@@ -2,6 +2,10 @@ name: Build Matrix
 
 on: [push]
 
+env:
+  CMAKE_VERSION: 3.18.3
+  BUILD_TYPE: Release
+
 jobs:
   build:
     name: ${ { matrix.config.name } }
