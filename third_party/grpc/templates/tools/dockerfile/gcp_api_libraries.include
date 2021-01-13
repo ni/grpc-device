@@ -1,0 +1,2 @@
+# Google Cloud platform API libraries
+RUN pip install --upgrade google-api-python-client oauth2client

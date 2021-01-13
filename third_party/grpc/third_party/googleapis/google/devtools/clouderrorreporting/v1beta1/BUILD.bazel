@@ -1,0 +1,100 @@
+load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
+load("@com_google_api_codegen//rules_gapic:gapic.bzl", "proto_library_with_info")
+load(
+    "@com_google_api_codegen//rules_gapic/java:java_gapic.bzl",
+    "java_gapic_library",
+    "java_resource_name_proto_library",
+)
+load("@com_google_api_codegen//rules_gapic/java:java_gapic_pkg.bzl", "java_gapic_assembly_gradle_pkg")
+
+# This is an API workspace, having public visibility by default makes perfect sense.
+package(default_visibility = ["//visibility:public"])
+
+##############################################################################
+# Common
+##############################################################################
+proto_library(
+    name = "errorreporting_proto",
+    srcs = [
+        "common.proto",
+        "error_group_service.proto",
+        "error_stats_service.proto",
+        "report_errors_service.proto",
+    ],
+    deps = [
+        "//google/api:api_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@com_google_protobuf//:duration_proto",
+    ],
+)
+
+proto_library_with_info(
+    name = "errorreporting_proto_with_info",
+    deps = [":errorreporting_proto"],
+)
+
+##############################################################################
+# Java
+##############################################################################
+_JAVA_GRPC_DEPS = [
+    "@com_google_api_grpc_proto_google_common_protos//jar",
+]
+
+java_proto_library(
+    name = "errorreporting_java_proto",
+    deps = [":errorreporting_proto"],
+)
+
+java_grpc_library(
+    name = "errorreporting_java_grpc",
+    srcs = [":errorreporting_proto"],
+    deps = [":errorreporting_java_proto"] + _JAVA_GRPC_DEPS,
+)
+
+java_resource_name_proto_library(
+    name = "errorreporting_resource_name_java_proto",
+    gapic_yaml = "errorreporting_gapic.yaml",
+    deps = [":errorreporting_proto"],
+)
+
+java_gapic_library(
+    name = "errorreporting_java_gapic",
+    src = ":errorreporting_proto_with_info",
+    gapic_yaml = "errorreporting_gapic.yaml",
+    service_yaml = "//google/devtools/clouderrorreporting:errorreporting.yaml",
+    test_deps = [":errorreporting_java_grpc"],
+    deps = [
+        ":errorreporting_java_proto",
+        ":errorreporting_resource_name_java_proto",
+    ] + _JAVA_GRPC_DEPS,
+)
+
+[java_test(
+    name = test_name,
+    test_class = test_name,
+    runtime_deps = [
+        ":errorreporting_java_gapic_test",
+    ],
+) for test_name in [
+    "com.google.cloud.errorreporting.v1beta1.ErrorGroupServiceClientTest",
+    "com.google.cloud.errorreporting.v1beta1.ErrorStatsServiceClientTest",
+    "com.google.cloud.errorreporting.v1beta1.ReportErrorsServiceClientTest",
+]]
+
+##############################################################################
+# Opensource Packages
+##############################################################################
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-error-reporting-v1beta1-java",
+    client_deps = [":errorreporting_java_gapic"],
+    client_group = "com.google.cloud",
+    client_test_deps = [":errorreporting_java_gapic_test"],
+    grpc_deps = [":errorreporting_java_grpc"],
+    grpc_group = "com.google.api.grpc",
+    proto_deps = [
+        ":errorreporting_java_proto",
+        ":errorreporting_proto",
+        ":errorreporting_resource_name_java_proto",
+    ] + _JAVA_GRPC_DEPS,
+    version = "0.0.0-SNAPSHOT",
+)

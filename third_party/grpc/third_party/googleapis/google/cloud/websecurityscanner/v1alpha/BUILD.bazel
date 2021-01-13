@@ -1,0 +1,86 @@
+load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
+load("@com_google_api_codegen//rules_gapic:gapic.bzl", "proto_library_with_info")
+load("@com_google_api_codegen//rules_gapic/java:java_gapic.bzl", "java_gapic_library")
+load("@com_google_api_codegen//rules_gapic/java:java_gapic_pkg.bzl", "java_gapic_assembly_gradle_pkg")
+
+# This is an API workspace, having public visibility by default makes perfect sense.
+package(default_visibility = ["//visibility:public"])
+
+##############################################################################
+# Common
+##############################################################################
+proto_library(
+    name = "websecurityscanner_proto",
+    srcs = [
+        "crawled_url.proto",
+        "finding.proto",
+        "finding_addon.proto",
+        "finding_type_stats.proto",
+        "scan_config.proto",
+        "scan_run.proto",
+        "web_security_scanner.proto",
+    ],
+    deps = [
+        "//google/api:api_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:field_mask_proto",
+    ],
+)
+
+proto_library_with_info(
+    name = "websecurityscanner_proto_with_info",
+    deps = [":websecurityscanner_proto"],
+)
+
+##############################################################################
+# Java
+##############################################################################
+_JAVA_GRPC_DEPS = [
+    "@com_google_api_grpc_proto_google_common_protos//jar",
+]
+
+java_proto_library(
+    name = "websecurityscanner_java_proto",
+    deps = [":websecurityscanner_proto"],
+)
+
+java_grpc_library(
+    name = "websecurityscanner_java_grpc",
+    srcs = [":websecurityscanner_proto"],
+    deps = [":websecurityscanner_java_proto"] + _JAVA_GRPC_DEPS,
+)
+
+java_gapic_library(
+    name = "websecurityscanner_java_gapic",
+    src = ":websecurityscanner_proto_with_info",
+    gapic_yaml = "websecurityscanner_gapic.yaml",
+    service_yaml = "//google/cloud/websecurityscanner:web_security_scanner_v1alpha.yaml",
+    test_deps = [":websecurityscanner_java_grpc"],
+    deps = [":websecurityscanner_java_proto"] + _JAVA_GRPC_DEPS,
+)
+
+[java_test(
+    name = test_name,
+    test_class = test_name,
+    runtime_deps = [":websecurityscanner_java_gapic_test"],
+) for test_name in [
+    "com.google.cloud.websecurityscanner.v1alpha.WebSecurityScannerClientTest",
+]]
+
+##############################################################################
+# Opensource Packages
+##############################################################################
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-websecurityscanner-v1alpha-java",
+    client_deps = [":websecurityscanner_java_gapic"],
+    client_group = "com.google.cloud",
+    client_test_deps = [":websecurityscanner_java_gapic_test"],
+    grpc_deps = [":websecurityscanner_java_grpc"],
+    grpc_group = "com.google.api.grpc",
+    proto_deps = [
+        ":websecurityscanner_java_proto",
+        ":websecurityscanner_proto",
+    ] + _JAVA_GRPC_DEPS,
+    version = "0.0.0-SNAPSHOT",
+)
