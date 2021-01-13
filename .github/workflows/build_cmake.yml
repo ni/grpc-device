@@ -27,7 +27,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - run: git submodule update --init
+    - run: git submodule update --init --recursive
     - name: Configure
       shell: cmake -P {0}
       run: |
