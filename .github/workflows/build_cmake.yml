@@ -27,7 +27,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: textbook/git-checkout-submodule-action@2.1.1
+    - run: git submodule update --init
     - name: Configure
       shell: cmake -P {0}
       run: |
