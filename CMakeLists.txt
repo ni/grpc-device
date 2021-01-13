@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5.1)
 
-project(Main C CXX)
+project(core_server C CXX)
 
 #----------------------------------------------------------------------
 # Include the gRPC's cmake build
@@ -24,9 +24,9 @@ else()
   set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
 endif()
 
-add_executable(Main "Source/main.cpp")
+add_executable(core_server "Source/core_server.cpp")
 
-target_link_libraries(Main
+target_link_libraries(core_server
    ${_REFLECTION}
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
