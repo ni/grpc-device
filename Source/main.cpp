@@ -34,7 +34,7 @@ void RunServer(int argc, char **argv)
 	builder.AddListeningPort(localhostAddress, grpc::InsecureServerCredentials());
 	
 	// Assemble the server.
-	std::unique_ptr<Server> server(builder.BuildAndStart());	
+	auto server = builder.BuildAndStart();	
 
 	cout << "Server listening on " << localhostAddress << endl;
 	
