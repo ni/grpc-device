@@ -27,7 +27,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - run: git submodule update --init --recursive
+
+    - name: Update Submodules
+      run: git submodule update --init --recursive
+      
     - name: Configure
       shell: cmake -P {0}
       run: |
@@ -48,6 +51,7 @@ jobs:
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Bad exit status")
         endif()
+
     - name: Build
       shell: cmake -P {0}
       run: |
@@ -64,6 +68,7 @@ jobs:
           message("::error::${error_message}")
           message(FATAL_ERROR "Build failed")
         endif()
+
     - name: Run tests
       shell: cmake -P {0}
       run: |
