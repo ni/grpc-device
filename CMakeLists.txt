@@ -6,8 +6,8 @@ add_executable(Main Source/main.cpp)
 
 # Add googletest unit tests
 enable_testing()
-add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
 add_executable(UnitTests Tests/RunAllGoogleTests.cpp Tests/SampleGoogleTestCase.cpp)
 
 # Link test executable against gtest
