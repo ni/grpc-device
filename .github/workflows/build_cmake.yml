@@ -26,8 +26,12 @@ jobs:
           }
 
     steps:
-    - uses: actions/checkout@v1
-    - run: git submodule update --init --recursive
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Update Submodules
+      run: git submodule update --init --recursive
+
     - name: Configure
       shell: cmake -P {0}
       run: |

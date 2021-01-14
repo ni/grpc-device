@@ -3,7 +3,8 @@
 
 const char* klocalhostAddress = "0.0.0.0:50051";
 
-namespace {
+namespace
+{
 	
 static void RunServer(int argc, char **argv)
 {
@@ -28,6 +29,6 @@ static void RunServer(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	RunServer(argc, argv);
-	return 0;
+   RunServer(argc, argv);
+   return 0;
 }
