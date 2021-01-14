@@ -3,7 +3,7 @@
 TEST(SampleTest, Expect_Less_Than)
 {
     // Simple google less than test with a custom failure message.
-    EXPECT_LT(2, 2) << "1 should be less than 2.";
+    EXPECT_LT(1, 2) << "1 should be less than 2.";
 }
 
 TEST(SampleTest, Expect_Equals)
