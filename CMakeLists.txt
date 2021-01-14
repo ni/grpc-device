@@ -24,7 +24,7 @@ else()
   set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
 endif()
 
-add_executable(core_server "Source/core_server.cpp")
+add_executable(core_server "source/core_server.cpp")
 
 target_link_libraries(core_server
    ${_REFLECTION}

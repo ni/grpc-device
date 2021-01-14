@@ -3,9 +3,6 @@
 
 const char* klocalhostAddress = "0.0.0.0:50051";
 
-namespace
-{
-	
 static void RunServer(int argc, char **argv)
 {
    grpc::EnableDefaultHealthCheckService(true);
@@ -23,8 +20,6 @@ static void RunServer(int argc, char **argv)
 	
    // This call will block until another thread shuts down the server.
    server->Wait();
-}
-
 }
 
 int main(int argc, char **argv)
