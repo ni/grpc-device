@@ -36,7 +36,7 @@ jobs:
       # `git@github.com:` are converted to HTTPS.
       #
       # Default: false
-      submodules: 'recursive'
+      submodules: recursive
 
     - name: Configure
       shell: cmake -P {0}
