@@ -48,6 +48,7 @@ jobs:
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Bad exit status")
         endif()
+        set(CTEST_CONFIGURATION_TYPE $ENV{BUILD_TYPE})
     - name: Build
       shell: cmake -P {0}
       run: |
@@ -71,7 +72,7 @@ jobs:
         ProcessorCount(N)
 
         execute_process(
-          COMMAND ctest -j ${N} -C $ENV{BUILD_TYPE} --output-on-failure
+          COMMAND ctest -j ${N} --output-on-failure
           WORKING_DIRECTORY build
           RESULT_VARIABLE result
         )
