@@ -26,11 +26,12 @@ jobs:
           }
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout Repo
+      uses: actions/checkout@v2
 
     - name: Update Submodules
       run: git submodule update --init --recursive
-      
+
     - name: Configure
       shell: cmake -P {0}
       run: |
@@ -69,7 +70,7 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
-    - name: Run tests
+    - name: Run Tests
       shell: cmake -P {0}
       run: |
         include(ProcessorCount)
