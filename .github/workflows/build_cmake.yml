@@ -71,7 +71,7 @@ jobs:
         ProcessorCount(N)
 
         execute_process(
-          COMMAND ctest -j ${N} -V
+          COMMAND ctest -j ${N} -c $ENV{BUILD_TYPE} --output-on-failure
           WORKING_DIRECTORY build
           RESULT_VARIABLE result
         )
