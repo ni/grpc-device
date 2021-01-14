@@ -27,6 +27,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - run: git submodule update --init --recursive
     - name: Configure
       shell: cmake -P {0}
       run: |
@@ -62,4 +63,18 @@ jobs:
           string(REPLACE "\n" "%0A" error_message "${error_message}")
           message("::error::${error_message}")
           message(FATAL_ERROR "Build failed")
+        endif()
+    - name: Run tests
+      shell: cmake -P {0}
+      run: |
+        include(ProcessorCount)
+        ProcessorCount(N)
+
+        execute_process(
+          COMMAND ctest -j ${N} -V
+          WORKING_DIRECTORY build
+          RESULT_VARIABLE result
+        )
+        if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Running tests failed!")
         endif()
