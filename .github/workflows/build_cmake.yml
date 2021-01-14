@@ -52,11 +52,12 @@ jobs:
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Bad exit status")
         endif()
+
     - name: Build
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build build
+          COMMAND cmake --build build --config $ENV{BUILD_TYPE}
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output
@@ -67,4 +68,19 @@ jobs:
           string(REPLACE "\n" "%0A" error_message "${error_message}")
           message("::error::${error_message}")
           message(FATAL_ERROR "Build failed")
+        endif()
+
+    - name: Run Tests
+      shell: cmake -P {0}
+      run: |
+        include(ProcessorCount)
+        ProcessorCount(N)
+
+        execute_process(
+          COMMAND ctest -j ${N} -C $ENV{BUILD_TYPE} --output-on-failure
+          WORKING_DIRECTORY build
+          RESULT_VARIABLE result
+        )
+        if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Running tests failed!")
         endif()
