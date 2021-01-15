@@ -30,8 +30,6 @@ endif()
 include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}" 
   "./source" 
-  $ENV{IVIROOTDIR64}/Include 
-  $ENV{NIEXTCCOMPILERSUPP}/Include
 )
 
 #----------------------------------------------------------------------
