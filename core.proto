@@ -5,17 +5,14 @@ option java_package = "ni.core";
 option java_outer_classname = "CoreService";
 option objc_class_prefix = "NI";
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
 package Core;
 
 service CoreService {
-
-  // Sends a greeting
-  rpc GetServerStatus () returns (ServerStatus) {}
+  rpc GetServerStatus (Empty) returns (ServerStatus) {}
 }
 
-// The response message containing the server status
 message ServerStatus {
-  bool message = 1;
+  bool status = 1;
 }
+
+message Empty {}

@@ -8,8 +8,8 @@
 #include <thread>
 #include <CoreService.h>
 
-grpc::Status CoreService::GetServerStatus(::grpc::ServerContext* context, const ServerStatus* status)
+grpc::Status CoreService::GetServerStatus(::grpc::ServerContext* context, Core::ServerStatus* status)
 {
-   status = true;
+   status->set_status(true);
    return grpc::Status::OK;
 }
