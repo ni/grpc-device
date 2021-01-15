@@ -24,7 +24,45 @@ else()
   set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
 endif()
 
-add_executable(core_server "source/core_server.cpp")
+#----------------------------------------------------------------------
+# Include generated *.pb.h files
+#----------------------------------------------------------------------
+include_directories(
+  "${CMAKE_CURRENT_BINARY_DIR}" 
+  "./source" 
+  $ENV{IVIROOTDIR64}/Include 
+  $ENV{NIEXTCCOMPILERSUPP}/Include
+)
+
+#----------------------------------------------------------------------
+# Proto file
+#----------------------------------------------------------------------
+get_filename_component(core_proto "core.proto" ABSOLUTE)
+get_filename_component(core_proto_path "${core_proto}" PATH)
+
+#----------------------------------------------------------------------
+# Generated sources
+#----------------------------------------------------------------------
+set(core_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/core.pb.cc")
+set(core_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/core.pb.h")
+set(core_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/core.grpc.pb.cc")
+set(core_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/core.grpc.pb.h")
+add_custom_command(
+  OUTPUT "${core_proto_srcs}" "${core_proto_hdrs}" "${core_grpc_srcs}" "${core_grpc_hdrs}"
+  COMMAND ${_PROTOBUF_PROTOC}
+  ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
+    --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
+    -I "${core_proto_path}"
+    --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
+    "${core_proto}"
+  DEPENDS "${core_proto}")
+  
+add_executable(core_server 
+   "source/core_server.cpp"
+   "source/CoreService.cpp"
+   "source/CoreService.h"
+   ${core_proto_srcs}
+   ${core_grpc_srcs})
 
 target_link_libraries(core_server
    ${_REFLECTION}
