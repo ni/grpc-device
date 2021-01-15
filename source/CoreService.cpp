@@ -1,7 +1,7 @@
 #include <CoreService.h>
 
-grpc::Status CoreService::IsServerRunning(::grpc::ServerContext* context, Core::IsServerRunningResult* status)
+::grpc::Status CoreService::IsServerRunning(::grpc::ServerContext* context, const ::Core::Empty* request, ::Core::IsServerRunningResult* response)
 {
-   status->set_status(true);
+   response->set_status(true);
    return grpc::Status::OK;
 }
