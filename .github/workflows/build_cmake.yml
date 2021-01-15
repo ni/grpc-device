@@ -26,6 +26,11 @@ jobs:
           }
 
     steps:
+    - name: Cancel Previous Build(s)
+      uses: styfle/cancel-workflow-action@0.7.0
+      with:
+        access_token: ${{ github.token }}
+
     - name: Checkout Repo
       uses: actions/checkout@v2
 
