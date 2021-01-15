@@ -6,5 +6,5 @@
 class CoreService final : public Core::CoreService::Service
 {
 public:
-   grpc::Status IsServerRunning(::grpc::ServerContext* context, ::Core::IsServerRunningResponse* status);
+   grpc::Status IsServerRunning(::grpc::ServerContext* context, ::Core::IsServerRunningResult* status);
 };
