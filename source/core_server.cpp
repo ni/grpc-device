@@ -12,6 +12,7 @@ static void RunServer(int argc, char **argv)
    // Listen on the given address without any authentication mechanism.
    builder.AddListeningPort(klocalhostAddress, grpc::InsecureServerCredentials());
 	
+   // Register services available on the server.
    CoreService coreService;
    builder.RegisterService(&coreService);
    

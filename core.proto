@@ -8,10 +8,10 @@ option objc_class_prefix = "NI";
 package Core;
 
 service CoreService {
-  rpc GetServerStatus (Empty) returns (ServerStatus) {}
+  rpc IsServingRunning (Empty) returns (IsServerRunningResponse) {}
 }
 
-message ServerStatus {
+message IsServerRunningResponse {
   bool status = 1;
 }
 
