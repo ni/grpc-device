@@ -28,7 +28,7 @@ class InProcessServerClientTest : public ::testing::Test
     ::core::Impl::CoreService service_;
 };
 
-TEST_F(InProcessServerClientTest, CoreService_RequestIsServerRunning_ResponseIsTrue) 
+TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue) 
 {
     ::core::IsServerRunningRequest request;
     ::core::IsServerRunningResult response;
