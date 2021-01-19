@@ -3,16 +3,16 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "ni.core";
 option java_outer_classname = "CoreService";
-option objc_class_prefix = "NI";
+option csharp_namespace = "NI.Core";
 
-package Core;
+package core;
 
 service CoreService {
-  rpc IsServerRunning (Empty) returns (IsServerRunningResult) {}
+  rpc IsServerRunning (IsServerRunningRequest) returns (IsServerRunningResult) {}
 }
 
 message IsServerRunningResult {
   bool status = 1;
 }
 
-message Empty {}
+message IsServerRunningRequest {}

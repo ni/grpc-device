@@ -6,5 +6,5 @@
 class CoreService final : public Core::CoreService::Service
 {
 public:
-   ::grpc::Status IsServerRunning(::grpc::ServerContext* context, const ::Core::Empty* request, ::Core::IsServerRunningResult* response) override;
+   ::grpc::Status IsServerRunning(::grpc::ServerContext* context, const ::Core::IsServerRunningRequest* request, ::Core::IsServerRunningResult* response) override;
 };
