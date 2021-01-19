@@ -1,4 +1,4 @@
-#include "CoreService.h"
+#include "core_service.h"
 
 const char* klocalhostAddress = "0.0.0.0:50051";
 

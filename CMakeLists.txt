@@ -57,8 +57,8 @@ add_custom_command(
   
 add_executable(core_server 
    "source/core_server.cpp"
-   "source/CoreService.cpp"
-   "source/CoreService.h"
+   "source/core_service.cpp"
+   "source/core_service.h"
    ${core_proto_srcs}
    ${core_grpc_srcs})
 

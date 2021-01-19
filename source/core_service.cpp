@@ -1,4 +1,4 @@
-#include "CoreService.h"
+#include "core_service.h"
 
 ::grpc::Status core::Impl::CoreService::IsServerRunning(::grpc::ServerContext* context, const ::core::IsServerRunningRequest* request, ::core::IsServerRunningResult* response)
 {
