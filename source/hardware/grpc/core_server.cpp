@@ -1,5 +1,4 @@
-#include <grpcpp/grpcpp.h>
-#include <grpcpp/ext/proto_server_reflection_plugin.h>
+#include "core_service.h"
 
 const char* klocalhostAddress = "0.0.0.0:50051";
 
@@ -13,6 +12,10 @@ static void RunServer(int argc, char **argv)
    // Listen on the given address without any authentication mechanism.
    builder.AddListeningPort(klocalhostAddress, grpc::InsecureServerCredentials());
 	
+   // Register services available on the server.
+   ni::hardware::grpc::impl::CoreService coreService;
+   builder.RegisterService(&coreService);
+   
    // Assemble the server.
    auto server = builder.BuildAndStart();	
 
