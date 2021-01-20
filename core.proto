@@ -1,18 +1,51 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "ni.core";
+option java_package = "com.ni.hardware.grpc";
 option java_outer_classname = "CoreService";
-option csharp_namespace = "NI.Core";
+option csharp_namespace = "NationalInstruments.Hardware.Grpc";
 
-package core;
+package ni.hardware.grpc;
 
 service CoreService {
-  rpc IsServerRunning (IsServerRunningRequest) returns (IsServerRunningResult) {}
+  rpc Reserve (ReserveRequest) returns (ReserveResponse) {};
+  rpc IsReservedByClient (IsReservedByClientRequest) returns (IsReservedByClientResponse) {};
+  rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
 }
 
-message IsServerRunningResult {
-  bool status = 1;
+message ViSession {
+  oneof session {
+      string sessionName = 1;
+      sfixed64 id = 2;
+  }
 }
 
-message IsServerRunningRequest {}
+message ReserveRequest {
+  ViSession session = 1;
+  string clientReserveId = 2;
+}
+
+message ReserveResponse {
+  enum ReserveStatus {
+      None = 0;
+      InvaidSession = 1;
+      Reserved = 2;
+  }
+  ReserveStatus status = 1;
+}
+
+message IsReservedByClientRequest {
+  string clientReserveId = 1;
+}
+
+message IsReservedByClientResponse {
+  bool isReserved = 2;
+}
+
+message UnreserveRequest {
+  string clientReserveId = 1;
+}
+
+message UnreserveResponse {       
+  bool isUnreserved = 1;
+}
