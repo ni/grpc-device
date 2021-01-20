@@ -9,7 +9,7 @@ namespace hardware
 {
 namespace grpc
 {
-namespace Impl
+namespace impl
 {
    class CoreService final : public ni::hardware::grpc::CoreService::Service
    {
