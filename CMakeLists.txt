@@ -56,9 +56,9 @@ add_custom_command(
   DEPENDS "${core_proto}")
   
 add_executable(core_server 
-   "source/core_server.cpp"
-   "source/core_service.cpp"
-   "source/core_service.h"
+   "source/hardware/grpc/core_server.cpp"
+   "source/hardware/grpc/core_service.cpp"
+   "source/hardware/grpc/core_service.h"
    ${core_proto_srcs}
    ${core_grpc_srcs})
 
