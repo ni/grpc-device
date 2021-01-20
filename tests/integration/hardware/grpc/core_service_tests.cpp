@@ -35,7 +35,7 @@ namespace grpc
         std::shared_ptr<::grpc::Channel> channel_;
         std::unique_ptr<::ni::hardware::grpc::CoreService::Stub> stub_;
         std::unique_ptr<::grpc::Server> server_;
-        ::ni::hardware::grpc::Impl::CoreService service_;
+        ::ni::hardware::grpc::impl::CoreService service_;
     };
 
     TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue) 
