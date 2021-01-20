@@ -73,21 +73,21 @@ enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
 
-add_executable(UnitTestRunner 
+add_executable(UnitTestsRunner 
     "tests/run_all_tests.cpp"
-    "tests/sample_google_tests.cpp")
-target_link_libraries(UnitTestRunner gtest)
+    "tests/unit/sample_google_tests.cpp")
+target_link_libraries(UnitTestsRunner gtest)
 
-add_executable(InProcessServerClientTestRunner 
+add_executable(CoreServiceTestsRunner 
     "tests/run_all_tests.cpp"
-    "tests/in-process-server-client-tests.cpp"
-    "source/core_service.cpp"
+    "tests/integration/hardware/grpc/core_service_tests.cpp"
+    "source/hardware/grpc/core_service.cpp"
     ${core_proto_srcs}
     ${core_grpc_srcs})
-target_link_libraries(InProcessServerClientTestRunner 
+target_link_libraries(CoreServiceTestsRunner 
     gtest
     ${_GRPC_GRPCPP})
 
 # Hook up different google test runners to CTest
-add_test( NAME UnitTests COMMAND UnitTestRunner )
-add_test( NAME InProcessServerClientTests COMMAND InProcessServerClientTestRunner )
+add_test( NAME UnitTests COMMAND UnitTestsRunner )
+add_test( NAME CoreServiceTests COMMAND CoreServiceTestsRunner )
