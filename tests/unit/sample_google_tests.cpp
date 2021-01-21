@@ -17,6 +17,6 @@ namespace unit
         // Simple google test  with a custom failure message.
         EXPECT_EQ(42, 42) << "42 should equal 42.";
     }
-}
-}
-}
+} // namespace unit
+} // namespace tests
+} // namespace ni
