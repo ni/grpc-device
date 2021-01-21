@@ -111,7 +111,7 @@ std::shared_ptr<CoreService::SessionInfo> CoreService::LookupSessionInfoUnlocked
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-grpc::Status CoreService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
+::grpc::Status CoreService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
 {
     std::shared_ptr<SessionInfo> sessionInfo;
     {
@@ -137,12 +137,12 @@ grpc::Status CoreService::Reserve(::grpc::ServerContext* context, const ReserveR
     {
         response->set_status(ReserveResponse_ReserveStatus_InvaidSession);
     }
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-grpc::Status CoreService::IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response)
+::grpc::Status CoreService::IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response)
 {
    std::unique_lock<std::shared_mutex> lock(s_SessionLock);
    auto it = _reservedSessions.find(request->clientreserveid());
@@ -150,12 +150,12 @@ grpc::Status CoreService::IsReservedByClient(::grpc::ServerContext* context, con
    {
       response->set_isreserved(true);
    }
-   return grpc::Status::OK;
+   return ::grpc::Status::OK;
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-grpc::Status CoreService::Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)
+::grpc::Status CoreService::Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)
 {
     std::shared_ptr<SessionInfo> sessionInfo;
     {
@@ -174,7 +174,7 @@ grpc::Status CoreService::Unreserve(::grpc::ServerContext* context, const Unrese
         sessionInfo->Lock->notify();
         response->set_isunreserved(true);
     }    
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
 }
 }
 }

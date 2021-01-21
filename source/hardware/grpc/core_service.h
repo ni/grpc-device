@@ -14,18 +14,18 @@ namespace impl
 {
    class Semaphore;
 
-   class CoreService final : public core::CoreService::Service
+   class CoreService final : public ni::hardware::grpc::CoreService::Service
    {
    public:
       using CleanupSessionProc = void (*)(ViSession session);
 
       static ViSession* AddSession(ViSession vi, const std::string& sessionUserId, CleanupSessionProc cleanupProc);
-      static void RemoveSession(core::ViSession session);
+      static void RemoveSession(ViSession session);
       static ViSession LookupSession(const ViSession& remoteSession);
 
-      grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
-      grpc::Status IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response) override;
-      grpc::Status Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response) override;
+      ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
+      ::grpc::Status IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response) override;
+      ::grpc::Status Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response) override;
 
    private:
       struct SessionInfo
@@ -41,7 +41,7 @@ namespace impl
       using SessionReservationMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
 
    private:
-      static std::shared_ptr<SessionInfo> LookupSessionInfoUnlocked(const core::ViSession& remoteSession);
+      static std::shared_ptr<SessionInfo> LookupSessionInfoUnlocked(const ViSession& remoteSession);
 
    private:
       SessionReservationMap _reservedSessions;

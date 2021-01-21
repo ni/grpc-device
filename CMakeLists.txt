@@ -68,14 +68,23 @@ target_link_libraries(core_server
    ${_PROTOBUF_LIBPROTOBUF}
    )
 
-# Add googletest unit tests
+# Add googletest tests
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
-add_executable(UnitTests Tests/RunAllGoogleTests.cpp Tests/SampleGoogleTestCase.cpp)
 
 # Link test executable against gtest
-target_link_libraries(UnitTests gtest)
 
-# Add test so the google test runner hooks up to CTest
-add_test( NAME UnitTests COMMAND UnitTests )
+add_executable(CoreServiceTestsRunner 
+    "tests/run_all_tests.cpp"
+    "tests/unit/hardware/grpc/core_service_tests.cpp"
+    "source/hardware/grpc/core_service.cpp"
+    ${core_proto_srcs})
+
+target_link_libraries(CoreServiceTestsRunner 
+    gtest
+    ${_GRPC_GRPCPP})
+
+# Hook up different google test runners to CTest
+# add_test( NAME UnitTests COMMAND UnitTestsRunner )
+add_test( NAME CoreServiceTests COMMAND CoreServiceTestsRunner ) 
