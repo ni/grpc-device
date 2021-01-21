@@ -79,7 +79,8 @@ add_executable(CoreServiceTestsRunner
     "tests/run_all_tests.cpp"
     "tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/hardware/grpc/core_service.cpp"
-    ${core_proto_srcs})
+    ${core_proto_srcs}
+    ${core_grpc_srcs})
 
 target_link_libraries(CoreServiceTestsRunner 
     gtest
