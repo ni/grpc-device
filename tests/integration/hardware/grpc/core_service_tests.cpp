@@ -14,7 +14,7 @@ namespace grpc
     class InProcessServerClientTest : public ::testing::Test
     {
         public:
-            ~InProcessServerClientTest() {}    
+            virtual ~InProcessServerClientTest() {}    
 
             void SetUp() override 
             {
