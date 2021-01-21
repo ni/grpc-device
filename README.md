@@ -3,7 +3,7 @@
 This repo contains necessary C++ code and .proto files needed to build a gRPC server for NI hardware driver APIs.
 
 ## Build Status
-TBD
+![Linux Build](https://github.com/ni/ni-driver-apis-grpc/workflows/Build%20Matrix/badge.svg)
 
 ## Note: This project is not yet complete
 * The gRPC server is not yet complete.
