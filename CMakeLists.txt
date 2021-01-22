@@ -25,6 +25,13 @@ else()
 endif()
 
 #----------------------------------------------------------------------
+# Use C++17 (needed for shared_mutex support on Linux)
+#----------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+#----------------------------------------------------------------------
 # Include generated *.pb.h files
 #----------------------------------------------------------------------
 include_directories(
