@@ -49,13 +49,13 @@ namespace grpc
 
     TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue) 
     {
-        ::ni::hardware::grpc::IsServerRunningRequest request;
-        ::ni::hardware::grpc::IsServerRunningResult response;
+        ::ni::hardware::grpc::IsReservedByClientRequest request;
+        ::ni::hardware::grpc::IsReservedByClientResponse response;
 
         ::grpc::ClientContext context;
-        ::grpc::Status s = GetStub()->IsServerRunning(&context, request, &response);
+        ::grpc::Status s = GetStub()->IsReservedByClient(&context, request, &response);
 
-        EXPECT_TRUE(response.status());
+        EXPECT_FALSE(response.isreserved());
         EXPECT_TRUE(s.ok());
     } 
 } // namespace grpc
