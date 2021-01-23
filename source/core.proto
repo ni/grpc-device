@@ -7,7 +7,7 @@ option csharp_namespace = "NationalInstruments.Hardware.Grpc";
 
 package ni.hardware.grpc;
 
-service CoreService {
+service CoreServer {
   rpc IsServerRunning (IsServerRunningRequest) returns (IsServerRunningResult) {}
 }
 

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
-#include "../source/hardware/grpc/core_service.h"
+
+#include "hardware/grpc/core_service.h"
 
 namespace ni
 {
@@ -14,9 +15,9 @@ namespace grpc
     class InProcessServerClientTest : public ::testing::Test
     {
         public:
-            virtual ~InProcessServerClientTest() {}    
+            virtual ~InProcessServerClientTest() {}
 
-            void SetUp() override 
+            void SetUp() override
             {
                 ::grpc::ServerBuilder builder;
                 builder.RegisterService(&service_);
@@ -26,28 +27,28 @@ namespace grpc
 
             void TearDown() override { server_->Shutdown(); }
 
-            void ResetStub() 
+            void ResetStub()
             {
                 channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-                stub_ = ::ni::hardware::grpc::CoreService::NewStub(channel_);
+                stub_ = ::ni::hardware::grpc::CoreServer::NewStub(channel_);
             }
 
-            std::unique_ptr<::ni::hardware::grpc::CoreService::Stub>& GetStub()
+            std::unique_ptr<ni::hardware::grpc::CoreServer::Stub>& GetStub()
             {
                 return stub_;
             }
-    
+
         protected:
             InProcessServerClientTest() {}
 
         private:
             std::shared_ptr<::grpc::Channel> channel_;
-            std::unique_ptr<::ni::hardware::grpc::CoreService::Stub> stub_;
+            std::unique_ptr<::ni::hardware::grpc::CoreServer::Stub> stub_;
             std::unique_ptr<::grpc::Server> server_;
-            ::ni::hardware::grpc::impl::CoreService service_;
+            ni::hardware::grpc::CoreService service_;
     };
 
-    TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue) 
+    TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue)
     {
         ::ni::hardware::grpc::IsServerRunningRequest request;
         ::ni::hardware::grpc::IsServerRunningResult response;
@@ -57,7 +58,8 @@ namespace grpc
 
         EXPECT_TRUE(response.status());
         EXPECT_TRUE(s.ok());
-    } 
+    }
+
 } // namespace grpc
 } // namespace hardware
 } // namespace integration

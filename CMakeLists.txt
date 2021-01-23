@@ -28,14 +28,15 @@ endif()
 # Include generated *.pb.h files
 #----------------------------------------------------------------------
 include_directories(
-  "${CMAKE_CURRENT_BINARY_DIR}" 
+  "${CMAKE_CURRENT_BINARY_DIR}"
   "./source"
+  "./source/core_server"
 )
 
 #----------------------------------------------------------------------
 # Proto file
 #----------------------------------------------------------------------
-get_filename_component(core_proto "core.proto" ABSOLUTE)
+get_filename_component(core_proto "source/core.proto" ABSOLUTE)
 get_filename_component(core_proto_path "${core_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -54,11 +55,11 @@ add_custom_command(
     --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
     "${core_proto}"
   DEPENDS "${core_proto}")
-  
-add_executable(core_server 
-   "source/hardware/grpc/core_server.cpp"
-   "source/hardware/grpc/core_service.cpp"
-   "source/hardware/grpc/core_service.h"
+
+add_executable(core_server
+   "source/core_server/core_server.cpp"
+   "source/core_server/hardware/grpc/core_service.cpp"
+   "source/core_server/hardware/grpc/core_service.h"
    ${core_proto_srcs}
    ${core_grpc_srcs})
 
@@ -73,18 +74,18 @@ enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
 
-add_executable(UnitTestsRunner 
+add_executable(UnitTestsRunner
     "tests/run_all_tests.cpp"
     "tests/unit/sample_google_tests.cpp")
 target_link_libraries(UnitTestsRunner gtest)
 
-add_executable(CoreServiceTestsRunner 
+add_executable(CoreServiceTestsRunner
     "tests/run_all_tests.cpp"
     "tests/integration/hardware/grpc/core_service_tests.cpp"
-    "source/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/core_service.cpp"
     ${core_proto_srcs}
     ${core_grpc_srcs})
-target_link_libraries(CoreServiceTestsRunner 
+target_link_libraries(CoreServiceTestsRunner
     gtest
     ${_GRPC_GRPCPP})
 
