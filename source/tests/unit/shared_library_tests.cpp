@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "core_server/hardware/grpc/internal/shared_library.h"
 
 namespace ni
 {
@@ -10,7 +11,7 @@ namespace hardware
 {
 namespace grpc
 {
-namespace impl
+namespace internal
 {
 
     TEST(SharedLibraryTests, Expect_Less_Than)
