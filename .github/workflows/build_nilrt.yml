@@ -1,0 +1,95 @@
+name: NI Linux Real-Time Build
+
+on: [push]
+
+env:
+  CMAKE_VERSION: 3.18.3
+  BUILD_TYPE: Release
+  
+jobs:
+  build-nilrt:
+    name: NILRT Cross Compile with GCC 6.3.0
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Cancel Build(s)
+      uses: styfle/cancel-workflow-action@0.7.0
+      with:
+        access_token: ${{ github.token }}
+    
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    
+    - name: Install NI Linux RT CC Toolchain
+      run: |
+        wget https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-core2-64-toolchain-6.0.sh
+        sudo chmod a+x ./oecore-x86_64-core2-64-toolchain-6.0.sh
+        sudo ./oecore-x86_64-core2-64-toolchain-6.0.sh -y -d $ENV{GITHUB_WORKSPACE}/nilrt-toolchain/
+        run echo "$ENV{GITHUB_WORKSPACE}/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> $GITHUB_PATH
+      
+    - name: Update Submodules
+      run: git submodule update --init --recursive
+      
+    - name: Configure Host OS gRPC Support
+      shell: cmake -P {0}
+      run: |
+        set(path_separator ":")
+        set(ENV{PATH} "$ENV{GITHUB_WORKSPACE}${path_separator}$ENV{PATH}")
+        execute_process(
+          COMMAND cmake
+            -S $ENV{GITHUB_WORKSPACE}/third_party/grpc/
+            -B $ENV{GITHUB_WORKSPACE}/third_party/grpc/build
+            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
+            -D gRPC_INSTALL=ON
+            -D gRPC_BUILD_TESTS=OFF
+          RESULT_VARIABLE result
+        )
+        if (NOT result EQUAL 0)
+          message(FATAL_ERROR "Bad exit status")
+        endif()
+      
+    - name: Build and Install Host OS gRPC Support
+      run: sudo cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build --target install
+        
+    - name: Configure Cross Compile
+      shell: cmake -P {0}
+      run: |
+        set(path_separator ":")
+        set(ENV{PATH} "$ENV{GITHUB_WORKSPACE}${path_separator}$ENV{PATH}")
+        execute_process(
+          COMMAND cmake
+            -S .
+            -B build
+            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
+            -D CMAKE_TOOLCHAIN_FILE=$ENV{GITHUB_WORKSPACE}/scripts/cmake/nilrt-x86_64.cmake
+          RESULT_VARIABLE result
+        )
+        if (NOT result EQUAL 0)
+          message(FATAL_ERROR "Bad exit status")
+        endif()
+    
+    - name: Cross Compile
+      shell: cmake -P {0}
+      run: |
+        execute_process(
+          COMMAND cmake --build build --config $ENV{BUILD_TYPE}
+          RESULT_VARIABLE result
+          OUTPUT_VARIABLE output
+          ERROR_VARIABLE output
+          ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
+        )
+        if (NOT result EQUAL 0)
+          string(REGEX MATCH "FAILED:.*$" error_message "${output}")
+          string(REPLACE "\n" "%0A" error_message "${error_message}")
+          message("::error::${error_message}")
+          message(FATAL_ERROR "Build failed")
+        endif()
+    
+    - name: Tar build files
+      run: tar -cvf NILinuxRealTime-x86_64.tar $ENV{GITHUB_WORKSPACE}/build/
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: NILinuxRealTime-x86_64
+        path: NILinuxRealTime-x86_64.tar
