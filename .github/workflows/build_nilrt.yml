@@ -22,10 +22,10 @@ jobs:
     
     - name: Install NI Linux RT CC Toolchain
       run: |
-        wget https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-core2-64-toolchain-6.0.sh
+        wget -nv https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-core2-64-toolchain-6.0.sh
         sudo chmod a+x ./oecore-x86_64-core2-64-toolchain-6.0.sh
-        sudo ./oecore-x86_64-core2-64-toolchain-6.0.sh -y -d $ENV{GITHUB_WORKSPACE}/nilrt-toolchain/
-        run echo "$ENV{GITHUB_WORKSPACE}/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> $GITHUB_PATH
+        sudo ./oecore-x86_64-core2-64-toolchain-6.0.sh -y -d ${GITHUB_WORKSPACE}/nilrt-toolchain/
+        echo "${GITHUB_WORKSPACE}/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> ${GITHUB_PATH}
       
     - name: Update Submodules
       run: git submodule update --init --recursive
@@ -49,7 +49,7 @@ jobs:
         endif()
       
     - name: Build and Install Host OS gRPC Support
-      run: sudo cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build --target install
+      run: sudo cmake --build ${GITHUB_WORKSPACE}/third_party/grpc/build --target install
         
     - name: Configure Cross Compile
       shell: cmake -P {0}
@@ -86,7 +86,7 @@ jobs:
         endif()
     
     - name: Tar build files
-      run: tar -cvf NILinuxRealTime-x86_64.tar $ENV{GITHUB_WORKSPACE}/build/
+      run: tar -cvf NILinuxRealTime-x86_64.tar ${GITHUB_WORKSPACE}/build/
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
