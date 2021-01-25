@@ -36,32 +36,32 @@ include_directories(
 #----------------------------------------------------------------------
 # Proto file
 #----------------------------------------------------------------------
-get_filename_component(core_proto "source/core.proto" ABSOLUTE)
-get_filename_component(core_proto_path "${core_proto}" PATH)
+get_filename_component(server_utilities_proto "source/server_utilities.proto" ABSOLUTE)
+get_filename_component(server_utilities_proto_path "${server_utilities_proto}" PATH)
 
 #----------------------------------------------------------------------
 # Generated sources
 #----------------------------------------------------------------------
-set(core_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/core.pb.cc")
-set(core_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/core.pb.h")
-set(core_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/core.grpc.pb.cc")
-set(core_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/core.grpc.pb.h")
+set(server_utilities_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.pb.cc")
+set(server_utilities_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.pb.h")
+set(server_utilities_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.grpc.pb.cc")
+set(server_utilities_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.grpc.pb.h")
 add_custom_command(
-  OUTPUT "${core_proto_srcs}" "${core_proto_hdrs}" "${core_grpc_srcs}" "${core_grpc_hdrs}"
+  OUTPUT "${server_utilities_proto_srcs}" "${server_utilities_proto_hdrs}" "${server_utilities_grpc_srcs}" "${server_utilities_grpc_hdrs}"
   COMMAND ${_PROTOBUF_PROTOC}
   ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
     --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
-    -I "${core_proto_path}"
+    -I "${server_utilities_proto_path}"
     --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-    "${core_proto}"
-  DEPENDS "${core_proto}")
+    "${server_utilities_proto}"
+  DEPENDS "${server_utilities_proto}")
 
 add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
    "source/core_server/hardware/grpc/core_service.h"
-   ${core_proto_srcs}
-   ${core_grpc_srcs})
+   ${server_utilities_proto_srcs}
+   ${server_utilities_grpc_srcs})
 
 target_link_libraries(core_server
    ${_REFLECTION}
@@ -83,8 +83,8 @@ add_executable(CoreServiceTestsRunner
     "tests/run_all_tests.cpp"
     "tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
-    ${core_proto_srcs}
-    ${core_grpc_srcs})
+    ${server_utilities_proto_srcs}
+    ${server_utilities_grpc_srcs})
 target_link_libraries(CoreServiceTestsRunner
     gtest
     ${_GRPC_GRPCPP})

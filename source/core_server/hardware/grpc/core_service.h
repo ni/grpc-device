@@ -1,4 +1,4 @@
-#include <core.grpc.pb.h>
+#include <server_utilities.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
@@ -10,7 +10,7 @@ namespace hardware
 namespace grpc
 {
 
-   class CoreService final : public CoreServer::Service
+   class CoreService final : public ServerUtilities::Service
    {
    public:
       ::grpc::Status IsServerRunning(::grpc::ServerContext* context, const IsServerRunningRequest* request, IsServerRunningResult* response) override;

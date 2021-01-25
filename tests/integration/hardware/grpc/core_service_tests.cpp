@@ -30,10 +30,10 @@ namespace grpc
             void ResetStub()
             {
                 channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-                stub_ = ::ni::hardware::grpc::CoreServer::NewStub(channel_);
+                stub_ = ::ni::hardware::grpc::ServerUtilities::NewStub(channel_);
             }
 
-            std::unique_ptr<ni::hardware::grpc::CoreServer::Stub>& GetStub()
+            std::unique_ptr<ni::hardware::grpc::ServerUtilities::Stub>& GetStub()
             {
                 return stub_;
             }
@@ -43,7 +43,7 @@ namespace grpc
 
         private:
             std::shared_ptr<::grpc::Channel> channel_;
-            std::unique_ptr<::ni::hardware::grpc::CoreServer::Stub> stub_;
+            std::unique_ptr<::ni::hardware::grpc::ServerUtilities::Stub> stub_;
             std::unique_ptr<::grpc::Server> server_;
             ni::hardware::grpc::CoreService service_;
     };
