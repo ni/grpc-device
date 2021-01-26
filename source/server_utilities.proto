@@ -11,6 +11,7 @@ service ServerUtilities {
   rpc Reserve (ReserveRequest) returns (ReserveResponse) {};
   rpc IsReservedByClient (IsReservedByClientRequest) returns (IsReservedByClientResponse) {};
   rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
+  rpc ForceCloseAllSessions (ForceCloseAllSessionsRequest) returns (ForceCloseAllSessionResponse) {};
 }
 
 message ViSession {
@@ -48,4 +49,12 @@ message UnreserveRequest {
 
 message UnreserveResponse {       
   bool isUnreserved = 1;
+}
+
+message ForceCloseAllSessionsRequest {
+  bool waitForLocks = 1;
+}
+
+message ForceCloseAllSessionResponse {       
+  bool allClosed = 1;
 }

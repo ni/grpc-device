@@ -150,6 +150,22 @@ namespace internal
             response->set_isunreserved(true);
         }
     }
+    
+   void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
+   {
+      std::unique_lock<std::shared_mutex> lock(sessionLock_);
+      /*for (it = s_NamedSessions.begin(); it != s_NamedSessions.end(); it++)
+      {
+      
+         std::cout << it->first    // string (key)
+              << ':'
+              << it->second   // string's value 
+              << std::endl;
+      }*/
+      //s_NamedSessions.clear();
+      //s_UnnamedSessions.clear();
+      //_reservedSessions.clear();
+}
 } // namespace internal
 } // namespace grpc
 } // namespace hardware

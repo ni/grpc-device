@@ -26,6 +26,13 @@ namespace grpc
         session_repository->unreserve(context, request, response);
         return ::grpc::Status::OK;
     }
+    
+    ::grpc::Status CoreService::ForceCloseAllSessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
+   {
+        internal::SessionRepository* session_repository = session_repository->instance();
+        session_repository->force_close_all_sessions(context, request, response);
+        return ::grpc::Status::OK;
+   }
 } // namespace grpc
 } // namespace hardware
 } // namespace ni
