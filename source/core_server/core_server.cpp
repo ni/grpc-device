@@ -1,4 +1,4 @@
-#include "core_service.h"
+#include "hardware/grpc/core_service.h"
 
 const char* klocalhostAddress = "0.0.0.0:50051";
 
@@ -13,7 +13,7 @@ static void RunServer(int argc, char **argv)
    builder.AddListeningPort(klocalhostAddress, grpc::InsecureServerCredentials());
 	
    // Register services available on the server.
-   ni::hardware::grpc::impl::CoreService coreService;
+   ni::hardware::grpc::CoreService coreService;
    builder.RegisterService(&coreService);
    
    // Assemble the server.

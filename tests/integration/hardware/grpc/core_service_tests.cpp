@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
-#include "../source/hardware/grpc/core_service.h"
+#include "hardware/grpc/core_service.h"
+#include "hardware/grpc/internal/semaphore.h"
 
 namespace ni
 {
@@ -29,10 +30,10 @@ namespace grpc
             void ResetStub() 
             {
                 channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-                stub_ = ::ni::hardware::grpc::CoreService::NewStub(channel_);
+                stub_ = ::ni::hardware::grpc::ServerUtilities::NewStub(channel_);
             }
 
-            std::unique_ptr<::ni::hardware::grpc::CoreService::Stub>& GetStub()
+            std::unique_ptr<::ni::hardware::grpc::ServerUtilities::Stub>& GetStub()
             {
                 return stub_;
             }
@@ -42,9 +43,9 @@ namespace grpc
 
         private:
             std::shared_ptr<::grpc::Channel> channel_;
-            std::unique_ptr<::ni::hardware::grpc::CoreService::Stub> stub_;
+            std::unique_ptr<::ni::hardware::grpc::ServerUtilities::Stub> stub_;
             std::unique_ptr<::grpc::Server> server_;
-            ::ni::hardware::grpc::impl::CoreService service_;
+            ::ni::hardware::grpc::CoreService service_;
     };
 
     TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue) 

@@ -2,12 +2,12 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.ni.hardware.grpc";
-option java_outer_classname = "CoreService";
+option java_outer_classname = "ServerUtilities";
 option csharp_namespace = "NationalInstruments.Hardware.Grpc";
 
 package ni.hardware.grpc;
 
-service CoreService {
+service ServerUtilities {
   rpc Reserve (ReserveRequest) returns (ReserveResponse) {};
   rpc IsReservedByClient (IsReservedByClientRequest) returns (IsReservedByClientResponse) {};
   rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
@@ -28,7 +28,7 @@ message ReserveRequest {
 message ReserveResponse {
   enum ReserveStatus {
       None = 0;
-      InvaidSession = 1;
+      InvalidSession = 1;
       Reserved = 2;
   }
   ReserveStatus status = 1;

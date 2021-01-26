@@ -6,78 +6,67 @@ namespace hardware
 {
 namespace grpc
 {
-namespace impl
-{
-std::shared_mutex CoreService::s_SessionLock;
-int CoreService::s_NextSessionId = 1000;
-CoreService::NamedSessionMap CoreService::s_NamedSessions;
-CoreService::SessionMap CoreService::s_UnnamedSessions;
+std::shared_mutex CoreService::sessionLock_;
+int CoreService::nextSessionId_ = 1000;
+CoreService::NamedSessionMap CoreService::namedSessions_;
+CoreService::SessionMap CoreService::unnamedSessions_;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-ViSession* CoreService::AddSession(ViSession vi, const std::string& sessionUserId, CleanupSessionProc cleanupProc)
+ViSession* CoreService::add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc)
 {    
-    std::unique_lock<std::shared_mutex> lock(s_SessionLock);
+    std::unique_lock<std::shared_mutex> lock(sessionLock_);
 
     auto session = new ViSession();
-    if (!sessionUserId.empty())
-    {
-        session->set_sessionname(sessionUserId);
+    if (!session_user_id.empty()) {
+        session->set_sessionname(session_user_id);
     }
-    else
-    {
-        auto id = ++s_NextSessionId;
+    else {
+        int id = ++nextSessionId_;
         session->set_id(id);
     }
-    auto info = LookupSessionInfoUnlocked(*session);
-    if (info == nullptr)
-    {
+    auto info = lookup_session_info_unlocked(*session);
+    if (info == nullptr) {
         info = std::make_shared<SessionInfo>();
-        if (sessionUserId.empty())
-        {
-            s_UnnamedSessions.emplace(session->id(), info);
+        if (session_user_id.empty()) {
+            unnamedSessions_.emplace(session->id(), info);
         }
-        else
-        {
-            s_NamedSessions.emplace(sessionUserId, info);
+        else {
+            namedSessions_.emplace(session_user_id, info);
         }
     }
     auto now = std::chrono::steady_clock::now();
     info->Session = vi;
-    info->CleanupProc = cleanupProc;
+    info->CleanupProc = cleanup_proc;
     info->LastAccessTime = now;
     return session;
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-void CoreService::RemoveSession(ViSession remoteSession)
+void CoreService::remove_session(const ViSession& remoteSession)
 {
-   std::unique_lock<std::shared_mutex> lock(s_SessionLock);
+   std::unique_lock<std::shared_mutex> lock(sessionLock_);
 
-   auto it = s_NamedSessions.find(remoteSession.sessionname());
-   if (it != s_NamedSessions.end())
-   {
-      s_NamedSessions.erase(it);
+   auto it = namedSessions_.find(remoteSession.sessionname());
+   if (it != namedSessions_.end()) {
+      namedSessions_.erase(it);
    }
-   else
-   {
-      auto it = s_UnnamedSessions.find(remoteSession.id());
-      if (it != s_UnnamedSessions.end())
-      {
-            s_UnnamedSessions.erase(it);
+   else {
+      auto it = unnamedSessions_.find(remoteSession.id());
+      if (it != unnamedSessions_.end()) {
+            unnamedSessions_.erase(it);
       }
    }
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-ViSession CoreService::LookupSession(const ViSession& remoteSession)
+ViSession CoreService::lookup_session(const ViSession& remote_session)
 {
-   std::shared_lock<std::shared_mutex> lock(s_SessionLock);
-   auto session = LookupSessionInfoUnlocked(remoteSession);
-   if (session != nullptr)
-   {
+   std::shared_lock<std::shared_mutex> lock(sessionLock_);
+   auto session = lookup_session_info_unlocked(remote_session);
+   if (session != nullptr) {
       return session->Session;
    }
    return ViSession();
@@ -85,23 +74,19 @@ ViSession CoreService::LookupSession(const ViSession& remoteSession)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-std::shared_ptr<CoreService::SessionInfo> CoreService::LookupSessionInfoUnlocked(const ViSession& remoteSession)
+std::shared_ptr<CoreService::SessionInfo> CoreService::lookup_session_info_unlocked(const ViSession& remote_session)
 {
     auto now = std::chrono::steady_clock::now();
-    if (!remoteSession.sessionname().empty())
-    {
-        auto it = s_NamedSessions.find(remoteSession.sessionname());
-        if (it != s_NamedSessions.end())
-        {
+    if (!remote_session.sessionname().empty()) {
+        auto it = namedSessions_.find(remote_session.sessionname());
+        if (it != namedSessions_.end()) {
             (*it).second->LastAccessTime = now;
             return (*it).second;
         }
     }
-    else
-    {
-        auto it = s_UnnamedSessions.find(remoteSession.id());
-        if (it != s_UnnamedSessions.end())
-        {
+    else {
+        auto it = unnamedSessions_.find(remote_session.id());
+        if (it != unnamedSessions_.end()) {
             (*it).second->LastAccessTime = now;
             return (*it).second;
         }
@@ -115,27 +100,24 @@ std::shared_ptr<CoreService::SessionInfo> CoreService::LookupSessionInfoUnlocked
 {
     std::shared_ptr<SessionInfo> sessionInfo;
     {
-        std::unique_lock<std::shared_mutex> lock(s_SessionLock);
-        sessionInfo = LookupSessionInfoUnlocked(request->session());
-        if (sessionInfo->Lock == nullptr)
-        {
-            sessionInfo->Lock = std::make_unique<Semaphore>();
-        }
+        std::unique_lock<std::shared_mutex> lock(sessionLock_);
+        sessionInfo = lookup_session_info_unlocked(request->session());
     }
-    if (sessionInfo != nullptr)
-    {
+    if (sessionInfo != nullptr) {
+        if (sessionInfo->Lock == nullptr) {
+            sessionInfo->Lock = std::make_unique<internal::Semaphore>();
+        }
         sessionInfo->Lock->wait();
         {
             auto now = std::chrono::steady_clock::now();
-            std::unique_lock<std::shared_mutex> lock(s_SessionLock);
+            std::unique_lock<std::shared_mutex> lock(sessionLock_);
             sessionInfo->LastAccessTime = now;
-            _reservedSessions.emplace(request->clientreserveid(), sessionInfo);
+            reservedSessions_.emplace(request->clientreserveid(), sessionInfo);
         }
         response->set_status(ReserveResponse_ReserveStatus_Reserved);
     }    
-    else
-    {
-        response->set_status(ReserveResponse_ReserveStatus_InvaidSession);
+    else {
+        response->set_status(ReserveResponse_ReserveStatus_InvalidSession);
     }
     return ::grpc::Status::OK;
 }
@@ -144,10 +126,9 @@ std::shared_ptr<CoreService::SessionInfo> CoreService::LookupSessionInfoUnlocked
 //---------------------------------------------------------------------
 ::grpc::Status CoreService::IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response)
 {
-   std::unique_lock<std::shared_mutex> lock(s_SessionLock);
-   auto it = _reservedSessions.find(request->clientreserveid());
-   if (it != _reservedSessions.end())
-   {
+   std::unique_lock<std::shared_mutex> lock(sessionLock_);
+   auto it = reservedSessions_.find(request->clientreserveid());
+   if (it != reservedSessions_.end()) {
       response->set_isreserved(true);
    }
    return ::grpc::Status::OK;
@@ -159,23 +140,20 @@ std::shared_ptr<CoreService::SessionInfo> CoreService::LookupSessionInfoUnlocked
 {
     std::shared_ptr<SessionInfo> sessionInfo;
     {
-        std::unique_lock<std::shared_mutex> lock(s_SessionLock);
-        auto it = _reservedSessions.find(request->clientreserveid());
-        if (it != _reservedSessions.end())
-        {
+        std::unique_lock<std::shared_mutex> lock(sessionLock_);
+        auto it = reservedSessions_.find(request->clientreserveid());
+        if (it != reservedSessions_.end()) {
             sessionInfo = (*it).second;
-            _reservedSessions.erase(it);
+            reservedSessions_.erase(it);
         }
     }
-    if (sessionInfo != nullptr)
-    {
+    if (sessionInfo != nullptr) {
         auto now = std::chrono::steady_clock::now();
         sessionInfo->LastAccessTime = now;
         sessionInfo->Lock->notify();
         response->set_isunreserved(true);
     }    
     return ::grpc::Status::OK;
-}
 }
 }
 }
