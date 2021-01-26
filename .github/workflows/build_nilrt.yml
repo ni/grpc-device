@@ -5,31 +5,33 @@ on: [push]
 env:
   CMAKE_VERSION: 3.18.3
   BUILD_TYPE: Release
-  
+
 jobs:
   build-nilrt:
     name: NILRT Cross Compile with GCC 6.3.0
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Cancel Build(s)
       uses: styfle/cancel-workflow-action@0.7.0
       with:
         access_token: ${{ github.token }}
-    
+
     - name: Checkout Repo
       uses: actions/checkout@v2
-    
+
+    # The URL used to download this toolchain may change in the future as
+    # improvements to hosting and exports of the NILRT toolchain are made.
     - name: Install NI Linux RT CC Toolchain
       run: |
         wget -nv https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-core2-64-toolchain-6.0.sh
         sudo chmod a+x ./oecore-x86_64-core2-64-toolchain-6.0.sh
         sudo ./oecore-x86_64-core2-64-toolchain-6.0.sh -y -d ${GITHUB_WORKSPACE}/nilrt-toolchain/
         echo "${GITHUB_WORKSPACE}/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> ${GITHUB_PATH}
-      
+
     - name: Update Submodules
       run: git submodule update --init --recursive
-      
+
     - name: Configure Host OS gRPC Support
       shell: cmake -P {0}
       run: |
@@ -47,10 +49,10 @@ jobs:
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Bad exit status")
         endif()
-      
+
     - name: Build and Install Host OS gRPC Support
       run: sudo cmake --build ${GITHUB_WORKSPACE}/third_party/grpc/build --target install
-        
+
     - name: Configure Cross Compile
       shell: cmake -P {0}
       run: |
@@ -67,7 +69,7 @@ jobs:
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Bad exit status")
         endif()
-    
+
     - name: Cross Compile
       shell: cmake -P {0}
       run: |
@@ -84,10 +86,10 @@ jobs:
           message("::error::${error_message}")
           message(FATAL_ERROR "Build failed")
         endif()
-    
+
     - name: Tar build files
       run: tar -cvf NILinuxRealTime-x86_64.tar ${GITHUB_WORKSPACE}/build/
-    
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
