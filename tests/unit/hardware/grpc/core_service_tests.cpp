@@ -28,7 +28,6 @@ TEST(CoreServiceTests, NoSession_ReserveWithNewClientName_InvalidSession)
 {
     ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
     auto request = new ni::hardware::grpc::ReserveRequest;
-    request->set_allocated_session(&ni::hardware::grpc::ViSession());
     request->set_clientreserveid("new_client_name");
 
     ::grpc::ServerContext context;
