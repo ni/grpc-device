@@ -13,7 +13,7 @@ namespace hardware
 {
 namespace grpc
 {
-namespace impl
+namespace internal
 {
 
    SharedLibrary::SharedLibrary(const char* library_name)

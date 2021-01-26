@@ -1,12 +1,12 @@
-#pragma once
+#ifndef NI_HARDWARE_GRPC_IMPL_SHARED_LIBRARY
+#define NI_HARDWARE_GRPC_IMPL_SHARED_LIBRARY
+
 #include <string>
 
 #if defined(WIN32)
 #include <Windows.h>
 #endif
 
-#ifndef NI_HARDWARE_GRPC_IMPL_SHARED_LIBRARY
-#define NI_HARDWARE_GRPC_IMPL_SHARED_LIBRARY
 
 namespace ni
 {
@@ -14,7 +14,7 @@ namespace hardware
 {
 namespace grpc
 {
-namespace impl
+namespace internal
 {
 
 #ifdef WIN32

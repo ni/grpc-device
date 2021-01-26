@@ -62,13 +62,13 @@ extern "C" int niTestApiReadSessionData(TestSession session, int attribute_id, s
         if (!value_buffer) {
             return 1;
         }
-        strncpy(value_buffer, value.c_str(), *value_length);
+        strncpy_s(value_buffer, *value_length, value.c_str(), value.length());
     }
     else {
         if (value_buffer) {
             return 1;
         }
-        *value_length = value.length();
+        *value_length = value.length() + 1;
     }
     return 0;
 }

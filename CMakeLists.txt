@@ -92,8 +92,9 @@ target_link_libraries(CoreServiceTestsRunner
     gtest
     ${_GRPC_GRPCPP})
 
-add_library(TestApi
+add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
+add_compile_definitions(MAKEDLL)
 
 # Hook up different google test runners to CTest
 add_test( NAME UnitTests COMMAND UnitTestsRunner )
