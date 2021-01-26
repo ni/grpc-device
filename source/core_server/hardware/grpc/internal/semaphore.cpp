@@ -30,7 +30,7 @@ namespace internal
         }
         count_--;
     }
-}
-}
-}
-}
+} // namespace internal
+} // namespace grpc
+} // namespace hardware
+} // namespace ni

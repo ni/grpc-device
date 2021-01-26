@@ -69,6 +69,8 @@ add_executable(core_server
    "source/core_server/hardware/grpc/core_service.h"
    "source/core_server/hardware/grpc/internal/semaphore.cpp"
    "source/core_server/hardware/grpc/internal/semaphore.h"
+   "source/core_server/hardware/grpc/internal/session_repository.cpp"
+   "source/core_server/hardware/grpc/internal/session_repository.h"
    ${server_utilities_proto_srcs}
    ${server_utilities_grpc_srcs})
 
@@ -89,6 +91,7 @@ add_executable(CoreServiceTestsRunner
     "tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
+    "source/core_server/hardware/grpc/internal/session_repository.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 
@@ -101,6 +104,7 @@ add_executable(UnitTestsRunner
     "tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
+    "source/core_server/hardware/grpc/internal/session_repository.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
     
