@@ -8,7 +8,7 @@ typedef std::map<int, std::string> DataMap;
 static DataMap& GetDataMapFromSession(TestSession session)
 {
     DataMap* map = reinterpret_cast<DataMap*>(session);
-    return &map;
+    return *map;
 }
 
 extern "C" int niTestApiCreateSession(TestSession* session)
@@ -33,7 +33,7 @@ extern "C" int niTestApiCloseSession(TestSession session)
         return 1;
     }
     DataMap& map = GetDataMapFromSession(session);
-    delete map;
+    delete &map;
     return 0;
 }
 
@@ -47,7 +47,7 @@ extern "C" int niTestApiWriteSessionData(TestSession session, int attribute_id, 
     return 0;
 }
 
-extern "C" int niTestApiReadSessionData(TestSession session, int attribute_id, size_t* value_length, const char** value_buffer)
+extern "C" int niTestApiReadSessionData(TestSession session, int attribute_id, size_t* value_length, char* value_buffer)
 {
     if (!session || !value_length) {
         return 1;
@@ -57,7 +57,7 @@ extern "C" int niTestApiReadSessionData(TestSession session, int attribute_id, s
     if (it == map.end()) {
         return 1;
     }
-    const std::string& value = it->second();
+    const std::string& value = it->second;
     if (*value_length) {
         if (!value_buffer) {
             return 1;

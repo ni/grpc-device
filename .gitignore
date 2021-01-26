@@ -13,6 +13,6 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 gens
-
+*.orig
 .vs
 .vscode
