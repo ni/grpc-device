@@ -2,12 +2,12 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.ni.hardware.grpc";
-option java_outer_classname = "CoreService";
+option java_outer_classname = "ServerUtilities";
 option csharp_namespace = "NationalInstruments.Hardware.Grpc";
 
 package ni.hardware.grpc;
 
-service CoreService {
+service ServerUtilities {
   rpc IsServerRunning (IsServerRunningRequest) returns (IsServerRunningResult) {}
 }
 
