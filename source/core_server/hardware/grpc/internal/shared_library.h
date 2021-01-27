@@ -1,10 +1,10 @@
-#ifndef NI_HARDWARE_GRPC_IMPL_SHARED_LIBRARY
-#define NI_HARDWARE_GRPC_IMPL_SHARED_LIBRARY
+#ifndef NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
+#define NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
 
 #include <string>
 
-#if defined(WIN32)
-#include <Windows.h>
+#if defined(_MSC_VER)
+   #include <Windows.h>
 #endif
 
 
@@ -17,7 +17,7 @@ namespace grpc
 namespace internal
 {
 
-#ifdef WIN32
+#ifdef _MSC_VER
    typedef HMODULE LibraryHandle;
 #else
    typedef void* LibraryHandle;
@@ -42,9 +42,9 @@ namespace internal
       LibraryHandle handle_;
    };
 
-} // namespace impl
+} // namespace internal
 } // namespace grpc
 } // namespace hardware
 } // namespace ni
 
-#endif // NI_HARDWARE_GRPC_IMPL_SHARED_LIBRARY
+#endif // NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY

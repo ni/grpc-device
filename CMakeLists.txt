@@ -68,6 +68,7 @@ target_link_libraries(core_server
    ${_REFLECTION}
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
+   ${CMAKE_DL_LIBS}
    )
 
 # Add googletest tests
@@ -80,7 +81,9 @@ add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/sample_google_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp")
-target_link_libraries(UnitTestsRunner gtest)
+target_link_libraries(UnitTestsRunner
+    gtest
+    ${CMAKE_DL_LIBS})
 
 add_executable(CoreServiceTestsRunner
     "source/tests/run_all_tests.cpp"
@@ -90,11 +93,12 @@ add_executable(CoreServiceTestsRunner
     ${server_utilities_grpc_srcs})
 target_link_libraries(CoreServiceTestsRunner
     gtest
-    ${_GRPC_GRPCPP})
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS})
 
 add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
-add_compile_definitions(MAKEDLL)
+add_compile_definitions(TestApi TEST_API_BUILDING)
 
 # Hook up different google test runners to CTest
 add_test( NAME UnitTests COMMAND UnitTestsRunner )

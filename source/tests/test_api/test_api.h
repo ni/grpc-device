@@ -1,8 +1,22 @@
 
-#if defined(MAKEDLL)
-   #define TEST_API_FUNCTION extern "C" __declspec(dllexport)
+#include <cstddef>
+
+#if defined(_MSC_VER)
+   #define EXPORT __declspec(dellexport)
+   #define IMPORT __declspec(dllimport)
+#elif defined(__GNUC__)
+   #define EXPORT __attribute__((visibility("default")))
+   #define IMPORT
 #else
-   #define TEST_API_FUNCTION extern "C" __declspec(dllimport)
+   #define EXPORT
+   #define IMPORT
+   #pragma warning Unknown dynamic link import/export semantics
+#endif
+
+#if defined(TEST_API_BUILDING)
+   #define TEST_API_FUNCTION extern "C" EXPORT
+#else
+   #define TEST_API_FUNCTION extern "C" IMPORT
 #endif
 
 typedef void* TestSession;

@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 #include "core_server/hardware/grpc/internal/shared_library.h"
 
+#if defined(__GNUC__)
+   #include <dlfcn.h>
+#endif
+
 namespace ni
 {
 namespace tests
@@ -14,120 +18,129 @@ namespace grpc
 namespace internal
 {
 
-    using TestSession = void*;
-    using TestApiCreateSessionPtr = int (*)(TestSession* session);
-    using TestApiCloseSessionPtr = int (*)(TestSession session);
-    using TestApiWriteSessionDataPtr = int (*)(TestSession session, int attribute_id, const char* value);
-    using TestApiReadSessionDataPtr = int (*)(TestSession session, int attribute_id, size_t* value_length, char* value_buffer);
-    using TestApiRemoveSessionDataPtr = int (*)(TestSession session, int attribute_id);
+   using TestSession = void*;
+   using TestApiCreateSessionPtr = int (*)(TestSession* session);
+   using TestApiCloseSessionPtr = int (*)(TestSession session);
+   using TestApiWriteSessionDataPtr = int (*)(TestSession session, int attribute_id, const char* value);
+   using TestApiReadSessionDataPtr = int (*)(TestSession session, int attribute_id, size_t* value_length, char* value_buffer);
+   using TestApiRemoveSessionDataPtr = int (*)(TestSession session, int attribute_id);
 
-    TEST(SharedLibraryTests, ValidNameForLibrary_Load_IsLoadedReturnsTrue)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("TestApi.dll");
+#if defined(_MSC_VER)
+   static const char* test_library_name = "TestApi.dll";
+   static const char* wrong_library_name = "WrongTestApi.dll"
+#else
+   static const char* test_library_name = "./libTestApi.so";
+   static const char* wrong_library_name = "./libWrongTestApi.so";
+#endif
 
-        library.load();
+   TEST(SharedLibraryTests, ValidNameForLibrary_Load_IsLoadedReturnsTrue)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
 
-        EXPECT_TRUE(library.is_loaded()) << "The library should have loaded.";
-    }
+      library.load();
 
-    TEST(SharedLibraryTests, ValidNameForLibrary_Load_GetHandleReturnsValue)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("TestApi.dll");
+      EXPECT_TRUE(library.is_loaded()) << "The library should have loaded.";
+   }
 
-        library.load();
+   TEST(SharedLibraryTests, ValidNameForLibrary_Load_GetHandleReturnsValue)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
 
-        EXPECT_NE(nullptr, library.get_handle()) << "The library should have a handle.";
-    }
+      library.load();
 
-    TEST(SharedLibraryTests, LibraryLoaded_Unload_UnloadsLibrary)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("TestApi.dll");
-        library.load();
+      EXPECT_NE(nullptr, library.get_handle());
+   }
 
-        library.unload();
+   TEST(SharedLibraryTests, LibraryLoaded_Unload_UnloadsLibrary)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+      library.load();
 
-        EXPECT_FALSE(library.is_loaded()) << "The library should be unloaded.";
-        EXPECT_EQ(nullptr, library.get_handle()) << "The library should not have a handle.";
-    }
+      library.unload();
 
-    TEST(SharedLibraryTests, InvalidNameForLibrary_Load_IsLoadedReturnsFalse)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("WrongTestApi.dll");
+      EXPECT_FALSE(library.is_loaded());
+      EXPECT_EQ(nullptr, library.get_handle());
+   }
 
-        library.load();
+   TEST(SharedLibraryTests, InvalidNameForLibrary_Load_IsLoadedReturnsFalse)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(wrong_library_name);
 
-        EXPECT_FALSE(library.is_loaded()) << "The library should not have loaded.";
-    }
+      library.load();
 
-    TEST(SharedLibraryTests, InvalidNameForLibrary_Load_GetHandleReturnsNull)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("WrongTestApi.dll");
+      EXPECT_FALSE(library.is_loaded());
+   }
 
-        library.load();
+   TEST(SharedLibraryTests, InvalidNameForLibrary_Load_GetHandleReturnsNull)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(wrong_library_name);
 
-        EXPECT_EQ(nullptr, library.get_handle()) << "The library should not have a handle.";
-    }
+      library.load();
 
-    TEST(SharedLibraryTests, LibraryNotLoaded_GetFunctionPointerWithExistingFunctionName_ReturnsNull)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("TestApi.dll");
+      EXPECT_EQ(nullptr, library.get_handle());
+   }
 
-        auto createSession = library.get_function_pointer("niTestApiCreateSession");
+   TEST(SharedLibraryTests, LibraryNotLoaded_GetFunctionPointerWithExistingFunctionName_ReturnsNull)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
 
-        EXPECT_EQ(nullptr, createSession) << "The function pointer should have been null when the library was not loaded.";
-    }
+      auto createSession = library.get_function_pointer("niTestApiCreateSession");
 
-    TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointersWithExistingFunctionName_ReturnsValidFunctionPointers)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("TestApi.dll");
-        library.load();
+      EXPECT_EQ(nullptr, createSession);
+   }
 
-        auto createSession = reinterpret_cast<TestApiCreateSessionPtr>(library.get_function_pointer("niTestApiCreateSession"));
-        auto closeSession = reinterpret_cast<TestApiCloseSessionPtr>(library.get_function_pointer("niTestApiCloseSession"));
-        auto writeData = reinterpret_cast<TestApiWriteSessionDataPtr>(library.get_function_pointer("niTestApiWriteSessionData"));
-        auto readData = reinterpret_cast<TestApiReadSessionDataPtr>(library.get_function_pointer("niTestApiReadSessionData"));
+   TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointersWithExistingFunctionName_ReturnsValidFunctionPointers)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+      library.load();
 
-        EXPECT_NE(nullptr, createSession) << "The function pointer should have been valid.";
-        EXPECT_NE(nullptr, closeSession) << "The function pointer should have been valid.";
-        EXPECT_NE(nullptr, writeData) << "The function pointer should have been valid.";
-        EXPECT_NE(nullptr, readData) << "The function pointer should have been valid.";
-    }
+      auto createSession = reinterpret_cast<TestApiCreateSessionPtr>(library.get_function_pointer("niTestApiCreateSession"));
+      auto closeSession = reinterpret_cast<TestApiCloseSessionPtr>(library.get_function_pointer("niTestApiCloseSession"));
+      auto writeData = reinterpret_cast<TestApiWriteSessionDataPtr>(library.get_function_pointer("niTestApiWriteSessionData"));
+      auto readData = reinterpret_cast<TestApiReadSessionDataPtr>(library.get_function_pointer("niTestApiReadSessionData"));
 
-    TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointerWithNonExistentFunctionName_ReturnsNull)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("TestApi.dll");
+      EXPECT_NE(nullptr, createSession);
+      EXPECT_NE(nullptr, closeSession);
+      EXPECT_NE(nullptr, writeData);
+      EXPECT_NE(nullptr, readData);
+   }
 
-        auto createSession = library.get_function_pointer("niTestApiNonExistentFunctionName");
+   TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointerWithNonExistentFunctionName_ReturnsNull)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
 
-        EXPECT_EQ(nullptr, createSession) << "The function pointer should have been null when the library was not loaded.";
-    }
+      auto createSession = library.get_function_pointer("niTestApiNonExistentFunctionName");
 
-    TEST(SharedLibraryTests, LibraryLoaded_CallLoadedFunctions_FunctionCallsSucceed)
-    {
-        ni::hardware::grpc::internal::SharedLibrary library("TestApi.dll");
-        library.load();
-        auto createSession = reinterpret_cast<TestApiCreateSessionPtr>(library.get_function_pointer("niTestApiCreateSession"));
-        auto closeSession = reinterpret_cast<TestApiCloseSessionPtr>(library.get_function_pointer("niTestApiCloseSession"));
-        auto writeData = reinterpret_cast<TestApiWriteSessionDataPtr>(library.get_function_pointer("niTestApiWriteSessionData"));
-        auto readData = reinterpret_cast<TestApiReadSessionDataPtr>(library.get_function_pointer("niTestApiReadSessionData"));
+      EXPECT_EQ(nullptr, createSession);
+   }
 
-        const int attribute = 5;
-        const char* value = "my data";
-        TestSession session = nullptr;
-        size_t buffer_length = 0;
-        char* buffer = nullptr;
-        EXPECT_EQ(0, createSession(&session)) << "The create call should succeed";
-        EXPECT_NE(nullptr, session) << "The session should be non-null";
-        EXPECT_EQ(0, writeData(session, attribute, "my data")) << "The write call should succeed";
-        EXPECT_EQ(0, readData(session, attribute, &buffer_length, nullptr)) << "The first read call should succeed";
-        EXPECT_EQ(strlen(value) + 1, buffer_length) << "The first read call should set the value length";
-        buffer = new char[buffer_length];
-        EXPECT_EQ(0, readData(session, attribute, &buffer_length, buffer)) << "The second read call should succeed";
-        EXPECT_STREQ(value, buffer) << "The value read should equal the value written.";
-        delete[] buffer;
-    }
+   TEST(SharedLibraryTests, LibraryAndFunctionsLoaded_FunctionCallsSucceed)
+   {
+      ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+      library.load();
+      ASSERT_TRUE(library.is_loaded());
+      auto createSession = reinterpret_cast<TestApiCreateSessionPtr>(library.get_function_pointer("niTestApiCreateSession"));
+      auto closeSession = reinterpret_cast<TestApiCloseSessionPtr>(library.get_function_pointer("niTestApiCloseSession"));
+      auto writeData = reinterpret_cast<TestApiWriteSessionDataPtr>(library.get_function_pointer("niTestApiWriteSessionData"));
+      auto readData = reinterpret_cast<TestApiReadSessionDataPtr>(library.get_function_pointer("niTestApiReadSessionData"));
 
-} // namespace impl
+      const int attribute = 5;
+      const char* value = "my data";
+      TestSession session = nullptr;
+      size_t buffer_length = 0;
+      char* buffer = nullptr;
+      EXPECT_EQ(0, createSession(&session));
+      EXPECT_NE(nullptr, session);
+      EXPECT_EQ(0, writeData(session, attribute, "my data"));
+      EXPECT_EQ(0, readData(session, attribute, &buffer_length, nullptr));
+      EXPECT_EQ(strlen(value) + 1, buffer_length);
+      buffer = new char[buffer_length];
+      EXPECT_EQ(0, readData(session, attribute, &buffer_length, buffer));
+      EXPECT_STREQ(value, buffer);
+      delete[] buffer;
+   }
+
+} // namespace internal
 } // namespace grpc
 } // namespace hardware
 } // namespace unit

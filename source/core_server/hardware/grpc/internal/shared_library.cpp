@@ -1,10 +1,7 @@
 #include "shared_library.h"
 
-#if !defined(WIN32)
-
-#include <dlfcn.h>
-#include "PosixError.h"
-
+#if defined(__GNUC__)
+   #include <dlfcn.h>
 #endif
 
 namespace ni
@@ -52,8 +49,11 @@ namespace internal
 
    void SharedLibrary::load()
    {
+      if (handle_) {
+         return;
+      }
       if (!library_name_.empty()) {
-#if defined(WIN32)
+#if defined(_MSC_VER)
          handle_ = ::LoadLibraryA(library_name_.c_str());
 #else
          handle_ = ::dlopen(library_name_.c_str(), RTLD_NOW | RTLD_GLOBAL);
@@ -64,7 +64,7 @@ namespace internal
    void SharedLibrary::unload()
    {
       if (handle_) {
-#if defined (WIN32)
+#if defined(_MSC_VER)
          ::FreeLibrary(handle_);
 #else
          ::dlclose(handle_);
@@ -78,14 +78,14 @@ namespace internal
       if (!handle_) {
          return nullptr;
       }
-#if defined (WIN32)
+#if defined(_MSC_VER)
       return ::GetProcAddress(handle_, name);
 #else
       return ::dlsym(handle_, name);
 #endif
    }
 
-} // namespace impl
+} // namespace internal
 } // namespace grpc
 } // namespace hardware
 } // namespace ni

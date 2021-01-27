@@ -1,6 +1,7 @@
 #include "test_api.h"
 
 #include <string>
+#include <string.h>
 #include <map>
 
 typedef std::map<int, std::string> DataMap;
@@ -59,10 +60,10 @@ extern "C" int niTestApiReadSessionData(TestSession session, int attribute_id, s
     }
     const std::string& value = it->second;
     if (*value_length) {
-        if (!value_buffer) {
+        if (!value_buffer || *value_length < value.length() + 1) {
             return 1;
         }
-        strncpy_s(value_buffer, *value_length, value.c_str(), value.length());
+        strncpy(value_buffer, value.c_str(), *value_length);
     }
     else {
         if (value_buffer) {
