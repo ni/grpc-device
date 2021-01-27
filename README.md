@@ -4,6 +4,7 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 
 ## Build Status
 ![Linux Build](https://github.com/ni/ni-driver-apis-grpc/workflows/Build%20Matrix/badge.svg)
+![NI Linux Real-Time Build](https://github.com/ni/ni-driver-apis-grpc/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
 
 ## Note: This project is not yet complete
 * The gRPC server is not yet complete.
