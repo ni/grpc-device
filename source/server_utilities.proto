@@ -15,37 +15,37 @@ service ServerUtilities {
 
 message ViSession {
   oneof session {
-      string sessionName = 1;
+      string session_name = 1;
       sfixed64 id = 2;
   }
 }
 
 message ReserveRequest {
   ViSession session = 1;
-  string clientReserveId = 2;
+  string client_reserve_id = 2;
 }
 
 message ReserveResponse {
   enum ReserveStatus {
-      None = 0;
-      InvalidSession = 1;
-      Reserved = 2;
+      NONE = 0;
+      INVALID_SESSION = 1;
+      RESERVED = 2;
   }
   ReserveStatus status = 1;
 }
 
 message IsReservedByClientRequest {
-  string clientReserveId = 1;
+  string client_reserve_id = 1;
 }
 
 message IsReservedByClientResponse {
-  bool isReserved = 2;
+  bool is_reserved = 2;
 }
 
 message UnreserveRequest {
-  string clientReserveId = 1;
+  string client_reserve_id = 1;
 }
 
-message UnreserveResponse {       
-  bool isUnreserved = 1;
+message UnreserveResponse {
+  bool is_unreserved = 1;
 }

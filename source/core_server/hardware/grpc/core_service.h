@@ -13,9 +13,14 @@ namespace grpc
    class CoreService final : public ServerUtilities::Service
    {
    public:
+      CoreService();
+      CoreService(internal::SessionRepository* session_repository);
+
       ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
       ::grpc::Status IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response) override;
       ::grpc::Status Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response) override;
+   private:
+      internal::SessionRepository* session_repository_;
    };
 } // namespace grpc
 } // namespace hardware

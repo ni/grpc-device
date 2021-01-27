@@ -16,46 +16,42 @@ namespace grpc
 {
 namespace internal
 {
-    class SessionRepository
-    {
-    public:
-        static SessionRepository* instance();
+   class SessionRepository
+   {
+   public:
+      SessionRepository();
 
-        using CleanupSessionProc = void (*)(ViSession session);
+      using CleanupSessionProc = void (*)(ViSession session);
 
-        static ViSession* add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc);
-        static void remove_session(const ViSession& session);
-        static ViSession lookup_session(const ViSession& remote_session);
+      ViSession* add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc);
+      void remove_session(const ViSession& remote_session);
+      ViSession lookup_session(const ViSession& remote_session);
 
-        void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
-        void is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response);
-        void unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response);
-
-    private:
-    struct SessionInfo
-    {
-        ViSession Session;
-        std::unique_ptr<internal::Semaphore> Lock;
-        std::chrono::steady_clock::time_point LastAccessTime;
-        SessionRepository::CleanupSessionProc CleanupProc;
-    };
-
-    using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
-    using SessionMap = std::map<google::protobuf::int64, std::shared_ptr<SessionInfo>>;
-    using SessionReservationMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
-
-    private:
-        static std::shared_ptr<SessionInfo> lookup_session_info_unlocked(const ViSession& remote_session);
-
-    private:
-        SessionReservationMap reservedSessions_;
+      void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
+      void is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response);
+      void unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response);
 
    private:
-      static std::shared_mutex sessionLock_;
-      static int nextSessionId_;
-      static NamedSessionMap namedSessions_;
-      static SessionMap unnamedSessions_;
-    };
+      struct SessionInfo
+      {
+         ViSession session;
+         std::unique_ptr<internal::Semaphore> lock;
+         std::chrono::steady_clock::time_point lastAccessTime;
+         SessionRepository::CleanupSessionProc cleanupProc;
+      };
+
+      using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
+      using SessionMap = std::map<google::protobuf::int64, std::shared_ptr<SessionInfo>>;
+      using SessionReservationMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
+
+      std::shared_ptr<SessionInfo> lookup_session_info_unlocked(const ViSession& remote_session);
+      SessionReservationMap reservedSessions_;
+
+      std::shared_mutex sessionLock_;
+      int nextSessionId_;
+      NamedSessionMap namedSessions_;
+      SessionMap unnamedSessions_;
+   };
 } // namespace internal
 } // namespace grpc
 } // namespace hardware
