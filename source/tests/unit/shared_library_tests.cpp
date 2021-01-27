@@ -27,7 +27,7 @@ namespace internal
 
 #if defined(_MSC_VER)
    static const char* test_library_name = "TestApi.dll";
-   static const char* wrong_library_name = "WrongTestApi.dll"
+   static const char* wrong_library_name = "WrongTestApi.dll";
 #else
    static const char* test_library_name = "./libTestApi.so";
    static const char* wrong_library_name = "./libWrongTestApi.so";
