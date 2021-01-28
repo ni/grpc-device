@@ -15,3 +15,11 @@ gens
 
 .vs
 .vscode
+tests/ni_fake/metadata/__pycache__/attributes_addon.cpython-39.pyc
+tests/ni_fake/metadata/__pycache__/config.cpython-39.pyc
+tests/ni_fake/metadata/__pycache__/config_addon.cpython-39.pyc
+tests/ni_fake/metadata/__pycache__/enums.cpython-39.pyc
+tests/ni_fake/metadata/__pycache__/enums_addon.cpython-39.pyc
+tests/ni_fake/metadata/__pycache__/functions.cpython-39.pyc
+tests/ni_fake/metadata/__pycache__/functions_addon.cpython-39.pyc
+tests/ni_fake/metadata/__pycache__/__init__.cpython-39.pyc
