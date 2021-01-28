@@ -46,11 +46,11 @@ namespace internal
 
       std::shared_ptr<SessionInfo> lookup_session_info_unlocked(const ViSession& remote_session);
 
-      SessionReservationMap reservedSessions_;
-      std::shared_mutex sessionLock_;
-      int nextSessionId_;
-      NamedSessionMap namedSessions_;
-      SessionMap unnamedSessions_;
+      SessionReservationMap reserved_sessions_;
+      std::shared_mutex session_lock_;
+      int next_session_id_;
+      NamedSessionMap named_sessions_;
+      SessionMap unnamed_sessions_;
    };
 } // namespace internal
 } // namespace grpc

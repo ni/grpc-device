@@ -9,30 +9,30 @@ namespace grpc
 namespace internal
 {
    SessionRepository::SessionRepository()
-      : nextSessionId_(1000)
+      : next_session_id_(1000)
    {
    }
 
    ViSession* SessionRepository::add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc)
    {
-      std::unique_lock<std::shared_mutex> lock(sessionLock_);
+      std::unique_lock<std::shared_mutex> lock(session_lock_);
 
       auto session = new ViSession();
       if (!session_user_id.empty()) {
          session->set_session_name(session_user_id);
       }
       else {
-         int id = ++nextSessionId_;
+         int id = ++next_session_id_;
          session->set_id(id);
       }
       auto info = lookup_session_info_unlocked(*session);
       if (!info) {
          info = std::make_shared<SessionInfo>();
          if (session_user_id.empty()) {
-            unnamedSessions_.emplace(session->id(), info);
+            unnamed_sessions_.emplace(session->id(), info);
          }
          else {
-            namedSessions_.emplace(session_user_id, info);
+            named_sessions_.emplace(session_user_id, info);
          }
       }
       auto now = std::chrono::steady_clock::now();
@@ -44,23 +44,23 @@ namespace internal
 
    void SessionRepository::remove_session(const ViSession& remote_session)
    {
-      std::unique_lock<std::shared_mutex> lock(sessionLock_);
+      std::unique_lock<std::shared_mutex> lock(session_lock_);
 
-      auto it = namedSessions_.find(remote_session.session_name());
-      if (it != namedSessions_.end()) {
-         namedSessions_.erase(it);
+      auto it = named_sessions_.find(remote_session.session_name());
+      if (it != named_sessions_.end()) {
+         named_sessions_.erase(it);
       }
       else {
-         auto it = unnamedSessions_.find(remote_session.id());
-         if (it != unnamedSessions_.end()) {
-            unnamedSessions_.erase(it);
+         auto it = unnamed_sessions_.find(remote_session.id());
+         if (it != unnamed_sessions_.end()) {
+            unnamed_sessions_.erase(it);
          }
       }
    }
 
    ViSession SessionRepository::lookup_session(const ViSession& remote_session)
    {
-      std::shared_lock<std::shared_mutex> lock(sessionLock_);
+      std::shared_lock<std::shared_mutex> lock(session_lock_);
       auto session = lookup_session_info_unlocked(remote_session);
       if (session) {
          return session->session;
@@ -72,15 +72,15 @@ namespace internal
    {
       auto now = std::chrono::steady_clock::now();
       if (!remote_session.session_name().empty()) {
-         auto it = namedSessions_.find(remote_session.session_name());
-         if (it != namedSessions_.end()) {
+         auto it = named_sessions_.find(remote_session.session_name());
+         if (it != named_sessions_.end()) {
             it->second->last_access_time = now;
             return it->second;
          }
       }
       else {
-         auto it = unnamedSessions_.find(remote_session.id());
-         if (it != unnamedSessions_.end()) {
+         auto it = unnamed_sessions_.find(remote_session.id());
+         if (it != unnamed_sessions_.end()) {
             it->second->last_access_time = now;
             return it->second;
          }
@@ -92,7 +92,7 @@ namespace internal
    {
       std::shared_ptr<SessionInfo> session_info;
       {
-         std::unique_lock<std::shared_mutex> lock(sessionLock_);
+         std::unique_lock<std::shared_mutex> lock(session_lock_);
          session_info = lookup_session_info_unlocked(request->session());
       }
       if (session_info) {
@@ -102,9 +102,9 @@ namespace internal
          session_info->lock->wait();
          {
             auto now = std::chrono::steady_clock::now();
-            std::unique_lock<std::shared_mutex> lock(sessionLock_);
+            std::unique_lock<std::shared_mutex> lock(session_lock_);
             session_info->last_access_time = now;
-            reservedSessions_.emplace(request->client_reserve_id(), session_info);
+            reserved_sessions_.emplace(request->client_reserve_id(), session_info);
          }
          response->set_status(ReserveResponse_ReserveStatus_RESERVED);
       }
@@ -115,9 +115,9 @@ namespace internal
 
    void SessionRepository::is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response)
    {
-      std::unique_lock<std::shared_mutex> lock(sessionLock_);
-      auto it = reservedSessions_.find(request->client_reserve_id());
-      if (it != reservedSessions_.end()) {
+      std::unique_lock<std::shared_mutex> lock(session_lock_);
+      auto it = reserved_sessions_.find(request->client_reserve_id());
+      if (it != reserved_sessions_.end()) {
          response->set_is_reserved(true);
       }
    }
@@ -126,11 +126,11 @@ namespace internal
    {
       std::shared_ptr<SessionInfo> sessionInfo;
       {
-         std::unique_lock<std::shared_mutex> lock(sessionLock_);
-         auto it = reservedSessions_.find(request->client_reserve_id());
-         if (it != reservedSessions_.end()) {
+         std::unique_lock<std::shared_mutex> lock(session_lock_);
+         auto it = reserved_sessions_.find(request->client_reserve_id());
+         if (it != reserved_sessions_.end()) {
             sessionInfo = it->second;
-            reservedSessions_.erase(it);
+            reserved_sessions_.erase(it);
          }
       }
       if (sessionInfo) {
