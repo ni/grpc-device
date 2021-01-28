@@ -1,5 +1,6 @@
 /bin/
 /build/
+/third_party/
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
@@ -12,6 +13,6 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 gens
-
+*.orig
 .vs
 .vscode

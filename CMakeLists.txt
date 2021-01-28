@@ -60,6 +60,7 @@ add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
    "source/core_server/hardware/grpc/core_service.h"
+   "source/core_server/hardware/grpc/internal/shared_library.cpp"
    ${server_utilities_proto_srcs}
    ${server_utilities_grpc_srcs})
 
@@ -67,6 +68,7 @@ target_link_libraries(core_server
    ${_REFLECTION}
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
+   ${CMAKE_DL_LIBS}
    )
 
 # Add googletest tests
@@ -75,19 +77,28 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
 
 add_executable(UnitTestsRunner
-    "tests/run_all_tests.cpp"
-    "tests/unit/sample_google_tests.cpp")
-target_link_libraries(UnitTestsRunner gtest)
+    "source/core_server/hardware/grpc/internal/shared_library.cpp"
+    "source/tests/run_all_tests.cpp"
+    "source/tests/unit/sample_google_tests.cpp"
+    "source/tests/unit/shared_library_tests.cpp")
+target_link_libraries(UnitTestsRunner
+    gtest
+    ${CMAKE_DL_LIBS})
 
 add_executable(CoreServiceTestsRunner
-    "tests/run_all_tests.cpp"
-    "tests/integration/hardware/grpc/core_service_tests.cpp"
+    "source/tests/run_all_tests.cpp"
+    "source/tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 target_link_libraries(CoreServiceTestsRunner
     gtest
-    ${_GRPC_GRPCPP})
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS})
+
+add_library(TestApi SHARED
+    "source/tests/test_api/test_api.cpp")
+add_compile_definitions(TestApi TEST_API_BUILDING)
 
 # Hook up different google test runners to CTest
 add_test( NAME UnitTests COMMAND UnitTestsRunner )
