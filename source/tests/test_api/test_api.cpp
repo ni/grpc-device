@@ -12,7 +12,7 @@ static DataMap& GetDataMapFromSession(TestSession session)
     return *map;
 }
 
-extern "C" int niTestApiCreateSession(TestSession* session)
+int niTestApiCreateSession(TestSession* session)
 {
     if (!session) {
         return 1;
@@ -28,7 +28,7 @@ extern "C" int niTestApiCreateSession(TestSession* session)
     }
 }
 
-extern "C" int niTestApiCloseSession(TestSession session)
+int niTestApiCloseSession(TestSession session)
 {
     if (!session) {
         return 1;
@@ -38,7 +38,7 @@ extern "C" int niTestApiCloseSession(TestSession session)
     return 0;
 }
 
-extern "C" int niTestApiWriteSessionData(TestSession session, int attribute_id, const char* value)
+int niTestApiWriteSessionData(TestSession session, int attribute_id, const char* value)
 {
     if (!session || !value) {
         return 1;
@@ -48,7 +48,7 @@ extern "C" int niTestApiWriteSessionData(TestSession session, int attribute_id, 
     return 0;
 }
 
-extern "C" int niTestApiReadSessionData(TestSession session, int attribute_id, size_t* value_length, char* value_buffer)
+int niTestApiReadSessionData(TestSession session, int attribute_id, size_t* value_length, char* value_buffer)
 {
     if (!session || !value_length) {
         return 1;
@@ -74,7 +74,7 @@ extern "C" int niTestApiReadSessionData(TestSession session, int attribute_id, s
     return 0;
 }
 
-extern "C" int niTestApiRemoveSessionData(TestSession session, int attribute_id)
+int niTestApiRemoveSessionData(TestSession session, int attribute_id)
 {
     if (!session) {
         return 1;
