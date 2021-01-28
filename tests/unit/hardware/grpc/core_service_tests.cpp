@@ -89,7 +89,8 @@ namespace grpc
       reserveRequest.set_allocated_session(session);
       reserveRequest.set_client_reserve_id(reserve_id);
       ::grpc::ServerContext context;
-      service.Reserve(&context, &reserveRequest, &ni::hardware::grpc::ReserveResponse());
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
 
       ni::hardware::grpc::IsReservedByClientRequest request;
       request.set_client_reserve_id(reserve_id);
@@ -110,10 +111,12 @@ namespace grpc
       reserveRequest.set_allocated_session(session);
       reserveRequest.set_client_reserve_id(reserve_id);
       ::grpc::ServerContext context;
-      service.Reserve(&context, &reserveRequest, &ni::hardware::grpc::ReserveResponse());
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
       ni::hardware::grpc::UnreserveRequest unreserveRequest;
       unreserveRequest.set_client_reserve_id(reserve_id);
-      service.Unreserve(&context, &unreserveRequest, &ni::hardware::grpc::UnreserveResponse());
+      ni::hardware::grpc::UnreserveResponse unreserve_response;
+      service.Unreserve(&context, &unreserveRequest, &unreserve_response);
 
       ni::hardware::grpc::IsReservedByClientRequest request;
       request.set_client_reserve_id(reserve_id);
@@ -148,7 +151,8 @@ namespace grpc
       reserveRequest.set_allocated_session(session);
       reserveRequest.set_client_reserve_id(reserve_id);
       ::grpc::ServerContext context;
-      service.Reserve(&context, &reserveRequest, &ni::hardware::grpc::ReserveResponse());
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
 
       ni::hardware::grpc::UnreserveRequest request;
       request.set_client_reserve_id(reserve_id);
