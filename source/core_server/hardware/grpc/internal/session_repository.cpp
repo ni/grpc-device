@@ -26,19 +26,19 @@ namespace internal
          session->set_id(id);
       }
       auto info = lookup_session_info_unlocked(*session);
-      if (info == nullptr) {
+      if (!info) {
          info = std::make_shared<SessionInfo>();
          if (session_user_id.empty()) {
-               unnamedSessions_.emplace(session->id(), info);
+            unnamedSessions_.emplace(session->id(), info);
          }
          else {
-               namedSessions_.emplace(session_user_id, info);
+            namedSessions_.emplace(session_user_id, info);
          }
       }
       auto now = std::chrono::steady_clock::now();
       info->session = vi;
-      info->cleanupProc = cleanup_proc;
-      info->lastAccessTime = now;
+      info->cleanup_proc = cleanup_proc;
+      info->last_access_time = now;
       return session;
    }
 
@@ -53,7 +53,7 @@ namespace internal
       else {
          auto it = unnamedSessions_.find(remote_session.id());
          if (it != unnamedSessions_.end()) {
-                  unnamedSessions_.erase(it);
+            unnamedSessions_.erase(it);
          }
       }
    }
@@ -62,7 +62,7 @@ namespace internal
    {
       std::shared_lock<std::shared_mutex> lock(sessionLock_);
       auto session = lookup_session_info_unlocked(remote_session);
-      if (session != nullptr) {
+      if (session) {
          return session->session;
       }
       return ViSession();
@@ -74,15 +74,15 @@ namespace internal
       if (!remote_session.session_name().empty()) {
          auto it = namedSessions_.find(remote_session.session_name());
          if (it != namedSessions_.end()) {
-               it->second->lastAccessTime = now;
-               return it->second;
+            it->second->last_access_time = now;
+            return it->second;
          }
       }
       else {
          auto it = unnamedSessions_.find(remote_session.id());
          if (it != unnamedSessions_.end()) {
-               it->second->lastAccessTime = now;
-               return it->second;
+            it->second->last_access_time = now;
+            return it->second;
          }
       }
       return nullptr;
@@ -95,16 +95,16 @@ namespace internal
          std::unique_lock<std::shared_mutex> lock(sessionLock_);
          session_info = lookup_session_info_unlocked(request->session());
       }
-      if (session_info != nullptr) {
-         if (session_info->lock == nullptr) {
-               session_info->lock = std::make_unique<internal::Semaphore>();
+      if (session_info) {
+         if (!session_info->lock) {
+            session_info->lock = std::make_unique<internal::Semaphore>();
          }
          session_info->lock->wait();
          {
-               auto now = std::chrono::steady_clock::now();
-               std::unique_lock<std::shared_mutex> lock(sessionLock_);
-               session_info->lastAccessTime = now;
-               reservedSessions_.emplace(request->client_reserve_id(), session_info);
+            auto now = std::chrono::steady_clock::now();
+            std::unique_lock<std::shared_mutex> lock(sessionLock_);
+            session_info->last_access_time = now;
+            reservedSessions_.emplace(request->client_reserve_id(), session_info);
          }
          response->set_status(ReserveResponse_ReserveStatus_RESERVED);
       }
@@ -129,13 +129,13 @@ namespace internal
          std::unique_lock<std::shared_mutex> lock(sessionLock_);
          auto it = reservedSessions_.find(request->client_reserve_id());
          if (it != reservedSessions_.end()) {
-               sessionInfo = it->second;
-               reservedSessions_.erase(it);
+            sessionInfo = it->second;
+            reservedSessions_.erase(it);
          }
       }
-      if (sessionInfo != nullptr) {
+      if (sessionInfo) {
          auto now = std::chrono::steady_clock::now();
-         sessionInfo->lastAccessTime = now;
+         sessionInfo->last_access_time = now;
          sessionInfo->lock->notify();
          response->set_is_unreserved(true);
       }

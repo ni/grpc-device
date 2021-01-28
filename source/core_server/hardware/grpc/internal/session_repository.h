@@ -36,8 +36,8 @@ namespace internal
       {
          ViSession session;
          std::unique_ptr<internal::Semaphore> lock;
-         std::chrono::steady_clock::time_point lastAccessTime;
-         SessionRepository::CleanupSessionProc cleanupProc;
+         std::chrono::steady_clock::time_point last_access_time;
+         SessionRepository::CleanupSessionProc cleanup_proc;
       };
 
       using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
@@ -45,8 +45,8 @@ namespace internal
       using SessionReservationMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
 
       std::shared_ptr<SessionInfo> lookup_session_info_unlocked(const ViSession& remote_session);
-      SessionReservationMap reservedSessions_;
 
+      SessionReservationMap reservedSessions_;
       std::shared_mutex sessionLock_;
       int nextSessionId_;
       NamedSessionMap namedSessions_;

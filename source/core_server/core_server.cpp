@@ -13,7 +13,8 @@ static void RunServer(int argc, char **argv)
    builder.AddListeningPort(klocalhostAddress, grpc::InsecureServerCredentials());
 
    // Register services available on the server.
-   ni::hardware::grpc::CoreService coreService;
+   ni::hardware::grpc::internal::SessionRepository session_repository;
+   ni::hardware::grpc::CoreService coreService(&session_repository);
    builder.RegisterService(&coreService);
 
    // Assemble the server.

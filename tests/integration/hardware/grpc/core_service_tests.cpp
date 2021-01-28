@@ -20,12 +20,19 @@ namespace grpc
          void SetUp() override
          {
             ::grpc::ServerBuilder builder;
-            builder.RegisterService(&service_);
+            session_repository_ = new ni::hardware::grpc::internal::SessionRepository();
+            service_ = new ni::hardware::grpc::CoreService(session_repository_);
+            builder.RegisterService(service_);
             server_ = builder.BuildAndStart();
             ResetStub();
          }
 
-         void TearDown() override { server_->Shutdown(); }
+         void TearDown() override
+         {
+            server_->Shutdown();
+            delete service_;
+            delete session_repository_;
+         }
 
          void ResetStub()
          {
@@ -45,7 +52,8 @@ namespace grpc
          std::shared_ptr<::grpc::Channel> channel_;
          std::unique_ptr<::ni::hardware::grpc::ServerUtilities::Stub> stub_;
          std::unique_ptr<::grpc::Server> server_;
-         ni::hardware::grpc::CoreService service_;
+         ni::hardware::grpc::CoreService* service_;
+         ni::hardware::grpc::internal::SessionRepository* session_repository_;
    };
 
    TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue)

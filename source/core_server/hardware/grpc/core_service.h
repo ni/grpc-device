@@ -13,7 +13,6 @@ namespace grpc
    class CoreService final : public ServerUtilities::Service
    {
    public:
-      CoreService();
       CoreService(internal::SessionRepository* session_repository);
 
       ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;

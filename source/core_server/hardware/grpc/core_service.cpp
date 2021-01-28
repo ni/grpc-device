@@ -6,11 +6,6 @@ namespace hardware
 {
 namespace grpc
 {
-   CoreService::CoreService()
-      : session_repository_(new internal::SessionRepository())
-   {
-   }
-
    CoreService::CoreService(internal::SessionRepository* session_repository)
       : session_repository_(session_repository)
    {
