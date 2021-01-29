@@ -130,7 +130,7 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
-    - name: Tar build files
+    - name: Tar Build Files
       run: tar -cvf NILinuxRealTime-x86_64.tar ${GITHUB_WORKSPACE}/build/
 
     - name: Upload Artifact
