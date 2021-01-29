@@ -1,6 +1,6 @@
 name: NI Linux Real-Time Build
 
-on: [push]
+on: [push, workflow_dispatch]
 
 env:
   CMAKE_VERSION: 3.18.3
