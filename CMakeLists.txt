@@ -35,7 +35,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Include generated *.pb.h files
 #----------------------------------------------------------------------
 include_directories(
-  "${CMAKE_CURRENT_BINARY_DIR}" 
+  "${CMAKE_CURRENT_BINARY_DIR}"
   "./source"
   "./source/core_server"
 )
@@ -62,15 +62,12 @@ add_custom_command(
     --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
     "${server_utilities_proto}"
   DEPENDS "${server_utilities_proto}")
-  
-add_executable(core_server 
+
+add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
-   "source/core_server/hardware/grpc/core_service.h"
    "source/core_server/hardware/grpc/internal/semaphore.cpp"
-   "source/core_server/hardware/grpc/internal/semaphore.h"
    "source/core_server/hardware/grpc/internal/session_repository.cpp"
-   "source/core_server/hardware/grpc/internal/session_repository.h"
    ${server_utilities_proto_srcs}
    ${server_utilities_grpc_srcs})
 
@@ -86,7 +83,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
 
 # Link test executable against gtest
-add_executable(CoreServiceTestsRunner 
+add_executable(CoreServiceTestsRunner
     "tests/run_all_tests.cpp"
     "tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
@@ -95,11 +92,11 @@ add_executable(CoreServiceTestsRunner
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 
-target_link_libraries(CoreServiceTestsRunner 
+target_link_libraries(CoreServiceTestsRunner
     gtest
     ${_GRPC_GRPCPP})
 
-add_executable(UnitTestsRunner 
+add_executable(UnitTestsRunner
     "tests/run_all_tests.cpp"
     "tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
@@ -107,12 +104,12 @@ add_executable(UnitTestsRunner
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
-    
-target_link_libraries(UnitTestsRunner 
+
+target_link_libraries(UnitTestsRunner
     gtest
     ${_GRPC_GRPCPP})
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )
-add_test( NAME CoreServiceTests COMMAND CoreServiceTestsRunner ) 
-add_test( NAME UnitTests COMMAND UnitTestsRunner ) 
+add_test( NAME CoreServiceTests COMMAND CoreServiceTestsRunner )
+add_test( NAME UnitTests COMMAND UnitTestsRunner )

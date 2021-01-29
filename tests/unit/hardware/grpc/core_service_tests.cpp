@@ -7,143 +7,163 @@
 // fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
 static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
-TEST(CoreServiceTests, SessionAdded_ReserveWithNewClientName_ReservesSession)
+namespace ni
 {
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
-    ni::hardware::grpc::internal::SessionRepository* session_repository = session_repository->instance();
-    auto session = session_repository->add_session(ni::hardware::grpc::ViSession(), "session_name", NULL);
-    auto request = new ni::hardware::grpc::ReserveRequest;
-    request->set_allocated_session(session);
-    request->set_clientreserveid("new_client_name");
-
-    ::grpc::ServerContext context;
-    auto response = new ni::hardware::grpc::ReserveResponse;
-    service.Reserve(&context, request, response);
-
-    EXPECT_EQ(response->status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_Reserved);
-    session_repository->remove_session(*session);
-}
-
-TEST(CoreServiceTests, NoSession_ReserveWithNewClientName_InvalidSession)
+namespace tests
 {
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
-    auto request = new ni::hardware::grpc::ReserveRequest;
-    request->set_allocated_session(&ni::hardware::grpc::ViSession());
-    request->set_clientreserveid("new_client_name");
-
-    ::grpc::ServerContext context;
-    auto response = new ni::hardware::grpc::ReserveResponse;
-    service.Reserve(&context, request, response);
-
-    EXPECT_EQ(response->status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_InvalidSession);
-}
-
-TEST(CoreServiceTests, AddSession_ReserveWithSameClientName_ReservesSession)
+namespace unit
 {
-    auto session_name = std::string("session_name");
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
-    ni::hardware::grpc::internal::SessionRepository* session_repository = session_repository->instance();
-    auto session = session_repository->add_session(ni::hardware::grpc::ViSession(), session_name, NULL);
-    auto request = new ni::hardware::grpc::ReserveRequest;
-    request->set_allocated_clientreserveid(&session_name);
-    request->set_clientreserveid(session_name);
-
-    ::grpc::ServerContext context;
-    auto response = new ni::hardware::grpc::ReserveResponse;
-    service.Reserve(&context, request, response);
-
-    EXPECT_EQ(response->status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_InvalidSession);
-    session_repository->remove_session(*session);
-}
-
-TEST(CoreServiceTests, UnusedSessionName_IsReserved_ReturnsFalse)
+namespace hardware
 {
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
-    auto request = new ni::hardware::grpc::IsReservedByClientRequest;
-    request->set_clientreserveid("unused id");
-
-    ::grpc::ServerContext context;
-    auto response = new ni::hardware::grpc::IsReservedByClientResponse;
-    service.IsReservedByClient(&context, request, response);
-
-    EXPECT_FALSE(response->isreserved());
-}
-
-TEST(CoreServiceTests, ReserveSession_IsReserved_ReturnsTrue)
+namespace grpc
 {
-    auto reserve_id = std::string("session_name");
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
-    ni::hardware::grpc::internal::SessionRepository* session_repository = session_repository->instance();
-    auto session = session_repository->add_session(ni::hardware::grpc::ViSession(), "session_name", NULL);
-    auto reserveRequest = new ni::hardware::grpc::ReserveRequest;
-    reserveRequest->set_allocated_session(session);
-    reserveRequest->set_clientreserveid(reserve_id);
-    ::grpc::ServerContext context;
-    service.Reserve(&context, reserveRequest, new ni::hardware::grpc::ReserveResponse);
+   TEST(CoreServiceTests, SessionAdded_ReserveWithNewClientName_ReservesSession)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
+      ni::hardware::grpc::ReserveRequest request;
+      request.set_allocated_session(session);
+      request.set_client_reserve_id("new_client_name");
 
-    auto request = new ni::hardware::grpc::IsReservedByClientRequest;
-    request->set_clientreserveid(reserve_id);
-    auto response = new ni::hardware::grpc::IsReservedByClientResponse;
-    service.IsReservedByClient(&context, request, response);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse response;
+      service.Reserve(&context, &request, &response);
 
-    EXPECT_TRUE(response->isreserved());
-    session_repository->remove_session(*session);
-}
+      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_RESERVED);
+      session_repository.remove_session(*session);
+   }
 
-TEST(CoreServiceTests, ReserveAndUnreserveSession_IsReserved_ReturnsFalse)
-{
-    auto reserve_id = std::string("session_name");
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
-    ni::hardware::grpc::internal::SessionRepository* session_repository = session_repository->instance();
-    auto session = session_repository->add_session(ni::hardware::grpc::ViSession(), "session_name", NULL);
-    auto reserveRequest = new ni::hardware::grpc::ReserveRequest;
-    reserveRequest->set_allocated_session(session);
-    reserveRequest->set_clientreserveid(reserve_id);
-    ::grpc::ServerContext context;
-    service.Reserve(&context, reserveRequest, new ni::hardware::grpc::ReserveResponse);
-    auto unreserveRequest = new ni::hardware::grpc::UnreserveRequest;
-    unreserveRequest->set_clientreserveid(reserve_id);
-    service.Unreserve(&context, unreserveRequest, new ni::hardware::grpc::UnreserveResponse);
+   TEST(CoreServiceTests, NoSession_ReserveWithNewClientName_InvalidSession)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::ReserveRequest request;
+      request.set_client_reserve_id("new_client_name");
 
-    auto request = new ni::hardware::grpc::IsReservedByClientRequest;
-    request->set_clientreserveid(reserve_id);
-    auto response = new ni::hardware::grpc::IsReservedByClientResponse;
-    service.IsReservedByClient(&context, request, response);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse response;
+      service.Reserve(&context, &request, &response);
 
-    EXPECT_FALSE(response->isreserved());
-    session_repository->remove_session(*session);
-}
+      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_SESSION);
+   }
 
-TEST(CoreServiceTests, NoSession_Unreserve_DoesNotUnreserve)
-{
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
+   TEST(CoreServiceTests, AddSession_ReserveWithSameClientName_ReservesSession)
+   {
+      std::string session_name("session_name");
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), session_name, nullptr);
+      ni::hardware::grpc::ReserveRequest request;
+      request.set_client_reserve_id(session_name);
 
-    ::grpc::ServerContext context;
-    auto request = new ni::hardware::grpc::UnreserveRequest;
-    request->set_clientreserveid("userId");
-    auto response = new ni::hardware::grpc::UnreserveResponse;
-    service.Unreserve(&context, request, response);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse response;
+      service.Reserve(&context, &request, &response);
 
-    EXPECT_FALSE(response->isunreserved());
-}
+      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_SESSION);
+      session_repository.remove_session(*session);
+   }
 
-TEST(CoreServiceTests, ReserveSession_Unreserve_UnreservesSession)
-{
-    auto reserve_id = std::string("session_name");
-    ni::hardware::grpc::CoreService service = ni::hardware::grpc::CoreService();
-    ni::hardware::grpc::internal::SessionRepository* session_repository = session_repository->instance();
-    auto session = session_repository->add_session(ni::hardware::grpc::ViSession(), "session_name", NULL);
-    auto reserveRequest = new ni::hardware::grpc::ReserveRequest;
-    reserveRequest->set_allocated_session(session);
-    reserveRequest->set_clientreserveid(reserve_id);
-    ::grpc::ServerContext context;
-    service.Reserve(&context, reserveRequest, new ni::hardware::grpc::ReserveResponse);
+   TEST(CoreServiceTests, UnusedSessionName_IsReserved_ReturnsFalse)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::IsReservedByClientRequest request;
+      request.set_client_reserve_id("unused id");
 
-    auto request = new ni::hardware::grpc::UnreserveRequest;
-    request->set_clientreserveid(reserve_id);
-    auto response = new ni::hardware::grpc::UnreserveResponse;
-    service.Unreserve(&context, request, response);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::IsReservedByClientResponse response;
+      service.IsReservedByClient(&context, &request, &response);
 
-    EXPECT_TRUE(response->isunreserved());
-    session_repository->remove_session(*session);
-}
+      EXPECT_FALSE(response.is_reserved());
+   }
+
+   TEST(CoreServiceTests, ReserveSession_IsReserved_ReturnsTrue)
+   {
+      std::string reserve_id("session_name");
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
+      ni::hardware::grpc::ReserveRequest reserveRequest;
+      reserveRequest.set_allocated_session(session);
+      reserveRequest.set_client_reserve_id(reserve_id);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
+
+      ni::hardware::grpc::IsReservedByClientRequest request;
+      request.set_client_reserve_id(reserve_id);
+      ni::hardware::grpc::IsReservedByClientResponse response;
+      service.IsReservedByClient(&context, &request, &response);
+
+      EXPECT_TRUE(response.is_reserved());
+      session_repository.remove_session(*session);
+   }
+
+   TEST(CoreServiceTests, ReserveAndUnreserveSession_IsReserved_ReturnsFalse)
+   {
+      std::string reserve_id("session_name");
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
+      ni::hardware::grpc::ReserveRequest reserveRequest;
+      reserveRequest.set_allocated_session(session);
+      reserveRequest.set_client_reserve_id(reserve_id);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
+      ni::hardware::grpc::UnreserveRequest unreserveRequest;
+      unreserveRequest.set_client_reserve_id(reserve_id);
+      ni::hardware::grpc::UnreserveResponse unreserve_response;
+      service.Unreserve(&context, &unreserveRequest, &unreserve_response);
+
+      ni::hardware::grpc::IsReservedByClientRequest request;
+      request.set_client_reserve_id(reserve_id);
+      ni::hardware::grpc::IsReservedByClientResponse response;
+      service.IsReservedByClient(&context, &request, &response);
+
+      EXPECT_FALSE(response.is_reserved());
+      session_repository.remove_session(*session);
+   }
+
+   TEST(CoreServiceTests, NoSession_Unreserve_DoesNotUnreserve)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::UnreserveRequest request;
+      request.set_client_reserve_id("userId");
+      ni::hardware::grpc::UnreserveResponse response;
+      service.Unreserve(&context, &request, &response);
+
+      EXPECT_FALSE(response.is_unreserved());
+   }
+
+   TEST(CoreServiceTests, ReserveSession_Unreserve_UnreservesSession)
+   {
+      std::string reserve_id("session_name");
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
+      ni::hardware::grpc::ReserveRequest reserveRequest;
+      reserveRequest.set_allocated_session(session);
+      reserveRequest.set_client_reserve_id(reserve_id);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
+
+      ni::hardware::grpc::UnreserveRequest request;
+      request.set_client_reserve_id(reserve_id);
+      ni::hardware::grpc::UnreserveResponse response;
+      service.Unreserve(&context, &request, &response);
+
+      EXPECT_TRUE(response.is_unreserved());
+      session_repository.remove_session(*session);
+   }
+} // namespace grpc
+} // namespace hardware
+} // namespace unit
+} // namespace tests
+} // namespace ni
