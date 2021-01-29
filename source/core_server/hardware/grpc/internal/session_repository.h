@@ -27,7 +27,6 @@ namespace internal
       void remove_session(const ViSession& remote_session);
       ViSession lookup_session(const ViSession& remote_session);
 
-
       void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
       void is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response);
       void unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response);
