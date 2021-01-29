@@ -16,6 +16,8 @@ service ServerUtilities {
 
   // Unreserves a previously reserved resource
   rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
+  
+  // Forces all session to close and restores the server to a default state
   rpc ForceCloseAllSessions (ForceCloseAllSessionsRequest) returns (ForceCloseAllSessionResponse) {};
 }
 
