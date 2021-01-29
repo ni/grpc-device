@@ -43,9 +43,6 @@ jobs:
 
     - name: Update Submodules
       id: submodules
-      outputs:
-        grpc-commit:
-          description: Current commit id of third_party/grpc
       run: |
         git submodule update --init --recursive
         echo "::set-output name=grpc-commit::$(git rev-parse --short @:./third_party/grpc)"
