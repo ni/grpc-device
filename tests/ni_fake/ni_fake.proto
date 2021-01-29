@@ -1,0 +1,1425 @@
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+no imports
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+options
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+
+packages 
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+
+
+
+
+//---------------------------------------------------------------------
+// The niFakeService definition.
+//---------------------------------------------------------------------
+service niFakeService {
+
+rpc Abort(AbortParameters) returns (AbortResult) {};
+
+rpc AcceptListOfDurationsInSeconds(AcceptListOfDurationsInSecondsParameters) returns (AcceptListOfDurationsInSecondsResult) {};
+
+rpc BoolArrayOutputFunction(BoolArrayOutputFunctionParameters) returns (BoolArrayOutputFunctionResult) {};
+
+rpc DoubleAllTheNums(DoubleAllTheNumsParameters) returns (DoubleAllTheNumsResult) {};
+
+rpc EnumArrayOutputFunction(EnumArrayOutputFunctionParameters) returns (EnumArrayOutputFunctionResult) {};
+
+rpc EnumInputFunctionWithDefaults(EnumInputFunctionWithDefaultsParameters) returns (EnumInputFunctionWithDefaultsResult) {};
+
+rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferParameters) returns (ExportAttributeConfigurationBufferResult) {};
+
+rpc FetchWaveform(FetchWaveformParameters) returns (FetchWaveformResult) {};
+
+rpc GetABoolean(GetABooleanParameters) returns (GetABooleanResult) {};
+
+rpc GetANumber(GetANumberParameters) returns (GetANumberResult) {};
+
+rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeParameters) returns (GetAStringOfFixedMaximumSizeResult) {};
+
+rpc GetAStringUsingPythonCode(GetAStringUsingPythonCodeParameters) returns (GetAStringUsingPythonCodeResult) {};
+
+rpc GetAnIviDanceString(GetAnIviDanceStringParameters) returns (GetAnIviDanceStringResult) {};
+
+rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringParameters) returns (GetAnIviDanceWithATwistStringResult) {};
+
+rpc GetArrayForPythonCodeCustomType(GetArrayForPythonCodeCustomTypeParameters) returns (GetArrayForPythonCodeCustomTypeResult) {};
+
+rpc GetArrayForPythonCodeDouble(GetArrayForPythonCodeDoubleParameters) returns (GetArrayForPythonCodeDoubleResult) {};
+
+rpc GetArraySizeForPythonCode(GetArraySizeForPythonCodeParameters) returns (GetArraySizeForPythonCodeResult) {};
+
+rpc GetArrayUsingIviDance(GetArrayUsingIviDanceParameters) returns (GetArrayUsingIviDanceResult) {};
+
+rpc GetAttributeViBoolean(GetAttributeViBooleanParameters) returns (GetAttributeViBooleanResult) {};
+
+rpc GetAttributeViInt32(GetAttributeViInt32Parameters) returns (GetAttributeViInt32Result) {};
+
+rpc GetAttributeViInt64(GetAttributeViInt64Parameters) returns (GetAttributeViInt64Result) {};
+
+rpc GetAttributeViReal64(GetAttributeViReal64Parameters) returns (GetAttributeViReal64Result) {};
+
+rpc GetAttributeViString(GetAttributeViStringParameters) returns (GetAttributeViStringResult) {};
+
+rpc GetCalDateAndTime(GetCalDateAndTimeParameters) returns (GetCalDateAndTimeResult) {};
+
+rpc GetCalInterval(GetCalIntervalParameters) returns (GetCalIntervalResult) {};
+
+rpc GetCustomType(GetCustomTypeParameters) returns (GetCustomTypeResult) {};
+
+rpc GetCustomTypeArray(GetCustomTypeArrayParameters) returns (GetCustomTypeArrayResult) {};
+
+rpc GetEnumValue(GetEnumValueParameters) returns (GetEnumValueResult) {};
+
+rpc GetError(GetErrorParameters) returns (GetErrorResult) {};
+
+rpc GetLastCalDateAndTime(GetLastCalDateAndTimeParameters) returns (GetLastCalDateAndTimeResult) {};
+
+rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferParameters) returns (ImportAttributeConfigurationBufferResult) {};
+
+rpc InitWithOptions(InitWithOptionsParameters) returns (InitWithOptionsResult) {};
+
+rpc Initiate(InitiateParameters) returns (InitiateResult) {};
+
+rpc LockSession(LockSessionParameters) returns (LockSessionResult) {};
+
+rpc MultipleArrayTypes(MultipleArrayTypesParameters) returns (MultipleArrayTypesResult) {};
+
+rpc MultipleArraysSameSize(MultipleArraysSameSizeParameters) returns (MultipleArraysSameSizeResult) {};
+
+rpc OneInputFunction(OneInputFunctionParameters) returns (OneInputFunctionResult) {};
+
+rpc ParametersAreMultipleTypes(ParametersAreMultipleTypesParameters) returns (ParametersAreMultipleTypesResult) {};
+
+rpc PoorlyNamedSimpleFunction(PoorlyNamedSimpleFunctionParameters) returns (PoorlyNamedSimpleFunctionResult) {};
+
+rpc Read(ReadParameters) returns (ReadResult) {};
+
+rpc ReadFromChannel(ReadFromChannelParameters) returns (ReadFromChannelResult) {};
+
+rpc ReturnANumberAndAString(ReturnANumberAndAStringParameters) returns (ReturnANumberAndAStringResult) {};
+
+rpc ReturnDurationInSeconds(ReturnDurationInSecondsParameters) returns (ReturnDurationInSecondsResult) {};
+
+rpc ReturnListOfDurationsInSeconds(ReturnListOfDurationsInSecondsParameters) returns (ReturnListOfDurationsInSecondsResult) {};
+
+rpc ReturnMultipleTypes(ReturnMultipleTypesParameters) returns (ReturnMultipleTypesResult) {};
+
+rpc SetAttributeViBoolean(SetAttributeViBooleanParameters) returns (SetAttributeViBooleanResult) {};
+
+rpc SetAttributeViInt32(SetAttributeViInt32Parameters) returns (SetAttributeViInt32Result) {};
+
+rpc SetAttributeViInt64(SetAttributeViInt64Parameters) returns (SetAttributeViInt64Result) {};
+
+rpc SetAttributeViReal64(SetAttributeViReal64Parameters) returns (SetAttributeViReal64Result) {};
+
+rpc SetAttributeViString(SetAttributeViStringParameters) returns (SetAttributeViStringResult) {};
+
+rpc SetCustomType(SetCustomTypeParameters) returns (SetCustomTypeResult) {};
+
+rpc SetCustomTypeArray(SetCustomTypeArrayParameters) returns (SetCustomTypeArrayResult) {};
+
+rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsParameters) returns (StringValuedEnumInputFunctionWithDefaultsResult) {};
+
+rpc TwoInputFunction(TwoInputFunctionParameters) returns (TwoInputFunctionResult) {};
+
+rpc UnlockSession(UnlockSessionParameters) returns (UnlockSessionResult) {};
+
+rpc Use64BitNumber(Use64BitNumberParameters) returns (Use64BitNumberResult) {};
+
+rpc WriteWaveform(WriteWaveformParameters) returns (WriteWaveformResult) {};
+
+rpc close(closeParameters) returns (closeResult) {};
+
+rpc error_message(error_messageParameters) returns (error_messageResult) {};
+
+rpc fancy_self_test(fancy_self_testParameters) returns (fancy_self_testResult) {};
+
+rpc self_test(self_testParameters) returns (self_testResult) {};
+}
+
+//---------------------------------------------------------------------
+// The niFakeAttributes definition.
+//---------------------------------------------------------------------
+enum FakeAttributes {
+NoValue = 0;
+
+READ_WRITE_BOOL = 1000000;
+
+READ_WRITE_DOUBLE = 1000001;
+
+READ_WRITE_STRING = 1000002;
+
+READ_WRITE_COLOR = 1000003;
+
+READ_WRITE_INTEGER = 1000004;
+
+FLOAT_ENUM = 1000005;
+
+READ_WRITE_INT64 = 1000006;
+
+READ_WRITE_DOUBLE_WITH_CONVERTER = 1000007;
+
+READ_WRITE_INTEGER_WITH_CONVERTER = 1000008;
+
+READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009;
+
+READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010;
+}
+
+//---------------------------------------------------------------------
+// The niFakeEnums definition.
+//---------------------------------------------------------------------
+enum FakeValues {
+NoValue = 0;
+
+   
+NIFAKE_VAL_PINK = 44;
+NIFAKE_VAL_AQUA = 43;
+NIFAKE_VAL_GREEN = 45;
+NIFAKE_VAL_BLACK = 42;
+
+   
+NIFAKE_VAL_RED = 1;
+NIFAKE_VAL_BLUE = 2;
+NIFAKE_VAL_YELLOW = 5;
+NIFAKE_VAL_BLACK = 42;
+
+   
+NIFAKE_VAL_RED = 1;
+NIFAKE_VAL_BLUE = 2;
+NIFAKE_VAL_YELLOW = 5;
+NIFAKE_VAL_BLACK = 42;
+
+   
+NIFAKE_VAL_RED = 1;
+NIFAKE_VAL_BLUE = 2;
+NIFAKE_VAL_YELLOW = 5;
+NIFAKE_VAL_BLACK = 42;
+
+   
+NIFAKE_VAL_THREE_POINT_FIVE = 3.5;
+NIFAKE_VAL_FOUR_POINT_FIVE = 4.5;
+NIFAKE_VAL_FIVE_POINT_FIVE = 5.5;
+NIFAKE_VAL_SIX_POINT_FIVE = 6.5;
+NIFAKE_VAL_SEVEN_POINT_FIVE = 7.5;
+
+   
+NIFAKE_VAL_ANDROID = Android;
+NIFAKE_VAL_IOS = iOS;
+NIFAKE_VAL_NONE = None;
+
+   
+NIFAKE_VAL_LEONARDO = 0;
+NIFAKE_VAL_DONATELLO = 1;
+NIFAKE_VAL_RAPHAEL = 2;
+NIFAKE_VAL_MICHELANGELO = 3;
+}
+
+
+//---------------------------------------------------------------------
+// Parameters & Results
+//---------------------------------------------------------------------
+message AbortParameters {
+   
+ViSession vi = 1  
+
+}
+
+
+message AbortResult {
+
+int32 status = 1;
+      
+}
+
+
+message AcceptListOfDurationsInSecondsParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 count = 2  
+   
+ViReal64[] delays = 3  
+
+}
+
+
+message AcceptListOfDurationsInSecondsResult {
+
+int32 status = 1;
+            
+}
+
+
+message BoolArrayOutputFunctionParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfElements = 2  
+   
+}
+
+
+message BoolArrayOutputFunctionResult {
+
+int32 status = 1;
+         
+
+ViBoolean[] anArray = 2  
+   
+}
+
+
+message DoubleAllTheNumsParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberCount = 2  
+   
+ViReal64[] numbers = 3  
+
+}
+
+
+message DoubleAllTheNumsResult {
+
+int32 status = 1;
+            
+}
+
+
+message EnumArrayOutputFunctionParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfElements = 2  
+   
+}
+
+
+message EnumArrayOutputFunctionResult {
+
+int32 status = 1;
+         
+
+ViInt16[] anArray = 2  
+   
+}
+
+
+message EnumInputFunctionWithDefaultsParameters {
+   
+ViSession vi = 1  
+   
+ViInt16 aTurtle = 2  
+
+}
+
+
+message EnumInputFunctionWithDefaultsResult {
+
+int32 status = 1;
+         
+}
+
+
+message ExportAttributeConfigurationBufferParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 sizeInBytes = 2  
+   
+}
+
+
+message ExportAttributeConfigurationBufferResult {
+
+int32 status = 1;
+         
+
+ViInt8[] configuration = 2  
+   
+}
+
+
+message FetchWaveformParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfSamples = 2  
+      
+}
+
+
+message FetchWaveformResult {
+
+int32 status = 1;
+         
+
+ViReal64[] waveformData = 2  
+   
+
+ViInt32 actualNumberOfSamples = 3  
+   
+}
+
+
+message GetABooleanParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message GetABooleanResult {
+
+int32 status = 1;
+      
+
+ViBoolean aBoolean = 2  
+   
+}
+
+
+message GetANumberParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message GetANumberResult {
+
+int32 status = 1;
+      
+
+ViInt16 aNumber = 2  
+   
+}
+
+
+message GetAStringOfFixedMaximumSizeParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message GetAStringOfFixedMaximumSizeResult {
+
+int32 status = 1;
+      
+
+ViChar[] aString = 2  
+   
+}
+
+
+message GetAStringUsingPythonCodeParameters {
+   
+ViSession vi = 1  
+   
+ViInt16 aNumber = 2  
+   
+}
+
+
+message GetAStringUsingPythonCodeResult {
+
+int32 status = 1;
+         
+
+ViChar[] aString = 2  
+   
+}
+
+
+message GetAnIviDanceStringParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 bufferSize = 2  
+   
+}
+
+
+message GetAnIviDanceStringResult {
+
+int32 status = 1;
+         
+
+ViChar[] aString = 2  
+   
+}
+
+
+message GetAnIviDanceWithATwistStringParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 bufferSize = 2  
+      
+}
+
+
+message GetAnIviDanceWithATwistStringResult {
+
+int32 status = 1;
+         
+
+ViChar[] aString = 2  
+   
+
+ViInt32 actualSize = 3  
+   
+}
+
+
+message GetArrayForPythonCodeCustomTypeParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfElements = 2  
+   
+}
+
+
+message GetArrayForPythonCodeCustomTypeResult {
+
+int32 status = 1;
+         
+
+struct CustomStruct[] arrayOut = 2  
+   
+}
+
+
+message GetArrayForPythonCodeDoubleParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfElements = 2  
+   
+}
+
+
+message GetArrayForPythonCodeDoubleResult {
+
+int32 status = 1;
+         
+
+ViReal64[] arrayOut = 2  
+   
+}
+
+
+message GetArraySizeForPythonCodeParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message GetArraySizeForPythonCodeResult {
+
+int32 status = 1;
+      
+
+ViInt32 sizeOut = 2  
+   
+}
+
+
+message GetArrayUsingIviDanceParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 arraySize = 2  
+   
+}
+
+
+message GetArrayUsingIviDanceResult {
+
+int32 status = 1;
+         
+
+ViReal64[] arrayOut = 2  
+   
+}
+
+
+message GetAttributeViBooleanParameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+}
+
+
+message GetAttributeViBooleanResult {
+
+int32 status = 1;
+            
+
+ViBoolean attributeValue = 2  
+   
+}
+
+
+message GetAttributeViInt32Parameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+}
+
+
+message GetAttributeViInt32Result {
+
+int32 status = 1;
+            
+
+ViInt32 attributeValue = 2  
+   
+}
+
+
+message GetAttributeViInt64Parameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+}
+
+
+message GetAttributeViInt64Result {
+
+int32 status = 1;
+            
+
+ViInt64 attributeValue = 2  
+   
+}
+
+
+message GetAttributeViReal64Parameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+}
+
+
+message GetAttributeViReal64Result {
+
+int32 status = 1;
+            
+
+ViReal64 attributeValue = 2  
+   
+}
+
+
+message GetAttributeViStringParameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+ViInt32 bufferSize = 4  
+   
+}
+
+
+message GetAttributeViStringResult {
+
+int32 status = 1;
+               
+
+ViChar[] attributeValue = 2  
+   
+}
+
+
+message GetCalDateAndTimeParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 calType = 2  
+               
+}
+
+
+message GetCalDateAndTimeResult {
+
+int32 status = 1;
+         
+
+ViInt32 month = 2  
+   
+
+ViInt32 day = 3  
+   
+
+ViInt32 year = 4  
+   
+
+ViInt32 hour = 5  
+   
+
+ViInt32 minute = 6  
+   
+}
+
+
+message GetCalIntervalParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message GetCalIntervalResult {
+
+int32 status = 1;
+      
+
+ViInt32 months = 2  
+   
+}
+
+
+message GetCustomTypeParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message GetCustomTypeResult {
+
+int32 status = 1;
+      
+
+struct CustomStruct cs = 2  
+   
+}
+
+
+message GetCustomTypeArrayParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfElements = 2  
+   
+}
+
+
+message GetCustomTypeArrayResult {
+
+int32 status = 1;
+         
+
+struct CustomStruct[] cs = 2  
+   
+}
+
+
+message GetEnumValueParameters {
+   
+ViSession vi = 1  
+      
+}
+
+
+message GetEnumValueResult {
+
+int32 status = 1;
+      
+
+ViInt32 aQuantity = 2  
+   
+
+ViInt16 aTurtle = 3  
+   
+}
+
+
+message GetErrorParameters {
+   
+ViSession vi = 1  
+      
+ViInt32 bufferSize = 2  
+   
+}
+
+
+message GetErrorResult {
+
+int32 status = 1;
+      
+
+ViStatus errorCode = 2  
+      
+
+ViChar[] description = 3  
+   
+}
+
+
+message GetLastCalDateAndTimeParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 calType = 2  
+   
+}
+
+
+message GetLastCalDateAndTimeResult {
+
+int32 status = 1;
+         
+
+hightime.datetime month = 2  
+   
+}
+
+
+message ImportAttributeConfigurationBufferParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 sizeInBytes = 2  
+   
+ViInt8[] configuration = 3  
+
+}
+
+
+message ImportAttributeConfigurationBufferResult {
+
+int32 status = 1;
+            
+}
+
+
+message InitWithOptionsParameters {
+   
+ViString resourceName = 1  
+   
+ViBoolean idQuery = 2  
+   
+ViBoolean resetDevice = 3  
+   
+ViConstString optionString = 4  
+   
+}
+
+
+message InitWithOptionsResult {
+
+int32 status = 1;
+               
+
+ViSession vi = 2  
+   
+}
+
+
+message InitiateParameters {
+   
+ViSession vi = 1  
+
+}
+
+
+message InitiateResult {
+
+int32 status = 1;
+      
+}
+
+
+message LockSessionParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message LockSessionResult {
+
+int32 status = 1;
+      
+
+ViBoolean callerHasLock = 2  
+   
+}
+
+
+message MultipleArrayTypesParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 outputArraySize = 2  
+         
+ViInt32 inputArraySizes = 3  
+   
+ViReal64[] inputArrayOfFloats = 4  
+   
+ViInt16[] inputArrayOfIntegers = 5  
+
+}
+
+
+message MultipleArrayTypesResult {
+
+int32 status = 1;
+         
+
+ViReal64[] outputArray = 2  
+   
+
+ViReal64[] outputArrayOfFixedLength = 3  
+            
+}
+
+
+message MultipleArraysSameSizeParameters {
+   
+ViSession vi = 1  
+   
+ViReal64[] values1 = 2  
+   
+ViReal64[] values2 = 3  
+   
+ViReal64[] values3 = 4  
+   
+ViReal64[] values4 = 5  
+   
+ViInt32 size = 6  
+
+}
+
+
+message MultipleArraysSameSizeResult {
+
+int32 status = 1;
+                     
+}
+
+
+message OneInputFunctionParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 aNumber = 2  
+
+}
+
+
+message OneInputFunctionResult {
+
+int32 status = 1;
+         
+}
+
+
+message ParametersAreMultipleTypesParameters {
+   
+ViSession vi = 1  
+   
+ViBoolean aBoolean = 2  
+   
+ViInt32 anInt32 = 3  
+   
+ViInt64 anInt64 = 4  
+   
+ViInt16 anIntEnum = 5  
+   
+ViReal64 aFloat = 6  
+   
+ViReal64 aFloatEnum = 7  
+   
+ViInt32 stringSize = 8  
+   
+ViConstString aString = 9  
+
+}
+
+
+message ParametersAreMultipleTypesResult {
+
+int32 status = 1;
+                              
+}
+
+
+message PoorlyNamedSimpleFunctionParameters {
+   
+ViSession vi = 1  
+
+}
+
+
+message PoorlyNamedSimpleFunctionResult {
+
+int32 status = 1;
+      
+}
+
+
+message ReadParameters {
+   
+ViSession vi = 1  
+   
+ViReal64 maximumTime = 2  
+   
+}
+
+
+message ReadResult {
+
+int32 status = 1;
+         
+
+ViReal64 reading = 2  
+   
+}
+
+
+message ReadFromChannelParameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViInt32 maximumTime = 3  
+   
+}
+
+
+message ReadFromChannelResult {
+
+int32 status = 1;
+            
+
+ViReal64 reading = 2  
+   
+}
+
+
+message ReturnANumberAndAStringParameters {
+   
+ViSession vi = 1  
+      
+}
+
+
+message ReturnANumberAndAStringResult {
+
+int32 status = 1;
+      
+
+ViInt16 aNumber = 2  
+   
+
+ViChar[] aString = 3  
+   
+}
+
+
+message ReturnDurationInSecondsParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message ReturnDurationInSecondsResult {
+
+int32 status = 1;
+      
+
+ViReal64 timedelta = 2  
+   
+}
+
+
+message ReturnListOfDurationsInSecondsParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfElements = 2  
+   
+}
+
+
+message ReturnListOfDurationsInSecondsResult {
+
+int32 status = 1;
+         
+
+ViReal64[] timedeltas = 2  
+   
+}
+
+
+message ReturnMultipleTypesParameters {
+   
+ViSession vi = 1  
+                     
+ViInt32 arraySize = 2  
+      
+ViInt32 stringSize = 3  
+   
+}
+
+
+message ReturnMultipleTypesResult {
+
+int32 status = 1;
+      
+
+ViBoolean aBoolean = 2  
+   
+
+ViInt32 anInt32 = 3  
+   
+
+ViInt64 anInt64 = 4  
+   
+
+ViInt16 anIntEnum = 5  
+   
+
+ViReal64 aFloat = 6  
+   
+
+ViReal64 aFloatEnum = 7  
+      
+
+ViReal64[] anArray = 8  
+      
+
+ViChar[] aString = 9  
+   
+}
+
+
+message SetAttributeViBooleanParameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+ViBoolean attributeValue = 4  
+
+}
+
+
+message SetAttributeViBooleanResult {
+
+int32 status = 1;
+               
+}
+
+
+message SetAttributeViInt32Parameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+ViInt32 attributeValue = 4  
+
+}
+
+
+message SetAttributeViInt32Result {
+
+int32 status = 1;
+               
+}
+
+
+message SetAttributeViInt64Parameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+ViInt64 attributeValue = 4  
+
+}
+
+
+message SetAttributeViInt64Result {
+
+int32 status = 1;
+               
+}
+
+
+message SetAttributeViReal64Parameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+ViReal64 attributeValue = 4  
+
+}
+
+
+message SetAttributeViReal64Result {
+
+int32 status = 1;
+               
+}
+
+
+message SetAttributeViStringParameters {
+   
+ViSession vi = 1  
+   
+ViConstString channelName = 2  
+   
+ViAttr attributeId = 3  
+   
+ViConstString attributeValue = 4  
+
+}
+
+
+message SetAttributeViStringResult {
+
+int32 status = 1;
+               
+}
+
+
+message SetCustomTypeParameters {
+   
+ViSession vi = 1  
+   
+struct CustomStruct cs = 2  
+
+}
+
+
+message SetCustomTypeResult {
+
+int32 status = 1;
+         
+}
+
+
+message SetCustomTypeArrayParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfElements = 2  
+   
+struct CustomStruct[] cs = 3  
+
+}
+
+
+message SetCustomTypeArrayResult {
+
+int32 status = 1;
+            
+}
+
+
+message StringValuedEnumInputFunctionWithDefaultsParameters {
+   
+ViSession vi = 1  
+   
+ViConstString aMobileOSName = 2  
+
+}
+
+
+message StringValuedEnumInputFunctionWithDefaultsResult {
+
+int32 status = 1;
+         
+}
+
+
+message TwoInputFunctionParameters {
+   
+ViSession vi = 1  
+   
+ViReal64 aNumber = 2  
+   
+ViString aString = 3  
+
+}
+
+
+message TwoInputFunctionResult {
+
+int32 status = 1;
+            
+}
+
+
+message UnlockSessionParameters {
+   
+ViSession vi = 1  
+   
+}
+
+
+message UnlockSessionResult {
+
+int32 status = 1;
+      
+
+ViBoolean callerHasLock = 2  
+   
+}
+
+
+message Use64BitNumberParameters {
+   
+ViSession vi = 1  
+   
+ViInt64 input = 2  
+   
+}
+
+
+message Use64BitNumberResult {
+
+int32 status = 1;
+         
+
+ViInt64 output = 2  
+   
+}
+
+
+message WriteWaveformParameters {
+   
+ViSession vi = 1  
+   
+ViInt32 numberOfSamples = 2  
+   
+ViReal64[] waveform = 3  
+
+}
+
+
+message WriteWaveformResult {
+
+int32 status = 1;
+            
+}
+
+
+message closeParameters {
+   
+ViSession vi = 1  
+
+}
+
+
+message closeResult {
+
+int32 status = 1;
+      
+}
+
+
+message error_messageParameters {
+   
+ViSession vi = 1  
+   
+ViStatus errorCode = 2  
+   
+}
+
+
+message error_messageResult {
+
+int32 status = 1;
+         
+
+ViChar[] errorMessage = 2  
+   
+}
+
+
+message fancy_self_testParameters {
+   
+ViSession vi = 1  
+
+}
+
+
+message fancy_self_testResult {
+
+int32 status = 1;
+      
+}
+
+
+message self_testParameters {
+   
+ViSession vi = 1  
+      
+}
+
+
+message self_testResult {
+
+int32 status = 1;
+      
+
+ViInt16 selfTestResult = 2  
+   
+
+ViChar[] selfTestMessage = 3  
+   
+}
+
+

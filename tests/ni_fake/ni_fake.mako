@@ -20,8 +20,8 @@ mytemplate = Template(filename='C:/Users/adarrow/Documents/GitHub/ni-driver-apis
 metadata = getMetaData()
 
 
-FileName = "HelloProto.proto"
+FileName = "ni_fake.proto"
 f=open(FileName, "w+")
-f.write(mytemplate.render_unicode(data=metadata));
+f.write(mytemplate.render(data=metadata));
 f.close()
 

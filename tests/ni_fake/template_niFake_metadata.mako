@@ -15,6 +15,22 @@ options
 
 packages 
 //---------------------------------------------------------------------
+//---------------------------------------------------------------------
+
+<%
+def is_output_parameter(parameter):
+    if 'out' in parameter['direction']:
+      return True
+    return False
+
+def is_input_parameter(parameter):
+    if 'in' in parameter['direction']:
+        return True
+    return False 
+%>
+
+
+//---------------------------------------------------------------------
 // The niFakeService definition.
 //---------------------------------------------------------------------
 service niFakeService {
@@ -59,6 +75,45 @@ ${value['name']} = ${value['value']};
 % endfor
 }
 
+
 //---------------------------------------------------------------------
-// The niFakeConfig definition.
-//---------------------------------------------------------------------     
+// Parameters & Results
+//---------------------------------------------------------------------
+% for function in data['functions']:
+<% 
+   parameter_array = data['functions'][function]['parameters'] 
+   index = 0
+%>\
+message ${function}Parameters {
+   % for parameter in parameter_array:
+   <%
+      if is_input_parameter(parameter) == False:
+         continue;     
+      index  = index +1
+   %>
+${parameter['type']} ${parameter['name']} = ${index}  
+   % endfor
+
+}
+
+
+message ${function}Result {
+
+int32 status = 1;
+<%
+index = 1
+%>\
+   %for parameter in parameter_array:
+   <%
+    if is_output_parameter(parameter) == False:
+        continue;  
+    index = index + 1
+   %>
+
+${parameter['type']} ${parameter['name']} = ${index}  
+   %endfor
+   
+}
+
+
+% endfor
