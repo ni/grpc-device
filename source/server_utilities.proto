@@ -66,5 +66,5 @@ message ForceCloseAllSessionsRequest {
 }
 
 message ForceCloseAllSessionResponse {       
-  bool allClosed = 1;
+  bool all_closed = 1;
 }

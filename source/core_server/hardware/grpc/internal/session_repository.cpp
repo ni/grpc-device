@@ -149,6 +149,8 @@ namespace internal
             unnamed_sessions_.erase(sessionIterator);
          }
       }
+      
+      response->set_all_closed(true);
    }
   
    void SessionRepository::unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)
