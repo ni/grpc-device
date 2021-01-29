@@ -8,11 +8,53 @@ option csharp_namespace = "NationalInstruments.Hardware.Grpc";
 package ni.hardware.grpc;
 
 service ServerUtilities {
-  rpc IsServerRunning (IsServerRunningRequest) returns (IsServerRunningResult) {}
+  // Reserve a set of client defined resources for exclusive use
+  rpc Reserve (ReserveRequest) returns (ReserveResponse) {};
+
+  // Determines if a set of client defined resources is currently reserved by a specific client
+  rpc IsReservedByClient (IsReservedByClientRequest) returns (IsReservedByClientResponse) {};
+
+  // Unreserves a previously reserved resource
+  rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
 }
 
-message IsServerRunningResult {
-  bool status = 1;
+message ViSession {
+  oneof session {
+      string session_name = 1;
+      sfixed64 id = 2;
+  }
 }
 
-message IsServerRunningRequest {}
+message ReserveRequest {
+  // client defined string representing a set of reservable resources
+  ViSession session = 1;
+  // client defined identifier for a specific client
+  string client_reserve_id = 2;
+}
+
+message ReserveResponse {
+  enum ReserveStatus {
+      NONE = 0;
+      INVALID_SESSION = 1;
+      RESERVED = 2;
+  }
+  ReserveStatus status = 1;
+}
+
+message IsReservedByClientRequest {
+  // client defined identifier for a specific client
+  string client_reserve_id = 1;
+}
+
+message IsReservedByClientResponse {
+  bool is_reserved = 2;
+}
+
+message UnreserveRequest {
+   // client defined identifier for a specific client
+  string client_reserve_id = 1;
+}
+
+message UnreserveResponse {
+  bool is_unreserved = 1;
+}
