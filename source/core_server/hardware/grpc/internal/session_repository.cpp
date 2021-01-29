@@ -122,7 +122,6 @@ namespace internal
       }
    }
 
-
    void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
    {
       std::unique_lock<std::shared_mutex> lock(session_lock_);
