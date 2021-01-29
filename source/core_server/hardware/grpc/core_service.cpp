@@ -31,8 +31,7 @@ namespace grpc
    
    ::grpc::Status CoreService::ForceCloseAllSessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
    {
-      internal::SessionRepository* session_repository = session_repository->instance();
-      session_repository->force_close_all_sessions(context, request, response);
+      session_repository_->force_close_all_sessions(context, request, response);
       return ::grpc::Status::OK;
    }
 } // namespace grpc

@@ -125,18 +125,23 @@ namespace internal
 
    void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
    {
-      std::unique_lock<std::shared_mutex> lock(sessionLock_);
-      /*for (it = s_NamedSessions.begin(); it != s_NamedSessions.end(); it++)
+      std::unique_lock<std::shared_mutex> lock(session_lock_);
+      for (auto sessionIterator = named_sessions_.begin(); sessionIterator != named_sessions_.end(); sessionIterator++)
       {
-      
-         std::cout << it->first    // string (key)
-              << ':'
-              << it->second   // string's value 
-              << std::endl;
-      }*/
-      //s_NamedSessions.clear();
-      //s_UnnamedSessions.clear();
-      //_reservedSessions.clear();
+         if (sessionIterator != named_sessions_.end()) {
+            // Unreserve
+            auto reservationIterator = reserved_sessions_.find(sessionIterator->first);
+            if (reservationIterator != reserved_sessions_.end()) {
+               reserved_sessions_.erase(reservationIterator);
+            }
+            
+            // Remove from session map
+            auto sessionInfo = sessionIterator->second;            
+            sessionInfo->cleanup_proc(sessionInfo->session);
+            named_sessions_.erase(sessionIterator);
+         }
+      }
+      //TODO: Unnamed sessions
    }
   
    void SessionRepository::unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)

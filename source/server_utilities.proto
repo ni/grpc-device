@@ -61,7 +61,6 @@ message UnreserveResponse {
 }
 
 message ForceCloseAllSessionsRequest {
-  bool waitForLocks = 1;
 }
 
 message ForceCloseAllSessionResponse {       
