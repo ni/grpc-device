@@ -16,7 +16,7 @@ def getMetaData():
    return metadata
    
    
-mytemplate = Template(filename='C:/Users/adarrow/Documents/GitHub/ni-driver-apis-grpc/tests/ni_fake/template_niFake_metadata.mako')
+mytemplate = Template(filename='template_niFake_metadata.mako')
 metadata = getMetaData()
 
 
