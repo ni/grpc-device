@@ -1,0 +1,9 @@
+pr:
+  - main
+
+pool:
+  name: cjohnsto
+
+steps:
+  - checkout: none
+  - script: echo "Hello, world!!!"
