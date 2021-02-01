@@ -8,7 +8,9 @@ functions = data['functions']
 
 ## TODO: Pull niFake from config metadata.
 driver_prefix = "niFake" ## config['driver_name']
-library_name = "nifake"
+driver_file_name_prefix= "ni_fake"
+library_name = "NiFake"
+service_name = "NiFakeService"
 array_brackets_expression = re.compile(r'\[.*\]')
 
 RESERVED_WORDS = [
@@ -107,6 +109,19 @@ def create_args(parameters):
             result = result + '&'
         result = result + camel_to_snake_name(parameter) + ', '
     return result[:-2]
+def create_params(parameters):
+    result = ''
+    for parameter in parameters:
+        result = result + get_proto_type(parameter['type'])
+        if '[]' in parameter['type']:
+          result = result + '['
+          if parameter['size']['mechanism'] == 'fixed':
+            result = result + str(parameter['size']['value'])
+          result = result + ']'
+        if is_output_parameter(parameter):
+          result = result + '*'
+        result = result + ', '
+    return result[:-2]
 
 def get_request_value(parameter):
     result = ''
@@ -150,10 +165,9 @@ def camel_to_snake_name(parameter):
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <${library_name}.h>
-#include <${library_name}_server.h>
-#include <${library_name}.grpc.h>
-## TODO: Should we include the SharedLibary and SessionManagement headers?
+#include <${driver_file_name_prefix}.h>
+#include <${driver_file_name_prefix}_service.h>
+#include <${driver_file_name_prefix}.grpc.h>
 #include <atomic>
 
 //---------------------------------------------------------------------
@@ -162,7 +176,16 @@ using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
+using grpc::StatusCode
 using grpc::ServerWriter;
+
+% for method_name in functions:
+<%
+    f = functions[method_name]
+    parameters = f['parameters']
+%>\
+using ${method_name}Ptr = int (*)(${create_params(parameters)});
+%endfor
 
 static bool s_HasSession;
 static std::atomic<unsigned int> s_IdleCount;
@@ -171,26 +194,46 @@ static std::atomic<unsigned int> s_IdleCount;
 //---------------------------------------------------------------------
 using namespace std;
 
-% for function in functions:
+## Constructor
+#if defined(_MSC_VER)
+   static const char* driver_api_library_name = "${library_name}.dll";
+#else
+   static const char* driver_api_library_name = "./lib${library_name}.so";
+#endif
+
+${service_name}::${service_name}()
+    : shared_library_(driver_api_library_name)
+{
+}
+
+% for method_name in functions:
 <%
-    method_name = function
-    f = functions[function]
+    f = functions[method_name]
     parameters = f['parameters']
     input_parameters = [p for p in parameters if is_input_parameter(p)]
     output_parameters = [p for p in parameters if is_output_parameter(p)]
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-Status ${driver_prefix}Service::${method_name}(ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
+Status ${service_name}::${method_name}(ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
 {
+  shared_library_.load();
+  if (!shared_library_.is_loaded()) {
+    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
+  }
+  auto ${method_name}FunctionPointer = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${method_name}"));
+  if (method_name == nullptr) {
+    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
+  }
+
 %for parameter in input_parameters:
   ${parameter['type']} ${camel_to_snake_name(parameter)} = ${get_request_value(parameter)}
 %endfor
 %for parameter in output_parameters:
   ${parameter['type']} ${camel_to_snake_name(parameter)};
 %endfor
-  ## TODO: Update this to use the shared_library to load up the function pointer to call.
-  auto status = ${method_name}(${create_args(parameters)});
+
+  auto status = ${method_name}FunctionPointer(${create_args(parameters)});
   response->set_status(status);
   if (status == 0) {
 %for parameter in output_parameters:

@@ -21,7 +21,7 @@ mytemplate = Template(filename='service.h.mako')
 metadata = getMetaData()
 if not os.path.exists('../../generated'):
     os.makedirs('../../generated')
-FileName = "../../generated/service.h"
+FileName = "../../generated/ni_fake_service.h"
 f=open(FileName, "w+")
 f.write(mytemplate.render_unicode(data=metadata))
 f.close()
