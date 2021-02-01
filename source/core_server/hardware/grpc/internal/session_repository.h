@@ -25,12 +25,13 @@ namespace internal
 
       ViSession* add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc);
       void remove_session(const ViSession& remote_session);
+      int SessionRepository::get_session_count();
       ViSession lookup_session(const ViSession& remote_session);
 
       void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
       void is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response);
       void unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response);
-      void force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response);
+      void force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionsResponse* response);
 
    private:
       struct SessionInfo

@@ -162,6 +162,26 @@ namespace grpc
       EXPECT_TRUE(response.is_unreserved());
       session_repository.remove_session(*session);
    }
+   
+   TEST(CoreServiceTests, ReserveSession_ForceCloseAll_SessionClosed)
+   {
+      std::string reserve_id("session_name");
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
+      ni::hardware::grpc::ReserveRequest reserveRequest;
+      reserveRequest.set_allocated_session(session);
+      reserveRequest.set_client_reserve_id(reserve_id);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
+
+      ni::hardware::grpc::ForceCloseAllSessionsResponse response;
+      service.ForceCloseAllSessions(&context, NULL, &response);
+      
+      EXPECT_TRUE(response.all_closed());
+      EXPECT_EQ(session_repository.get_session_count(), 0);
+   }
 } // namespace grpc
 } // namespace hardware
 } // namespace unit

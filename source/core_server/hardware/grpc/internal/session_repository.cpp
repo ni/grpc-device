@@ -12,7 +12,7 @@ namespace internal
       : next_session_id_(1000)
    {
    }
-   
+
    ViSession* SessionRepository::add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc)
    {
       std::unique_lock<std::shared_mutex> lock(session_lock_);
@@ -57,7 +57,12 @@ namespace internal
          }
       }
    }
-
+   
+   int SessionRepository::get_session_count()
+   {
+      return  static_cast<int>(named_sessions_.size()) +  static_cast<int>(unnamed_sessions_.size());
+   }
+   
    ViSession SessionRepository::lookup_session(const ViSession& remote_session)
    {
       std::shared_lock<std::shared_mutex> lock(session_lock_);
@@ -94,8 +99,12 @@ namespace internal
       for (auto sessionIterator = map.begin(); sessionIterator != map.end(); sessionIterator++)
       {
          if (sessionIterator != map.end()) {          
-            auto sessionInfo = sessionIterator->second;            
-            sessionInfo->cleanup_proc(sessionInfo->session);
+            auto sessionInfo = sessionIterator->second;
+            auto session = sessionInfo->session;
+            auto cleanupProc = sessionInfo->cleanup_proc;
+            if (cleanupProc != NULL){
+               cleanupProc(sessionInfo->session);
+            }
             map.erase(sessionIterator);
          }
       }
@@ -154,7 +163,7 @@ namespace internal
       }
    }
       
-   void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
+   void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionsResponse* response)
    {
       std::unique_lock<std::shared_mutex> lock(session_lock_);
       reserved_sessions_.clear();
