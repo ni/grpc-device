@@ -12,7 +12,7 @@ namespace internal
       : next_session_id_(1000)
    {
    }
-
+   
    ViSession* SessionRepository::add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc)
    {
       std::unique_lock<std::shared_mutex> lock(session_lock_);
@@ -88,6 +88,19 @@ namespace internal
       return nullptr;
    }
 
+   template<class MapType>
+   void SessionRepository::close_sessions(MapType& map)
+   {
+      for (auto sessionIterator = map.begin(); sessionIterator != map.end(); sessionIterator++)
+      {
+         if (sessionIterator != map.end()) {          
+            auto sessionInfo = sessionIterator->second;            
+            sessionInfo->cleanup_proc(sessionInfo->session);
+            map.erase(sessionIterator);
+         }
+      }
+   }
+   
    void SessionRepository::reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
    {
       std::shared_ptr<SessionInfo> session_info;
@@ -140,34 +153,13 @@ namespace internal
          response->set_is_unreserved(true);
       }
    }
-   
+      
    void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
    {
       std::unique_lock<std::shared_mutex> lock(session_lock_);
-
-      // Clear all reservations
       reserved_sessions_.clear();
-
-      // Close named sessions
-      for (auto sessionIterator = named_sessions_.begin(); sessionIterator != named_sessions_.end(); sessionIterator++)
-      {
-         if (sessionIterator != named_sessions_.end()) {          
-            auto sessionInfo = sessionIterator->second;            
-            sessionInfo->cleanup_proc(sessionInfo->session);
-            named_sessions_.erase(sessionIterator);
-         }
-      }
-
-      // Close unnamed sessions      
-      for (auto sessionIterator = unnamed_sessions_.begin(); sessionIterator != unnamed_sessions_.end(); sessionIterator++)
-            {
-         if (sessionIterator != unnamed_sessions_.end()) {          
-            auto sessionInfo = sessionIterator->second;            
-            sessionInfo->cleanup_proc(sessionInfo->session);
-            unnamed_sessions_.erase(sessionIterator);
-         }
-      }
-
+      close_sessions(named_sessions_);
+      close_sessions(unnamed_sessions_);
       response->set_all_closed(true);
    }
 } // namespace internal

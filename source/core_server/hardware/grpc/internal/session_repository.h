@@ -46,7 +46,9 @@ namespace internal
       using SessionReservationMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
 
       std::shared_ptr<SessionInfo> lookup_session_info_unlocked(const ViSession& remote_session);
-
+      template<class MapType>
+      void close_sessions(MapType& map);
+      
       SessionReservationMap reserved_sessions_;
       std::shared_mutex session_lock_;
       int next_session_id_;
