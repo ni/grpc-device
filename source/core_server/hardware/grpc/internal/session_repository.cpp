@@ -140,6 +140,36 @@ namespace internal
          response->set_is_unreserved(true);
       }
    }
+   
+   void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionResponse* response)
+   {
+      std::unique_lock<std::shared_mutex> lock(session_lock_);
+
+      // Clear all reservations
+      reserved_sessions_.clear();
+
+      // Close named sessions
+      for (auto sessionIterator = named_sessions_.begin(); sessionIterator != named_sessions_.end(); sessionIterator++)
+      {
+         if (sessionIterator != named_sessions_.end()) {          
+            auto sessionInfo = sessionIterator->second;            
+            sessionInfo->cleanup_proc(sessionInfo->session);
+            named_sessions_.erase(sessionIterator);
+         }
+      }
+
+      // Close unnamed sessions      
+      for (auto sessionIterator = unnamed_sessions_.begin(); sessionIterator != unnamed_sessions_.end(); sessionIterator++)
+            {
+         if (sessionIterator != unnamed_sessions_.end()) {          
+            auto sessionInfo = sessionIterator->second;            
+            sessionInfo->cleanup_proc(sessionInfo->session);
+            unnamed_sessions_.erase(sessionIterator);
+         }
+      }
+
+      response->set_all_closed(true);
+   }
 } // namespace internal
 } // namespace grpc
 } // namespace hardware
