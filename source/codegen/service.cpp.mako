@@ -128,8 +128,7 @@ def get_request_value(parameter):
     if parameter['type'] == 'ViChar':
         result = result + '(char*)'
     if parameter['type'] == 'ViSession':
-    ## TODO: Update this to point to our SessionManager
-        result = result + 'SessionManager::LookupSession('        
+        result = result + 'session_repository_->lookup_session('        
     result = result + 'request->'
     result = result + get_proto_type(camel_to_snake_name(parameter).lower())
     result = result + '()'
@@ -193,15 +192,15 @@ static std::atomic<unsigned int> s_IdleCount;
 //---------------------------------------------------------------------
 using namespace std;
 
-## Constructor
+## Constructors
 #if defined(_MSC_VER)
    static const char* driver_api_library_name = "${library_name}.dll";
 #else
    static const char* driver_api_library_name = "./lib${library_name}.so";
 #endif
 
-${service_name}::${service_name}()
-    : shared_library_(driver_api_library_name)
+${service_name}::${service_name}(internal::SessionRepository* session_repository)
+    : shared_library_(driver_api_library_name), session_repository_(session_repository)
 {
 }
 
@@ -236,6 +235,7 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
   response->set_status(status);
   if (status == 0) {
 %for parameter in output_parameters:
+## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
     response->set_${get_proto_type(camel_to_snake_name(parameter).lower())}(${get_proto_type(camel_to_snake_name(parameter))});
 %endfor
   }

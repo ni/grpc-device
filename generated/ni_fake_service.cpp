@@ -93,8 +93,8 @@ using namespace std;
    static const char* driver_api_library_name = "./libNiFake.so";
 #endif
 
-NiFakeService::NiFakeService()
-    : shared_library_(driver_api_library_name)
+NiFakeService::NiFakeService(internal::SessionRepository* session_repository)
+    : shared_library_(driver_api_library_name), session_repository_(session_repository)
 {
 }
 
@@ -111,7 +111,7 @@ Status NiFakeService::Abort(ServerContext* context, const niFake::AbortRequest* 
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
 
   auto status = AbortFunctionPointer(vi);
   response->set_status(status);
@@ -134,7 +134,7 @@ Status NiFakeService::AcceptListOfDurationsInSeconds(ServerContext* context, con
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 count = request->count();
   ViReal64[] delays = request->delays();
 
@@ -159,7 +159,7 @@ Status NiFakeService::BoolArrayOutputFunction(ServerContext* context, const niFa
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_elements = request->number_of_elements();
   ViBoolean[] an_array;
 
@@ -185,7 +185,7 @@ Status NiFakeService::DoubleAllTheNums(ServerContext* context, const niFake::Dou
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_count = request->number_count();
   ViReal64[] numbers = request->numbers();
 
@@ -210,7 +210,7 @@ Status NiFakeService::EnumArrayOutputFunction(ServerContext* context, const niFa
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_elements = request->number_of_elements();
   ViInt16[] an_array;
 
@@ -236,7 +236,7 @@ Status NiFakeService::EnumInputFunctionWithDefaults(ServerContext* context, cons
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt16 a_turtle = request->a_turtle();
 
   auto status = EnumInputFunctionWithDefaultsFunctionPointer(vi, a_turtle);
@@ -260,7 +260,7 @@ Status NiFakeService::ExportAttributeConfigurationBuffer(ServerContext* context,
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 size_in_bytes = request->size_in_bytes();
   ViInt8[] configuration;
 
@@ -286,7 +286,7 @@ Status NiFakeService::FetchWaveform(ServerContext* context, const niFake::FetchW
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_samples = request->number_of_samples();
   ViReal64[] waveform_data;
   ViInt32 actual_number_of_samples;
@@ -314,7 +314,7 @@ Status NiFakeService::GetABoolean(ServerContext* context, const niFake::GetABool
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViBoolean a_boolean;
 
   auto status = GetABooleanFunctionPointer(vi, &a_boolean);
@@ -339,7 +339,7 @@ Status NiFakeService::GetANumber(ServerContext* context, const niFake::GetANumbe
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt16 a_number;
 
   auto status = GetANumberFunctionPointer(vi, &a_number);
@@ -364,7 +364,7 @@ Status NiFakeService::GetAStringOfFixedMaximumSize(ServerContext* context, const
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViChar[] a_string;
 
   auto status = GetAStringOfFixedMaximumSizeFunctionPointer(vi, &a_string);
@@ -389,7 +389,7 @@ Status NiFakeService::GetAStringUsingPythonCode(ServerContext* context, const ni
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt16 a_number = request->a_number();
   ViChar[] a_string;
 
@@ -415,7 +415,7 @@ Status NiFakeService::GetAnIviDanceString(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 buffer_size = request->buffer_size();
   ViChar[] a_string;
 
@@ -441,7 +441,7 @@ Status NiFakeService::GetAnIviDanceWithATwistString(ServerContext* context, cons
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 buffer_size = request->buffer_size();
   ViChar[] a_string;
   ViInt32 actual_size;
@@ -469,7 +469,7 @@ Status NiFakeService::GetArrayForPythonCodeCustomType(ServerContext* context, co
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_elements = request->number_of_elements();
   struct CustomStruct[] array_out;
 
@@ -495,7 +495,7 @@ Status NiFakeService::GetArrayForPythonCodeDouble(ServerContext* context, const 
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_elements = request->number_of_elements();
   ViReal64[] array_out;
 
@@ -521,7 +521,7 @@ Status NiFakeService::GetArraySizeForPythonCode(ServerContext* context, const ni
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 size_out;
 
   auto status = GetArraySizeForPythonCodeFunctionPointer(vi, &size_out);
@@ -546,7 +546,7 @@ Status NiFakeService::GetArrayUsingIviDance(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 array_size = request->array_size();
   ViReal64[] array_out;
 
@@ -572,7 +572,7 @@ Status NiFakeService::GetAttributeViBoolean(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViBoolean attribute_value;
@@ -599,7 +599,7 @@ Status NiFakeService::GetAttributeViInt32(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViInt32 attribute_value;
@@ -626,7 +626,7 @@ Status NiFakeService::GetAttributeViInt64(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViInt64 attribute_value;
@@ -653,7 +653,7 @@ Status NiFakeService::GetAttributeViReal64(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViReal64 attribute_value;
@@ -680,7 +680,7 @@ Status NiFakeService::GetAttributeViString(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViInt32 buffer_size = request->buffer_size();
@@ -708,7 +708,7 @@ Status NiFakeService::GetCalDateAndTime(ServerContext* context, const niFake::Ge
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 cal_type = request->cal_type();
   ViInt32 month;
   ViInt32 day;
@@ -742,7 +742,7 @@ Status NiFakeService::GetCalInterval(ServerContext* context, const niFake::GetCa
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 months;
 
   auto status = GetCalIntervalFunctionPointer(vi, &months);
@@ -767,7 +767,7 @@ Status NiFakeService::GetCustomType(ServerContext* context, const niFake::GetCus
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   struct CustomStruct cs;
 
   auto status = GetCustomTypeFunctionPointer(vi, &cs);
@@ -792,7 +792,7 @@ Status NiFakeService::GetCustomTypeArray(ServerContext* context, const niFake::G
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_elements = request->number_of_elements();
   struct CustomStruct[] cs;
 
@@ -818,7 +818,7 @@ Status NiFakeService::GetEnumValue(ServerContext* context, const niFake::GetEnum
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 a_quantity;
   ViInt16 a_turtle;
 
@@ -845,7 +845,7 @@ Status NiFakeService::GetError(ServerContext* context, const niFake::GetErrorReq
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 buffer_size = request->buffer_size();
   ViStatus error_code;
   ViChar[] description;
@@ -873,7 +873,7 @@ Status NiFakeService::GetLastCalDateAndTime(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 cal_type = request->cal_type();
   hightime.datetime month;
 
@@ -899,7 +899,7 @@ Status NiFakeService::ImportAttributeConfigurationBuffer(ServerContext* context,
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 size_in_bytes = request->size_in_bytes();
   ViInt8[] configuration = request->configuration();
 
@@ -952,7 +952,7 @@ Status NiFakeService::Initiate(ServerContext* context, const niFake::InitiateReq
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
 
   auto status = InitiateFunctionPointer(vi);
   response->set_status(status);
@@ -975,7 +975,7 @@ Status NiFakeService::LockSession(ServerContext* context, const niFake::LockSess
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViBoolean caller_has_lock;
 
   auto status = LockSessionFunctionPointer(vi, &caller_has_lock);
@@ -1000,7 +1000,7 @@ Status NiFakeService::MultipleArrayTypes(ServerContext* context, const niFake::M
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 output_array_size = request->output_array_size();
   ViInt32 input_array_sizes = request->input_array_sizes();
   ViReal64[] input_array_of_floats = request->input_array_of_floats();
@@ -1031,7 +1031,7 @@ Status NiFakeService::MultipleArraysSameSize(ServerContext* context, const niFak
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViReal64[] values1 = request->values1();
   ViReal64[] values2 = request->values2();
   ViReal64[] values3 = request->values3();
@@ -1059,7 +1059,7 @@ Status NiFakeService::OneInputFunction(ServerContext* context, const niFake::One
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 a_number = request->a_number();
 
   auto status = OneInputFunctionFunctionPointer(vi, a_number);
@@ -1083,7 +1083,7 @@ Status NiFakeService::ParametersAreMultipleTypes(ServerContext* context, const n
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViBoolean a_boolean = request->a_boolean();
   ViInt32 an_int32 = request->an_int32();
   ViInt64 an_int64 = request->an_int64();
@@ -1114,7 +1114,7 @@ Status NiFakeService::PoorlyNamedSimpleFunction(ServerContext* context, const ni
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
 
   auto status = PoorlyNamedSimpleFunctionFunctionPointer(vi);
   response->set_status(status);
@@ -1137,7 +1137,7 @@ Status NiFakeService::Read(ServerContext* context, const niFake::ReadRequest* re
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViReal64 maximum_time = request->maximum_time();
   ViReal64 reading;
 
@@ -1163,7 +1163,7 @@ Status NiFakeService::ReadFromChannel(ServerContext* context, const niFake::Read
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViInt32 maximum_time = request->maximum_time();
   ViReal64 reading;
@@ -1190,7 +1190,7 @@ Status NiFakeService::ReturnANumberAndAString(ServerContext* context, const niFa
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt16 a_number;
   ViChar[] a_string;
 
@@ -1217,7 +1217,7 @@ Status NiFakeService::ReturnDurationInSeconds(ServerContext* context, const niFa
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViReal64 timedelta;
 
   auto status = ReturnDurationInSecondsFunctionPointer(vi, &timedelta);
@@ -1242,7 +1242,7 @@ Status NiFakeService::ReturnListOfDurationsInSeconds(ServerContext* context, con
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_elements = request->number_of_elements();
   ViReal64[] timedeltas;
 
@@ -1268,7 +1268,7 @@ Status NiFakeService::ReturnMultipleTypes(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 array_size = request->array_size();
   ViInt32 string_size = request->string_size();
   ViBoolean a_boolean;
@@ -1309,7 +1309,7 @@ Status NiFakeService::SetAttributeViBoolean(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViBoolean attribute_value = request->attribute_value();
@@ -1335,7 +1335,7 @@ Status NiFakeService::SetAttributeViInt32(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViInt32 attribute_value = request->attribute_value();
@@ -1361,7 +1361,7 @@ Status NiFakeService::SetAttributeViInt64(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViInt64 attribute_value = request->attribute_value();
@@ -1387,7 +1387,7 @@ Status NiFakeService::SetAttributeViReal64(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViReal64 attribute_value = request->attribute_value();
@@ -1413,7 +1413,7 @@ Status NiFakeService::SetAttributeViString(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   ViConstString attribute_value = request->attribute_value().c_str();
@@ -1439,7 +1439,7 @@ Status NiFakeService::SetCustomType(ServerContext* context, const niFake::SetCus
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   struct CustomStruct cs = request->cs();
 
   auto status = SetCustomTypeFunctionPointer(vi, cs);
@@ -1463,7 +1463,7 @@ Status NiFakeService::SetCustomTypeArray(ServerContext* context, const niFake::S
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_elements = request->number_of_elements();
   struct CustomStruct[] cs = request->cs();
 
@@ -1488,7 +1488,7 @@ Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(ServerContext* c
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViConstString a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
 
   auto status = StringValuedEnumInputFunctionWithDefaultsFunctionPointer(vi, a_mobile_o_s_name);
@@ -1512,7 +1512,7 @@ Status NiFakeService::TwoInputFunction(ServerContext* context, const niFake::Two
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViReal64 a_number = request->a_number();
   ViString a_string = request->a_string();
 
@@ -1537,7 +1537,7 @@ Status NiFakeService::UnlockSession(ServerContext* context, const niFake::Unlock
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViBoolean caller_has_lock;
 
   auto status = UnlockSessionFunctionPointer(vi, &caller_has_lock);
@@ -1562,7 +1562,7 @@ Status NiFakeService::Use64BitNumber(ServerContext* context, const niFake::Use64
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt64 input = request->input();
   ViInt64 output;
 
@@ -1588,7 +1588,7 @@ Status NiFakeService::WriteWaveform(ServerContext* context, const niFake::WriteW
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt32 number_of_samples = request->number_of_samples();
   ViReal64[] waveform = request->waveform();
 
@@ -1613,7 +1613,7 @@ Status NiFakeService::close(ServerContext* context, const niFake::closeRequest* 
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
 
   auto status = closeFunctionPointer(vi);
   response->set_status(status);
@@ -1636,7 +1636,7 @@ Status NiFakeService::error_message(ServerContext* context, const niFake::error_
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViStatus error_code = request->error_code();
   ViChar[] error_message;
 
@@ -1662,7 +1662,7 @@ Status NiFakeService::fancy_self_test(ServerContext* context, const niFake::fanc
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
 
   auto status = fancy_self_testFunctionPointer(vi);
   response->set_status(status);
@@ -1685,7 +1685,7 @@ Status NiFakeService::self_test(ServerContext* context, const niFake::self_testR
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  ViSession vi = SessionManager::LookupSession(request->vi());
+  ViSession vi = session_repository_->lookup_session(request->vi());
   ViInt16 self_test_result;
   ViChar[] self_test_message;
 

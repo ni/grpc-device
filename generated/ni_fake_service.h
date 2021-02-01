@@ -26,7 +26,7 @@ namespace grpc
   class NiFakeService final : public niFake::Service
   {
   public:
-    NiFakeService();
+    NiFakeService(internal::SessionRepository* session_repository);
     Status Abort(ServerContext* context, const niFake::AbortRequest* request, niFake::AbortResponse* response) override;
     Status AcceptListOfDurationsInSeconds(ServerContext* context, const niFake::AcceptListOfDurationsInSecondsRequest* request, niFake::AcceptListOfDurationsInSecondsResponse* response) override;
     Status BoolArrayOutputFunction(ServerContext* context, const niFake::BoolArrayOutputFunctionRequest* request, niFake::BoolArrayOutputFunctionResponse* response) override;
@@ -90,6 +90,7 @@ namespace grpc
     Status self_test(ServerContext* context, const niFake::self_testRequest* request, niFake::self_testResponse* response) override;
   private:
     SharedLibrary shared_library_;
+    internal::SessionRepository* session_repository_;
   };
 } // namespace grpc
 } // namespace hardware
