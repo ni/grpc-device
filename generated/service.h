@@ -1,15 +1,20 @@
 // This file was generated
+#ifndef NI_HARDWARE_GRPC_NIFAKE_SERVICE_H
+#define NI_HARDWARE_GRPC_NIFAKE_SERVICE_H
+
 #include <niFake.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <condition_variable>
+#include "core_server/hardware/grpc/internal/shared_library.h"
 
 using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
 using grpc::ServerWriter;
+using ni::hardware::grpc::internal::SharedLibrary;
 using namespace std;
 
 namespace ni
@@ -18,9 +23,10 @@ namespace hardware
 {
 namespace grpc
 {
-  class niFakeService final : public niFake::Service
+  class NiFakeService final : public niFake::Service
   {
   public:
+    NiFakeService();
     Status Abort(ServerContext* context, const niFake::AbortRequest* request, niFake::AbortResponse* response) override;
     Status AcceptListOfDurationsInSeconds(ServerContext* context, const niFake::AcceptListOfDurationsInSecondsRequest* request, niFake::AcceptListOfDurationsInSecondsResponse* response) override;
     Status BoolArrayOutputFunction(ServerContext* context, const niFake::BoolArrayOutputFunctionRequest* request, niFake::BoolArrayOutputFunctionResponse* response) override;
@@ -82,7 +88,10 @@ namespace grpc
     Status error_message(ServerContext* context, const niFake::error_messageRequest* request, niFake::error_messageResponse* response) override;
     Status fancy_self_test(ServerContext* context, const niFake::fancy_self_testRequest* request, niFake::fancy_self_testResponse* response) override;
     Status self_test(ServerContext* context, const niFake::self_testRequest* request, niFake::self_testResponse* response) override;
+  private:
+    SharedLibrary shared_library_;
   };
 } // namespace grpc
 } // namespace hardware
 } // namespace ni
+#endif NI_HARDWARE_GRPC_NIFAKE_SERVICE_H
