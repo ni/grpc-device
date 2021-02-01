@@ -165,7 +165,6 @@ def camel_to_snake_name(parameter):
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <${driver_file_name_prefix}.h>
 #include <${driver_file_name_prefix}_service.h>
 #include <${driver_file_name_prefix}.grpc.h>
 #include <atomic>

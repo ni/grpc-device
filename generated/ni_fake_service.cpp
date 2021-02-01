@@ -5,7 +5,6 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <ni_fake.h>
 #include <ni_fake_service.h>
 #include <ni_fake.grpc.h>
 #include <atomic>
