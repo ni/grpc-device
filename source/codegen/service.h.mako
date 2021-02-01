@@ -34,11 +34,8 @@ namespace grpc
   {
   public:
   % for function in functions:
-  <% 
-    method_name = function
-  %>\
   ## TODO: Possibly filter which functions to generate.
-    Status ${method_name}(ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response) override;
+    Status ${function}(ServerContext* context, const ${driver_prefix}::${function}Request* request, ${driver_prefix}::${function}Response* response) override;
   % endfor
   };
 } // namespace grpc

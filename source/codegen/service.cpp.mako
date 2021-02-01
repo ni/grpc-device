@@ -176,34 +176,24 @@ using namespace std;
     method_name = function
     f = functions[function]
     parameters = f['parameters']
+    input_parameters = [p for p in parameters if is_input_parameter(p)]
+    output_parameters = [p for p in parameters if is_output_parameter(p)]
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status ${driver_prefix}Service::${method_name}(ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
 {
-%for parameter in parameters:
-<%
-    if is_input_parameter(parameter) == False:
-        continue
-%>\
+%for parameter in input_parameters:
   ${parameter['type']} ${camel_to_snake_name(parameter)} = ${get_request_value(parameter)}
 %endfor
-%for parameter in parameters:
-<%
-    if is_output_parameter(parameter) == False:
-        continue
-%>\
+%for parameter in output_parameters:
   ${parameter['type']} ${camel_to_snake_name(parameter)};
 %endfor
-    ## TODO: Update this to use the shared_library to load up the function pointer to call.
+  ## TODO: Update this to use the shared_library to load up the function pointer to call.
   auto status = ${method_name}(${create_args(parameters)});
   response->set_status(status);
   if (status == 0) {
-%for parameter in parameters:
-<%
-    if is_output_parameter(parameter) == False:
-        continue
-%>\
+%for parameter in output_parameters:
     response->set_${get_proto_type(camel_to_snake_name(parameter).lower())}(${get_proto_type(camel_to_snake_name(parameter))});
 %endfor
   }
