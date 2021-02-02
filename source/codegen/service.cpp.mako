@@ -13,6 +13,7 @@ driver_file_name_prefix= "ni_fake"
 library_name = "NiFake"
 service_name = "NiFakeService"
 array_brackets_expression = re.compile(r'\[.*\]')
+c_function_prefix = config['c_function_prefix']
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -84,7 +85,7 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
   if (!shared_library_.is_loaded()) {
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
-  auto ${method_name}FunctionPointer = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${method_name}"));
+  auto ${method_name}FunctionPointer = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_function_prefix}${method_name}"));
   if (method_name == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
