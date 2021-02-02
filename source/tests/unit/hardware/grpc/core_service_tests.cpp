@@ -1,5 +1,6 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
+#include <thread>
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/semaphore.h"
 #include "hardware/grpc/internal/session_repository.h"
