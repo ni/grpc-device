@@ -73,12 +73,12 @@ def get_proto_type(typestr):
     return typestr
 
 def is_output_parameter(parameter):
-    if parameter['direction'] == 'out':
-        return True
+    if "out" in parameter["direction"]:
+      return True
     return False
 
 def is_input_parameter(parameter):
-    if parameter['direction'] == 'in':
+    if "in" in parameter["direction"]:
         return True
     return False
 
@@ -94,6 +94,7 @@ def create_args(parameters):
             result = result + '&'
         result = result + camel_to_snake_name(parameter) + ', '
     return result[:-2]
+
 def create_params(parameters):
     result = ''
     for parameter in parameters:
@@ -142,6 +143,7 @@ def camel_to_snake(camelString):
 
 def camel_to_snake_name(parameter):
   return camel_to_snake(parameter['name'])
+
 def has_array_parameter(function):
   for parameter in function['parameters']:
     if 'size' in parameter.keys():
