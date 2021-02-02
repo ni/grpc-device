@@ -96,9 +96,9 @@ namespace internal
          if (sessionIterator != map.end()) {          
             auto sessionInfo = sessionIterator->second;
             auto session = sessionInfo->session;
-            auto cleanupProccess = sessionInfo->cleanup_proc;
-            if (cleanupProccess != NULL){
-               cleanupProccess(sessionInfo->session);
+            auto cleanupProcess  = sessionInfo->cleanup_proc;
+            if (cleanupProcess != NULL){
+               cleanupProcess(sessionInfo->session);
             }
             map.erase(sessionIterator);
          }
