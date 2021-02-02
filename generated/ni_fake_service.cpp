@@ -19,66 +19,39 @@ using grpc::StatusCode
 using grpc::ServerWriter;
 
 using AbortPtr = int (*)(ViSession);
-using AcceptListOfDurationsInSecondsPtr = int (*)(ViSession, int32, double[]);
-using BoolArrayOutputFunctionPtr = int (*)(ViSession, int32, bool[]*);
-using DoubleAllTheNumsPtr = int (*)(ViSession, int32, double[]);
-using EnumArrayOutputFunctionPtr = int (*)(ViSession, int32, bytes[]*);
 using EnumInputFunctionWithDefaultsPtr = int (*)(ViSession, bytes);
-using ExportAttributeConfigurationBufferPtr = int (*)(ViSession, int32, bytes[]*);
-using FetchWaveformPtr = int (*)(ViSession, int32, double[]*, int32*);
 using GetABooleanPtr = int (*)(ViSession, bool*);
 using GetANumberPtr = int (*)(ViSession, bytes*);
-using GetAStringOfFixedMaximumSizePtr = int (*)(ViSession, string[256]*);
-using GetAStringUsingPythonCodePtr = int (*)(ViSession, bytes, string[]*);
-using GetAnIviDanceStringPtr = int (*)(ViSession, int32, string[]*);
-using GetAnIviDanceWithATwistStringPtr = int (*)(ViSession, int32, string[]*, int32*);
-using GetArrayForPythonCodeCustomTypePtr = int (*)(ViSession, int32, struct CustomStruct[][]*);
-using GetArrayForPythonCodeDoublePtr = int (*)(ViSession, int32, double[]*);
 using GetArraySizeForPythonCodePtr = int (*)(ViSession, int32*);
-using GetArrayUsingIviDancePtr = int (*)(ViSession, int32, double[]*);
 using GetAttributeViBooleanPtr = int (*)(ViSession, string, ScopePropertyId, bool*);
 using GetAttributeViInt32Ptr = int (*)(ViSession, string, ScopePropertyId, int32*);
 using GetAttributeViInt64Ptr = int (*)(ViSession, string, ScopePropertyId, int64*);
 using GetAttributeViReal64Ptr = int (*)(ViSession, string, ScopePropertyId, double*);
-using GetAttributeViStringPtr = int (*)(ViSession, string, ScopePropertyId, int32, string[]*);
 using GetCalDateAndTimePtr = int (*)(ViSession, int32, int32*, int32*, int32*, int32*, int32*);
 using GetCalIntervalPtr = int (*)(ViSession, int32*);
 using GetCustomTypePtr = int (*)(ViSession, struct CustomStruct*);
-using GetCustomTypeArrayPtr = int (*)(ViSession, int32, struct CustomStruct[][]*);
 using GetEnumValuePtr = int (*)(ViSession, int32*, bytes*);
-using GetErrorPtr = int (*)(ViSession, int32*, int32, string[]*);
 using GetLastCalDateAndTimePtr = int (*)(ViSession, int32, hightime.datetime*);
-using ImportAttributeConfigurationBufferPtr = int (*)(ViSession, int32, bytes[]);
 using InitWithOptionsPtr = int (*)(string, bool, bool, string, ViSession*);
 using InitiatePtr = int (*)(ViSession);
 using LockSessionPtr = int (*)(ViSession, bool*);
-using MultipleArrayTypesPtr = int (*)(ViSession, int32, double[]*, double[3]*, int32, double[], bytes[]);
-using MultipleArraysSameSizePtr = int (*)(ViSession, double[], double[], double[], double[], int32);
 using OneInputFunctionPtr = int (*)(ViSession, int32);
-using ParametersAreMultipleTypesPtr = int (*)(ViSession, bool, int32, int64, bytes, double, double, int32, string);
 using PoorlyNamedSimpleFunctionPtr = int (*)(ViSession);
 using ReadPtr = int (*)(ViSession, double, double*);
 using ReadFromChannelPtr = int (*)(ViSession, string, int32, double*);
-using ReturnANumberAndAStringPtr = int (*)(ViSession, bytes*, string[256]*);
 using ReturnDurationInSecondsPtr = int (*)(ViSession, double*);
-using ReturnListOfDurationsInSecondsPtr = int (*)(ViSession, int32, double[]*);
-using ReturnMultipleTypesPtr = int (*)(ViSession, bool*, int32*, int64*, bytes*, double*, double*, int32, double[]*, int32, string[]*);
 using SetAttributeViBooleanPtr = int (*)(ViSession, string, ScopePropertyId, bool);
 using SetAttributeViInt32Ptr = int (*)(ViSession, string, ScopePropertyId, int32);
 using SetAttributeViInt64Ptr = int (*)(ViSession, string, ScopePropertyId, int64);
 using SetAttributeViReal64Ptr = int (*)(ViSession, string, ScopePropertyId, double);
 using SetAttributeViStringPtr = int (*)(ViSession, string, ScopePropertyId, string);
 using SetCustomTypePtr = int (*)(ViSession, struct CustomStruct);
-using SetCustomTypeArrayPtr = int (*)(ViSession, int32, struct CustomStruct[][]);
 using StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(ViSession, string);
 using TwoInputFunctionPtr = int (*)(ViSession, double, string);
 using UnlockSessionPtr = int (*)(ViSession, bool*);
 using Use64BitNumberPtr = int (*)(ViSession, int64, int64*);
-using WriteWaveformPtr = int (*)(ViSession, int32, double[]);
 using closePtr = int (*)(ViSession);
-using error_messagePtr = int (*)(ViSession, int32, string[256]*);
 using fancy_self_testPtr = int (*)(ViSession);
-using self_testPtr = int (*)(ViSession, bytes*, string[256]*);
 
 static bool s_HasSession;
 static std::atomic<unsigned int> s_IdleCount;
@@ -125,102 +98,28 @@ Status NiFakeService::Abort(ServerContext* context, const niFake::AbortRequest* 
 //---------------------------------------------------------------------
 Status NiFakeService::AcceptListOfDurationsInSeconds(ServerContext* context, const niFake::AcceptListOfDurationsInSecondsRequest* request, niFake::AcceptListOfDurationsInSecondsResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto AcceptListOfDurationsInSecondsFunctionPointer = reinterpret_cast<AcceptListOfDurationsInSecondsPtr>(shared_library_.get_function_pointer("AcceptListOfDurationsInSeconds"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 count = request->count();
-  ViReal64[] delays = request->delays();
-
-  auto status = AcceptListOfDurationsInSecondsFunctionPointer(vi, count, delays);
-  response->set_status(status);
-  if (status == 0) {
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::BoolArrayOutputFunction(ServerContext* context, const niFake::BoolArrayOutputFunctionRequest* request, niFake::BoolArrayOutputFunctionResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto BoolArrayOutputFunctionFunctionPointer = reinterpret_cast<BoolArrayOutputFunctionPtr>(shared_library_.get_function_pointer("BoolArrayOutputFunction"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_elements = request->number_of_elements();
-  ViBoolean[] an_array;
-
-  auto status = BoolArrayOutputFunctionFunctionPointer(vi, number_of_elements, &an_array);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_an_array(an_array);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::DoubleAllTheNums(ServerContext* context, const niFake::DoubleAllTheNumsRequest* request, niFake::DoubleAllTheNumsResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto DoubleAllTheNumsFunctionPointer = reinterpret_cast<DoubleAllTheNumsPtr>(shared_library_.get_function_pointer("DoubleAllTheNums"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_count = request->number_count();
-  ViReal64[] numbers = request->numbers();
-
-  auto status = DoubleAllTheNumsFunctionPointer(vi, number_count, numbers);
-  response->set_status(status);
-  if (status == 0) {
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::EnumArrayOutputFunction(ServerContext* context, const niFake::EnumArrayOutputFunctionRequest* request, niFake::EnumArrayOutputFunctionResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto EnumArrayOutputFunctionFunctionPointer = reinterpret_cast<EnumArrayOutputFunctionPtr>(shared_library_.get_function_pointer("EnumArrayOutputFunction"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_elements = request->number_of_elements();
-  ViInt16[] an_array;
-
-  auto status = EnumArrayOutputFunctionFunctionPointer(vi, number_of_elements, &an_array);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_an_array(an_array);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -251,54 +150,14 @@ Status NiFakeService::EnumInputFunctionWithDefaults(ServerContext* context, cons
 //---------------------------------------------------------------------
 Status NiFakeService::ExportAttributeConfigurationBuffer(ServerContext* context, const niFake::ExportAttributeConfigurationBufferRequest* request, niFake::ExportAttributeConfigurationBufferResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto ExportAttributeConfigurationBufferFunctionPointer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("ExportAttributeConfigurationBuffer"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 size_in_bytes = request->size_in_bytes();
-  ViInt8[] configuration;
-
-  auto status = ExportAttributeConfigurationBufferFunctionPointer(vi, size_in_bytes, &configuration);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_configuration(configuration);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::FetchWaveform(ServerContext* context, const niFake::FetchWaveformRequest* request, niFake::FetchWaveformResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto FetchWaveformFunctionPointer = reinterpret_cast<FetchWaveformPtr>(shared_library_.get_function_pointer("FetchWaveform"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_samples = request->number_of_samples();
-  ViReal64[] waveform_data;
-  ViInt32 actual_number_of_samples;
-
-  auto status = FetchWaveformFunctionPointer(vi, number_of_samples, &waveform_data, &actual_number_of_samples);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_waveform_data(waveform_data);
-    response->set_actual_number_of_samples(actual_number_of_samples);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -355,157 +214,42 @@ Status NiFakeService::GetANumber(ServerContext* context, const niFake::GetANumbe
 //---------------------------------------------------------------------
 Status NiFakeService::GetAStringOfFixedMaximumSize(ServerContext* context, const niFake::GetAStringOfFixedMaximumSizeRequest* request, niFake::GetAStringOfFixedMaximumSizeResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetAStringOfFixedMaximumSizeFunctionPointer = reinterpret_cast<GetAStringOfFixedMaximumSizePtr>(shared_library_.get_function_pointer("GetAStringOfFixedMaximumSize"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViChar[] a_string;
-
-  auto status = GetAStringOfFixedMaximumSizeFunctionPointer(vi, &a_string);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_a_string(a_string);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::GetAStringUsingPythonCode(ServerContext* context, const niFake::GetAStringUsingPythonCodeRequest* request, niFake::GetAStringUsingPythonCodeResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetAStringUsingPythonCodeFunctionPointer = reinterpret_cast<GetAStringUsingPythonCodePtr>(shared_library_.get_function_pointer("GetAStringUsingPythonCode"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt16 a_number = request->a_number();
-  ViChar[] a_string;
-
-  auto status = GetAStringUsingPythonCodeFunctionPointer(vi, a_number, &a_string);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_a_string(a_string);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::GetAnIviDanceString(ServerContext* context, const niFake::GetAnIviDanceStringRequest* request, niFake::GetAnIviDanceStringResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetAnIviDanceStringFunctionPointer = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("GetAnIviDanceString"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 buffer_size = request->buffer_size();
-  ViChar[] a_string;
-
-  auto status = GetAnIviDanceStringFunctionPointer(vi, buffer_size, &a_string);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_a_string(a_string);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::GetAnIviDanceWithATwistString(ServerContext* context, const niFake::GetAnIviDanceWithATwistStringRequest* request, niFake::GetAnIviDanceWithATwistStringResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetAnIviDanceWithATwistStringFunctionPointer = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("GetAnIviDanceWithATwistString"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 buffer_size = request->buffer_size();
-  ViChar[] a_string;
-  ViInt32 actual_size;
-
-  auto status = GetAnIviDanceWithATwistStringFunctionPointer(vi, buffer_size, &a_string, &actual_size);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_a_string(a_string);
-    response->set_actual_size(actual_size);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::GetArrayForPythonCodeCustomType(ServerContext* context, const niFake::GetArrayForPythonCodeCustomTypeRequest* request, niFake::GetArrayForPythonCodeCustomTypeResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetArrayForPythonCodeCustomTypeFunctionPointer = reinterpret_cast<GetArrayForPythonCodeCustomTypePtr>(shared_library_.get_function_pointer("GetArrayForPythonCodeCustomType"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_elements = request->number_of_elements();
-  struct CustomStruct[] array_out;
-
-  auto status = GetArrayForPythonCodeCustomTypeFunctionPointer(vi, number_of_elements, &array_out);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_array_out(array_out);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::GetArrayForPythonCodeDouble(ServerContext* context, const niFake::GetArrayForPythonCodeDoubleRequest* request, niFake::GetArrayForPythonCodeDoubleResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetArrayForPythonCodeDoubleFunctionPointer = reinterpret_cast<GetArrayForPythonCodeDoublePtr>(shared_library_.get_function_pointer("GetArrayForPythonCodeDouble"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_elements = request->number_of_elements();
-  ViReal64[] array_out;
-
-  auto status = GetArrayForPythonCodeDoubleFunctionPointer(vi, number_of_elements, &array_out);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_array_out(array_out);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -537,26 +281,7 @@ Status NiFakeService::GetArraySizeForPythonCode(ServerContext* context, const ni
 //---------------------------------------------------------------------
 Status NiFakeService::GetArrayUsingIviDance(ServerContext* context, const niFake::GetArrayUsingIviDanceRequest* request, niFake::GetArrayUsingIviDanceResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetArrayUsingIviDanceFunctionPointer = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("GetArrayUsingIviDance"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 array_size = request->array_size();
-  ViReal64[] array_out;
-
-  auto status = GetArrayUsingIviDanceFunctionPointer(vi, array_size, &array_out);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_array_out(array_out);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -671,28 +396,7 @@ Status NiFakeService::GetAttributeViReal64(ServerContext* context, const niFake:
 //---------------------------------------------------------------------
 Status NiFakeService::GetAttributeViString(ServerContext* context, const niFake::GetAttributeViStringRequest* request, niFake::GetAttributeViStringResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetAttributeViStringFunctionPointer = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("GetAttributeViString"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViConstString channel_name = request->channel_name().c_str();
-  ViAttr attribute_id = request->attribute_id();
-  ViInt32 buffer_size = request->buffer_size();
-  ViChar[] attribute_value;
-
-  auto status = GetAttributeViStringFunctionPointer(vi, channel_name, attribute_id, buffer_size, &attribute_value);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_attribute_value(attribute_value);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -783,26 +487,7 @@ Status NiFakeService::GetCustomType(ServerContext* context, const niFake::GetCus
 //---------------------------------------------------------------------
 Status NiFakeService::GetCustomTypeArray(ServerContext* context, const niFake::GetCustomTypeArrayRequest* request, niFake::GetCustomTypeArrayResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetCustomTypeArrayFunctionPointer = reinterpret_cast<GetCustomTypeArrayPtr>(shared_library_.get_function_pointer("GetCustomTypeArray"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_elements = request->number_of_elements();
-  struct CustomStruct[] cs;
-
-  auto status = GetCustomTypeArrayFunctionPointer(vi, number_of_elements, &cs);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_cs(cs);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -836,28 +521,7 @@ Status NiFakeService::GetEnumValue(ServerContext* context, const niFake::GetEnum
 //---------------------------------------------------------------------
 Status NiFakeService::GetError(ServerContext* context, const niFake::GetErrorRequest* request, niFake::GetErrorResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto GetErrorFunctionPointer = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("GetError"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 buffer_size = request->buffer_size();
-  ViStatus error_code;
-  ViChar[] description;
-
-  auto status = GetErrorFunctionPointer(vi, &error_code, buffer_size, &description);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_error_code(error_code);
-    response->set_description(description);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -890,25 +554,7 @@ Status NiFakeService::GetLastCalDateAndTime(ServerContext* context, const niFake
 //---------------------------------------------------------------------
 Status NiFakeService::ImportAttributeConfigurationBuffer(ServerContext* context, const niFake::ImportAttributeConfigurationBufferRequest* request, niFake::ImportAttributeConfigurationBufferResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto ImportAttributeConfigurationBufferFunctionPointer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("ImportAttributeConfigurationBuffer"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 size_in_bytes = request->size_in_bytes();
-  ViInt8[] configuration = request->configuration();
-
-  auto status = ImportAttributeConfigurationBufferFunctionPointer(vi, size_in_bytes, configuration);
-  response->set_status(status);
-  if (status == 0) {
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -991,59 +637,14 @@ Status NiFakeService::LockSession(ServerContext* context, const niFake::LockSess
 //---------------------------------------------------------------------
 Status NiFakeService::MultipleArrayTypes(ServerContext* context, const niFake::MultipleArrayTypesRequest* request, niFake::MultipleArrayTypesResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto MultipleArrayTypesFunctionPointer = reinterpret_cast<MultipleArrayTypesPtr>(shared_library_.get_function_pointer("MultipleArrayTypes"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 output_array_size = request->output_array_size();
-  ViInt32 input_array_sizes = request->input_array_sizes();
-  ViReal64[] input_array_of_floats = request->input_array_of_floats();
-  ViInt16[] input_array_of_integers = request->input_array_of_integers();
-  ViReal64[] output_array;
-  ViReal64[] output_array_of_fixed_length;
-
-  auto status = MultipleArrayTypesFunctionPointer(vi, output_array_size, &output_array, &output_array_of_fixed_length, input_array_sizes, input_array_of_floats, input_array_of_integers);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_output_array(output_array);
-    response->set_output_array_of_fixed_length(output_array_of_fixed_length);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::MultipleArraysSameSize(ServerContext* context, const niFake::MultipleArraysSameSizeRequest* request, niFake::MultipleArraysSameSizeResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto MultipleArraysSameSizeFunctionPointer = reinterpret_cast<MultipleArraysSameSizePtr>(shared_library_.get_function_pointer("MultipleArraysSameSize"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViReal64[] values1 = request->values1();
-  ViReal64[] values2 = request->values2();
-  ViReal64[] values3 = request->values3();
-  ViReal64[] values4 = request->values4();
-  ViInt32 size = request->size();
-
-  auto status = MultipleArraysSameSizeFunctionPointer(vi, values1, values2, values3, values4, size);
-  response->set_status(status);
-  if (status == 0) {
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -1074,31 +675,7 @@ Status NiFakeService::OneInputFunction(ServerContext* context, const niFake::One
 //---------------------------------------------------------------------
 Status NiFakeService::ParametersAreMultipleTypes(ServerContext* context, const niFake::ParametersAreMultipleTypesRequest* request, niFake::ParametersAreMultipleTypesResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto ParametersAreMultipleTypesFunctionPointer = reinterpret_cast<ParametersAreMultipleTypesPtr>(shared_library_.get_function_pointer("ParametersAreMultipleTypes"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViBoolean a_boolean = request->a_boolean();
-  ViInt32 an_int32 = request->an_int32();
-  ViInt64 an_int64 = request->an_int64();
-  ViInt16 an_int_enum = request->an_int_enum();
-  ViReal64 a_float = request->a_float();
-  ViReal64 a_float_enum = request->a_float_enum();
-  ViInt32 string_size = request->string_size();
-  ViConstString a_string = request->a_string().c_str();
-
-  auto status = ParametersAreMultipleTypesFunctionPointer(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
-  response->set_status(status);
-  if (status == 0) {
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -1181,27 +758,7 @@ Status NiFakeService::ReadFromChannel(ServerContext* context, const niFake::Read
 //---------------------------------------------------------------------
 Status NiFakeService::ReturnANumberAndAString(ServerContext* context, const niFake::ReturnANumberAndAStringRequest* request, niFake::ReturnANumberAndAStringResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto ReturnANumberAndAStringFunctionPointer = reinterpret_cast<ReturnANumberAndAStringPtr>(shared_library_.get_function_pointer("ReturnANumberAndAString"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt16 a_number;
-  ViChar[] a_string;
-
-  auto status = ReturnANumberAndAStringFunctionPointer(vi, &a_number, &a_string);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_a_number(a_number);
-    response->set_a_string(a_string);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -1233,67 +790,14 @@ Status NiFakeService::ReturnDurationInSeconds(ServerContext* context, const niFa
 //---------------------------------------------------------------------
 Status NiFakeService::ReturnListOfDurationsInSeconds(ServerContext* context, const niFake::ReturnListOfDurationsInSecondsRequest* request, niFake::ReturnListOfDurationsInSecondsResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto ReturnListOfDurationsInSecondsFunctionPointer = reinterpret_cast<ReturnListOfDurationsInSecondsPtr>(shared_library_.get_function_pointer("ReturnListOfDurationsInSeconds"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_elements = request->number_of_elements();
-  ViReal64[] timedeltas;
-
-  auto status = ReturnListOfDurationsInSecondsFunctionPointer(vi, number_of_elements, &timedeltas);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_timedeltas(timedeltas);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 Status NiFakeService::ReturnMultipleTypes(ServerContext* context, const niFake::ReturnMultipleTypesRequest* request, niFake::ReturnMultipleTypesResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto ReturnMultipleTypesFunctionPointer = reinterpret_cast<ReturnMultipleTypesPtr>(shared_library_.get_function_pointer("ReturnMultipleTypes"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 array_size = request->array_size();
-  ViInt32 string_size = request->string_size();
-  ViBoolean a_boolean;
-  ViInt32 an_int32;
-  ViInt64 an_int64;
-  ViInt16 an_int_enum;
-  ViReal64 a_float;
-  ViReal64 a_float_enum;
-  ViReal64[] an_array;
-  ViChar[] a_string;
-
-  auto status = ReturnMultipleTypesFunctionPointer(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, &an_array, string_size, &a_string);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_a_boolean(a_boolean);
-    response->set_an_int32(an_int32);
-    response->set_an_int64(an_int64);
-    response->set_an_int_enum(an_int_enum);
-    response->set_a_float(a_float);
-    response->set_a_float_enum(a_float_enum);
-    response->set_an_array(an_array);
-    response->set_a_string(a_string);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -1454,25 +958,7 @@ Status NiFakeService::SetCustomType(ServerContext* context, const niFake::SetCus
 //---------------------------------------------------------------------
 Status NiFakeService::SetCustomTypeArray(ServerContext* context, const niFake::SetCustomTypeArrayRequest* request, niFake::SetCustomTypeArrayResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto SetCustomTypeArrayFunctionPointer = reinterpret_cast<SetCustomTypeArrayPtr>(shared_library_.get_function_pointer("SetCustomTypeArray"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_elements = request->number_of_elements();
-  struct CustomStruct[] cs = request->cs();
-
-  auto status = SetCustomTypeArrayFunctionPointer(vi, number_of_elements, cs);
-  response->set_status(status);
-  if (status == 0) {
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -1579,25 +1065,7 @@ Status NiFakeService::Use64BitNumber(ServerContext* context, const niFake::Use64
 //---------------------------------------------------------------------
 Status NiFakeService::WriteWaveform(ServerContext* context, const niFake::WriteWaveformRequest* request, niFake::WriteWaveformResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto WriteWaveformFunctionPointer = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("WriteWaveform"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt32 number_of_samples = request->number_of_samples();
-  ViReal64[] waveform = request->waveform();
-
-  auto status = WriteWaveformFunctionPointer(vi, number_of_samples, waveform);
-  response->set_status(status);
-  if (status == 0) {
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -1627,26 +1095,7 @@ Status NiFakeService::close(ServerContext* context, const niFake::closeRequest* 
 //---------------------------------------------------------------------
 Status NiFakeService::error_message(ServerContext* context, const niFake::error_messageRequest* request, niFake::error_messageResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto error_messageFunctionPointer = reinterpret_cast<error_messagePtr>(shared_library_.get_function_pointer("error_message"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViStatus error_code = request->error_code();
-  ViChar[] error_message;
-
-  auto status = error_messageFunctionPointer(vi, error_code, &error_message);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_error_message(error_message);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 //---------------------------------------------------------------------
@@ -1676,26 +1125,6 @@ Status NiFakeService::fancy_self_test(ServerContext* context, const niFake::fanc
 //---------------------------------------------------------------------
 Status NiFakeService::self_test(ServerContext* context, const niFake::self_testRequest* request, niFake::self_testResponse* response)
 {
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto self_testFunctionPointer = reinterpret_cast<self_testPtr>(shared_library_.get_function_pointer("self_test"));
-  if (method_name == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
-
-  ViSession vi = session_repository_->lookup_session(request->vi());
-  ViInt16 self_test_result;
-  ViChar[] self_test_message;
-
-  auto status = self_testFunctionPointer(vi, &self_test_result, &self_test_message);
-  response->set_status(status);
-  if (status == 0) {
-    response->set_self_test_result(self_test_result);
-    response->set_self_test_message(self_test_message);
-  }
-
-  return Status::OK;
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 

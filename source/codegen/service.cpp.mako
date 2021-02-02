@@ -157,6 +157,11 @@ def camel_to_snake(camelString):
 
 def camel_to_snake_name(parameter):
   return camel_to_snake(parameter['name'])
+def has_array_parameter(function):
+  for parameter in function['parameters']:
+    if 'size' in parameter.keys():
+      return True
+  return False
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -182,7 +187,9 @@ using grpc::ServerWriter;
     f = functions[method_name]
     parameters = f['parameters']
 %>\
+% if not has_array_parameter(f):
 using ${method_name}Ptr = int (*)(${create_params(parameters)});
+% endif
 %endfor
 
 static bool s_HasSession;
@@ -215,6 +222,12 @@ ${service_name}::${service_name}(internal::SessionRepository* session_repository
 //---------------------------------------------------------------------
 Status ${service_name}::${method_name}(ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
 {
+% if has_array_parameter(f):
+  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
+}
+
+<% continue %>
+% endif
   shared_library_.load();
   if (!shared_library_.is_loaded()) {
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
