@@ -176,11 +176,10 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse reserve_response;
       service.Reserve(&context, &reserveRequest, &reserve_response);
 
-      ni::hardware::grpc::ForceCloseAllSessionsResponse response;
-      service.ForceCloseAllSessions(&context, NULL, &response);
+      ni::hardware::grpc::ResetServerResponse response;
+      service.ResetServer(&context, NULL, &response);
       
       EXPECT_TRUE(response.all_closed());
-      EXPECT_TRUE(response.all_unreserved());
    }
 } // namespace grpc
 } // namespace hardware

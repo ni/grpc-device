@@ -29,9 +29,9 @@ namespace grpc
       return ::grpc::Status::OK;
    }
    
-   ::grpc::Status CoreService::ForceCloseAllSessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionsResponse* response)
+   ::grpc::Status CoreService::ResetServer(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
    {
-      session_repository_->force_close_all_sessions(context, request, response);
+      session_repository_->reset_server(context, request, response);
       return ::grpc::Status::OK;
    }
 } // namespace grpc

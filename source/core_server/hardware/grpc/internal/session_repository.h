@@ -30,7 +30,7 @@ namespace internal
       void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
       void is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response);
       void unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response);
-      void force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionsResponse* response);
+      void reset_server(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response);
 
    private:
       struct SessionInfo

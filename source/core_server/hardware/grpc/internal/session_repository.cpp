@@ -158,14 +158,14 @@ namespace internal
       }
    }
       
-   void SessionRepository::force_close_all_sessions(::grpc::ServerContext* context, const ForceCloseAllSessionsRequest* request, ForceCloseAllSessionsResponse* response)
+   void SessionRepository::reset_server(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
    {
       std::unique_lock<std::shared_mutex> lock(session_lock_);
       reserved_sessions_.clear();
       close_sessions(named_sessions_);
       close_sessions(unnamed_sessions_);
-      response->set_all_closed(named_sessions_.empty() && unnamed_sessions_.empty());
-      response->set_all_unreserved(reserved_sessions_.empty());
+      bool allClosed = named_sessions_.empty() && unnamed_sessions_.empty();
+      response->set_all_closed(allClosed && reserved_sessions_.empty());
    }
 } // namespace internal
 } // namespace grpc

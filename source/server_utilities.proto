@@ -17,8 +17,8 @@ service ServerUtilities {
   // Unreserves a previously reserved resource
   rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
   
-  // Forces all session to close and restores the server to a default state
-  rpc ForceCloseAllSessions (ForceCloseAllSessionsRequest) returns (ForceCloseAllSessionsResponse) {};
+  // Resets the server to a default state with no open sessions
+  rpc ResetServer (ResetServerRequest) returns (ResetServerResponse) {};
 }
 
 message ViSession {
@@ -62,10 +62,9 @@ message UnreserveResponse {
   bool is_unreserved = 1;
 }
 
-message ForceCloseAllSessionsRequest {
+message ResetServerRequest {
 }
 
-message ForceCloseAllSessionsResponse {       
+message ResetServerResponse {       
   bool all_closed = 1;
-  bool all_unreserved = 2;
 }
