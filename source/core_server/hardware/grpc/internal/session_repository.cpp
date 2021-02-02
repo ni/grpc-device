@@ -57,12 +57,7 @@ namespace internal
          }
       }
    }
-   
-   int SessionRepository::get_session_count()
-   {
-      return  static_cast<int>(named_sessions_.size()) +  static_cast<int>(unnamed_sessions_.size());
-   }
-   
+      
    ViSession SessionRepository::lookup_session(const ViSession& remote_session)
    {
       std::shared_lock<std::shared_mutex> lock(session_lock_);
@@ -101,9 +96,9 @@ namespace internal
          if (sessionIterator != map.end()) {          
             auto sessionInfo = sessionIterator->second;
             auto session = sessionInfo->session;
-            auto cleanupProc = sessionInfo->cleanup_proc;
-            if (cleanupProc != NULL){
-               cleanupProc(sessionInfo->session);
+            auto cleanupProccess = sessionInfo->cleanup_proc;
+            if (cleanupProccess != NULL){
+               cleanupProccess(sessionInfo->session);
             }
             map.erase(sessionIterator);
          }
@@ -169,7 +164,8 @@ namespace internal
       reserved_sessions_.clear();
       close_sessions(named_sessions_);
       close_sessions(unnamed_sessions_);
-      response->set_all_closed(true);
+      response->set_all_closed(named_sessions_.empty() && unnamed_sessions_.empty());
+      response->set_all_unreserved(reserved_sessions_.empty());
    }
 } // namespace internal
 } // namespace grpc

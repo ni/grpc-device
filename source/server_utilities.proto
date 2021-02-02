@@ -67,4 +67,5 @@ message ForceCloseAllSessionsRequest {
 
 message ForceCloseAllSessionsResponse {       
   bool all_closed = 1;
+  bool all_unreserved = 2;
 }

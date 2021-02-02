@@ -180,7 +180,7 @@ namespace grpc
       service.ForceCloseAllSessions(&context, NULL, &response);
       
       EXPECT_TRUE(response.all_closed());
-      EXPECT_EQ(session_repository.get_session_count(), 0);
+      EXPECT_TRUE(response.all_unreserved());
    }
 } // namespace grpc
 } // namespace hardware

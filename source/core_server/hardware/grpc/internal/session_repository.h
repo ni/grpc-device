@@ -25,7 +25,6 @@ namespace internal
 
       ViSession* add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc);
       void remove_session(const ViSession& remote_session);
-      int SessionRepository::get_session_count();
       ViSession lookup_session(const ViSession& remote_session);
 
       void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
