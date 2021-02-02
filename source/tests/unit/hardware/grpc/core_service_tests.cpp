@@ -192,6 +192,28 @@ namespace grpc
       ::grpc::ServerContext context;
       ni::hardware::grpc::ReserveResponse reserve_response;
       service.Reserve(&context, &reserveRequest, &reserve_response);
+      
+      ni::hardware::grpc::ResetServerResponse response;
+      service.ResetServer(&context, NULL, &response);
+      
+      EXPECT_TRUE(response.all_closed());
+   }
+   
+      TEST(CoreServiceTests, ReservedNamedAndUnnamedSessions_ResetServer_SessionClosed)
+   {
+      std::string reserve_id("session_name");
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      auto firstSession = session_repository.add_session(ni::hardware::grpc::ViSession(), reserve_id, nullptr);
+      ni::hardware::grpc::ReserveRequest reserveRequest;
+      reserveRequest.set_allocated_session(firstSession);
+      reserveRequest.set_client_reserve_id(reserve_id);
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserveRequest, &reserve_response);
+      auto secondSession = session_repository.add_session(ni::hardware::grpc::ViSession(), "", nullptr);
+      reserveRequest.set_allocated_session(secondSession);
+      service.Reserve(&context, &reserveRequest, &reserve_response);
 
       ni::hardware::grpc::ResetServerResponse response;
       service.ResetServer(&context, NULL, &response);

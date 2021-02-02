@@ -57,7 +57,7 @@ namespace internal
          }
       }
    }
-      
+
    ViSession SessionRepository::lookup_session(const ViSession& remote_session)
    {
       std::shared_lock<std::shared_mutex> lock(session_lock_);
