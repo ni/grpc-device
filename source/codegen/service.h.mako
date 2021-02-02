@@ -7,6 +7,7 @@ functions = data['functions']
 
 ## TODO: Pull niFake from config metadata.
 driver_prefix = "niFake" ## config['driver_name']
+driver_namespace = "fake"
 define_name = "ni_hardware_grpc_" + driver_prefix + "_service_h"
 define_name = define_name.upper()
 service_name = "NiFakeService"
@@ -36,7 +37,7 @@ using namespace std;
 
 namespace ni
 {
-namespace hardware
+namespace ${driver_namespace}
 {
 namespace grpc
 {
@@ -53,6 +54,6 @@ namespace grpc
     SessionRepository* session_repository_;
   };
 } // namespace grpc
-} // namespace hardware
+} // namespace ${driver_namespace}
 } // namespace ni
 #endif ${define_name}

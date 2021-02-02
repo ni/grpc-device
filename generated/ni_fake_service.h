@@ -21,7 +21,7 @@ using namespace std;
 
 namespace ni
 {
-namespace hardware
+namespace fake
 {
 namespace grpc
 {
@@ -95,6 +95,6 @@ namespace grpc
     SessionRepository* session_repository_;
   };
 } // namespace grpc
-} // namespace hardware
+} // namespace fake
 } // namespace ni
 #endif NI_HARDWARE_GRPC_NIFAKE_SERVICE_H
