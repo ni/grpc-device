@@ -14,6 +14,9 @@ library_name = "NiFake"
 service_name = "NiFakeService"
 array_brackets_expression = re.compile(r'\[.*\]')
 c_function_prefix = config['c_function_prefix']
+linux_library_name = config['library_info']['Linux']['64bit']['name']
+linux_library_name = "./" + linux_library_name + '.so'
+windows_libary_name = config['library_info']['Windows']['64bit']['name']
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -54,9 +57,9 @@ using namespace std;
 
 ## Constructors
 #if defined(_MSC_VER)
-   static const char* driver_api_library_name = "${library_name}.dll";
+   static const char* driver_api_library_name = "${windows_libary_name}";
 #else
-   static const char* driver_api_library_name = "./lib${library_name}.so";
+   static const char* driver_api_library_name = "${linux_library_name}";
 #endif
 
 ${service_name}::${service_name}(internal::SessionRepository* session_repository)

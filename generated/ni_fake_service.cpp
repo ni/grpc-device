@@ -62,9 +62,9 @@ static std::atomic<unsigned int> s_IdleCount;
 using namespace std;
 
 #if defined(_MSC_VER)
-   static const char* driver_api_library_name = "NiFake.dll";
+   static const char* driver_api_library_name = "nifake_64.dll";
 #else
-   static const char* driver_api_library_name = "./libNiFake.so";
+   static const char* driver_api_library_name = "./nifake.so";
 #endif
 
 NiFakeService::NiFakeService(internal::SessionRepository* session_repository)
