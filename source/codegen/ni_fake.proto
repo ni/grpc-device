@@ -133,7 +133,7 @@ enum NiFakeValues {
 
 
 message AbortRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message AbortResponse {
@@ -141,9 +141,9 @@ message AbortResponse {
 }
 
 message AcceptListOfDurationsInSecondsRequest {
-  ViSession vi = 1  
-  ViInt32 count = 2  
-  repeated ViReal64 delays = 3  
+  uint32 vi = 1  
+  int32 count = 2  
+  double delays = 3  
 }
 
 message AcceptListOfDurationsInSecondsResponse {
@@ -151,19 +151,19 @@ message AcceptListOfDurationsInSecondsResponse {
 }
 
 message BoolArrayOutputFunctionRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_elements = 2  
+  uint32 vi = 1  
+  int32 number_of_elements = 2  
 }
 
 message BoolArrayOutputFunctionResponse {
   int32 status = 1;
-  repeated ViBoolean an_array = 2  
+  bool an_array = 2  
 }
 
 message DoubleAllTheNumsRequest {
-  ViSession vi = 1  
-  ViInt32 number_count = 2  
-  repeated ViReal64 numbers = 3  
+  uint32 vi = 1  
+  int32 number_count = 2  
+  double numbers = 3  
 }
 
 message DoubleAllTheNumsResponse {
@@ -171,18 +171,18 @@ message DoubleAllTheNumsResponse {
 }
 
 message EnumArrayOutputFunctionRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_elements = 2  
+  uint32 vi = 1  
+  int32 number_of_elements = 2  
 }
 
 message EnumArrayOutputFunctionResponse {
   int32 status = 1;
-  repeated ViInt16 an_array = 2  
+  bytes an_array = 2  
 }
 
 message EnumInputFunctionWithDefaultsRequest {
-  ViSession vi = 1  
-  ViInt16 a_turtle = 2  
+  uint32 vi = 1  
+  bytes a_turtle = 2  
 }
 
 message EnumInputFunctionWithDefaultsResponse {
@@ -190,87 +190,87 @@ message EnumInputFunctionWithDefaultsResponse {
 }
 
 message ExportAttributeConfigurationBufferRequest {
-  ViSession vi = 1  
-  ViInt32 size_in_bytes = 2  
+  uint32 vi = 1  
+  int32 size_in_bytes = 2  
 }
 
 message ExportAttributeConfigurationBufferResponse {
   int32 status = 1;
-  repeated ViInt8 configuration = 2  
+  bytes configuration = 2  
 }
 
 message FetchWaveformRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_samples = 2  
+  uint32 vi = 1  
+  int32 number_of_samples = 2  
 }
 
 message FetchWaveformResponse {
   int32 status = 1;
-  repeated ViReal64 waveform_data = 2  
-  ViInt32 actual_number_of_samples = 3  
+  double waveform_data = 2  
+  int32 actual_number_of_samples = 3  
 }
 
 message GetABooleanRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message GetABooleanResponse {
   int32 status = 1;
-  ViBoolean a_boolean = 2  
+  bool a_boolean = 2  
 }
 
 message GetANumberRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message GetANumberResponse {
   int32 status = 1;
-  ViInt16 a_number = 2  
+  bytes a_number = 2  
 }
 
 message GetAStringOfFixedMaximumSizeRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message GetAStringOfFixedMaximumSizeResponse {
   int32 status = 1;
-  repeated ViChar a_string = 2  
+  string a_string = 2  
 }
 
 message GetAStringUsingPythonCodeRequest {
-  ViSession vi = 1  
-  ViInt16 a_number = 2  
+  uint32 vi = 1  
+  bytes a_number = 2  
 }
 
 message GetAStringUsingPythonCodeResponse {
   int32 status = 1;
-  repeated ViChar a_string = 2  
+  string a_string = 2  
 }
 
 message GetAnIviDanceStringRequest {
-  ViSession vi = 1  
-  ViInt32 buffer_size = 2  
+  uint32 vi = 1  
+  int32 buffer_size = 2  
 }
 
 message GetAnIviDanceStringResponse {
   int32 status = 1;
-  repeated ViChar a_string = 2  
+  string a_string = 2  
 }
 
 message GetAnIviDanceWithATwistStringRequest {
-  ViSession vi = 1  
-  ViInt32 buffer_size = 2  
+  uint32 vi = 1  
+  int32 buffer_size = 2  
 }
 
 message GetAnIviDanceWithATwistStringResponse {
   int32 status = 1;
-  repeated ViChar a_string = 2  
-  ViInt32 actual_size = 3  
+  string a_string = 2  
+  int32 actual_size = 3  
 }
 
 message GetArrayForPythonCodeCustomTypeRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_elements = 2  
+  uint32 vi = 1  
+  int32 number_of_elements = 2  
 }
 
 message GetArrayForPythonCodeCustomTypeResponse {
@@ -279,115 +279,115 @@ message GetArrayForPythonCodeCustomTypeResponse {
 }
 
 message GetArrayForPythonCodeDoubleRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_elements = 2  
+  uint32 vi = 1  
+  int32 number_of_elements = 2  
 }
 
 message GetArrayForPythonCodeDoubleResponse {
   int32 status = 1;
-  repeated ViReal64 array_out = 2  
+  double array_out = 2  
 }
 
 message GetArraySizeForPythonCodeRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message GetArraySizeForPythonCodeResponse {
   int32 status = 1;
-  ViInt32 size_out = 2  
+  int32 size_out = 2  
 }
 
 message GetArrayUsingIviDanceRequest {
-  ViSession vi = 1  
-  ViInt32 array_size = 2  
+  uint32 vi = 1  
+  int32 array_size = 2  
 }
 
 message GetArrayUsingIviDanceResponse {
   int32 status = 1;
-  repeated ViReal64 array_out = 2  
+  double array_out = 2  
 }
 
 message GetAttributeViBooleanRequest {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
 }
 
 message GetAttributeViBooleanResponse {
   int32 status = 1;
-  ViBoolean attribute_value = 2  
+  bool attribute_value = 2  
 }
 
 message GetAttributeViInt32Request {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
 }
 
 message GetAttributeViInt32Response {
   int32 status = 1;
-  ViInt32 attribute_value = 2  
+  int32 attribute_value = 2  
 }
 
 message GetAttributeViInt64Request {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
 }
 
 message GetAttributeViInt64Response {
   int32 status = 1;
-  ViInt64 attribute_value = 2  
+  int64 attribute_value = 2  
 }
 
 message GetAttributeViReal64Request {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
 }
 
 message GetAttributeViReal64Response {
   int32 status = 1;
-  ViReal64 attribute_value = 2  
+  double attribute_value = 2  
 }
 
 message GetAttributeViStringRequest {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
-  ViInt32 buffer_size = 4  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
+  int32 buffer_size = 4  
 }
 
 message GetAttributeViStringResponse {
   int32 status = 1;
-  repeated ViChar attribute_value = 2  
+  string attribute_value = 2  
 }
 
 message GetCalDateAndTimeRequest {
-  ViSession vi = 1  
-  ViInt32 cal_type = 2  
+  uint32 vi = 1  
+  int32 cal_type = 2  
 }
 
 message GetCalDateAndTimeResponse {
   int32 status = 1;
-  ViInt32 month = 2  
-  ViInt32 day = 3  
-  ViInt32 year = 4  
-  ViInt32 hour = 5  
-  ViInt32 minute = 6  
+  int32 month = 2  
+  int32 day = 3  
+  int32 year = 4  
+  int32 hour = 5  
+  int32 minute = 6  
 }
 
 message GetCalIntervalRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message GetCalIntervalResponse {
   int32 status = 1;
-  ViInt32 months = 2  
+  int32 months = 2  
 }
 
 message GetCustomTypeRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message GetCustomTypeResponse {
@@ -396,8 +396,8 @@ message GetCustomTypeResponse {
 }
 
 message GetCustomTypeArrayRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_elements = 2  
+  uint32 vi = 1  
+  int32 number_of_elements = 2  
 }
 
 message GetCustomTypeArrayResponse {
@@ -406,29 +406,29 @@ message GetCustomTypeArrayResponse {
 }
 
 message GetEnumValueRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message GetEnumValueResponse {
   int32 status = 1;
-  ViInt32 a_quantity = 2  
-  ViInt16 a_turtle = 3  
+  int32 a_quantity = 2  
+  bytes a_turtle = 3  
 }
 
 message GetErrorRequest {
-  ViSession vi = 1  
-  ViInt32 buffer_size = 2  
+  uint32 vi = 1  
+  int32 buffer_size = 2  
 }
 
 message GetErrorResponse {
   int32 status = 1;
-  ViStatus error_code = 2  
-  repeated ViChar description = 3  
+  int32 error_code = 2  
+  string description = 3  
 }
 
 message GetLastCalDateAndTimeRequest {
-  ViSession vi = 1  
-  ViInt32 cal_type = 2  
+  uint32 vi = 1  
+  int32 cal_type = 2  
 }
 
 message GetLastCalDateAndTimeResponse {
@@ -437,9 +437,9 @@ message GetLastCalDateAndTimeResponse {
 }
 
 message ImportAttributeConfigurationBufferRequest {
-  ViSession vi = 1  
-  ViInt32 size_in_bytes = 2  
-  repeated ViInt8 configuration = 3  
+  uint32 vi = 1  
+  int32 size_in_bytes = 2  
+  bytes configuration = 3  
 }
 
 message ImportAttributeConfigurationBufferResponse {
@@ -447,19 +447,19 @@ message ImportAttributeConfigurationBufferResponse {
 }
 
 message InitWithOptionsRequest {
-  ViString resource_name = 1  
-  ViBoolean id_query = 2  
-  ViBoolean reset_device = 3  
-  ViConstString option_string = 4  
+  string resource_name = 1  
+  bool id_query = 2  
+  bool reset_device = 3  
+  string option_string = 4  
 }
 
 message InitWithOptionsResponse {
   int32 status = 1;
-  ViSession vi = 2  
+  uint32 vi = 2  
 }
 
 message InitiateRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message InitiateResponse {
@@ -467,35 +467,35 @@ message InitiateResponse {
 }
 
 message LockSessionRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message LockSessionResponse {
   int32 status = 1;
-  ViBoolean caller_has_lock = 2  
+  bool caller_has_lock = 2  
 }
 
 message MultipleArrayTypesRequest {
-  ViSession vi = 1  
-  ViInt32 output_array_size = 2  
-  ViInt32 input_array_sizes = 3  
-  repeated ViReal64 input_array_of_floats = 4  
-  repeated ViInt16 input_array_of_integers = 5  
+  uint32 vi = 1  
+  int32 output_array_size = 2  
+  int32 input_array_sizes = 3  
+  double input_array_of_floats = 4  
+  bytes input_array_of_integers = 5  
 }
 
 message MultipleArrayTypesResponse {
   int32 status = 1;
-  repeated ViReal64 output_array = 2  
-  repeated ViReal64 output_array_of_fixed_length = 3  
+  double output_array = 2  
+  double output_array_of_fixed_length = 3  
 }
 
 message MultipleArraysSameSizeRequest {
-  ViSession vi = 1  
-  repeated ViReal64 values1 = 2  
-  repeated ViReal64 values2 = 3  
-  repeated ViReal64 values3 = 4  
-  repeated ViReal64 values4 = 5  
-  ViInt32 size = 6  
+  uint32 vi = 1  
+  double values1 = 2  
+  double values2 = 3  
+  double values3 = 4  
+  double values4 = 5  
+  int32 size = 6  
 }
 
 message MultipleArraysSameSizeResponse {
@@ -503,8 +503,8 @@ message MultipleArraysSameSizeResponse {
 }
 
 message OneInputFunctionRequest {
-  ViSession vi = 1  
-  ViInt32 a_number = 2  
+  uint32 vi = 1  
+  int32 a_number = 2  
 }
 
 message OneInputFunctionResponse {
@@ -512,15 +512,15 @@ message OneInputFunctionResponse {
 }
 
 message ParametersAreMultipleTypesRequest {
-  ViSession vi = 1  
-  ViBoolean a_boolean = 2  
-  ViInt32 an_int32 = 3  
-  ViInt64 an_int64 = 4  
-  ViInt16 an_int_enum = 5  
-  ViReal64 a_float = 6  
-  ViReal64 a_float_enum = 7  
-  ViInt32 string_size = 8  
-  ViConstString a_string = 9  
+  uint32 vi = 1  
+  bool a_boolean = 2  
+  int32 an_int32 = 3  
+  int64 an_int64 = 4  
+  bytes an_int_enum = 5  
+  double a_float = 6  
+  double a_float_enum = 7  
+  int32 string_size = 8  
+  string a_string = 9  
 }
 
 message ParametersAreMultipleTypesResponse {
@@ -528,7 +528,7 @@ message ParametersAreMultipleTypesResponse {
 }
 
 message PoorlyNamedSimpleFunctionRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message PoorlyNamedSimpleFunctionResponse {
@@ -536,78 +536,78 @@ message PoorlyNamedSimpleFunctionResponse {
 }
 
 message ReadRequest {
-  ViSession vi = 1  
-  ViReal64 maximum_time = 2  
+  uint32 vi = 1  
+  double maximum_time = 2  
 }
 
 message ReadResponse {
   int32 status = 1;
-  ViReal64 reading = 2  
+  double reading = 2  
 }
 
 message ReadFromChannelRequest {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViInt32 maximum_time = 3  
+  uint32 vi = 1  
+  string channel_name = 2  
+  int32 maximum_time = 3  
 }
 
 message ReadFromChannelResponse {
   int32 status = 1;
-  ViReal64 reading = 2  
+  double reading = 2  
 }
 
 message ReturnANumberAndAStringRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message ReturnANumberAndAStringResponse {
   int32 status = 1;
-  ViInt16 a_number = 2  
-  repeated ViChar a_string = 3  
+  bytes a_number = 2  
+  string a_string = 3  
 }
 
 message ReturnDurationInSecondsRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message ReturnDurationInSecondsResponse {
   int32 status = 1;
-  ViReal64 timedelta = 2  
+  double timedelta = 2  
 }
 
 message ReturnListOfDurationsInSecondsRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_elements = 2  
+  uint32 vi = 1  
+  int32 number_of_elements = 2  
 }
 
 message ReturnListOfDurationsInSecondsResponse {
   int32 status = 1;
-  repeated ViReal64 timedeltas = 2  
+  double timedeltas = 2  
 }
 
 message ReturnMultipleTypesRequest {
-  ViSession vi = 1  
-  ViInt32 array_size = 2  
-  ViInt32 string_size = 3  
+  uint32 vi = 1  
+  int32 array_size = 2  
+  int32 string_size = 3  
 }
 
 message ReturnMultipleTypesResponse {
   int32 status = 1;
-  ViBoolean a_boolean = 2  
-  ViInt32 an_int32 = 3  
-  ViInt64 an_int64 = 4  
-  ViInt16 an_int_enum = 5  
-  ViReal64 a_float = 6  
-  ViReal64 a_float_enum = 7  
-  repeated ViReal64 an_array = 8  
-  repeated ViChar a_string = 9  
+  bool a_boolean = 2  
+  int32 an_int32 = 3  
+  int64 an_int64 = 4  
+  bytes an_int_enum = 5  
+  double a_float = 6  
+  double a_float_enum = 7  
+  double an_array = 8  
+  string a_string = 9  
 }
 
 message SetAttributeViBooleanRequest {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
-  ViBoolean attribute_value = 4  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
+  bool attribute_value = 4  
 }
 
 message SetAttributeViBooleanResponse {
@@ -615,10 +615,10 @@ message SetAttributeViBooleanResponse {
 }
 
 message SetAttributeViInt32Request {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
-  ViInt32 attribute_value = 4  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
+  int32 attribute_value = 4  
 }
 
 message SetAttributeViInt32Response {
@@ -626,10 +626,10 @@ message SetAttributeViInt32Response {
 }
 
 message SetAttributeViInt64Request {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
-  ViInt64 attribute_value = 4  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
+  int64 attribute_value = 4  
 }
 
 message SetAttributeViInt64Response {
@@ -637,10 +637,10 @@ message SetAttributeViInt64Response {
 }
 
 message SetAttributeViReal64Request {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
-  ViReal64 attribute_value = 4  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
+  double attribute_value = 4  
 }
 
 message SetAttributeViReal64Response {
@@ -648,10 +648,10 @@ message SetAttributeViReal64Response {
 }
 
 message SetAttributeViStringRequest {
-  ViSession vi = 1  
-  ViConstString channel_name = 2  
-  ViAttr attribute_id = 3  
-  ViConstString attribute_value = 4  
+  uint32 vi = 1  
+  string channel_name = 2  
+  FakeAttributes attribute_id = 3  
+  string attribute_value = 4  
 }
 
 message SetAttributeViStringResponse {
@@ -659,7 +659,7 @@ message SetAttributeViStringResponse {
 }
 
 message SetCustomTypeRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
   struct CustomStruct cs = 2  
 }
 
@@ -668,8 +668,8 @@ message SetCustomTypeResponse {
 }
 
 message SetCustomTypeArrayRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_elements = 2  
+  uint32 vi = 1  
+  int32 number_of_elements = 2  
   repeated struct CustomStruct cs = 3  
 }
 
@@ -678,8 +678,8 @@ message SetCustomTypeArrayResponse {
 }
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {
-  ViSession vi = 1  
-  ViConstString a_mobile_o_s_name = 2  
+  uint32 vi = 1  
+  string a_mobile_o_s_name = 2  
 }
 
 message StringValuedEnumInputFunctionWithDefaultsResponse {
@@ -687,9 +687,9 @@ message StringValuedEnumInputFunctionWithDefaultsResponse {
 }
 
 message TwoInputFunctionRequest {
-  ViSession vi = 1  
-  ViReal64 a_number = 2  
-  ViString a_string = 3  
+  uint32 vi = 1  
+  double a_number = 2  
+  string a_string = 3  
 }
 
 message TwoInputFunctionResponse {
@@ -697,28 +697,28 @@ message TwoInputFunctionResponse {
 }
 
 message UnlockSessionRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message UnlockSessionResponse {
   int32 status = 1;
-  ViBoolean caller_has_lock = 2  
+  bool caller_has_lock = 2  
 }
 
 message Use64BitNumberRequest {
-  ViSession vi = 1  
-  ViInt64 input = 2  
+  uint32 vi = 1  
+  int64 input = 2  
 }
 
 message Use64BitNumberResponse {
   int32 status = 1;
-  ViInt64 output = 2  
+  int64 output = 2  
 }
 
 message WriteWaveformRequest {
-  ViSession vi = 1  
-  ViInt32 number_of_samples = 2  
-  repeated ViReal64 waveform = 3  
+  uint32 vi = 1  
+  int32 number_of_samples = 2  
+  double waveform = 3  
 }
 
 message WriteWaveformResponse {
@@ -726,7 +726,7 @@ message WriteWaveformResponse {
 }
 
 message CloseRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message CloseResponse {
@@ -734,17 +734,17 @@ message CloseResponse {
 }
 
 message ErrorMessageRequest {
-  ViSession vi = 1  
-  ViStatus error_code = 2  
+  uint32 vi = 1  
+  int32 error_code = 2  
 }
 
 message ErrorMessageResponse {
   int32 status = 1;
-  repeated ViChar error_message = 2  
+  string error_message = 2  
 }
 
 message FancySelfTestRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message FancySelfTestResponse {
@@ -752,11 +752,11 @@ message FancySelfTestResponse {
 }
 
 message SelfTestRequest {
-  ViSession vi = 1  
+  uint32 vi = 1  
 }
 
 message SelfTestResponse {
   int32 status = 1;
-  ViInt16 self_test_result = 2  
-  repeated ViChar self_test_message = 3  
+  bytes self_test_result = 2  
+  string self_test_message = 3  
 }

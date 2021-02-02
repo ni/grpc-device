@@ -69,6 +69,47 @@ def pascal_to_camel(pascal_string) :
   
 driver_name_camel = pascal_to_camel(driver_name_pascal) 
 c_function_prefix = data["config"]["c_function_prefix"] 
+
+def get_grpc_type_from_ivi(type):
+    if 'ViSession' in type:
+        return 'uint32'
+    if 'ViBoolean' in type:
+        return 'bool'
+    if 'ViReal64' in type:
+        return 'double'
+    if 'ViInt32' in type:
+        return 'int32'
+    if 'ViConstString' in type:
+        return 'string'
+    if 'ViString' in type:
+        return 'string'
+    if 'ViRsrc' in type:
+        return 'string'
+    if 'ViChar' in type:
+        return 'string'
+    if 'ViReal32' in type:
+        return 'float'
+    if 'ViAttr' in type:
+        return driver_name_to_pascal(driver_name_camel.replace("ni", "")) + "Attributes"
+    if 'ViInt8' in type:
+        return 'bytes'
+    if 'void' in type:
+        return 'bytes'
+    if 'ViInt16' in type:
+        return 'bytes'
+    if 'ViInt64' in type:
+        return 'int64'
+    if 'ViUInt32' in type:
+        return 'uint32'
+    if 'ViUInt64' in type:
+        return 'uint64'
+    if 'ViStatus' in type:
+        return 'int32'
+    if 'ViAddr' in type:
+        return 'bytes'
+    if 'int' == type:
+        return 'int32'
+    return type
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -144,7 +185,7 @@ message ${snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%  
   index  = index +1
-  parameter_type = parameter["type"]
+  parameter_type = get_grpc_type_from_ivi(parameter["type"])
   if is_array(parameter_type) is True:
     parameter_type = "repeated " + parameter_type.replace('[]','')
 %>\
@@ -160,7 +201,7 @@ message ${snake_to_camel(function)}Response {
 % for parameter in output_parameters:
 <%  
   index = index + 1
-  parameter_type = parameter["type"]
+  parameter_type = get_grpc_type_from_ivi(parameter["type"])
   if is_array(parameter_type) is True:
     parameter_type = "repeated " + parameter_type.replace('[]','')
 %>\
