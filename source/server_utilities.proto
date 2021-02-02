@@ -18,18 +18,11 @@ service ServerUtilities {
   rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
 }
 
-message ViSession {
-  oneof session {
-      string session_name = 1;
-      sfixed64 id = 2;
-  }
-}
-
 message ReserveRequest {
   // client defined string representing a set of reservable resources
-  ViSession session = 1;
+  string reservation_id = 1;
   // client defined identifier for a specific client
-  string client_reserve_id = 2;
+  string client_id = 2;
 }
 
 message ReserveResponse {
@@ -42,8 +35,10 @@ message ReserveResponse {
 }
 
 message IsReservedByClientRequest {
+  // client defined string representing a set of reservable resources
+  string reservation_id = 1;
   // client defined identifier for a specific client
-  string client_reserve_id = 1;
+  string client_id = 2;
 }
 
 message IsReservedByClientResponse {
@@ -51,8 +46,10 @@ message IsReservedByClientResponse {
 }
 
 message UnreserveRequest {
-   // client defined identifier for a specific client
-  string client_reserve_id = 1;
+   // client defined string representing a set of reservable resources
+  string reservation_id = 1;
+  // client defined identifier for a specific client
+  string client_id = 2;
 }
 
 message UnreserveResponse {

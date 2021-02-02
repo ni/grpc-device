@@ -1,12 +1,10 @@
 #ifndef NI_HARDWARE_GRPC_INTERNAL_SESSIONREPOSITORY
 #define NI_HARDWARE_GRPC_INTERNAL_SESSIONREPOSITORY
 
-#include <server_utilities.grpc.pb.h>
-#include <grpcpp/grpcpp.h>
-#include <grpcpp/health_check_service_interface.h>
-#include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <shared_mutex>
 #include "hardware/grpc/internal/semaphore.h"
+#include <grpcpp/grpcpp.h>
+#include <server_utilities.grpc.pb.h>
 
 namespace ni
 {
@@ -21,32 +19,36 @@ namespace internal
    public:
       SessionRepository();
 
-      using CleanupSessionProc = void (*)(ViSession session);
+      using CleanupSessionProc = void (*)(const std::string& session_name);
 
-      ViSession* add_session(ViSession vi, const std::string& session_user_id, CleanupSessionProc cleanup_proc);
-      void remove_session(const ViSession& remote_session);
-      ViSession lookup_session(const ViSession& remote_session);
+      void add_session(const std::string& session_user_id, CleanupSessionProc cleanup_proc);
+      void remove_session(const std::string& session_name);
 
-      void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
-      void is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response);
-      void unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response);
+      ReserveResponse_ReserveStatus reserve(const std::string& reservation_id, const std::string& client_id);
+      bool is_reserved_by_client(const std::string& reservation_id, const std::string& client_id);
+      bool unreserve(const std::string& reservation_id, const std::string& client_id);
 
    private:
+      struct ReservationInfo
+      {
+         std::string client_id;
+         std::unique_ptr<internal::Semaphore> lock;
+         std::chrono::steady_clock::time_point creation_time;
+      };
+
       struct SessionInfo
       {
-         ViSession session;
-         std::unique_ptr<internal::Semaphore> lock;
          std::chrono::steady_clock::time_point last_access_time;
          SessionRepository::CleanupSessionProc cleanup_proc;
       };
 
       using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
       using SessionMap = std::map<google::protobuf::int64, std::shared_ptr<SessionInfo>>;
-      using SessionReservationMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
+      using ReservationMap = std::map<std::string, std::shared_ptr<ReservationInfo>>;
 
-      std::shared_ptr<SessionInfo> lookup_session_info_unlocked(const ViSession& remote_session);
+      std::shared_ptr<ReservationInfo> lookup_reservation_info_unlocked(const std::string& reservation_id);
 
-      SessionReservationMap reserved_sessions_;
+      ReservationMap reservations_;
       std::shared_mutex session_lock_;
       int next_session_id_;
       NamedSessionMap named_sessions_;
