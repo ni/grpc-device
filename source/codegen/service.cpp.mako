@@ -89,7 +89,7 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto ${method_name}FunctionPointer = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_function_prefix}${method_name}"));
-  if (method_name == nullptr) {
+  if (${method_name}FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 

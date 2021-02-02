@@ -81,7 +81,7 @@ Status NiFakeService::Abort(ServerContext* context, const niFake::AbortRequest* 
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto AbortFunctionPointer = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niFake_Abort"));
-  if (method_name == nullptr) {
+  if (AbortFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -132,7 +132,7 @@ Status NiFakeService::EnumInputFunctionWithDefaults(ServerContext* context, cons
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto EnumInputFunctionWithDefaultsFunctionPointer = reinterpret_cast<EnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
-  if (method_name == nullptr) {
+  if (EnumInputFunctionWithDefaultsFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -170,7 +170,7 @@ Status NiFakeService::GetABoolean(ServerContext* context, const niFake::GetABool
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetABooleanFunctionPointer = reinterpret_cast<GetABooleanPtr>(shared_library_.get_function_pointer("niFake_GetABoolean"));
-  if (method_name == nullptr) {
+  if (GetABooleanFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -195,7 +195,7 @@ Status NiFakeService::GetANumber(ServerContext* context, const niFake::GetANumbe
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetANumberFunctionPointer = reinterpret_cast<GetANumberPtr>(shared_library_.get_function_pointer("niFake_GetANumber"));
-  if (method_name == nullptr) {
+  if (GetANumberFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -262,7 +262,7 @@ Status NiFakeService::GetArraySizeForPythonCode(ServerContext* context, const ni
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetArraySizeForPythonCodeFunctionPointer = reinterpret_cast<GetArraySizeForPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForPythonCode"));
-  if (method_name == nullptr) {
+  if (GetArraySizeForPythonCodeFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -294,7 +294,7 @@ Status NiFakeService::GetAttributeViBoolean(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetAttributeViBooleanFunctionPointer = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFake_GetAttributeViBoolean"));
-  if (method_name == nullptr) {
+  if (GetAttributeViBooleanFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -321,7 +321,7 @@ Status NiFakeService::GetAttributeViInt32(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetAttributeViInt32FunctionPointer = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViInt32"));
-  if (method_name == nullptr) {
+  if (GetAttributeViInt32FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -348,7 +348,7 @@ Status NiFakeService::GetAttributeViInt64(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetAttributeViInt64FunctionPointer = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViInt64"));
-  if (method_name == nullptr) {
+  if (GetAttributeViInt64FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -375,7 +375,7 @@ Status NiFakeService::GetAttributeViReal64(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetAttributeViReal64FunctionPointer = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViReal64"));
-  if (method_name == nullptr) {
+  if (GetAttributeViReal64FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -409,7 +409,7 @@ Status NiFakeService::GetCalDateAndTime(ServerContext* context, const niFake::Ge
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetCalDateAndTimeFunctionPointer = reinterpret_cast<GetCalDateAndTimePtr>(shared_library_.get_function_pointer("niFake_GetCalDateAndTime"));
-  if (method_name == nullptr) {
+  if (GetCalDateAndTimeFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -443,7 +443,7 @@ Status NiFakeService::GetCalInterval(ServerContext* context, const niFake::GetCa
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetCalIntervalFunctionPointer = reinterpret_cast<GetCalIntervalPtr>(shared_library_.get_function_pointer("niFake_GetCalInterval"));
-  if (method_name == nullptr) {
+  if (GetCalIntervalFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -468,7 +468,7 @@ Status NiFakeService::GetCustomType(ServerContext* context, const niFake::GetCus
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetCustomTypeFunctionPointer = reinterpret_cast<GetCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetCustomType"));
-  if (method_name == nullptr) {
+  if (GetCustomTypeFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -500,7 +500,7 @@ Status NiFakeService::GetEnumValue(ServerContext* context, const niFake::GetEnum
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetEnumValueFunctionPointer = reinterpret_cast<GetEnumValuePtr>(shared_library_.get_function_pointer("niFake_GetEnumValue"));
-  if (method_name == nullptr) {
+  if (GetEnumValueFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -534,7 +534,7 @@ Status NiFakeService::GetLastCalDateAndTime(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto GetLastCalDateAndTimeFunctionPointer = reinterpret_cast<GetLastCalDateAndTimePtr>(shared_library_.get_function_pointer("niFake_GetLastCalDateAndTime"));
-  if (method_name == nullptr) {
+  if (GetLastCalDateAndTimeFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -567,7 +567,7 @@ Status NiFakeService::InitWithOptions(ServerContext* context, const niFake::Init
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto InitWithOptionsFunctionPointer = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niFake_InitWithOptions"));
-  if (method_name == nullptr) {
+  if (InitWithOptionsFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -595,7 +595,7 @@ Status NiFakeService::Initiate(ServerContext* context, const niFake::InitiateReq
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto InitiateFunctionPointer = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niFake_Initiate"));
-  if (method_name == nullptr) {
+  if (InitiateFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -618,7 +618,7 @@ Status NiFakeService::LockSession(ServerContext* context, const niFake::LockSess
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto LockSessionFunctionPointer = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niFake_LockSession"));
-  if (method_name == nullptr) {
+  if (LockSessionFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -657,7 +657,7 @@ Status NiFakeService::OneInputFunction(ServerContext* context, const niFake::One
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto OneInputFunctionFunctionPointer = reinterpret_cast<OneInputFunctionPtr>(shared_library_.get_function_pointer("niFake_OneInputFunction"));
-  if (method_name == nullptr) {
+  if (OneInputFunctionFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -688,7 +688,7 @@ Status NiFakeService::PoorlyNamedSimpleFunction(ServerContext* context, const ni
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto PoorlyNamedSimpleFunctionFunctionPointer = reinterpret_cast<PoorlyNamedSimpleFunctionPtr>(shared_library_.get_function_pointer("niFake_PoorlyNamedSimpleFunction"));
-  if (method_name == nullptr) {
+  if (PoorlyNamedSimpleFunctionFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -711,7 +711,7 @@ Status NiFakeService::Read(ServerContext* context, const niFake::ReadRequest* re
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto ReadFunctionPointer = reinterpret_cast<ReadPtr>(shared_library_.get_function_pointer("niFake_Read"));
-  if (method_name == nullptr) {
+  if (ReadFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -737,7 +737,7 @@ Status NiFakeService::ReadFromChannel(ServerContext* context, const niFake::Read
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto ReadFromChannelFunctionPointer = reinterpret_cast<ReadFromChannelPtr>(shared_library_.get_function_pointer("niFake_ReadFromChannel"));
-  if (method_name == nullptr) {
+  if (ReadFromChannelFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -771,7 +771,7 @@ Status NiFakeService::ReturnDurationInSeconds(ServerContext* context, const niFa
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto ReturnDurationInSecondsFunctionPointer = reinterpret_cast<ReturnDurationInSecondsPtr>(shared_library_.get_function_pointer("niFake_ReturnDurationInSeconds"));
-  if (method_name == nullptr) {
+  if (ReturnDurationInSecondsFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -810,7 +810,7 @@ Status NiFakeService::SetAttributeViBoolean(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto SetAttributeViBooleanFunctionPointer = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFake_SetAttributeViBoolean"));
-  if (method_name == nullptr) {
+  if (SetAttributeViBooleanFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -836,7 +836,7 @@ Status NiFakeService::SetAttributeViInt32(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto SetAttributeViInt32FunctionPointer = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFake_SetAttributeViInt32"));
-  if (method_name == nullptr) {
+  if (SetAttributeViInt32FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -862,7 +862,7 @@ Status NiFakeService::SetAttributeViInt64(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto SetAttributeViInt64FunctionPointer = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFake_SetAttributeViInt64"));
-  if (method_name == nullptr) {
+  if (SetAttributeViInt64FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -888,7 +888,7 @@ Status NiFakeService::SetAttributeViReal64(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto SetAttributeViReal64FunctionPointer = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFake_SetAttributeViReal64"));
-  if (method_name == nullptr) {
+  if (SetAttributeViReal64FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -914,7 +914,7 @@ Status NiFakeService::SetAttributeViString(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto SetAttributeViStringFunctionPointer = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niFake_SetAttributeViString"));
-  if (method_name == nullptr) {
+  if (SetAttributeViStringFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -940,7 +940,7 @@ Status NiFakeService::SetCustomType(ServerContext* context, const niFake::SetCus
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto SetCustomTypeFunctionPointer = reinterpret_cast<SetCustomTypePtr>(shared_library_.get_function_pointer("niFake_SetCustomType"));
-  if (method_name == nullptr) {
+  if (SetCustomTypeFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -971,7 +971,7 @@ Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(ServerContext* c
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto StringValuedEnumInputFunctionWithDefaultsFunctionPointer = reinterpret_cast<StringValuedEnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_StringValuedEnumInputFunctionWithDefaults"));
-  if (method_name == nullptr) {
+  if (StringValuedEnumInputFunctionWithDefaultsFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -995,7 +995,7 @@ Status NiFakeService::TwoInputFunction(ServerContext* context, const niFake::Two
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto TwoInputFunctionFunctionPointer = reinterpret_cast<TwoInputFunctionPtr>(shared_library_.get_function_pointer("niFake_TwoInputFunction"));
-  if (method_name == nullptr) {
+  if (TwoInputFunctionFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -1020,7 +1020,7 @@ Status NiFakeService::UnlockSession(ServerContext* context, const niFake::Unlock
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto UnlockSessionFunctionPointer = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niFake_UnlockSession"));
-  if (method_name == nullptr) {
+  if (UnlockSessionFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -1045,7 +1045,7 @@ Status NiFakeService::Use64BitNumber(ServerContext* context, const niFake::Use64
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto Use64BitNumberFunctionPointer = reinterpret_cast<Use64BitNumberPtr>(shared_library_.get_function_pointer("niFake_Use64BitNumber"));
-  if (method_name == nullptr) {
+  if (Use64BitNumberFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -1078,7 +1078,7 @@ Status NiFakeService::close(ServerContext* context, const niFake::closeRequest* 
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto closeFunctionPointer = reinterpret_cast<closePtr>(shared_library_.get_function_pointer("niFake_close"));
-  if (method_name == nullptr) {
+  if (closeFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
@@ -1108,7 +1108,7 @@ Status NiFakeService::fancy_self_test(ServerContext* context, const niFake::fanc
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto fancy_self_testFunctionPointer = reinterpret_cast<fancy_self_testPtr>(shared_library_.get_function_pointer("niFake_fancy_self_test"));
-  if (method_name == nullptr) {
+  if (fancy_self_testFunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
