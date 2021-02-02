@@ -22,7 +22,7 @@ service_name = "NiFakeService"
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <condition_variable>
 #include "core_server/hardware/grpc/internal/shared_library.h"
-## TODO: Do we need more includes? Session manager, core_service, and/or SharedLibrary?
+#include "core_server/hardware/grpc/internal/session_repository.h"
 
 ## Usings TODO: Do we want to use usings or no?
 using grpc::Server;
@@ -31,6 +31,7 @@ using grpc::ServerContext;
 using grpc::Status;
 using grpc::ServerWriter;
 using ni::hardware::grpc::internal::SharedLibrary;
+using ni::hardware::grpc::internal::SessionRepository;
 using namespace std;
 
 namespace ni
@@ -42,14 +43,14 @@ namespace grpc
   class ${service_name} final : public ${driver_prefix}::Service
   {
   public:
-    ${service_name}(internal::SessionRepository* session_repository);
+    ${service_name}(SessionRepository* session_repository);
   % for function in functions:
   ## TODO: Possibly filter which functions to generate.
     Status ${function}(ServerContext* context, const ${driver_prefix}::${function}Request* request, ${driver_prefix}::${function}Response* response) override;
   % endfor
   private:
     SharedLibrary shared_library_;
-    internal::SessionRepository* session_repository_;
+    SessionRepository* session_repository_;
   };
 } // namespace grpc
 } // namespace hardware

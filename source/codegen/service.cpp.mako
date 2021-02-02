@@ -181,6 +181,7 @@ using grpc::ServerContext;
 using grpc::Status;
 using grpc::StatusCode
 using grpc::ServerWriter;
+using ni::hardware::grpc::internal::ViSession;
 
 % for method_name in functions:
 <%

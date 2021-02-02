@@ -8,6 +8,7 @@
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <condition_variable>
 #include "core_server/hardware/grpc/internal/shared_library.h"
+#include "core_server/hardware/grpc/internal/session_repository.h"
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -15,6 +16,7 @@ using grpc::ServerContext;
 using grpc::Status;
 using grpc::ServerWriter;
 using ni::hardware::grpc::internal::SharedLibrary;
+using ni::hardware::grpc::internal::SessionRepository;
 using namespace std;
 
 namespace ni
@@ -26,7 +28,7 @@ namespace grpc
   class NiFakeService final : public niFake::Service
   {
   public:
-    NiFakeService(internal::SessionRepository* session_repository);
+    NiFakeService(SessionRepository* session_repository);
     Status Abort(ServerContext* context, const niFake::AbortRequest* request, niFake::AbortResponse* response) override;
     Status AcceptListOfDurationsInSeconds(ServerContext* context, const niFake::AcceptListOfDurationsInSecondsRequest* request, niFake::AcceptListOfDurationsInSecondsResponse* response) override;
     Status BoolArrayOutputFunction(ServerContext* context, const niFake::BoolArrayOutputFunctionRequest* request, niFake::BoolArrayOutputFunctionResponse* response) override;
@@ -90,7 +92,7 @@ namespace grpc
     Status self_test(ServerContext* context, const niFake::self_testRequest* request, niFake::self_testResponse* response) override;
   private:
     SharedLibrary shared_library_;
-    internal::SessionRepository* session_repository_;
+    SessionRepository* session_repository_;
   };
 } // namespace grpc
 } // namespace hardware

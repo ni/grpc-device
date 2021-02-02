@@ -17,6 +17,7 @@ using grpc::ServerContext;
 using grpc::Status;
 using grpc::StatusCode
 using grpc::ServerWriter;
+using ni::hardware::grpc::internal::ViSession;
 
 using AbortPtr = int (*)(ViSession);
 using EnumInputFunctionWithDefaultsPtr = int (*)(ViSession, bytes);
