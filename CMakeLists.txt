@@ -103,6 +103,10 @@ add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
@@ -117,7 +121,8 @@ add_executable(UnitTestsRunner
 target_link_libraries(UnitTestsRunner
     gtest
     ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS})
+    ${CMAKE_DL_LIBS}
+    Threads::Threads)
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )
