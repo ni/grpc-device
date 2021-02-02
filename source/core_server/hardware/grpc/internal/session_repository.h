@@ -30,7 +30,7 @@ namespace internal
       void reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response);
       void is_reserved_by_client(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response);
       void unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response);
-      void reset_server(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response);
+      bool reset_server();
 
    private:
       struct SessionInfo
@@ -48,7 +48,9 @@ namespace internal
       std::shared_ptr<SessionInfo> lookup_session_info_unlocked(const ViSession& remote_session);
       template<class MapType>
       void close_sessions(MapType& map);
-      
+      void clear_reservations();
+      bool unreserve_unlocked(const std::string& clientReserveId);
+
       SessionReservationMap reserved_sessions_;
       std::shared_mutex session_lock_;
       int next_session_id_;

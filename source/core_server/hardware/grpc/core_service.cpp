@@ -31,7 +31,8 @@ namespace grpc
    
    ::grpc::Status CoreService::ResetServer(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
    {
-      session_repository_->reset_server(context, request, response);
+      auto closeSuccess = session_repository_->reset_server();
+      response->set_all_closed(closeSuccess);
       return ::grpc::Status::OK;
    }
 } // namespace grpc

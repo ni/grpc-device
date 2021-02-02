@@ -105,6 +105,17 @@ namespace internal
       }
    }
    
+   void SessionRepository::clear_reservations()
+   {
+      for (auto reservationIterator = reserved_sessions_.begin(); reservationIterator != reserved_sessions_.end(); reservationIterator++)
+      {
+         if (reservationIterator != reserved_sessions_.end()) {    
+            auto clientReserveId = reservationIterator->first;         
+            unreserve_unlocked(clientReserveId);
+         }
+      }
+   }
+   
    void SessionRepository::reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
    {
       std::shared_ptr<SessionInfo> session_info;
@@ -141,31 +152,37 @@ namespace internal
 
    void SessionRepository::unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)
    {
-      std::shared_ptr<SessionInfo> sessionInfo;
-      {
          std::unique_lock<std::shared_mutex> lock(session_lock_);
-         auto it = reserved_sessions_.find(request->client_reserve_id());
-         if (it != reserved_sessions_.end()) {
-            sessionInfo = it->second;
-            reserved_sessions_.erase(it);
-         }
+         auto isUnreserved = unreserve_unlocked(request->client_reserve_id());
+         response->set_is_unreserved(isUnreserved);
+   }
+   
+   bool SessionRepository::unreserve_unlocked(const std::string& clientReserveId)
+   {
+      auto it = reserved_sessions_.find(clientReserveId);
+      std::shared_ptr<SessionInfo> sessionInfo;
+      if (it != reserved_sessions_.end()) {
+         sessionInfo = it->second;
+         reserved_sessions_.erase(it);
       }
+
       if (sessionInfo) {
          auto now = std::chrono::steady_clock::now();
          sessionInfo->last_access_time = now;
          sessionInfo->lock->notify();
-         response->set_is_unreserved(true);
+         return true;
       }
+      return false;
    }
       
-   void SessionRepository::reset_server(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
+   bool SessionRepository::reset_server()
    {
       std::unique_lock<std::shared_mutex> lock(session_lock_);
-      reserved_sessions_.clear();
+      clear_reservations();
       close_sessions(named_sessions_);
       close_sessions(unnamed_sessions_);
       bool allClosed = named_sessions_.empty() && unnamed_sessions_.empty();
-      response->set_all_closed(allClosed && reserved_sessions_.empty());
+      return allClosed && reserved_sessions_.empty();
    }
 } // namespace internal
 } // namespace grpc
