@@ -52,26 +52,6 @@ def get_repeated_prefix(parameter):
         return 'repeated '
     return ''
 
-def get_request_value(parameter):
-    result = ''
-    if parameter['type'] == 'ViChar':
-        result = result + '(char*)'
-    if parameter['type'] == 'ViSession':
-        result = result + 'session_repository_->lookup_session('        
-    result = result + 'request->'
-    result = result + get_grpc_type_from_ivi(camel_to_snake_name(parameter).lower())
-    result = result + '()'
-    if parameter['type'] == 'ViConstString':
-        result = result + '.c_str()'
-    if parameter['type'] == 'ViRsrc':
-        result = result + '.c_str()'
-    if parameter['type'] == 'ViChar':
-        result = result + '.c_str()'
-    if parameter['type'] == 'ViSession':
-        result = result + ')'
-    result = result + ';'
-    return result
-
 def camel_to_snake(camelString):
   camelString = list(camelString)
   index = 0

@@ -96,7 +96,7 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
   }
 
 %for parameter in input_parameters:
-  ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)} = ${codegen_helpers.get_request_value(parameter)}
+  ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)} = ${handler_helpers.get_request_value(parameter)}
 %endfor
 %for parameter in output_parameters:
   ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)};
