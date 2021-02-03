@@ -2,6 +2,7 @@
 <%
 import re
 import codegen_helpers
+import handler_helpers
 attributes = data['attributes']
 config = data['config']
 enums = data['enums']
@@ -44,7 +45,7 @@ using ni::hardware::grpc::internal::ViSession;
     parameters = f['parameters']
 %>\
 % if not codegen_helpers.has_array_parameter(f):
-using ${method_name}Ptr = int (*)(${codegen_helpers.create_params(parameters)});
+using ${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
 % endif
 %endfor
 
@@ -100,7 +101,7 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
   ${parameter['type']} ${codegen_helpers.camel_to_snake_name(parameter)};
 %endfor
 
-  auto status = ${method_name}FunctionPointer(${codegen_helpers.create_args(parameters)});
+  auto status = ${method_name}FunctionPointer(${handler_helpers.create_args(parameters)});
   response->set_status(status);
   if (status == 0) {
 %for parameter in output_parameters:
