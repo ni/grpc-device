@@ -85,6 +85,17 @@ namespace internal
 #endif
    }
 
+   void SharedLibrary::set_library_name(const char* library_name)
+   {
+      if (!is_loaded())
+         library_name_ = library_name;
+   }
+
+   std::string SharedLibrary::get_library_name() const
+   {
+     return library_name_;
+   }
+
 } // namespace internal
 } // namespace grpc
 } // namespace hardware

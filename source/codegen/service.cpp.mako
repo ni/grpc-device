@@ -63,9 +63,10 @@ using namespace std;
    static const char* driver_api_library_name = "${linux_library_name}";
 #endif
 
-${service_name}::${service_name}(internal::SessionRepository* session_repository)
-    : shared_library_(driver_api_library_name), session_repository_(session_repository)
+${service_name}::${service_name}(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
+    : shared_library_(shared_library), session_repository_(session_repository) 
 {
+  shared_library_ -> set_library_name(driver_api_library_name);
 }
 
 % for method_name in functions:
@@ -85,11 +86,11 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
 
 <% continue %>
 % endif
-  shared_library_.load();
-  if (!shared_library_.is_loaded()) {
+  shared_library_ -> load();
+  if (!shared_library_ -> is_loaded()) {
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
-  auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_.get_function_pointer("${c_function_prefix}${method_name}"));
+  auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_ -> get_function_pointer("${c_function_prefix}${method_name}"));
   if (${method_name}FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }

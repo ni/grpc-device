@@ -44,13 +44,13 @@ namespace grpc
   class ${service_name} final : public ${driver_prefix}::Service
   {
   public:
-    ${service_name}(SessionRepository* session_repository);
+    ${service_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
   % for function in functions:
   ## TODO: Possibly filter which functions to generate.
     Status ${function}(ServerContext* context, const ${driver_prefix}::${function}Request* request, ${driver_prefix}::${function}Response* response) override;
   % endfor
   private:
-    SharedLibrary shared_library_;
+    SharedLibrary* shared_library_;
     SessionRepository* session_repository_;
   };
 } // namespace grpc
