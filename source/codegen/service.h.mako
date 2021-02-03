@@ -25,16 +25,6 @@ service_name = "NiFakeService"
 #include "core_server/hardware/grpc/internal/shared_library.h"
 #include "core_server/hardware/grpc/internal/session_repository.h"
 
-## Usings TODO: Do we want to use usings or no?
-using grpc::Server;
-using grpc::ServerBuilder;
-using grpc::ServerContext;
-using grpc::Status;
-using grpc::ServerWriter;
-using ni::hardware::grpc::internal::SharedLibrary;
-using ni::hardware::grpc::internal::SessionRepository;
-using namespace std;
-
 namespace ni
 {
 namespace ${driver_namespace}
@@ -47,11 +37,11 @@ namespace grpc
     ${service_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
   % for function in functions:
   ## TODO: Possibly filter which functions to generate.
-    Status ${function}(ServerContext* context, const ${driver_prefix}::${function}Request* request, ${driver_prefix}::${function}Response* response) override;
+    grpc::Status ${function}(grpc::ServerContext* context, const ${driver_prefix}::${function}Request* request, ${driver_prefix}::${function}Response* response) override;
   % endfor
   private:
-    SharedLibrary* shared_library_;
-    SessionRepository* session_repository_;
+    internal::SharedLibrary* shared_library_;
+    internal::SessionRepository* session_repository_;
   };
 } // namespace grpc
 } // namespace ${driver_namespace}

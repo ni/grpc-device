@@ -31,13 +31,7 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-using grpc::Server;
-using grpc::ServerBuilder;
-using grpc::ServerContext;
-using grpc::Status;
-using grpc::StatusCode
-using grpc::ServerWriter;
-using ni::hardware::grpc::internal::ViSession;
+using internal = ni::hardware::grpc::internal;
 
 % for method_name in functions:
 <%
@@ -48,9 +42,6 @@ using ni::hardware::grpc::internal::ViSession;
 using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
 % endif
 %endfor
-
-static bool s_HasSession;
-static std::atomic<unsigned int> s_IdleCount;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -78,21 +69,21 @@ ${service_name}::${service_name}(internal::SharedLibrary* shared_library, intern
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-Status ${service_name}::${method_name}(ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
+grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
 {
 % if codegen_helpers.has_array_parameter(f):
-  return Status(StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
+  return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
 <% continue %>
 % endif
   shared_library_ -> load();
   if (!shared_library_ -> is_loaded()) {
-    return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
+    return grpc::Status(grpc::StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
   auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_ -> get_function_pointer("${c_function_prefix}${method_name}"));
   if (${method_name}FunctionPointer == nullptr) {
-    return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
+    return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
 %for parameter in input_parameters:
@@ -111,7 +102,7 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
 %endfor
   }
 
-  return Status::OK;
+  return grpc::Status::OK;
 }
 
 % endfor
