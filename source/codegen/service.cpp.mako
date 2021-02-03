@@ -45,7 +45,7 @@ using ni::hardware::grpc::internal::ViSession;
     parameters = f['parameters']
 %>\
 % if not codegen_helpers.has_array_parameter(f):
-using ${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
+using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
 % endif
 %endfor
 
@@ -89,7 +89,7 @@ Status ${service_name}::${method_name}(ServerContext* context, const ${driver_pr
   if (!shared_library_.is_loaded()) {
     return Status(StatusCode::NOT_FOUND, "Driver DLL was not found.");
   }
-  auto ${method_name}FunctionPointer = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_function_prefix}${method_name}"));
+  auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_.get_function_pointer("${c_function_prefix}${method_name}"));
   if (${method_name}FunctionPointer == nullptr) {
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
