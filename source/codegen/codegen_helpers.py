@@ -1,49 +1,41 @@
-def get_proto_type(typestr):
-    if 'ViBoolean' in typestr:
-        return 'bool'
-    if 'ViReal64' in typestr:
-        return 'double'
-    if 'ViInt32' in typestr:
-        return 'int32'
-    if 'ViConstString' in typestr:
-        return 'string'
-    if 'ViString' in typestr:
-        return 'string'
-    if 'ViRsrc' in typestr:
-        return 'string'
-    if 'ViChar' in typestr:
-        return 'string'
-    if 'niScope_wfmInfo' in typestr:
-        return 'ScopeWaveformInfo'
-    if 'niScope_coefficientInfo' in typestr:
-        return 'ScopeCoefficientInfo'
-    if 'ViReal32' in typestr:
-        return 'float'
-    if 'ViAttr' in typestr:
-        return 'ScopePropertyId'
-    if 'ViInt8' in typestr:
-        return 'bytes'
-    if 'void' in typestr:
-        return 'bytes'
-    if 'ViInt16' in typestr:
-        return 'bytes'
-    if 'ViInt64' in typestr:
-        return 'int64'
-    if 'ViUInt32' in typestr:
+def get_grpc_type_from_ivi(type):
+    if 'ViSession' in type:
         return 'uint32'
-    if 'ViUInt64' in typestr:
-        return 'uint64'
-    if 'ViStatus' in typestr:
+    if 'ViBoolean' in type:
+        return 'bool'
+    if 'ViReal64' in type:
+        return 'double'
+    if 'ViInt32' in type:
         return 'int32'
-    if 'ViAddr' in typestr:
+    if 'ViConstString' in type:
+        return 'string'
+    if 'ViString' in type:
+        return 'string'
+    if 'ViRsrc' in type:
+        return 'string'
+    if 'ViChar' in type:
+        return 'string'
+    if 'ViReal32' in type:
+        return 'float'
+    if 'ViInt8' in type:
         return 'bytes'
-    if 'NIComplexNumber' in typestr:
-        return 'ComplexNumber'
-    if 'NIComplexI16' in typestr:
-        return 'ComplexI16'
-    if 'int' == typestr:
+    if 'void' in type:
+        return 'bytes'
+    if 'ViInt16' in type:
+        return 'bytes'
+    if 'ViInt64' in type:
+        return 'int64'
+    if 'ViUInt32' in type:
+        return 'uint32'
+    if 'ViUInt64' in type:
+        return 'uint64'
+    if 'ViStatus' in type:
         return 'int32'
-    return typestr
+    if 'ViAddr' in type:
+        return 'bytes'
+    if 'int' == type:
+        return 'int32'
+    return type 
 
 def is_output_parameter(parameter):
     if "out" in parameter["direction"]:
@@ -67,7 +59,7 @@ def get_request_value(parameter):
     if parameter['type'] == 'ViSession':
         result = result + 'session_repository_->lookup_session('        
     result = result + 'request->'
-    result = result + get_proto_type(camel_to_snake_name(parameter).lower())
+    result = result + get_grpc_type_from_ivi(camel_to_snake_name(parameter).lower())
     result = result + '()'
     if parameter['type'] == 'ViConstString':
         result = result + '.c_str()'

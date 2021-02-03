@@ -38,7 +38,7 @@ def create_args(parameters):
 def create_params(parameters):
     result = ''
     for parameter in parameters:
-        result = result + codegen_helpers.get_proto_type(parameter['type'])
+        result = result + get_c_type(parameter)
         if '[]' in parameter['type']:
           result = result + '['
           if parameter['size']['mechanism'] == 'fixed':
@@ -48,3 +48,25 @@ def create_params(parameters):
           result = result + '*'
         result = result + ', '
     return result[:-2]
+
+def get_c_type(parameter):
+  grpc_type = codegen_helpers.get_grpc_type_from_ivi(parameter['type'])
+  grpc_to_c = {
+    "double": "double",
+    "float": "float",
+    "int32": "int32",
+    "int64": "int64",
+    "uint32": "uint32",
+    "uint64": "uint64",
+    "sint32": "int32",
+    "sint64": "int64",
+    "fixed32": "uint32",
+    "fixed64": "uint64",
+    "sfixed32": "int32",
+    "sfixed64": "int64",
+    "bool": "bool",
+    "string": "string",
+    "bytes": "string"
+  }
+  # This is equivalent to a switch statement with the default case returning the grpc_type
+  return grpc_to_c.get(grpc_type, grpc_type)
