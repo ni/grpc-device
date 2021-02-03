@@ -19,40 +19,40 @@ using grpc::StatusCode
 using grpc::ServerWriter;
 using ni::hardware::grpc::internal::ViSession;
 
-using niFake_AbortPtr = int (*)(uint32);
-using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(uint32, string);
-using niFake_GetABooleanPtr = int (*)(uint32, bool*);
-using niFake_GetANumberPtr = int (*)(uint32, string*);
-using niFake_GetArraySizeForPythonCodePtr = int (*)(uint32, int32*);
-using niFake_GetAttributeViBooleanPtr = int (*)(uint32, string, ViAttr, bool*);
-using niFake_GetAttributeViInt32Ptr = int (*)(uint32, string, ViAttr, int32*);
-using niFake_GetAttributeViInt64Ptr = int (*)(uint32, string, ViAttr, int64*);
-using niFake_GetAttributeViReal64Ptr = int (*)(uint32, string, ViAttr, double*);
-using niFake_GetCalDateAndTimePtr = int (*)(uint32, int32, int32*, int32*, int32*, int32*, int32*);
-using niFake_GetCalIntervalPtr = int (*)(uint32, int32*);
-using niFake_GetCustomTypePtr = int (*)(uint32, struct CustomStruct*);
-using niFake_GetEnumValuePtr = int (*)(uint32, int32*, string*);
-using niFake_GetLastCalDateAndTimePtr = int (*)(uint32, int32, hightime.datetime*);
-using niFake_InitWithOptionsPtr = int (*)(string, bool, bool, string, uint32*);
-using niFake_InitiatePtr = int (*)(uint32);
-using niFake_LockSessionPtr = int (*)(uint32, bool*);
-using niFake_OneInputFunctionPtr = int (*)(uint32, int32);
-using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(uint32);
-using niFake_ReadPtr = int (*)(uint32, double, double*);
-using niFake_ReadFromChannelPtr = int (*)(uint32, string, int32, double*);
-using niFake_ReturnDurationInSecondsPtr = int (*)(uint32, double*);
-using niFake_SetAttributeViBooleanPtr = int (*)(uint32, string, ViAttr, bool);
-using niFake_SetAttributeViInt32Ptr = int (*)(uint32, string, ViAttr, int32);
-using niFake_SetAttributeViInt64Ptr = int (*)(uint32, string, ViAttr, int64);
-using niFake_SetAttributeViReal64Ptr = int (*)(uint32, string, ViAttr, double);
-using niFake_SetAttributeViStringPtr = int (*)(uint32, string, ViAttr, string);
-using niFake_SetCustomTypePtr = int (*)(uint32, struct CustomStruct);
-using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(uint32, string);
-using niFake_TwoInputFunctionPtr = int (*)(uint32, double, string);
-using niFake_UnlockSessionPtr = int (*)(uint32, bool*);
-using niFake_Use64BitNumberPtr = int (*)(uint32, int64, int64*);
-using niFake_closePtr = int (*)(uint32);
-using niFake_fancy_self_testPtr = int (*)(uint32);
+using niFake_AbortPtr = int (*)(uint64);
+using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(uint64, string);
+using niFake_GetABooleanPtr = int (*)(uint64, bool*);
+using niFake_GetANumberPtr = int (*)(uint64, string*);
+using niFake_GetArraySizeForPythonCodePtr = int (*)(uint64, int32*);
+using niFake_GetAttributeViBooleanPtr = int (*)(uint64, string, ViAttr, bool*);
+using niFake_GetAttributeViInt32Ptr = int (*)(uint64, string, ViAttr, int32*);
+using niFake_GetAttributeViInt64Ptr = int (*)(uint64, string, ViAttr, int64*);
+using niFake_GetAttributeViReal64Ptr = int (*)(uint64, string, ViAttr, double*);
+using niFake_GetCalDateAndTimePtr = int (*)(uint64, int32, int32*, int32*, int32*, int32*, int32*);
+using niFake_GetCalIntervalPtr = int (*)(uint64, int32*);
+using niFake_GetCustomTypePtr = int (*)(uint64, struct CustomStruct*);
+using niFake_GetEnumValuePtr = int (*)(uint64, int32*, string*);
+using niFake_GetLastCalDateAndTimePtr = int (*)(uint64, int32, hightime.datetime*);
+using niFake_InitWithOptionsPtr = int (*)(string, bool, bool, string, uint64*);
+using niFake_InitiatePtr = int (*)(uint64);
+using niFake_LockSessionPtr = int (*)(uint64, bool*);
+using niFake_OneInputFunctionPtr = int (*)(uint64, int32);
+using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(uint64);
+using niFake_ReadPtr = int (*)(uint64, double, double*);
+using niFake_ReadFromChannelPtr = int (*)(uint64, string, int32, double*);
+using niFake_ReturnDurationInSecondsPtr = int (*)(uint64, double*);
+using niFake_SetAttributeViBooleanPtr = int (*)(uint64, string, ViAttr, bool);
+using niFake_SetAttributeViInt32Ptr = int (*)(uint64, string, ViAttr, int32);
+using niFake_SetAttributeViInt64Ptr = int (*)(uint64, string, ViAttr, int64);
+using niFake_SetAttributeViReal64Ptr = int (*)(uint64, string, ViAttr, double);
+using niFake_SetAttributeViStringPtr = int (*)(uint64, string, ViAttr, string);
+using niFake_SetCustomTypePtr = int (*)(uint64, struct CustomStruct);
+using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(uint64, string);
+using niFake_TwoInputFunctionPtr = int (*)(uint64, double, string);
+using niFake_UnlockSessionPtr = int (*)(uint64, bool*);
+using niFake_Use64BitNumberPtr = int (*)(uint64, int64, int64*);
+using niFake_closePtr = int (*)(uint64);
+using niFake_fancy_self_testPtr = int (*)(uint64);
 
 static bool s_HasSession;
 static std::atomic<unsigned int> s_IdleCount;
@@ -86,7 +86,7 @@ Status NiFakeService::Abort(ServerContext* context, const niFake::AbortRequest* 
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
 
   auto status = AbortFunctionPointer(vi);
   response->set_status(status);
@@ -137,7 +137,7 @@ Status NiFakeService::EnumInputFunctionWithDefaults(ServerContext* context, cons
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string a_turtle = request->a_turtle();
 
   auto status = EnumInputFunctionWithDefaultsFunctionPointer(vi, a_turtle);
@@ -175,7 +175,7 @@ Status NiFakeService::GetABoolean(ServerContext* context, const niFake::GetABool
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   bool a_boolean;
 
   auto status = GetABooleanFunctionPointer(vi, &a_boolean);
@@ -200,7 +200,7 @@ Status NiFakeService::GetANumber(ServerContext* context, const niFake::GetANumbe
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string a_number;
 
   auto status = GetANumberFunctionPointer(vi, &a_number);
@@ -267,7 +267,7 @@ Status NiFakeService::GetArraySizeForPythonCode(ServerContext* context, const ni
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   int32 size_out;
 
   auto status = GetArraySizeForPythonCodeFunctionPointer(vi, &size_out);
@@ -299,7 +299,7 @@ Status NiFakeService::GetAttributeViBoolean(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   bool attribute_value;
@@ -326,7 +326,7 @@ Status NiFakeService::GetAttributeViInt32(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int32 attribute_value;
@@ -353,7 +353,7 @@ Status NiFakeService::GetAttributeViInt64(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int64 attribute_value;
@@ -380,7 +380,7 @@ Status NiFakeService::GetAttributeViReal64(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   double attribute_value;
@@ -414,7 +414,7 @@ Status NiFakeService::GetCalDateAndTime(ServerContext* context, const niFake::Ge
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   int32 cal_type = request->cal_type();
   int32 month;
   int32 day;
@@ -448,7 +448,7 @@ Status NiFakeService::GetCalInterval(ServerContext* context, const niFake::GetCa
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   int32 months;
 
   auto status = GetCalIntervalFunctionPointer(vi, &months);
@@ -473,7 +473,7 @@ Status NiFakeService::GetCustomType(ServerContext* context, const niFake::GetCus
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   struct CustomStruct cs;
 
   auto status = GetCustomTypeFunctionPointer(vi, &cs);
@@ -505,7 +505,7 @@ Status NiFakeService::GetEnumValue(ServerContext* context, const niFake::GetEnum
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   int32 a_quantity;
   string a_turtle;
 
@@ -539,7 +539,7 @@ Status NiFakeService::GetLastCalDateAndTime(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   int32 cal_type = request->cal_type();
   hightime.datetime month;
 
@@ -576,7 +576,7 @@ Status NiFakeService::InitWithOptions(ServerContext* context, const niFake::Init
   bool id_query = request->id_query();
   bool reset_device = request->reset_device();
   string option_string = request->option_string().c_str();
-  uint32 vi;
+  uint64 vi;
 
   auto status = InitWithOptionsFunctionPointer(resource_name, id_query, reset_device, option_string, &vi);
   response->set_status(status);
@@ -600,7 +600,7 @@ Status NiFakeService::Initiate(ServerContext* context, const niFake::InitiateReq
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
 
   auto status = InitiateFunctionPointer(vi);
   response->set_status(status);
@@ -623,7 +623,7 @@ Status NiFakeService::LockSession(ServerContext* context, const niFake::LockSess
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   bool caller_has_lock;
 
   auto status = LockSessionFunctionPointer(vi, &caller_has_lock);
@@ -662,7 +662,7 @@ Status NiFakeService::OneInputFunction(ServerContext* context, const niFake::One
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   int32 a_number = request->a_number();
 
   auto status = OneInputFunctionFunctionPointer(vi, a_number);
@@ -693,7 +693,7 @@ Status NiFakeService::PoorlyNamedSimpleFunction(ServerContext* context, const ni
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
 
   auto status = PoorlyNamedSimpleFunctionFunctionPointer(vi);
   response->set_status(status);
@@ -716,7 +716,7 @@ Status NiFakeService::Read(ServerContext* context, const niFake::ReadRequest* re
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   double maximum_time = request->maximum_time();
   double reading;
 
@@ -742,7 +742,7 @@ Status NiFakeService::ReadFromChannel(ServerContext* context, const niFake::Read
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   int32 maximum_time = request->maximum_time();
   double reading;
@@ -776,7 +776,7 @@ Status NiFakeService::ReturnDurationInSeconds(ServerContext* context, const niFa
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   double timedelta;
 
   auto status = ReturnDurationInSecondsFunctionPointer(vi, &timedelta);
@@ -815,7 +815,7 @@ Status NiFakeService::SetAttributeViBoolean(ServerContext* context, const niFake
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   bool attribute_value = request->attribute_value();
@@ -841,7 +841,7 @@ Status NiFakeService::SetAttributeViInt32(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int32 attribute_value = request->attribute_value();
@@ -867,7 +867,7 @@ Status NiFakeService::SetAttributeViInt64(ServerContext* context, const niFake::
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int64 attribute_value = request->attribute_value();
@@ -893,7 +893,7 @@ Status NiFakeService::SetAttributeViReal64(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   double attribute_value = request->attribute_value();
@@ -919,7 +919,7 @@ Status NiFakeService::SetAttributeViString(ServerContext* context, const niFake:
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   string attribute_value = request->attribute_value().c_str();
@@ -945,7 +945,7 @@ Status NiFakeService::SetCustomType(ServerContext* context, const niFake::SetCus
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   struct CustomStruct cs = request->cs();
 
   auto status = SetCustomTypeFunctionPointer(vi, cs);
@@ -976,7 +976,7 @@ Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(ServerContext* c
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   string a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
 
   auto status = StringValuedEnumInputFunctionWithDefaultsFunctionPointer(vi, a_mobile_o_s_name);
@@ -1000,7 +1000,7 @@ Status NiFakeService::TwoInputFunction(ServerContext* context, const niFake::Two
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   double a_number = request->a_number();
   string a_string = request->a_string();
 
@@ -1025,7 +1025,7 @@ Status NiFakeService::UnlockSession(ServerContext* context, const niFake::Unlock
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   bool caller_has_lock;
 
   auto status = UnlockSessionFunctionPointer(vi, &caller_has_lock);
@@ -1050,7 +1050,7 @@ Status NiFakeService::Use64BitNumber(ServerContext* context, const niFake::Use64
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
   int64 input = request->input();
   int64 output;
 
@@ -1083,7 +1083,7 @@ Status NiFakeService::close(ServerContext* context, const niFake::closeRequest* 
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
 
   auto status = closeFunctionPointer(vi);
   response->set_status(status);
@@ -1113,7 +1113,7 @@ Status NiFakeService::fancy_self_test(ServerContext* context, const niFake::fanc
     return Status(StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  uint32 vi = request->vi());
+  uint64 vi = request->vi());
 
   auto status = fancy_self_testFunctionPointer(vi);
   response->set_status(status);

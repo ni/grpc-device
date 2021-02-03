@@ -1,6 +1,6 @@
 def get_grpc_type_from_ivi(type):
     if 'ViSession' in type:
-        return 'uint32'
+        return 'fixed64'
     if 'ViBoolean' in type:
         return 'bool'
     if 'ViReal64' in type:
