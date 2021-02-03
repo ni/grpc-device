@@ -13,8 +13,12 @@ namespace grpc
 
    ::grpc::Status CoreService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
    {
-      auto status = session_repository_->reserve(request->reservation_id(), request->client_id());
-      response->set_status(status);
+      bool reserved = session_repository_->reserve(request->reservation_id(), request->client_id());
+      response->set_is_reserved(reserved);
+      if (!reserved)
+      {
+         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "You must specify a non-empty reservation_id and client_id.");
+      }
       return ::grpc::Status::OK;
    }
 

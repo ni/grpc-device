@@ -33,12 +33,7 @@ message ReserveRequest {
 }
 
 message ReserveResponse {
-  enum ReserveStatus {
-      NONE = 0;
-      INVALID_ID = 1;
-      RESERVED = 2;
-  }
-  ReserveStatus status = 1;
+  bool is_reserved = 1;
 }
 
 message IsReservedByClientRequest {
@@ -49,7 +44,7 @@ message IsReservedByClientRequest {
 }
 
 message IsReservedByClientResponse {
-  bool is_reserved = 2;
+  bool is_reserved = 1;
 }
 
 message UnreserveRequest {

@@ -25,7 +25,7 @@ namespace internal
       uint64_t access_session(uint64_t session_id, const std::string& session_name);
       void remove_session(uint64_t id);
 
-      ReserveResponse_ReserveStatus reserve(const std::string& reservation_id, const std::string& client_id);
+      bool reserve(const std::string& reservation_id, const std::string& client_id);
       bool is_reserved_by_client(const std::string& reservation_id, const std::string& client_id);
       bool unreserve(const std::string& reservation_id, const std::string& client_id);
 

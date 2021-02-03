@@ -26,9 +26,10 @@ namespace grpc
 
       ::grpc::ServerContext context;
       ni::hardware::grpc::ReserveResponse response;
-      service.Reserve(&context, &request, &response);
+      ::grpc::Status status = service.Reserve(&context, &request, &response);
 
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_ID);
+      EXPECT_FALSE(response.is_reserved());
+      EXPECT_EQ(status.error_code(), ::grpc::INVALID_ARGUMENT);
    }
 
    TEST(CoreServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
@@ -40,9 +41,10 @@ namespace grpc
 
       ::grpc::ServerContext context;
       ni::hardware::grpc::ReserveResponse response;
-      service.Reserve(&context, &request, &response);
+      ::grpc::Status status = service.Reserve(&context, &request, &response);
 
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_ID);
+      EXPECT_FALSE(response.is_reserved());
+      EXPECT_EQ(status.error_code(), ::grpc::INVALID_ARGUMENT);
    }
 
    TEST(CoreServiceTests, NewReserveIdAndClientId_Reserve_ReservesSession)
@@ -57,7 +59,7 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse response;
       service.Reserve(&context, &request, &response);
 
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_RESERVED);
+      EXPECT_TRUE(response.is_reserved());
    }
 
    void task(ni::hardware::grpc::CoreService* service, ni::hardware::grpc::ReserveRequest* request, ni::hardware::grpc::ReserveResponse* response)
@@ -78,17 +80,17 @@ namespace grpc
       service.Reserve(&context, &request, &response);
 
       request.set_client_id("b");
-      response.set_status(ni::hardware::grpc::ReserveResponse_ReserveStatus_NONE);
+      response.set_is_reserved(false);
       std::thread res(task, &service, &request, &response);
 
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_NONE);
+      EXPECT_FALSE(response.is_reserved());
       ni::hardware::grpc::UnreserveRequest unreserve_request;
       unreserve_request.set_reservation_id("foo");
       unreserve_request.set_client_id("a");
       ni::hardware::grpc::UnreserveResponse unreserve_response;
       service.Unreserve(&context, &unreserve_request, &unreserve_response);
       res.join();
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_RESERVED);
+      EXPECT_TRUE(response.is_reserved());
    }
 
    TEST(CoreServiceTests, IdReserved_ReserveWithSameClientId_ReturnsReserved)
@@ -102,10 +104,10 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse response;
       service.Reserve(&context, &request, &response);
 
-      response.set_status(ni::hardware::grpc::ReserveResponse_ReserveStatus_NONE);
+      response.set_is_reserved(false);
       service.Reserve(&context, &request, &response);
 
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_RESERVED);
+      EXPECT_TRUE(response.is_reserved());
    }
 
    TEST(CoreServiceTests, NoReservations_IsReserved_ReturnsFalse)

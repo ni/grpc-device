@@ -93,15 +93,15 @@ namespace internal
       return info;
    }
 
-   ReserveResponse_ReserveStatus SessionRepository::reserve(const std::string& reservation_id, const std::string& client_id)
+   bool SessionRepository::reserve(const std::string& reservation_id, const std::string& client_id)
    {
       if (reservation_id.empty() || client_id.empty())
       {
-         return ReserveResponse_ReserveStatus_INVALID_ID;
+         return false;
       }
       std::shared_ptr<ReservationInfo> info = find_or_create_reservation(reservation_id, client_id);
       if (!info) {
-         return ReserveResponse_ReserveStatus_RESERVED;
+         return true;
       }
       if (!info->lock) {
          info->lock = std::make_unique<internal::Semaphore>();
@@ -111,7 +111,7 @@ namespace internal
          std::unique_lock<std::shared_mutex> lock(repository_lock_);
          info->client_id = client_id;
       }
-      return ReserveResponse_ReserveStatus_RESERVED;
+      return true;
    }
 
    bool SessionRepository::is_reserved_by_client(const std::string& reservation_id, const std::string& client_id)
