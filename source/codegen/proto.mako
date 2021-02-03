@@ -16,8 +16,13 @@ c_function_prefix = data["config"]["c_function_prefix"]
 // Proto file for the ${driver_name_camel} Metadata
 //---------------------------------------------------------------------
 Syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.${module_name}.grpc";
+option java_outer_classname = "${driver_name_pascal}Service";
+option csharp_namespace = "NationalInstruments.${driver_name_pascal}.Grpc";
+
 package ${driver_name_camel}; 
-The ${driver_name_pascal}Service definition.
 
 service ${driver_name_pascal}Service {
 % for function in data["functions"]:
@@ -28,9 +33,6 @@ service ${driver_name_pascal}Service {
 % endfor
 }
 
-//---------------------------------------------------------------------
-// The ${driver_name_pascal}Attributes definition.
-//---------------------------------------------------------------------
 enum ${driver_name_pascal}Attributes {
   ${c_function_prefix.upper()}UNSPECIFIED = 0;
 % for attribute in data["attributes"]:
@@ -41,9 +43,6 @@ enum ${driver_name_pascal}Attributes {
 % endfor
 }
 
-//---------------------------------------------------------------------
-// The ${driver_name_pascal}Enums definition.
-//---------------------------------------------------------------------
 enum ${driver_name_pascal}Values {
   ${c_function_prefix.upper()}UNSPECIFIED = 0;
 % for enum_list in data["enums"]:
@@ -73,11 +72,14 @@ message ${common_helpers.snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%  
   index  = index + 1
-  parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
-  if common_helpers.is_array(parameter_type) is True:
-    parameter_type = "repeated " + parameter_type.replace('[]', '')
+  is_array = common_helpers.is_array((parameter["type"]))
+  if is_array is True:
+    parameter_type = "repeated " + proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
+  else:
+    parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
+
 %>\
-  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}  
+  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};  
 % endfor
 }
 
@@ -93,7 +95,7 @@ message ${common_helpers.snake_to_camel(function)}Response {
   if common_helpers.is_array(parameter_type) is True:
     parameter_type = "repeated " + parameter_type.replace('[]', '')
 %>\
-  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}  
+  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}; 
 %endfor  
 }
 
