@@ -22,10 +22,11 @@ RESERVED_WORDS = [
 ]
 
 def sanitize_names(parameters):
-    """Sanitizes name fields on a list of parameter objects and populates the dotNetName field with the sanitized value."""
+    """Sanitizes name fields on a list of parameter objects and populates the cppname field with the sanitized value."""
     for parameter in parameters:
-        if parameter['name'] in RESERVED_WORDS:
-            parameter['dotNetName'] = parameter['name'] + 'Parameter'
+        parameter['cppname'] = parameter['name']
+        if parameter['cppname'] in RESERVED_WORDS:
+            parameter['cppname'] = parameter['cppname'] + 'Parameter'
 
 def create_args(parameters):
     result = ''

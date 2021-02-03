@@ -40,6 +40,7 @@ using internal = ni::hardware::grpc::internal;
     if not handler_helpers.should_gen_function_pointer(f):
       continue
     parameters = f['parameters']
+    handler_helpers.sanitize_names(parameters)
 %>\
 % if not codegen_helpers.has_array_parameter(f):
 using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
@@ -69,6 +70,7 @@ ${service_name}::${service_name}(internal::SharedLibrary* shared_library, intern
     if not codegen_helpers.should_gen_service_handler(f):
       continue
     parameters = f['parameters']
+    handler_helpers.sanitize_names(parameters)
     input_parameters = [p for p in parameters if codegen_helpers.is_input_parameter(p)]
     output_parameters = [p for p in parameters if codegen_helpers.is_output_parameter(p)]
 %>\
