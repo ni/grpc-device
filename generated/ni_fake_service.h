@@ -38,21 +38,11 @@ namespace grpc
     grpc::Status GetArrayForPythonCodeDouble(grpc::ServerContext* context, const niFake::GetArrayForPythonCodeDoubleRequest* request, niFake::GetArrayForPythonCodeDoubleResponse* response) override;
     grpc::Status GetArraySizeForPythonCode(grpc::ServerContext* context, const niFake::GetArraySizeForPythonCodeRequest* request, niFake::GetArraySizeForPythonCodeResponse* response) override;
     grpc::Status GetArrayUsingIviDance(grpc::ServerContext* context, const niFake::GetArrayUsingIviDanceRequest* request, niFake::GetArrayUsingIviDanceResponse* response) override;
-    grpc::Status GetAttributeViBoolean(grpc::ServerContext* context, const niFake::GetAttributeViBooleanRequest* request, niFake::GetAttributeViBooleanResponse* response) override;
-    grpc::Status GetAttributeViInt32(grpc::ServerContext* context, const niFake::GetAttributeViInt32Request* request, niFake::GetAttributeViInt32Response* response) override;
-    grpc::Status GetAttributeViInt64(grpc::ServerContext* context, const niFake::GetAttributeViInt64Request* request, niFake::GetAttributeViInt64Response* response) override;
-    grpc::Status GetAttributeViReal64(grpc::ServerContext* context, const niFake::GetAttributeViReal64Request* request, niFake::GetAttributeViReal64Response* response) override;
-    grpc::Status GetAttributeViString(grpc::ServerContext* context, const niFake::GetAttributeViStringRequest* request, niFake::GetAttributeViStringResponse* response) override;
-    grpc::Status GetCalDateAndTime(grpc::ServerContext* context, const niFake::GetCalDateAndTimeRequest* request, niFake::GetCalDateAndTimeResponse* response) override;
     grpc::Status GetCalInterval(grpc::ServerContext* context, const niFake::GetCalIntervalRequest* request, niFake::GetCalIntervalResponse* response) override;
     grpc::Status GetCustomType(grpc::ServerContext* context, const niFake::GetCustomTypeRequest* request, niFake::GetCustomTypeResponse* response) override;
     grpc::Status GetCustomTypeArray(grpc::ServerContext* context, const niFake::GetCustomTypeArrayRequest* request, niFake::GetCustomTypeArrayResponse* response) override;
     grpc::Status GetEnumValue(grpc::ServerContext* context, const niFake::GetEnumValueRequest* request, niFake::GetEnumValueResponse* response) override;
-    grpc::Status GetError(grpc::ServerContext* context, const niFake::GetErrorRequest* request, niFake::GetErrorResponse* response) override;
-    grpc::Status GetLastCalDateAndTime(grpc::ServerContext* context, const niFake::GetLastCalDateAndTimeRequest* request, niFake::GetLastCalDateAndTimeResponse* response) override;
     grpc::Status ImportAttributeConfigurationBuffer(grpc::ServerContext* context, const niFake::ImportAttributeConfigurationBufferRequest* request, niFake::ImportAttributeConfigurationBufferResponse* response) override;
-    grpc::Status InitWithOptions(grpc::ServerContext* context, const niFake::InitWithOptionsRequest* request, niFake::InitWithOptionsResponse* response) override;
-    grpc::Status Initiate(grpc::ServerContext* context, const niFake::InitiateRequest* request, niFake::InitiateResponse* response) override;
     grpc::Status LockSession(grpc::ServerContext* context, const niFake::LockSessionRequest* request, niFake::LockSessionResponse* response) override;
     grpc::Status MultipleArrayTypes(grpc::ServerContext* context, const niFake::MultipleArrayTypesRequest* request, niFake::MultipleArrayTypesResponse* response) override;
     grpc::Status MultipleArraysSameSize(grpc::ServerContext* context, const niFake::MultipleArraysSameSizeRequest* request, niFake::MultipleArraysSameSizeResponse* response) override;
@@ -65,11 +55,6 @@ namespace grpc
     grpc::Status ReturnDurationInSeconds(grpc::ServerContext* context, const niFake::ReturnDurationInSecondsRequest* request, niFake::ReturnDurationInSecondsResponse* response) override;
     grpc::Status ReturnListOfDurationsInSeconds(grpc::ServerContext* context, const niFake::ReturnListOfDurationsInSecondsRequest* request, niFake::ReturnListOfDurationsInSecondsResponse* response) override;
     grpc::Status ReturnMultipleTypes(grpc::ServerContext* context, const niFake::ReturnMultipleTypesRequest* request, niFake::ReturnMultipleTypesResponse* response) override;
-    grpc::Status SetAttributeViBoolean(grpc::ServerContext* context, const niFake::SetAttributeViBooleanRequest* request, niFake::SetAttributeViBooleanResponse* response) override;
-    grpc::Status SetAttributeViInt32(grpc::ServerContext* context, const niFake::SetAttributeViInt32Request* request, niFake::SetAttributeViInt32Response* response) override;
-    grpc::Status SetAttributeViInt64(grpc::ServerContext* context, const niFake::SetAttributeViInt64Request* request, niFake::SetAttributeViInt64Response* response) override;
-    grpc::Status SetAttributeViReal64(grpc::ServerContext* context, const niFake::SetAttributeViReal64Request* request, niFake::SetAttributeViReal64Response* response) override;
-    grpc::Status SetAttributeViString(grpc::ServerContext* context, const niFake::SetAttributeViStringRequest* request, niFake::SetAttributeViStringResponse* response) override;
     grpc::Status SetCustomType(grpc::ServerContext* context, const niFake::SetCustomTypeRequest* request, niFake::SetCustomTypeResponse* response) override;
     grpc::Status SetCustomTypeArray(grpc::ServerContext* context, const niFake::SetCustomTypeArrayRequest* request, niFake::SetCustomTypeArrayResponse* response) override;
     grpc::Status StringValuedEnumInputFunctionWithDefaults(grpc::ServerContext* context, const niFake::StringValuedEnumInputFunctionWithDefaultsRequest* request, niFake::StringValuedEnumInputFunctionWithDefaultsResponse* response) override;
@@ -77,10 +62,6 @@ namespace grpc
     grpc::Status UnlockSession(grpc::ServerContext* context, const niFake::UnlockSessionRequest* request, niFake::UnlockSessionResponse* response) override;
     grpc::Status Use64BitNumber(grpc::ServerContext* context, const niFake::Use64BitNumberRequest* request, niFake::Use64BitNumberResponse* response) override;
     grpc::Status WriteWaveform(grpc::ServerContext* context, const niFake::WriteWaveformRequest* request, niFake::WriteWaveformResponse* response) override;
-    grpc::Status close(grpc::ServerContext* context, const niFake::closeRequest* request, niFake::closeResponse* response) override;
-    grpc::Status error_message(grpc::ServerContext* context, const niFake::error_messageRequest* request, niFake::error_messageResponse* response) override;
-    grpc::Status fancy_self_test(grpc::ServerContext* context, const niFake::fancy_self_testRequest* request, niFake::fancy_self_testResponse* response) override;
-    grpc::Status self_test(grpc::ServerContext* context, const niFake::self_testRequest* request, niFake::self_testResponse* response) override;
   private:
     internal::SharedLibrary* shared_library_;
     internal::SessionRepository* session_repository_;

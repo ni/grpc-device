@@ -90,3 +90,7 @@ def get_c_type(parameter):
   }
   # This is equivalent to a switch statement with the default case returning the grpc_type
   return grpc_to_c.get(grpc_type, grpc_type)
+
+def should_gen_function_pointer(function):
+  '''Returns function metadata only for those functions to include for generating function pointers to driver library'''
+  return 'codegen_method' not in function.keys() or function['codegen_method'] != 'no'

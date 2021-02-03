@@ -1,5 +1,6 @@
 // This file was generated
 <%
+import codegen_helpers
 attributes = data['attributes']
 config = data['config']
 enums = data['enums']
@@ -35,8 +36,12 @@ namespace grpc
   {
   public:
     ${service_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
-  % for function in functions:
-  ## TODO: Possibly filter which functions to generate.
+% for function in functions:
+<%
+    f = functions[function]
+    if not codegen_helpers.should_gen_service_handler(f):
+      continue
+%>\
     grpc::Status ${function}(grpc::ServerContext* context, const ${driver_prefix}::${function}Request* request, ${driver_prefix}::${function}Response* response) override;
   % endfor
   private:

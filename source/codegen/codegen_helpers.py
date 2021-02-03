@@ -72,3 +72,7 @@ def has_array_parameter(function):
     if 'size' in parameter.keys():
       return True
   return False
+
+def should_gen_service_handler(function):
+  '''Returns function metadata only for those functions to include for generating function pointers to driver library'''
+  return 'codegen_method' not in function.keys() or function['codegen_method'] == 'public'

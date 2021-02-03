@@ -33,9 +33,12 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 //---------------------------------------------------------------------
 using internal = ni::hardware::grpc::internal;
 
+## Function pointers to driver library
 % for method_name in functions:
 <%
     f = functions[method_name]
+    if not handler_helpers.should_gen_function_pointer(f):
+      continue
     parameters = f['parameters']
 %>\
 % if not codegen_helpers.has_array_parameter(f):
@@ -63,6 +66,8 @@ ${service_name}::${service_name}(internal::SharedLibrary* shared_library, intern
 % for method_name in functions:
 <%
     f = functions[method_name]
+    if not codegen_helpers.should_gen_service_handler(f):
+      continue
     parameters = f['parameters']
     input_parameters = [p for p in parameters if codegen_helpers.is_input_parameter(p)]
     output_parameters = [p for p in parameters if codegen_helpers.is_output_parameter(p)]
