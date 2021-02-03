@@ -110,6 +110,7 @@ find_package(Threads REQUIRED)
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"

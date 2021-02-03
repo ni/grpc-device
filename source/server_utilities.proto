@@ -18,6 +18,13 @@ service ServerUtilities {
   rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
 }
 
+message Session {
+   oneof session {
+      string name = 1;
+      fixed64 id = 2;
+   }
+}
+
 message ReserveRequest {
   // client defined string representing a set of reservable resources
   string reservation_id = 1;
@@ -28,7 +35,7 @@ message ReserveRequest {
 message ReserveResponse {
   enum ReserveStatus {
       NONE = 0;
-      INVALID_SESSION = 1;
+      INVALID_ID = 1;
       RESERVED = 2;
   }
   ReserveStatus status = 1;

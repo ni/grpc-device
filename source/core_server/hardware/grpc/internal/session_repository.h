@@ -19,10 +19,11 @@ namespace internal
    public:
       SessionRepository();
 
-      using CleanupSessionProc = void (*)(const std::string& session_name);
+      using CleanupSessionProc = void (*)(const Session& session);
 
-      void add_session(const std::string& session_user_id, CleanupSessionProc cleanup_proc);
-      void remove_session(const std::string& session_name);
+      int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionProc cleanup_proc, uint64_t& session_id);
+      uint64_t access_session(uint64_t session_id, const std::string& session_name);
+      void remove_session(uint64_t id);
 
       ReserveResponse_ReserveStatus reserve(const std::string& reservation_id, const std::string& client_id);
       bool is_reserved_by_client(const std::string& reservation_id, const std::string& client_id);
@@ -38,6 +39,8 @@ namespace internal
 
       struct SessionInfo
       {
+         uint64_t id;
+         std::string name;
          std::chrono::steady_clock::time_point last_access_time;
          SessionRepository::CleanupSessionProc cleanup_proc;
       };
@@ -46,13 +49,12 @@ namespace internal
       using SessionMap = std::map<google::protobuf::int64, std::shared_ptr<SessionInfo>>;
       using ReservationMap = std::map<std::string, std::shared_ptr<ReservationInfo>>;
 
-      std::shared_ptr<ReservationInfo> lookup_reservation_info_unlocked(const std::string& reservation_id);
+      std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
 
       ReservationMap reservations_;
-      std::shared_mutex session_lock_;
-      int next_session_id_;
+      std::shared_mutex repository_lock_;
       NamedSessionMap named_sessions_;
-      SessionMap unnamed_sessions_;
+      SessionMap sessions_;
    };
 } // namespace internal
 } // namespace grpc

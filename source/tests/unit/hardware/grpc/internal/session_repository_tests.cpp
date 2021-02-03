@@ -1,0 +1,99 @@
+#include <gtest/gtest.h>
+#include "hardware/grpc/internal/semaphore.h"
+#include "hardware/grpc/internal/session_repository.h"
+
+namespace ni
+{
+namespace tests
+{
+namespace unit
+{
+namespace hardware
+{
+namespace grpc
+{
+namespace internal
+{
+   TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNotStoreSession)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id = 42;
+      int status = session_repository.add_session(
+         "",
+         [session_id]() { return std::make_tuple(1, session_id); },
+         NULL,
+         session_id);
+
+      EXPECT_EQ(status, 1);
+      EXPECT_FALSE(session_repository.access_session(session_id, ""));
+   }
+
+   TEST(SessionRepositoryTests, AddSession_StoresSessionWithGivenId)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id;
+      int status = session_repository.add_session(
+         "",
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         session_id);
+
+      EXPECT_EQ(status, 0);
+      EXPECT_EQ(session_id, 42);
+      EXPECT_EQ(session_repository.access_session(session_id, ""), session_id);
+   }
+
+   TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
+   {
+      std::string session_name = "session_name";
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id;
+      int status = session_repository.add_session(
+         session_name,
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         session_id);
+
+      EXPECT_EQ(status, 0);
+      EXPECT_EQ(session_id, 42);
+      EXPECT_EQ(session_repository.access_session(session_id, ""), session_id);
+      EXPECT_EQ(session_repository.access_session(0, session_name), session_id);
+   }
+
+   TEST(SessionRepositoryTests, UnnamedSessionAdded_RemoveSession_RemovesSession)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id;
+      session_repository.add_session(
+         "",
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         session_id);
+
+      session_repository.remove_session(session_id);
+
+      EXPECT_FALSE(session_repository.access_session(session_id, ""));
+   }
+
+   TEST(SessionRepositoryTests, NamedSessionAdded_RemoveSession_RemovesSession)
+   {
+      std::string session_name = "session_name";
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id;
+      int status = session_repository.add_session(
+         session_name,
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         session_id);
+
+      session_repository.remove_session(session_id);
+
+      EXPECT_FALSE(session_repository.access_session(session_id, ""));
+      EXPECT_FALSE(session_repository.access_session(0, session_name));
+   }
+} // namespace internal
+} // namespace grpc
+} // namespace hardware
+} // namespace unit
+} // namespace tests
+} // namespace ni

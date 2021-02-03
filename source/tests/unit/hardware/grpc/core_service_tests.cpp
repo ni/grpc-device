@@ -18,7 +18,7 @@ namespace hardware
 {
 namespace grpc
 {
-   TEST(CoreServiceTests, EmptyReserveId_Reserve_)
+   TEST(CoreServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
@@ -28,10 +28,10 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse response;
       service.Reserve(&context, &request, &response);
 
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_SESSION);
+      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_ID);
    }
 
-   TEST(CoreServiceTests, EmptyClientId_Reserve_)
+   TEST(CoreServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
@@ -42,7 +42,7 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse response;
       service.Reserve(&context, &request, &response);
 
-      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_SESSION);
+      EXPECT_EQ(response.status(), ni::hardware::grpc::ReserveResponse_ReserveStatus_INVALID_ID);
    }
 
    TEST(CoreServiceTests, NewReserveIdAndClientId_Reserve_ReservesSession)
