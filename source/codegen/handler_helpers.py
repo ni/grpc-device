@@ -85,8 +85,8 @@ def get_c_type(parameter):
     "sfixed32": "int32",
     "sfixed64": "int64",
     "bool": "bool",
-    "string": "string",
-    "bytes": "string"
+    "string": "std::string",
+    "bytes": "std::string"
   }
   # This is equivalent to a switch statement with the default case returning the grpc_type
   return grpc_to_c.get(grpc_type, grpc_type)

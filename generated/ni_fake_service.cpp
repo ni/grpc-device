@@ -14,35 +14,35 @@
 using internal = ni::hardware::grpc::internal;
 
 using niFake_AbortPtr = int (*)(uint64);
-using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(uint64, string);
+using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(uint64, std::string);
 using niFake_GetABooleanPtr = int (*)(uint64, bool*);
-using niFake_GetANumberPtr = int (*)(uint64, string*);
+using niFake_GetANumberPtr = int (*)(uint64, std::string*);
 using niFake_GetArraySizeForPythonCodePtr = int (*)(uint64, int32*);
-using niFake_GetAttributeViBooleanPtr = int (*)(uint64, string, ViAttr, bool*);
-using niFake_GetAttributeViInt32Ptr = int (*)(uint64, string, ViAttr, int32*);
-using niFake_GetAttributeViInt64Ptr = int (*)(uint64, string, ViAttr, int64*);
-using niFake_GetAttributeViReal64Ptr = int (*)(uint64, string, ViAttr, double*);
+using niFake_GetAttributeViBooleanPtr = int (*)(uint64, std::string, ViAttr, bool*);
+using niFake_GetAttributeViInt32Ptr = int (*)(uint64, std::string, ViAttr, int32*);
+using niFake_GetAttributeViInt64Ptr = int (*)(uint64, std::string, ViAttr, int64*);
+using niFake_GetAttributeViReal64Ptr = int (*)(uint64, std::string, ViAttr, double*);
 using niFake_GetCalDateAndTimePtr = int (*)(uint64, int32, int32*, int32*, int32*, int32*, int32*);
 using niFake_GetCalIntervalPtr = int (*)(uint64, int32*);
 using niFake_GetCustomTypePtr = int (*)(uint64, struct CustomStruct*);
-using niFake_GetEnumValuePtr = int (*)(uint64, int32*, string*);
+using niFake_GetEnumValuePtr = int (*)(uint64, int32*, std::string*);
 using niFake_GetLastCalDateAndTimePtr = int (*)(uint64, int32, hightime.datetime*);
-using niFake_InitWithOptionsPtr = int (*)(string, bool, bool, string, uint64*);
+using niFake_InitWithOptionsPtr = int (*)(std::string, bool, bool, std::string, uint64*);
 using niFake_InitiatePtr = int (*)(uint64);
 using niFake_LockSessionPtr = int (*)(uint64, bool*);
 using niFake_OneInputFunctionPtr = int (*)(uint64, int32);
 using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(uint64);
 using niFake_ReadPtr = int (*)(uint64, double, double*);
-using niFake_ReadFromChannelPtr = int (*)(uint64, string, int32, double*);
+using niFake_ReadFromChannelPtr = int (*)(uint64, std::string, int32, double*);
 using niFake_ReturnDurationInSecondsPtr = int (*)(uint64, double*);
-using niFake_SetAttributeViBooleanPtr = int (*)(uint64, string, ViAttr, bool);
-using niFake_SetAttributeViInt32Ptr = int (*)(uint64, string, ViAttr, int32);
-using niFake_SetAttributeViInt64Ptr = int (*)(uint64, string, ViAttr, int64);
-using niFake_SetAttributeViReal64Ptr = int (*)(uint64, string, ViAttr, double);
-using niFake_SetAttributeViStringPtr = int (*)(uint64, string, ViAttr, string);
+using niFake_SetAttributeViBooleanPtr = int (*)(uint64, std::string, ViAttr, bool);
+using niFake_SetAttributeViInt32Ptr = int (*)(uint64, std::string, ViAttr, int32);
+using niFake_SetAttributeViInt64Ptr = int (*)(uint64, std::string, ViAttr, int64);
+using niFake_SetAttributeViReal64Ptr = int (*)(uint64, std::string, ViAttr, double);
+using niFake_SetAttributeViStringPtr = int (*)(uint64, std::string, ViAttr, std::string);
 using niFake_SetCustomTypePtr = int (*)(uint64, struct CustomStruct);
-using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(uint64, string);
-using niFake_TwoInputFunctionPtr = int (*)(uint64, double, string);
+using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(uint64, std::string);
+using niFake_TwoInputFunctionPtr = int (*)(uint64, double, std::string);
 using niFake_UnlockSessionPtr = int (*)(uint64, bool*);
 using niFake_Use64BitNumberPtr = int (*)(uint64, int64, int64*);
 using niFake_closePtr = int (*)(uint64);
@@ -129,7 +129,7 @@ grpc::Status NiFakeService::EnumInputFunctionWithDefaults(grpc::ServerContext* c
   }
 
   uint64 vi = request->vi());
-  string a_turtle = request->a_turtle();
+  std::string a_turtle = request->a_turtle();
 
   auto status = EnumInputFunctionWithDefaultsFunctionPointer(vi, a_turtle);
   response->set_status(status);
@@ -192,7 +192,7 @@ grpc::Status NiFakeService::GetANumber(grpc::ServerContext* context, const niFak
   }
 
   uint64 vi = request->vi());
-  string a_number;
+  std::string a_number;
 
   auto status = GetANumberFunctionPointer(vi, &a_number);
   response->set_status(status);
@@ -291,7 +291,7 @@ grpc::Status NiFakeService::GetAttributeViBoolean(grpc::ServerContext* context, 
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   bool attribute_value;
 
@@ -318,7 +318,7 @@ grpc::Status NiFakeService::GetAttributeViInt32(grpc::ServerContext* context, co
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int32 attribute_value;
 
@@ -345,7 +345,7 @@ grpc::Status NiFakeService::GetAttributeViInt64(grpc::ServerContext* context, co
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int64 attribute_value;
 
@@ -372,7 +372,7 @@ grpc::Status NiFakeService::GetAttributeViReal64(grpc::ServerContext* context, c
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   double attribute_value;
 
@@ -498,7 +498,7 @@ grpc::Status NiFakeService::GetEnumValue(grpc::ServerContext* context, const niF
 
   uint64 vi = request->vi());
   int32 a_quantity;
-  string a_turtle;
+  std::string a_turtle;
 
   auto status = GetEnumValueFunctionPointer(vi, &a_quantity, &a_turtle);
   response->set_status(status);
@@ -563,10 +563,10 @@ grpc::Status NiFakeService::InitWithOptions(grpc::ServerContext* context, const 
     return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
   }
 
-  string resource_name = request->resource_name();
+  std::string resource_name = request->resource_name();
   bool id_query = request->id_query();
   bool reset_device = request->reset_device();
-  string option_string = request->option_string().c_str();
+  std::string option_string = request->option_string().c_str();
   uint64 vi;
 
   auto status = InitWithOptionsFunctionPointer(resource_name, id_query, reset_device, option_string, &vi);
@@ -734,7 +734,7 @@ grpc::Status NiFakeService::ReadFromChannel(grpc::ServerContext* context, const 
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   int32 maximum_time = request->maximum_time();
   double reading;
 
@@ -807,7 +807,7 @@ grpc::Status NiFakeService::SetAttributeViBoolean(grpc::ServerContext* context, 
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   bool attribute_value = request->attribute_value();
 
@@ -833,7 +833,7 @@ grpc::Status NiFakeService::SetAttributeViInt32(grpc::ServerContext* context, co
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int32 attribute_value = request->attribute_value();
 
@@ -859,7 +859,7 @@ grpc::Status NiFakeService::SetAttributeViInt64(grpc::ServerContext* context, co
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   int64 attribute_value = request->attribute_value();
 
@@ -885,7 +885,7 @@ grpc::Status NiFakeService::SetAttributeViReal64(grpc::ServerContext* context, c
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
   double attribute_value = request->attribute_value();
 
@@ -911,9 +911,9 @@ grpc::Status NiFakeService::SetAttributeViString(grpc::ServerContext* context, c
   }
 
   uint64 vi = request->vi());
-  string channel_name = request->channel_name().c_str();
+  std::string channel_name = request->channel_name().c_str();
   ViAttr attribute_id = request->attribute_id();
-  string attribute_value = request->attribute_value().c_str();
+  std::string attribute_value = request->attribute_value().c_str();
 
   auto status = SetAttributeViStringFunctionPointer(vi, channel_name, attribute_id, attribute_value);
   response->set_status(status);
@@ -968,7 +968,7 @@ grpc::Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(grpc::Serv
   }
 
   uint64 vi = request->vi());
-  string a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
+  std::string a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
 
   auto status = StringValuedEnumInputFunctionWithDefaultsFunctionPointer(vi, a_mobile_o_s_name);
   response->set_status(status);
@@ -993,7 +993,7 @@ grpc::Status NiFakeService::TwoInputFunction(grpc::ServerContext* context, const
 
   uint64 vi = request->vi());
   double a_number = request->a_number();
-  string a_string = request->a_string();
+  std::string a_string = request->a_string();
 
   auto status = TwoInputFunctionFunctionPointer(vi, a_number, a_string);
   response->set_status(status);
