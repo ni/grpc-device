@@ -289,10 +289,10 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse reserve_response;
       service.Reserve(&context, &reserve_request, &reserve_response);
 
-      ni::hardware::grpc::ResetServerResponse response;
-      service.ResetServer(&context, NULL, &response);
+      ni::hardware::grpc::ResetServerResponse reset_response;
+      service.ResetServer(&context, NULL, &reset_response);
 
-      EXPECT_TRUE(response.is_server_reset());
+      EXPECT_TRUE(reset_response.is_server_reset());
       ni::hardware::grpc::IsReservedByClientRequest is_reserved_request;
       is_reserved_request.set_reservation_id("foo");
       is_reserved_request.set_client_id("a");
