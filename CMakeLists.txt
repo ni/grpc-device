@@ -101,7 +101,7 @@ target_link_libraries(CoreServiceTestsRunner
 
 add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
-add_compile_definitions(TestApi TEST_API_BUILDING)
+add_definitions(-DTestApi -DTEST_API_BUILDING)
 
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
