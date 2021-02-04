@@ -54,7 +54,7 @@ namespace internal
 	   template<class MapType>
       void close_sessions(MapType& map);
       void clear_reservations();
-      bool release_reservation(std::shared_ptr<SessionRepository::ReservationInfo> reservationInfo);
+      bool release_reservation(const std::shared_ptr<ReservationInfo>& reservation_info);
       
       ReservationMap reservations_;
       std::shared_mutex repository_lock_;

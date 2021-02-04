@@ -137,10 +137,10 @@ namespace internal
       return release_reservation(reservation_info);
    }
    
-   bool SessionRepository::release_reservation(std::shared_ptr<SessionRepository::ReservationInfo> reservationInfo)
+   bool SessionRepository::release_reservation(const std::shared_ptr<ReservationInfo>& reservation_info)
    {
-      if (reservationInfo) {
-         reservationInfo->lock->notify();
+      if (reservation_info) {
+         reservation_info->lock->notify();
          return true;
       }
       return false;
@@ -149,34 +149,34 @@ namespace internal
    template<class MapType>
    void SessionRepository::close_sessions(MapType& map)
    {
-      for (auto sessionIterator = map.begin(); sessionIterator != map.end();)
+      for (auto it = map.begin(); it != map.end();)
       {
-         if (sessionIterator != map.end()) {          
-            auto sessionInfo = sessionIterator->second;
+         if (it != map.end()) {          
+            auto sessionInfo = it->second;
             auto cleanupProcess  = sessionInfo->cleanup_proc;
             if (cleanupProcess != NULL){
                cleanupProcess(sessionInfo->id);
             }
-            sessionIterator = map.erase(sessionIterator);
+            it = map.erase(it);
          }
          else {
-            ++sessionIterator;
+            ++it;
          }
       }
    }
 
    void SessionRepository::clear_reservations()
    {
-      for (auto reservationIterator = reservations_.begin(); reservationIterator != reservations_.end();)
+      for (auto it = reservations_.begin(); it != reservations_.end();)
       {
-         if (reservationIterator != reservations_.end()) {    
+         if (it != reservations_.end()) {    
             std::shared_ptr<SessionRepository::ReservationInfo> reservation_info;
-            reservation_info = reservationIterator->second;
-            reservationIterator = reservations_.erase(reservationIterator);
+            reservation_info = it->second;
+            it = reservations_.erase(it);
             release_reservation(reservation_info);
          }
          else {
-            ++reservationIterator;
+            ++it;
          }
       }
    }
@@ -187,8 +187,8 @@ namespace internal
       clear_reservations();
       close_sessions(named_sessions_);
       close_sessions(sessions_);
-      bool allClosed = named_sessions_.empty() && sessions_.empty();
-      return allClosed && reservations_.empty();	   
+      auto all_closed = named_sessions_.empty() && sessions_.empty();
+      return all_closed && reservations_.empty();	   
    }
 } // namespace internal
 } // namespace grpc
