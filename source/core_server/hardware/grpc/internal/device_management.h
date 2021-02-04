@@ -16,7 +16,7 @@ namespace internal
    public:
       DeviceManagement();
 
-      void enumerate_devices(::grpc::ServerContext * context, const EnumerateDevicesRequest * request, EnumerateDevicesResponse * response);
+      void enumerate_devices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response);
    };
 } // namespace internal
 } // namespace grpc

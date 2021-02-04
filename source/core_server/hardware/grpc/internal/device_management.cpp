@@ -11,18 +11,18 @@ namespace grpc
 namespace internal
 {
    using NISysCfgInitializeSessionPtr = NISysCfgStatus (*)(
-      const char *                           targetName,                // NULL or "" => localhost
-      const char *                           username,                  // NULL or "" => no credentials
-      const char *                           password,                  // NULL or "" => no credentials
+      const char*                            targetName,                // NULL or "" => localhost
+      const char*                            username,                  // NULL or "" => no credentials
+      const char*                            password,                  // NULL or "" => no credentials
       NISysCfgLocale                         language,                  // LCID or 0 to indicate default.
       NISysCfgBool                           forcePropertyRefresh,
       unsigned int                           connectTimeoutMsec,
-      NISysCfgEnumExpertHandle *             expertEnumHandle,          // Can be NULL
-      NISysCfgSessionHandle *                sessionHandle
+      NISysCfgEnumExpertHandle*              expertEnumHandle,          // Can be NULL
+      NISysCfgSessionHandle*                 sessionHandle
       );
    using NISysCfgCreateFilterPtr = NISysCfgStatus(*)(
       NISysCfgSessionHandle                  sessionHandle,
-      NISysCfgFilterHandle *                 filterHandle
+      NISysCfgFilterHandle*                  filterHandle
        );
    using NISysCfgSetFilterPropertyPtr = NISysCfgStatus (*)(
       NISysCfgFilterHandle                   filterHandle,
@@ -33,13 +33,13 @@ namespace internal
       NISysCfgSessionHandle                  sessionHandle,
       NISysCfgFilterMode                     filterMode,                // Ignored if filter handle is NULL
       NISysCfgFilterHandle                   filterHandle,              // Can be NULL
-      const char *                           expertNames,               // NULL or "" => all experts
-      NISysCfgEnumResourceHandle *           resourceEnumHandle
+      const char*                            expertNames,               // NULL or "" => all experts
+      NISysCfgEnumResourceHandle*            resourceEnumHandle
       );
    using NISysCfgNextResourcePtr = NISysCfgStatus(*)(
       NISysCfgSessionHandle                  sessionHandle,
       NISysCfgEnumResourceHandle             resourceEnumHandle,
-      NISysCfgResourceHandle *               resourceHandle
+      NISysCfgResourceHandle*                resourceHandle
       );
    using NISysCfgGetResourceIndexedPropertyPtr = NISysCfgStatus(*)(
       NISysCfgResourceHandle                 resourceHandle,
@@ -50,15 +50,15 @@ namespace internal
    using NISysCfgGetResourcePropertyPtr = NISysCfgStatus(*)(
       NISysCfgResourceHandle                 resourceHandle,
       NISysCfgResourceProperty               propertyID,
-      void *                                 value
+      void*                                  value
       );
    using NISysCfgCloseHandlePtr = NISysCfgStatus(*)(
-      void *                                 syscfgHandle
+      void*                                  syscfgHandle
       );
    using NISysCfgGetStatusDescriptionPtr = NISysCfgStatus(*)(
       NISysCfgSessionHandle                  sessionHandle,              // Can be NULL
       NISysCfgStatus                         status,
-      char **                                detailedDescription
+      char**                                 detailedDescription
       );
    using NISysCfgFreeDetailedStringPtr = NISysCfgStatus (*)(
       char                                   str[]
@@ -74,7 +74,7 @@ namespace internal
    {
    }
 
-   void DeviceManagement::enumerate_devices(::grpc::ServerContext * context, const EnumerateDevicesRequest * request, EnumerateDevicesResponse * response)
+   void DeviceManagement::enumerate_devices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response)
    {
       NISysCfgStatus status = NISysCfg_OK;
       NISysCfgSessionHandle session = NULL;
@@ -87,7 +87,7 @@ namespace internal
       char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
       char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
       char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-      char * detailed_description = NULL;
+      char* detailed_description = NULL;
 
       ni::hardware::grpc::internal::SharedLibrary library(syscfg_library_name);
       library.load();
