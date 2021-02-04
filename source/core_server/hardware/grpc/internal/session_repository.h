@@ -49,7 +49,7 @@ namespace internal
       template<class MapType>
       void close_sessions(MapType& map);
       void clear_reservations();
-      bool unreserve_unlocked(const std::string& clientReserveId);
+      bool unreserve_unlocked(std::shared_ptr<SessionInfo> sessionInfo);
 
       SessionReservationMap reserved_sessions_;
       std::shared_mutex session_lock_;

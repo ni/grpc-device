@@ -91,7 +91,7 @@ namespace internal
    template<class MapType>
    void SessionRepository::close_sessions(MapType& map)
    {
-      for (auto sessionIterator = map.begin(); sessionIterator != map.end(); sessionIterator++)
+      for (auto sessionIterator = map.begin(); sessionIterator != map.end();)
       {
          if (sessionIterator != map.end()) {          
             auto sessionInfo = sessionIterator->second;
@@ -100,18 +100,26 @@ namespace internal
             if (cleanupProcess != NULL){
                cleanupProcess(sessionInfo->session);
             }
-            map.erase(sessionIterator);
+            sessionIterator = map.erase(sessionIterator);
+         }
+         else {
+            ++sessionIterator;
          }
       }
    }
    
    void SessionRepository::clear_reservations()
    {
-      for (auto reservationIterator = reserved_sessions_.begin(); reservationIterator != reserved_sessions_.end(); reservationIterator++)
+      for (auto reservationIterator = reserved_sessions_.begin(); reservationIterator != reserved_sessions_.end();)
       {
          if (reservationIterator != reserved_sessions_.end()) {    
-            auto clientReserveId = reservationIterator->first;         
-            unreserve_unlocked(clientReserveId);
+            std::shared_ptr<SessionInfo> sessionInfo;
+            sessionInfo = reservationIterator->second;
+            reservationIterator = reserved_sessions_.erase(reservationIterator);
+            unreserve_unlocked(sessionInfo);
+         }
+         else {
+            ++reservationIterator;
          }
       }
    }
@@ -153,19 +161,18 @@ namespace internal
    void SessionRepository::unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)
    {
          std::unique_lock<std::shared_mutex> lock(session_lock_);
-         auto isUnreserved = unreserve_unlocked(request->client_reserve_id());
+         auto it = reserved_sessions_.find(request->client_reserve_id());
+         std::shared_ptr<SessionInfo> sessionInfo;
+         if (it != reserved_sessions_.end()) {
+            sessionInfo = it->second;
+            reserved_sessions_.erase(it);
+         }
+         auto isUnreserved = unreserve_unlocked(sessionInfo);
          response->set_is_unreserved(isUnreserved);
    }
    
-   bool SessionRepository::unreserve_unlocked(const std::string& clientReserveId)
+   bool SessionRepository::unreserve_unlocked(std::shared_ptr<SessionInfo> sessionInfo)
    {
-      auto it = reserved_sessions_.find(clientReserveId);
-      std::shared_ptr<SessionInfo> sessionInfo;
-      if (it != reserved_sessions_.end()) {
-         sessionInfo = it->second;
-         reserved_sessions_.erase(it);
-      }
-
       if (sessionInfo) {
          auto now = std::chrono::steady_clock::now();
          sessionInfo->last_access_time = now;
