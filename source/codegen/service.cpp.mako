@@ -108,11 +108,13 @@ namespace grpc
 
     auto status = ${method_name}FunctionPointer(${handler_helpers.create_args(parameters)});
     response->set_status(status);
+%if output_parameters:
     if (status == 0) {
 %for parameter in output_parameters:
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
       response->set_${codegen_helpers.camel_to_snake_name(parameter)}(${codegen_helpers.camel_to_snake_name(parameter)});
 %endfor
+%endif
     }
     return grpc::Status::OK;
   }

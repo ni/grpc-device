@@ -87,7 +87,6 @@ namespace grpc
 
     auto status = AbortFunctionPointer(vi);
     response->set_status(status);
-    if (status == 0) {
     }
     return grpc::Status::OK;
   }
@@ -138,7 +137,6 @@ namespace grpc
 
     auto status = EnumInputFunctionWithDefaultsFunctionPointer(vi, a_turtle);
     response->set_status(status);
-    if (status == 0) {
     }
     return grpc::Status::OK;
   }
@@ -422,7 +420,6 @@ namespace grpc
 
     auto status = OneInputFunctionFunctionPointer(vi, a_number);
     response->set_status(status);
-    if (status == 0) {
     }
     return grpc::Status::OK;
   }
@@ -451,7 +448,6 @@ namespace grpc
 
     auto status = PoorlyNamedSimpleFunctionFunctionPointer(vi);
     response->set_status(status);
-    if (status == 0) {
     }
     return grpc::Status::OK;
   }
@@ -570,7 +566,6 @@ namespace grpc
 
     auto status = SetCustomTypeFunctionPointer(vi, cs);
     response->set_status(status);
-    if (status == 0) {
     }
     return grpc::Status::OK;
   }
@@ -600,7 +595,6 @@ namespace grpc
 
     auto status = StringValuedEnumInputFunctionWithDefaultsFunctionPointer(vi, a_mobile_o_s_name);
     response->set_status(status);
-    if (status == 0) {
     }
     return grpc::Status::OK;
   }
@@ -624,7 +618,6 @@ namespace grpc
 
     auto status = TwoInputFunctionFunctionPointer(vi, a_number, a_string);
     response->set_status(status);
-    if (status == 0) {
     }
     return grpc::Status::OK;
   }
