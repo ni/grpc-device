@@ -30,16 +30,16 @@ namespace internal
       SharedLibrary(const SharedLibrary& other);
       virtual ~SharedLibrary();
 
-      void swap(SharedLibrary& other);
-      bool is_loaded() const;
-      LibraryHandle get_handle() const;
-      void load();
-      void unload();
-      const void* get_function_pointer(const char* name) const;
-      void set_library_name(const char* library_name);
-      std::string get_library_name() const;
+      virtual void swap(SharedLibrary& other);
+      virtual bool is_loaded() const;
+      virtual LibraryHandle get_handle() const;
+      virtual void load();
+      virtual void unload();
+      virtual const void* get_function_pointer(const char* name) const;
+      virtual void set_library_name(const char* library_name);
+      virtual std::string get_library_name() const;
 
-   private:
+   protected:
       std::string library_name_;
       LibraryHandle handle_;
    };
