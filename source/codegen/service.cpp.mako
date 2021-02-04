@@ -35,9 +35,9 @@ namespace ${driver_namespace}
 {
 namespace grpc
 {
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-using internal = ni::hardware::grpc::internal;
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  using internal = ni::hardware::grpc::internal;
 
 ## Function pointers to driver library
 % for method_name in functions:
@@ -49,26 +49,26 @@ using internal = ni::hardware::grpc::internal;
     handler_helpers.sanitize_names(parameters)
 %>\
 % if not codegen_helpers.has_array_parameter(f):
-using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
+  using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
 % endif
 %endfor
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-using namespace std;
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  using namespace std;
 
 ## Constructors
-#if defined(_MSC_VER)
-   static const char* driver_api_library_name = "${windows_libary_name}";
-#else
-   static const char* driver_api_library_name = "${linux_library_name}";
-#endif
+  #if defined(_MSC_VER)
+    static const char* driver_api_library_name = "${windows_libary_name}";
+  #else
+    static const char* driver_api_library_name = "${linux_library_name}";
+  #endif
 
-${service_name}::${service_name}(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
-    : shared_library_(shared_library), session_repository_(session_repository) 
-{
-  shared_library_ -> set_library_name(driver_api_library_name);
-}
+  ${service_name}::${service_name}(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
+      : shared_library_(shared_library), session_repository_(session_repository) 
+  {
+    shared_library_ -> set_library_name(driver_api_library_name);
+  }
 
 % for method_name in functions:
 <%
@@ -80,43 +80,43 @@ ${service_name}::${service_name}(internal::SharedLibrary* shared_library, intern
     input_parameters = [p for p in parameters if codegen_helpers.is_input_parameter(p)]
     output_parameters = [p for p in parameters if codegen_helpers.is_output_parameter(p)]
 %>\
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
+  {
 % if codegen_helpers.has_array_parameter(f):
-  return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
-}
+    return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
+  }
 
 <% continue %>
 % endif
-  shared_library_ -> load();
-  if (!shared_library_ -> is_loaded()) {
-    return grpc::Status(grpc::StatusCode::NOT_FOUND, "Driver DLL was not found.");
-  }
-  auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_ -> get_function_pointer("${c_function_prefix}${method_name}"));
-  if (${method_name}FunctionPointer == nullptr) {
-    return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
-  }
+    shared_library_ -> load();
+    if (!shared_library_ -> is_loaded()) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "Driver DLL was not found.");
+    }
+    auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_ -> get_function_pointer("${c_function_prefix}${method_name}"));
+    if (${method_name}FunctionPointer == nullptr) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested driver method wasn't found in the library.");
+    }
 
 %for parameter in input_parameters:
-  ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)} = ${handler_helpers.get_request_value(parameter)}
+    ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)} = ${handler_helpers.get_request_value(parameter)}
 %endfor
 %for parameter in output_parameters:
-  ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)};
+    ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)};
 %endfor
 
-  auto status = ${method_name}FunctionPointer(${handler_helpers.create_args(parameters)});
-  response->set_status(status);
-  if (status == 0) {
+    auto status = ${method_name}FunctionPointer(${handler_helpers.create_args(parameters)});
+    response->set_status(status);
+    if (status == 0) {
 %for parameter in output_parameters:
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
-    response->set_${codegen_helpers.camel_to_snake_name(parameter)}(${codegen_helpers.camel_to_snake_name(parameter)});
+      response->set_${codegen_helpers.camel_to_snake_name(parameter)}(${codegen_helpers.camel_to_snake_name(parameter)});
 %endfor
-  }
+    }
 
-  return grpc::Status::OK;
-}
+    return grpc::Status::OK;
+  }
 
 % endfor
 } // namespace grpc
