@@ -146,18 +146,17 @@ namespace internal
       return false;
    }
    
-   template<class MapType>
-   void SessionRepository::close_sessions(MapType& map)
+   void SessionRepository::close_sessions()
    {
-      for (auto it = map.begin(); it != map.end();)
+      for (auto it = sessions_.begin(); it != sessions_.end();)
       {
-         if (it != map.end()) {          
+         if (it != sessions_.end()) {          
             auto sessionInfo = it->second;
             auto cleanupProcess  = sessionInfo->cleanup_proc;
             if (cleanupProcess != NULL){
                cleanupProcess(sessionInfo->id);
             }
-            it = map.erase(it);
+            it = sessions_.erase(it);
          }
          else {
             ++it;
@@ -185,8 +184,8 @@ namespace internal
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
       clear_reservations();
-      close_sessions(named_sessions_);
-      close_sessions(sessions_);
+      close_sessions();
+      named_sessions_.clear();
       auto all_closed = named_sessions_.empty() && sessions_.empty();
       return all_closed && reservations_.empty();	   
    }

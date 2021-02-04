@@ -51,8 +51,7 @@ namespace internal
       using ReservationMap = std::map<std::string, std::shared_ptr<ReservationInfo>>;
 
       std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
-	   template<class MapType>
-      void close_sessions(MapType& map);
+      void close_sessions();
       void clear_reservations();
       bool release_reservation(const std::shared_ptr<ReservationInfo>& reservation_info);
       
