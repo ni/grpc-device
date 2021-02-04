@@ -9,13 +9,13 @@ package ni.hardware.grpc;
 
 service ServerUtilities {
   // Reserve a set of client defined resources for exclusive use
-  rpc Reserve (ReserveRequest) returns (ReserveResponse) {};
+  rpc Reserve (ReserveRequest) returns (ReserveResponse);
 
   // Determines if a set of client defined resources is currently reserved by a specific client
-  rpc IsReservedByClient (IsReservedByClientRequest) returns (IsReservedByClientResponse) {};
+  rpc IsReservedByClient (IsReservedByClientRequest) returns (IsReservedByClientResponse);
 
   // Unreserves a previously reserved resource
-  rpc Unreserve (UnreserveRequest) returns (UnreserveResponse) {};
+  rpc Unreserve (UnreserveRequest) returns (UnreserveResponse);
 }
 
 message Session {

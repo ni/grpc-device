@@ -18,6 +18,7 @@ namespace internal
       CleanupSessionProc cleanup_proc,
       uint64_t& session_id)
    {
+      session_id = 0;
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
       auto now = std::chrono::steady_clock::now();
       auto it = named_sessions_.find(session_name);
@@ -79,8 +80,7 @@ namespace internal
       std::shared_ptr<ReservationInfo> info;
       auto it = reservations_.find(reservation_id);
       if (it != reservations_.end()) {
-         info = it->second;
-         if (info->client_id == client_id) {
+         if ((*it).second->client_id == client_id) {
             return nullptr;
          }
       }
@@ -107,7 +107,7 @@ namespace internal
          info->lock = std::make_unique<internal::Semaphore>();
       }
       info->lock->wait();
-      {
+      if (info) {
          std::unique_lock<std::shared_mutex> lock(repository_lock_);
          info->client_id = client_id;
       }
@@ -126,14 +126,12 @@ namespace internal
 
    bool SessionRepository::unreserve(const std::string& reservation_id, const std::string& client_id)
    {
+      std::unique_lock<std::shared_mutex> lock(repository_lock_);
       std::shared_ptr<SessionRepository::ReservationInfo> reservation_info;
-      {
-         std::unique_lock<std::shared_mutex> lock(repository_lock_);
-         auto it = reservations_.find(reservation_id);
-         if (it != reservations_.end() && client_id == it->second->client_id) {
-            reservation_info = it->second;
-            reservations_.erase(it);
-         }
+      auto it = reservations_.find(reservation_id);
+      if (it != reservations_.end() && client_id == it->second->client_id) {
+         reservation_info = it->second;
+         reservations_.erase(it);
       }
       if (reservation_info) {
          reservation_info->lock->notify();
