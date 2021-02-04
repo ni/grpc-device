@@ -118,6 +118,24 @@ namespace internal
       EXPECT_EQ(session_id, 42);
    }
    
+   TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
+   {
+      std::string session_name = "session_name";
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id;
+      int status = session_repository.add_session(
+         session_name,
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         session_id);
+
+      bool all_closed = session_repository.reset_server();
+
+      EXPECT_FALSE(session_repository.access_session(session_id, ""));
+      EXPECT_FALSE(session_repository.access_session(0, session_name));
+      EXPECT_TRUE(all_closed);
+   }
+   
    TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
