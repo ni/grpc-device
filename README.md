@@ -52,14 +52,14 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git and cmake (3.12 or later):
+For Debian/Ubuntu, install git and cmake (3.5.1 or later):
 ```
 > sudo apt-get update
 > sudo apt-get install git
 > sudo apt-get install cmake
 ```
 
-For NI Linux RT, install git, git-perltools, and cmake (3.12 or later):
+For NI Linux RT, install git, git-perltools, and cmake (3.5.1 or later):
 ```
 > opkg update
 > opkg install git
