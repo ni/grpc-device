@@ -3,6 +3,7 @@
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/semaphore.h"
 #include "hardware/grpc/internal/session_repository.h"
+#include "hardware/grpc/internal/device_management.h"
 
 // fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
 static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
@@ -20,7 +21,8 @@ namespace grpc
    TEST(CoreServiceTests, SessionAdded_ReserveWithNewClientName_ReservesSession)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
       auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
       ni::hardware::grpc::ReserveRequest request;
       request.set_allocated_session(session);
@@ -37,7 +39,8 @@ namespace grpc
    TEST(CoreServiceTests, NoSession_ReserveWithNewClientName_InvalidSession)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
       ni::hardware::grpc::ReserveRequest request;
       request.set_client_reserve_id("new_client_name");
 
@@ -52,7 +55,8 @@ namespace grpc
    {
       std::string session_name("session_name");
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
       auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), session_name, nullptr);
       ni::hardware::grpc::ReserveRequest request;
       request.set_client_reserve_id(session_name);
@@ -68,7 +72,8 @@ namespace grpc
    TEST(CoreServiceTests, UnusedSessionName_IsReserved_ReturnsFalse)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
       ni::hardware::grpc::IsReservedByClientRequest request;
       request.set_client_reserve_id("unused id");
 
@@ -83,7 +88,8 @@ namespace grpc
    {
       std::string reserve_id("session_name");
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
       auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
       ni::hardware::grpc::ReserveRequest reserveRequest;
       reserveRequest.set_allocated_session(session);
@@ -105,7 +111,8 @@ namespace grpc
    {
       std::string reserve_id("session_name");
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
       auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
       ni::hardware::grpc::ReserveRequest reserveRequest;
       reserveRequest.set_allocated_session(session);
@@ -130,7 +137,8 @@ namespace grpc
    TEST(CoreServiceTests, NoSession_Unreserve_DoesNotUnreserve)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
 
       ::grpc::ServerContext context;
       ni::hardware::grpc::UnreserveRequest request;
@@ -145,7 +153,8 @@ namespace grpc
    {
       std::string reserve_id("session_name");
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
       auto session = session_repository.add_session(ni::hardware::grpc::ViSession(), "session_name", nullptr);
       ni::hardware::grpc::ReserveRequest reserveRequest;
       reserveRequest.set_allocated_session(session);

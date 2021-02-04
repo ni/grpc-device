@@ -38,6 +38,7 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}"
   "./source"
   "./source/core_server"
+  $ENV{NIEXTCCOMPILERSUPP}/Include
 )
 
 #----------------------------------------------------------------------
@@ -66,6 +67,7 @@ add_custom_command(
 add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
+   "source/core_server/hardware/grpc/internal/device_management.cpp"
    "source/core_server/hardware/grpc/internal/semaphore.cpp"
    "source/core_server/hardware/grpc/internal/session_repository.cpp"
    "source/core_server/hardware/grpc/internal/shared_library.cpp"
@@ -89,8 +91,10 @@ add_executable(CoreServiceTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_management.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
+    "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 
@@ -108,6 +112,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_management.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
     "source/core_server/hardware/grpc/internal/shared_library.cpp"

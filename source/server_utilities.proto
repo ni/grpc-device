@@ -8,6 +8,9 @@ option csharp_namespace = "NationalInstruments.Hardware.Grpc";
 package ni.hardware.grpc;
 
 service ServerUtilities {
+  // Returns a list of devices or chassis connected to server under localhost
+  rpc EnumerateDevices (EnumerateDevicesRequest) returns (EnumerateDevicesResponse) {};
+
   // Reserve a set of client defined resources for exclusive use
   rpc Reserve (ReserveRequest) returns (ReserveResponse) {};
 
@@ -23,6 +26,21 @@ message ViSession {
       string session_name = 1;
       sfixed64 id = 2;
   }
+}
+
+message NiDeviceProperties {
+  string ResourceName = 1;
+  string Alias = 2;
+  string Model = 3;
+  string Vendor = 4;
+  string SerialNumber = 5;
+}
+
+message EnumerateDevicesRequest {
+}
+
+message EnumerateDevicesResponse {
+  repeated NiDeviceProperties devices = 1;
 }
 
 message ReserveRequest {
