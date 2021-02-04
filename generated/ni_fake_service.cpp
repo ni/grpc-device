@@ -89,7 +89,6 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
     }
-
     return grpc::Status::OK;
   }
 
@@ -141,7 +140,6 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
     }
-
     return grpc::Status::OK;
   }
 
@@ -180,7 +178,6 @@ namespace grpc
     if (status == 0) {
       response->set_a_boolean(a_boolean);
     }
-
     return grpc::Status::OK;
   }
 
@@ -205,7 +202,6 @@ namespace grpc
     if (status == 0) {
       response->set_a_number(a_number);
     }
-
     return grpc::Status::OK;
   }
 
@@ -272,7 +268,6 @@ namespace grpc
     if (status == 0) {
       response->set_size_out(size_out);
     }
-
     return grpc::Status::OK;
   }
 
@@ -304,7 +299,6 @@ namespace grpc
     if (status == 0) {
       response->set_months(months);
     }
-
     return grpc::Status::OK;
   }
 
@@ -329,7 +323,6 @@ namespace grpc
     if (status == 0) {
       response->set_cs(cs);
     }
-
     return grpc::Status::OK;
   }
 
@@ -363,7 +356,6 @@ namespace grpc
       response->set_a_quantity(a_quantity);
       response->set_a_turtle(a_turtle);
     }
-
     return grpc::Status::OK;
   }
 
@@ -395,7 +387,6 @@ namespace grpc
     if (status == 0) {
       response->set_caller_has_lock(caller_has_lock);
     }
-
     return grpc::Status::OK;
   }
 
@@ -433,7 +424,6 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
     }
-
     return grpc::Status::OK;
   }
 
@@ -463,7 +453,6 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
     }
-
     return grpc::Status::OK;
   }
 
@@ -489,7 +478,6 @@ namespace grpc
     if (status == 0) {
       response->set_reading(reading);
     }
-
     return grpc::Status::OK;
   }
 
@@ -516,7 +504,6 @@ namespace grpc
     if (status == 0) {
       response->set_reading(reading);
     }
-
     return grpc::Status::OK;
   }
 
@@ -548,7 +535,6 @@ namespace grpc
     if (status == 0) {
       response->set_timedelta(timedelta);
     }
-
     return grpc::Status::OK;
   }
 
@@ -586,7 +572,6 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
     }
-
     return grpc::Status::OK;
   }
 
@@ -617,7 +602,6 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
     }
-
     return grpc::Status::OK;
   }
 
@@ -642,7 +626,6 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
     }
-
     return grpc::Status::OK;
   }
 
@@ -667,7 +650,6 @@ namespace grpc
     if (status == 0) {
       response->set_caller_has_lock(caller_has_lock);
     }
-
     return grpc::Status::OK;
   }
 
@@ -693,7 +675,6 @@ namespace grpc
     if (status == 0) {
       response->set_output(output);
     }
-
     return grpc::Status::OK;
   }
 

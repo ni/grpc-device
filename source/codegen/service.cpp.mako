@@ -114,7 +114,6 @@ namespace grpc
       response->set_${codegen_helpers.camel_to_snake_name(parameter)}(${codegen_helpers.camel_to_snake_name(parameter)});
 %endfor
     }
-
     return grpc::Status::OK;
   }
 
