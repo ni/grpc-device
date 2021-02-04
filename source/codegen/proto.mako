@@ -45,6 +45,9 @@ enum ${driver_name_pascal}Attributes {
 
 enum ${driver_name_pascal}Values {
   ${c_function_prefix.upper()}UNSPECIFIED = 0;
+<%
+nonint_index = 1
+%>\
 % for enum_list in data["enums"]:
 <%
 enums = data["enums"][enum_list]
@@ -52,6 +55,12 @@ enums = data["enums"][enum_list]
 % for values in enums :
 % for value in enums[values] :
 <%
+
+
+if isinstance(value["value"], int) is False:
+  value["value"] = nonint_index
+  nonint_index = nonint_index+1
+
 enum_name = value["name"].replace((module_name.upper()) + '_VAL_', (c_function_prefix.upper()))
 %>\
   ${enum_name} = ${value["value"]};
@@ -72,11 +81,10 @@ message ${common_helpers.snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%  
   index  = index + 1
-  is_array = common_helpers.is_array((parameter["type"]))
+  is_array = common_helpers.is_array(parameter["type"])
+  parameter_type = "repeated " + proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
   if is_array is True:
-    parameter_type = "repeated " + proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
-  else:
-    parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
+    parameter_type = parameter_type
 
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};  
@@ -91,12 +99,12 @@ message ${common_helpers.snake_to_camel(function)}Response {
 % for parameter in output_parameters:
 <%  
   index = index + 1
+  is_array = common_helpers.is_array(parameter["type"])
   parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
-  if common_helpers.is_array(parameter_type) is True:
-    parameter_type = "repeated " + parameter_type.replace('[]', '')
+  if is_array is True:
+    parameter_type = "repeated " + parameter_type
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}; 
 %endfor  
 }
-
 % endfor
