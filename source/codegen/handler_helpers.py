@@ -24,9 +24,9 @@ RESERVED_WORDS = [
 def sanitize_names(parameters):
     """Sanitizes name fields on a list of parameter objects and populates the cppname field with the sanitized value."""
     for parameter in parameters:
-        parameter['cppname'] = parameter['name']
-        if parameter['cppname'] in RESERVED_WORDS:
-            parameter['cppname'] = parameter['cppname'] + 'Parameter'
+        parameter['cppName'] = parameter['name']
+        if parameter['cppName'] in RESERVED_WORDS:
+            parameter['cppName'] = parameter['cppName'] + 'Parameter'
 
 def create_args(parameters):
     result = ''

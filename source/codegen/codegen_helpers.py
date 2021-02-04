@@ -65,7 +65,7 @@ def camel_to_snake(camelString):
   return ("".join(camelString))
 
 def camel_to_snake_name(parameter):
-  return camel_to_snake(parameter['cppname'])
+  return camel_to_snake(parameter['cppName'])
 
 def has_array_parameter(function):
   for parameter in function['parameters']:
