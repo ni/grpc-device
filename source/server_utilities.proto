@@ -65,5 +65,5 @@ message ResetServerRequest {
 }
 
 message ResetServerResponse {       
-  bool all_closed = 1;
+  bool is_server_reset = 1;
 }

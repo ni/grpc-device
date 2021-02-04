@@ -292,7 +292,7 @@ namespace grpc
       ni::hardware::grpc::ResetServerResponse response;
       service.ResetServer(&context, NULL, &response);
 
-      EXPECT_TRUE(response.all_closed());
+      EXPECT_TRUE(response.is_server_reset());
       ni::hardware::grpc::IsReservedByClientRequest is_reserved_request;
       is_reserved_request.set_reservation_id("foo");
       is_reserved_request.set_client_id("a");

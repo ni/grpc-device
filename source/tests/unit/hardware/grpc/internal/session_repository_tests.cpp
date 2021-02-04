@@ -129,11 +129,11 @@ namespace internal
          NULL,
          session_id);
 
-      bool all_closed = session_repository.reset_server();
+      bool is_server_reset = session_repository.reset_server();
 
       EXPECT_FALSE(session_repository.access_session(session_id, ""));
       EXPECT_FALSE(session_repository.access_session(0, session_name));
-      EXPECT_TRUE(all_closed);
+      EXPECT_TRUE(is_server_reset);
    }
    
    TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
@@ -146,10 +146,10 @@ namespace internal
          NULL,
          session_id);
 
-      bool all_closed = session_repository.reset_server();
+      bool is_server_reset = session_repository.reset_server();
 
       EXPECT_FALSE(session_repository.access_session(session_id, ""));
-      EXPECT_TRUE(all_closed);
+      EXPECT_TRUE(is_server_reset);
    }
 
    TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBothSessions)
@@ -169,12 +169,12 @@ namespace internal
          NULL,
          unnamed_session_id);
          
-      bool all_closed = session_repository.reset_server();
+      bool is_server_reset = session_repository.reset_server();
 
       EXPECT_FALSE(session_repository.access_session(named_session_id, ""));
       EXPECT_FALSE(session_repository.access_session(0, session_name));
       EXPECT_FALSE(session_repository.access_session(unnamed_session_id, ""));
-      EXPECT_TRUE(all_closed);
+      EXPECT_TRUE(is_server_reset);
    }
 } // namespace internal
 } // namespace grpc

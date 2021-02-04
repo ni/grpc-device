@@ -169,8 +169,7 @@ namespace internal
       for (auto it = reservations_.begin(); it != reservations_.end();)
       {
          if (it != reservations_.end()) {    
-            std::shared_ptr<SessionRepository::ReservationInfo> reservation_info;
-            reservation_info = it->second;
+            auto reservation_info = it->second;
             it = reservations_.erase(it);
             release_reservation(reservation_info);
          }
@@ -186,8 +185,8 @@ namespace internal
       clear_reservations();
       close_sessions();
       named_sessions_.clear();
-      auto all_closed = named_sessions_.empty() && sessions_.empty();
-      return all_closed && reservations_.empty();	   
+      auto is_server_reset = named_sessions_.empty() && sessions_.empty();
+      return is_server_reset && reservations_.empty();	   
    }
 } // namespace internal
 } // namespace grpc
