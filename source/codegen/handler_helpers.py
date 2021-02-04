@@ -53,21 +53,20 @@ def create_params(parameters):
 def get_request_value(parameter):
     result = ''
     if parameter['type'] == 'ViChar':
-        result = result + '(char*)'
-    ## if parameter['type'] == 'ViSession':
-        ## result = result + 'session_repository_->lookup_session('        
-    result = result + 'request->'
-    result = result + codegen_helpers.get_grpc_type_from_ivi(codegen_helpers.camel_to_snake_name(parameter).lower())
-    result = result + '()'
+        result = '%(result)s(char*)'
+    result = f'{result}request->'
+    param_name = codegen_helpers.camel_to_snake_name(parameter)
+    request_name = codegen_helpers.get_grpc_type_from_ivi(param_name)
+    result = f'{result}{request_name}()'
     if parameter['type'] == 'ViConstString':
-        result = result + '.c_str()'
+        result = f'{result}.c_str()'
     if parameter['type'] == 'ViRsrc':
-        result = result + '.c_str()'
+        result = f'{result}.c_str()'
     if parameter['type'] == 'ViChar':
-        result = result + '.c_str()'
+        result = f'{result}.c_str()'
     if parameter['type'] == 'ViSession':
-        result = result + ')'
-    result = result + ';'
+        result = f'{result})'
+    result = f'{result};'
     return result
 
 def get_c_type(parameter):
