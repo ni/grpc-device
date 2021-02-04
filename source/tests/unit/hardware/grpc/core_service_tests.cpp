@@ -277,6 +277,29 @@ namespace grpc
       service.IsReservedByClient(&context, &is_reserved_request, &is_reserved_response);
       EXPECT_FALSE(is_reserved_response.is_reserved());
    }
+   
+    TEST(CoreServiceTests, Reservation_ResetServer_Unreserves)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::ReserveRequest reserve_request;
+      reserve_request.set_reservation_id("foo");
+      reserve_request.set_client_id("a");
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service.Reserve(&context, &reserve_request, &reserve_response);
+
+      ni::hardware::grpc::ResetServerResponse response;
+      service.ResetServer(&context, NULL, &response);
+
+      EXPECT_TRUE(response.all_closed());
+      ni::hardware::grpc::IsReservedByClientRequest is_reserved_request;
+      is_reserved_request.set_reservation_id("foo");
+      is_reserved_request.set_client_id("a");
+      ni::hardware::grpc::IsReservedByClientResponse is_reserved_response;
+      service.IsReservedByClient(&context, &is_reserved_request, &is_reserved_response);
+      EXPECT_FALSE(is_reserved_response.is_reserved());
+   }
 } // namespace grpc
 } // namespace hardware
 } // namespace unit

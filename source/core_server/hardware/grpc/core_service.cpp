@@ -35,6 +35,13 @@ namespace grpc
       response->set_is_unreserved(is_unreserved);
       return ::grpc::Status::OK;
    }
+   
+   ::grpc::Status CoreService::ResetServer(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
+   {
+      auto closeSuccess = session_repository_->reset_server();
+      response->set_all_closed(closeSuccess);
+      return ::grpc::Status::OK;
+   }
 } // namespace grpc
 } // namespace hardware
 } // namespace ni

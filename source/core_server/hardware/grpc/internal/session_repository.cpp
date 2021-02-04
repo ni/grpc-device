@@ -134,11 +134,61 @@ namespace internal
          reservation_info = it->second;
          reservations_.erase(it);
       }
-      if (reservation_info) {
-         reservation_info->lock->notify();
+      return release_reservation(reservation_info);
+   }
+   
+   bool SessionRepository::release_reservation(std::shared_ptr<SessionRepository::ReservationInfo> reservationInfo)
+   {
+      if (reservationInfo) {
+         reservationInfo->lock->notify();
          return true;
       }
       return false;
+   }
+   
+   template<class MapType>
+   void SessionRepository::close_sessions(MapType& map)
+   {
+      for (auto sessionIterator = map.begin(); sessionIterator != map.end();)
+      {
+         if (sessionIterator != map.end()) {          
+            auto sessionInfo = sessionIterator->second;
+            auto cleanupProcess  = sessionInfo->cleanup_proc;
+            if (cleanupProcess != NULL){
+               cleanupProcess(sessionInfo->id);
+            }
+            sessionIterator = map.erase(sessionIterator);
+         }
+         else {
+            ++sessionIterator;
+         }
+      }
+   }
+
+   void SessionRepository::clear_reservations()
+   {
+      for (auto reservationIterator = reservations_.begin(); reservationIterator != reservations_.end();)
+      {
+         if (reservationIterator != reservations_.end()) {    
+            std::shared_ptr<SessionRepository::ReservationInfo> reservation_info;
+            reservation_info = reservationIterator->second;
+            reservationIterator = reservations_.erase(reservationIterator);
+            release_reservation(reservation_info);
+         }
+         else {
+            ++reservationIterator;
+         }
+      }
+   }
+   
+   bool SessionRepository::reset_server()
+   {
+      std::unique_lock<std::shared_mutex> lock(repository_lock_);
+      clear_reservations();
+      close_sessions(named_sessions_);
+      close_sessions(sessions_);
+      bool allClosed = named_sessions_.empty() && sessions_.empty();
+      return allClosed && reservations_.empty();	   
    }
 } // namespace internal
 } // namespace grpc

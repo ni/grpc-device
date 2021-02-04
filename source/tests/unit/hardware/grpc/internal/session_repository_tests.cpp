@@ -117,6 +117,47 @@ namespace internal
       EXPECT_FALSE(init_called);
       EXPECT_EQ(session_id, 42);
    }
+   
+   TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id;
+      session_repository.add_session(
+         "",
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         session_id);
+
+      bool all_closed = session_repository.reset_server();
+
+      EXPECT_FALSE(session_repository.access_session(session_id, ""));
+      EXPECT_TRUE(all_closed);
+   }
+
+   TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBothSessions)
+   {
+      std::string session_name = "session_name";
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t named_session_id;
+      int status = session_repository.add_session(
+         session_name,
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         named_session_id);
+      uint64_t unnamed_session_id;
+      session_repository.add_session(
+         "",
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         unnamed_session_id);
+         
+      bool all_closed = session_repository.reset_server();
+
+      EXPECT_FALSE(session_repository.access_session(named_session_id, ""));
+      EXPECT_FALSE(session_repository.access_session(0, session_name));
+      EXPECT_FALSE(session_repository.access_session(unnamed_session_id, ""));
+      EXPECT_TRUE(all_closed);
+   }
 } // namespace internal
 } // namespace grpc
 } // namespace hardware
