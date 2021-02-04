@@ -92,37 +92,62 @@ enum NiFakeAttributes {
   NIFAKE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010;
 }
 
-enum NiFakeValues {
+enum BeautifulColorValues {
   NIFAKE_UNSPECIFIED = 0;
   NIFAKE_PINK = 44;
   NIFAKE_AQUA = 43;
   NIFAKE_GREEN = 45;
   NIFAKE_BLACK = 42;
+}  
+  
+enum ColorValues {
+  NIFAKE_UNSPECIFIED = 0;
   NIFAKE_RED = 1;
   NIFAKE_BLUE = 2;
   NIFAKE_YELLOW = 5;
   NIFAKE_BLACK = 42;
+}  
+  
+enum ColorObsoleteValues {
+  NIFAKE_UNSPECIFIED = 0;
   NIFAKE_RED = 1;
   NIFAKE_BLUE = 2;
   NIFAKE_YELLOW = 5;
   NIFAKE_BLACK = 42;
+}  
+  
+enum ColorPrivateValues {
+  NIFAKE_UNSPECIFIED = 0;
   NIFAKE_RED = 1;
   NIFAKE_BLUE = 2;
   NIFAKE_YELLOW = 5;
   NIFAKE_BLACK = 42;
+}  
+  
+enum FloatEnumValues {
+  NIFAKE_UNSPECIFIED = 0;
   NIFAKE_THREE_POINT_FIVE = 1;
   NIFAKE_FOUR_POINT_FIVE = 2;
   NIFAKE_FIVE_POINT_FIVE = 3;
   NIFAKE_SIX_POINT_FIVE = 4;
   NIFAKE_SEVEN_POINT_FIVE = 5;
-  NIFAKE_ANDROID = 6;
-  NIFAKE_IOS = 7;
-  NIFAKE_NONE = 8;
+}  
+  
+enum MobileOSNamesValues {
+  NIFAKE_UNSPECIFIED = 0;
+  NIFAKE_ANDROID = 1;
+  NIFAKE_IOS = 2;
+  NIFAKE_NONE = 3;
+}  
+  
+enum TurtleValues {
+  NIFAKE_UNSPECIFIED = 0;
   NIFAKE_LEONARDO = 0;
   NIFAKE_DONATELLO = 1;
   NIFAKE_RAPHAEL = 2;
   NIFAKE_MICHELANGELO = 3;
-}
+}  
+  
 
 
 message AbortRequest {

@@ -43,20 +43,16 @@ enum ${driver_name_pascal}Attributes {
 % endfor
 }
 
-enum ${driver_name_pascal}Values {
+% for enum_list in data["enums"]:
+enum ${enum_list}Values {
   ${c_function_prefix.upper()}UNSPECIFIED = 0;
 <%
 nonint_index = 1
-%>\
-% for enum_list in data["enums"]:
-<%
 enums = data["enums"][enum_list]
 %>\
 % for values in enums :
 % for value in enums[values] :
 <%
-
-
 if isinstance(value["value"], int) is False:
   value["value"] = nonint_index
   nonint_index = nonint_index+1
@@ -65,9 +61,10 @@ enum_name = value["name"].replace((module_name.upper()) + '_VAL_', (c_function_p
 %>\
   ${enum_name} = ${value["value"]};
 % endfor   
-% endfor    
 % endfor
-}
+}  
+  
+% endfor
 
 % for function in data["functions"]:
 <% 
