@@ -18,7 +18,7 @@ service ServerUtilities {
   rpc Unreserve (UnreserveRequest) returns (UnreserveResponse);
   
   // Resets the server to a default state with no open sessions
-  rpc ResetServer (ResetServerRequest) returns (ResetServerResponse) {};
+  rpc ResetServer (ResetServerRequest) returns (ResetServerResponse);
 }
 
 message Session {
