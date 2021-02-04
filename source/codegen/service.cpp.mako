@@ -13,7 +13,6 @@ driver_prefix = "niFake" ## config['driver_name']
 driver_file_name_prefix= "ni_fake"
 library_name = "NiFake"
 service_name = "NiFakeService"
-array_brackets_expression = re.compile(r'\[.*\]')
 c_function_prefix = config['c_function_prefix']
 linux_library_name = config['library_info']['Linux']['64bit']['name']
 linux_library_name = "./" + linux_library_name + '.so'
