@@ -18,7 +18,7 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 To prepare for cmake + Microsoft Visual C++ compiler build
 - Install Visual Studio 2015, 2017, or 2019 (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
-- Install [CMake](https://cmake.org/download/).
+- Install [CMake](https://cmake.org/download/) (3.12 or later).
 
 Launch "x64 Native Tools Command Prompt for Visual Studio"
 
@@ -52,14 +52,14 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git and cmake:
+For Debian/Ubuntu, install git and cmake (3.12 or later):
 ```
 > sudo apt-get update
 > sudo apt-get install git
 > sudo apt-get install cmake
 ```
 
-For NI Linux RT, install git, git-perltools, and cmake:
+For NI Linux RT, install git, git-perltools, and cmake (3.12 or later):
 ```
 > opkg update
 > opkg install git
