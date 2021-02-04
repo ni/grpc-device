@@ -11,6 +11,7 @@ functions = data['functions']
 ## TODO: Pull niFake from config metadata.
 driver_prefix = "niFake" ## config['driver_name']
 driver_file_name_prefix= "ni_fake"
+driver_namespace = "fake"
 library_name = "NiFake"
 service_name = "NiFakeService"
 c_function_prefix = config['c_function_prefix']
@@ -28,6 +29,12 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 #include <${driver_file_name_prefix}.grpc.h>
 #include <atomic>
 
+namespace ni
+{
+namespace ${driver_namespace}
+{
+namespace grpc
+{
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 using internal = ni::hardware::grpc::internal;
@@ -112,3 +119,6 @@ grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const
 }
 
 % endfor
+} // namespace grpc
+} // namespace ${driver_namespace}
+} // namespace ni

@@ -9,6 +9,12 @@
 #include <ni_fake.grpc.h>
 #include <atomic>
 
+namespace ni
+{
+namespace fake
+{
+namespace grpc
+{
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 using internal = ni::hardware::grpc::internal;
@@ -698,3 +704,6 @@ grpc::Status NiFakeService::WriteWaveform(grpc::ServerContext* context, const ni
   return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
 }
 
+} // namespace grpc
+} // namespace fake
+} // namespace ni
