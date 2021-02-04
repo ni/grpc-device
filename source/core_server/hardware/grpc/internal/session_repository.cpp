@@ -23,6 +23,7 @@ namespace internal
       auto now = std::chrono::steady_clock::now();
       auto it = named_sessions_.find(session_name);
       if (it != named_sessions_.end()) {
+         session_id = it->second->id;
          it->second->last_access_time = now;
          return 0;
       }

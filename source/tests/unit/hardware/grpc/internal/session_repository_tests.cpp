@@ -91,6 +91,32 @@ namespace internal
       EXPECT_FALSE(session_repository.access_session(session_id, ""));
       EXPECT_FALSE(session_repository.access_session(0, session_name));
    }
+
+   TEST(SessionRepositoryTests, NamedSessionAdded_AddSessionWithSameName_ReturnsFirstSessionIdAndDoesNotCallInit)
+   {
+      std::string session_name = "session_name";
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      uint64_t session_id;
+      session_repository.add_session(
+         session_name,
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         session_id);
+
+      session_id = 0;
+      bool init_called = false;
+      session_repository.add_session(
+         session_name,
+         [init_called]() mutable {
+            init_called = true;
+            return std::make_tuple(0, 52);
+         },
+         NULL,
+         session_id);
+
+      EXPECT_FALSE(init_called);
+      EXPECT_EQ(session_id, 42);
+   }
 } // namespace internal
 } // namespace grpc
 } // namespace hardware
