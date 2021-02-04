@@ -82,9 +82,9 @@ message ${common_helpers.snake_to_camel(function)}Request {
 <%  
   index  = index + 1
   is_array = common_helpers.is_array(parameter["type"])
-  parameter_type = "repeated " + proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
+  parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], driver_name_camel)
   if is_array is True:
-    parameter_type = parameter_type
+    parameter_type = "repeated " + parameter_type
 
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};  

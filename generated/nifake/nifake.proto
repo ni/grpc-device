@@ -126,7 +126,7 @@ enum NiFakeValues {
 
 
 message AbortRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message AbortResponse {
@@ -134,8 +134,8 @@ message AbortResponse {
 }
 
 message AcceptListOfDurationsInSecondsRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 count = 2;  
+  fixed64 vi = 1;  
+  sint32 count = 2;  
   repeated double delays = 3;  
 }
 
@@ -144,8 +144,8 @@ message AcceptListOfDurationsInSecondsResponse {
 }
 
 message BoolArrayOutputFunctionRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_elements = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_elements = 2;  
 }
 
 message BoolArrayOutputFunctionResponse {
@@ -154,8 +154,8 @@ message BoolArrayOutputFunctionResponse {
 }
 
 message DoubleAllTheNumsRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_count = 2;  
+  fixed64 vi = 1;  
+  sint32 number_count = 2;  
   repeated double numbers = 3;  
 }
 
@@ -164,18 +164,18 @@ message DoubleAllTheNumsResponse {
 }
 
 message EnumArrayOutputFunctionRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_elements = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_elements = 2;  
 }
 
 message EnumArrayOutputFunctionResponse {
   int32 status = 1;
-  repeated bytes an_array = 2; 
+  repeated uint32 an_array = 2; 
 }
 
 message EnumInputFunctionWithDefaultsRequest {
-  repeated fixed64 vi = 1;  
-  repeated bytes a_turtle = 2;  
+  fixed64 vi = 1;  
+  uint32 a_turtle = 2;  
 }
 
 message EnumInputFunctionWithDefaultsResponse {
@@ -183,18 +183,18 @@ message EnumInputFunctionWithDefaultsResponse {
 }
 
 message ExportAttributeConfigurationBufferRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 size_in_bytes = 2;  
+  fixed64 vi = 1;  
+  sint32 size_in_bytes = 2;  
 }
 
 message ExportAttributeConfigurationBufferResponse {
   int32 status = 1;
-  repeated bytes configuration = 2; 
+  repeated uint32 configuration = 2; 
 }
 
 message FetchWaveformRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_samples = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_samples = 2;  
 }
 
 message FetchWaveformResponse {
@@ -204,7 +204,7 @@ message FetchWaveformResponse {
 }
 
 message GetABooleanRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message GetABooleanResponse {
@@ -213,16 +213,16 @@ message GetABooleanResponse {
 }
 
 message GetANumberRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message GetANumberResponse {
   int32 status = 1;
-  bytes a_number = 2; 
+  uint32 a_number = 2; 
 }
 
 message GetAStringOfFixedMaximumSizeRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message GetAStringOfFixedMaximumSizeResponse {
@@ -231,8 +231,8 @@ message GetAStringOfFixedMaximumSizeResponse {
 }
 
 message GetAStringUsingPythonCodeRequest {
-  repeated fixed64 vi = 1;  
-  repeated bytes a_number = 2;  
+  fixed64 vi = 1;  
+  uint32 a_number = 2;  
 }
 
 message GetAStringUsingPythonCodeResponse {
@@ -241,8 +241,8 @@ message GetAStringUsingPythonCodeResponse {
 }
 
 message GetAnIviDanceStringRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 buffer_size = 2;  
+  fixed64 vi = 1;  
+  sint32 buffer_size = 2;  
 }
 
 message GetAnIviDanceStringResponse {
@@ -251,8 +251,8 @@ message GetAnIviDanceStringResponse {
 }
 
 message GetAnIviDanceWithATwistStringRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 buffer_size = 2;  
+  fixed64 vi = 1;  
+  sint32 buffer_size = 2;  
 }
 
 message GetAnIviDanceWithATwistStringResponse {
@@ -262,8 +262,8 @@ message GetAnIviDanceWithATwistStringResponse {
 }
 
 message GetArrayForPythonCodeCustomTypeRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_elements = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_elements = 2;  
 }
 
 message GetArrayForPythonCodeCustomTypeResponse {
@@ -272,8 +272,8 @@ message GetArrayForPythonCodeCustomTypeResponse {
 }
 
 message GetArrayForPythonCodeDoubleRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_elements = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_elements = 2;  
 }
 
 message GetArrayForPythonCodeDoubleResponse {
@@ -282,7 +282,7 @@ message GetArrayForPythonCodeDoubleResponse {
 }
 
 message GetArraySizeForPythonCodeRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message GetArraySizeForPythonCodeResponse {
@@ -291,8 +291,8 @@ message GetArraySizeForPythonCodeResponse {
 }
 
 message GetArrayUsingIviDanceRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 array_size = 2;  
+  fixed64 vi = 1;  
+  sint32 array_size = 2;  
 }
 
 message GetArrayUsingIviDanceResponse {
@@ -301,9 +301,9 @@ message GetArrayUsingIviDanceResponse {
 }
 
 message GetAttributeViBooleanRequest {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViBooleanResponse {
@@ -312,9 +312,9 @@ message GetAttributeViBooleanResponse {
 }
 
 message GetAttributeViInt32Request {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViInt32Response {
@@ -323,9 +323,9 @@ message GetAttributeViInt32Response {
 }
 
 message GetAttributeViInt64Request {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViInt64Response {
@@ -334,9 +334,9 @@ message GetAttributeViInt64Response {
 }
 
 message GetAttributeViReal64Request {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViReal64Response {
@@ -345,10 +345,10 @@ message GetAttributeViReal64Response {
 }
 
 message GetAttributeViStringRequest {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
-  repeated sint32 buffer_size = 4;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
+  sint32 buffer_size = 4;  
 }
 
 message GetAttributeViStringResponse {
@@ -357,8 +357,8 @@ message GetAttributeViStringResponse {
 }
 
 message GetCalDateAndTimeRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 cal_type = 2;  
+  fixed64 vi = 1;  
+  sint32 cal_type = 2;  
 }
 
 message GetCalDateAndTimeResponse {
@@ -371,7 +371,7 @@ message GetCalDateAndTimeResponse {
 }
 
 message GetCalIntervalRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message GetCalIntervalResponse {
@@ -380,7 +380,7 @@ message GetCalIntervalResponse {
 }
 
 message GetCustomTypeRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message GetCustomTypeResponse {
@@ -389,8 +389,8 @@ message GetCustomTypeResponse {
 }
 
 message GetCustomTypeArrayRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_elements = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_elements = 2;  
 }
 
 message GetCustomTypeArrayResponse {
@@ -399,18 +399,18 @@ message GetCustomTypeArrayResponse {
 }
 
 message GetEnumValueRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message GetEnumValueResponse {
   int32 status = 1;
   sint32 a_quantity = 2; 
-  bytes a_turtle = 3; 
+  uint32 a_turtle = 3; 
 }
 
 message GetErrorRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 buffer_size = 2;  
+  fixed64 vi = 1;  
+  sint32 buffer_size = 2;  
 }
 
 message GetErrorResponse {
@@ -420,8 +420,8 @@ message GetErrorResponse {
 }
 
 message GetLastCalDateAndTimeRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 cal_type = 2;  
+  fixed64 vi = 1;  
+  sint32 cal_type = 2;  
 }
 
 message GetLastCalDateAndTimeResponse {
@@ -430,9 +430,9 @@ message GetLastCalDateAndTimeResponse {
 }
 
 message ImportAttributeConfigurationBufferRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 size_in_bytes = 2;  
-  repeated bytes configuration = 3;  
+  fixed64 vi = 1;  
+  sint32 size_in_bytes = 2;  
+  repeated uint32 configuration = 3;  
 }
 
 message ImportAttributeConfigurationBufferResponse {
@@ -440,10 +440,10 @@ message ImportAttributeConfigurationBufferResponse {
 }
 
 message InitWithOptionsRequest {
-  repeated string resource_name = 1;  
-  repeated bool id_query = 2;  
-  repeated bool reset_device = 3;  
-  repeated string option_string = 4;  
+  string resource_name = 1;  
+  bool id_query = 2;  
+  bool reset_device = 3;  
+  string option_string = 4;  
 }
 
 message InitWithOptionsResponse {
@@ -452,7 +452,7 @@ message InitWithOptionsResponse {
 }
 
 message InitiateRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message InitiateResponse {
@@ -460,7 +460,7 @@ message InitiateResponse {
 }
 
 message LockSessionRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message LockSessionResponse {
@@ -469,11 +469,11 @@ message LockSessionResponse {
 }
 
 message MultipleArrayTypesRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 output_array_size = 2;  
-  repeated sint32 input_array_sizes = 3;  
+  fixed64 vi = 1;  
+  sint32 output_array_size = 2;  
+  sint32 input_array_sizes = 3;  
   repeated double input_array_of_floats = 4;  
-  repeated bytes input_array_of_integers = 5;  
+  repeated uint32 input_array_of_integers = 5;  
 }
 
 message MultipleArrayTypesResponse {
@@ -483,12 +483,12 @@ message MultipleArrayTypesResponse {
 }
 
 message MultipleArraysSameSizeRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
   repeated double values1 = 2;  
   repeated double values2 = 3;  
   repeated double values3 = 4;  
   repeated double values4 = 5;  
-  repeated sint32 size = 6;  
+  sint32 size = 6;  
 }
 
 message MultipleArraysSameSizeResponse {
@@ -496,8 +496,8 @@ message MultipleArraysSameSizeResponse {
 }
 
 message OneInputFunctionRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 a_number = 2;  
+  fixed64 vi = 1;  
+  sint32 a_number = 2;  
 }
 
 message OneInputFunctionResponse {
@@ -505,15 +505,15 @@ message OneInputFunctionResponse {
 }
 
 message ParametersAreMultipleTypesRequest {
-  repeated fixed64 vi = 1;  
-  repeated bool a_boolean = 2;  
-  repeated sint32 an_int32 = 3;  
-  repeated int64 an_int64 = 4;  
-  repeated bytes an_int_enum = 5;  
-  repeated double a_float = 6;  
-  repeated double a_float_enum = 7;  
-  repeated sint32 string_size = 8;  
-  repeated string a_string = 9;  
+  fixed64 vi = 1;  
+  bool a_boolean = 2;  
+  sint32 an_int32 = 3;  
+  int64 an_int64 = 4;  
+  uint32 an_int_enum = 5;  
+  double a_float = 6;  
+  double a_float_enum = 7;  
+  sint32 string_size = 8;  
+  string a_string = 9;  
 }
 
 message ParametersAreMultipleTypesResponse {
@@ -521,7 +521,7 @@ message ParametersAreMultipleTypesResponse {
 }
 
 message PoorlyNamedSimpleFunctionRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message PoorlyNamedSimpleFunctionResponse {
@@ -529,8 +529,8 @@ message PoorlyNamedSimpleFunctionResponse {
 }
 
 message ReadRequest {
-  repeated fixed64 vi = 1;  
-  repeated double maximum_time = 2;  
+  fixed64 vi = 1;  
+  double maximum_time = 2;  
 }
 
 message ReadResponse {
@@ -539,9 +539,9 @@ message ReadResponse {
 }
 
 message ReadFromChannelRequest {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated sint32 maximum_time = 3;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  sint32 maximum_time = 3;  
 }
 
 message ReadFromChannelResponse {
@@ -550,17 +550,17 @@ message ReadFromChannelResponse {
 }
 
 message ReturnANumberAndAStringRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message ReturnANumberAndAStringResponse {
   int32 status = 1;
-  bytes a_number = 2; 
+  uint32 a_number = 2; 
   repeated string a_string = 3; 
 }
 
 message ReturnDurationInSecondsRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message ReturnDurationInSecondsResponse {
@@ -569,8 +569,8 @@ message ReturnDurationInSecondsResponse {
 }
 
 message ReturnListOfDurationsInSecondsRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_elements = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_elements = 2;  
 }
 
 message ReturnListOfDurationsInSecondsResponse {
@@ -579,9 +579,9 @@ message ReturnListOfDurationsInSecondsResponse {
 }
 
 message ReturnMultipleTypesRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 array_size = 2;  
-  repeated sint32 string_size = 3;  
+  fixed64 vi = 1;  
+  sint32 array_size = 2;  
+  sint32 string_size = 3;  
 }
 
 message ReturnMultipleTypesResponse {
@@ -589,7 +589,7 @@ message ReturnMultipleTypesResponse {
   bool a_boolean = 2; 
   sint32 an_int32 = 3; 
   int64 an_int64 = 4; 
-  bytes an_int_enum = 5; 
+  uint32 an_int_enum = 5; 
   double a_float = 6; 
   double a_float_enum = 7; 
   repeated double an_array = 8; 
@@ -597,10 +597,10 @@ message ReturnMultipleTypesResponse {
 }
 
 message SetAttributeViBooleanRequest {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
-  repeated bool attribute_value = 4;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
+  bool attribute_value = 4;  
 }
 
 message SetAttributeViBooleanResponse {
@@ -608,10 +608,10 @@ message SetAttributeViBooleanResponse {
 }
 
 message SetAttributeViInt32Request {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
-  repeated sint32 attribute_value = 4;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
+  sint32 attribute_value = 4;  
 }
 
 message SetAttributeViInt32Response {
@@ -619,10 +619,10 @@ message SetAttributeViInt32Response {
 }
 
 message SetAttributeViInt64Request {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
-  repeated int64 attribute_value = 4;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
+  int64 attribute_value = 4;  
 }
 
 message SetAttributeViInt64Response {
@@ -630,10 +630,10 @@ message SetAttributeViInt64Response {
 }
 
 message SetAttributeViReal64Request {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
-  repeated double attribute_value = 4;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
+  double attribute_value = 4;  
 }
 
 message SetAttributeViReal64Response {
@@ -641,10 +641,10 @@ message SetAttributeViReal64Response {
 }
 
 message SetAttributeViStringRequest {
-  repeated fixed64 vi = 1;  
-  repeated string channel_name = 2;  
-  repeated FakeAttributes attribute_id = 3;  
-  repeated string attribute_value = 4;  
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  FakeAttributes attribute_id = 3;  
+  string attribute_value = 4;  
 }
 
 message SetAttributeViStringResponse {
@@ -652,8 +652,8 @@ message SetAttributeViStringResponse {
 }
 
 message SetCustomTypeRequest {
-  repeated fixed64 vi = 1;  
-  repeated fixed64 cs = 2;  
+  fixed64 vi = 1;  
+  fixed64 cs = 2;  
 }
 
 message SetCustomTypeResponse {
@@ -661,8 +661,8 @@ message SetCustomTypeResponse {
 }
 
 message SetCustomTypeArrayRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_elements = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_elements = 2;  
   repeated fixed64 cs = 3;  
 }
 
@@ -671,8 +671,8 @@ message SetCustomTypeArrayResponse {
 }
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {
-  repeated fixed64 vi = 1;  
-  repeated string a_mobile_o_s_name = 2;  
+  fixed64 vi = 1;  
+  string a_mobile_o_s_name = 2;  
 }
 
 message StringValuedEnumInputFunctionWithDefaultsResponse {
@@ -680,9 +680,9 @@ message StringValuedEnumInputFunctionWithDefaultsResponse {
 }
 
 message TwoInputFunctionRequest {
-  repeated fixed64 vi = 1;  
-  repeated double a_number = 2;  
-  repeated string a_string = 3;  
+  fixed64 vi = 1;  
+  double a_number = 2;  
+  string a_string = 3;  
 }
 
 message TwoInputFunctionResponse {
@@ -690,7 +690,7 @@ message TwoInputFunctionResponse {
 }
 
 message UnlockSessionRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message UnlockSessionResponse {
@@ -699,8 +699,8 @@ message UnlockSessionResponse {
 }
 
 message Use64BitNumberRequest {
-  repeated fixed64 vi = 1;  
-  repeated int64 input = 2;  
+  fixed64 vi = 1;  
+  int64 input = 2;  
 }
 
 message Use64BitNumberResponse {
@@ -709,8 +709,8 @@ message Use64BitNumberResponse {
 }
 
 message WriteWaveformRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 number_of_samples = 2;  
+  fixed64 vi = 1;  
+  sint32 number_of_samples = 2;  
   repeated double waveform = 3;  
 }
 
@@ -719,7 +719,7 @@ message WriteWaveformResponse {
 }
 
 message CloseRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message CloseResponse {
@@ -727,8 +727,8 @@ message CloseResponse {
 }
 
 message ErrorMessageRequest {
-  repeated fixed64 vi = 1;  
-  repeated sint32 error_code = 2;  
+  fixed64 vi = 1;  
+  sint32 error_code = 2;  
 }
 
 message ErrorMessageResponse {
@@ -737,7 +737,7 @@ message ErrorMessageResponse {
 }
 
 message FancySelfTestRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message FancySelfTestResponse {
@@ -745,11 +745,11 @@ message FancySelfTestResponse {
 }
 
 message SelfTestRequest {
-  repeated fixed64 vi = 1;  
+  fixed64 vi = 1;  
 }
 
 message SelfTestResponse {
   int32 status = 1;
-  bytes self_test_result = 2; 
+  uint32 self_test_result = 2; 
   repeated string self_test_message = 3; 
 }
