@@ -116,8 +116,8 @@ namespace grpc
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
       response->set_${codegen_helpers.camel_to_snake_name(parameter)}(${codegen_helpers.camel_to_snake_name(parameter)});
 %endfor
-%endif
     }
+%endif
     return grpc::Status::OK;
   }
 
