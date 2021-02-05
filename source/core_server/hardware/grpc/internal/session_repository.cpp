@@ -155,7 +155,7 @@ namespace internal
          release_reservation(reservation_info.get());
       }
    }
-   
+      
    bool SessionRepository::reset_server()
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
@@ -164,6 +164,13 @@ namespace internal
       sessions_.clear();
       auto is_server_reset = named_sessions_.empty() && sessions_.empty();
       return is_server_reset && reservations_.empty();	   
+   }
+   
+   SessionRepository::SessionInfo::~SessionInfo()
+   {
+      if (cleanup_func != NULL){
+         cleanup_func(id);
+      }
    }
 } // namespace internal
 } // namespace grpc

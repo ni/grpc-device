@@ -40,17 +40,12 @@ namespace internal
 
       struct SessionInfo
       {
+         virtual ~SessionInfo();
+
          uint64_t id;
          std::string name;
          std::chrono::steady_clock::time_point last_access_time;
          SessionRepository::CleanupSessionFunc cleanup_func;
-         
-         ~SessionInfo()
-         {
-            if (cleanup_func != NULL){
-               cleanup_func(id);
-            }
-         }
       };
 
       using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
