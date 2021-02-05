@@ -19,9 +19,9 @@ namespace internal
    public:
       SessionRepository();
 
-      using CleanupSessionProc = void (*)(uint64_t id);
+      using CleanupSessionFunc = void (*)(uint64_t id);
 
-      int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionProc cleanup_proc, uint64_t& session_id);
+      int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionFunc cleanup_func, uint64_t& session_id);
       uint64_t access_session(uint64_t session_id, const std::string& session_name);
       void remove_session(uint64_t id);
 
@@ -43,7 +43,14 @@ namespace internal
          uint64_t id;
          std::string name;
          std::chrono::steady_clock::time_point last_access_time;
-         SessionRepository::CleanupSessionProc cleanup_proc;
+         SessionRepository::CleanupSessionFunc cleanup_func;
+         
+         ~SessionInfo()
+         {
+            if (cleanup_func != NULL){
+               cleanup_func(id);
+            }
+         }
       };
 
       using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
@@ -51,9 +58,8 @@ namespace internal
       using ReservationMap = std::map<std::string, std::shared_ptr<ReservationInfo>>;
 
       std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
-      void close_sessions();
       void clear_reservations();
-      bool release_reservation(const std::shared_ptr<ReservationInfo>& reservation_info);
+      bool release_reservation(const ReservationInfo* reservation_info);
       
       ReservationMap reservations_;
       std::shared_mutex repository_lock_;

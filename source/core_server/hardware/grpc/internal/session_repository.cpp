@@ -15,7 +15,7 @@ namespace internal
    int SessionRepository::add_session(
       const std::string& session_name,
       std::function<std::tuple<int, uint64_t>()> init_func,
-      CleanupSessionProc cleanup_proc,
+      CleanupSessionFunc cleanup_func,
       uint64_t& session_id)
    {
       session_id = 0;
@@ -35,7 +35,7 @@ namespace internal
       }
       session_id = std::get<1>(init_result);
       info->id = session_id;
-      info->cleanup_proc = cleanup_proc;
+      info->cleanup_func = cleanup_func;
       info->last_access_time = now;
       sessions_.emplace(session_id, info);
       if (!session_name.empty()) {
@@ -134,10 +134,10 @@ namespace internal
          reservation_info = it->second;
          reservations_.erase(it);
       }
-      return release_reservation(reservation_info);
+      return release_reservation(reservation_info.get());
    }
    
-   bool SessionRepository::release_reservation(const std::shared_ptr<ReservationInfo>& reservation_info)
+   bool SessionRepository::release_reservation(const ReservationInfo* reservation_info)
    {
       if (reservation_info) {
          reservation_info->lock->notify();
@@ -146,32 +146,14 @@ namespace internal
       return false;
    }
    
-   void SessionRepository::close_sessions()
-   {
-      for (auto it = sessions_.begin(); it != sessions_.end();)
-      {
-         if (it != sessions_.end()) {          
-            auto sessionInfo = it->second;
-            auto cleanupProcess  = sessionInfo->cleanup_proc;
-            if (cleanupProcess != NULL){
-               cleanupProcess(sessionInfo->id);
-            }
-            it = sessions_.erase(it);
-         }
-         else {
-            ++it;
-         }
-      }
-   }
-
    void SessionRepository::clear_reservations()
    {
       for (auto it = reservations_.begin(); it != reservations_.end();)
       {
          if (it != reservations_.end()) {    
-            auto reservation_info = it->second;
+            std::shared_ptr<SessionRepository::ReservationInfo> reservation_info = it->second;
             it = reservations_.erase(it);
-            release_reservation(reservation_info);
+            release_reservation(reservation_info.get());
          }
          else {
             ++it;
@@ -183,8 +165,8 @@ namespace internal
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
       clear_reservations();
-      close_sessions();
       named_sessions_.clear();
+      sessions_.clear();
       auto is_server_reset = named_sessions_.empty() && sessions_.empty();
       return is_server_reset && reservations_.empty();	   
    }
