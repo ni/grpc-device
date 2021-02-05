@@ -214,7 +214,7 @@ message ExportAttributeConfigurationBufferRequest {
 
 message ExportAttributeConfigurationBufferResponse {
   int32 status = 1;
-  repeated uint32 configuration = 2; 
+  bytes configuration = 2; 
 }
 
 message FetchWaveformRequest {
@@ -457,7 +457,7 @@ message GetLastCalDateAndTimeResponse {
 message ImportAttributeConfigurationBufferRequest {
   fixed64 vi = 1;  
   sint32 size_in_bytes = 2;  
-  repeated uint32 configuration = 3;  
+  bytes configuration = 3;  
 }
 
 message ImportAttributeConfigurationBufferResponse {
