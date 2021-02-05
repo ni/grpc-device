@@ -1,6 +1,6 @@
 name: NI Linux Real-Time Build
 
-on: [push]
+on: [push, workflow_dispatch]
 
 env:
   CMAKE_VERSION: 3.18.3
@@ -30,9 +30,22 @@ jobs:
         echo "${GITHUB_WORKSPACE}/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> ${GITHUB_PATH}
 
     - name: Update Submodules
-      run: git submodule update --init --recursive
+      id: submodules
+      run: |
+        git submodule update --init --recursive
+        echo "::set-output name=grpc-commit::$(git rev-parse --short @:./third_party/grpc)"
+
+    - name: Cache Host OS gRPC Support
+      uses: actions/cache@v2
+      id: hostgrpccache
+      env:
+        cache-name: hostgrpccache
+      with:
+        path: third_party/grpc/build/
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
 
     - name: Configure Host OS gRPC Support
+      if: steps.hostgrpccache.outputs.cache-hit != 'true'
       shell: cmake -P {0}
       run: |
         set(path_separator ":")
@@ -50,8 +63,26 @@ jobs:
           message(FATAL_ERROR "Bad exit status")
         endif()
 
-    - name: Build and Install Host OS gRPC Support
-      run: sudo cmake --build ${GITHUB_WORKSPACE}/third_party/grpc/build --target install
+    - name: Build Host OS gRPC Support
+      if: steps.hostgrpccache.outputs.cache-hit != 'true'
+      shell: cmake -P {0}
+      run: |
+        execute_process(
+          COMMAND cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build
+          RESULT_VARIABLE result
+          OUTPUT_VARIABLE output
+          ERROR_VARIABLE output
+          ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
+        )
+        if (NOT result EQUAL 0)
+          string(REGEX MATCH "FAILED:.*$" error_message "${output}")
+          string(REPLACE "\n" "%0A" error_message "${error_message}")
+          message("::error::${error_message}")
+          message(FATAL_ERROR "Build failed")
+        endif()
+
+    - name: Install Host OS gRPC Support
+      run: sudo cmake --install ${GITHUB_WORKSPACE}/third_party/grpc/build
 
     - name: Configure Cross Compile
       shell: cmake -P {0}
@@ -87,7 +118,7 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
-    - name: Tar build files
+    - name: Tar Build Files
       run: tar -cvf NILinuxRealTime-x86_64.tar ${GITHUB_WORKSPACE}/build/
 
     - name: Upload Artifact

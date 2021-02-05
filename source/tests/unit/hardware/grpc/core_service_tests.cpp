@@ -286,7 +286,7 @@ namespace grpc
       EXPECT_FALSE(is_reserved);
    }
    
-    TEST(CoreServiceTests, Reservation_ResetServer_Unreserves)
+   TEST(CoreServiceTests, Reservation_ResetServer_Unreserves)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
