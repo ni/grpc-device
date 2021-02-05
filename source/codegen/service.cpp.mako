@@ -52,13 +52,13 @@ namespace grpc
 % endif
 %endfor
 
-## Constructors
   #if defined(_MSC_VER)
     static const char* driver_api_library_name = "${windows_libary_name}";
   #else
     static const char* driver_api_library_name = "${linux_library_name}";
   #endif
 
+## Constructors
   ${service_name}::${service_name}(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
       : shared_library_(shared_library), session_repository_(session_repository) 
   {
