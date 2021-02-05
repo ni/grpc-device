@@ -148,10 +148,10 @@ namespace internal
    
    void SessionRepository::clear_reservations()
    {
-      for (auto it = reservations_.rbegin(); it != reservations_.rend(); it++)
+      for (auto it = reservations_.begin(); it != reservations_.end();)
       {
          std::shared_ptr<SessionRepository::ReservationInfo> reservation_info = it->second;
-         reservations_.erase(it ->first);
+         it = reservations_.erase(it);
          release_reservation(reservation_info.get());
       }
    }
