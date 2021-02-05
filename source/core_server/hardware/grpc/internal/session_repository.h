@@ -19,7 +19,7 @@ namespace internal
    public:
       SessionRepository();
 
-      using CleanupSessionFunc = void (*)(uint64_t id);
+      using CleanupSessioFunc = void (*)(uint64_t session_id);
 
       int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionFunc cleanup_func, uint64_t& session_id);
       uint64_t access_session(uint64_t session_id, const std::string& session_name);
@@ -36,6 +36,7 @@ namespace internal
          std::string client_id;
          std::unique_ptr<internal::Semaphore> lock;
          std::chrono::steady_clock::time_point creation_time;
+         int client_count;
       };
 
       struct SessionInfo
@@ -60,11 +61,11 @@ namespace internal
       std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
       void clear_reservations();
       bool release_reservation(const ReservationInfo* reservation_info);
-      
-      ReservationMap reservations_;
+
       std::shared_mutex repository_lock_;
-      NamedSessionMap named_sessions_;
       SessionMap sessions_;
+      NamedSessionMap named_sessions_;
+      ReservationMap reservations_;
    };
 } // namespace internal
 } // namespace grpc
