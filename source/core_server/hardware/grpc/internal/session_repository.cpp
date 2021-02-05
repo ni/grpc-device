@@ -81,14 +81,18 @@ namespace internal
       std::shared_ptr<ReservationInfo> info;
       auto it = reservations_.find(reservation_id);
       if (it != reservations_.end()) {
-         if ((*it).second->client_id == client_id) {
+         info = it->second;
+         if (info->client_id == client_id) {
             return nullptr;
          }
+         ++info->wait_count;
       }
       else {
          info = std::make_shared<SessionRepository::ReservationInfo>();
          info->creation_time = std::chrono::steady_clock::now();
          info->client_id = client_id;
+         info->lock = std::make_unique<internal::Semaphore>();
+         info->wait_count = 1;
          reservations_.emplace(reservation_id, info);
       }
       return info;
@@ -100,18 +104,14 @@ namespace internal
       {
          return false;
       }
-      std::shared_ptr<ReservationInfo> info = find_or_create_reservation(reservation_id, client_id);
+      std::shared_ptr<ReservationInfo> info;
+      info = find_or_create_reservation(reservation_id, client_id);
       if (!info) {
          return true;
       }
-      if (!info->lock) {
-         info->lock = std::make_unique<internal::Semaphore>();
-      }
       info->lock->wait();
-      if (info) {
-         std::unique_lock<std::shared_mutex> lock(repository_lock_);
-         info->client_id = client_id;
-      }
+      info->wait_count--;
+      info->client_id = client_id;
       return true;
    }
 
@@ -132,7 +132,9 @@ namespace internal
       auto it = reservations_.find(reservation_id);
       if (it != reservations_.end() && client_id == it->second->client_id) {
          reservation_info = it->second;
-         reservations_.erase(it);
+         if (it->second->wait_count <= 0) {
+            reservations_.erase(it);
+         }
       }
       if (reservation_info) {
          reservation_info->lock->notify();

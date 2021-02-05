@@ -19,7 +19,7 @@ namespace internal
    public:
       SessionRepository();
 
-      using CleanupSessionProc = void (*)(const Session& session);
+      using CleanupSessionProc = void (*)(uint64_t session_id);
 
       int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionProc cleanup_proc, uint64_t& session_id);
       uint64_t access_session(uint64_t session_id, const std::string& session_name);
@@ -35,6 +35,7 @@ namespace internal
          std::string client_id;
          std::unique_ptr<internal::Semaphore> lock;
          std::chrono::steady_clock::time_point creation_time;
+         int wait_count;
       };
 
       struct SessionInfo
