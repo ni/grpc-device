@@ -35,6 +35,7 @@ namespace internal
          std::string client_id;
          std::unique_ptr<internal::Semaphore> lock;
          std::chrono::steady_clock::time_point creation_time;
+         // the number of clients that have asked to reserve this reservation, but have not yet acquired the lock.
          int client_count;
       };
 
@@ -46,7 +47,9 @@ namespace internal
          SessionRepository::CleanupSessionProc cleanup_proc;
       };
 
+      // named sessions point at SessionInfo objects that are also contained in the SessionMap.
       using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
+      // this map contains every session, including both named and unnamed ones.
       using SessionMap = std::map<google::protobuf::int64, std::shared_ptr<SessionInfo>>;
       using ReservationMap = std::map<std::string, std::shared_ptr<ReservationInfo>>;
 

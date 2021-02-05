@@ -12,6 +12,11 @@ namespace internal
    {
    }
 
+   // the return value is the status code returned by the init_func.
+   // session_name is optional. if a session with the given name already exists, this returns a 0 status, session_id is the ID of the existing session, and init_func is not called.
+   // the function passed as the init_func returns a tuple, where the first value is a status code, and the second value is the ID of the initialized session.
+   // when a 0 status is returned, the session_id is set to the ID of the new session (or existing session with the given name).
+   // if a non-zero status is returned, the session_id is 0 and meaningless.
    int SessionRepository::add_session(
       const std::string& session_name,
       std::function<std::tuple<int, uint64_t>()> init_func,
@@ -45,6 +50,9 @@ namespace internal
       return 0;
    }
 
+   // this method updates the last_access_time of a session, if one is found with the given ID or name.
+   // the return value is the ID of the session that matches the given ID or name, or 0 if such a session is not found.
+   // it's only necessary to specify one of the two parameters. passing only a name will cause the corresponding ID to be returned.
    uint64_t SessionRepository::access_session(uint64_t session_id, const std::string& session_name)
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
@@ -62,6 +70,8 @@ namespace internal
       return 0;
    }
 
+   // removes a session by ID.
+   // to remove a session by name, a caller can use access_session to get the session ID from the name and then call this method.
    void SessionRepository::remove_session(uint64_t id)
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
@@ -75,6 +85,11 @@ namespace internal
       }
    }
 
+   // this method has three behaviors:
+   // 1) if no ReservationInfo exists with the given reservation_id, it creates a new ReservationInfo, adds it to reservations_, and returns it.
+   // 2) if a ReservationInfo does exist with the given reservation_id
+   //    a) if the client_id on the existing reservation matches the client_id given to this method, it returns a nullptr
+   //    b) otherwise, it increments the client_count on the existing ReservationInfo and returns the existing info
    std::shared_ptr<SessionRepository::ReservationInfo> SessionRepository::find_or_create_reservation(const std::string& reservation_id, const std::string& client_id)
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
@@ -128,6 +143,8 @@ namespace internal
       return it != reservations_.end() && client_id == it->second->client_id;
    }
 
+   // unreserving a reservation causes the lock on the reservation to notify, allowing the next client waiting on that reservation ID to use it.
+   // if there are no clients waiting on the reservation's lock, the reservation is also removed from the reservations_ map.
    bool SessionRepository::unreserve(const std::string& reservation_id, const std::string& client_id)
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
