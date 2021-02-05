@@ -85,14 +85,14 @@ namespace internal
          if (info->client_id == client_id) {
             return nullptr;
          }
-         ++info->wait_count;
+         ++info->client_count;
       }
       else {
          info = std::make_shared<SessionRepository::ReservationInfo>();
          info->creation_time = std::chrono::steady_clock::now();
          info->client_id = client_id;
          info->lock = std::make_unique<internal::Semaphore>();
-         info->wait_count = 1;
+         info->client_count = 1;
          reservations_.emplace(reservation_id, info);
       }
       return info;
@@ -104,14 +104,20 @@ namespace internal
       {
          return false;
       }
-      std::shared_ptr<ReservationInfo> info;
-      info = find_or_create_reservation(reservation_id, client_id);
+      std::shared_ptr<ReservationInfo> info = find_or_create_reservation(reservation_id, client_id);
       if (!info) {
          return true;
       }
+      // if the info was newly created by find_or_create_reservation, this call
+      // will not wait. on subsequent calls to reserve with the same reservation_id
+      // and a different client_id, it will wait until the lock calls notify which
+      // releases the lock one client at a time.
       info->lock->wait();
-      info->wait_count--;
-      info->client_id = client_id;
+      {
+         std::unique_lock<std::shared_mutex> lock(repository_lock_);
+         info->client_count--;
+         info->client_id = client_id;
+      }
       return true;
    }
 
@@ -119,10 +125,7 @@ namespace internal
    {
       std::unique_lock<std::shared_mutex> lock(repository_lock_);
       auto it = reservations_.find(reservation_id);
-      if (it != reservations_.end() && client_id == it->second->client_id) {
-         return true;
-      }
-      return false;
+      return it != reservations_.end() && client_id == it->second->client_id;
    }
 
    bool SessionRepository::unreserve(const std::string& reservation_id, const std::string& client_id)
@@ -132,7 +135,7 @@ namespace internal
       auto it = reservations_.find(reservation_id);
       if (it != reservations_.end() && client_id == it->second->client_id) {
          reservation_info = it->second;
-         if (it->second->wait_count <= 0) {
+         if (it->second->client_count <= 0) {
             reservations_.erase(it);
          }
       }

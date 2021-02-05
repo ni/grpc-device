@@ -35,7 +35,7 @@ namespace internal
          std::string client_id;
          std::unique_ptr<internal::Semaphore> lock;
          std::chrono::steady_clock::time_point creation_time;
-         int wait_count;
+         int client_count;
       };
 
       struct SessionInfo
@@ -52,10 +52,10 @@ namespace internal
 
       std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
 
-      ReservationMap reservations_;
       std::shared_mutex repository_lock_;
-      NamedSessionMap named_sessions_;
       SessionMap sessions_;
+      NamedSessionMap named_sessions_;
+      ReservationMap reservations_;
    };
 } // namespace internal
 } // namespace grpc

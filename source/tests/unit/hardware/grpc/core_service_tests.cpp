@@ -125,8 +125,10 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse response;
       service.Reserve(&context, &request, &response);
 
-      request.set_client_id("b");
-      std::thread reserve_b(call_reserve_task, &service, &request, &response);
+      ni::hardware::grpc::ReserveRequest request_b;
+      request_b.set_reservation_id("foo");
+      request_b.set_client_id("b");
+      std::thread reserve_b(call_reserve_task, &service, &request_b, &response);
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
       ni::hardware::grpc::ReserveRequest request_c;
       request_c.set_reservation_id("foo");
