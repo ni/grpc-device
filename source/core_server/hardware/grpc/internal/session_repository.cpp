@@ -12,7 +12,7 @@ namespace internal
    {
    }
 
-int SessionRepository::add_session(
+   int SessionRepository::add_session(
       const std::string& session_name,
       std::function<std::tuple<int, uint64_t>()> init_func,
       CleanupSessionFunc cleanup_func,
