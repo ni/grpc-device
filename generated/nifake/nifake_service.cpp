@@ -5,8 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <ni_fake_service.h>
-#include <ni_fake.grpc.h>
+#include <nifake_service.h>
 #include <atomic>
 
 namespace ni
@@ -19,33 +18,34 @@ namespace grpc
   //---------------------------------------------------------------------
   using internal = ni::hardware::grpc::internal;
   using niFake_AbortPtr = int (*)(std::uint64_t);
-  using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::string);
+  using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::uint32_t);
   using niFake_GetABooleanPtr = int (*)(std::uint64_t, bool*);
-  using niFake_GetANumberPtr = int (*)(std::uint64_t, std::string*);
+  using niFake_GetANumberPtr = int (*)(std::uint64_t, std::uint32_t*);
   using niFake_GetArraySizeForPythonCodePtr = int (*)(std::uint64_t, std::int32_t*);
-  using niFake_GetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, ViAttr, bool*);
-  using niFake_GetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int32_t*);
-  using niFake_GetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int64_t*);
-  using niFake_GetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, ViAttr, double*);
+  using niFake_GetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, FakeAttributes, bool*);
+  using niFake_GetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, FakeAttributes, std::int32_t*);
+  using niFake_GetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, FakeAttributes, std::int64_t*);
+  using niFake_GetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, FakeAttributes, double*);
   using niFake_GetCalDateAndTimePtr = int (*)(std::uint64_t, std::int32_t, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*);
   using niFake_GetCalIntervalPtr = int (*)(std::uint64_t, std::int32_t*);
-  using niFake_GetCustomTypePtr = int (*)(std::uint64_t, struct CustomStruct*);
-  using niFake_GetEnumValuePtr = int (*)(std::uint64_t, std::int32_t*, std::string*);
-  using niFake_GetLastCalDateAndTimePtr = int (*)(std::uint64_t, std::int32_t, hightime.datetime*);
+  using niFake_GetCustomTypePtr = int (*)(std::uint64_t, std::uint64_t*);
+  using niFake_GetEnumValuePtr = int (*)(std::uint64_t, std::int32_t*, std::uint32_t*);
+  using niFake_GetLastCalDateAndTimePtr = int (*)(std::uint64_t, std::int32_t, google.protobuf.Timestamp*);
   using niFake_InitWithOptionsPtr = int (*)(std::string, bool, bool, std::string, std::uint64_t*);
   using niFake_InitiatePtr = int (*)(std::uint64_t);
   using niFake_LockSessionPtr = int (*)(std::uint64_t, bool*);
   using niFake_OneInputFunctionPtr = int (*)(std::uint64_t, std::int32_t);
+  using niFake_ParametersAreMultipleTypesPtr = int (*)(std::uint64_t, bool, std::int32_t, std::int64_t, std::uint32_t, double, double, std::int32_t, std::string);
   using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(std::uint64_t);
   using niFake_ReadPtr = int (*)(std::uint64_t, double, double*);
   using niFake_ReadFromChannelPtr = int (*)(std::uint64_t, std::string, std::int32_t, double*);
   using niFake_ReturnDurationInSecondsPtr = int (*)(std::uint64_t, double*);
-  using niFake_SetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, ViAttr, bool);
-  using niFake_SetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int32_t);
-  using niFake_SetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int64_t);
-  using niFake_SetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, ViAttr, double);
-  using niFake_SetAttributeViStringPtr = int (*)(std::uint64_t, std::string, ViAttr, std::string);
-  using niFake_SetCustomTypePtr = int (*)(std::uint64_t, struct CustomStruct);
+  using niFake_SetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, FakeAttributes, bool);
+  using niFake_SetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, FakeAttributes, std::int32_t);
+  using niFake_SetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, FakeAttributes, std::int64_t);
+  using niFake_SetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, FakeAttributes, double);
+  using niFake_SetAttributeViStringPtr = int (*)(std::uint64_t, std::string, FakeAttributes, std::string);
+  using niFake_SetCustomTypePtr = int (*)(std::uint64_t, std::uint64_t);
   using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::string);
   using niFake_TwoInputFunctionPtr = int (*)(std::uint64_t, double, std::string);
   using niFake_UnlockSessionPtr = int (*)(std::uint64_t, bool*);
@@ -67,7 +67,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::Abort(grpc::ServerContext* context, const niFake::AbortRequest* request, niFake::AbortResponse* response)
+  grpc::Status NiFakeService::Abort(grpc::ServerContext* context, const nifake::AbortRequest* request, nifake::AbortResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -88,35 +88,35 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::AcceptListOfDurationsInSeconds(grpc::ServerContext* context, const niFake::AcceptListOfDurationsInSecondsRequest* request, niFake::AcceptListOfDurationsInSecondsResponse* response)
+  grpc::Status NiFakeService::AcceptListOfDurationsInSeconds(grpc::ServerContext* context, const nifake::AcceptListOfDurationsInSecondsRequest* request, nifake::AcceptListOfDurationsInSecondsResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::BoolArrayOutputFunction(grpc::ServerContext* context, const niFake::BoolArrayOutputFunctionRequest* request, niFake::BoolArrayOutputFunctionResponse* response)
+  grpc::Status NiFakeService::BoolArrayOutputFunction(grpc::ServerContext* context, const nifake::BoolArrayOutputFunctionRequest* request, nifake::BoolArrayOutputFunctionResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::DoubleAllTheNums(grpc::ServerContext* context, const niFake::DoubleAllTheNumsRequest* request, niFake::DoubleAllTheNumsResponse* response)
+  grpc::Status NiFakeService::DoubleAllTheNums(grpc::ServerContext* context, const nifake::DoubleAllTheNumsRequest* request, nifake::DoubleAllTheNumsResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::EnumArrayOutputFunction(grpc::ServerContext* context, const niFake::EnumArrayOutputFunctionRequest* request, niFake::EnumArrayOutputFunctionResponse* response)
+  grpc::Status NiFakeService::EnumArrayOutputFunction(grpc::ServerContext* context, const nifake::EnumArrayOutputFunctionRequest* request, nifake::EnumArrayOutputFunctionResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::EnumInputFunctionWithDefaults(grpc::ServerContext* context, const niFake::EnumInputFunctionWithDefaultsRequest* request, niFake::EnumInputFunctionWithDefaultsResponse* response)
+  grpc::Status NiFakeService::EnumInputFunctionWithDefaults(grpc::ServerContext* context, const nifake::EnumInputFunctionWithDefaultsRequest* request, nifake::EnumInputFunctionWithDefaultsResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -130,7 +130,7 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    std::string a_turtle = request->a_turtle();
+    std::uint32_t a_turtle = request->a_turtle();
     auto status = EnumInputFunctionWithDefaultsFunctionPointer(vi, a_turtle);
     response->set_status(status);
     return grpc::Status::OK;
@@ -138,21 +138,21 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ExportAttributeConfigurationBuffer(grpc::ServerContext* context, const niFake::ExportAttributeConfigurationBufferRequest* request, niFake::ExportAttributeConfigurationBufferResponse* response)
+  grpc::Status NiFakeService::ExportAttributeConfigurationBuffer(grpc::ServerContext* context, const nifake::ExportAttributeConfigurationBufferRequest* request, nifake::ExportAttributeConfigurationBufferResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::FetchWaveform(grpc::ServerContext* context, const niFake::FetchWaveformRequest* request, niFake::FetchWaveformResponse* response)
+  grpc::Status NiFakeService::FetchWaveform(grpc::ServerContext* context, const nifake::FetchWaveformRequest* request, nifake::FetchWaveformResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetABoolean(grpc::ServerContext* context, const niFake::GetABooleanRequest* request, niFake::GetABooleanResponse* response)
+  grpc::Status NiFakeService::GetABoolean(grpc::ServerContext* context, const nifake::GetABooleanRequest* request, nifake::GetABooleanResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -177,7 +177,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetANumber(grpc::ServerContext* context, const niFake::GetANumberRequest* request, niFake::GetANumberResponse* response)
+  grpc::Status NiFakeService::GetANumber(grpc::ServerContext* context, const nifake::GetANumberRequest* request, nifake::GetANumberResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -191,7 +191,7 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    std::string a_number;
+    std::uint32_t a_number;
     auto status = GetANumberFunctionPointer(vi, &a_number);
     response->set_status(status);
     if (status == 0) {
@@ -202,49 +202,49 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetAStringOfFixedMaximumSize(grpc::ServerContext* context, const niFake::GetAStringOfFixedMaximumSizeRequest* request, niFake::GetAStringOfFixedMaximumSizeResponse* response)
+  grpc::Status NiFakeService::GetAStringOfFixedMaximumSize(grpc::ServerContext* context, const nifake::GetAStringOfFixedMaximumSizeRequest* request, nifake::GetAStringOfFixedMaximumSizeResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetAStringUsingPythonCode(grpc::ServerContext* context, const niFake::GetAStringUsingPythonCodeRequest* request, niFake::GetAStringUsingPythonCodeResponse* response)
+  grpc::Status NiFakeService::GetAStringUsingPythonCode(grpc::ServerContext* context, const nifake::GetAStringUsingPythonCodeRequest* request, nifake::GetAStringUsingPythonCodeResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetAnIviDanceString(grpc::ServerContext* context, const niFake::GetAnIviDanceStringRequest* request, niFake::GetAnIviDanceStringResponse* response)
+  grpc::Status NiFakeService::GetAnIviDanceString(grpc::ServerContext* context, const nifake::GetAnIviDanceStringRequest* request, nifake::GetAnIviDanceStringResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetAnIviDanceWithATwistString(grpc::ServerContext* context, const niFake::GetAnIviDanceWithATwistStringRequest* request, niFake::GetAnIviDanceWithATwistStringResponse* response)
+  grpc::Status NiFakeService::GetAnIviDanceWithATwistString(grpc::ServerContext* context, const nifake::GetAnIviDanceWithATwistStringRequest* request, nifake::GetAnIviDanceWithATwistStringResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetArrayForPythonCodeCustomType(grpc::ServerContext* context, const niFake::GetArrayForPythonCodeCustomTypeRequest* request, niFake::GetArrayForPythonCodeCustomTypeResponse* response)
+  grpc::Status NiFakeService::GetArrayForPythonCodeCustomType(grpc::ServerContext* context, const nifake::GetArrayForPythonCodeCustomTypeRequest* request, nifake::GetArrayForPythonCodeCustomTypeResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetArrayForPythonCodeDouble(grpc::ServerContext* context, const niFake::GetArrayForPythonCodeDoubleRequest* request, niFake::GetArrayForPythonCodeDoubleResponse* response)
+  grpc::Status NiFakeService::GetArrayForPythonCodeDouble(grpc::ServerContext* context, const nifake::GetArrayForPythonCodeDoubleRequest* request, nifake::GetArrayForPythonCodeDoubleResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetArraySizeForPythonCode(grpc::ServerContext* context, const niFake::GetArraySizeForPythonCodeRequest* request, niFake::GetArraySizeForPythonCodeResponse* response)
+  grpc::Status NiFakeService::GetArraySizeForPythonCode(grpc::ServerContext* context, const nifake::GetArraySizeForPythonCodeRequest* request, nifake::GetArraySizeForPythonCodeResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -269,14 +269,14 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetArrayUsingIviDance(grpc::ServerContext* context, const niFake::GetArrayUsingIviDanceRequest* request, niFake::GetArrayUsingIviDanceResponse* response)
+  grpc::Status NiFakeService::GetArrayUsingIviDance(grpc::ServerContext* context, const nifake::GetArrayUsingIviDanceRequest* request, nifake::GetArrayUsingIviDanceResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetCalInterval(grpc::ServerContext* context, const niFake::GetCalIntervalRequest* request, niFake::GetCalIntervalResponse* response)
+  grpc::Status NiFakeService::GetCalInterval(grpc::ServerContext* context, const nifake::GetCalIntervalRequest* request, nifake::GetCalIntervalResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -301,7 +301,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetCustomType(grpc::ServerContext* context, const niFake::GetCustomTypeRequest* request, niFake::GetCustomTypeResponse* response)
+  grpc::Status NiFakeService::GetCustomType(grpc::ServerContext* context, const nifake::GetCustomTypeRequest* request, nifake::GetCustomTypeResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -315,7 +315,7 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    struct CustomStruct cs;
+    std::uint64_t cs;
     auto status = GetCustomTypeFunctionPointer(vi, &cs);
     response->set_status(status);
     if (status == 0) {
@@ -326,14 +326,14 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetCustomTypeArray(grpc::ServerContext* context, const niFake::GetCustomTypeArrayRequest* request, niFake::GetCustomTypeArrayResponse* response)
+  grpc::Status NiFakeService::GetCustomTypeArray(grpc::ServerContext* context, const nifake::GetCustomTypeArrayRequest* request, nifake::GetCustomTypeArrayResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::GetEnumValue(grpc::ServerContext* context, const niFake::GetEnumValueRequest* request, niFake::GetEnumValueResponse* response)
+  grpc::Status NiFakeService::GetEnumValue(grpc::ServerContext* context, const nifake::GetEnumValueRequest* request, nifake::GetEnumValueResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -348,7 +348,7 @@ namespace grpc
 
     std::uint64_t vi = request->vi());
     std::int32_t a_quantity;
-    std::string a_turtle;
+    std::uint32_t a_turtle;
     auto status = GetEnumValueFunctionPointer(vi, &a_quantity, &a_turtle);
     response->set_status(status);
     if (status == 0) {
@@ -360,14 +360,14 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ImportAttributeConfigurationBuffer(grpc::ServerContext* context, const niFake::ImportAttributeConfigurationBufferRequest* request, niFake::ImportAttributeConfigurationBufferResponse* response)
+  grpc::Status NiFakeService::ImportAttributeConfigurationBuffer(grpc::ServerContext* context, const nifake::ImportAttributeConfigurationBufferRequest* request, nifake::ImportAttributeConfigurationBufferResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::LockSession(grpc::ServerContext* context, const niFake::LockSessionRequest* request, niFake::LockSessionResponse* response)
+  grpc::Status NiFakeService::LockSession(grpc::ServerContext* context, const nifake::LockSessionRequest* request, nifake::LockSessionResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -392,21 +392,21 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::MultipleArrayTypes(grpc::ServerContext* context, const niFake::MultipleArrayTypesRequest* request, niFake::MultipleArrayTypesResponse* response)
+  grpc::Status NiFakeService::MultipleArrayTypes(grpc::ServerContext* context, const nifake::MultipleArrayTypesRequest* request, nifake::MultipleArrayTypesResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::MultipleArraysSameSize(grpc::ServerContext* context, const niFake::MultipleArraysSameSizeRequest* request, niFake::MultipleArraysSameSizeResponse* response)
+  grpc::Status NiFakeService::MultipleArraysSameSize(grpc::ServerContext* context, const nifake::MultipleArraysSameSizeRequest* request, nifake::MultipleArraysSameSizeResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::OneInputFunction(grpc::ServerContext* context, const niFake::OneInputFunctionRequest* request, niFake::OneInputFunctionResponse* response)
+  grpc::Status NiFakeService::OneInputFunction(grpc::ServerContext* context, const nifake::OneInputFunctionRequest* request, nifake::OneInputFunctionResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -428,14 +428,36 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ParametersAreMultipleTypes(grpc::ServerContext* context, const niFake::ParametersAreMultipleTypesRequest* request, niFake::ParametersAreMultipleTypesResponse* response)
+  grpc::Status NiFakeService::ParametersAreMultipleTypes(grpc::ServerContext* context, const nifake::ParametersAreMultipleTypesRequest* request, nifake::ParametersAreMultipleTypesResponse* response)
   {
-    return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
+    shared_library_ -> load();
+    if (!shared_library_ -> is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
+    }
+    auto ParametersAreMultipleTypesFunctionPointer = reinterpret_cast<niFake_ParametersAreMultipleTypesPtr>(shared_library_ -> get_function_pointer("niFake_ParametersAreMultipleTypes"));
+    if (ParametersAreMultipleTypesFunctionPointer == nullptr) {
+      return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_ParametersAreMultipleTypes");
+    }
+
+    std::uint64_t vi = request->vi());
+    bool a_boolean = request->a_boolean();
+    std::int32_t an_int32 = request->an_int32();
+    std::int64_t an_int64 = request->an_int64();
+    std::uint32_t an_int_enum = request->an_int_enum();
+    double a_float = request->a_float();
+    double a_float_enum = request->a_float_enum();
+    std::int32_t string_size = request->string_size();
+    std::string a_string = request->a_string().c_str();
+    auto status = ParametersAreMultipleTypesFunctionPointer(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
+    response->set_status(status);
+    return grpc::Status::OK;
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::PoorlyNamedSimpleFunction(grpc::ServerContext* context, const niFake::PoorlyNamedSimpleFunctionRequest* request, niFake::PoorlyNamedSimpleFunctionResponse* response)
+  grpc::Status NiFakeService::PoorlyNamedSimpleFunction(grpc::ServerContext* context, const nifake::PoorlyNamedSimpleFunctionRequest* request, nifake::PoorlyNamedSimpleFunctionResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -456,7 +478,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::Read(grpc::ServerContext* context, const niFake::ReadRequest* request, niFake::ReadResponse* response)
+  grpc::Status NiFakeService::Read(grpc::ServerContext* context, const nifake::ReadRequest* request, nifake::ReadResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -482,7 +504,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ReadFromChannel(grpc::ServerContext* context, const niFake::ReadFromChannelRequest* request, niFake::ReadFromChannelResponse* response)
+  grpc::Status NiFakeService::ReadFromChannel(grpc::ServerContext* context, const nifake::ReadFromChannelRequest* request, nifake::ReadFromChannelResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -509,14 +531,14 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ReturnANumberAndAString(grpc::ServerContext* context, const niFake::ReturnANumberAndAStringRequest* request, niFake::ReturnANumberAndAStringResponse* response)
+  grpc::Status NiFakeService::ReturnANumberAndAString(grpc::ServerContext* context, const nifake::ReturnANumberAndAStringRequest* request, nifake::ReturnANumberAndAStringResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ReturnDurationInSeconds(grpc::ServerContext* context, const niFake::ReturnDurationInSecondsRequest* request, niFake::ReturnDurationInSecondsResponse* response)
+  grpc::Status NiFakeService::ReturnDurationInSeconds(grpc::ServerContext* context, const nifake::ReturnDurationInSecondsRequest* request, nifake::ReturnDurationInSecondsResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -541,21 +563,21 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ReturnListOfDurationsInSeconds(grpc::ServerContext* context, const niFake::ReturnListOfDurationsInSecondsRequest* request, niFake::ReturnListOfDurationsInSecondsResponse* response)
+  grpc::Status NiFakeService::ReturnListOfDurationsInSeconds(grpc::ServerContext* context, const nifake::ReturnListOfDurationsInSecondsRequest* request, nifake::ReturnListOfDurationsInSecondsResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::ReturnMultipleTypes(grpc::ServerContext* context, const niFake::ReturnMultipleTypesRequest* request, niFake::ReturnMultipleTypesResponse* response)
+  grpc::Status NiFakeService::ReturnMultipleTypes(grpc::ServerContext* context, const nifake::ReturnMultipleTypesRequest* request, nifake::ReturnMultipleTypesResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::SetCustomType(grpc::ServerContext* context, const niFake::SetCustomTypeRequest* request, niFake::SetCustomTypeResponse* response)
+  grpc::Status NiFakeService::SetCustomType(grpc::ServerContext* context, const nifake::SetCustomTypeRequest* request, nifake::SetCustomTypeResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -569,7 +591,7 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    struct CustomStruct cs = request->cs();
+    std::uint64_t cs = request->cs();
     auto status = SetCustomTypeFunctionPointer(vi, cs);
     response->set_status(status);
     return grpc::Status::OK;
@@ -577,14 +599,14 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::SetCustomTypeArray(grpc::ServerContext* context, const niFake::SetCustomTypeArrayRequest* request, niFake::SetCustomTypeArrayResponse* response)
+  grpc::Status NiFakeService::SetCustomTypeArray(grpc::ServerContext* context, const nifake::SetCustomTypeArrayRequest* request, nifake::SetCustomTypeArrayResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(grpc::ServerContext* context, const niFake::StringValuedEnumInputFunctionWithDefaultsRequest* request, niFake::StringValuedEnumInputFunctionWithDefaultsResponse* response)
+  grpc::Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(grpc::ServerContext* context, const nifake::StringValuedEnumInputFunctionWithDefaultsRequest* request, nifake::StringValuedEnumInputFunctionWithDefaultsResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -606,7 +628,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::TwoInputFunction(grpc::ServerContext* context, const niFake::TwoInputFunctionRequest* request, niFake::TwoInputFunctionResponse* response)
+  grpc::Status NiFakeService::TwoInputFunction(grpc::ServerContext* context, const nifake::TwoInputFunctionRequest* request, nifake::TwoInputFunctionResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -629,7 +651,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::UnlockSession(grpc::ServerContext* context, const niFake::UnlockSessionRequest* request, niFake::UnlockSessionResponse* response)
+  grpc::Status NiFakeService::UnlockSession(grpc::ServerContext* context, const nifake::UnlockSessionRequest* request, nifake::UnlockSessionResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -654,7 +676,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::Use64BitNumber(grpc::ServerContext* context, const niFake::Use64BitNumberRequest* request, niFake::Use64BitNumberResponse* response)
+  grpc::Status NiFakeService::Use64BitNumber(grpc::ServerContext* context, const nifake::Use64BitNumberRequest* request, nifake::Use64BitNumberResponse* response)
   {
     shared_library_ -> load();
     if (!shared_library_ -> is_loaded()) {
@@ -680,7 +702,7 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status NiFakeService::WriteWaveform(grpc::ServerContext* context, const niFake::WriteWaveformRequest* request, niFake::WriteWaveformResponse* response)
+  grpc::Status NiFakeService::WriteWaveform(grpc::ServerContext* context, const nifake::WriteWaveformRequest* request, nifake::WriteWaveformResponse* response)
   {
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
   }

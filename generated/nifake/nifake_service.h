@@ -1,8 +1,8 @@
 // This file was generated
-#ifndef NI_HARDWARE_GRPC_NIFAKE_SERVICE_H
-#define NI_HARDWARE_GRPC_NIFAKE_SERVICE_H
+#ifndef NI_FAKE_GRPC_SERVICE_H
+#define NI_FAKE_GRPC_SERVICE_H
 
-#include <niFake.grpc.pb.h>
+#include <ni_fake_service.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
@@ -16,7 +16,7 @@ namespace fake
 {
 namespace grpc
 {
-  class NiFakeService final : public niFake::Service
+  class NiFakeService final : public niFake::NiFakeService::Service
   {
   public:
     NiFakeService(SharedLibrary* shared_library, SessionRepository* session_repository);
@@ -69,4 +69,4 @@ namespace grpc
 } // namespace grpc
 } // namespace fake
 } // namespace ni
-#endif NI_HARDWARE_GRPC_NIFAKE_SERVICE_H
+#endif NI_FAKE_GRPC_SERVICE_H

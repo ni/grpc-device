@@ -1,24 +1,34 @@
 // This file was generated
 <%
-import codegen_helpers
+import common_helpers
 attributes = data['attributes']
 config = data['config']
 enums = data['enums']
 functions = data['functions']
 
-## TODO: Pull niFake from config metadata.
-driver_prefix = "niFake" ## config['driver_name']
-driver_namespace = "fake"
-define_name = "ni_hardware_grpc_" + driver_prefix + "_service_h"
-define_name = define_name.upper()
-service_name = "NiFakeService"
+driver_name_pascal = common_helpers.driver_name_to_pascal(data["config"]["driver_name"])
+driver_name_caps_underscore = common_helpers.driver_name_add_underscore(data["config"]["driver_name"])
+module_name = data["config"]["module_name"]
+  
+driver_name_camel = common_helpers.pascal_to_camel(driver_name_pascal) 
+c_function_prefix = data["config"]["c_function_prefix"]
+
+service_name = driver_name_pascal + "Service"
+c_function_prefix = config['c_function_prefix']
+
+driver_full_namespace = common_helpers.get_service_namespace(driver_name_caps_underscore)
+driver_namespaces = driver_full_namespace.split(".")
+reversed_driver_namespaces = driver_namespaces.copy()
+reversed_driver_namespaces.reverse()
+define_name = driver_full_namespace + "_service_h"
+define_name = define_name.upper().replace(".", "_")
 %>\
 ## Define section
 #ifndef ${define_name}
 #define ${define_name}
 
 ## Include section
-#include <${driver_prefix}.grpc.pb.h>
+#include <${common_helpers.camel_to_snake(common_helpers.pascal_to_camel(service_name))}.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
@@ -26,29 +36,27 @@ service_name = "NiFakeService"
 #include "core_server/hardware/grpc/internal/shared_library.h"
 #include "core_server/hardware/grpc/internal/session_repository.h"
 
-namespace ni
+% for namespace in driver_namespaces:
+namespace ${namespace}
 {
-namespace ${driver_namespace}
-{
-namespace grpc
-{
-  class ${service_name} final : public ${driver_prefix}::Service
+% endfor
+  class ${service_name} final : public ${driver_name_camel}::${service_name}::Service
   {
   public:
     ${service_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
 % for function in functions:
 <%
     f = functions[function]
-    if not codegen_helpers.should_gen_service_handler(f):
+    if not common_helpers.should_gen_service_handler(f):
       continue
 %>\
-    grpc::Status ${function}(grpc::ServerContext* context, const ${driver_prefix}::${function}Request* request, ${driver_prefix}::${function}Response* response) override;
-  % endfor
+    grpc::Status ${function}(grpc::ServerContext* context, const ${driver_name_camel}::${function}Request* request, ${driver_name_camel}::${function}Response* response) override;
+% endfor
   private:
     internal::SharedLibrary* shared_library_;
     internal::SessionRepository* session_repository_;
   };
-} // namespace grpc
-} // namespace ${driver_namespace}
-} // namespace ni
+% for namespace in reversed_driver_namespaces:
+} // namespace ${namespace}
+% endfor
 #endif ${define_name}
