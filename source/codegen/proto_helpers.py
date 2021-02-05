@@ -1,5 +1,4 @@
-import common_helpers
-def get_grpc_type_from_ivi(type, driver_name_camel):
+def get_grpc_type_from_ivi(type, driver_name_pascal):
     if 'ViSession' in type:
         return 'fixed64'
     if 'ViBoolean' in type:
@@ -19,7 +18,7 @@ def get_grpc_type_from_ivi(type, driver_name_camel):
     if 'ViReal32' in type:
         return 'float'
     if 'ViAttr' in type:
-        return common_helpers.driver_name_to_pascal(driver_name_camel.replace("ni", "")) + "Attributes"
+        return driver_name_pascal + "Attributes"
     if 'ViInt8' in type:
         return 'uint32'
     if 'void*' in type:

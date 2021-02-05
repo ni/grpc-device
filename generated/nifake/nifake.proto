@@ -328,7 +328,7 @@ message GetArrayUsingIviDanceResponse {
 message GetAttributeViBooleanRequest {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViBooleanResponse {
@@ -339,7 +339,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViInt32Request {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViInt32Response {
@@ -350,7 +350,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViInt64Request {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViInt64Response {
@@ -361,7 +361,7 @@ message GetAttributeViInt64Response {
 message GetAttributeViReal64Request {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
 }
 
 message GetAttributeViReal64Response {
@@ -372,7 +372,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViStringRequest {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
   sint32 buffer_size = 4;  
 }
 
@@ -624,7 +624,7 @@ message ReturnMultipleTypesResponse {
 message SetAttributeViBooleanRequest {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
   bool attribute_value = 4;  
 }
 
@@ -635,7 +635,7 @@ message SetAttributeViBooleanResponse {
 message SetAttributeViInt32Request {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
   sint32 attribute_value = 4;  
 }
 
@@ -646,7 +646,7 @@ message SetAttributeViInt32Response {
 message SetAttributeViInt64Request {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
   int64 attribute_value = 4;  
 }
 
@@ -657,7 +657,7 @@ message SetAttributeViInt64Response {
 message SetAttributeViReal64Request {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
   double attribute_value = 4;  
 }
 
@@ -668,7 +668,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViStringRequest {
   fixed64 vi = 1;  
   string channel_name = 2;  
-  FakeAttributes attribute_id = 3;  
+  NiFakeAttributes attribute_id = 3;  
   string attribute_value = 4;  
 }
 
