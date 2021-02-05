@@ -38,7 +38,6 @@ namespace grpc
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   using internal = ni::hardware::grpc::internal;
-
 ## Function pointers to driver library
 % for method_name in functions:
 <%
@@ -52,10 +51,6 @@ namespace grpc
   using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters)});
 % endif
 %endfor
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  using namespace std;
 
 ## Constructors
   #if defined(_MSC_VER)

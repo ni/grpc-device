@@ -18,7 +18,6 @@ namespace grpc
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   using internal = ni::hardware::grpc::internal;
-
   using niFake_AbortPtr = int (*)(std::uint64_t);
   using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::string);
   using niFake_GetABooleanPtr = int (*)(std::uint64_t, bool*);
@@ -53,10 +52,6 @@ namespace grpc
   using niFake_Use64BitNumberPtr = int (*)(std::uint64_t, std::int64_t, std::int64_t*);
   using niFake_closePtr = int (*)(std::uint64_t);
   using niFake_fancy_self_testPtr = int (*)(std::uint64_t);
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  using namespace std;
 
   #if defined(_MSC_VER)
     static const char* driver_api_library_name = "nifake_64.dll";
