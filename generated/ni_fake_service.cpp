@@ -19,40 +19,40 @@ namespace grpc
   //---------------------------------------------------------------------
   using internal = ni::hardware::grpc::internal;
 
-  using niFake_AbortPtr = int (*)(uint64);
-  using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(uint64, std::string);
-  using niFake_GetABooleanPtr = int (*)(uint64, bool*);
-  using niFake_GetANumberPtr = int (*)(uint64, std::string*);
-  using niFake_GetArraySizeForPythonCodePtr = int (*)(uint64, int32*);
-  using niFake_GetAttributeViBooleanPtr = int (*)(uint64, std::string, ViAttr, bool*);
-  using niFake_GetAttributeViInt32Ptr = int (*)(uint64, std::string, ViAttr, int32*);
-  using niFake_GetAttributeViInt64Ptr = int (*)(uint64, std::string, ViAttr, int64*);
-  using niFake_GetAttributeViReal64Ptr = int (*)(uint64, std::string, ViAttr, double*);
-  using niFake_GetCalDateAndTimePtr = int (*)(uint64, int32, int32*, int32*, int32*, int32*, int32*);
-  using niFake_GetCalIntervalPtr = int (*)(uint64, int32*);
-  using niFake_GetCustomTypePtr = int (*)(uint64, struct CustomStruct*);
-  using niFake_GetEnumValuePtr = int (*)(uint64, int32*, std::string*);
-  using niFake_GetLastCalDateAndTimePtr = int (*)(uint64, int32, hightime.datetime*);
-  using niFake_InitWithOptionsPtr = int (*)(std::string, bool, bool, std::string, uint64*);
-  using niFake_InitiatePtr = int (*)(uint64);
-  using niFake_LockSessionPtr = int (*)(uint64, bool*);
-  using niFake_OneInputFunctionPtr = int (*)(uint64, int32);
-  using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(uint64);
-  using niFake_ReadPtr = int (*)(uint64, double, double*);
-  using niFake_ReadFromChannelPtr = int (*)(uint64, std::string, int32, double*);
-  using niFake_ReturnDurationInSecondsPtr = int (*)(uint64, double*);
-  using niFake_SetAttributeViBooleanPtr = int (*)(uint64, std::string, ViAttr, bool);
-  using niFake_SetAttributeViInt32Ptr = int (*)(uint64, std::string, ViAttr, int32);
-  using niFake_SetAttributeViInt64Ptr = int (*)(uint64, std::string, ViAttr, int64);
-  using niFake_SetAttributeViReal64Ptr = int (*)(uint64, std::string, ViAttr, double);
-  using niFake_SetAttributeViStringPtr = int (*)(uint64, std::string, ViAttr, std::string);
-  using niFake_SetCustomTypePtr = int (*)(uint64, struct CustomStruct);
-  using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(uint64, std::string);
-  using niFake_TwoInputFunctionPtr = int (*)(uint64, double, std::string);
-  using niFake_UnlockSessionPtr = int (*)(uint64, bool*);
-  using niFake_Use64BitNumberPtr = int (*)(uint64, int64, int64*);
-  using niFake_closePtr = int (*)(uint64);
-  using niFake_fancy_self_testPtr = int (*)(uint64);
+  using niFake_AbortPtr = int (*)(std::uint64_t);
+  using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::string);
+  using niFake_GetABooleanPtr = int (*)(std::uint64_t, bool*);
+  using niFake_GetANumberPtr = int (*)(std::uint64_t, std::string*);
+  using niFake_GetArraySizeForPythonCodePtr = int (*)(std::uint64_t, std::int32_t*);
+  using niFake_GetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, ViAttr, bool*);
+  using niFake_GetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int32_t*);
+  using niFake_GetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int64_t*);
+  using niFake_GetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, ViAttr, double*);
+  using niFake_GetCalDateAndTimePtr = int (*)(std::uint64_t, std::int32_t, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*);
+  using niFake_GetCalIntervalPtr = int (*)(std::uint64_t, std::int32_t*);
+  using niFake_GetCustomTypePtr = int (*)(std::uint64_t, struct CustomStruct*);
+  using niFake_GetEnumValuePtr = int (*)(std::uint64_t, std::int32_t*, std::string*);
+  using niFake_GetLastCalDateAndTimePtr = int (*)(std::uint64_t, std::int32_t, hightime.datetime*);
+  using niFake_InitWithOptionsPtr = int (*)(std::string, bool, bool, std::string, std::uint64_t*);
+  using niFake_InitiatePtr = int (*)(std::uint64_t);
+  using niFake_LockSessionPtr = int (*)(std::uint64_t, bool*);
+  using niFake_OneInputFunctionPtr = int (*)(std::uint64_t, std::int32_t);
+  using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(std::uint64_t);
+  using niFake_ReadPtr = int (*)(std::uint64_t, double, double*);
+  using niFake_ReadFromChannelPtr = int (*)(std::uint64_t, std::string, std::int32_t, double*);
+  using niFake_ReturnDurationInSecondsPtr = int (*)(std::uint64_t, double*);
+  using niFake_SetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, ViAttr, bool);
+  using niFake_SetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int32_t);
+  using niFake_SetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, ViAttr, std::int64_t);
+  using niFake_SetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, ViAttr, double);
+  using niFake_SetAttributeViStringPtr = int (*)(std::uint64_t, std::string, ViAttr, std::string);
+  using niFake_SetCustomTypePtr = int (*)(std::uint64_t, struct CustomStruct);
+  using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::string);
+  using niFake_TwoInputFunctionPtr = int (*)(std::uint64_t, double, std::string);
+  using niFake_UnlockSessionPtr = int (*)(std::uint64_t, bool*);
+  using niFake_Use64BitNumberPtr = int (*)(std::uint64_t, std::int64_t, std::int64_t*);
+  using niFake_closePtr = int (*)(std::uint64_t);
+  using niFake_fancy_self_testPtr = int (*)(std::uint64_t);
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -85,7 +85,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_Abort");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     auto status = AbortFunctionPointer(vi);
     response->set_status(status);
     return grpc::Status::OK;
@@ -134,7 +134,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_EnumInputFunctionWithDefaults");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     std::string a_turtle = request->a_turtle();
     auto status = EnumInputFunctionWithDefaultsFunctionPointer(vi, a_turtle);
     response->set_status(status);
@@ -170,7 +170,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetABoolean");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     bool a_boolean;
     auto status = GetABooleanFunctionPointer(vi, &a_boolean);
     response->set_status(status);
@@ -195,7 +195,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetANumber");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     std::string a_number;
     auto status = GetANumberFunctionPointer(vi, &a_number);
     response->set_status(status);
@@ -262,8 +262,8 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetArraySizeForPythonCode");
     }
 
-    uint64 vi = request->vi());
-    int32 size_out;
+    std::uint64_t vi = request->vi());
+    std::int32_t size_out;
     auto status = GetArraySizeForPythonCodeFunctionPointer(vi, &size_out);
     response->set_status(status);
     if (status == 0) {
@@ -294,8 +294,8 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetCalInterval");
     }
 
-    uint64 vi = request->vi());
-    int32 months;
+    std::uint64_t vi = request->vi());
+    std::int32_t months;
     auto status = GetCalIntervalFunctionPointer(vi, &months);
     response->set_status(status);
     if (status == 0) {
@@ -319,7 +319,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetCustomType");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     struct CustomStruct cs;
     auto status = GetCustomTypeFunctionPointer(vi, &cs);
     response->set_status(status);
@@ -351,8 +351,8 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetEnumValue");
     }
 
-    uint64 vi = request->vi());
-    int32 a_quantity;
+    std::uint64_t vi = request->vi());
+    std::int32_t a_quantity;
     std::string a_turtle;
     auto status = GetEnumValueFunctionPointer(vi, &a_quantity, &a_turtle);
     response->set_status(status);
@@ -385,7 +385,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_LockSession");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     bool caller_has_lock;
     auto status = LockSessionFunctionPointer(vi, &caller_has_lock);
     response->set_status(status);
@@ -424,8 +424,8 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_OneInputFunction");
     }
 
-    uint64 vi = request->vi());
-    int32 a_number = request->a_number();
+    std::uint64_t vi = request->vi());
+    std::int32_t a_number = request->a_number();
     auto status = OneInputFunctionFunctionPointer(vi, a_number);
     response->set_status(status);
     return grpc::Status::OK;
@@ -453,7 +453,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_PoorlyNamedSimpleFunction");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     auto status = PoorlyNamedSimpleFunctionFunctionPointer(vi);
     response->set_status(status);
     return grpc::Status::OK;
@@ -474,7 +474,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_Read");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     double maximum_time = request->maximum_time();
     double reading;
     auto status = ReadFunctionPointer(vi, maximum_time, &reading);
@@ -500,9 +500,9 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_ReadFromChannel");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     std::string channel_name = request->channel_name().c_str();
-    int32 maximum_time = request->maximum_time();
+    std::int32_t maximum_time = request->maximum_time();
     double reading;
     auto status = ReadFromChannelFunctionPointer(vi, channel_name, maximum_time, &reading);
     response->set_status(status);
@@ -534,7 +534,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_ReturnDurationInSeconds");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     double timedelta;
     auto status = ReturnDurationInSecondsFunctionPointer(vi, &timedelta);
     response->set_status(status);
@@ -573,7 +573,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_SetCustomType");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     struct CustomStruct cs = request->cs();
     auto status = SetCustomTypeFunctionPointer(vi, cs);
     response->set_status(status);
@@ -602,7 +602,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_StringValuedEnumInputFunctionWithDefaults");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     std::string a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
     auto status = StringValuedEnumInputFunctionWithDefaultsFunctionPointer(vi, a_mobile_o_s_name);
     response->set_status(status);
@@ -624,7 +624,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_TwoInputFunction");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     double a_number = request->a_number();
     std::string a_string = request->a_string();
     auto status = TwoInputFunctionFunctionPointer(vi, a_number, a_string);
@@ -647,7 +647,7 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_UnlockSession");
     }
 
-    uint64 vi = request->vi());
+    std::uint64_t vi = request->vi());
     bool caller_has_lock;
     auto status = UnlockSessionFunctionPointer(vi, &caller_has_lock);
     response->set_status(status);
@@ -672,9 +672,9 @@ namespace grpc
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_Use64BitNumber");
     }
 
-    uint64 vi = request->vi());
-    int64 input = request->input();
-    int64 output;
+    std::uint64_t vi = request->vi());
+    std::int64_t input = request->input();
+    std::int64_t output;
     auto status = Use64BitNumberFunctionPointer(vi, input, &output);
     response->set_status(status);
     if (status == 0) {
