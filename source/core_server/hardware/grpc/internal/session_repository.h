@@ -21,7 +21,7 @@ namespace internal
 
       using CleanupSessionFunc = void (*)(uint64_t session_id);
 
-      int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionProc cleanup_proc, uint64_t& session_id);
+      int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionFunc cleanup_func, uint64_t& session_id);
       uint64_t access_session(uint64_t session_id, const std::string& session_name);
       void remove_session(uint64_t id);
 

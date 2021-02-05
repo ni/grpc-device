@@ -175,6 +175,7 @@ namespace internal
    {
       if (cleanup_func != NULL){
          cleanup_func(id);
+      }
    }
 } // namespace internal
 } // namespace grpc
