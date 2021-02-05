@@ -7,9 +7,9 @@
 Syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.ni.nifake.grpc";
-option java_outer_classname = "NiFakeService";
-option csharp_namespace = "NationalInstruments.NiFake.Grpc";
+option java_package = "com.ni.fake.grpc";
+option java_outer_classname = "FakeService";
+option csharp_namespace = "NationalInstruments.Fake.Grpc";
 
 package niFake; 
 
@@ -252,7 +252,7 @@ message GetAStringOfFixedMaximumSizeRequest {
 
 message GetAStringOfFixedMaximumSizeResponse {
   int32 status = 1;
-  repeated string a_string = 2; 
+  string a_string = 2; 
 }
 
 message GetAStringUsingPythonCodeRequest {
@@ -262,7 +262,7 @@ message GetAStringUsingPythonCodeRequest {
 
 message GetAStringUsingPythonCodeResponse {
   int32 status = 1;
-  repeated string a_string = 2; 
+  string a_string = 2; 
 }
 
 message GetAnIviDanceStringRequest {
@@ -272,7 +272,7 @@ message GetAnIviDanceStringRequest {
 
 message GetAnIviDanceStringResponse {
   int32 status = 1;
-  repeated string a_string = 2; 
+  string a_string = 2; 
 }
 
 message GetAnIviDanceWithATwistStringRequest {
@@ -282,7 +282,7 @@ message GetAnIviDanceWithATwistStringRequest {
 
 message GetAnIviDanceWithATwistStringResponse {
   int32 status = 1;
-  repeated string a_string = 2; 
+  string a_string = 2; 
   sint32 actual_size = 3; 
 }
 
@@ -378,7 +378,7 @@ message GetAttributeViStringRequest {
 
 message GetAttributeViStringResponse {
   int32 status = 1;
-  repeated string attribute_value = 2; 
+  string attribute_value = 2; 
 }
 
 message GetCalDateAndTimeRequest {
@@ -441,7 +441,7 @@ message GetErrorRequest {
 message GetErrorResponse {
   int32 status = 1;
   sint32 error_code = 2; 
-  repeated string description = 3; 
+  string description = 3; 
 }
 
 message GetLastCalDateAndTimeRequest {
@@ -581,7 +581,7 @@ message ReturnANumberAndAStringRequest {
 message ReturnANumberAndAStringResponse {
   int32 status = 1;
   uint32 a_number = 2; 
-  repeated string a_string = 3; 
+  string a_string = 3; 
 }
 
 message ReturnDurationInSecondsRequest {
@@ -618,7 +618,7 @@ message ReturnMultipleTypesResponse {
   double a_float = 6; 
   double a_float_enum = 7; 
   repeated double an_array = 8; 
-  repeated string a_string = 9; 
+  string a_string = 9; 
 }
 
 message SetAttributeViBooleanRequest {
@@ -758,7 +758,7 @@ message ErrorMessageRequest {
 
 message ErrorMessageResponse {
   int32 status = 1;
-  repeated string error_message = 2; 
+  string error_message = 2; 
 }
 
 message FancySelfTestRequest {
@@ -776,5 +776,5 @@ message SelfTestRequest {
 message SelfTestResponse {
   int32 status = 1;
   uint32 self_test_result = 2; 
-  repeated string self_test_message = 3; 
+  string self_test_message = 3; 
 }
