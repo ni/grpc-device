@@ -11,13 +11,15 @@ spec.loader.exec_module(metadata)
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
-mytemplate = Template(filename="proto.mako")
-fileName = metadata.metadata["config"]["module_name"] + ".proto"
-os.makedirs(outputPath, exist_ok=True)
+def generate_service_file(template_file_name, generated_file_suffix):
+  mytemplate = Template(filename=template_file_name)
+  fileName = metadata.metadata["config"]["module_name"] + generated_file_suffix
+  os.makedirs(outputPath, exist_ok=True)
 
-protoFilePath = outputPath + fileName
+  protoFilePath = outputPath + fileName
 
-f=open(protoFilePath, "w+")
-f.write(mytemplate.render(data=metadata.metadata));
-f.close()
+  f=open(protoFilePath, "w+")
+  f.write(mytemplate.render(data=metadata.metadata))
+  f.close()
 
+generate_service_file("proto.mako", ".proto")
