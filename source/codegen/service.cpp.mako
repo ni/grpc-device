@@ -107,7 +107,6 @@ namespace grpc
 %for parameter in output_parameters:
     ${handler_helpers.get_c_type(parameter)} ${codegen_helpers.camel_to_snake_name(parameter)};
 %endfor
-
     auto status = ${method_name}FunctionPointer(${handler_helpers.create_args(parameters)});
     response->set_status(status);
 %if output_parameters:

@@ -86,7 +86,6 @@ namespace grpc
     }
 
     uint64 vi = request->vi());
-
     auto status = AbortFunctionPointer(vi);
     response->set_status(status);
     return grpc::Status::OK;
@@ -137,7 +136,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     std::string a_turtle = request->a_turtle();
-
     auto status = EnumInputFunctionWithDefaultsFunctionPointer(vi, a_turtle);
     response->set_status(status);
     return grpc::Status::OK;
@@ -174,7 +172,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     bool a_boolean;
-
     auto status = GetABooleanFunctionPointer(vi, &a_boolean);
     response->set_status(status);
     if (status == 0) {
@@ -200,7 +197,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     std::string a_number;
-
     auto status = GetANumberFunctionPointer(vi, &a_number);
     response->set_status(status);
     if (status == 0) {
@@ -268,7 +264,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     int32 size_out;
-
     auto status = GetArraySizeForPythonCodeFunctionPointer(vi, &size_out);
     response->set_status(status);
     if (status == 0) {
@@ -301,7 +296,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     int32 months;
-
     auto status = GetCalIntervalFunctionPointer(vi, &months);
     response->set_status(status);
     if (status == 0) {
@@ -327,7 +321,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     struct CustomStruct cs;
-
     auto status = GetCustomTypeFunctionPointer(vi, &cs);
     response->set_status(status);
     if (status == 0) {
@@ -361,7 +354,6 @@ namespace grpc
     uint64 vi = request->vi());
     int32 a_quantity;
     std::string a_turtle;
-
     auto status = GetEnumValueFunctionPointer(vi, &a_quantity, &a_turtle);
     response->set_status(status);
     if (status == 0) {
@@ -395,7 +387,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     bool caller_has_lock;
-
     auto status = LockSessionFunctionPointer(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
@@ -435,7 +426,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     int32 a_number = request->a_number();
-
     auto status = OneInputFunctionFunctionPointer(vi, a_number);
     response->set_status(status);
     return grpc::Status::OK;
@@ -464,7 +454,6 @@ namespace grpc
     }
 
     uint64 vi = request->vi());
-
     auto status = PoorlyNamedSimpleFunctionFunctionPointer(vi);
     response->set_status(status);
     return grpc::Status::OK;
@@ -488,7 +477,6 @@ namespace grpc
     uint64 vi = request->vi());
     double maximum_time = request->maximum_time();
     double reading;
-
     auto status = ReadFunctionPointer(vi, maximum_time, &reading);
     response->set_status(status);
     if (status == 0) {
@@ -516,7 +504,6 @@ namespace grpc
     std::string channel_name = request->channel_name().c_str();
     int32 maximum_time = request->maximum_time();
     double reading;
-
     auto status = ReadFromChannelFunctionPointer(vi, channel_name, maximum_time, &reading);
     response->set_status(status);
     if (status == 0) {
@@ -549,7 +536,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     double timedelta;
-
     auto status = ReturnDurationInSecondsFunctionPointer(vi, &timedelta);
     response->set_status(status);
     if (status == 0) {
@@ -589,7 +575,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     struct CustomStruct cs = request->cs();
-
     auto status = SetCustomTypeFunctionPointer(vi, cs);
     response->set_status(status);
     return grpc::Status::OK;
@@ -619,7 +604,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     std::string a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
-
     auto status = StringValuedEnumInputFunctionWithDefaultsFunctionPointer(vi, a_mobile_o_s_name);
     response->set_status(status);
     return grpc::Status::OK;
@@ -643,7 +627,6 @@ namespace grpc
     uint64 vi = request->vi());
     double a_number = request->a_number();
     std::string a_string = request->a_string();
-
     auto status = TwoInputFunctionFunctionPointer(vi, a_number, a_string);
     response->set_status(status);
     return grpc::Status::OK;
@@ -666,7 +649,6 @@ namespace grpc
 
     uint64 vi = request->vi());
     bool caller_has_lock;
-
     auto status = UnlockSessionFunctionPointer(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
@@ -693,7 +675,6 @@ namespace grpc
     uint64 vi = request->vi());
     int64 input = request->input();
     int64 output;
-
     auto status = Use64BitNumberFunctionPointer(vi, input, &output);
     response->set_status(status);
     if (status == 0) {
