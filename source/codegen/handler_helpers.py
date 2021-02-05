@@ -37,10 +37,10 @@ def create_args(parameters):
         result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
-def create_params(parameters, driver_name_camel):
+def create_params(parameters, driver_name_pascal):
     result = ''
     for parameter in parameters:
-        result = result + get_c_type(parameter, driver_name_camel)
+        result = result + get_c_type(parameter, driver_name_pascal)
         if '[]' in parameter['type']:
           result = result + '['
           if parameter['size']['mechanism'] == 'fixed':
@@ -51,13 +51,13 @@ def create_params(parameters, driver_name_camel):
         result = result + ', '
     return result[:-2]
 
-def get_request_value(parameter, driver_name_camel):
+def get_request_value(parameter, driver_name_pascal):
     result = ''
     if parameter['type'] == 'ViChar':
         result = '%(result)s(char*)'
     result = f'{result}request->'
     param_name = common_helpers.camel_to_snake(parameter['cppName'])
-    request_name = proto_helpers.get_grpc_type_from_ivi(param_name, driver_name_camel)
+    request_name = proto_helpers.get_grpc_type_from_ivi(param_name, driver_name_pascal)
     result = f'{result}{request_name}()'
     if parameter['type'] == 'ViConstString':
         result = f'{result}.c_str()'
@@ -70,8 +70,8 @@ def get_request_value(parameter, driver_name_camel):
     result = f'{result};'
     return result
 
-def get_c_type(parameter, driver_name_camel):
-  grpc_type = proto_helpers.get_grpc_type_from_ivi(parameter['type'], driver_name_camel)
+def get_c_type(parameter, driver_name_pascal):
+  grpc_type = proto_helpers.get_grpc_type_from_ivi(parameter['type'], driver_name_pascal)
   grpc_to_c = {
     "double": "double",
     "float": "float",

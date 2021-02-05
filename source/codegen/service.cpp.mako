@@ -54,7 +54,7 @@ namespace ${namespace}
     handler_helpers.sanitize_names(parameters)
 %>\
 % if not common_helpers.has_array_parameter(f):
-  using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters, driver_name_camel)});
+  using ${c_function_prefix}${method_name}Ptr = int (*)(${handler_helpers.create_params(parameters, driver_name_pascal)});
 % endif
 %endfor
 
@@ -103,10 +103,10 @@ namespace ${namespace}
     }
 
 %for parameter in input_parameters:
-    ${handler_helpers.get_c_type(parameter, driver_name_camel)} ${common_helpers.camel_to_snake(parameter['cppName'])} = ${handler_helpers.get_request_value(parameter, driver_name_camel)}
+    ${handler_helpers.get_c_type(parameter, driver_name_pascal)} ${common_helpers.camel_to_snake(parameter['cppName'])} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
 %endfor
 %for parameter in output_parameters:
-    ${handler_helpers.get_c_type(parameter, driver_name_camel)} ${common_helpers.camel_to_snake(parameter['cppName'])};
+    ${handler_helpers.get_c_type(parameter, driver_name_pascal)} ${common_helpers.camel_to_snake(parameter['cppName'])};
 %endfor
     auto status = ${method_name}FunctionPointer(${handler_helpers.create_args(parameters)});
     response->set_status(status);
