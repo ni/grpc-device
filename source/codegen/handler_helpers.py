@@ -57,7 +57,8 @@ def get_request_value(parameter, driver_name_pascal):
         result = '%(result)s(char*)'
     result = f'{result}request->'
     param_name = common_helpers.camel_to_snake(parameter['cppName'])
-    request_name = proto_helpers.get_grpc_type_from_ivi(param_name, driver_name_pascal)
+    is_array = common_helpers.is_array(parameter["type"])
+    request_name = proto_helpers.get_grpc_type_from_ivi(param_name, is_array, driver_name_pascal)
     result = f'{result}{request_name}()'
     if parameter['type'] == 'ViConstString':
         result = f'{result}.c_str()'
@@ -71,7 +72,8 @@ def get_request_value(parameter, driver_name_pascal):
     return result
 
 def get_c_type(parameter, driver_name_pascal):
-  grpc_type = proto_helpers.get_grpc_type_from_ivi(parameter['type'], driver_name_pascal)
+  is_array = common_helpers.is_array(parameter["type"])
+  grpc_type = proto_helpers.get_grpc_type_from_ivi(parameter['type'], is_array, driver_name_pascal)
   grpc_to_c = {
     "double": "double",
     "float": "float",
