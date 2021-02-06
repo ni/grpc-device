@@ -282,6 +282,24 @@ namespace grpc
       bool is_reserved = call_is_reserved(&service, "foo", "a");
       EXPECT_FALSE(is_reserved);
    }
+   
+   TEST(CoreServiceTests, TwoReservations_ResetServer_Unreserves)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      call_reserve(&service, "foo", "a");
+      call_reserve(&service, "bar", "b");
+
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ResetServerResponse reset_response;
+      service.ResetServer(&context, NULL, &reset_response);
+
+      EXPECT_TRUE(reset_response.is_server_reset());
+      bool is_a_reserved = call_is_reserved(&service, "foo", "a");
+      EXPECT_FALSE(is_a_reserved);
+      bool is_b_reserved = call_is_reserved(&service, "bar", "b");
+      EXPECT_FALSE(is_b_reserved);
+   }
 } // namespace grpc
 } // namespace hardware
 } // namespace unit
