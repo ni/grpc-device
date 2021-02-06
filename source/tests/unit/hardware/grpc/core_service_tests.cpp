@@ -90,6 +90,17 @@ namespace grpc
       return is_reserved_response.is_reserved();
    }
 
+   bool call_reserve(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id)
+   {
+      ni::hardware::grpc::ReserveRequest reserve_request;
+      reserve_request.set_reservation_id("foo");
+      reserve_request.set_client_id("a");
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse reserve_response;
+      service->Reserve(&context, &reserve_request, &reserve_response);
+      return reserve_response.is_reserved();
+   }
+   
    TEST(CoreServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenReserves)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -178,12 +189,7 @@ namespace grpc
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
-      ni::hardware::grpc::ReserveRequest reserve_request;
-      reserve_request.set_reservation_id("foo");
-      reserve_request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse reserve_response;
-      service.Reserve(&context, &reserve_request, &reserve_response);
+      call_reserve(&service, "foo", "a");
 
       bool is_reserved = call_is_reserved(&service, "bar", "a");
 
@@ -194,12 +200,7 @@ namespace grpc
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
-      ni::hardware::grpc::ReserveRequest reserve_request;
-      reserve_request.set_reservation_id("foo");
-      reserve_request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse reserve_response;
-      service.Reserve(&context, &reserve_request, &reserve_response);
+      call_reserve(&service, "foo", "a");
 
       bool is_reserved = call_is_reserved(&service, "foo", "b");
 
@@ -210,12 +211,7 @@ namespace grpc
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
-      ni::hardware::grpc::ReserveRequest reserve_request;
-      reserve_request.set_reservation_id("foo");
-      reserve_request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse reserve_response;
-      service.Reserve(&context, &reserve_request, &reserve_response);
+      call_reserve(&service, "foo", "a");
 
       bool is_reserved = call_is_reserved(&service, "foo", "a");
 
@@ -237,11 +233,7 @@ namespace grpc
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
       ni::hardware::grpc::ReserveRequest reserve_request;
-      reserve_request.set_reservation_id("foo");
-      reserve_request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse reserve_response;
-      service.Reserve(&context, &reserve_request, &reserve_response);
+      call_reserve(&service, "foo", "a");
 
       bool is_unreserved = call_unreserve(&service, "bar", "a");
 
@@ -254,12 +246,7 @@ namespace grpc
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
-      ni::hardware::grpc::ReserveRequest reserve_request;
-      reserve_request.set_reservation_id("foo");
-      reserve_request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse reserve_response;
-      service.Reserve(&context, &reserve_request, &reserve_response);
+      call_reserve(&service, "foo", "a");
 
       bool is_unreserved = call_unreserve(&service, "foo", "b");
 
@@ -272,12 +259,7 @@ namespace grpc
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
-      ni::hardware::grpc::ReserveRequest reserve_request;
-      reserve_request.set_reservation_id("foo");
-      reserve_request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse reserve_response;
-      service.Reserve(&context, &reserve_request, &reserve_response);
+      call_reserve(&service, "foo", "a");
 
       bool is_unreserved = call_unreserve(&service, "foo", "a");
 
@@ -290,23 +272,15 @@ namespace grpc
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
-      ni::hardware::grpc::ReserveRequest reserve_request;
-      reserve_request.set_reservation_id("foo");
-      reserve_request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse reserve_response;
-      service.Reserve(&context, &reserve_request, &reserve_response);
+      call_reserve(&service, "foo", "a");
 
+      ::grpc::ServerContext context;
       ni::hardware::grpc::ResetServerResponse reset_response;
       service.ResetServer(&context, NULL, &reset_response);
 
       EXPECT_TRUE(reset_response.is_server_reset());
-      ni::hardware::grpc::IsReservedByClientRequest is_reserved_request;
-      is_reserved_request.set_reservation_id("foo");
-      is_reserved_request.set_client_id("a");
-      ni::hardware::grpc::IsReservedByClientResponse is_reserved_response;
-      service.IsReservedByClient(&context, &is_reserved_request, &is_reserved_response);
-      EXPECT_FALSE(is_reserved_response.is_reserved());
+      bool is_reserved = call_is_reserved(&service, "foo", "a");
+      EXPECT_FALSE(is_reserved);
    }
 } // namespace grpc
 } // namespace hardware
