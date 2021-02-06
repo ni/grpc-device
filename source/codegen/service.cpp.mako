@@ -83,7 +83,7 @@ namespace ${namespace}
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const ${driver_prefix}::${method_name}Request* request, ${driver_prefix}::${method_name}Response* response)
+  grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const ${driver_name_camel}::${method_name}Request* request, ${driver_name_camel}::${method_name}Response* response)
   {
 % if common_helpers.has_array_parameter(f):
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
