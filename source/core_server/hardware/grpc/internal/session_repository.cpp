@@ -173,7 +173,7 @@ namespace internal
    
    SessionRepository::SessionInfo::~SessionInfo()
    {
-      if (cleanup_func != NULL){
+      if (cleanup_func != nullptr){
          cleanup_func(id);
       }
    }
