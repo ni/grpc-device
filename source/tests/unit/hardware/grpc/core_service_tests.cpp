@@ -300,6 +300,31 @@ namespace grpc
       bool is_b_reserved = call_is_reserved(&service, "bar", "b");
       EXPECT_FALSE(is_b_reserved);
    }
+   
+   TEST(CoreServiceTests, IdReserved_ReserveWithNewClientIdAndResetServer_WaitsForResetThenReserves)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::ReserveRequest request;
+      request.set_reservation_id("foo");
+      request.set_client_id("a");
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ReserveResponse response;
+      service.Reserve(&context, &request, &response);
+
+      request.set_client_id("b");
+      response.set_is_reserved(false);
+      std::thread reserve_b(call_reserve_task, &service, &request, &response);
+      EXPECT_FALSE(response.is_reserved());
+      ni::hardware::grpc::ResetServerResponse reset_response;
+      service.ResetServer(&context, NULL, &reset_response);
+      
+      EXPECT_TRUE(reset_response.is_server_reset());
+      reserve_b.join();
+      EXPECT_TRUE(response.is_reserved());
+      bool is_reserved = call_is_reserved(&service, "foo", "b");
+      EXPECT_TRUE(is_reserved);
+   }
 } // namespace grpc
 } // namespace hardware
 } // namespace unit
