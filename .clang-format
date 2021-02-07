@@ -5,10 +5,7 @@ Language: Cpp
 ColumnLimit: 0
 AlignAfterOpenBracket: AlwaysBreak
 BreakBeforeBraces: Stroustrup
-BreakBeforeTernaryOperators: true
-BreakInheritanceList: AfterColon
 DerivePointerAlignment: false
 IndentPPDirectives: BeforeHash
-MaxEmptyLinesToKeep: 1
 PointerAlignment: Left
 ---
