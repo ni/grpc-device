@@ -325,19 +325,19 @@ namespace grpc
       EXPECT_FALSE(is_b_reserved);
    }
    
-   TEST(CoreServiceTests, IdReserved_ReserveWithNewClientIdAndResetServer_WaitsForResetAndDoesNotReserve)   
+   TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_ClientReturnsAndDoesNotReserve)   
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
       call_reserve(&service, "foo", "a");
-
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
       request.set_client_id("b");
       ni::hardware::grpc::ReserveResponse response;
+      response.set_is_reserved(true);
       std::thread reserve_b(call_reserve_task, &service, &request, &response);
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
-      EXPECT_FALSE(response.is_reserved());
+      
       ::grpc::ServerContext context;
       ni::hardware::grpc::ResetServerResponse reset_response;
       service.ResetServer(&context, NULL, &reset_response);
@@ -349,21 +349,23 @@ namespace grpc
       EXPECT_FALSE(is_reserved);
    }
    
-   TEST(CoreServiceTests, IdReserved_ReserveWithTwoNewClientIdsAndResetServer_WaitsForResetAndDoesNotReserve)
+   TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnAndDoNotReserve)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
       call_reserve(&service, "foo", "a");
-
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
       request.set_client_id("b");
       ni::hardware::grpc::ReserveResponse clientb_response;
+      clientb_response.set_is_reserved(true);
       std::thread reserve_b(call_reserve_task, &service, &request, &clientb_response);
       request.set_client_id("c");
       ni::hardware::grpc::ReserveResponse clientc_response;
+      clientb_response.set_is_reserved(true);
       std::thread reserve_c(call_reserve_task, &service, &request, &clientc_response);
       std::this_thread::sleep_for(std::chrono::milliseconds(2));
+      
       ::grpc::ServerContext context;
       ni::hardware::grpc::ResetServerResponse reset_response;
       service.ResetServer(&context, NULL, &reset_response);
