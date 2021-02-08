@@ -20,7 +20,7 @@ driver_full_namespace = common_helpers.get_service_namespace(driver_name_caps_un
 driver_namespaces = driver_full_namespace.split(".")
 reversed_driver_namespaces = driver_namespaces.copy()
 reversed_driver_namespaces.reverse()
-define_name = driver_full_namespace + "_server_h"
+define_name = driver_full_namespace + "_service_h"
 define_name = define_name.upper().replace(".", "_")
 %>\
 ## Define section
