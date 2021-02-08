@@ -1,7 +1,9 @@
-from metadata.nifake.functions import functions
-from metadata.nifake.attributes import attributes
-from metadata.nifake.enums import enums
-from metadata.nifake.config import config
+import sys
+sys.path.append("niFake")
+from metadata.niFake.functions import functions
+from metadata.niFake.attributes import attributes
+from metadata.niFake.enums import enums
+from metadata.niFake.config import config
 
 metadata = {
     "functions" : functions, 
