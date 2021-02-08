@@ -283,6 +283,30 @@ namespace grpc
       EXPECT_FALSE(is_reserved);
    }
    
+   TEST(CoreServiceTests, ReservationAndSession_ResetServer_UnreservesAndRemovesSession)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      std::string session_name = "session_name";
+      uint64_t named_session_id;
+      int status = session_repository.add_session(
+         session_name,
+         []() { return std::make_tuple(0, 42); },
+         NULL,
+         named_session_id);
+      call_reserve(&service, session_name, "a");
+
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ResetServerResponse reset_response;
+      service.ResetServer(&context, NULL, &reset_response);
+
+      EXPECT_TRUE(reset_response.is_server_reset());
+      bool is_reserved = call_is_reserved(&service, session_name, "a");
+      EXPECT_FALSE(is_reserved);
+      EXPECT_FALSE(session_repository.access_session(named_session_id, ""));
+      EXPECT_FALSE(session_repository.access_session(0, session_name));
+   }
+   
    TEST(CoreServiceTests, TwoReservations_ResetServer_Unreserves)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -301,30 +325,63 @@ namespace grpc
       EXPECT_FALSE(is_b_reserved);
    }
    
-   TEST(CoreServiceTests, IdReserved_ReserveWithNewClientIdAndResetServer_WaitsForResetAndDoesNotReserve)
+   TEST(CoreServiceTests, IdReserved_ReserveWithNewClientIdAndResetServer_WaitsForResetAndDoesNotReserve)   
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
+      call_reserve(&service, "foo", "a");
+
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
-      request.set_client_id("a");
-      ::grpc::ServerContext context;
-      ni::hardware::grpc::ReserveResponse response;
-      service.Reserve(&context, &request, &response);
-
       request.set_client_id("b");
-      response.set_is_reserved(false);
+      ni::hardware::grpc::ReserveResponse response;
       std::thread reserve_b(call_reserve_task, &service, &request, &response);
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
       EXPECT_FALSE(response.is_reserved());
 
+      ::grpc::ServerContext context;
+      ni::hardware::grpc::ResetServerResponse reset_response;
+      service.ResetServer(&context, NULL, &reset_response);
+
+      EXPECT_TRUE(reset_response.is_server_reset());
+      reserve_b.join();
+      EXPECT_FALSE(response.is_reserved());
+      bool is_reserved = call_is_reserved(&service, "foo", "b");
+      EXPECT_FALSE(is_reserved);
+   }
+   
+   TEST(CoreServiceTests, IdReserved_ReserveWithTwoNewClientIdAndResetServer_WaitsForResetAndDoesNotReserve)
+   {
+      ni::hardware::grpc::internal::SessionRepository session_repository;
+      ni::hardware::grpc::CoreService service(&session_repository);
+      call_reserve(&service, "foo", "a");
+
+      ni::hardware::grpc::ReserveRequest request;
+      request.set_reservation_id("foo");
+      request.set_client_id("b");
+      ni::hardware::grpc::ReserveResponse clientb_response;
+      std::thread reserve_b(call_reserve_task, &service, &request, &clientb_response);
+      request.set_client_id("c");
+      ni::hardware::grpc::ReserveResponse clientc_response;
+      std::thread reserve_c(call_reserve_task, &service, &request, &clientc_response);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      EXPECT_FALSE(clientb_response.is_reserved());
+      EXPECT_FALSE(clientc_response.is_reserved());
+
+      ::grpc::ServerContext context;
       ni::hardware::grpc::ResetServerResponse reset_response;
       service.ResetServer(&context, NULL, &reset_response);
       
       EXPECT_TRUE(reset_response.is_server_reset());
       reserve_b.join();
-      EXPECT_FALSE(response.is_reserved());
+      reserve_c.join();
+      EXPECT_FALSE(clientb_response.is_reserved());
+      EXPECT_FALSE(clientc_response.is_reserved());
+
+      EXPECT_TRUE(reset_response.is_server_reset());
       bool is_reserved = call_is_reserved(&service, "foo", "b");
+      EXPECT_FALSE(is_reserved);
+      is_reserved = call_is_reserved(&service, "foo", "c");
       EXPECT_FALSE(is_reserved);
    }
 } // namespace grpc

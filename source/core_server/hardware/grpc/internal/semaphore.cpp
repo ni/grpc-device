@@ -13,21 +13,29 @@ namespace internal
    {
    }
 
-   void Semaphore::notify()
+   void Semaphore::notify_one()
    {
       std::unique_lock<std::mutex> lock(mtx_);
       ++count_;
       cv_.notify_one();
    }
 
+   void Semaphore::notify_all()
+   {
+      std::unique_lock<std::mutex> lock(mtx_);
+      count_ = waiters_ + 1;
+      cv_.notify_all();
+   }
+   
    void Semaphore::wait()
    {
       std::unique_lock<std::mutex> lock(mtx_);
-
+      ++waiters_;
       while(count_ == 0) {
          cv_.wait(lock);
       }
       count_--;
+      waiters_--;
    }
 } // namespace internal
 } // namespace grpc
