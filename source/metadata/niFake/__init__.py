@@ -1,3 +1,5 @@
+import sys
+sys.path.append("nifake")
 from metadata.nifake.functions import functions
 from metadata.nifake.attributes import attributes
 from metadata.nifake.enums import enums

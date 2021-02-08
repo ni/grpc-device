@@ -34,18 +34,18 @@ service ${driver_name_pascal}Service {
 }
 
 enum ${driver_name_pascal}Attributes {
-  ${c_function_prefix.upper()}UNSPECIFIED = 0;
+  UNSPECIFIED = 0;
 % for attribute in data["attributes"]:
 <%
    attribute_name = data["attributes"][attribute]["name"]
 %>\
-  ${c_function_prefix.upper()}${attribute_name} = ${attribute};
+  ${attribute_name} = ${attribute};
 % endfor
 }
 
 % for enum_list in data["enums"]:
-enum ${enum_list}Values {
-  ${c_function_prefix.upper()}UNSPECIFIED = 0;
+enum ${enum_list} {
+  UNSPECIFIED = 0;
 <%
 nonint_index = 1
 enums = data["enums"][enum_list]
@@ -56,16 +56,13 @@ enums = data["enums"][enum_list]
 if isinstance(value["value"], int) is False:
   value["value"] = nonint_index
   nonint_index = nonint_index+1
-
-enum_name = value["name"].replace((module_name.upper()) + '_VAL_', (c_function_prefix.upper()))
 %>\
-  ${enum_name} = ${value["value"]};
+  ${value["name"]} = ${value["value"]};
 % endfor   
 % endfor
 }  
   
 % endfor
-
 % for function in data["functions"]:
 <% 
   parameter_array = data["functions"][function]["parameters"] 
@@ -73,13 +70,15 @@ enum_name = value["name"].replace((module_name.upper()) + '_VAL_', (c_function_p
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
   index = 0
 %>\
-
 message ${common_helpers.snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%  
   index  = index + 1
   is_array = common_helpers.is_array(parameter["type"])
-  parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
+  if "enum" in parameter:
+    parameter_type = parameter["enum"]
+  else:
+    parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};  
 % endfor
@@ -99,4 +98,5 @@ message ${common_helpers.snake_to_camel(function)}Response {
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}; 
 %endfor  
 }
+
 % endfor
