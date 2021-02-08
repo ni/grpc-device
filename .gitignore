@@ -16,3 +16,4 @@ gens
 *.orig
 .vs
 .vscode
+__pycache__/
