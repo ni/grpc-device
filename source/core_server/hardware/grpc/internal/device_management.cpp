@@ -1,6 +1,6 @@
 #include "device_management.h"
 #include "shared_library.h"
-#include <nisyscfg.h>
+#include "nisyscfg.h"
 
 namespace ni
 {
@@ -11,13 +11,13 @@ namespace grpc
 namespace internal
 {
    using NISysCfgInitializeSessionPtr = NISysCfgStatus (*)(
-      const char*                            targetName,                // NULL or "" => localhost
-      const char*                            username,                  // NULL or "" => no credentials
-      const char*                            password,                  // NULL or "" => no credentials
-      NISysCfgLocale                         language,                  // LCID or 0 to indicate default.
+      const char*                            targetName,
+      const char*                            username,
+      const char*                            password,
+      NISysCfgLocale                         language,
       NISysCfgBool                           forcePropertyRefresh,
       unsigned int                           connectTimeoutMsec,
-      NISysCfgEnumExpertHandle*              expertEnumHandle,          // Can be NULL
+      NISysCfgEnumExpertHandle*              expertEnumHandle,
       NISysCfgSessionHandle*                 sessionHandle
       );
    using NISysCfgCreateFilterPtr = NISysCfgStatus(*)(
@@ -31,9 +31,9 @@ namespace internal
       );
    using NISysCfgFindHardwarePtr = NISysCfgStatus (*)(
       NISysCfgSessionHandle                  sessionHandle,
-      NISysCfgFilterMode                     filterMode,                // Ignored if filter handle is NULL
-      NISysCfgFilterHandle                   filterHandle,              // Can be NULL
-      const char*                            expertNames,               // NULL or "" => all experts
+      NISysCfgFilterMode                     filterMode,
+      NISysCfgFilterHandle                   filterHandle,
+      const char*                            expertNames,
       NISysCfgEnumResourceHandle*            resourceEnumHandle
       );
    using NISysCfgNextResourcePtr = NISysCfgStatus(*)(
@@ -56,7 +56,7 @@ namespace internal
       void*                                  syscfgHandle
       );
    using NISysCfgGetStatusDescriptionPtr = NISysCfgStatus(*)(
-      NISysCfgSessionHandle                  sessionHandle,              // Can be NULL
+      NISysCfgSessionHandle                  sessionHandle,
       NISysCfgStatus                         status,
       char**                                 detailedDescription
       );
@@ -82,8 +82,7 @@ namespace internal
       NISysCfgResourceHandle resource = NULL;
       NISysCfgFilterHandle filter = NULL;
       char expert_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-      char resource_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-      char alias[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+      char name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
       char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
       char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
       char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
@@ -91,6 +90,11 @@ namespace internal
 
       ni::hardware::grpc::internal::SharedLibrary library(syscfg_library_name);
       library.load();
+
+      if (!library.is_loaded())
+      {
+
+      }
 
       auto syscfg_initialize_session = reinterpret_cast<NISysCfgInitializeSessionPtr>(library.get_function_pointer("NISysCfgInitializeSession"));
       auto syscfg_create_filter = reinterpret_cast<NISysCfgCreateFilterPtr>(library.get_function_pointer("NISysCfgCreateFilter"));
@@ -117,14 +121,12 @@ namespace internal
                   if (strcmp(expert_name, "network") != 0)
                   {
                      auto properties = response->mutable_devices()->Add();
-                     sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertResourceName, 0, resource_name);
-                     sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, alias);
+                     sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertyProductName, model);
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertyVendorName, vendor);
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertySerialNumber, serial_number);
-                     properties->set_resourcename(resource_name);
-                     properties->set_alias(alias);
-                     properties->set_model(alias);
+                     properties->set_alias(name);
+                     properties->set_model(model);
                      properties->set_vendor(vendor);
                      properties->set_serialnumber(serial_number);
                      status = sysycfg_close_handle(resource);

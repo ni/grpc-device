@@ -29,11 +29,10 @@ message ViSession {
 }
 
 message NiDeviceProperties {
-  string ResourceName = 1;
-  string Alias = 2;
-  string Model = 3;
-  string Vendor = 4;
-  string SerialNumber = 5;
+  string Name = 1;
+  string Model = 2;
+  string Vendor = 3;
+  string SerialNumber = 4;
 }
 
 message EnumerateDevicesRequest {
