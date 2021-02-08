@@ -33,7 +33,7 @@ namespace internal
     void register_function(const char* name, void* func_pointer);
 
   private:
-    std::map<const char*, void*> mock_function_pointers_;
+    std::map<std::string, void*> mock_function_pointers_;
     bool is_loaded_;
     const void* get_function_from_map(const char* name) const;
   };
