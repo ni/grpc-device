@@ -9,7 +9,7 @@ namespace grpc
 namespace internal
 {
    Semaphore::Semaphore (int count)
-      : count_(count)
+      : count_(count), waiters_(0)
    {
    }
 
@@ -24,6 +24,7 @@ namespace internal
    {
       std::unique_lock<std::mutex> lock(mtx_);
       count_ = waiters_ + 1;
+      printf ("Number of waiters: %c \n", count_);
       cv_.notify_all();
    }
    
