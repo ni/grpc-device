@@ -2,7 +2,7 @@
 #ifndef NI_FAKE_GRPC_SERVICE_H
 #define NI_FAKE_GRPC_SERVICE_H
 
-#include <ni_fake_service.grpc.pb.h>
+#include <ni_fake.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>

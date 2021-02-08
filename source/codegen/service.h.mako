@@ -28,7 +28,7 @@ define_name = define_name.upper().replace(".", "_")
 #define ${define_name}
 
 ## Include section
-#include <${common_helpers.camel_to_snake(common_helpers.pascal_to_camel(service_name))}.grpc.pb.h>
+#include <${common_helpers.camel_to_snake(common_helpers.pascal_to_camel(driver_name_pascal))}.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
