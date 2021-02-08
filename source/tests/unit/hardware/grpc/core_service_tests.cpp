@@ -312,15 +312,11 @@ namespace grpc
       ni::hardware::grpc::ReserveResponse response;
       service.Reserve(&context, &request, &response);
 
-      bool is_reserved = call_is_reserved(&service, "foo", "a");
-      EXPECT_TRUE(is_reserved);
       request.set_client_id("b");
       response.set_is_reserved(false);
       std::thread reserve_b(call_reserve_task, &service, &request, &response);
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
       EXPECT_FALSE(response.is_reserved());
-      is_reserved = call_is_reserved(&service, "foo", "b");
-      EXPECT_FALSE(is_reserved);
 
       ni::hardware::grpc::ResetServerResponse reset_response;
       service.ResetServer(&context, NULL, &reset_response);
@@ -328,7 +324,7 @@ namespace grpc
       EXPECT_TRUE(reset_response.is_server_reset());
       reserve_b.join();
       EXPECT_FALSE(response.is_reserved());
-      is_reserved = call_is_reserved(&service, "foo", "b");
+      bool is_reserved = call_is_reserved(&service, "foo", "b");
       EXPECT_FALSE(is_reserved);
    }
 } // namespace grpc
