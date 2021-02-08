@@ -14,7 +14,6 @@ driver_name_camel = common_helpers.pascal_to_camel(driver_name_pascal)
 c_function_prefix = data["config"]["c_function_prefix"]
 
 service_name = driver_name_pascal + "Service"
-server_name = driver_name_pascal + "Server"
 c_function_prefix = config['c_function_prefix']
 
 driver_full_namespace = common_helpers.get_service_namespace(driver_name_caps_underscore)
@@ -41,10 +40,10 @@ define_name = define_name.upper().replace(".", "_")
 namespace ${namespace}
 {
 % endfor
-  class ${server_name} final : public ${service_name}::Service
+  class ${service_name} final : public ${driver_name_pascal}::Service
   {
   public:
-    ${server_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
+    ${service_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
 % for function in functions:
 <%
     f = functions[function]

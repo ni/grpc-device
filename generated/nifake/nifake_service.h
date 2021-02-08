@@ -16,10 +16,10 @@ namespace fake
 {
 namespace grpc
 {
-  class NiFakeServer final : public NiFakeService::Service
+  class NiFakeService final : public NiFake::Service
   {
   public:
-    NiFakeServer(SharedLibrary* shared_library, SessionRepository* session_repository);
+    NiFakeService(SharedLibrary* shared_library, SessionRepository* session_repository);
     grpc::Status Abort(grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
     grpc::Status AcceptListOfDurationsInSeconds(grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
     grpc::Status BoolArrayOutputFunction(grpc::ServerContext* context, const BoolArrayOutputFunctionRequest* request, BoolArrayOutputFunctionResponse* response) override;

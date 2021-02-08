@@ -19,12 +19,12 @@ Syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.ni.${module_name.replace("ni", "")}.grpc";
-option java_outer_classname = "${driver_name_pascal.replace("Ni", "")}Service";
+option java_outer_classname = "${driver_name_pascal}";
 option csharp_namespace = "NationalInstruments.${driver_name_pascal.replace("Ni", "")}.Grpc";
 
 package ${common_helpers.get_service_namespace(driver_name_caps_underscore)}; 
 
-service ${driver_name_pascal}Service {
+service ${driver_name_pascal} {
 % for function in data["functions"]:
 <% 
    method_name = common_helpers.snake_to_camel(function)

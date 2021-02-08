@@ -8,12 +8,12 @@ Syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.ni.fake.grpc";
-option java_outer_classname = "FakeService";
+option java_outer_classname = "NiFake";
 option csharp_namespace = "NationalInstruments.Fake.Grpc";
 
 package ni.fake.grpc; 
 
-service NiFakeService {
+service NiFake {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc AcceptListOfDurationsInSeconds(AcceptListOfDurationsInSecondsRequest) returns (AcceptListOfDurationsInSecondsResponse);
   rpc BoolArrayOutputFunction(BoolArrayOutputFunctionRequest) returns (BoolArrayOutputFunctionResponse);

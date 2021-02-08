@@ -23,5 +23,5 @@ def generate_service_file(template_file_name, generated_file_suffix):
   f.close()
 
 generate_service_file("proto.mako", ".proto")
-generate_service_file("service.h.mako", "_server.h")
-generate_service_file("service.cpp.mako", "_server.cpp")
+generate_service_file("service.h.mako", "_service.h")
+generate_service_file("service.cpp.mako", "_service.cpp")
