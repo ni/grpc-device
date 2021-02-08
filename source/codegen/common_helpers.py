@@ -64,10 +64,15 @@ def snake_to_camel(snake_string):
       index = index + 1
   return ("".join(snake_string))
 
-def pascal_to_camel(pascal_string) :
+def pascal_to_camel(pascal_string):
   pascal_string = list(pascal_string)
-  pascal_string[0] = pascal_string[0].lower();
+  pascal_string[0] = pascal_string[0].lower()
   return ("".join(pascal_string))
+
+def pascal_to_snake(pascal_string):
+  camel_string = pascal_to_camel(pascal_string)
+  snake_string = camel_to_snake(camel_string)
+  return ("".join(snake_string))
 
 def should_gen_service_handler(function):
   '''Returns function metadata only for those functions to include for generating function pointers to driver library'''

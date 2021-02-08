@@ -100,8 +100,8 @@ namespace ${namespace}
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_->get_function_pointer("${c_function_prefix}${method_name}"));
-    if (${method_name}FunctionPointer == nullptr) {
+    auto ${common_helpers.pascal_to_snake(method_name)}_function = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_->get_function_pointer("${c_function_prefix}${method_name}"));
+    if (${common_helpers.pascal_to_snake(method_name)}_function == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: ${c_function_prefix}${method_name}");
     }
 
@@ -111,7 +111,7 @@ namespace ${namespace}
 %for parameter in output_parameters:
     ${handler_helpers.get_c_type(parameter, driver_name_pascal)} ${common_helpers.camel_to_snake(parameter['cppName'])};
 %endfor
-    auto status = ${method_name}FunctionPointer(${handler_helpers.create_args(parameters)});
+    auto status = ${common_helpers.pascal_to_snake(method_name)}_function(${handler_helpers.create_args(parameters)});
     response->set_status(status);
 %if output_parameters:
     if (status == 0) {
