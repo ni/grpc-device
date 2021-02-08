@@ -20,7 +20,7 @@ namespace internal
    int SessionRepository::add_session(
       const std::string& session_name,
       std::function<std::tuple<int, uint64_t>()> init_func,
-      CleanupSessionProc cleanup_proc,
+      CleanupSessionFunc cleanup_func,
       uint64_t& session_id)
    {
       session_id = 0;
@@ -40,7 +40,7 @@ namespace internal
       }
       session_id = std::get<1>(init_result);
       info->id = session_id;
-      info->cleanup_proc = cleanup_proc;
+      info->cleanup_func = cleanup_func;
       info->last_access_time = now;
       sessions_.emplace(session_id, info);
       if (!session_name.empty()) {
@@ -134,8 +134,9 @@ namespace internal
          std::unique_lock<std::shared_mutex> lock(repository_lock_);
          info->client_count--;
          info->client_id = client_id;
+         auto it = reservations_.find(reservation_id);
+         return it != reservations_.end() && client_id == it->second->client_id;     
       }
-      return true;
    }
 
    bool SessionRepository::is_reserved_by_client(const std::string& reservation_id, const std::string& client_id)
@@ -159,11 +160,43 @@ namespace internal
             reservations_.erase(it);
          }
       }
+      return release_reservation(reservation_info.get());
+   }
+   
+   bool SessionRepository::release_reservation(const ReservationInfo* reservation_info)
+   {
       if (reservation_info) {
          reservation_info->lock->notify();
          return true;
       }
       return false;
+   }
+   
+   void SessionRepository::clear_reservations()
+   {
+      for (auto it = reservations_.begin(); it != reservations_.end();)
+      {
+         std::shared_ptr<SessionRepository::ReservationInfo> reservation_info = it->second;
+         it = reservations_.erase(it);
+         reservation_info->lock->cancel();
+      }
+   }
+      
+   bool SessionRepository::reset_server()
+   {
+      std::unique_lock<std::shared_mutex> lock(repository_lock_);
+      clear_reservations();
+      named_sessions_.clear();
+      sessions_.clear();
+      auto is_server_reset = named_sessions_.empty() && sessions_.empty();
+      return is_server_reset && reservations_.empty();	   
+   }
+   
+   SessionRepository::SessionInfo::~SessionInfo()
+   {
+      if (cleanup_func != nullptr){
+         cleanup_func(id);
+      }
    }
 } // namespace internal
 } // namespace grpc
