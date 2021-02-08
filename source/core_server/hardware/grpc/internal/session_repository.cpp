@@ -117,8 +117,9 @@ namespace internal
          std::unique_lock<std::shared_mutex> lock(repository_lock_);
          info->client_count--;
          info->client_id = client_id;
+         auto it = reservations_.find(reservation_id);
+         return it != reservations_.end() && client_id == it->second->client_id;     
       }
-      return true;
    }
 
    bool SessionRepository::is_reserved_by_client(const std::string& reservation_id, const std::string& client_id)
