@@ -11,7 +11,7 @@ option java_package = "com.ni.fake.grpc";
 option java_outer_classname = "FakeService";
 option csharp_namespace = "NationalInstruments.Fake.Grpc";
 
-package niFake; 
+package ni.fake.grpc; 
 
 service NiFakeService {
   rpc Abort(AbortRequest) returns (AbortResponse);

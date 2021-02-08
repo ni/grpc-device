@@ -14,13 +14,14 @@ driver_name_camel = common_helpers.pascal_to_camel(driver_name_pascal)
 c_function_prefix = data["config"]["c_function_prefix"]
 
 service_name = driver_name_pascal + "Service"
+server_name = driver_name_pascal + "Server"
 c_function_prefix = config['c_function_prefix']
 
 driver_full_namespace = common_helpers.get_service_namespace(driver_name_caps_underscore)
 driver_namespaces = driver_full_namespace.split(".")
 reversed_driver_namespaces = driver_namespaces.copy()
 reversed_driver_namespaces.reverse()
-define_name = driver_full_namespace + "_service_h"
+define_name = driver_full_namespace + "_server_h"
 define_name = define_name.upper().replace(".", "_")
 %>\
 ## Define section
@@ -40,17 +41,17 @@ define_name = define_name.upper().replace(".", "_")
 namespace ${namespace}
 {
 % endfor
-  class ${service_name} final : public ${driver_name_camel}::${service_name}::Service
+  class ${server_name} final : public ${service_name}::Service
   {
   public:
-    ${service_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
+    ${server_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
 % for function in functions:
 <%
     f = functions[function]
     if not common_helpers.should_gen_service_handler(f):
       continue
 %>\
-    grpc::Status ${function}(grpc::ServerContext* context, const ${driver_name_camel}::${function}Request* request, ${driver_name_camel}::${function}Response* response) override;
+    grpc::Status ${function}(grpc::ServerContext* context, const ${function}Request* request, ${function}Response* response) override;
 % endfor
   private:
     internal::SharedLibrary* shared_library_;

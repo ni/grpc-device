@@ -25,7 +25,7 @@ reversed_driver_namespaces = driver_namespaces.copy()
 reversed_driver_namespaces.reverse()
 
 library_name = driver_name_pascal
-service_name = driver_name_pascal + "Service"
+server_name = driver_name_pascal + "Server"
 %>\
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -33,7 +33,7 @@ service_name = driver_name_pascal + "Service"
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <${driver_name_pascal.lower()}_service.h>
+#include <${driver_name_pascal.lower()}_server.h>
 #include <atomic>
 
 ## Namespaces
@@ -65,7 +65,7 @@ namespace ${namespace}
   #endif
 
 ## Constructors
-  ${service_name}::${service_name}(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
+  ${server_name}::${server_name}(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
       : shared_library_(shared_library), session_repository_(session_repository) 
   {
     shared_library_ -> set_library_name(driver_api_library_name);
@@ -83,7 +83,7 @@ namespace ${namespace}
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const ${driver_name_camel}::${method_name}Request* request, ${driver_name_camel}::${method_name}Response* response)
+  grpc::Status ${server_name}::${method_name}(grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
   {
 % if common_helpers.has_array_parameter(f):
     return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");

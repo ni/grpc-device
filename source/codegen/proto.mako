@@ -22,7 +22,7 @@ option java_package = "com.ni.${module_name.replace("ni", "")}.grpc";
 option java_outer_classname = "${driver_name_pascal.replace("Ni", "")}Service";
 option csharp_namespace = "NationalInstruments.${driver_name_pascal.replace("Ni", "")}.Grpc";
 
-package ${driver_name_camel}; 
+package ${common_helpers.get_service_namespace(driver_name_caps_underscore)}; 
 
 service ${driver_name_pascal}Service {
 % for function in data["functions"]:
