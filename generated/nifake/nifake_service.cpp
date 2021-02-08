@@ -65,20 +65,20 @@ namespace grpc
   NiFakeService::NiFakeService(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
       : shared_library_(shared_library), session_repository_(session_repository) 
   {
-    shared_library_ -> set_library_name(driver_api_library_name);
+    shared_library_->set_library_name(driver_api_library_name);
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::Abort(grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto AbortFunctionPointer = reinterpret_cast<niFake_AbortPtr>(shared_library_ -> get_function_pointer("niFake_Abort"));
+    auto AbortFunctionPointer = reinterpret_cast<niFake_AbortPtr>(shared_library_->get_function_pointer("niFake_Abort"));
     if (AbortFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_Abort");
     }
@@ -121,13 +121,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::EnumInputFunctionWithDefaults(grpc::ServerContext* context, const EnumInputFunctionWithDefaultsRequest* request, EnumInputFunctionWithDefaultsResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto EnumInputFunctionWithDefaultsFunctionPointer = reinterpret_cast<niFake_EnumInputFunctionWithDefaultsPtr>(shared_library_ -> get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
+    auto EnumInputFunctionWithDefaultsFunctionPointer = reinterpret_cast<niFake_EnumInputFunctionWithDefaultsPtr>(shared_library_->get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
     if (EnumInputFunctionWithDefaultsFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_EnumInputFunctionWithDefaults");
     }
@@ -157,13 +157,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::GetABoolean(grpc::ServerContext* context, const GetABooleanRequest* request, GetABooleanResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto GetABooleanFunctionPointer = reinterpret_cast<niFake_GetABooleanPtr>(shared_library_ -> get_function_pointer("niFake_GetABoolean"));
+    auto GetABooleanFunctionPointer = reinterpret_cast<niFake_GetABooleanPtr>(shared_library_->get_function_pointer("niFake_GetABoolean"));
     if (GetABooleanFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetABoolean");
     }
@@ -182,13 +182,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::GetANumber(grpc::ServerContext* context, const GetANumberRequest* request, GetANumberResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto GetANumberFunctionPointer = reinterpret_cast<niFake_GetANumberPtr>(shared_library_ -> get_function_pointer("niFake_GetANumber"));
+    auto GetANumberFunctionPointer = reinterpret_cast<niFake_GetANumberPtr>(shared_library_->get_function_pointer("niFake_GetANumber"));
     if (GetANumberFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetANumber");
     }
@@ -249,13 +249,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::GetArraySizeForPythonCode(grpc::ServerContext* context, const GetArraySizeForPythonCodeRequest* request, GetArraySizeForPythonCodeResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto GetArraySizeForPythonCodeFunctionPointer = reinterpret_cast<niFake_GetArraySizeForPythonCodePtr>(shared_library_ -> get_function_pointer("niFake_GetArraySizeForPythonCode"));
+    auto GetArraySizeForPythonCodeFunctionPointer = reinterpret_cast<niFake_GetArraySizeForPythonCodePtr>(shared_library_->get_function_pointer("niFake_GetArraySizeForPythonCode"));
     if (GetArraySizeForPythonCodeFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetArraySizeForPythonCode");
     }
@@ -281,13 +281,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::GetCalInterval(grpc::ServerContext* context, const GetCalIntervalRequest* request, GetCalIntervalResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto GetCalIntervalFunctionPointer = reinterpret_cast<niFake_GetCalIntervalPtr>(shared_library_ -> get_function_pointer("niFake_GetCalInterval"));
+    auto GetCalIntervalFunctionPointer = reinterpret_cast<niFake_GetCalIntervalPtr>(shared_library_->get_function_pointer("niFake_GetCalInterval"));
     if (GetCalIntervalFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetCalInterval");
     }
@@ -306,13 +306,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::GetCustomType(grpc::ServerContext* context, const GetCustomTypeRequest* request, GetCustomTypeResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto GetCustomTypeFunctionPointer = reinterpret_cast<niFake_GetCustomTypePtr>(shared_library_ -> get_function_pointer("niFake_GetCustomType"));
+    auto GetCustomTypeFunctionPointer = reinterpret_cast<niFake_GetCustomTypePtr>(shared_library_->get_function_pointer("niFake_GetCustomType"));
     if (GetCustomTypeFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetCustomType");
     }
@@ -338,13 +338,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::GetEnumValue(grpc::ServerContext* context, const GetEnumValueRequest* request, GetEnumValueResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto GetEnumValueFunctionPointer = reinterpret_cast<niFake_GetEnumValuePtr>(shared_library_ -> get_function_pointer("niFake_GetEnumValue"));
+    auto GetEnumValueFunctionPointer = reinterpret_cast<niFake_GetEnumValuePtr>(shared_library_->get_function_pointer("niFake_GetEnumValue"));
     if (GetEnumValueFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_GetEnumValue");
     }
@@ -372,13 +372,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::LockSession(grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto LockSessionFunctionPointer = reinterpret_cast<niFake_LockSessionPtr>(shared_library_ -> get_function_pointer("niFake_LockSession"));
+    auto LockSessionFunctionPointer = reinterpret_cast<niFake_LockSessionPtr>(shared_library_->get_function_pointer("niFake_LockSession"));
     if (LockSessionFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_LockSession");
     }
@@ -411,13 +411,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::OneInputFunction(grpc::ServerContext* context, const OneInputFunctionRequest* request, OneInputFunctionResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto OneInputFunctionFunctionPointer = reinterpret_cast<niFake_OneInputFunctionPtr>(shared_library_ -> get_function_pointer("niFake_OneInputFunction"));
+    auto OneInputFunctionFunctionPointer = reinterpret_cast<niFake_OneInputFunctionPtr>(shared_library_->get_function_pointer("niFake_OneInputFunction"));
     if (OneInputFunctionFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_OneInputFunction");
     }
@@ -433,13 +433,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::ParametersAreMultipleTypes(grpc::ServerContext* context, const ParametersAreMultipleTypesRequest* request, ParametersAreMultipleTypesResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto ParametersAreMultipleTypesFunctionPointer = reinterpret_cast<niFake_ParametersAreMultipleTypesPtr>(shared_library_ -> get_function_pointer("niFake_ParametersAreMultipleTypes"));
+    auto ParametersAreMultipleTypesFunctionPointer = reinterpret_cast<niFake_ParametersAreMultipleTypesPtr>(shared_library_->get_function_pointer("niFake_ParametersAreMultipleTypes"));
     if (ParametersAreMultipleTypesFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_ParametersAreMultipleTypes");
     }
@@ -462,13 +462,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::PoorlyNamedSimpleFunction(grpc::ServerContext* context, const PoorlyNamedSimpleFunctionRequest* request, PoorlyNamedSimpleFunctionResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto PoorlyNamedSimpleFunctionFunctionPointer = reinterpret_cast<niFake_PoorlyNamedSimpleFunctionPtr>(shared_library_ -> get_function_pointer("niFake_PoorlyNamedSimpleFunction"));
+    auto PoorlyNamedSimpleFunctionFunctionPointer = reinterpret_cast<niFake_PoorlyNamedSimpleFunctionPtr>(shared_library_->get_function_pointer("niFake_PoorlyNamedSimpleFunction"));
     if (PoorlyNamedSimpleFunctionFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_PoorlyNamedSimpleFunction");
     }
@@ -483,13 +483,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::Read(grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto ReadFunctionPointer = reinterpret_cast<niFake_ReadPtr>(shared_library_ -> get_function_pointer("niFake_Read"));
+    auto ReadFunctionPointer = reinterpret_cast<niFake_ReadPtr>(shared_library_->get_function_pointer("niFake_Read"));
     if (ReadFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_Read");
     }
@@ -509,13 +509,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::ReadFromChannel(grpc::ServerContext* context, const ReadFromChannelRequest* request, ReadFromChannelResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto ReadFromChannelFunctionPointer = reinterpret_cast<niFake_ReadFromChannelPtr>(shared_library_ -> get_function_pointer("niFake_ReadFromChannel"));
+    auto ReadFromChannelFunctionPointer = reinterpret_cast<niFake_ReadFromChannelPtr>(shared_library_->get_function_pointer("niFake_ReadFromChannel"));
     if (ReadFromChannelFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_ReadFromChannel");
     }
@@ -543,13 +543,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::ReturnDurationInSeconds(grpc::ServerContext* context, const ReturnDurationInSecondsRequest* request, ReturnDurationInSecondsResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto ReturnDurationInSecondsFunctionPointer = reinterpret_cast<niFake_ReturnDurationInSecondsPtr>(shared_library_ -> get_function_pointer("niFake_ReturnDurationInSeconds"));
+    auto ReturnDurationInSecondsFunctionPointer = reinterpret_cast<niFake_ReturnDurationInSecondsPtr>(shared_library_->get_function_pointer("niFake_ReturnDurationInSeconds"));
     if (ReturnDurationInSecondsFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_ReturnDurationInSeconds");
     }
@@ -582,13 +582,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::SetCustomType(grpc::ServerContext* context, const SetCustomTypeRequest* request, SetCustomTypeResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto SetCustomTypeFunctionPointer = reinterpret_cast<niFake_SetCustomTypePtr>(shared_library_ -> get_function_pointer("niFake_SetCustomType"));
+    auto SetCustomTypeFunctionPointer = reinterpret_cast<niFake_SetCustomTypePtr>(shared_library_->get_function_pointer("niFake_SetCustomType"));
     if (SetCustomTypeFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_SetCustomType");
     }
@@ -611,13 +611,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(grpc::ServerContext* context, const StringValuedEnumInputFunctionWithDefaultsRequest* request, StringValuedEnumInputFunctionWithDefaultsResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto StringValuedEnumInputFunctionWithDefaultsFunctionPointer = reinterpret_cast<niFake_StringValuedEnumInputFunctionWithDefaultsPtr>(shared_library_ -> get_function_pointer("niFake_StringValuedEnumInputFunctionWithDefaults"));
+    auto StringValuedEnumInputFunctionWithDefaultsFunctionPointer = reinterpret_cast<niFake_StringValuedEnumInputFunctionWithDefaultsPtr>(shared_library_->get_function_pointer("niFake_StringValuedEnumInputFunctionWithDefaults"));
     if (StringValuedEnumInputFunctionWithDefaultsFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_StringValuedEnumInputFunctionWithDefaults");
     }
@@ -633,13 +633,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::TwoInputFunction(grpc::ServerContext* context, const TwoInputFunctionRequest* request, TwoInputFunctionResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto TwoInputFunctionFunctionPointer = reinterpret_cast<niFake_TwoInputFunctionPtr>(shared_library_ -> get_function_pointer("niFake_TwoInputFunction"));
+    auto TwoInputFunctionFunctionPointer = reinterpret_cast<niFake_TwoInputFunctionPtr>(shared_library_->get_function_pointer("niFake_TwoInputFunction"));
     if (TwoInputFunctionFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_TwoInputFunction");
     }
@@ -656,13 +656,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::UnlockSession(grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto UnlockSessionFunctionPointer = reinterpret_cast<niFake_UnlockSessionPtr>(shared_library_ -> get_function_pointer("niFake_UnlockSession"));
+    auto UnlockSessionFunctionPointer = reinterpret_cast<niFake_UnlockSessionPtr>(shared_library_->get_function_pointer("niFake_UnlockSession"));
     if (UnlockSessionFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_UnlockSession");
     }
@@ -681,13 +681,13 @@ namespace grpc
   //---------------------------------------------------------------------
   grpc::Status NiFakeService::Use64BitNumber(grpc::ServerContext* context, const Use64BitNumberRequest* request, Use64BitNumberResponse* response)
   {
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto Use64BitNumberFunctionPointer = reinterpret_cast<niFake_Use64BitNumberPtr>(shared_library_ -> get_function_pointer("niFake_Use64BitNumber"));
+    auto Use64BitNumberFunctionPointer = reinterpret_cast<niFake_Use64BitNumberPtr>(shared_library_->get_function_pointer("niFake_Use64BitNumber"));
     if (Use64BitNumberFunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: niFake_Use64BitNumber");
     }

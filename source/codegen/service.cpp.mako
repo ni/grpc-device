@@ -71,7 +71,7 @@ namespace ${namespace}
   ${service_name}::${service_name}(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
       : shared_library_(shared_library), session_repository_(session_repository) 
   {
-    shared_library_ -> set_library_name(driver_api_library_name);
+    shared_library_->set_library_name(driver_api_library_name);
   }
 
 % for method_name in functions:
@@ -94,13 +94,13 @@ namespace ${namespace}
 
 <% continue %>
 % endif
-    shared_library_ -> load();
-    if (!shared_library_ -> is_loaded()) {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
       return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
     }
-    auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_ -> get_function_pointer("${c_function_prefix}${method_name}"));
+    auto ${method_name}FunctionPointer = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_->get_function_pointer("${c_function_prefix}${method_name}"));
     if (${method_name}FunctionPointer == nullptr) {
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: ${c_function_prefix}${method_name}");
     }
