@@ -338,7 +338,6 @@ namespace grpc
       std::thread reserve_b(call_reserve_task, &service, &request, &response);
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
       EXPECT_FALSE(response.is_reserved());
-
       ::grpc::ServerContext context;
       ni::hardware::grpc::ResetServerResponse reset_response;
       service.ResetServer(&context, NULL, &reset_response);
@@ -350,7 +349,7 @@ namespace grpc
       EXPECT_FALSE(is_reserved);
    }
    
-   TEST(CoreServiceTests, IdReserved_ReserveWithTwoNewClientIdAndResetServer_WaitsForResetAndDoesNotReserve)
+   TEST(CoreServiceTests, IdReserved_ReserveWithTwoNewClientIdsAndResetServer_WaitsForResetAndDoesNotReserve)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::CoreService service(&session_repository);
@@ -364,21 +363,16 @@ namespace grpc
       request.set_client_id("c");
       ni::hardware::grpc::ReserveResponse clientc_response;
       std::thread reserve_c(call_reserve_task, &service, &request, &clientc_response);
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
-      EXPECT_FALSE(clientb_response.is_reserved());
-      EXPECT_FALSE(clientc_response.is_reserved());
-
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
       ::grpc::ServerContext context;
       ni::hardware::grpc::ResetServerResponse reset_response;
       service.ResetServer(&context, NULL, &reset_response);
       
       EXPECT_TRUE(reset_response.is_server_reset());
       reserve_b.join();
-      reserve_c.join();
       EXPECT_FALSE(clientb_response.is_reserved());
+      reserve_c.join();
       EXPECT_FALSE(clientc_response.is_reserved());
-
-      EXPECT_TRUE(reset_response.is_server_reset());
       bool is_reserved = call_is_reserved(&service, "foo", "b");
       EXPECT_FALSE(is_reserved);
       is_reserved = call_is_reserved(&service, "foo", "c");
