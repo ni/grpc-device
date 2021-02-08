@@ -8,10 +8,6 @@
 // fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
 static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
-#if defined(__GNUC__)
-   #include <dlfcn.h>
-#endif
-
 namespace ni {
 namespace tests {
 namespace unit {
