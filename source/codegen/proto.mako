@@ -77,6 +77,8 @@ message ${common_helpers.snake_to_camel(function)}Request {
   is_array = common_helpers.is_array(parameter["type"])
   if "enum" in parameter:
     parameter_type = parameter["enum"]
+    if is_array == True : 
+      parameter_type = "repeated " + parameter_type  
   else:
     parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
 %>\
@@ -93,7 +95,12 @@ message ${common_helpers.snake_to_camel(function)}Response {
 <%  
   index = index + 1
   is_array = common_helpers.is_array(parameter["type"])
-  parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
+  if "enum" in parameter :
+    parameter_type = parameter["enum"]
+    if is_array == True : 
+      parameter_type = "repeated " + parameter_type
+  else:
+    parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}; 
 %endfor  

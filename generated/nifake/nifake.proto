@@ -193,7 +193,7 @@ message EnumArrayOutputFunctionRequest {
 
 message EnumArrayOutputFunctionResponse {
   int32 status = 1;
-  repeated uint32 an_array = 2; 
+  repeated Turtle an_array = 2; 
 }
 
 message EnumInputFunctionWithDefaultsRequest {
@@ -428,7 +428,7 @@ message GetEnumValueRequest {
 message GetEnumValueResponse {
   int32 status = 1;
   sint32 a_quantity = 2; 
-  uint32 a_turtle = 3; 
+  Turtle a_turtle = 3; 
 }
 
 message GetErrorRequest {
@@ -612,9 +612,9 @@ message ReturnMultipleTypesResponse {
   bool a_boolean = 2; 
   sint32 an_int32 = 3; 
   int64 an_int64 = 4; 
-  uint32 an_int_enum = 5; 
+  Turtle an_int_enum = 5; 
   double a_float = 6; 
-  double a_float_enum = 7; 
+  FloatEnum a_float_enum = 7; 
   repeated double an_array = 8; 
   string a_string = 9; 
 }
