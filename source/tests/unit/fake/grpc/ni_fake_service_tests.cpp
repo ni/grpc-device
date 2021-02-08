@@ -5,9 +5,6 @@
 #include "hardware/grpc/internal/session_repository.h"
 #include "hardware/grpc/internal/shared_library.h"
 
-// fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
-static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
-
 namespace ni {
 namespace tests {
 namespace unit {
