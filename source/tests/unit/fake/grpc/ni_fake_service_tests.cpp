@@ -10,6 +10,7 @@ namespace tests {
 namespace unit {
 namespace fake {
 namespace grpc {
+
   #if defined(_MSC_VER)
     static const char* expected_api_library_name = "nifake_64.dll";
   #else
@@ -51,6 +52,7 @@ namespace grpc {
     // Since the ni fake library shouldn't be present, we expect a NOT_FOUND status in response.
     EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
   }
+
 } // namespace grpc
 } // namespace fake
 } // namespace unit
