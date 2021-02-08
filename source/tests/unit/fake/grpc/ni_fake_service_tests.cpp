@@ -23,7 +23,7 @@ namespace grpc {
     static const char* expected_api_library_name = "./nifake.so";
   #endif
 
-  TEST(NiFakeServiceTests, NiFakeService_Construct_SharedLibraryIsNotLoaded)
+  TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryIsNotLoaded)
   {
     ni::hardware::grpc::internal::SessionRepository session_repository;
     ni::hardware::grpc::internal::SharedLibrary shared_library;
@@ -33,7 +33,7 @@ namespace grpc {
     EXPECT_FALSE(shared_library.is_loaded());
   }
    
-  TEST(NiFakeServiceTests, NiFakeService_Construct_SharedLibraryNameIsSet)
+  TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryNameIsSet)
   {
     ni::hardware::grpc::internal::SessionRepository session_repository;
     ni::hardware::grpc::internal::SharedLibrary shared_library;
