@@ -146,7 +146,7 @@ namespace internal
    bool SessionRepository::release_reservation(const ReservationInfo* reservation_info)
    {
       if (reservation_info) {
-         reservation_info->lock->notify_one();
+         reservation_info->lock->notify();
          return true;
       }
       return false;
@@ -158,7 +158,7 @@ namespace internal
       {
          std::shared_ptr<SessionRepository::ReservationInfo> reservation_info = it->second;
          it = reservations_.erase(it);
-         reservation_info->lock->notify_all();
+         reservation_info->lock->cancel();
       }
    }
       

@@ -9,33 +9,34 @@ namespace grpc
 namespace internal
 {
    Semaphore::Semaphore (int count)
-      : count_(count), waiters_(0)
+      : count_(count), is_canceled_(false)
    {
    }
 
-   void Semaphore::notify_one()
+   void Semaphore::notify()
    {
       std::unique_lock<std::mutex> lock(mtx_);
       ++count_;
       cv_.notify_one();
    }
 
-   void Semaphore::notify_all()
+   void Semaphore::cancel()
    {
       std::unique_lock<std::mutex> lock(mtx_);
-      count_ = waiters_ + 1;
+      is_canceled_ = true;
       cv_.notify_all();
    }
    
    void Semaphore::wait()
    {
       std::unique_lock<std::mutex> lock(mtx_);
-      ++waiters_;
-      while(count_ == 0) {
+      while(count_ == 0 && !is_canceled_) {
          cv_.wait(lock);
       }
-      count_--;
-      waiters_--;
+      
+      if (!is_canceled_) {
+         count_--;
+      }
    }
 } // namespace internal
 } // namespace grpc

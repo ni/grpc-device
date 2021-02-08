@@ -15,12 +15,12 @@ namespace internal
    {
    public:
       Semaphore(int count = 1);
-      void notify_one();
-      void notify_all();
+      void notify();
+      void cancel();
       void wait();
    private:
       int count_;
-      int waiters_;
+      bool is_canceled_;
       std::mutex mtx_;
       std::condition_variable cv_;
    };
