@@ -93,7 +93,7 @@ namespace internal
 
       if (!library.is_loaded())
       {
-
+          return;
       }
 
       auto syscfg_initialize_session = reinterpret_cast<NISysCfgInitializeSessionPtr>(library.get_function_pointer("NISysCfgInitializeSession"));
@@ -125,7 +125,7 @@ namespace internal
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertyProductName, model);
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertyVendorName, vendor);
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertySerialNumber, serial_number);
-                     properties->set_alias(name);
+                     properties->set_name(name);
                      properties->set_model(model);
                      properties->set_vendor(vendor);
                      properties->set_serialnumber(serial_number);

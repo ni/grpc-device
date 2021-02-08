@@ -38,7 +38,6 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}"
   "./source"
   "./source/core_server"
-  $ENV{NIEXTCCOMPILERSUPP}/Include
 )
 
 #----------------------------------------------------------------------
