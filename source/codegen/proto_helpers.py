@@ -51,3 +51,12 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
   if add_repeated == True:
     return "repeated " + type
   return type
+  
+def determine_function_parameter_type(is_array, parameter, driver_name_pascal):
+  if "enum" in parameter :
+    parameter_type = parameter["enum"]
+    if is_array == True : 
+      parameter_type = "repeated " + parameter_type
+  else:
+    parameter_type = get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
+  return parameter_type
