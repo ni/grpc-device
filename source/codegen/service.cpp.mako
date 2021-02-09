@@ -106,18 +106,57 @@ namespace ${namespace}
     }
 
 %for parameter in input_parameters:
-    ${handler_helpers.get_c_type(parameter, driver_name_pascal)} ${common_helpers.camel_to_snake(parameter['cppName'])} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  paramter_name_ctype = parameter_name + "_ctype"
+  parameter_type = handler_helpers.get_c_type(parameter, driver_name_pascal)
+%>\
+%if common_helpers.is_enum(parameter) == True:
+    ${parameter["enum"]} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
+    ${parameter_type} ${paramter_name_ctype} = ${parameter_name};
+<%    
+    parameter['cppName'] = paramter_name_ctype
+%>\
+% else:
+    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
+% endif
 %endfor
 %for parameter in output_parameters:
-    ${handler_helpers.get_c_type(parameter, driver_name_pascal)} ${common_helpers.camel_to_snake(parameter['cppName'])};
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  paramter_name_ctype = parameter_name + "_ctype"
+  parameter_type = handler_helpers.get_c_type(parameter, driver_name_pascal)
+%>\
+%if common_helpers.is_enum(parameter) == True:
+    ${parameter["enum"]} ${parameter_name};
+    ${parameter_type} ${paramter_name_ctype};
+<%
+     parameter['cppName'] = paramter_name_ctype
+%>\
+%else:
+    ${parameter_type} ${parameter_name};
+%endif
 %endfor
     auto status = ${common_helpers.pascal_to_snake(method_name)}_function(${handler_helpers.create_args(parameters)});
+<%
+     parameter['cppName'] = parameter_name
+%>\
     response->set_status(status);
 %if output_parameters:
     if (status == 0) {
 %for parameter in output_parameters:
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  paramter_name_ctype = parameter_name + "_ctype"
+  parameter_type = handler_helpers.get_c_type(parameter, driver_name_pascal)
+%>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
-      response->set_${common_helpers.camel_to_snake(parameter['cppName'])}(${common_helpers.camel_to_snake(parameter['cppName'])});
+%if common_helpers.is_enum(parameter) == True:
+      ${parameter_name} = ${paramter_name_ctype};
+      response->set_${parameter_name}(${parameter_name});
+% else:
+      response->set_${parameter_name}(${parameter_name});
+%endif
 %endfor
     }
 %endif

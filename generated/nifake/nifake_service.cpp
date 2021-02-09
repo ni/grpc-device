@@ -133,8 +133,9 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    std::uint32_t a_turtle = request->a_turtle();
-    auto status = enum_input_function_with_defaults_function(vi, a_turtle);
+    Turtle a_turtle = request->a_turtle();
+    std::uint32_t a_turtle_ctype = a_turtle;
+    auto status = enum_input_function_with_defaults_function(vi, a_turtle_ctype);
     response->set_status(status);
     return grpc::Status::OK;
   }
@@ -351,11 +352,13 @@ namespace grpc
 
     std::uint64_t vi = request->vi());
     std::int32_t a_quantity;
-    std::uint32_t a_turtle;
-    auto status = get_enum_value_function(vi, &a_quantity, &a_turtle);
+    Turtle a_turtle;
+    std::uint32_t a_turtle_ctype;
+    auto status = get_enum_value_function(vi, &a_quantity, &a_turtle_ctype);
     response->set_status(status);
     if (status == 0) {
       response->set_a_quantity(a_quantity);
+      a_turtle = a_turtle_ctype;
       response->set_a_turtle(a_turtle);
     }
     return grpc::Status::OK;
@@ -448,12 +451,14 @@ namespace grpc
     bool a_boolean = request->a_boolean();
     std::int32_t an_int32 = request->an_int32();
     std::int64_t an_int64 = request->an_int64();
-    std::uint32_t an_int_enum = request->an_int_enum();
+    Turtle an_int_enum = request->an_int_enum();
+    std::uint32_t an_int_enum_ctype = an_int_enum;
     double a_float = request->a_float();
-    double a_float_enum = request->a_float_enum();
+    FloatEnum a_float_enum = request->a_float_enum();
+    double a_float_enum_ctype = a_float_enum;
     std::int32_t string_size = request->string_size();
     std::string a_string = request->a_string().c_str();
-    auto status = parameters_are_multiple_types_function(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
+    auto status = parameters_are_multiple_types_function(vi, a_boolean, an_int32, an_int64, an_int_enum_ctype, a_float, a_float_enum_ctype, string_size, a_string);
     response->set_status(status);
     return grpc::Status::OK;
   }
@@ -623,8 +628,9 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    std::string a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
-    auto status = string_valued_enum_input_function_with_defaults_function(vi, a_mobile_o_s_name);
+    MobileOSNames a_mobile_o_s_name = request->a_mobile_o_s_name().c_str();
+    std::string a_mobile_o_s_name_ctype = a_mobile_o_s_name;
+    auto status = string_valued_enum_input_function_with_defaults_function(vi, a_mobile_o_s_name_ctype);
     response->set_status(status);
     return grpc::Status::OK;
   }
