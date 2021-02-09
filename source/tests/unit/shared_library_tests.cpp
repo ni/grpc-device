@@ -135,6 +135,33 @@ TEST(SharedLibraryTests, LibraryAndFunctionsLoaded_FunctionCallsSucceed)
   delete[] buffer;
 }
 
+TEST(SharedLibraryTests, LoadedLibrary_SetLibraryName_DoesNotUpdateLibraryName)
+{
+  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  library.load();
+  std::string initial_library_name = library.get_library_name();
+  ASSERT_STREQ(test_library_name, initial_library_name.c_str());
+
+  ASSERT_TRUE(library.is_loaded());
+  const char* new_library_name = "hello";
+  library.set_library_name(new_library_name);
+
+  std::string name_after_attempted_rename = library.get_library_name();
+  EXPECT_STREQ(initial_library_name.c_str(), name_after_attempted_rename.c_str());
+}
+
+TEST(SharedLibraryTests, UnloadedLibrary_SetLibraryName_UpdatesLibraryName)
+{
+  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+
+  ASSERT_FALSE(library.is_loaded());
+  const char* new_library_name = "hello";
+  library.set_library_name(new_library_name);
+
+  std::string name_after_attempted_rename = library.get_library_name();
+  EXPECT_STREQ(new_library_name, name_after_attempted_rename.c_str());
+}
+
 }  // namespace internal
 }  // namespace grpc
 }  // namespace hardware

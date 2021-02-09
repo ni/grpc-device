@@ -33,6 +33,13 @@ CoreService::CoreService(internal::SessionRepository* session_repository)
   return ::grpc::Status::OK;
 }
 
+::grpc::Status CoreService::ResetServer(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
+{
+  bool is_server_reset = session_repository_->reset_server();
+  response->set_is_server_reset(is_server_reset);
+  return ::grpc::Status::OK;
+}
+
 }  // namespace grpc
 }  // namespace hardware
 }  // namespace ni

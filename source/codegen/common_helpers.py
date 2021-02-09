@@ -35,6 +35,12 @@ def is_array(dataType):
   if dataType.find("[]") != -1:
     return True
   return False
+
+def has_array_parameter(function):
+  for parameter in function['parameters']:
+    if is_array(parameter['type']):
+      return True
+  return False
   
 def camel_to_snake(camelString):
   camelString = list(camelString)
@@ -58,8 +64,21 @@ def snake_to_camel(snake_string):
       index = index + 1
   return ("".join(snake_string))
 
-def pascal_to_camel(pascal_string) :
+def pascal_to_camel(pascal_string):
   pascal_string = list(pascal_string)
-  pascal_string[0] = pascal_string[0].lower();
+  pascal_string[0] = pascal_string[0].lower()
   return ("".join(pascal_string))
-  
+
+def pascal_to_snake(pascal_string):
+  camel_string = pascal_to_camel(pascal_string)
+  snake_string = camel_to_snake(camel_string)
+  return ("".join(snake_string))
+
+def should_gen_service_handler(function):
+  '''Returns function metadata only for those functions to include for generating function pointers to driver library'''
+  return 'codegen_method' not in function.keys() or function['codegen_method'] == 'public'
+
+def get_service_namespace(driver_name_caps_underscore):
+  driver_full_namespace = driver_name_caps_underscore + "_" + "grpc"
+  driver_full_namespace = driver_full_namespace.lower().replace("_", ".")
+  return driver_full_namespace

@@ -30,6 +30,8 @@ class SharedLibrary {
   void load();
   void unload();
   const void* get_function_pointer(const char* name) const;
+  void set_library_name(const char* library_name);
+  std::string get_library_name() const;
 
  private:
   std::string library_name_;

@@ -18,6 +18,9 @@ service ServerUtilities {
 
   // Unreserves a previously reserved resource
   rpc Unreserve(UnreserveRequest) returns (UnreserveResponse);
+
+  // Resets the server to a default state with no open sessions
+  rpc ResetServer(ResetServerRequest) returns (ResetServerResponse);
 }
 
 message Session {
@@ -58,4 +61,10 @@ message UnreserveRequest {
 
 message UnreserveResponse {
   bool is_unreserved = 1;
+}
+
+message ResetServerRequest {}
+
+message ResetServerResponse {
+  bool is_server_reset = 1;
 }
