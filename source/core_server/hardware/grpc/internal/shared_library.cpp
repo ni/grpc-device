@@ -1,102 +1,98 @@
 #include "shared_library.h"
 
 #if defined(__GNUC__)
-   #include <dlfcn.h>
+  #include <dlfcn.h>
 #endif
 
-namespace ni
+namespace ni {
+namespace hardware {
+namespace grpc {
+namespace internal {
+
+SharedLibrary::SharedLibrary(const char* library_name)
+    : library_name_(library_name), handle_(nullptr)
 {
-namespace hardware
+}
+
+SharedLibrary::SharedLibrary(const SharedLibrary& other)
+    : library_name_(other.library_name_), handle_(nullptr)
 {
-namespace grpc
+  if (other.handle_) {
+    load();
+  }
+}
+
+SharedLibrary::~SharedLibrary()
 {
-namespace internal
+  unload();
+}
+
+void SharedLibrary::swap(SharedLibrary& other)
 {
+  library_name_.swap(other.library_name_);
+  std::swap(handle_, other.handle_);
+}
 
-   SharedLibrary::SharedLibrary(const char* library_name)
-      : library_name_(library_name), handle_(nullptr)
-   {
-   }
+bool SharedLibrary::is_loaded() const
+{
+  return handle_ != nullptr;
+}
 
-   SharedLibrary::SharedLibrary(const SharedLibrary& other)
-      : library_name_(other.library_name_), handle_(nullptr)
-   {
-      if (other.handle_) {
-         load();
-      }
-   }
+LibraryHandle SharedLibrary::get_handle() const
+{
+  return handle_;
+}
 
-   SharedLibrary::~SharedLibrary()
-   {
-      unload();
-   }
-
-   void SharedLibrary::swap(SharedLibrary& other)
-   {
-      library_name_.swap(other.library_name_);
-      std::swap(handle_, other.handle_);
-   }
-
-   bool SharedLibrary::is_loaded() const
-   {
-      return handle_ != nullptr;
-   }
-
-   LibraryHandle SharedLibrary::get_handle() const
-   {
-      return handle_;
-   }
-
-   void SharedLibrary::load()
-   {
-      if (handle_) {
-         return;
-      }
-      if (!library_name_.empty()) {
+void SharedLibrary::load()
+{
+  if (handle_) {
+    return;
+  }
+  if (!library_name_.empty()) {
 #if defined(_MSC_VER)
-         handle_ = ::LoadLibraryA(library_name_.c_str());
+    handle_ = ::LoadLibraryA(library_name_.c_str());
 #else
-         handle_ = ::dlopen(library_name_.c_str(), RTLD_NOW | RTLD_GLOBAL);
+    handle_ = ::dlopen(library_name_.c_str(), RTLD_NOW | RTLD_GLOBAL);
 #endif
-      }
-   }
+  }
+}
 
-   void SharedLibrary::unload()
-   {
-      if (handle_) {
+void SharedLibrary::unload()
+{
+  if (handle_) {
 #if defined(_MSC_VER)
-         ::FreeLibrary(handle_);
+    ::FreeLibrary(handle_);
 #else
-         ::dlclose(handle_);
+    ::dlclose(handle_);
 #endif
-         handle_ = nullptr;
-      }
-   }
+    handle_ = nullptr;
+  }
+}
 
-   const void* SharedLibrary::get_function_pointer(const char* name) const
-   {
-      if (!handle_) {
-         return nullptr;
-      }
+const void* SharedLibrary::get_function_pointer(const char* name) const
+{
+  if (!handle_) {
+    return nullptr;
+  }
 #if defined(_MSC_VER)
-      return ::GetProcAddress(handle_, name);
+  return ::GetProcAddress(handle_, name);
 #else
-      return ::dlsym(handle_, name);
+  return ::dlsym(handle_, name);
 #endif
-   }
+}
 
-   void SharedLibrary::set_library_name(const char* library_name)
-   {
-      if (!is_loaded())
-         library_name_ = library_name;
-   }
+void SharedLibrary::set_library_name(const char* library_name)
+{
+  if (!is_loaded())
+    library_name_ = library_name;
+}
 
-   std::string SharedLibrary::get_library_name() const
-   {
-     return library_name_;
-   }
+std::string SharedLibrary::get_library_name() const
+{
+  return library_name_;
+}
 
-} // namespace internal
-} // namespace grpc
-} // namespace hardware
-} // namespace ni
+}  // namespace internal
+}  // namespace grpc
+}  // namespace hardware
+}  // namespace ni

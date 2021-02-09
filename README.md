@@ -96,6 +96,21 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 > make
 ```
 
+## C++ Coding Conventions
+
+This project follows the Google style guidelines for all C++ and protobuf files with the exceptions documented below.
+
+The C++ style is encoded in the `clang-format` file at the root of the repository.<br>
+See https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+Setting | Google | Ours | Justification
+--|--|--|--
+`ColumnLimit` | `80` | `0` | Some times a long line is appropriate. We should police that in PRs, not with our tooling.
+`AlignAfterOpenBracket` | `Align` | `AlwaysBreak` | Either all parameters should be on one line or all of them on separate lines. Without this the formatter would allow you to leave parameters on the first line and would align the other lines with the first parameter. This adds a lot of whitespace.
+`BreakBeforeBraces` | `Attach` | `Stroustrup` | This puts function curly braces on the next line and puts `else` blocks on the next line. This helps with control flow readability.
+`DerivePointerAlignment` | `true` | `false` | We should be consistent with our pointer alignment. Left alignment (`void* foo`) is more standard than right (`void *foo`) and is the default Google style.
+`IndentPPDirectives` | `None` | `BeforeHash` | Indented `#include` directives inside `#defined` blocks improves readability.
+
 ## Running the gRPC Server
 
 Coming Soon
