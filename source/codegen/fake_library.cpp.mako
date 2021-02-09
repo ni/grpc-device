@@ -19,34 +19,28 @@ functions = data["functions"]
 
 #include "${module_name}_fake_library.h"
 
-namespace ni
-{
-namespace tests
-{
-namespace unit
-{
-namespace hardware
-{
-namespace grpc
-{
-namespace internal
-{
+namespace ni {
+namespace tests {
+namespace unit {
+namespace hardware {
+namespace grpc {
+namespace internal {
 
-  ${driver_name_pascal}SharedLibrary::${driver_name_pascal}SharedLibrary(const char* library_name)
+${driver_name_pascal}SharedLibrary::${driver_name_pascal}SharedLibrary(const char* library_name)
     : FakeSharedLibrary(library_name)
-  {
-  }
+{
+}
 
-  ${driver_name_pascal}SharedLibrary::~${driver_name_pascal}SharedLibrary()
-  {
-    unload();
-  }
+${driver_name_pascal}SharedLibrary::~${driver_name_pascal}SharedLibrary()
+{
+  unload();
+}
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpmf-conversions"
 
-  void ${driver_name_pascal}SharedLibrary::create_function_map()
-  {
+void ${driver_name_pascal}SharedLibrary::create_function_map()
+{
 % for method_name in functions:
 <%
   f = functions[method_name]
@@ -56,20 +50,19 @@ namespace internal
   handler_helpers.sanitize_names(parameters)
 %>\
 % if not common_helpers.has_array_parameter(f) :
-      // Register function mock of ${c_function_prefix}${method_name} to map.
-      int (ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::*${method_name}_fp)(${handler_helpers.create_params(parameters, driver_name_pascal)});
-      ${method_name}_fp = &ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::${c_function_prefix}${method_name};
-      register_function("${c_function_prefix}${method_name}", reinterpret_cast<void*>(${method_name}_fp));
-
+  // Register function mock of ${c_function_prefix}${method_name} to map.
+  int (ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::*${method_name}_fp)(${handler_helpers.create_params(parameters, driver_name_pascal)});
+  ${method_name}_fp = &ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::${c_function_prefix}${method_name};
+  register_function("${c_function_prefix}${method_name}", reinterpret_cast<void*>(${method_name}_fp));
 % endif
 % endfor
-  }
+}
 
 #pragma GCC diagnostic pop
 
-} // namespace internal
-} // namespace grpc
-} // namespace hardware
-} // namespace unit
-} // namespace tests
-} // namespace ni
+}  // namespace internal
+}  // namespace grpc
+}  // namespace hardware
+}  // namespace unit
+}  // namespace tests
+}  // namespace ni

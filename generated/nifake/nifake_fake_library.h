@@ -8,139 +8,126 @@
 #ifndef FAKE_NI_FAKE_LIBRARY_HEADER
 #define FAKE_NI_FAKE_LIBRARY_HEADER
 
-#include "fake_shared_library.h"
 #include <gmock/gmock.h>
 
-namespace ni
-{
-namespace tests
-{
-namespace unit
-{
-namespace hardware
-{
-namespace grpc
-{
-namespace internal
-{
+#include "fake_shared_library.h"
 
-  // Driver attribute values
-  enum NiFakeAttributes
-  {
-    NIFAKE_READ_WRITE_BOOL = 1000000,
-    NIFAKE_READ_WRITE_DOUBLE = 1000001,
-    NIFAKE_READ_WRITE_STRING = 1000002,
-    NIFAKE_READ_WRITE_COLOR = 1000003,
-    NIFAKE_READ_WRITE_INTEGER = 1000004,
-    NIFAKE_FLOAT_ENUM = 1000005,
-    NIFAKE_READ_WRITE_INT64 = 1000006,
-    NIFAKE_READ_WRITE_DOUBLE_WITH_CONVERTER = 1000007,
-    NIFAKE_READ_WRITE_INTEGER_WITH_CONVERTER = 1000008,
-    NIFAKE_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009,
-    NIFAKE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010,
-  };
+namespace ni {
+namespace tests {
+namespace unit {
+namespace hardware {
+namespace grpc {
+namespace internal {
 
-  // Driver enum values
-  enum BeautifulColorValues
-  {
-    NIFAKE_PINK = 44,
-    NIFAKE_AQUA = 43,
-    NIFAKE_GREEN = 45,
-    NIFAKE_BLACK = 42,
-  };
-  enum ColorValues
-  {
-    NIFAKE_RED = 1,
-    NIFAKE_BLUE = 2,
-    NIFAKE_YELLOW = 5,
-    NIFAKE_BLACK = 42,
-  };
-  enum ColorObsoleteValues
-  {
-    NIFAKE_RED = 1,
-    NIFAKE_BLUE = 2,
-    NIFAKE_YELLOW = 5,
-    NIFAKE_BLACK = 42,
-  };
-  enum ColorPrivateValues
-  {
-    NIFAKE_RED = 1,
-    NIFAKE_BLUE = 2,
-    NIFAKE_YELLOW = 5,
-    NIFAKE_BLACK = 42,
-  };
-  enum FloatEnumValues
-  {
-    NIFAKE_THREE_POINT_FIVE = 1,
-    NIFAKE_FOUR_POINT_FIVE = 2,
-    NIFAKE_FIVE_POINT_FIVE = 3,
-    NIFAKE_SIX_POINT_FIVE = 4,
-    NIFAKE_SEVEN_POINT_FIVE = 5,
-  };
-  enum MobileOSNamesValues
-  {
-    NIFAKE_ANDROID = 1,
-    NIFAKE_IOS = 2,
-    NIFAKE_NONE = 3,
-  };
-  enum TurtleValues
-  {
-    NIFAKE_LEONARDO = 0,
-    NIFAKE_DONATELLO = 1,
-    NIFAKE_RAPHAEL = 2,
-    NIFAKE_MICHELANGELO = 3,
-  };
+// Driver attribute values
+enum NiFakeAttributes {
+  NIFAKE_READ_WRITE_BOOL = 1000000,
+  NIFAKE_READ_WRITE_DOUBLE = 1000001,
+  NIFAKE_READ_WRITE_STRING = 1000002,
+  NIFAKE_READ_WRITE_COLOR = 1000003,
+  NIFAKE_READ_WRITE_INTEGER = 1000004,
+  NIFAKE_FLOAT_ENUM = 1000005,
+  NIFAKE_READ_WRITE_INT64 = 1000006,
+  NIFAKE_READ_WRITE_DOUBLE_WITH_CONVERTER = 1000007,
+  NIFAKE_READ_WRITE_INTEGER_WITH_CONVERTER = 1000008,
+  NIFAKE_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009,
+  NIFAKE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010,
+};
 
-  // Fake driver shared library class
-  class NiFakeSharedLibrary : public FakeSharedLibrary
-  {
-    public:
-      NiFakeSharedLibrary(const char* library_name);
-      virtual ~NiFakeSharedLibrary();
-      MOCK_METHOD(int, niFake_Abort, (std::uint64_t));
-      MOCK_METHOD(int, niFake_EnumInputFunctionWithDefaults, (std::uint64_t, std::uint32_t));
-      MOCK_METHOD(int, niFake_GetABoolean, (std::uint64_t, bool*));
-      MOCK_METHOD(int, niFake_GetANumber, (std::uint64_t, std::uint32_t*));
-      MOCK_METHOD(int, niFake_GetArraySizeForPythonCode, (std::uint64_t, std::int32_t*));
-      MOCK_METHOD(int, niFake_GetAttributeViBoolean, (std::uint64_t, std::string, NiFakeAttributes, bool*));
-      MOCK_METHOD(int, niFake_GetAttributeViInt32, (std::uint64_t, std::string, NiFakeAttributes, std::int32_t*));
-      MOCK_METHOD(int, niFake_GetAttributeViInt64, (std::uint64_t, std::string, NiFakeAttributes, std::int64_t*));
-      MOCK_METHOD(int, niFake_GetAttributeViReal64, (std::uint64_t, std::string, NiFakeAttributes, double*));
-      MOCK_METHOD(int, niFake_GetCalDateAndTime, (std::uint64_t, std::int32_t, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*));
-      MOCK_METHOD(int, niFake_GetCalInterval, (std::uint64_t, std::int32_t*));
-      MOCK_METHOD(int, niFake_GetCustomType, (std::uint64_t, std::uint64_t*));
-      MOCK_METHOD(int, niFake_GetEnumValue, (std::uint64_t, std::int32_t*, std::uint32_t*));
-      MOCK_METHOD(int, niFake_GetLastCalDateAndTime, (std::uint64_t, std::int32_t, google.protobuf.Timestamp*));
-      MOCK_METHOD(int, niFake_InitWithOptions, (std::string, bool, bool, std::string, std::uint64_t*));
-      MOCK_METHOD(int, niFake_Initiate, (std::uint64_t));
-      MOCK_METHOD(int, niFake_LockSession, (std::uint64_t, bool*));
-      MOCK_METHOD(int, niFake_OneInputFunction, (std::uint64_t, std::int32_t));
-      MOCK_METHOD(int, niFake_ParametersAreMultipleTypes, (std::uint64_t, bool, std::int32_t, std::int64_t, std::uint32_t, double, double, std::int32_t, std::string));
-      MOCK_METHOD(int, niFake_PoorlyNamedSimpleFunction, (std::uint64_t));
-      MOCK_METHOD(int, niFake_Read, (std::uint64_t, double, double*));
-      MOCK_METHOD(int, niFake_ReadFromChannel, (std::uint64_t, std::string, std::int32_t, double*));
-      MOCK_METHOD(int, niFake_ReturnDurationInSeconds, (std::uint64_t, double*));
-      MOCK_METHOD(int, niFake_SetAttributeViBoolean, (std::uint64_t, std::string, NiFakeAttributes, bool));
-      MOCK_METHOD(int, niFake_SetAttributeViInt32, (std::uint64_t, std::string, NiFakeAttributes, std::int32_t));
-      MOCK_METHOD(int, niFake_SetAttributeViInt64, (std::uint64_t, std::string, NiFakeAttributes, std::int64_t));
-      MOCK_METHOD(int, niFake_SetAttributeViReal64, (std::uint64_t, std::string, NiFakeAttributes, double));
-      MOCK_METHOD(int, niFake_SetAttributeViString, (std::uint64_t, std::string, NiFakeAttributes, std::string));
-      MOCK_METHOD(int, niFake_SetCustomType, (std::uint64_t, std::uint64_t));
-      MOCK_METHOD(int, niFake_StringValuedEnumInputFunctionWithDefaults, (std::uint64_t, std::string));
-      MOCK_METHOD(int, niFake_TwoInputFunction, (std::uint64_t, double, std::string));
-      MOCK_METHOD(int, niFake_UnlockSession, (std::uint64_t, bool*));
-      MOCK_METHOD(int, niFake_Use64BitNumber, (std::uint64_t, std::int64_t, std::int64_t*));
-      MOCK_METHOD(int, niFake_close, (std::uint64_t));
-      MOCK_METHOD(int, niFake_fancy_self_test, (std::uint64_t));
-    protected:
-      void create_function_map() override;
-  };
+// Driver enum values
+enum BeautifulColorValues {
+  NIFAKE_PINK = 44,
+  NIFAKE_AQUA = 43,
+  NIFAKE_GREEN = 45,
+  NIFAKE_BLACK = 42,
+};
+enum ColorValues {
+  NIFAKE_RED = 1,
+  NIFAKE_BLUE = 2,
+  NIFAKE_YELLOW = 5,
+  NIFAKE_BLACK = 42,
+};
+enum ColorObsoleteValues {
+  NIFAKE_RED = 1,
+  NIFAKE_BLUE = 2,
+  NIFAKE_YELLOW = 5,
+  NIFAKE_BLACK = 42,
+};
+enum ColorPrivateValues {
+  NIFAKE_RED = 1,
+  NIFAKE_BLUE = 2,
+  NIFAKE_YELLOW = 5,
+  NIFAKE_BLACK = 42,
+};
+enum FloatEnumValues {
+  NIFAKE_THREE_POINT_FIVE = 1,
+  NIFAKE_FOUR_POINT_FIVE = 2,
+  NIFAKE_FIVE_POINT_FIVE = 3,
+  NIFAKE_SIX_POINT_FIVE = 4,
+  NIFAKE_SEVEN_POINT_FIVE = 5,
+};
+enum MobileOSNamesValues {
+  NIFAKE_ANDROID = 1,
+  NIFAKE_IOS = 2,
+  NIFAKE_NONE = 3,
+};
+enum TurtleValues {
+  NIFAKE_LEONARDO = 0,
+  NIFAKE_DONATELLO = 1,
+  NIFAKE_RAPHAEL = 2,
+  NIFAKE_MICHELANGELO = 3,
+};
 
-} // namespace internal
-} // namespace grpc
-} // namespace hardware
-} // namespace unit
-} // namespace tests
-} // namespace ni
+// Fake driver shared library class
+class NiFakeSharedLibrary : public FakeSharedLibrary {
+ public:
+  NiFakeSharedLibrary(const char* library_name);
+  virtual ~NiFakeSharedLibrary();
+  MOCK_METHOD(int, niFake_Abort, (std::uint64_t));
+  MOCK_METHOD(int, niFake_EnumInputFunctionWithDefaults, (std::uint64_t, std::uint32_t));
+  MOCK_METHOD(int, niFake_GetABoolean, (std::uint64_t, bool*));
+  MOCK_METHOD(int, niFake_GetANumber, (std::uint64_t, std::uint32_t*));
+  MOCK_METHOD(int, niFake_GetArraySizeForPythonCode, (std::uint64_t, std::int32_t*));
+  MOCK_METHOD(int, niFake_GetAttributeViBoolean, (std::uint64_t, std::string, NiFakeAttributes, bool*));
+  MOCK_METHOD(int, niFake_GetAttributeViInt32, (std::uint64_t, std::string, NiFakeAttributes, std::int32_t*));
+  MOCK_METHOD(int, niFake_GetAttributeViInt64, (std::uint64_t, std::string, NiFakeAttributes, std::int64_t*));
+  MOCK_METHOD(int, niFake_GetAttributeViReal64, (std::uint64_t, std::string, NiFakeAttributes, double*));
+  MOCK_METHOD(int, niFake_GetCalDateAndTime, (std::uint64_t, std::int32_t, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*));
+  MOCK_METHOD(int, niFake_GetCalInterval, (std::uint64_t, std::int32_t*));
+  MOCK_METHOD(int, niFake_GetCustomType, (std::uint64_t, std::uint64_t*));
+  MOCK_METHOD(int, niFake_GetEnumValue, (std::uint64_t, std::int32_t*, std::uint32_t*));
+  MOCK_METHOD(int, niFake_GetLastCalDateAndTime, (std::uint64_t, std::int32_t, google.protobuf.Timestamp*));
+  MOCK_METHOD(int, niFake_InitWithOptions, (std::string, bool, bool, std::string, std::uint64_t*));
+  MOCK_METHOD(int, niFake_Initiate, (std::uint64_t));
+  MOCK_METHOD(int, niFake_LockSession, (std::uint64_t, bool*));
+  MOCK_METHOD(int, niFake_OneInputFunction, (std::uint64_t, std::int32_t));
+  MOCK_METHOD(int, niFake_ParametersAreMultipleTypes, (std::uint64_t, bool, std::int32_t, std::int64_t, std::uint32_t, double, double, std::int32_t, std::string));
+  MOCK_METHOD(int, niFake_PoorlyNamedSimpleFunction, (std::uint64_t));
+  MOCK_METHOD(int, niFake_Read, (std::uint64_t, double, double*));
+  MOCK_METHOD(int, niFake_ReadFromChannel, (std::uint64_t, std::string, std::int32_t, double*));
+  MOCK_METHOD(int, niFake_ReturnDurationInSeconds, (std::uint64_t, double*));
+  MOCK_METHOD(int, niFake_SetAttributeViBoolean, (std::uint64_t, std::string, NiFakeAttributes, bool));
+  MOCK_METHOD(int, niFake_SetAttributeViInt32, (std::uint64_t, std::string, NiFakeAttributes, std::int32_t));
+  MOCK_METHOD(int, niFake_SetAttributeViInt64, (std::uint64_t, std::string, NiFakeAttributes, std::int64_t));
+  MOCK_METHOD(int, niFake_SetAttributeViReal64, (std::uint64_t, std::string, NiFakeAttributes, double));
+  MOCK_METHOD(int, niFake_SetAttributeViString, (std::uint64_t, std::string, NiFakeAttributes, std::string));
+  MOCK_METHOD(int, niFake_SetCustomType, (std::uint64_t, std::uint64_t));
+  MOCK_METHOD(int, niFake_StringValuedEnumInputFunctionWithDefaults, (std::uint64_t, std::string));
+  MOCK_METHOD(int, niFake_TwoInputFunction, (std::uint64_t, double, std::string));
+  MOCK_METHOD(int, niFake_UnlockSession, (std::uint64_t, bool*));
+  MOCK_METHOD(int, niFake_Use64BitNumber, (std::uint64_t, std::int64_t, std::int64_t*));
+  MOCK_METHOD(int, niFake_close, (std::uint64_t));
+  MOCK_METHOD(int, niFake_fancy_self_test, (std::uint64_t));
 
-#endif // FAKE_NI_FAKE_LIBRARY_HEADER
+ protected:
+  void create_function_map() override;
+};
+
+}  // namespace internal
+}  // namespace grpc
+}  // namespace hardware
+}  // namespace unit
+}  // namespace tests
+}  // namespace ni
+
+#endif  // FAKE_NI_FAKE_LIBRARY_HEADER

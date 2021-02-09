@@ -7,216 +7,175 @@
 
 #include "nifake_fake_library.h"
 
-namespace ni
-{
-namespace tests
-{
-namespace unit
-{
-namespace hardware
-{
-namespace grpc
-{
-namespace internal
-{
+namespace ni {
+namespace tests {
+namespace unit {
+namespace hardware {
+namespace grpc {
+namespace internal {
 
-  NiFakeSharedLibrary::NiFakeSharedLibrary(const char* library_name)
+NiFakeSharedLibrary::NiFakeSharedLibrary(const char* library_name)
     : FakeSharedLibrary(library_name)
-  {
-  }
+{
+}
 
-  NiFakeSharedLibrary::~NiFakeSharedLibrary()
-  {
-    unload();
-  }
+NiFakeSharedLibrary::~NiFakeSharedLibrary()
+{
+  unload();
+}
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpmf-conversions"
 
-  void NiFakeSharedLibrary::create_function_map()
-  {
-      // Register function mock of niFake_Abort to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Abort_fp)(std::uint64_t);
-      Abort_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Abort;
-      register_function("niFake_Abort", reinterpret_cast<void*>(Abort_fp));
-
-      // Register function mock of niFake_EnumInputFunctionWithDefaults to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*EnumInputFunctionWithDefaults_fp)(std::uint64_t, std::uint32_t);
-      EnumInputFunctionWithDefaults_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_EnumInputFunctionWithDefaults;
-      register_function("niFake_EnumInputFunctionWithDefaults", reinterpret_cast<void*>(EnumInputFunctionWithDefaults_fp));
-
-      // Register function mock of niFake_GetABoolean to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetABoolean_fp)(std::uint64_t, bool*);
-      GetABoolean_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetABoolean;
-      register_function("niFake_GetABoolean", reinterpret_cast<void*>(GetABoolean_fp));
-
-      // Register function mock of niFake_GetANumber to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetANumber_fp)(std::uint64_t, std::uint32_t*);
-      GetANumber_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetANumber;
-      register_function("niFake_GetANumber", reinterpret_cast<void*>(GetANumber_fp));
-
-      // Register function mock of niFake_GetArraySizeForPythonCode to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetArraySizeForPythonCode_fp)(std::uint64_t, std::int32_t*);
-      GetArraySizeForPythonCode_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetArraySizeForPythonCode;
-      register_function("niFake_GetArraySizeForPythonCode", reinterpret_cast<void*>(GetArraySizeForPythonCode_fp));
-
-      // Register function mock of niFake_GetAttributeViBoolean to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViBoolean_fp)(std::uint64_t, std::string, NiFakeAttributes, bool*);
-      GetAttributeViBoolean_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViBoolean;
-      register_function("niFake_GetAttributeViBoolean", reinterpret_cast<void*>(GetAttributeViBoolean_fp));
-
-      // Register function mock of niFake_GetAttributeViInt32 to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViInt32_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int32_t*);
-      GetAttributeViInt32_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViInt32;
-      register_function("niFake_GetAttributeViInt32", reinterpret_cast<void*>(GetAttributeViInt32_fp));
-
-      // Register function mock of niFake_GetAttributeViInt64 to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViInt64_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int64_t*);
-      GetAttributeViInt64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViInt64;
-      register_function("niFake_GetAttributeViInt64", reinterpret_cast<void*>(GetAttributeViInt64_fp));
-
-      // Register function mock of niFake_GetAttributeViReal64 to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViReal64_fp)(std::uint64_t, std::string, NiFakeAttributes, double*);
-      GetAttributeViReal64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViReal64;
-      register_function("niFake_GetAttributeViReal64", reinterpret_cast<void*>(GetAttributeViReal64_fp));
-
-      // Register function mock of niFake_GetCalDateAndTime to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetCalDateAndTime_fp)(std::uint64_t, std::int32_t, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*);
-      GetCalDateAndTime_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetCalDateAndTime;
-      register_function("niFake_GetCalDateAndTime", reinterpret_cast<void*>(GetCalDateAndTime_fp));
-
-      // Register function mock of niFake_GetCalInterval to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetCalInterval_fp)(std::uint64_t, std::int32_t*);
-      GetCalInterval_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetCalInterval;
-      register_function("niFake_GetCalInterval", reinterpret_cast<void*>(GetCalInterval_fp));
-
-      // Register function mock of niFake_GetCustomType to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetCustomType_fp)(std::uint64_t, std::uint64_t*);
-      GetCustomType_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetCustomType;
-      register_function("niFake_GetCustomType", reinterpret_cast<void*>(GetCustomType_fp));
-
-      // Register function mock of niFake_GetEnumValue to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetEnumValue_fp)(std::uint64_t, std::int32_t*, std::uint32_t*);
-      GetEnumValue_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetEnumValue;
-      register_function("niFake_GetEnumValue", reinterpret_cast<void*>(GetEnumValue_fp));
-
-      // Register function mock of niFake_GetLastCalDateAndTime to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetLastCalDateAndTime_fp)(std::uint64_t, std::int32_t, google.protobuf.Timestamp*);
-      GetLastCalDateAndTime_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetLastCalDateAndTime;
-      register_function("niFake_GetLastCalDateAndTime", reinterpret_cast<void*>(GetLastCalDateAndTime_fp));
-
-      // Register function mock of niFake_InitWithOptions to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*InitWithOptions_fp)(std::string, bool, bool, std::string, std::uint64_t*);
-      InitWithOptions_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_InitWithOptions;
-      register_function("niFake_InitWithOptions", reinterpret_cast<void*>(InitWithOptions_fp));
-
-      // Register function mock of niFake_Initiate to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Initiate_fp)(std::uint64_t);
-      Initiate_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Initiate;
-      register_function("niFake_Initiate", reinterpret_cast<void*>(Initiate_fp));
-
-      // Register function mock of niFake_LockSession to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*LockSession_fp)(std::uint64_t, bool*);
-      LockSession_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_LockSession;
-      register_function("niFake_LockSession", reinterpret_cast<void*>(LockSession_fp));
-
-      // Register function mock of niFake_OneInputFunction to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*OneInputFunction_fp)(std::uint64_t, std::int32_t);
-      OneInputFunction_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_OneInputFunction;
-      register_function("niFake_OneInputFunction", reinterpret_cast<void*>(OneInputFunction_fp));
-
-      // Register function mock of niFake_ParametersAreMultipleTypes to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*ParametersAreMultipleTypes_fp)(std::uint64_t, bool, std::int32_t, std::int64_t, std::uint32_t, double, double, std::int32_t, std::string);
-      ParametersAreMultipleTypes_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_ParametersAreMultipleTypes;
-      register_function("niFake_ParametersAreMultipleTypes", reinterpret_cast<void*>(ParametersAreMultipleTypes_fp));
-
-      // Register function mock of niFake_PoorlyNamedSimpleFunction to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*PoorlyNamedSimpleFunction_fp)(std::uint64_t);
-      PoorlyNamedSimpleFunction_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_PoorlyNamedSimpleFunction;
-      register_function("niFake_PoorlyNamedSimpleFunction", reinterpret_cast<void*>(PoorlyNamedSimpleFunction_fp));
-
-      // Register function mock of niFake_Read to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Read_fp)(std::uint64_t, double, double*);
-      Read_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Read;
-      register_function("niFake_Read", reinterpret_cast<void*>(Read_fp));
-
-      // Register function mock of niFake_ReadFromChannel to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*ReadFromChannel_fp)(std::uint64_t, std::string, std::int32_t, double*);
-      ReadFromChannel_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_ReadFromChannel;
-      register_function("niFake_ReadFromChannel", reinterpret_cast<void*>(ReadFromChannel_fp));
-
-      // Register function mock of niFake_ReturnDurationInSeconds to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*ReturnDurationInSeconds_fp)(std::uint64_t, double*);
-      ReturnDurationInSeconds_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_ReturnDurationInSeconds;
-      register_function("niFake_ReturnDurationInSeconds", reinterpret_cast<void*>(ReturnDurationInSeconds_fp));
-
-      // Register function mock of niFake_SetAttributeViBoolean to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViBoolean_fp)(std::uint64_t, std::string, NiFakeAttributes, bool);
-      SetAttributeViBoolean_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViBoolean;
-      register_function("niFake_SetAttributeViBoolean", reinterpret_cast<void*>(SetAttributeViBoolean_fp));
-
-      // Register function mock of niFake_SetAttributeViInt32 to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViInt32_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int32_t);
-      SetAttributeViInt32_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViInt32;
-      register_function("niFake_SetAttributeViInt32", reinterpret_cast<void*>(SetAttributeViInt32_fp));
-
-      // Register function mock of niFake_SetAttributeViInt64 to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViInt64_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int64_t);
-      SetAttributeViInt64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViInt64;
-      register_function("niFake_SetAttributeViInt64", reinterpret_cast<void*>(SetAttributeViInt64_fp));
-
-      // Register function mock of niFake_SetAttributeViReal64 to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViReal64_fp)(std::uint64_t, std::string, NiFakeAttributes, double);
-      SetAttributeViReal64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViReal64;
-      register_function("niFake_SetAttributeViReal64", reinterpret_cast<void*>(SetAttributeViReal64_fp));
-
-      // Register function mock of niFake_SetAttributeViString to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViString_fp)(std::uint64_t, std::string, NiFakeAttributes, std::string);
-      SetAttributeViString_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViString;
-      register_function("niFake_SetAttributeViString", reinterpret_cast<void*>(SetAttributeViString_fp));
-
-      // Register function mock of niFake_SetCustomType to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetCustomType_fp)(std::uint64_t, std::uint64_t);
-      SetCustomType_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetCustomType;
-      register_function("niFake_SetCustomType", reinterpret_cast<void*>(SetCustomType_fp));
-
-      // Register function mock of niFake_StringValuedEnumInputFunctionWithDefaults to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*StringValuedEnumInputFunctionWithDefaults_fp)(std::uint64_t, std::string);
-      StringValuedEnumInputFunctionWithDefaults_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_StringValuedEnumInputFunctionWithDefaults;
-      register_function("niFake_StringValuedEnumInputFunctionWithDefaults", reinterpret_cast<void*>(StringValuedEnumInputFunctionWithDefaults_fp));
-
-      // Register function mock of niFake_TwoInputFunction to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*TwoInputFunction_fp)(std::uint64_t, double, std::string);
-      TwoInputFunction_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_TwoInputFunction;
-      register_function("niFake_TwoInputFunction", reinterpret_cast<void*>(TwoInputFunction_fp));
-
-      // Register function mock of niFake_UnlockSession to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*UnlockSession_fp)(std::uint64_t, bool*);
-      UnlockSession_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_UnlockSession;
-      register_function("niFake_UnlockSession", reinterpret_cast<void*>(UnlockSession_fp));
-
-      // Register function mock of niFake_Use64BitNumber to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Use64BitNumber_fp)(std::uint64_t, std::int64_t, std::int64_t*);
-      Use64BitNumber_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Use64BitNumber;
-      register_function("niFake_Use64BitNumber", reinterpret_cast<void*>(Use64BitNumber_fp));
-
-      // Register function mock of niFake_close to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*close_fp)(std::uint64_t);
-      close_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_close;
-      register_function("niFake_close", reinterpret_cast<void*>(close_fp));
-
-      // Register function mock of niFake_fancy_self_test to map.
-      int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*fancy_self_test_fp)(std::uint64_t);
-      fancy_self_test_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_fancy_self_test;
-      register_function("niFake_fancy_self_test", reinterpret_cast<void*>(fancy_self_test_fp));
-
-  }
+void NiFakeSharedLibrary::create_function_map()
+{
+  // Register function mock of niFake_Abort to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Abort_fp)(std::uint64_t);
+  Abort_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Abort;
+  register_function("niFake_Abort", reinterpret_cast<void*>(Abort_fp));
+  // Register function mock of niFake_EnumInputFunctionWithDefaults to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*EnumInputFunctionWithDefaults_fp)(std::uint64_t, std::uint32_t);
+  EnumInputFunctionWithDefaults_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_EnumInputFunctionWithDefaults;
+  register_function("niFake_EnumInputFunctionWithDefaults", reinterpret_cast<void*>(EnumInputFunctionWithDefaults_fp));
+  // Register function mock of niFake_GetABoolean to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetABoolean_fp)(std::uint64_t, bool*);
+  GetABoolean_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetABoolean;
+  register_function("niFake_GetABoolean", reinterpret_cast<void*>(GetABoolean_fp));
+  // Register function mock of niFake_GetANumber to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetANumber_fp)(std::uint64_t, std::uint32_t*);
+  GetANumber_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetANumber;
+  register_function("niFake_GetANumber", reinterpret_cast<void*>(GetANumber_fp));
+  // Register function mock of niFake_GetArraySizeForPythonCode to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetArraySizeForPythonCode_fp)(std::uint64_t, std::int32_t*);
+  GetArraySizeForPythonCode_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetArraySizeForPythonCode;
+  register_function("niFake_GetArraySizeForPythonCode", reinterpret_cast<void*>(GetArraySizeForPythonCode_fp));
+  // Register function mock of niFake_GetAttributeViBoolean to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViBoolean_fp)(std::uint64_t, std::string, NiFakeAttributes, bool*);
+  GetAttributeViBoolean_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViBoolean;
+  register_function("niFake_GetAttributeViBoolean", reinterpret_cast<void*>(GetAttributeViBoolean_fp));
+  // Register function mock of niFake_GetAttributeViInt32 to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViInt32_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int32_t*);
+  GetAttributeViInt32_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViInt32;
+  register_function("niFake_GetAttributeViInt32", reinterpret_cast<void*>(GetAttributeViInt32_fp));
+  // Register function mock of niFake_GetAttributeViInt64 to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViInt64_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int64_t*);
+  GetAttributeViInt64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViInt64;
+  register_function("niFake_GetAttributeViInt64", reinterpret_cast<void*>(GetAttributeViInt64_fp));
+  // Register function mock of niFake_GetAttributeViReal64 to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetAttributeViReal64_fp)(std::uint64_t, std::string, NiFakeAttributes, double*);
+  GetAttributeViReal64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetAttributeViReal64;
+  register_function("niFake_GetAttributeViReal64", reinterpret_cast<void*>(GetAttributeViReal64_fp));
+  // Register function mock of niFake_GetCalDateAndTime to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetCalDateAndTime_fp)(std::uint64_t, std::int32_t, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*);
+  GetCalDateAndTime_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetCalDateAndTime;
+  register_function("niFake_GetCalDateAndTime", reinterpret_cast<void*>(GetCalDateAndTime_fp));
+  // Register function mock of niFake_GetCalInterval to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetCalInterval_fp)(std::uint64_t, std::int32_t*);
+  GetCalInterval_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetCalInterval;
+  register_function("niFake_GetCalInterval", reinterpret_cast<void*>(GetCalInterval_fp));
+  // Register function mock of niFake_GetCustomType to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetCustomType_fp)(std::uint64_t, std::uint64_t*);
+  GetCustomType_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetCustomType;
+  register_function("niFake_GetCustomType", reinterpret_cast<void*>(GetCustomType_fp));
+  // Register function mock of niFake_GetEnumValue to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetEnumValue_fp)(std::uint64_t, std::int32_t*, std::uint32_t*);
+  GetEnumValue_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetEnumValue;
+  register_function("niFake_GetEnumValue", reinterpret_cast<void*>(GetEnumValue_fp));
+  // Register function mock of niFake_GetLastCalDateAndTime to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*GetLastCalDateAndTime_fp)(std::uint64_t, std::int32_t, google.protobuf.Timestamp*);
+  GetLastCalDateAndTime_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_GetLastCalDateAndTime;
+  register_function("niFake_GetLastCalDateAndTime", reinterpret_cast<void*>(GetLastCalDateAndTime_fp));
+  // Register function mock of niFake_InitWithOptions to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*InitWithOptions_fp)(std::string, bool, bool, std::string, std::uint64_t*);
+  InitWithOptions_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_InitWithOptions;
+  register_function("niFake_InitWithOptions", reinterpret_cast<void*>(InitWithOptions_fp));
+  // Register function mock of niFake_Initiate to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Initiate_fp)(std::uint64_t);
+  Initiate_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Initiate;
+  register_function("niFake_Initiate", reinterpret_cast<void*>(Initiate_fp));
+  // Register function mock of niFake_LockSession to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*LockSession_fp)(std::uint64_t, bool*);
+  LockSession_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_LockSession;
+  register_function("niFake_LockSession", reinterpret_cast<void*>(LockSession_fp));
+  // Register function mock of niFake_OneInputFunction to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*OneInputFunction_fp)(std::uint64_t, std::int32_t);
+  OneInputFunction_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_OneInputFunction;
+  register_function("niFake_OneInputFunction", reinterpret_cast<void*>(OneInputFunction_fp));
+  // Register function mock of niFake_ParametersAreMultipleTypes to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*ParametersAreMultipleTypes_fp)(std::uint64_t, bool, std::int32_t, std::int64_t, std::uint32_t, double, double, std::int32_t, std::string);
+  ParametersAreMultipleTypes_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_ParametersAreMultipleTypes;
+  register_function("niFake_ParametersAreMultipleTypes", reinterpret_cast<void*>(ParametersAreMultipleTypes_fp));
+  // Register function mock of niFake_PoorlyNamedSimpleFunction to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*PoorlyNamedSimpleFunction_fp)(std::uint64_t);
+  PoorlyNamedSimpleFunction_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_PoorlyNamedSimpleFunction;
+  register_function("niFake_PoorlyNamedSimpleFunction", reinterpret_cast<void*>(PoorlyNamedSimpleFunction_fp));
+  // Register function mock of niFake_Read to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Read_fp)(std::uint64_t, double, double*);
+  Read_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Read;
+  register_function("niFake_Read", reinterpret_cast<void*>(Read_fp));
+  // Register function mock of niFake_ReadFromChannel to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*ReadFromChannel_fp)(std::uint64_t, std::string, std::int32_t, double*);
+  ReadFromChannel_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_ReadFromChannel;
+  register_function("niFake_ReadFromChannel", reinterpret_cast<void*>(ReadFromChannel_fp));
+  // Register function mock of niFake_ReturnDurationInSeconds to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*ReturnDurationInSeconds_fp)(std::uint64_t, double*);
+  ReturnDurationInSeconds_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_ReturnDurationInSeconds;
+  register_function("niFake_ReturnDurationInSeconds", reinterpret_cast<void*>(ReturnDurationInSeconds_fp));
+  // Register function mock of niFake_SetAttributeViBoolean to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViBoolean_fp)(std::uint64_t, std::string, NiFakeAttributes, bool);
+  SetAttributeViBoolean_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViBoolean;
+  register_function("niFake_SetAttributeViBoolean", reinterpret_cast<void*>(SetAttributeViBoolean_fp));
+  // Register function mock of niFake_SetAttributeViInt32 to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViInt32_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int32_t);
+  SetAttributeViInt32_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViInt32;
+  register_function("niFake_SetAttributeViInt32", reinterpret_cast<void*>(SetAttributeViInt32_fp));
+  // Register function mock of niFake_SetAttributeViInt64 to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViInt64_fp)(std::uint64_t, std::string, NiFakeAttributes, std::int64_t);
+  SetAttributeViInt64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViInt64;
+  register_function("niFake_SetAttributeViInt64", reinterpret_cast<void*>(SetAttributeViInt64_fp));
+  // Register function mock of niFake_SetAttributeViReal64 to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViReal64_fp)(std::uint64_t, std::string, NiFakeAttributes, double);
+  SetAttributeViReal64_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViReal64;
+  register_function("niFake_SetAttributeViReal64", reinterpret_cast<void*>(SetAttributeViReal64_fp));
+  // Register function mock of niFake_SetAttributeViString to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetAttributeViString_fp)(std::uint64_t, std::string, NiFakeAttributes, std::string);
+  SetAttributeViString_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetAttributeViString;
+  register_function("niFake_SetAttributeViString", reinterpret_cast<void*>(SetAttributeViString_fp));
+  // Register function mock of niFake_SetCustomType to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*SetCustomType_fp)(std::uint64_t, std::uint64_t);
+  SetCustomType_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_SetCustomType;
+  register_function("niFake_SetCustomType", reinterpret_cast<void*>(SetCustomType_fp));
+  // Register function mock of niFake_StringValuedEnumInputFunctionWithDefaults to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*StringValuedEnumInputFunctionWithDefaults_fp)(std::uint64_t, std::string);
+  StringValuedEnumInputFunctionWithDefaults_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_StringValuedEnumInputFunctionWithDefaults;
+  register_function("niFake_StringValuedEnumInputFunctionWithDefaults", reinterpret_cast<void*>(StringValuedEnumInputFunctionWithDefaults_fp));
+  // Register function mock of niFake_TwoInputFunction to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*TwoInputFunction_fp)(std::uint64_t, double, std::string);
+  TwoInputFunction_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_TwoInputFunction;
+  register_function("niFake_TwoInputFunction", reinterpret_cast<void*>(TwoInputFunction_fp));
+  // Register function mock of niFake_UnlockSession to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*UnlockSession_fp)(std::uint64_t, bool*);
+  UnlockSession_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_UnlockSession;
+  register_function("niFake_UnlockSession", reinterpret_cast<void*>(UnlockSession_fp));
+  // Register function mock of niFake_Use64BitNumber to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*Use64BitNumber_fp)(std::uint64_t, std::int64_t, std::int64_t*);
+  Use64BitNumber_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_Use64BitNumber;
+  register_function("niFake_Use64BitNumber", reinterpret_cast<void*>(Use64BitNumber_fp));
+  // Register function mock of niFake_close to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*close_fp)(std::uint64_t);
+  close_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_close;
+  register_function("niFake_close", reinterpret_cast<void*>(close_fp));
+  // Register function mock of niFake_fancy_self_test to map.
+  int (ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::*fancy_self_test_fp)(std::uint64_t);
+  fancy_self_test_fp = &ni::tests::unit::hardware::grpc::internal::NiFakeSharedLibrary::niFake_fancy_self_test;
+  register_function("niFake_fancy_self_test", reinterpret_cast<void*>(fancy_self_test_fp));
+}
 
 #pragma GCC diagnostic pop
 
-} // namespace internal
-} // namespace grpc
-} // namespace hardware
-} // namespace unit
-} // namespace tests
-} // namespace ni
+}  // namespace internal
+}  // namespace grpc
+}  // namespace hardware
+}  // namespace unit
+}  // namespace tests
+}  // namespace ni
