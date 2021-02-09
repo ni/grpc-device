@@ -14,23 +14,26 @@
 #   > py -m grpc_tools.protoc -I../../ --python_out=. --grpc_python_out=. niDevice.proto
 #   > py -m grpc_tools.protoc -I../../ --python_out=. --grpc_python_out=. niSwitch.proto 
 #
-# Update the server address and resource name and options in this file
 # Run the code to initialize a session with Switch
+#
+# Refer to the NI Switches Help to determine if your switch supports scanning, the scan list syntax, 
+# and the valid channel names and valid resource names for your switch module.
 
 import grpc
+import time
 import niSwitch_pb2 as switchTypes
 import niSwitch_pb2_grpc as gRPCSwitch
 
 # This is the location (ipaddress or machine name):(port) of the niDevice server
 serverAddress = "localhost:50051"
 
-# Resource name and options for a simulated 2571 switch. Change them according to the switch model.
-resource = "switch1"
+# Resource name and options for a simulated 2529 switch. Change them according to the switch model.
+resource = "Switch1"
 channelName = "0"
-options = "Simulate=1, DriverSetup=Model:2571; BoardType:PXI"
+options = "Simulate=1, DriverSetup=Model:2529; BoardType:PXI"
 
 # Or you can use real hardware
-# resource = "2571"
+# resource = "2529"
 # channelName="0"
 # options = ""
 
@@ -38,65 +41,72 @@ options = "Simulate=1, DriverSetup=Model:2571; BoardType:PXI"
 # and create a connection to the niSwitch service
 channel = grpc.insecure_channel(serverAddress)
 switch = gRPCSwitch.niSwitchServiceStub(channel)
+numberOfTriggers = 5
+anyError = False
+
+# Display errors if any
+def CheckForError (vi, status) :
+    global anyError
+    if(status != 0 and not anyError):
+        anyError = True
+        ErrorMessage (vi, status)
+
+def ErrorMessage (vi, errorCode):
+    errorMessageResult = switch.ErrorMessage(switchTypes.ErrorMessageParameters(
+    vi=vi,
+    errorCode = errorCode
+    ))
+    print(errorMessageResult)
 
 # Open session to switch module and set topology
 initWithTopologyResult = switch.InitWithTopology(switchTypes.InitWithTopologyParameters(
-    resourceName=resource, 
-    topology=NISWITCH_TOPOLOGY_CONFIGURED_TOPOLOGY,
+    resourceName=resource,
+    topology = switchTypes.SwitchTopology(),
     simulate=True,
     resetDevice=False
     ))
-vi = initWithTopologyResult.vi
-print("Initialize With Topology Status: " + str(initWithTopologyResult.status))
+vi = initWithTopologyResult.newVi
+CheckForError(vi,initWithTopologyResult.status)
 
-# Specify scan list
-configureScanListResult = switch.ConfigureScanList(switchTypes.ConfigureScanListParameters(
+# Specify scan list. Use values that are valid for the switch model being used.
+CheckForError(vi, (switch.ConfigureScanList(switchTypes.ConfigureScanListParameters(
     vi=vi,
-    scanList = "ch0:4->com0;",
+    scanList = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3;",
     scanMode = 0
-    ))
-print("configure scan list Status: " + str(configureScanListResult.status))
+    ))).status)
 
-# Select software trigger
-configureScanTriggerResult = switch.ConfigureScanTrigger(switchTypes.ConfigureScanTriggerParameters(
-    vi=vi
-    ))
-print("Configure Scan Trigger Status: " + str(configureScanTriggerResult.status))
-
+# Configures the trigger to be software trigger.
+CheckForError(vi, (switch.ConfigureScanTrigger(switchTypes.ConfigureScanTriggerParameters(
+    vi=vi,
+    triggerInput = 3
+    ))).status)
 
 # Loop through scan list continuously
-setContinuousScanResult = switch.SetContinuousScan(switchTypes.SetContinuousScanParameters(
-    vi=vi
-    ))
-print("Set Continuous Scan Status: " + str(setContinuousScanResult.status))
+CheckForError(vi, (switch.SetContinuousScan(switchTypes.SetContinuousScanParameters(
+    vi=vi,
+    continuousScan = True
+    ))).status)
 
 #Initiate scanning
-initiateScanResult = switch.InitiateScanEnabled(switchTypes.InitiateScanParameters(
+CheckForError(vi, (switch.InitiateScan(switchTypes.InitiateScanParameters(
     vi=vi
-    ))
-print("InitiateScan Status: " + str(initiateScanResult.status))
-
+    ))).status)
 
 #Send software trigger to switch module in a loop
-while (count) :
-    sendSoftwareTriggerResult = switch.SendSoftwareTrigger(switchTypes.SendSoftwareTriggerParameters(
+while (numberOfTriggers) :
+    #Wait for 500 ms
+    time.sleep(0.5)
+    CheckForError(vi, (switch.SendSoftwareTrigger(switchTypes.SendSoftwareTriggerParameters(
     vi=vi
-    ))
-    print("Send Software Trigger Status: " + str(sendSoftwareTriggerResult.status))
-    if (sendSoftwareTriggerResult.status == 0) :
-        break
-    count = count - 1    
+    ))).status)
+    numberOfTriggers = numberOfTriggers - 1    
 
-#Set time out
-time.sleep(10)
-
-#Abort Generation
-abortScanResult = switch.AbortScan(switchTypes.AbortGenerationParameters(
+#Abort Scanning
+CheckForError(vi, (switch.AbortScan(switchTypes.AbortScanParameters(
     vi=vi
-    ))
-print("Abort Scan Status: " + str(abortScanResult.status))
+    ))).status)
 
 # Close session to switch module.
-switch.Close(switchTypes.CloseParameters(
-    vi = vi
-    ))
+CheckForError(vi, (switch.Close(switchTypes.CloseParameters(
+        vi = vi
+        ))).status)
