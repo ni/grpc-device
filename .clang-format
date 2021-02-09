@@ -1,0 +1,11 @@
+---
+BasedOnStyle: Google
+---
+Language: Cpp
+ColumnLimit: 0
+AlignAfterOpenBracket: AlwaysBreak
+BreakBeforeBraces: Stroustrup
+DerivePointerAlignment: false
+IndentPPDirectives: BeforeHash
+PointerAlignment: Left
+---
