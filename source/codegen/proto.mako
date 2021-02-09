@@ -74,8 +74,7 @@ message ${common_helpers.snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%  
   index  = index + 1
-  is_array = common_helpers.is_array(parameter["type"])
-  parameter_type = proto_helpers.determine_function_parameter_type(is_array, parameter, driver_name_pascal)
+  parameter_type = proto_helpers.determine_function_parameter_type(parameter, driver_name_pascal)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};  
 % endfor
@@ -89,8 +88,7 @@ message ${common_helpers.snake_to_camel(function)}Response {
 % for parameter in output_parameters:
 <%  
   index = index + 1
-  is_array = common_helpers.is_array(parameter["type"])
-  parameter_type = proto_helpers.determine_function_parameter_type(is_array, parameter, driver_name_pascal)
+  parameter_type = proto_helpers.determine_function_parameter_type(parameter, driver_name_pascal)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}; 
 %endfor  
