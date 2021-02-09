@@ -28,7 +28,7 @@ namespace internal
   {
     public:
       NiFakeSharedLibrary(const char* library_name);
-      virtual ~NiFakeSharedLibrary;
+      virtual ~NiFakeSharedLibrary();
       MOCK_METHOD(int, niFake_Abort, (std::uint64_t));
       MOCK_METHOD(int, niFake_EnumInputFunctionWithDefaults, (std::uint64_t, std::uint32_t));
       MOCK_METHOD(int, niFake_GetABoolean, (std::uint64_t, bool*));

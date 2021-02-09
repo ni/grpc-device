@@ -39,7 +39,7 @@ namespace internal
   {
     public:
       ${driver_name_pascal}SharedLibrary(const char* library_name);
-      virtual ~${driver_name_pascal}SharedLibrary;
+      virtual ~${driver_name_pascal}SharedLibrary();
 % for method_name in functions:
 <%
   f = functions[method_name]
