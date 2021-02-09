@@ -35,7 +35,7 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Install mako
-      if: startsWith(matrix.os, 'windows')
+      if: startsWith(matrix.config.os, 'windows')
       run: python -m pip install mako 
 
     - name: Update Submodules
