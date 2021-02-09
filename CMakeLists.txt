@@ -66,11 +66,15 @@ foreach(driver ${ni_drivers})
     "${metadata_dir}/${driver}/enums.py"
     "${metadata_dir}/${driver}/enums_addon.py"
     "${metadata_dir}/${driver}/functions.py"
-    "${metadata_dir}/${driver}/functions_addon."
+    "${metadata_dir}/${driver}/functions_addon.py"
     "${metadata_dir}/${driver}/__init__.py"
     "${codegen_dir}/proto.mako"
     "${codegen_dir}/service.cpp.mako"
-    "${codegen_dir}/service.h.mako")
+    "${codegen_dir}/service.h.mako"
+    "${codegen_dir}/common_helpers.py"
+    "${codegen_dir}/generate_service.py"
+    "${codegen_dir}/handler_helpers.py"
+    "${codegen_dir}/proto_helpers.py")
   string(TOLOWER ${driver} driver_lower)
   set(output_files
     ${generated_dir}/${driver_lower}/${driver_lower}.proto
@@ -84,7 +88,7 @@ foreach(driver ${ni_drivers})
     ${gen_command}
     WORKING_DIRECTORY ${codegen_dir}/
     COMMENT "Generating proto file and service for ${driver}"
-    DEPENDS ${metadata_files})
+    DEPENDS ${codegen_dependencies})
 endforeach()
 
 #----------------------------------------------------------------------

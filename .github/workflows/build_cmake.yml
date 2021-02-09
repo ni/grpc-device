@@ -33,6 +33,10 @@ jobs:
 
     - name: Checkout Repo
       uses: actions/checkout@v2
+      
+    - name: Install mako
+      if: startsWith(matrix.os, "windows")
+      run: python -m pip install mako 
 
     - name: Update Submodules
       run: git submodule update --init --recursive
