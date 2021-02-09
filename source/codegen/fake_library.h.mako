@@ -3,6 +3,7 @@ import common_helpers
 import handler_helpers
 driver_name_pascal = common_helpers.driver_name_to_pascal(data["config"]["driver_name"])
 driver_name_caps_underscore = common_helpers.driver_name_add_underscore(data["config"]["driver_name"])
+module_name = data["config"]["module_name"]
 
 driver_name_camel = common_helpers.pascal_to_camel(driver_name_pascal)
 c_function_prefix = data["config"]["c_function_prefix"]
@@ -35,6 +36,41 @@ namespace grpc
 namespace internal
 {
 
+  // Driver attribute values
+  enum ${driver_name_pascal}Attributes
+  {
+% for attribute in data["attributes"]:
+<%
+    attribute_name = data["attributes"][attribute]["name"]
+%>\
+    ${c_function_prefix.upper()}${attribute_name} = ${attribute},
+% endfor
+  };
+
+  // Driver enum values
+% for enum_list in data["enums"]:
+  enum ${enum_list}Values
+  {
+<%
+nonint_index = 1
+enums = data["enums"][enum_list]
+%>\
+% for values in enums :
+% for value in enums[values] :
+<%
+if isinstance(value["value"], int) is False:
+  value["value"] = nonint_index
+  nonint_index = nonint_index+1
+
+enum_name = value["name"].replace((module_name.upper()) + '_VAL_', (c_function_prefix.upper()))
+%>\
+    ${enum_name} = ${value["value"]},
+% endfor
+% endfor
+  };
+% endfor
+
+  // Fake driver shared library class
   class ${driver_name_pascal}SharedLibrary : public FakeSharedLibrary
   {
     public:
@@ -63,4 +99,4 @@ namespace internal
 } // namespace tests
 } // namespace ni
 
-#ENDIF // FAKE_${driver_name_caps_underscore}_LIBRARY_HEADER
+#endif // FAKE_${driver_name_caps_underscore}_LIBRARY_HEADER

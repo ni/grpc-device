@@ -57,9 +57,9 @@ namespace internal
 %>\
 % if not common_helpers.has_array_parameter(f) :
       // Register function mock of ${c_function_prefix}${method_name} to map.
-      int (ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::*fp)(${handler_helpers.create_params(parameters, driver_name_pascal)});
-      fp = &ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::${c_function_prefix}${method_name};
-      register_function("${c_function_prefix}${method_name}", reinterpret_cast<void*>(fp));
+      int (ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::*${method_name}_fp)(${handler_helpers.create_params(parameters, driver_name_pascal)});
+      ${method_name}_fp = &ni::tests::unit::hardware::grpc::internal::${driver_name_pascal}SharedLibrary::${c_function_prefix}${method_name};
+      register_function("${c_function_prefix}${method_name}", reinterpret_cast<void*>(${method_name}_fp));
 
 % endif
 % endfor

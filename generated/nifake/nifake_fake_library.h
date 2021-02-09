@@ -24,6 +24,74 @@ namespace grpc
 namespace internal
 {
 
+  // Driver attribute values
+  enum NiFakeAttributes
+  {
+    NIFAKE_READ_WRITE_BOOL = 1000000,
+    NIFAKE_READ_WRITE_DOUBLE = 1000001,
+    NIFAKE_READ_WRITE_STRING = 1000002,
+    NIFAKE_READ_WRITE_COLOR = 1000003,
+    NIFAKE_READ_WRITE_INTEGER = 1000004,
+    NIFAKE_FLOAT_ENUM = 1000005,
+    NIFAKE_READ_WRITE_INT64 = 1000006,
+    NIFAKE_READ_WRITE_DOUBLE_WITH_CONVERTER = 1000007,
+    NIFAKE_READ_WRITE_INTEGER_WITH_CONVERTER = 1000008,
+    NIFAKE_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009,
+    NIFAKE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010,
+  };
+
+  // Driver enum values
+  enum BeautifulColorValues
+  {
+    NIFAKE_PINK = 44,
+    NIFAKE_AQUA = 43,
+    NIFAKE_GREEN = 45,
+    NIFAKE_BLACK = 42,
+  };
+  enum ColorValues
+  {
+    NIFAKE_RED = 1,
+    NIFAKE_BLUE = 2,
+    NIFAKE_YELLOW = 5,
+    NIFAKE_BLACK = 42,
+  };
+  enum ColorObsoleteValues
+  {
+    NIFAKE_RED = 1,
+    NIFAKE_BLUE = 2,
+    NIFAKE_YELLOW = 5,
+    NIFAKE_BLACK = 42,
+  };
+  enum ColorPrivateValues
+  {
+    NIFAKE_RED = 1,
+    NIFAKE_BLUE = 2,
+    NIFAKE_YELLOW = 5,
+    NIFAKE_BLACK = 42,
+  };
+  enum FloatEnumValues
+  {
+    NIFAKE_THREE_POINT_FIVE = 1,
+    NIFAKE_FOUR_POINT_FIVE = 2,
+    NIFAKE_FIVE_POINT_FIVE = 3,
+    NIFAKE_SIX_POINT_FIVE = 4,
+    NIFAKE_SEVEN_POINT_FIVE = 5,
+  };
+  enum MobileOSNamesValues
+  {
+    NIFAKE_ANDROID = 1,
+    NIFAKE_IOS = 2,
+    NIFAKE_NONE = 3,
+  };
+  enum TurtleValues
+  {
+    NIFAKE_LEONARDO = 0,
+    NIFAKE_DONATELLO = 1,
+    NIFAKE_RAPHAEL = 2,
+    NIFAKE_MICHELANGELO = 3,
+  };
+
+  // Fake driver shared library class
   class NiFakeSharedLibrary : public FakeSharedLibrary
   {
     public:
@@ -75,4 +143,4 @@ namespace internal
 } // namespace tests
 } // namespace ni
 
-#ENDIF // FAKE_NI_FAKE_LIBRARY_HEADER
+#endif // FAKE_NI_FAKE_LIBRARY_HEADER
