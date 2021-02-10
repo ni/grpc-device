@@ -351,14 +351,12 @@ namespace grpc
 
     std::uint64_t vi = request->vi());
     std::int32_t a_quantity;
-    Turtle a_turtle;
     std::uint32_t a_turtle_ctype;
     auto status = get_enum_value_function(vi, &a_quantity, &a_turtle_ctype);
     response->set_status(status);
     if (status == 0) {
       response->set_a_quantity(a_quantity);
-      a_turtle = a_turtle_ctype;
-      response->set_a_turtle(a_turtle);
+      response->set_a_turtle(static_cast<Turtle>(a_turtle_ctype));
     }
     return grpc::Status::OK;
   }

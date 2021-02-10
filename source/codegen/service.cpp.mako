@@ -112,6 +112,7 @@ namespace ${namespace}
   parameter_type = handler_helpers.get_c_type(parameter, driver_name_pascal)
 %>\
 %if common_helpers.is_enum(parameter) == True:
+    ## TODO: Handle non integer enums
     auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
 % else:
     ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
@@ -124,7 +125,6 @@ namespace ${namespace}
   parameter_type = handler_helpers.get_c_type(parameter, driver_name_pascal)
 %>\
 %if common_helpers.is_enum(parameter) == True:
-    ${parameter["enum"]} ${parameter_name};
     ${parameter_type} ${paramter_name_ctype};
 <%
      parameter['cppName'] = paramter_name_ctype
@@ -148,8 +148,8 @@ namespace ${namespace}
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
-      ${parameter_name} = ${paramter_name_ctype};
-      response->set_${parameter_name}(${parameter_name});
+      ##TODO: Handle non int types
+      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${paramter_name_ctype}));
 % else:
       response->set_${parameter_name}(${parameter_name});
 %endif
