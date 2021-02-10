@@ -34,7 +34,7 @@ def generate_all(metadata_dir, gen_dir):
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description = "Generate files for specified NI driver API gRPC service.")
-  parser.add_argument("metadata", help="The path to the directory containing the metadata for the API being generated.")
-  parser.add_argument("--output", "-o", help="The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.")
+  parser.add_argument("metadata", help = "The path to the directory containing the metadata for the API being generated.")
+  parser.add_argument("--output", "-o", help = "The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.")
   args = parser.parse_args()
   generate_all(args.metadata, "." if args.output is None else args.output)
