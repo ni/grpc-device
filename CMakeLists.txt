@@ -41,53 +41,56 @@ include_directories(
 )
 
 #----------------------------------------------------------------------
-# Get list of NI Drivers and directories to generate from
+# Get list of NI Driver APIs and directories to generate from
 #----------------------------------------------------------------------
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/metadata)
-set(generated_dir ${CMAKE_SOURCE_DIR}/generated)
+set(proto_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 file(GLOB proto_directories RELATIVE ${metadata_dir} CONFIGURE_DEPENDS ${metadata_dir}/*)
-set(ni_drivers "")
+set(ni_apis "")
 foreach(proto_dir ${proto_directories})
   if(IS_DIRECTORY ${metadata_dir}/${proto_dir})
-    set(ni_drivers ${ni_drivers} ${proto_dir})
+    set(ni_apis ${ni_apis} ${proto_dir})
   endif()
 endforeach()
 
 #----------------------------------------------------------------------
-# Create NI Driver proto and server files
+# Create NI Driver APIs proto and server files
 #----------------------------------------------------------------------
-foreach(driver ${ni_drivers})
+set(codegen_scripts 
+  "${codegen_dir}/proto.mako"
+  "${codegen_dir}/service.cpp.mako"
+  "${codegen_dir}/service.h.mako"
+  "${codegen_dir}/common_helpers.py"
+  "${codegen_dir}/generate_service.py"
+  "${codegen_dir}/handler_helpers.py"
+  "${codegen_dir}/proto_helpers.py")
+
+foreach(api ${ni_apis})
+  string(TOLOWER ${api} api_lower)
   set(codegen_dependencies
-    "${metadata_dir}/${driver}/attributes.py"
-    "${metadata_dir}/${driver}/attributes_addon.py"
-    "${metadata_dir}/${driver}/config.py"
-    "${metadata_dir}/${driver}/config_addon.py"
-    "${metadata_dir}/${driver}/enums.py"
-    "${metadata_dir}/${driver}/enums_addon.py"
-    "${metadata_dir}/${driver}/functions.py"
-    "${metadata_dir}/${driver}/functions_addon.py"
-    "${metadata_dir}/${driver}/__init__.py"
-    "${codegen_dir}/proto.mako"
-    "${codegen_dir}/service.cpp.mako"
-    "${codegen_dir}/service.h.mako"
-    "${codegen_dir}/common_helpers.py"
-    "${codegen_dir}/generate_service.py"
-    "${codegen_dir}/handler_helpers.py"
-    "${codegen_dir}/proto_helpers.py")
-  string(TOLOWER ${driver} driver_lower)
+    "${metadata_dir}/${api}/attributes.py"
+    "${metadata_dir}/${api}/attributes_addon.py"
+    "${metadata_dir}/${api}/config.py"
+    "${metadata_dir}/${api}/config_addon.py"
+    "${metadata_dir}/${api}/enums.py"
+    "${metadata_dir}/${api}/enums_addon.py"
+    "${metadata_dir}/${api}/functions.py"
+    "${metadata_dir}/${api}/functions_addon.py"
+    "${metadata_dir}/${api}/__init__.py"
+    ${codegen_scripts})
   set(output_files
-    ${generated_dir}/${driver_lower}/${driver_lower}.proto
-    ${generated_dir}/${driver_lower}/${driver_lower}_service.cpp
-    ${generated_dir}/${driver_lower}/${driver_lower}_service.h)
-  set(gen_command COMMAND python generate_service.py ${metadata_dir}/${driver} ${generated_dir}/${driver_lower}/)
-  if (driver_lower STREQUAL "nifake")
+    ${proto_output_dir}/${api_lower}/${api_lower}.proto
+    ${proto_output_dir}/${api_lower}/${api_lower}_service.cpp
+    ${proto_output_dir}/${api_lower}/${api_lower}_service.h)
+  set(gen_command COMMAND python generate_service.py ${metadata_dir}/${api} ${proto_output_dir}/${api_lower}/)
+  if (api STREQUAL "nifake")
     # Fake library gen goes here. Add flag and files to output_files and gen_command
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
     WORKING_DIRECTORY ${codegen_dir}/
-    COMMENT "Generating proto file and service for ${driver}"
+    COMMENT "Generating proto file and service for ${api}"
     DEPENDS ${codegen_dependencies})
 endforeach()
 
@@ -125,22 +128,22 @@ GenerateGrpcSources(
   ${server_utilities_grpc_srcs}
   ${server_utilities_grpc_hdrs})
 
-foreach(driver ${ni_drivers})
-  string(TOLOWER ${driver} driver_lower)
+foreach(api ${ni_apis})
+  string(TOLOWER ${api} api_lower)
   GenerateGrpcSources(
-    ${generated_dir}/${driver_lower}/${driver_lower}.proto
-    ${generated_dir}/${driver_lower}/
-    "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.pb.cc"
-    "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.pb.h"
-    "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.grpc.pb.cc"
-    "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.grpc.pb.h")
+    ${proto_output_dir}/${api_lower}/${api_lower}.proto
+    ${proto_output_dir}/${api_lower}/
+    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.h"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.h")
   # Temporary custom target to force generation without changing an existing target
-  add_custom_target(${driver_lower}_protocs ALL
+  add_custom_target(${api}_protocs ALL
     DEPENDS
-      "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.pb.cc"
-      "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.pb.h"
-      "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.grpc.pb.cc"
-      "${CMAKE_CURRENT_BINARY_DIR}/${driver_lower}.grpc.pb.h")
+      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.cc"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.h"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.cc"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.h")
 endforeach()
 
 add_executable(core_server

@@ -20,6 +20,7 @@ To prepare for cmake + Microsoft Visual C++ compiler build
 - Install [Git](https://git-scm.com/).
 - Install [CMake](https://cmake.org/download/).
 - Install [Python](https://www.python.org/downloads/).
+- Install [mako](https://www.makotemplates.org/download.html)
 
 Launch "x64 Native Tools Command Prompt for Visual Studio"
 
