@@ -40,7 +40,6 @@ jobs:
         python-version: '3.x'
 
     - name: Install mako
-      if: startsWith(matrix.config.os, 'windows')
       run: python -m pip install mako 
 
     - name: Update Submodules
