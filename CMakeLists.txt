@@ -78,7 +78,13 @@ target_link_libraries(core_server
    ${_PROTOBUF_LIBPROTOBUF}
    ${CMAKE_DL_LIBS}
    )
-
+ 
+add_custom_command(
+   TARGET core_server POST_BUILD
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
+            ${CMAKE_SOURCE_DIR}/server.json
+            $<TARGET_FILE_DIR:core_server>/server.json)
+        
 # Add googletest tests
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
