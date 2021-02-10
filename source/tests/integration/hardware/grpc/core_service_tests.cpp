@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <thread>
+
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/semaphore.h"
 
@@ -39,6 +41,43 @@ class InProcessServerClientTest : public ::testing::Test {
     return stub_;
   }
 
+  ::grpc::Status call_reserve(
+      std::string reservation_id,
+      std::string client_id,
+      const std::chrono::system_clock::time_point& deadline =
+          std::chrono::system_clock::now() + std::chrono::seconds(1))
+  {
+    ni::hardware::grpc::ReserveRequest request;
+    ni::hardware::grpc::ReserveResponse response;
+    request.set_reservation_id(reservation_id);
+    request.set_client_id(client_id);
+    ::grpc::ClientContext context;
+    context.set_deadline(deadline);
+    return GetStub()->Reserve(&context, request, &response);
+  }
+
+  bool call_is_reserved(std::string reservation_id, std::string client_id)
+  {
+    ni::hardware::grpc::IsReservedByClientRequest request;
+    ni::hardware::grpc::IsReservedByClientResponse response;
+    request.set_reservation_id(reservation_id);
+    request.set_client_id(client_id);
+    ::grpc::ClientContext context;
+    GetStub()->IsReservedByClient(&context, request, &response);
+    return response.is_reserved();
+  }
+
+  bool call_unreserve(std::string reservation_id, std::string client_id)
+  {
+    ni::hardware::grpc::UnreserveRequest request;
+    ni::hardware::grpc::UnreserveResponse response;
+    request.set_reservation_id(reservation_id);
+    request.set_client_id(client_id);
+    ::grpc::ClientContext context;
+    GetStub()->Unreserve(&context, request, &response);
+    return response.is_unreserved();
+  }
+
  protected:
   InProcessServerClientTest() {}
 
@@ -60,6 +99,45 @@ TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_Respo
 
   EXPECT_FALSE(response.is_reserved());
   EXPECT_TRUE(s.ok());
+}
+
+TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservation_FreeReservation_DoesNotReserve)
+{
+  auto status_a = call_reserve("foo", "a");
+  auto status_b = call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+
+  call_unreserve("foo", "a");
+
+  EXPECT_FALSE(call_is_reserved("foo", "b"));
+  EXPECT_TRUE(status_a.ok());
+  EXPECT_FALSE(status_b.ok());
+  EXPECT_EQ(status_b.error_code(), ::grpc::DEADLINE_EXCEEDED);
+}
+
+TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_FreeReservation_DoNotReserve)
+{
+  call_reserve("foo", "a");
+  call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+  call_reserve("foo", "c", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+
+  call_unreserve("foo", "a");
+
+  EXPECT_FALSE(call_is_reserved("foo", "b"));
+  EXPECT_FALSE(call_is_reserved("foo", "c"));
+}
+
+TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
+{
+  call_reserve("foo", "a");
+  call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+  std::thread reserve_c([this] { call_reserve("foo", "c"); });
+  std::this_thread::sleep_for(std::chrono::milliseconds(5));
+
+  call_unreserve("foo", "a");
+  reserve_c.join();
+
+  EXPECT_FALSE(call_is_reserved("foo", "b"));
+  EXPECT_TRUE(call_is_reserved("foo", "c"));
 }
 
 }  // namespace grpc
