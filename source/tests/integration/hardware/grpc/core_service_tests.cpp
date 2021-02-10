@@ -22,7 +22,8 @@ namespace grpc
             ::grpc::ServerBuilder builder;
             session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
             device_management_ = std::make_unique<ni::hardware::grpc::internal::DeviceManagement>();
-            service_ = std::make_unique<ni::hardware::grpc::CoreService>(session_repository_.get(), device_management_.get());
+            shared_library_ = std::make_unique<ni::hardware::grpc::internal::SharedLibrary>();
+            service_ = std::make_unique<ni::hardware::grpc::CoreService>(session_repository_.get(), device_management_.get(), shared_library_.get());
             builder.RegisterService(service_.get());
             server_ = builder.BuildAndStart();
             ResetStub();
@@ -52,6 +53,7 @@ namespace grpc
          std::unique_ptr<::ni::hardware::grpc::ServerUtilities::Stub> stub_;
          std::unique_ptr<ni::hardware::grpc::internal::SessionRepository> session_repository_;
          std::unique_ptr<ni::hardware::grpc::internal::DeviceManagement> device_management_;
+         std::unique_ptr<ni::hardware::grpc::internal::SharedLibrary> shared_library_;
          std::unique_ptr<ni::hardware::grpc::CoreService> service_;
          std::unique_ptr<::grpc::Server> server_;
    };

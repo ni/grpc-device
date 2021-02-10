@@ -2,6 +2,8 @@
 #define NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
 
 #include "session_repository.h"
+#include "shared_library.h"
+#include "nisyscfg.h"
 
 namespace ni
 {
@@ -16,7 +18,7 @@ namespace internal
    public:
       DeviceManagement();
 
-      void enumerate_devices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response);
+      NISysCfgStatus enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
    };
 } // namespace internal
 } // namespace grpc

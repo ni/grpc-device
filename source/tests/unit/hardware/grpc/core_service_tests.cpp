@@ -22,7 +22,9 @@ namespace grpc
    TEST(CoreServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       ni::hardware::grpc::ReserveRequest request;
 
       ::grpc::ServerContext context;
@@ -37,7 +39,8 @@ namespace grpc
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
       ni::hardware::grpc::internal::DeviceManagement device_management;
-      ni::hardware::grpc::CoreService service(&session_repository, &device_management);
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
 
@@ -52,7 +55,9 @@ namespace grpc
    TEST(CoreServiceTests, NewReserveIdAndClientId_Reserve_ReservesSession)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
       request.set_client_id("a");
@@ -106,7 +111,9 @@ namespace grpc
    TEST(CoreServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenReserves)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
       request.set_client_id("a");
@@ -130,7 +137,9 @@ namespace grpc
    TEST(CoreServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsForTwoUnreservesThenReservesLastClient)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
       request.set_client_id("a");
@@ -163,7 +172,9 @@ namespace grpc
    TEST(CoreServiceTests, IdReserved_ReserveWithSameClientId_ReturnsReserved)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
       request.set_client_id("a");
@@ -180,7 +191,9 @@ namespace grpc
    TEST(CoreServiceTests, NoReservations_IsReserved_ReturnsFalse)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
 
       bool is_reserved = call_is_reserved(&service, "foo", "a");
 
@@ -190,7 +203,9 @@ namespace grpc
    TEST(CoreServiceTests, Reservation_IsReservedWithDifferentReservationId_ReturnsFalse)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
 
       bool is_reserved = call_is_reserved(&service, "bar", "a");
@@ -201,7 +216,9 @@ namespace grpc
    TEST(CoreServiceTests, Reservation_IsReservedWithDifferentClientId_ReturnsFalse)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
 
       bool is_reserved = call_is_reserved(&service, "foo", "b");
@@ -212,7 +229,9 @@ namespace grpc
    TEST(CoreServiceTests, Reservation_IsReservedWithSameClientId_ReturnsTrue)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
 
       bool is_reserved = call_is_reserved(&service, "foo", "a");
@@ -223,7 +242,9 @@ namespace grpc
    TEST(CoreServiceTests, NoReservations_Unreserve_ReturnsFalse)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
 
       bool is_unreserved = call_unreserve(&service, "foo", "a");
 
@@ -233,7 +254,9 @@ namespace grpc
    TEST(CoreServiceTests, Reservation_UnreserveWithDifferentReservationId_ReturnsFalseAndKeepsReservation)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       ni::hardware::grpc::ReserveRequest reserve_request;
       call_reserve(&service, "foo", "a");
 
@@ -247,7 +270,9 @@ namespace grpc
    TEST(CoreServiceTests, Reservation_UnreserveWithDifferentClientId_ReturnsFalseAndKeepsReservation)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
 
       bool is_unreserved = call_unreserve(&service, "foo", "b");
@@ -260,7 +285,9 @@ namespace grpc
    TEST(CoreServiceTests, Reservation_Unreserve_Unreserves)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
 
       bool is_unreserved = call_unreserve(&service, "foo", "a");
@@ -273,7 +300,9 @@ namespace grpc
    TEST(CoreServiceTests, Reservation_ResetServer_Unreserves)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
 
       ::grpc::ServerContext context;
@@ -288,7 +317,9 @@ namespace grpc
    TEST(CoreServiceTests, ReservationAndSession_ResetServer_UnreservesAndRemovesSession)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       std::string session_name = "session_name";
       uint64_t named_session_id;
       int status = session_repository.add_session(
@@ -312,7 +343,9 @@ namespace grpc
    TEST(CoreServiceTests, TwoReservations_ResetServer_Unreserves)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
       call_reserve(&service, "bar", "b");
 
@@ -330,7 +363,9 @@ namespace grpc
    TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_ClientReturnsAndDoesNotReserve)   
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");
@@ -354,7 +389,9 @@ namespace grpc
    TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnAndDoNotReserve)
    {
       ni::hardware::grpc::internal::SessionRepository session_repository;
-      ni::hardware::grpc::CoreService service(&session_repository);
+      ni::hardware::grpc::internal::DeviceManagement device_management;
+      ni::hardware::grpc::internal::SharedLibrary shared_library;
+      ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
       call_reserve(&service, "foo", "a");
       ni::hardware::grpc::ReserveRequest request;
       request.set_reservation_id("foo");

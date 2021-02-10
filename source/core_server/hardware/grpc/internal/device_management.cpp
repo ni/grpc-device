@@ -1,6 +1,4 @@
 #include "device_management.h"
-#include "shared_library.h"
-#include "nisyscfg.h"
 
 namespace ni
 {
@@ -64,17 +62,11 @@ namespace internal
       char                                   str[]
       );
 
-#if defined(_MSC_VER)
-   static const char * syscfg_library_name = "nisyscfg.dll";
-#else
-   static const char * syscfg_library_name = "./libnisyscfg.so";
-#endif
-
    DeviceManagement::DeviceManagement()
    {
    }
 
-   void DeviceManagement::enumerate_devices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response)
+   NISysCfgStatus DeviceManagement::enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties> *devices)
    {
       NISysCfgStatus status = NISysCfg_OK;
       NISysCfgSessionHandle session = NULL;
@@ -88,24 +80,16 @@ namespace internal
       char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
       char* detailed_description = NULL;
 
-      ni::hardware::grpc::internal::SharedLibrary library(syscfg_library_name);
-      library.load();
-
-      if (!library.is_loaded())
-      {
-          return;
-      }
-
-      auto syscfg_initialize_session = reinterpret_cast<NISysCfgInitializeSessionPtr>(library.get_function_pointer("NISysCfgInitializeSession"));
-      auto syscfg_create_filter = reinterpret_cast<NISysCfgCreateFilterPtr>(library.get_function_pointer("NISysCfgCreateFilter"));
-      auto syscfg_set_filter_property = reinterpret_cast<NISysCfgSetFilterPropertyPtr>(library.get_function_pointer("NISysCfgSetFilterProperty"));
-      auto syscfg_find_hardware = reinterpret_cast<NISysCfgFindHardwarePtr>(library.get_function_pointer("NISysCfgFindHardware"));
-      auto sysycfg_next_resource = reinterpret_cast<NISysCfgNextResourcePtr>(library.get_function_pointer("NISysCfgNextResource"));
-      auto sysycfg_get_resource_indexed_property = reinterpret_cast<NISysCfgGetResourceIndexedPropertyPtr>(library.get_function_pointer("NISysCfgGetResourceIndexedProperty"));
-      auto sysycfg_get_resource_property = reinterpret_cast<NISysCfgGetResourcePropertyPtr>(library.get_function_pointer("NISysCfgGetResourceProperty"));
-      auto sysycfg_close_handle = reinterpret_cast<NISysCfgCloseHandlePtr>(library.get_function_pointer("NISysCfgCloseHandle"));
-      auto sysycfg_get_status_description = reinterpret_cast<NISysCfgGetStatusDescriptionPtr>(library.get_function_pointer("NISysCfgGetStatusDescription"));
-      auto sysycfg_free_detailed_string = reinterpret_cast<NISysCfgFreeDetailedStringPtr>(library.get_function_pointer("NISysCfgFreeDetailedString"));
+      auto syscfg_initialize_session = reinterpret_cast<NISysCfgInitializeSessionPtr>(shared_library->get_function_pointer("NISysCfgInitializeSession"));
+      auto syscfg_create_filter = reinterpret_cast<NISysCfgCreateFilterPtr>(shared_library->get_function_pointer("NISysCfgCreateFilter"));
+      auto syscfg_set_filter_property = reinterpret_cast<NISysCfgSetFilterPropertyPtr>(shared_library->get_function_pointer("NISysCfgSetFilterProperty"));
+      auto syscfg_find_hardware = reinterpret_cast<NISysCfgFindHardwarePtr>(shared_library->get_function_pointer("NISysCfgFindHardware"));
+      auto sysycfg_next_resource = reinterpret_cast<NISysCfgNextResourcePtr>(shared_library->get_function_pointer("NISysCfgNextResource"));
+      auto sysycfg_get_resource_indexed_property = reinterpret_cast<NISysCfgGetResourceIndexedPropertyPtr>(shared_library->get_function_pointer("NISysCfgGetResourceIndexedProperty"));
+      auto sysycfg_get_resource_property = reinterpret_cast<NISysCfgGetResourcePropertyPtr>(shared_library->get_function_pointer("NISysCfgGetResourceProperty"));
+      auto sysycfg_close_handle = reinterpret_cast<NISysCfgCloseHandlePtr>(shared_library->get_function_pointer("NISysCfgCloseHandle"));
+      auto sysycfg_get_status_description = reinterpret_cast<NISysCfgGetStatusDescriptionPtr>(shared_library->get_function_pointer("NISysCfgGetStatusDescription"));
+      auto sysycfg_free_detailed_string = reinterpret_cast<NISysCfgFreeDetailedStringPtr>(shared_library->get_function_pointer("NISysCfgFreeDetailedString"));
 
       if (NISysCfg_Succeeded(status = syscfg_initialize_session("localhost", NULL, NULL, NISysCfgLocaleEnglish, NISysCfgBoolTrue, 10000, NULL, &session)))
       {
@@ -120,7 +104,7 @@ namespace internal
                   sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
                   if (strcmp(expert_name, "network") != 0)
                   {
-                     auto properties = response->mutable_devices()->Add();
+                     NiDeviceProperties* properties = devices->Add();
                      sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertyProductName, model);
                      sysycfg_get_resource_property(resource, NISysCfgResourcePropertyVendorName, vendor);
@@ -135,15 +119,10 @@ namespace internal
             }
          }
       }
-      if (NISysCfg_Failed(status))
-      {
-         sysycfg_get_status_description(session, status, &detailed_description);
-         printf("Error: %s\n", detailed_description);
-         sysycfg_free_detailed_string(detailed_description);
-      }
       sysycfg_close_handle(filter);
       sysycfg_close_handle(resources_handle);
       sysycfg_close_handle(session);
+      return status;
    }
 } // namespace internal
 } // namespace grpc
