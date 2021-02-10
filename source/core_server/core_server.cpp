@@ -1,17 +1,5 @@
 #include "hardware/grpc/core_service.h"
-#include "nlohmann/json.hpp"
-#include <fstream>
-
-const char* klocalhostAddress = "0.0.0.0:";
-
-static std::string GetServerAddress(int argc, char** argv)
-{
-      std::ifstream i("server.json");
-      nlohmann::json config_file;
-      i >> config_file;
-      auto port = config_file["port"].get<int>();
-      return klocalhostAddress + std::to_string(port);
-}
+#include "hardware/grpc/server_configuration.h"
 
 static void RunServer(int argc, char** argv)
 {
@@ -19,7 +7,11 @@ static void RunServer(int argc, char** argv)
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
 
   grpc::ServerBuilder builder;
-  auto server_address = GetServerAddress();
+  std::cout << "Start listening on " << 0 << std::endl;
+  auto server_configuration =  ni::hardware::grpc::ServerConfiguration::ServerConfiguration();
+  auto server_address = server_configuration.get_address();
+
+  std::cout << "Start listening on " << server_address << std::endl;
 
   // Listen on the given address without any authentication mechanism.
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
@@ -31,7 +23,6 @@ static void RunServer(int argc, char** argv)
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
-  int* foo = nullptr;
 
   std::cout << "Server listening on " << server_address << std::endl;
 
