@@ -20,6 +20,11 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
+    - name: Setup python3
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
     # The URL used to download this toolchain may change in the future as
     # improvements to hosting and exports of the NILRT toolchain are made.
     - name: Install NI Linux RT CC Toolchain
