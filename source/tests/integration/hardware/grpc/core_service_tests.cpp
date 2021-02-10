@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <thread>
+
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/semaphore.h"
 
@@ -42,7 +44,8 @@ class InProcessServerClientTest : public ::testing::Test {
   ::grpc::Status call_reserve(
       std::string reservation_id,
       std::string client_id,
-      const std::chrono::system_clock::time_point& deadline = std::chrono::system_clock::now() + std::chrono::seconds(1))
+      const std::chrono::system_clock::time_point& deadline =
+          std::chrono::system_clock::now() + std::chrono::seconds(1))
   {
     ni::hardware::grpc::ReserveRequest request;
     ni::hardware::grpc::ReserveResponse response;
