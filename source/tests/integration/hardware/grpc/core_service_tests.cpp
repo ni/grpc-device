@@ -39,7 +39,7 @@ class InProcessServerClientTest : public ::testing::Test {
     return stub_;
   }
 
-  void call_reserve(
+  ::grpc::Status call_reserve(
       std::string reservation_id,
       std::string client_id,
       const std::chrono::system_clock::time_point& deadline = std::chrono::system_clock::now() + std::chrono::seconds(1))
@@ -50,7 +50,7 @@ class InProcessServerClientTest : public ::testing::Test {
     request.set_client_id(client_id);
     ::grpc::ClientContext context;
     context.set_deadline(deadline);
-    GetStub()->Reserve(&context, request, &response);
+    return GetStub()->Reserve(&context, request, &response);
   }
 
   bool call_is_reserved(std::string reservation_id, std::string client_id)
@@ -100,12 +100,15 @@ TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_Respo
 
 TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservation_FreeReservation_DoesNotReserve)
 {
-  call_reserve("foo", "a");
-  call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+  auto status_a = call_reserve("foo", "a");
+  auto status_b = call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
 
   call_unreserve("foo", "a");
 
   EXPECT_FALSE(call_is_reserved("foo", "b"));
+  EXPECT_TRUE(status_a.ok());
+  EXPECT_FALSE(status_b.ok());
+  EXPECT_EQ(status_b.error_code(), ::grpc::DEADLINE_EXCEEDED);
 }
 
 TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_FreeReservation_DoNotReserve)
@@ -120,19 +123,19 @@ TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_Fr
   EXPECT_FALSE(call_is_reserved("foo", "c"));
 }
 
-// TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
-// {
-//    call_reserve("foo", "a");
-//    call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
-//    std::thread reserve_c(call_reserve, "foo", "c");
-//    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
+{
+  call_reserve("foo", "a");
+  call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+  std::thread reserve_c([this] { call_reserve("foo", "c"); });
+  std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
-//    call_unreserve("foo", "a");
-//    reserve_c.join();
+  call_unreserve("foo", "a");
+  reserve_c.join();
 
-//    EXPECT_FALSE(call_is_reserved("foo", "b"));
-//    EXPECT_TRUE(call_is_reserved("foo", "c"));
-// }
+  EXPECT_FALSE(call_is_reserved("foo", "b"));
+  EXPECT_TRUE(call_is_reserved("foo", "c"));
+}
 
 }  // namespace grpc
 }  // namespace hardware
