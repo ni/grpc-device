@@ -14,7 +14,7 @@
 #   > py -m grpc_tools.protoc -I../../ --python_out=. --grpc_python_out=. niDevice.proto
 #   > py -m grpc_tools.protoc -I../../ --python_out=. --grpc_python_out=. niSwitch.proto 
 #
-# Run the code to initialize a session with Switch
+# Run the code to initialize a session with Switch. This example demonstrates how to scan a series of channels on a switch using software scanning.
 #
 # Refer to the NI Switches Help to determine if your switch supports scanning, the scan list syntax, 
 # and the valid channel names and valid resource names for your switch module.
@@ -51,6 +51,7 @@ def CheckForError (vi, status) :
         anyError = True
         ErrorMessage (vi, status)
 
+# Converts an error code returned by NI-SWITCH into a user-readable string
 def ErrorMessage (vi, errorCode):
     errorMessageResponse = switch.ErrorMessage(switchTypes.ErrorMessageRequest(
     vi=vi,
