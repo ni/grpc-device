@@ -77,8 +77,7 @@ foreach(api ${ni_apis})
     "${metadata_dir}/${api}/enums_addon.py"
     "${metadata_dir}/${api}/functions.py"
     "${metadata_dir}/${api}/functions_addon.py"
-    "${metadata_dir}/${api}/__init__.py"
-    ${codegen_scripts})
+    "${metadata_dir}/${api}/__init__.py")
   set(output_files
     ${proto_output_dir}/${api_lower}/${api_lower}.proto
     ${proto_output_dir}/${api_lower}/${api_lower}_service.cpp
@@ -91,7 +90,7 @@ foreach(api ${ni_apis})
     ${gen_command}
     WORKING_DIRECTORY ${codegen_dir}/
     COMMENT "Generating proto file and service for ${api}"
-    DEPENDS ${codegen_dependencies})
+    DEPENDS ${codegen_dependencies} ${codegen_scripts})
 endforeach()
 
 #----------------------------------------------------------------------
