@@ -14,10 +14,13 @@ CoreService::CoreService(internal::SessionRepository* session_repository)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  if (request->reservation_id().empty() || request->client_id().empty()) {
+    return ::grpc::Status(::grpc::INVALID_ARGUMENT, "You must specify a non-empty reservation_id and client_id.");
+  }
   bool reserved = session_repository_->reserve(context, request->reservation_id(), request->client_id());
   response->set_is_reserved(reserved);
   if (!reserved && !context->IsCancelled()) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, "You must specify a non-empty reservation_id and client_id.");
+    return ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");;
   }
   return ::grpc::Status::OK;
 }
