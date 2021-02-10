@@ -67,7 +67,6 @@ set(codegen_scripts
   "${codegen_dir}/proto_helpers.py")
 
 foreach(api ${ni_apis})
-  string(TOLOWER ${api} api_lower)
   set(codegen_dependencies
     "${metadata_dir}/${api}/attributes.py"
     "${metadata_dir}/${api}/attributes_addon.py"
@@ -79,10 +78,10 @@ foreach(api ${ni_apis})
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
   set(output_files
-    ${proto_output_dir}/${api_lower}/${api_lower}.proto
-    ${proto_output_dir}/${api_lower}/${api_lower}_service.cpp
-    ${proto_output_dir}/${api_lower}/${api_lower}_service.h)
-  set(gen_command COMMAND python generate_service.py ${metadata_dir}/${api} ${proto_output_dir}/${api_lower}/)
+    ${proto_output_dir}/${api}/${api}.proto
+    ${proto_output_dir}/${api}/${api}_service.cpp
+    ${proto_output_dir}/${api}/${api}_service.h)
+  set(gen_command COMMAND python generate_service.py ${metadata_dir}/${api} ${proto_output_dir}/${api}/)
   if (api STREQUAL "nifake")
     # Fake library gen goes here. Add flag and files to output_files and gen_command
   endif()
@@ -128,21 +127,20 @@ GenerateGrpcSources(
   ${server_utilities_grpc_hdrs})
 
 foreach(api ${ni_apis})
-  string(TOLOWER ${api} api_lower)
   GenerateGrpcSources(
-    ${proto_output_dir}/${api_lower}/${api_lower}.proto
-    ${proto_output_dir}/${api_lower}/
-    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.cc"
-    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.h"
-    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.cc"
-    "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.h")
+    ${proto_output_dir}/${api}/${api}.proto
+    ${proto_output_dir}/${api}/
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.h"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.h")
   # Temporary custom target to force generation without changing an existing target
   add_custom_target(${api}_protocs ALL
     DEPENDS
-      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.cc"
-      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.pb.h"
-      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.cc"
-      "${CMAKE_CURRENT_BINARY_DIR}/${api_lower}.grpc.pb.h")
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.cc"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.h"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.cc"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.h")
 endforeach()
 
 add_executable(core_server
