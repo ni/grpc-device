@@ -1,30 +1,13 @@
-"""
-Usage: python generate_service.py <metadata_dir> <generated_dir>
-
-  metadata_dir:  The absolute or relative path to the directory containing the metadata
-                 for the API being generated.
-
-  generated_dir: The absolute or relative path to the top-level directory to save the
-                 generated files. The API-specific sub-directories will be automatically
-                 created.
-
-Example:
-  From the root directory:
-    python generate_service.py ./source/apis/metadata/nifake ./generated
-  Generates the following files:
-    ./generated/nifake/nifake.proto
-    ./generated/nifake/nifake_service.cpp
-    ./generated/nifake/nifake_service.h
-"""
-
 import sys
 import os
+import argparse
 import importlib
 import importlib.util
 import mako.template
+import pathlib
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
-  current_dir = dirname = os.path.dirname(__file__)
+  current_dir = os.path.dirname(__file__)
   template_file_path = os.path.join(current_dir, template_file_name)
   module_name = metadata["config"]["module_name"]
   output_dir = os.path.join(gen_dir, module_name)
@@ -50,6 +33,8 @@ def generate_all(metadata_dir, gen_dir):
   generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)
 
 if __name__ == "__main__":
-  metadata_dir = os.path.abspath(sys.argv[1])
-  gen_dir = os.path.abspath(sys.argv[2])
-  generate_all(metadata_dir, gen_dir)
+  parser = argparse.ArgumentParser(description = "Generate files for specified NI driver API gRPC service.")
+  parser.add_argument("metadata", help="The path to the directory containing the metadata for the API being generated.")
+  parser.add_argument("--output", "-o", help="The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.")
+  args = parser.parse_args()
+  generate_all(args.metadata, "." if args.output is None else args.output)
