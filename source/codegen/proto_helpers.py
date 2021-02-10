@@ -62,3 +62,10 @@ def determine_function_parameter_type(parameter, driver_name_pascal):
   else:
     parameter_type = get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
   return parameter_type
+
+def determine_allow_alias(enums):
+  for values in enums:
+    for value in enums[values]:
+      if value["value"] == 0:
+        return True
+  return False

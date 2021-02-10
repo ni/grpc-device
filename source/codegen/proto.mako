@@ -15,7 +15,9 @@ c_function_prefix = data["config"]["c_function_prefix"]
 //---------------------------------------------------------------------
 // Proto file for the ${driver_name_camel} Metadata
 //---------------------------------------------------------------------
-Syntax = "proto3";
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
 
 option java_multiple_files = true;
 option java_package = "com.ni.${module_name.replace("ni", "")}.grpc";
@@ -34,30 +36,37 @@ service ${driver_name_pascal} {
 }
 
 enum ${driver_name_pascal}Attributes {
-  UNSPECIFIED = 0;
+  ${driver_name_camel.upper()}_UNSPECIFIED = 0;
 % for attribute in data["attributes"]:
 <%
    attribute_name = data["attributes"][attribute]["name"]
 %>\
-  ${attribute_name} = ${attribute};
+  ${driver_name_camel.upper()}_${attribute_name} = ${attribute};
 % endfor
 }
 
 % for enum_list in data["enums"]:
+<%
+  enum_name = common_helpers.camel_to_snake(common_helpers.pascal_to_camel(enum_list)).upper()
+  enums = data["enums"][enum_list]
+  allow_alias = proto_helpers.determine_allow_alias(enums)
+%>\
 enum ${enum_list} {
-  UNSPECIFIED = 0;
+% if allow_alias == True:
+  option allow_aliases = true;
+% endif
+  ${enum_name}_UNSPECIFIED = 0;
 <%
 nonint_index = 1
-enums = data["enums"][enum_list]
 %>\
-% for values in enums :
-% for value in enums[values] :
+% for values in enums:
+% for value in enums[values]:
 <%
 if isinstance(value["value"], int) is False:
   value["value"] = nonint_index
   nonint_index = nonint_index+1
 %>\
-  ${value["name"]} = ${value["value"]};
+  ${enum_name}_${value["name"]} = ${value["value"]};
 % endfor   
 % endfor
 }  

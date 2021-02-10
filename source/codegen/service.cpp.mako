@@ -112,11 +112,7 @@ namespace ${namespace}
   parameter_type = handler_helpers.get_c_type(parameter, driver_name_pascal)
 %>\
 %if common_helpers.is_enum(parameter) == True:
-    ${parameter["enum"]} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
-    ${parameter_type} ${paramter_name_ctype} = ${parameter_name};
-<%    
-    parameter['cppName'] = paramter_name_ctype
-%>\
+    auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
 % else:
     ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
 % endif
