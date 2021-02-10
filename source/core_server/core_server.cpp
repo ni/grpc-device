@@ -6,7 +6,7 @@ static void RunServer(int argc, char** argv)
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
 
-  auto server_configuration =  ni::hardware::grpc::ServerConfiguration::ServerConfiguration();
+  ni::hardware::grpc::ServerConfiguration server_configuration;
   auto server_address = server_configuration.get_address();
 
   // Listen on the given address without any authentication mechanism.

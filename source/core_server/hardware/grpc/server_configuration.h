@@ -9,7 +9,7 @@ class ServerConfiguration {
  public:
   ServerConfiguration();
 
-  std::string ServerConfiguration::get_address();
+  std::string get_address();
 
  private:
   nlohmann::json config_file_;
