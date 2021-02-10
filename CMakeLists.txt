@@ -77,6 +77,7 @@ target_link_libraries(core_server
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
    ${CMAKE_DL_LIBS}
+   nlohmann_json::nlohmann_json
    )
  
 add_custom_command(
@@ -84,11 +85,13 @@ add_custom_command(
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
             ${CMAKE_SOURCE_DIR}/server.json
             $<TARGET_FILE_DIR:core_server>/server.json)
-        
+ 
+add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
+ 
 # Add googletest tests
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
+add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
 
 # Link test executable against gtest
 add_executable(CoreServiceTestsRunner
