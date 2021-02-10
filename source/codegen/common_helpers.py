@@ -35,6 +35,11 @@ def is_array(dataType):
   if dataType.find("[]") != -1:
     return True
   return False
+  
+def is_enum(parameter):
+  if "enum" in parameter:
+    return True
+  return False
 
 def has_array_parameter(function):
   for parameter in function['parameters']:

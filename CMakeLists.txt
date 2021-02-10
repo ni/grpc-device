@@ -176,18 +176,19 @@ add_executable(CoreServiceTestsRunner
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+    find_package(Threads REQUIRED)
+
 target_link_libraries(CoreServiceTestsRunner
     gtest
     ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS})
+    ${CMAKE_DL_LIBS}
+    Threads::Threads)
 
 add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
-
-set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
 
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"

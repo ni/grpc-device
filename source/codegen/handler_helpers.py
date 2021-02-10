@@ -60,6 +60,9 @@ def get_request_value(parameter, driver_name_pascal):
     is_array = common_helpers.is_array(parameter["type"])
     request_name = proto_helpers.get_grpc_type_from_ivi(param_name, is_array, driver_name_pascal)
     result = f'{result}{request_name}()'
+    is_enum = common_helpers.is_enum(parameter)
+    if  common_helpers.is_enum(parameter) == True:
+        return result
     if parameter['type'] == 'ViConstString':
         result = f'{result}.c_str()'
     if parameter['type'] == 'ViRsrc':

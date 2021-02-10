@@ -112,7 +112,10 @@ std::shared_ptr<SessionRepository::ReservationInfo> SessionRepository::find_or_c
   return info;
 }
 
-bool SessionRepository::reserve(const std::string& reservation_id, const std::string& client_id)
+bool SessionRepository::reserve(
+    const ::grpc::ServerContext* context,
+    const std::string& reservation_id,
+    const std::string& client_id)
 {
   if (reservation_id.empty() || client_id.empty()) {
     return false;
@@ -131,6 +134,13 @@ bool SessionRepository::reserve(const std::string& reservation_id, const std::st
     info->client_count--;
     info->client_id = client_id;
     auto it = reservations_.find(reservation_id);
+    if (context->IsCancelled()) {
+      info->lock->notify();
+      if (it != reservations_.end() && info->client_count <= 0) {
+        reservations_.erase(it);
+      }
+      return false;
+    }
     return it != reservations_.end() && client_id == it->second->client_id;
   }
 }

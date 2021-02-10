@@ -15,7 +15,9 @@ c_function_prefix = data["config"]["c_function_prefix"]
 //---------------------------------------------------------------------
 // Proto file for the ${driver_name_camel} Metadata
 //---------------------------------------------------------------------
-Syntax = "proto3";
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
 
 option java_multiple_files = true;
 option java_package = "com.ni.${module_name.replace("ni", "")}.grpc";
@@ -34,38 +36,42 @@ service ${driver_name_pascal} {
 }
 
 enum ${driver_name_pascal}Attributes {
-  ${c_function_prefix.upper()}UNSPECIFIED = 0;
+  ${driver_name_camel.upper()}_UNSPECIFIED = 0;
 % for attribute in data["attributes"]:
 <%
    attribute_name = data["attributes"][attribute]["name"]
 %>\
-  ${c_function_prefix.upper()}${attribute_name} = ${attribute};
+  ${driver_name_camel.upper()}_${attribute_name} = ${attribute};
 % endfor
 }
 
 % for enum_list in data["enums"]:
-enum ${enum_list}Values {
-  ${c_function_prefix.upper()}UNSPECIFIED = 0;
+<%
+  enum_name = common_helpers.camel_to_snake(common_helpers.pascal_to_camel(enum_list)).upper()
+  enums = data["enums"][enum_list]
+  allow_alias = proto_helpers.determine_allow_alias(enums)
+%>\
+enum ${enum_list} {
+% if allow_alias == True:
+  option allow_alias = true;
+% endif
+  ${enum_name}_UNSPECIFIED = 0;
 <%
 nonint_index = 1
-enums = data["enums"][enum_list]
 %>\
-% for values in enums :
-% for value in enums[values] :
+% for values in enums:
+% for value in enums[values]:
 <%
 if isinstance(value["value"], int) is False:
   value["value"] = nonint_index
   nonint_index = nonint_index+1
-
-enum_name = value["name"].replace((module_name.upper()) + '_VAL_', (c_function_prefix.upper()))
 %>\
-  ${enum_name} = ${value["value"]};
+  ${enum_name}_${value["name"]} = ${value["value"]};
 % endfor   
 % endfor
 }  
   
 % endfor
-
 % for function in data["functions"]:
 <% 
   parameter_array = data["functions"][function]["parameters"] 
@@ -73,13 +79,11 @@ enum_name = value["name"].replace((module_name.upper()) + '_VAL_', (c_function_p
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
   index = 0
 %>\
-
 message ${common_helpers.snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%  
   index  = index + 1
-  is_array = common_helpers.is_array(parameter["type"])
-  parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
+  parameter_type = proto_helpers.determine_function_parameter_type(parameter, driver_name_pascal)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};  
 % endfor
@@ -93,10 +97,10 @@ message ${common_helpers.snake_to_camel(function)}Response {
 % for parameter in output_parameters:
 <%  
   index = index + 1
-  is_array = common_helpers.is_array(parameter["type"])
-  parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
+  parameter_type = proto_helpers.determine_function_parameter_type(parameter, driver_name_pascal)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index}; 
 %endfor  
 }
+
 % endfor

@@ -4,7 +4,9 @@
 //---------------------------------------------------------------------
 // Proto file for the niFake Metadata
 //---------------------------------------------------------------------
-Syntax = "proto3";
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
 
 option java_multiple_files = true;
 option java_package = "com.ni.fake.grpc";
@@ -92,64 +94,63 @@ enum NiFakeAttributes {
   NIFAKE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010;
 }
 
-enum BeautifulColorValues {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_PINK = 44;
-  NIFAKE_AQUA = 43;
-  NIFAKE_GREEN = 45;
-  NIFAKE_BLACK = 42;
+enum BeautifulColor {
+  BEAUTIFUL_COLOR_UNSPECIFIED = 0;
+  BEAUTIFUL_COLOR_PINK = 44;
+  BEAUTIFUL_COLOR_AQUA = 43;
+  BEAUTIFUL_COLOR_GREEN = 45;
+  BEAUTIFUL_COLOR_BLACK = 42;
 }  
   
-enum ColorValues {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_RED = 1;
-  NIFAKE_BLUE = 2;
-  NIFAKE_YELLOW = 5;
-  NIFAKE_BLACK = 42;
+enum Color {
+  COLOR_UNSPECIFIED = 0;
+  COLOR_RED = 1;
+  COLOR_BLUE = 2;
+  COLOR_YELLOW = 5;
+  COLOR_BLACK = 42;
 }  
   
-enum ColorObsoleteValues {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_RED = 1;
-  NIFAKE_BLUE = 2;
-  NIFAKE_YELLOW = 5;
-  NIFAKE_BLACK = 42;
+enum ColorObsolete {
+  COLOR_OBSOLETE_UNSPECIFIED = 0;
+  COLOR_OBSOLETE_RED = 1;
+  COLOR_OBSOLETE_BLUE = 2;
+  COLOR_OBSOLETE_YELLOW = 5;
+  COLOR_OBSOLETE_BLACK = 42;
 }  
   
-enum ColorPrivateValues {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_RED = 1;
-  NIFAKE_BLUE = 2;
-  NIFAKE_YELLOW = 5;
-  NIFAKE_BLACK = 42;
+enum ColorPrivate {
+  COLOR_PRIVATE_UNSPECIFIED = 0;
+  COLOR_PRIVATE_RED = 1;
+  COLOR_PRIVATE_BLUE = 2;
+  COLOR_PRIVATE_YELLOW = 5;
+  COLOR_PRIVATE_BLACK = 42;
 }  
   
-enum FloatEnumValues {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_THREE_POINT_FIVE = 1;
-  NIFAKE_FOUR_POINT_FIVE = 2;
-  NIFAKE_FIVE_POINT_FIVE = 3;
-  NIFAKE_SIX_POINT_FIVE = 4;
-  NIFAKE_SEVEN_POINT_FIVE = 5;
+enum FloatEnum {
+  FLOAT_ENUM_UNSPECIFIED = 0;
+  FLOAT_ENUM_THREE_POINT_FIVE = 1;
+  FLOAT_ENUM_FOUR_POINT_FIVE = 2;
+  FLOAT_ENUM_FIVE_POINT_FIVE = 3;
+  FLOAT_ENUM_SIX_POINT_FIVE = 4;
+  FLOAT_ENUM_SEVEN_POINT_FIVE = 5;
 }  
   
-enum MobileOSNamesValues {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_ANDROID = 1;
-  NIFAKE_IOS = 2;
-  NIFAKE_NONE = 3;
+enum MobileOSNames {
+  MOBILE_O_S_NAMES_UNSPECIFIED = 0;
+  MOBILE_O_S_NAMES_ANDROID = 1;
+  MOBILE_O_S_NAMES_IOS = 2;
+  MOBILE_O_S_NAMES_NONE = 3;
 }  
   
-enum TurtleValues {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_LEONARDO = 0;
-  NIFAKE_DONATELLO = 1;
-  NIFAKE_RAPHAEL = 2;
-  NIFAKE_MICHELANGELO = 3;
+enum Turtle {
+  option allow_alias = true;
+  TURTLE_UNSPECIFIED = 0;
+  TURTLE_LEONARDO = 0;
+  TURTLE_DONATELLO = 1;
+  TURTLE_RAPHAEL = 2;
+  TURTLE_MICHELANGELO = 3;
 }  
   
-
-
 message AbortRequest {
   fixed64 vi = 1;  
 }
@@ -195,12 +196,12 @@ message EnumArrayOutputFunctionRequest {
 
 message EnumArrayOutputFunctionResponse {
   int32 status = 1;
-  repeated uint32 an_array = 2; 
+  repeated Turtle an_array = 2; 
 }
 
 message EnumInputFunctionWithDefaultsRequest {
   fixed64 vi = 1;  
-  uint32 a_turtle = 2;  
+  Turtle a_turtle = 2;  
 }
 
 message EnumInputFunctionWithDefaultsResponse {
@@ -430,7 +431,7 @@ message GetEnumValueRequest {
 message GetEnumValueResponse {
   int32 status = 1;
   sint32 a_quantity = 2; 
-  uint32 a_turtle = 3; 
+  Turtle a_turtle = 3; 
 }
 
 message GetErrorRequest {
@@ -534,9 +535,9 @@ message ParametersAreMultipleTypesRequest {
   bool a_boolean = 2;  
   sint32 an_int32 = 3;  
   int64 an_int64 = 4;  
-  uint32 an_int_enum = 5;  
+  Turtle an_int_enum = 5;  
   double a_float = 6;  
-  double a_float_enum = 7;  
+  FloatEnum a_float_enum = 7;  
   sint32 string_size = 8;  
   string a_string = 9;  
 }
@@ -614,9 +615,9 @@ message ReturnMultipleTypesResponse {
   bool a_boolean = 2; 
   sint32 an_int32 = 3; 
   int64 an_int64 = 4; 
-  uint32 an_int_enum = 5; 
+  Turtle an_int_enum = 5; 
   double a_float = 6; 
-  double a_float_enum = 7; 
+  FloatEnum a_float_enum = 7; 
   repeated double an_array = 8; 
   string a_string = 9; 
 }
@@ -697,7 +698,7 @@ message SetCustomTypeArrayResponse {
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {
   fixed64 vi = 1;  
-  string a_mobile_o_s_name = 2;  
+  MobileOSNames a_mobile_o_s_name = 2;  
 }
 
 message StringValuedEnumInputFunctionWithDefaultsResponse {
@@ -778,3 +779,4 @@ message SelfTestResponse {
   uint32 self_test_result = 2; 
   string self_test_message = 3; 
 }
+
