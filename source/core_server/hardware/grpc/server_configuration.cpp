@@ -28,7 +28,11 @@ std::string ServerConfiguration::get_address()
    int parsed_port = 0;
    parse_config();
    if (config_file_ != nullptr){
-      parsed_port = config_file_[kportKey].get<int>();
+      std::string key(kportKey);
+      auto it = config_file_.find(key);
+      if (it != config_file_.end()) {
+         parsed_port = config_file_[key].get<int>();
+      }
    }
    
    int port = kdefaultPort;
