@@ -54,19 +54,31 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git and cmake:
+For Debian/Ubuntu, install git, cmake, and mako:
 ```
 > sudo apt-get update
 > sudo apt-get install git
 > sudo apt-get install cmake
+> python -m pip install mako
 ```
 
-For NI Linux RT, install git, git-perltools, and cmake:
+For NI Linux RT, install git, git-perltools, cmake, python3-utils, and mako:
 ```
 > opkg update
 > opkg install git
 > opkg install git-perltools
 > opkg install cmake
+> opkg install python3-misc
+# follow the latest instructions to install pip:
+# https://pip.pypa.io/en/stable/installing/
+> python -m pip install mako
+```
+
+**Note**: Depending on the version of NI Linux RT, installing a newer version of CMake
+may be required. Follow the instructions to [install CMake](https://cmake.org/install/).
+If this is required, make sure to install openssl-dev as well.
+```
+> opkg install openssl-dev
 ```
 
 ### Clone Repo
