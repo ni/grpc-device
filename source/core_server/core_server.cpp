@@ -6,14 +6,11 @@ static void RunServer(int argc, char** argv)
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
 
-  grpc::ServerBuilder builder;
-  std::cout << "Start listening on " << 0 << std::endl;
   auto server_configuration =  ni::hardware::grpc::ServerConfiguration::ServerConfiguration();
   auto server_address = server_configuration.get_address();
 
-  std::cout << "Start listening on " << server_address << std::endl;
-
   // Listen on the given address without any authentication mechanism.
+  grpc::ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
 
   // Register services available on the server.
