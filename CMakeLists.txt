@@ -57,7 +57,7 @@ endforeach()
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
 #----------------------------------------------------------------------
-set(codegen_scripts 
+set(codegen_scripts
   "${codegen_dir}/proto.mako"
   "${codegen_dir}/service.cpp.mako"
   "${codegen_dir}/service.h.mako"
