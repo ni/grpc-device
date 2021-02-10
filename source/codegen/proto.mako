@@ -53,7 +53,7 @@ enum ${driver_name_pascal}Attributes {
 %>\
 enum ${enum_list} {
 % if allow_alias == True:
-  option allow_aliases = true;
+  option allow_alias = true;
 % endif
   ${enum_name}_UNSPECIFIED = 0;
 <%
