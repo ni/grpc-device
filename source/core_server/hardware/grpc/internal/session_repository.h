@@ -24,9 +24,9 @@ class SessionRepository {
   void remove_session(uint64_t id);
 
   bool reserve(
-   const ::grpc::ServerContext* context,
-   const std::string& reservation_id,
-   const std::string& client_id);
+      const ::grpc::ServerContext* context,
+      const std::string& reservation_id,
+      const std::string& client_id);
   bool is_reserved_by_client(const std::string& reservation_id, const std::string& client_id);
   bool unreserve(const std::string& reservation_id, const std::string& client_id);
   bool reset_server();

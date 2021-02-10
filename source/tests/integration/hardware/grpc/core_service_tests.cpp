@@ -40,40 +40,39 @@ class InProcessServerClientTest : public ::testing::Test {
   }
 
   void call_reserve(
-     std::string reservation_id,
-     std::string client_id,
-     const std::chrono::system_clock::time_point& deadline
-      = std::chrono::system_clock::now() + std::chrono::seconds(1))
+      std::string reservation_id,
+      std::string client_id,
+      const std::chrono::system_clock::time_point& deadline = std::chrono::system_clock::now() + std::chrono::seconds(1))
   {
-     ni::hardware::grpc::ReserveRequest request;
-      ni::hardware::grpc::ReserveResponse response;
-      request.set_reservation_id(reservation_id);
-      request.set_client_id(client_id);
-      ::grpc::ClientContext context;
-      context.set_deadline(deadline);
-     GetStub()->Reserve(&context, request, &response);
+    ni::hardware::grpc::ReserveRequest request;
+    ni::hardware::grpc::ReserveResponse response;
+    request.set_reservation_id(reservation_id);
+    request.set_client_id(client_id);
+    ::grpc::ClientContext context;
+    context.set_deadline(deadline);
+    GetStub()->Reserve(&context, request, &response);
   }
 
   bool call_is_reserved(std::string reservation_id, std::string client_id)
   {
-     ni::hardware::grpc::IsReservedByClientRequest request;
-      ni::hardware::grpc::IsReservedByClientResponse response;
-      request.set_reservation_id(reservation_id);
-      request.set_client_id(client_id);
-      ::grpc::ClientContext context;
-     GetStub()->IsReservedByClient(&context, request, &response);
-     return response.is_reserved();
+    ni::hardware::grpc::IsReservedByClientRequest request;
+    ni::hardware::grpc::IsReservedByClientResponse response;
+    request.set_reservation_id(reservation_id);
+    request.set_client_id(client_id);
+    ::grpc::ClientContext context;
+    GetStub()->IsReservedByClient(&context, request, &response);
+    return response.is_reserved();
   }
 
   bool call_unreserve(std::string reservation_id, std::string client_id)
   {
-     ni::hardware::grpc::UnreserveRequest request;
-      ni::hardware::grpc::UnreserveResponse response;
-      request.set_reservation_id(reservation_id);
-      request.set_client_id(client_id);
-      ::grpc::ClientContext context;
-     GetStub()->Unreserve(&context, request, &response);
-     return response.is_unreserved();
+    ni::hardware::grpc::UnreserveRequest request;
+    ni::hardware::grpc::UnreserveResponse response;
+    request.set_reservation_id(reservation_id);
+    request.set_client_id(client_id);
+    ::grpc::ClientContext context;
+    GetStub()->Unreserve(&context, request, &response);
+    return response.is_unreserved();
   }
 
  protected:
@@ -101,24 +100,24 @@ TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_Respo
 
 TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservation_FreeReservation_DoesNotReserve)
 {
-   call_reserve("foo", "a");
-   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+  call_reserve("foo", "a");
+  call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
 
-   call_unreserve("foo", "a");
+  call_unreserve("foo", "a");
 
-   EXPECT_FALSE(call_is_reserved("foo", "b"));
+  EXPECT_FALSE(call_is_reserved("foo", "b"));
 }
 
 TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_FreeReservation_DoNotReserve)
 {
-   call_reserve("foo", "a");
-   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
-   call_reserve("foo", "c", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+  call_reserve("foo", "a");
+  call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
+  call_reserve("foo", "c", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
 
   call_unreserve("foo", "a");
 
-   EXPECT_FALSE(call_is_reserved("foo", "b"));
-   EXPECT_FALSE(call_is_reserved("foo", "c"));
+  EXPECT_FALSE(call_is_reserved("foo", "b"));
+  EXPECT_FALSE(call_is_reserved("foo", "c"));
 }
 
 // TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
