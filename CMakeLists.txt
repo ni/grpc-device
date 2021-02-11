@@ -38,7 +38,7 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}"
   "./source"
   "./source/core_server"
-  "./generated/niFake"
+  "./generated/nifake"
 )
 
 #----------------------------------------------------------------------
