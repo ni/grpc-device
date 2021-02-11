@@ -446,7 +446,7 @@ TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientRet
   EXPECT_EQ(status.error_code(), ::grpc::ABORTED);
 }
 
-TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnsAborted)
+TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnAborted)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService service(&session_repository);
