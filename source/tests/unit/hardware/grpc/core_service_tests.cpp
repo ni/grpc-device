@@ -391,10 +391,10 @@ TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientRet
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
   request.set_client_id("b");
-  ::grpc::Status server_status;
+  ::grpc::Status status;
   ni::hardware::grpc::ReserveResponse response;
   response.set_is_reserved(true);
-  std::thread reserve_b(call_reserve_task, &service, &request, &response, &server_status);
+  std::thread reserve_b(call_reserve_task, &service, &request, &response, &status);
   std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
   ::grpc::ServerContext context;
@@ -403,9 +403,39 @@ TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientRet
 
   reserve_b.join();
   EXPECT_FALSE(response.is_reserved());
-  EXPECT_EQ(server_status.error_code(), ::grpc::ABORTED);
+  EXPECT_EQ(status.error_code(), ::grpc::ABORTED);
 }
 
+TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnedAborted)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  ni::hardware::grpc::CoreService service(&session_repository);
+  call_reserve(&service, "foo", "a");
+  ni::hardware::grpc::ReserveRequest request;
+  request.set_reservation_id("foo");
+  request.set_client_id("b");
+  ni::hardware::grpc::ReserveResponse clientb_response;
+  clientb_response.set_is_reserved(true);
+  ::grpc::Status status_b;
+  std::thread reserve_b(call_reserve_task, &service, &request, &clientb_response, &status_b);
+  request.set_client_id("c");
+  ni::hardware::grpc::ReserveResponse clientc_response;
+  clientb_response.set_is_reserved(true);
+  ::grpc::Status status_c;
+  std::thread reserve_c(call_reserve_task, &service, &request, &clientc_response, &status_c);
+  std::this_thread::sleep_for(std::chrono::milliseconds(2));
+
+  ::grpc::ServerContext context;
+  ni::hardware::grpc::ResetServerResponse reset_response;
+  service.ResetServer(&context, NULL, &reset_response);
+
+  reserve_b.join();
+  EXPECT_FALSE(clientb_response.is_reserved());
+  EXPECT_EQ(status_b.error_code(), ::grpc::ABORTED);
+  reserve_c.join();
+  EXPECT_FALSE(clientc_response.is_reserved());
+  EXPECT_EQ(status_c.error_code(), ::grpc::ABORTED);
+}
 }  // namespace grpc
 }  // namespace hardware
 }  // namespace unit
