@@ -113,12 +113,12 @@ std::shared_ptr<SessionRepository::ReservationInfo> SessionRepository::find_or_c
 }
 
 // A call to this method does not guarantee that the provided client_id will hold the reservation upon completion.
-// The method will return a boolean value indicating whether or not the caller holds the reservation and it will
+// The method will return a boolean value indicating whether or not the client_id holds the reservation and it will
 // also set the status to an appropriate grpc::Status providing more detail about the circumstances surrounding
 // the returned reservation state:
 // 1. If the reservation_id or client_id are empty then the status is set to INVALID_ARGUMENT
 // 2. If the reservation requested is already reserved by client_id then status is set to FAILED_PRECONDITION. The 
-//    precondition in this case is that the client_id doesn't already hold the reservation.
+//    precondition in this case is that the client_id doesn't already hold the reservation_id.
 // 3. If the reserve call is cancelled by a client call to cancel or by exceeding the client's deadline then
 //    the status is set to CANCELLED.
 // 4. If the reservation is created for client_id or if the reservation is changed from another client to client_id
