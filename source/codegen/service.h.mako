@@ -33,7 +33,7 @@ define_name = define_name.upper().replace(".", "_")
 #define ${define_name}
 
 ## Include section
-#include <${driver_name_pascal.lower()}.grpc.pb.h>
+#include <${module_name}.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
