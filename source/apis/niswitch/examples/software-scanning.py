@@ -44,20 +44,21 @@ switch = gRPCSwitch.niSwitchServiceStub(channel)
 numberOfTriggers = 5
 anyError = False
 
-# Display errors if any
+# Checks for errors. If any, throws an exception to stop the execution.
 def CheckForError (vi, status) :
     global anyError
     if(status != 0 and not anyError):
         anyError = True
-        ErrorMessage (vi, status)
+        ThrowOnError (vi, status)
 
 # Converts an error code returned by NI-SWITCH into a user-readable string
-def ErrorMessage (vi, errorCode):
-    errorMessageResponse = switch.ErrorMessage(switchTypes.ErrorMessageRequest(
-    vi=vi,
-    errorCode = errorCode
-    ))
-    print(errorMessageResponse)
+def ThrowOnError (vi, errorCode):
+    errorMessageRequest = switchTypes.ErrorMessageRequest(
+        vi=vi,
+        errorCode = errorCode
+        )
+    errorMessageResponse = switch.ErrorMessage(errorMessageRequest)
+    raise Exception (errorMessageResponse)
 
 # Open session to switch module and set topology
 initWithTopologyResponse = switch.InitWithTopology(switchTypes.InitWithTopologyRequest(
@@ -94,12 +95,12 @@ CheckForError(vi, (switch.InitiateScan(switchTypes.InitiateScanRequest(
     ))).status)
 
 #Send software trigger to switch module in a loop
-while (numberOfTriggers) :
+for x in range(numberOfTriggers):
     #Wait for 500 ms
     time.sleep(0.5)
     CheckForError(vi, (switch.SendSoftwareTrigger(switchTypes.SendSoftwareTriggerRequest(
-    vi=vi
-    ))).status)
+        vi=vi
+        ))).status)
     numberOfTriggers = numberOfTriggers - 1    
 
 #Abort Scanning
@@ -109,5 +110,5 @@ CheckForError(vi, (switch.AbortScan(switchTypes.AbortScanRequest(
 
 # Close session to switch module.
 CheckForError(vi, (switch.Close(switchTypes.CloseRequest(
-        vi = vi
-        ))).status)
+    vi = vi
+    ))).status)
