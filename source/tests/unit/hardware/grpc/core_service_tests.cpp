@@ -105,15 +105,21 @@ bool call_is_reserved(ni::hardware::grpc::CoreService* service, std::string rese
   return  call_is_reserved(service, reservation_id, client_id, status);
 }
 
-bool call_reserve(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id)
+bool call_reserve(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
 {
   ni::hardware::grpc::ReserveRequest reserve_request;
   reserve_request.set_reservation_id("foo");
   reserve_request.set_client_id("a");
   ::grpc::ServerContext context;
   ni::hardware::grpc::ReserveResponse reserve_response;
-  service->Reserve(&context, &reserve_request, &reserve_response);
+  status = service->Reserve(&context, &reserve_request, &reserve_response);
   return reserve_response.is_reserved();
+}
+
+bool call_reserve(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id)
+{
+  ::grpc::Status status;
+  return call_reserve(service, reservation_id, client_id, status);
 }
 
 TEST(CoreServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenReserves)
@@ -196,15 +202,10 @@ TEST(CoreServiceTests, IdReserved_ReserveWithSameClientId_ReturnsFailedPrecondit
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService service(&session_repository);
-  ni::hardware::grpc::ReserveRequest request;
-  request.set_reservation_id("foo");
-  request.set_client_id("a");
-  ::grpc::ServerContext context;
-  ni::hardware::grpc::ReserveResponse response;
-  service.Reserve(&context, &request, &response);
+  call_reserve(&service, "foo", "a");
 
-  response.set_is_reserved(false);
-  auto status = service.Reserve(&context, &request, &response);
+  ::grpc::Status status;
+  call_reserve(&service, "foo", "a", status);
 
   EXPECT_EQ(status.error_code(), ::grpc::FAILED_PRECONDITION);
 }
@@ -422,7 +423,7 @@ TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClie
   EXPECT_FALSE(is_reserved);
 }
 
-TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientReturnedAborted)
+TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientReturnsAborted)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService service(&session_repository);
@@ -445,7 +446,7 @@ TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientRet
   EXPECT_EQ(status.error_code(), ::grpc::ABORTED);
 }
 
-TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnedAborted)
+TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnsAborted)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService service(&session_repository);
