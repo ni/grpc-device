@@ -53,7 +53,7 @@ DeviceManagement::DeviceManagement()
 {
 }
 
-NISysCfgStatus DeviceManagement::enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties> *devices)
+NISysCfgStatus DeviceManagement::enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
 {
   NISysCfgStatus status = NISysCfg_OK;
   NISysCfgSessionHandle session = NULL;

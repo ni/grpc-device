@@ -17,6 +17,12 @@ namespace unit {
 namespace hardware {
 namespace grpc {
 
+#if defined(_MSC_VER)
+static const char* expected_syscfg_api_library_name = "nisyscfg.dll";
+#else
+static const char* expected_syscfg_api_library_name = "./libnisyscfg.so";
+#endif
+
 TEST(CoreServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -416,6 +422,43 @@ TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClie
   EXPECT_FALSE(is_reserved);
   is_reserved = call_is_reserved(&service, "foo", "c");
   EXPECT_FALSE(is_reserved);
+}
+
+TEST(CoreServiceTests, CreateCoreService_SharedLibraryIsNotLoaded)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  ni::hardware::grpc::internal::DeviceManagement device_management;
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
+
+  EXPECT_FALSE(shared_library.is_loaded());
+}
+
+TEST(CoreServiceTests, CreateCoreService_SharedLibraryNameIsSetToSysCfgLibrary)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  ni::hardware::grpc::internal::DeviceManagement device_management;
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
+  std::string shared_library_name = shared_library.get_library_name();
+
+  EXPECT_STREQ(expected_syscfg_api_library_name, shared_library_name.c_str());
+}
+
+TEST(CoreServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  ni::hardware::grpc::internal::DeviceManagement device_management;
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
+
+  ::grpc::ServerContext context;
+  ni::hardware::grpc::EnumerateDevicesRequest request;
+  ni::hardware::grpc::EnumerateDevicesResponse response;
+  ::grpc::Status status = service.EnumerateDevices(&context, &request, &response);
+
+  // Since the syscfg library will not be present, we expect a NOT_FOUND status in response.
+  EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
 }
 
 }  // namespace grpc
