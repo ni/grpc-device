@@ -68,7 +68,10 @@ def get_request_value(parameter, driver_name_pascal):
     if parameter['type'] == 'ViRsrc':
         result = f'{result}.c_str()'
     if parameter['type'] == 'ViChar':
-        result = f'{result}.c_str()'
+        if is_array:
+            result = f'{result}.c_str()'
+        else:
+            result = f'{result}[0]'
     result = f'{result};'
     return result
 
