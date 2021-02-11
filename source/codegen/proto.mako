@@ -50,6 +50,9 @@ enum ${driver_name_pascal}Attributes {
   enum_name = common_helpers.camel_to_snake(common_helpers.pascal_to_camel(enum_list)).upper()
   enums = data["enums"][enum_list]
   allow_alias = proto_helpers.determine_allow_alias(enums)
+  used_enums = common_helpers.get_used_enums(data["functions"], data["attributes"])
+  if enum_list not in used_enums:
+    continue
 %>\
 enum ${enum_list} {
 % if allow_alias == True:
