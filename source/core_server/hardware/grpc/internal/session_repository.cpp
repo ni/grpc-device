@@ -146,10 +146,9 @@ bool SessionRepository::reserve(
       return false;
     }
     bool is_reserved = it != reservations_.end() && client_id == it->second->client_id;
-    status = ::grpc::Status::OK;
-    if(!is_reserved){
-      status = ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");
-    }
+    status = is_reserved 
+      ? ::grpc::Status::OK
+      : ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");
     return is_reserved;
   }
 }

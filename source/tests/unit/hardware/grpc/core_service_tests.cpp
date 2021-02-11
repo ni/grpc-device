@@ -60,7 +60,11 @@ TEST(CoreServiceTests, NewReserveIdAndClientId_Reserve_ReservesSession)
   EXPECT_TRUE(response.is_reserved());
 }
 
-void call_reserve_task(ni::hardware::grpc::CoreService* service, ni::hardware::grpc::ReserveRequest* request, ni::hardware::grpc::ReserveResponse* response, ::grpc::Status* status)
+void call_reserve_task(
+  ni::hardware::grpc::CoreService* service,
+  ni::hardware::grpc::ReserveRequest* request,
+  ni::hardware::grpc::ReserveResponse* response,
+  ::grpc::Status* status)
 {
   ::grpc::ServerContext context;
   *status = service->Reserve(&context, request, response);
