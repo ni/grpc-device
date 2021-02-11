@@ -5,21 +5,19 @@
 #include "shared_library.h"
 #include "nisyscfg.h"
 
-namespace ni
+namespace ni {
+namespace hardware {
+namespace grpc {
+namespace internal {
+  
+class DeviceManagement
 {
-namespace hardware
-{
-namespace grpc
-{
-namespace internal
-{
-   class DeviceManagement
-   {
-   public:
-      DeviceManagement();
+ public:
+  DeviceManagement();
 
-      NISysCfgStatus enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
-   };
+  NISysCfgStatus enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
+};
+
 } // namespace internal
 } // namespace grpc
 } // namespace hardware

@@ -13,7 +13,7 @@ namespace grpc {
 CoreService::CoreService(internal::SessionRepository* session_repository, internal::DeviceManagement* device_management, internal::SharedLibrary* shared_library)
     : session_repository_(session_repository), device_management_(device_management), shared_library_(shared_library)
 {
-    shared_library->set_library_name(syscfg_api_library_name);
+  shared_library->set_library_name(syscfg_api_library_name);
 }
 
 ::grpc::Status CoreService::EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response)
