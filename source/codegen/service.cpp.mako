@@ -46,7 +46,7 @@ namespace ${namespace}
 % endfor
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  using internal = ni::hardware::grpc::internal;
+  namespace internal = ni::hardware::grpc::internal;
 ## Function pointers to driver library
 % for method_name in functions:
 <%
@@ -86,10 +86,10 @@ namespace ${namespace}
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  grpc::Status ${service_name}::${method_name}(grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
+  ::grpc::Status ${service_name}::${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
   {
 % if common_helpers.has_array_parameter(f):
-    return grpc::Status(grpc::StatusCode::NOT_IMPLEMENTED, "TODO: This server handler has not been implemented.");
+    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
 <% continue %>
@@ -98,11 +98,11 @@ namespace ${namespace}
     if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
       message += driver_api_library_name;
-      return grpc::Status(grpc::StatusCode::NOT_FOUND, message.c_str());
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
     }
     auto ${common_helpers.pascal_to_snake(method_name)}_function = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_->get_function_pointer("${c_function_prefix}${method_name}"));
     if (${common_helpers.pascal_to_snake(method_name)}_function == nullptr) {
-      return grpc::Status(grpc::StatusCode::NOT_FOUND, "The requested function was not found: ${c_function_prefix}${method_name}");
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: ${c_function_prefix}${method_name}");
     }
 
 %for parameter in input_parameters:
@@ -113,7 +113,8 @@ namespace ${namespace}
 %>\
 %if common_helpers.is_enum(parameter) == True:
     ## TODO: Handle non integer enums
-    auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
+    ## auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
+    ${parameter_type} ${parameter_name};
 % else:
     ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
 % endif
@@ -156,7 +157,7 @@ namespace ${namespace}
 %endfor
     }
 %endif
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   }
 
 % endfor

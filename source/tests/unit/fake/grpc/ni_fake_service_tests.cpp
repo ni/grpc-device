@@ -5,7 +5,7 @@
 
 #include "hardware/grpc/internal/session_repository.h"
 #include "hardware/grpc/internal/shared_library.h"
-#include "nifake/nifake_service.h"
+#include <nifake_service.h>
 
 namespace ni {
 namespace tests {
@@ -22,7 +22,7 @@ static const char* expected_api_library_name = "./nifake.so";
 TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryIsNotLoaded)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::internal::SharedLibrary shared_library("arbitraryName");
 
   ni::fake::grpc::NiFakeService service(&shared_library, &session_repository);
 
@@ -32,7 +32,7 @@ TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryIsNotLoaded)
 TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryNameIsSet)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::internal::SharedLibrary shared_library("arbitraryName");
 
   ni::fake::grpc::NiFakeService service(&shared_library, &session_repository);
   std::string shared_library_name = shared_library.get_library_name();
@@ -43,7 +43,7 @@ TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryNameIsSet)
 TEST(NiFakeServiceTests, LibraryNotPresent_GetABoolean_ReturnsNotFoundGrpcStatusError)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::internal::SharedLibrary shared_library("arbitraryName");
   ni::fake::grpc::NiFakeService service(&shared_library, &session_repository);
   ni::fake::grpc::GetABooleanRequest request;
 

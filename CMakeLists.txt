@@ -38,6 +38,7 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}"
   "./source"
   "./source/core_server"
+  "./generated/niFake"
 )
 
 #----------------------------------------------------------------------
@@ -187,17 +188,25 @@ add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
+# Hardcode ni-fake soruces in right now to get it building the unit tests.
+set(ni_fake_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/niFake.pb.cc")
+set(ni_fake_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/niFake.grpc.pb.cc")
+set(ni_fake_service_srcs "${proto_output_dir}/niFake/nifake_service.cpp")
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
+    "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
     "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
-    ${server_utilities_grpc_srcs})
+    ${server_utilities_grpc_srcs}
+    ${ni_fake_service_srcs}
+    ${ni_fake_proto_srcs}
+    ${ni_fake_grpc_srcs})
 
 target_link_libraries(UnitTestsRunner
     gtest

@@ -69,8 +69,6 @@ def get_request_value(parameter, driver_name_pascal):
         result = f'{result}.c_str()'
     if parameter['type'] == 'ViChar':
         result = f'{result}.c_str()'
-    if parameter['type'] == 'ViSession':
-        result = f'{result})'
     result = f'{result};'
     return result
 
@@ -92,7 +90,8 @@ def get_c_type(parameter, driver_name_pascal):
     "sfixed64": "std::int64_t",
     "bool": "bool",
     "string": "std::string",
-    "bytes": "std::string"
+    "bytes": "std::string",
+    "google.protobuf.Timestamp": "google::protobuf::Timestamp"
   }
   # This is equivalent to a switch statement with the default case returning the grpc_type
   return grpc_to_c.get(grpc_type, grpc_type)

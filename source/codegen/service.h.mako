@@ -33,7 +33,7 @@ define_name = define_name.upper().replace(".", "_")
 #define ${define_name}
 
 ## Include section
-#include <${common_helpers.camel_to_snake(common_helpers.pascal_to_camel(driver_name_pascal))}.grpc.pb.h>
+#include <${common_helpers.pascal_to_camel(driver_name_pascal)}.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
@@ -48,18 +48,18 @@ namespace ${namespace}
   class ${service_name} final : public ${driver_name_pascal}::Service
   {
   public:
-    ${service_name}(SharedLibrary* shared_library, SessionRepository* session_repository);
+    ${service_name}(ni::hardware::grpc::internal::SharedLibrary* shared_library, ni::hardware::grpc::internal::SessionRepository* session_repository);
 % for function in functions:
 <%
     f = functions[function]
     if not common_helpers.should_gen_service_handler(f):
       continue
 %>\
-    grpc::Status ${function}(grpc::ServerContext* context, const ${function}Request* request, ${function}Response* response) override;
+    ::grpc::Status ${function}(::grpc::ServerContext* context, const ${function}Request* request, ${function}Response* response) override;
 % endfor
   private:
-    internal::SharedLibrary* shared_library_;
-    internal::SessionRepository* session_repository_;
+    ni::hardware::grpc::internal::SharedLibrary* shared_library_;
+    ni::hardware::grpc::internal::SessionRepository* session_repository_;
   };
 % for namespace in reversed_driver_namespaces:
 } // namespace ${namespace}
