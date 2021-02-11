@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.12.0)
 
 project(core_server C CXX)
 
@@ -41,27 +41,106 @@ include_directories(
 )
 
 #----------------------------------------------------------------------
+# Get list of NI Driver APIs and directories to generate from
+#----------------------------------------------------------------------
+set(metadata_dir ${CMAKE_SOURCE_DIR}/source/metadata)
+set(proto_output_dir ${CMAKE_SOURCE_DIR}/generated)
+set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
+file(GLOB proto_directories RELATIVE ${metadata_dir} CONFIGURE_DEPENDS ${metadata_dir}/*)
+set(ni_apis "")
+foreach(proto_dir ${proto_directories})
+  if(IS_DIRECTORY ${metadata_dir}/${proto_dir})
+    set(ni_apis ${ni_apis} ${proto_dir})
+  endif()
+endforeach()
+
+#----------------------------------------------------------------------
+# Create NI Driver APIs proto and server files
+#----------------------------------------------------------------------
+set(codegen_scripts
+  "${codegen_dir}/proto.mako"
+  "${codegen_dir}/service.cpp.mako"
+  "${codegen_dir}/service.h.mako"
+  "${codegen_dir}/common_helpers.py"
+  "${codegen_dir}/generate_service.py"
+  "${codegen_dir}/handler_helpers.py"
+  "${codegen_dir}/proto_helpers.py")
+
+foreach(api ${ni_apis})
+  set(codegen_dependencies
+    "${metadata_dir}/${api}/attributes.py"
+    "${metadata_dir}/${api}/attributes_addon.py"
+    "${metadata_dir}/${api}/config.py"
+    "${metadata_dir}/${api}/config_addon.py"
+    "${metadata_dir}/${api}/enums.py"
+    "${metadata_dir}/${api}/enums_addon.py"
+    "${metadata_dir}/${api}/functions.py"
+    "${metadata_dir}/${api}/functions_addon.py"
+    "${metadata_dir}/${api}/__init__.py")
+  set(output_files
+    ${proto_output_dir}/${api}/${api}.proto
+    ${proto_output_dir}/${api}/${api}_service.cpp
+    ${proto_output_dir}/${api}/${api}_service.h)
+  set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${proto_output_dir}/)
+  if (api STREQUAL "nifake")
+    # Fake library gen goes here. Add flag and files to output_files and gen_command
+  endif()
+  add_custom_command(OUTPUT ${output_files}
+    ${gen_command}
+    COMMENT "Generating proto file and service for ${api}"
+    DEPENDS ${codegen_dependencies} ${codegen_scripts})
+endforeach()
+
+#----------------------------------------------------------------------
 # Proto file
 #----------------------------------------------------------------------
 get_filename_component(server_utilities_proto "source/server_utilities.proto" ABSOLUTE)
 get_filename_component(server_utilities_proto_path "${server_utilities_proto}" PATH)
 
 #----------------------------------------------------------------------
-# Generated sources
+# Generate sources from proto files
 #----------------------------------------------------------------------
+function(GenerateGrpcSources proto_file proto_path proto_srcs proto_hdrs grpc_srcs grpc_hdrs)
+  add_custom_command(
+    OUTPUT "${proto_srcs}" "${proto_hdrs}" "${grpc_srcs}" "${grpc_hdrs}"
+    COMMAND ${_PROTOBUF_PROTOC}
+    ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
+      --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
+      -I "${proto_path}"
+      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+      --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
+      "${proto_file}"
+    DEPENDS "${proto_file}")
+endfunction()
+
 set(server_utilities_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.pb.cc")
 set(server_utilities_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.pb.h")
 set(server_utilities_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.grpc.pb.cc")
 set(server_utilities_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.grpc.pb.h")
-add_custom_command(
-  OUTPUT "${server_utilities_proto_srcs}" "${server_utilities_proto_hdrs}" "${server_utilities_grpc_srcs}" "${server_utilities_grpc_hdrs}"
-  COMMAND ${_PROTOBUF_PROTOC}
-  ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
-    --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
-    -I "${server_utilities_proto_path}"
-    --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-    "${server_utilities_proto}"
-  DEPENDS "${server_utilities_proto}")
+GenerateGrpcSources(
+  ${server_utilities_proto}
+  ${server_utilities_proto_path}
+  ${server_utilities_proto_srcs}
+  ${server_utilities_proto_hdrs}
+  ${server_utilities_grpc_srcs}
+  ${server_utilities_grpc_hdrs})
+
+foreach(api ${ni_apis})
+  GenerateGrpcSources(
+    ${proto_output_dir}/${api}/${api}.proto
+    ${proto_output_dir}/${api}/
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.h"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.h")
+  # Temporary custom target to force generation without changing an existing target
+  add_custom_target(${api}_protocs ALL
+    DEPENDS
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.cc"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.pb.h"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.cc"
+      "${CMAKE_CURRENT_BINARY_DIR}/${api}.grpc.pb.h")
+endforeach()
 
 add_executable(core_server
    "source/core_server/core_server.cpp"
