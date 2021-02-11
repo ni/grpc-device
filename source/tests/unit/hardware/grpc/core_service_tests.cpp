@@ -88,15 +88,21 @@ bool call_unreserve(ni::hardware::grpc::CoreService* service, std::string reserv
   return  call_unreserve(service, reservation_id, client_id, status);
 }
 
-bool call_is_reserved(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id)
+bool call_is_reserved(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
 {
   ni::hardware::grpc::IsReservedByClientRequest is_reserved_request;
   is_reserved_request.set_reservation_id(reservation_id);
   is_reserved_request.set_client_id(client_id);
   ni::hardware::grpc::IsReservedByClientResponse is_reserved_response;
   ::grpc::ServerContext context;
-  service->IsReservedByClient(&context, &is_reserved_request, &is_reserved_response);
+  status = service->IsReservedByClient(&context, &is_reserved_request, &is_reserved_response);
   return is_reserved_response.is_reserved();
+}
+
+bool call_is_reserved(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id)
+{
+  ::grpc::Status status;
+  return  call_is_reserved(service, reservation_id, client_id, status);
 }
 
 bool call_reserve(ni::hardware::grpc::CoreService* service, std::string reservation_id, std::string client_id)
@@ -241,8 +247,10 @@ TEST(CoreServiceTests, Reservation_IsReservedWithSameClientId_ReturnsTrue)
   ni::hardware::grpc::CoreService service(&session_repository);
   call_reserve(&service, "foo", "a");
 
-  bool is_reserved = call_is_reserved(&service, "foo", "a");
+  ::grpc::Status status;
+  bool is_reserved = call_is_reserved(&service, "foo", "a", status);
 
+  EXPECT_EQ(status.error_code(), ::grpc::OK);
   EXPECT_TRUE(is_reserved);
 }
 
