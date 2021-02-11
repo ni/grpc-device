@@ -18,7 +18,7 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 To prepare for cmake + Microsoft Visual C++ compiler build
 - Install Visual Studio 2015, 2017, or 2019 (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
-- Install [CMake](https://cmake.org/download/).
+- Install [CMake](https://cmake.org/download/) 3.12.0 or newer.
 - Install [Python](https://www.python.org/downloads/).
 - Install [mako](https://www.makotemplates.org/download.html)
 
@@ -54,7 +54,7 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git, cmake, and mako:
+For Debian/Ubuntu, install git, cmake (3.12.0 or newer), and mako:
 ```
 > sudo apt-get update
 > sudo apt-get install git
@@ -62,7 +62,7 @@ For Debian/Ubuntu, install git, cmake, and mako:
 > python -m pip install mako
 ```
 
-For NI Linux RT, install git, git-perltools, cmake, python3-utils, and mako:
+For NI Linux RT, install git, git-perltools, cmake (3.12.0 or newer), python3-utils, and mako:
 ```
 > opkg update
 > opkg install git
