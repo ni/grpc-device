@@ -306,9 +306,10 @@ TEST(CoreServiceTests, Reservation_ResetServer_Unreserves)
 
   ::grpc::ServerContext context;
   ni::hardware::grpc::ResetServerResponse reset_response;
-  service.ResetServer(&context, NULL, &reset_response);
+  auto status = service.ResetServer(&context, NULL, &reset_response);
 
   EXPECT_TRUE(reset_response.is_server_reset());
+  EXPECT_EQ(status.error_code(), ::grpc::OK);
   bool is_reserved = call_is_reserved(&service, "foo", "a");
   EXPECT_FALSE(is_reserved);
 }
