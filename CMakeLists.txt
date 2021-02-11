@@ -38,7 +38,6 @@ include_directories(
   "${CMAKE_CURRENT_BINARY_DIR}"
   "./source"
   "./source/core_server"
-  "./generated/nifake"
 )
 
 #----------------------------------------------------------------------
@@ -188,10 +187,7 @@ add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
-# Hardcode ni-fake soruces in right now to get it building the unit tests.
-set(ni_fake_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/nifake.pb.cc")
-set(ni_fake_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/nifake.grpc.pb.cc")
-set(ni_fake_service_srcs "${proto_output_dir}/nifake/nifake_service.cpp")
+# Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
@@ -204,10 +200,12 @@ add_executable(UnitTestsRunner
     "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs}
-    ${ni_fake_service_srcs}
-    ${ni_fake_proto_srcs}
-    ${ni_fake_grpc_srcs})
+    "${proto_output_dir}/nifake/nifake_service.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/nifake.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/nifake.grpc.pb.cc")
 
+target_include_directories(UnitTestsRunner
+    PRIVATE "${proto_output_dir}/nifake")
 target_link_libraries(UnitTestsRunner
     gtest
     ${_GRPC_GRPCPP}
