@@ -133,6 +133,8 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi();
+    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
+    // auto a_turtle = static_cast<std::uint32_t>(request->a_turtle());
     std::uint32_t a_turtle;
     auto status = enum_input_function_with_defaults_function(vi, a_turtle);
     response->set_status(status);
@@ -448,8 +450,12 @@ namespace grpc
     bool a_boolean = request->a_boolean();
     std::int32_t an_int32 = request->an_int32();
     std::int64_t an_int64 = request->an_int64();
+    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
+    // auto an_int_enum = static_cast<std::uint32_t>(request->an_int_enum());
     std::uint32_t an_int_enum;
     double a_float = request->a_float();
+    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
+    // auto a_float_enum = static_cast<double>(request->a_float_enum());
     double a_float_enum;
     std::int32_t string_size = request->string_size();
     std::string a_string = request->a_string().c_str();
@@ -623,6 +629,8 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi();
+    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
+    // auto a_mobile_o_s_name = static_cast<std::string>(request->a_mobile_o_s_name());
     std::string a_mobile_o_s_name;
     auto status = string_valued_enum_input_function_with_defaults_function(vi, a_mobile_o_s_name);
     response->set_status(status);

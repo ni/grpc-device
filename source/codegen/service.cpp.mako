@@ -113,7 +113,8 @@ namespace ${namespace}
 %>\
 %if common_helpers.is_enum(parameter) == True:
     ## TODO: Handle non integer enums
-    ## auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
+    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
+    // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
     ${parameter_type} ${parameter_name};
 % else:
     ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
