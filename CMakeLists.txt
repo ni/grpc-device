@@ -189,8 +189,8 @@ add_library(TestApi SHARED
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
 # Hardcode ni-fake soruces in right now to get it building the unit tests.
-set(ni_fake_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/niFake.pb.cc")
-set(ni_fake_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/niFake.grpc.pb.cc")
+set(ni_fake_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/nifake.pb.cc")
+set(ni_fake_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/nifake.grpc.pb.cc")
 set(ni_fake_service_srcs "${proto_output_dir}/nifake/nifake_service.cpp")
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
