@@ -115,13 +115,16 @@ std::shared_ptr<SessionRepository::ReservationInfo> SessionRepository::find_or_c
 bool SessionRepository::reserve(
     const ::grpc::ServerContext* context,
     const std::string& reservation_id,
-    const std::string& client_id)
+    const std::string& client_id,
+    ::grpc::Status& status)
 {
   if (reservation_id.empty() || client_id.empty()) {
+    status = ::grpc::Status(::grpc::INVALID_ARGUMENT, "You must specify a non-empty reservation_id and client_id.");
     return false;
   }
   std::shared_ptr<ReservationInfo> info = find_or_create_reservation(reservation_id, client_id);
   if (!info) {
+    status = ::grpc::Status::OK;
     return true;
   }
   // If the info was newly created by find_or_create_reservation, this call
@@ -139,9 +142,15 @@ bool SessionRepository::reserve(
       if (it != reservations_.end() && info->client_count <= 0) {
         reservations_.erase(it);
       }
+      status = ::grpc::Status::CANCELLED;
       return false;
     }
-    return it != reservations_.end() && client_id == it->second->client_id;
+    bool is_reserved = it != reservations_.end() && client_id == it->second->client_id;
+    status = ::grpc::Status::OK;
+    if(!is_reserved){
+      status = ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");
+    }
+    return is_reserved;
   }
 }
 
