@@ -32,7 +32,7 @@ namespace ${namespace} {
 
 class ${driver_name_pascal}LibraryWrapper {
  public:
-  virtual ::grpc::Status CheckIfFunctionExists(const char* functionName) = 0;
+  virtual ::grpc::Status check_function_exists(const char* functionName) = 0;
 % for method_name in functions:
 <%
 f = functions[method_name]

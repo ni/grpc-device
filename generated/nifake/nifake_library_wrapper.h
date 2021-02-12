@@ -14,7 +14,7 @@ namespace grpc {
 
 class NiFakeLibraryWrapper {
  public:
-  virtual ::grpc::Status CheckIfFunctionExists(const char* functionName) = 0;
+  virtual ::grpc::Status check_function_exists(const char* functionName) = 0;
   virtual std::uint32_t Abort(std::uint64_t vi) = 0;
   virtual std::uint32_t EnumInputFunctionWithDefaults(std::uint64_t vi, std::uint32_t aTurtle) = 0;
   virtual std::uint32_t GetABoolean(std::uint64_t vi, bool* aBoolean) = 0;
