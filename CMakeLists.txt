@@ -58,7 +58,7 @@ endforeach()
 # Create NI Driver APIs proto and server files
 #----------------------------------------------------------------------
 set(codegen_scripts
-  "${codegen_dir}/interface.h.mako"
+  "${codegen_dir}/library_wrapper.h.mako"
   "${codegen_dir}/proto.mako"
   "${codegen_dir}/service.cpp.mako"
   "${codegen_dir}/service.h.mako"
@@ -82,7 +82,7 @@ foreach(api ${ni_apis})
     ${proto_output_dir}/${api}/${api}.proto
     ${proto_output_dir}/${api}/${api}_service.cpp
     ${proto_output_dir}/${api}/${api}_service.h
-    ${proto_output_dir}/${api}/${api}_interface.h)
+    ${proto_output_dir}/${api}/${api}_library_wrapper.h)
   set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${proto_output_dir}/)
   if (api STREQUAL "nifake")
     # Fake library gen goes here. Add flag and files to output_files and gen_command
