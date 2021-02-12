@@ -1,5 +1,5 @@
 #include "hardware/grpc/core_service.h"
-#include "hardware/grpc/server_configuration.h"
+#include "hardware/grpc/internal/server_configuration.h"
 
 static void RunServer(int argc, char** argv)
 {
@@ -10,7 +10,7 @@ static void RunServer(int argc, char** argv)
   try {
     //TODO: parse config file path from command line argument
     std::string config_file_path;
-    ni::hardware::grpc::ServerConfiguration server_configuration(config_file_path);
+    ni::hardware::grpc::internal::ServerConfiguration server_configuration(config_file_path);
     server_address = server_configuration.get_address();
   }
   catch(const std::exception& ex) {
