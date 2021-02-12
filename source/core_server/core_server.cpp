@@ -21,7 +21,6 @@ static void RunServer(int argc, char** argv)
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
-  int* foo = nullptr;
 
   std::cout << "Server listening on " << klocalhostAddress << std::endl;
 
