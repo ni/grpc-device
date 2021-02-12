@@ -14,6 +14,7 @@ jobs:
     steps:
     - name: Cancel Build(s)
       uses: styfle/cancel-workflow-action@0.7.0
+      if: !contains(github.ref, 'main')
       with:
         access_token: ${{ github.token }}
 
