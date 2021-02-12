@@ -17,7 +17,7 @@ std::string build_asset_path(const std::string& filename, const std::string& sub
   return sub_directory + "/" + filename;
 }
 
-TEST(ServerConfigurationTests, CreateConfigurationWithDefault_ReturnsDefaultLocalAddressAndPort)
+TEST(ServerConfigurationTests, CreateConfigurationWithDefaultConfigFile_ReturnsDefaultLocalAddressAndPort)
 {
   auto file_path = build_asset_path(kdefaultFilename, kreleaseFolder);
   ni::hardware::grpc::internal::ServerConfiguration server_configuration(file_path);
@@ -29,7 +29,7 @@ TEST(ServerConfigurationTests, CreateConfigurationWithDefault_ReturnsDefaultLoca
 
 TEST(ServerConfigurationTests, CreateConfigurationWithMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
-  auto file_path = build_asset_path("fake.json", "");
+  auto file_path = build_asset_path("fake.json", kreleaseFolder);
   ni::hardware::grpc::internal::ServerConfiguration server_configuration(file_path);
 
   try {
