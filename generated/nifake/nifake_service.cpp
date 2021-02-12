@@ -356,7 +356,7 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
       response->set_a_quantity(a_quantity);
-      response->set_a_turtle(static_cast<Turtle>(turtle_output_map_.find(a_turtle_ctype))->second);
+      response->set_a_turtle(static_cast<Turtle>(turtle_output_map_.find(a_turtle_ctype)->second));
     }
     return ::grpc::Status::OK;
   }

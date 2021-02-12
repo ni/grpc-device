@@ -147,7 +147,7 @@ namespace ${namespace}
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
-      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter["enum"].lower()}_output_map_.find(${paramter_name_ctype}))->second);
+      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter["enum"].lower()}_output_map_.find(${paramter_name_ctype})->second));
 % else:
       response->set_${parameter_name}(${parameter_name});
 %endif
