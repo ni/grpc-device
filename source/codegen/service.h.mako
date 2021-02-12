@@ -71,7 +71,7 @@ namespace ${namespace}
   enum_value = handler_helpers.python_to_c(type(enums[enum]["values"][0]["value"]).__name__)
 %>\
     std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${handler_helpers.get_input_values(enums[enum])} };
-    std::map<${enum_value}, std::int32_t> ${enum}.lower()_output_map_ { ${handler_helpers.get_output_values(enums[enum])} };
+    std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${handler_helpers.get_output_values(enums[enum])} };
 %endif
 %endfor
   };
