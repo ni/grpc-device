@@ -39,7 +39,6 @@ service NiFake {
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc MultipleArrayTypes(MultipleArrayTypesRequest) returns (MultipleArrayTypesResponse);
   rpc MultipleArraysSameSize(MultipleArraysSameSizeRequest) returns (MultipleArraysSameSizeResponse);
   rpc OneInputFunction(OneInputFunctionRequest) returns (OneInputFunctionResponse);
@@ -55,7 +54,6 @@ service NiFake {
   rpc SetCustomTypeArray(SetCustomTypeArrayRequest) returns (SetCustomTypeArrayResponse);
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
   rpc TwoInputFunction(TwoInputFunctionRequest) returns (TwoInputFunctionResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc Use64BitNumber(Use64BitNumberRequest) returns (Use64BitNumberResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
@@ -358,15 +356,6 @@ message InitWithOptionsResponse {
   fixed64 vi = 2; 
 }
 
-message LockSessionRequest {
-  fixed64 vi = 1;  
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2; 
-}
-
 message MultipleArrayTypesRequest {
   fixed64 vi = 1;  
   sint32 output_array_size = 2;  
@@ -531,15 +520,6 @@ message TwoInputFunctionRequest {
 
 message TwoInputFunctionResponse {
   int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  fixed64 vi = 1;  
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2; 
 }
 
 message Use64BitNumberRequest {

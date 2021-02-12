@@ -1237,6 +1237,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'LockSession': {
+        'codegen_method': 'no',
         'documentation': {
             'description': 'Lock.'
         },
@@ -2223,6 +2224,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UnlockSession': {
+        'codegen_method': 'no',
         'documentation': {
             'description': 'Unlock'
         },

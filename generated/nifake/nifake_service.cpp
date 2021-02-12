@@ -35,7 +35,6 @@ namespace grpc
   using niFake_GetEnumValuePtr = int (*)(std::uint64_t, std::int32_t*, std::uint32_t*);
   using niFake_InitWithOptionsPtr = int (*)(std::string, bool, bool, std::string, std::uint64_t*);
   using niFake_InitiatePtr = int (*)(std::uint64_t);
-  using niFake_LockSessionPtr = int (*)(std::uint64_t, bool*);
   using niFake_OneInputFunctionPtr = int (*)(std::uint64_t, std::int32_t);
   using niFake_ParametersAreMultipleTypesPtr = int (*)(std::uint64_t, bool, std::int32_t, std::int64_t, std::uint32_t, double, double, std::int32_t, std::string);
   using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(std::uint64_t);
@@ -50,7 +49,6 @@ namespace grpc
   using niFake_SetCustomTypePtr = int (*)(std::uint64_t, std::uint64_t);
   using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::string);
   using niFake_TwoInputFunctionPtr = int (*)(std::uint64_t, double, std::string);
-  using niFake_UnlockSessionPtr = int (*)(std::uint64_t, bool*);
   using niFake_Use64BitNumberPtr = int (*)(std::uint64_t, std::int64_t, std::int64_t*);
   using niFake_closePtr = int (*)(std::uint64_t);
 
@@ -432,31 +430,6 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
-  {
-    shared_library_->load();
-    if (!shared_library_->is_loaded()) {
-      std::string message("The library could not be loaded: ");
-      message += driver_api_library_name;
-      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
-    }
-    auto lock_session_function = reinterpret_cast<niFake_LockSessionPtr>(shared_library_->get_function_pointer("niFake_LockSession"));
-    if (lock_session_function == nullptr) {
-      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_LockSession");
-    }
-
-    std::uint64_t vi = request->vi();
-    bool caller_has_lock;
-    auto status = lock_session_function(vi, &caller_has_lock);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_caller_has_lock(caller_has_lock);
-    }
-    return ::grpc::Status::OK;
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::MultipleArrayTypes(::grpc::ServerContext* context, const MultipleArrayTypesRequest* request, MultipleArrayTypesResponse* response)
   {
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
@@ -717,31 +690,6 @@ namespace grpc
     std::string a_string = request->a_string();
     auto status = two_input_function_function(vi, a_number, a_string);
     response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
-  {
-    shared_library_->load();
-    if (!shared_library_->is_loaded()) {
-      std::string message("The library could not be loaded: ");
-      message += driver_api_library_name;
-      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
-    }
-    auto unlock_session_function = reinterpret_cast<niFake_UnlockSessionPtr>(shared_library_->get_function_pointer("niFake_UnlockSession"));
-    if (unlock_session_function == nullptr) {
-      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_UnlockSession");
-    }
-
-    std::uint64_t vi = request->vi();
-    bool caller_has_lock;
-    auto status = unlock_session_function(vi, &caller_has_lock);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_caller_has_lock(caller_has_lock);
-    }
     return ::grpc::Status::OK;
   }
 

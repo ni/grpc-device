@@ -17,8 +17,6 @@ c_function_prefix = data["config"]["c_function_prefix"]
 //---------------------------------------------------------------------
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
 option java_multiple_files = true;
 option java_package = "com.ni.${module_name.replace("ni", "")}.grpc";
 option java_outer_classname = "${driver_name_pascal}";
