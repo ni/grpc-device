@@ -33,7 +33,6 @@ namespace grpc
   using niFake_GetCalIntervalPtr = int (*)(std::uint64_t, std::int32_t*);
   using niFake_GetCustomTypePtr = int (*)(std::uint64_t, std::uint64_t*);
   using niFake_GetEnumValuePtr = int (*)(std::uint64_t, std::int32_t*, std::uint32_t*);
-  using niFake_GetLastCalDateAndTimePtr = int (*)(std::uint64_t, std::int32_t, google::protobuf::Timestamp*);
   using niFake_InitWithOptionsPtr = int (*)(std::string, bool, bool, std::string, std::uint64_t*);
   using niFake_InitiatePtr = int (*)(std::uint64_t);
   using niFake_LockSessionPtr = int (*)(std::uint64_t, bool*);
@@ -54,7 +53,6 @@ namespace grpc
   using niFake_UnlockSessionPtr = int (*)(std::uint64_t, bool*);
   using niFake_Use64BitNumberPtr = int (*)(std::uint64_t, std::int64_t, std::int64_t*);
   using niFake_closePtr = int (*)(std::uint64_t);
-  using niFake_fancy_self_testPtr = int (*)(std::uint64_t);
 
   #if defined(_MSC_VER)
     static const char* driver_api_library_name = "nifake_64.dll";
@@ -281,6 +279,40 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetCalDateAndTime(::grpc::ServerContext* context, const GetCalDateAndTimeRequest* request, GetCalDateAndTimeResponse* response)
+  {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto get_cal_date_and_time_function = reinterpret_cast<niFake_GetCalDateAndTimePtr>(shared_library_->get_function_pointer("niFake_GetCalDateAndTime"));
+    if (get_cal_date_and_time_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetCalDateAndTime");
+    }
+
+    std::uint64_t vi = request->vi();
+    std::int32_t cal_type = request->cal_type();
+    std::int32_t month;
+    std::int32_t day;
+    std::int32_t year;
+    std::int32_t hour;
+    std::int32_t minute;
+    auto status = get_cal_date_and_time_function(vi, cal_type, &month, &day, &year, &hour, &minute);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_month(month);
+      response->set_day(day);
+      response->set_year(year);
+      response->set_hour(hour);
+      response->set_minute(minute);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCalInterval(::grpc::ServerContext* context, const GetCalIntervalRequest* request, GetCalIntervalResponse* response)
   {
     shared_library_->load();
@@ -368,6 +400,34 @@ namespace grpc
   ::grpc::Status NiFakeService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
   {
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
+  {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto init_with_options_function = reinterpret_cast<niFake_InitWithOptionsPtr>(shared_library_->get_function_pointer("niFake_InitWithOptions"));
+    if (init_with_options_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_InitWithOptions");
+    }
+
+    std::string resource_name = request->resource_name();
+    bool id_query = request->id_query();
+    bool reset_device = request->reset_device();
+    std::string option_string = request->option_string().c_str();
+    std::uint64_t vi;
+    auto status = init_with_options_function(resource_name, id_query, reset_device, option_string, &vi);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_vi(vi);
+    }
+    return ::grpc::Status::OK;
   }
 
   //---------------------------------------------------------------------
@@ -716,6 +776,27 @@ namespace grpc
   ::grpc::Status NiFakeService::WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response)
   {
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
+  {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto close_function = reinterpret_cast<niFake_closePtr>(shared_library_->get_function_pointer("niFake_close"));
+    if (close_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_close");
+    }
+
+    std::uint64_t vi = request->vi();
+    auto status = close_function(vi);
+    response->set_status(status);
+    return ::grpc::Status::OK;
   }
 
 } // namespace grpc

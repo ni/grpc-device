@@ -79,9 +79,9 @@ def pascal_to_snake(pascal_string):
   snake_string = camel_to_snake(camel_string)
   return ("".join(snake_string))
 
-def should_gen_service_handler(function):
-  '''Returns function metadata only for those functions to include for generating function pointers to driver library'''
-  return 'codegen_method' not in function.keys() or function['codegen_method'] == 'public'
+def filter_proto_rpc_functions(functions):
+  '''Returns function metadata only for those functions to include for generating proto rpc methods'''
+  return {k: function for k, function in functions.items() if 'codegen_method' not in function.keys() or function['codegen_method'] == 'public'}
 
 def get_service_namespace(driver_name_caps_underscore):
   driver_full_namespace = driver_name_caps_underscore + "_" + "grpc"

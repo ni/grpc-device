@@ -27,7 +27,7 @@ option csharp_namespace = "NationalInstruments.${driver_name_pascal.replace("Ni"
 package ${common_helpers.get_service_namespace(driver_name_caps_underscore)}; 
 
 service ${driver_name_pascal} {
-% for function in data["functions"]:
+% for function in common_helpers.filter_proto_rpc_functions(data["functions"]):
 <% 
    method_name = common_helpers.snake_to_camel(function)
 %>\
@@ -75,7 +75,7 @@ if isinstance(value["value"], int) is False:
 }  
   
 % endfor
-% for function in data["functions"]:
+% for function in common_helpers.filter_proto_rpc_functions(data["functions"]):
 <% 
   parameter_array = data["functions"][function]["parameters"] 
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]

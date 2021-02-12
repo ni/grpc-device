@@ -6,8 +6,6 @@
 //---------------------------------------------------------------------
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
 option java_multiple_files = true;
 option java_package = "com.ni.fake.grpc";
 option java_outer_classname = "NiFake";
@@ -34,21 +32,13 @@ service NiFake {
   rpc GetArrayForPythonCodeDouble(GetArrayForPythonCodeDoubleRequest) returns (GetArrayForPythonCodeDoubleResponse);
   rpc GetArraySizeForPythonCode(GetArraySizeForPythonCodeRequest) returns (GetArraySizeForPythonCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
-  rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
-  rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
-  rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
-  rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
-  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
   rpc GetCalInterval(GetCalIntervalRequest) returns (GetCalIntervalResponse);
   rpc GetCustomType(GetCustomTypeRequest) returns (GetCustomTypeResponse);
   rpc GetCustomTypeArray(GetCustomTypeArrayRequest) returns (GetCustomTypeArrayResponse);
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
-  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
-  rpc GetLastCalDateAndTime(GetLastCalDateAndTimeRequest) returns (GetLastCalDateAndTimeResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
-  rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc MultipleArrayTypes(MultipleArrayTypesRequest) returns (MultipleArrayTypesResponse);
   rpc MultipleArraysSameSize(MultipleArraysSameSizeRequest) returns (MultipleArraysSameSizeResponse);
@@ -61,11 +51,6 @@ service NiFake {
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
   rpc ReturnListOfDurationsInSeconds(ReturnListOfDurationsInSecondsRequest) returns (ReturnListOfDurationsInSecondsResponse);
   rpc ReturnMultipleTypes(ReturnMultipleTypesRequest) returns (ReturnMultipleTypesResponse);
-  rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
-  rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
-  rpc SetAttributeViInt64(SetAttributeViInt64Request) returns (SetAttributeViInt64Response);
-  rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
-  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetCustomType(SetCustomTypeRequest) returns (SetCustomTypeResponse);
   rpc SetCustomTypeArray(SetCustomTypeArrayRequest) returns (SetCustomTypeArrayResponse);
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
@@ -74,9 +59,6 @@ service NiFake {
   rpc Use64BitNumber(Use64BitNumberRequest) returns (Use64BitNumberResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
-  rpc FancySelfTest(FancySelfTestRequest) returns (FancySelfTestResponse);
-  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
 }
 
 enum NiFakeAttributes {
@@ -302,62 +284,6 @@ message GetArrayUsingIviDanceResponse {
   repeated double array_out = 2; 
 }
 
-message GetAttributeViBooleanRequest {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-}
-
-message GetAttributeViBooleanResponse {
-  int32 status = 1;
-  bool attribute_value = 2; 
-}
-
-message GetAttributeViInt32Request {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-}
-
-message GetAttributeViInt32Response {
-  int32 status = 1;
-  sint32 attribute_value = 2; 
-}
-
-message GetAttributeViInt64Request {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-}
-
-message GetAttributeViInt64Response {
-  int32 status = 1;
-  int64 attribute_value = 2; 
-}
-
-message GetAttributeViReal64Request {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-}
-
-message GetAttributeViReal64Response {
-  int32 status = 1;
-  double attribute_value = 2; 
-}
-
-message GetAttributeViStringRequest {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-  sint32 buffer_size = 4;  
-}
-
-message GetAttributeViStringResponse {
-  int32 status = 1;
-  string attribute_value = 2; 
-}
-
 message GetCalDateAndTimeRequest {
   fixed64 vi = 1;  
   sint32 cal_type = 2;  
@@ -410,27 +336,6 @@ message GetEnumValueResponse {
   Turtle a_turtle = 3; 
 }
 
-message GetErrorRequest {
-  fixed64 vi = 1;  
-  sint32 buffer_size = 2;  
-}
-
-message GetErrorResponse {
-  int32 status = 1;
-  sint32 error_code = 2; 
-  string description = 3; 
-}
-
-message GetLastCalDateAndTimeRequest {
-  fixed64 vi = 1;  
-  sint32 cal_type = 2;  
-}
-
-message GetLastCalDateAndTimeResponse {
-  int32 status = 1;
-  google.protobuf.Timestamp month = 2; 
-}
-
 message ImportAttributeConfigurationBufferRequest {
   fixed64 vi = 1;  
   sint32 size_in_bytes = 2;  
@@ -451,14 +356,6 @@ message InitWithOptionsRequest {
 message InitWithOptionsResponse {
   int32 status = 1;
   fixed64 vi = 2; 
-}
-
-message InitiateRequest {
-  fixed64 vi = 1;  
-}
-
-message InitiateResponse {
-  int32 status = 1;
 }
 
 message LockSessionRequest {
@@ -598,61 +495,6 @@ message ReturnMultipleTypesResponse {
   string a_string = 9; 
 }
 
-message SetAttributeViBooleanRequest {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-  bool attribute_value = 4;  
-}
-
-message SetAttributeViBooleanResponse {
-  int32 status = 1;
-}
-
-message SetAttributeViInt32Request {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-  sint32 attribute_value = 4;  
-}
-
-message SetAttributeViInt32Response {
-  int32 status = 1;
-}
-
-message SetAttributeViInt64Request {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-  int64 attribute_value = 4;  
-}
-
-message SetAttributeViInt64Response {
-  int32 status = 1;
-}
-
-message SetAttributeViReal64Request {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-  double attribute_value = 4;  
-}
-
-message SetAttributeViReal64Response {
-  int32 status = 1;
-}
-
-message SetAttributeViStringRequest {
-  fixed64 vi = 1;  
-  string channel_name = 2;  
-  NiFakeAttributes attribute_id = 3;  
-  string attribute_value = 4;  
-}
-
-message SetAttributeViStringResponse {
-  int32 status = 1;
-}
-
 message SetCustomTypeRequest {
   fixed64 vi = 1;  
   fixed64 cs = 2;  
@@ -726,33 +568,5 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
-}
-
-message ErrorMessageRequest {
-  fixed64 vi = 1;  
-  sint32 error_code = 2;  
-}
-
-message ErrorMessageResponse {
-  int32 status = 1;
-  string error_message = 2; 
-}
-
-message FancySelfTestRequest {
-  fixed64 vi = 1;  
-}
-
-message FancySelfTestResponse {
-  int32 status = 1;
-}
-
-message SelfTestRequest {
-  fixed64 vi = 1;  
-}
-
-message SelfTestResponse {
-  int32 status = 1;
-  uint32 self_test_result = 2; 
-  string self_test_message = 3; 
 }
 
