@@ -277,6 +277,121 @@ namespace grpc
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
+  {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto get_attribute_vi_boolean_function = reinterpret_cast<niFake_GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niFake_GetAttributeViBoolean"));
+    if (get_attribute_vi_boolean_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViBoolean");
+    }
+
+    std::uint64_t vi = request->vi();
+    std::string channel_name = request->channel_name().c_str();
+    NiFakeAttributes attribute_id = request->attribute_id();
+    bool attribute_value;
+    auto status = get_attribute_vi_boolean_function(vi, channel_name, attribute_id, &attribute_value);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_attribute_value(attribute_value);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
+  {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto get_attribute_vi_int32_function = reinterpret_cast<niFake_GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niFake_GetAttributeViInt32"));
+    if (get_attribute_vi_int32_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViInt32");
+    }
+
+    std::uint64_t vi = request->vi();
+    std::string channel_name = request->channel_name().c_str();
+    NiFakeAttributes attribute_id = request->attribute_id();
+    std::int32_t attribute_value;
+    auto status = get_attribute_vi_int32_function(vi, channel_name, attribute_id, &attribute_value);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_attribute_value(attribute_value);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
+  {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto get_attribute_vi_int64_function = reinterpret_cast<niFake_GetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niFake_GetAttributeViInt64"));
+    if (get_attribute_vi_int64_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViInt64");
+    }
+
+    std::uint64_t vi = request->vi();
+    std::string channel_name = request->channel_name().c_str();
+    NiFakeAttributes attribute_id = request->attribute_id();
+    std::int64_t attribute_value;
+    auto status = get_attribute_vi_int64_function(vi, channel_name, attribute_id, &attribute_value);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_attribute_value(attribute_value);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
+  {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto get_attribute_vi_real64_function = reinterpret_cast<niFake_GetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niFake_GetAttributeViReal64"));
+    if (get_attribute_vi_real64_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViReal64");
+    }
+
+    std::uint64_t vi = request->vi();
+    std::string channel_name = request->channel_name().c_str();
+    NiFakeAttributes attribute_id = request->attribute_id();
+    double attribute_value;
+    auto status = get_attribute_vi_real64_function(vi, channel_name, attribute_id, &attribute_value);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_attribute_value(attribute_value);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
+  {
+    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCalDateAndTime(::grpc::ServerContext* context, const GetCalDateAndTimeRequest* request, GetCalDateAndTimeResponse* response)
   {
     shared_library_->load();

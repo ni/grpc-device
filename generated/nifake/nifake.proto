@@ -32,6 +32,11 @@ service NiFake {
   rpc GetArrayForPythonCodeDouble(GetArrayForPythonCodeDoubleRequest) returns (GetArrayForPythonCodeDoubleResponse);
   rpc GetArraySizeForPythonCode(GetArraySizeForPythonCodeRequest) returns (GetArraySizeForPythonCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
+  rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
+  rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
+  rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
+  rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
+  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
   rpc GetCalInterval(GetCalIntervalRequest) returns (GetCalIntervalResponse);
   rpc GetCustomType(GetCustomTypeRequest) returns (GetCustomTypeResponse);
@@ -280,6 +285,62 @@ message GetArrayUsingIviDanceRequest {
 message GetArrayUsingIviDanceResponse {
   int32 status = 1;
   repeated double array_out = 2; 
+}
+
+message GetAttributeViBooleanRequest {
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  NiFakeAttributes attribute_id = 3;  
+}
+
+message GetAttributeViBooleanResponse {
+  int32 status = 1;
+  bool attribute_value = 2; 
+}
+
+message GetAttributeViInt32Request {
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  NiFakeAttributes attribute_id = 3;  
+}
+
+message GetAttributeViInt32Response {
+  int32 status = 1;
+  sint32 attribute_value = 2; 
+}
+
+message GetAttributeViInt64Request {
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  NiFakeAttributes attribute_id = 3;  
+}
+
+message GetAttributeViInt64Response {
+  int32 status = 1;
+  int64 attribute_value = 2; 
+}
+
+message GetAttributeViReal64Request {
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  NiFakeAttributes attribute_id = 3;  
+}
+
+message GetAttributeViReal64Response {
+  int32 status = 1;
+  double attribute_value = 2; 
+}
+
+message GetAttributeViStringRequest {
+  fixed64 vi = 1;  
+  string channel_name = 2;  
+  NiFakeAttributes attribute_id = 3;  
+  sint32 buffer_size = 4;  
+}
+
+message GetAttributeViStringResponse {
+  int32 status = 1;
+  string attribute_value = 2; 
 }
 
 message GetCalDateAndTimeRequest {

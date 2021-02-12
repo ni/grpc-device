@@ -640,7 +640,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViBoolean': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViBoolean attribute.'
         },
@@ -681,7 +681,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViInt32': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViInt32 attribute.'
         },
@@ -722,7 +722,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViInt64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViInt64 attribute.'
         },
@@ -763,7 +763,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViReal64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViReal attribute.'
         },
@@ -804,7 +804,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViString': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViBoolean attribute.'
         },
