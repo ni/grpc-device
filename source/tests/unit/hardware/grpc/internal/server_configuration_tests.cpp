@@ -40,6 +40,23 @@ TEST(ServerConfigurationTests, CreateConfigurationWithMissingConfigFile_ThrowsCo
   }  
 }
 
+TEST(ServerConfigurationTests, CreateConfigurationWithNegativePortNumber_ThrowsConfigFileNotFoundException)
+{
+  auto config_json = R"(
+    {
+      "port": -1
+    }
+  )"_json;
+  ni::hardware::grpc::internal::ServerConfiguration server_configuration(config_json);
+
+  try {
+    auto address = server_configuration.get_address();
+  }
+  catch(const std::exception& ex)  {
+    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfiguration::InvalidPortException));
+  }  
+}
+
 }  // namespace internal
 }  // namespace grpc
 }  // namespace hardware

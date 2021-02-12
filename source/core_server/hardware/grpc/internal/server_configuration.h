@@ -9,8 +9,8 @@ namespace internal {
 class ServerConfiguration {
 
  public:
-  ServerConfiguration();
   ServerConfiguration(const std::string& config_file_path);
+  ServerConfiguration(nlohmann::json& config_file);
 
   std::string get_address();
   
@@ -31,7 +31,7 @@ class ServerConfiguration {
   static const char* kConfigFileNotFoundMessage;
   static const char* kinvalidPortMessage;
   
-  nlohmann::json config_file_;
+  nlohmann::json& config_file_;
   const std::string& config_file_path_;
 
   void parse_config();

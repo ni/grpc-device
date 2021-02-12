@@ -12,7 +12,12 @@ const char* ServerConfiguration::kConfigFileNotFoundMessage = "The server config
 const char* ServerConfiguration::kinvalidPortMessage = "The specified port number must between 0 and 65535.";
 
 ServerConfiguration::ServerConfiguration(const std::string& config_file_path)
-  : config_file_path_(config_file_path)
+  : config_file_path_(config_file_path), config_file_(nlohmann::json())
+{
+}
+
+ServerConfiguration::ServerConfiguration(nlohmann::json& config_file)
+  : config_file_path_(std::string()), config_file_(config_file)
 {
 }
 
