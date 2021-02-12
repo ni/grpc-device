@@ -1,26 +1,14 @@
 <%
 import common_helpers
 import handler_helpers
-attributes = data['attributes']
-config = data['config']
-enums = data['enums']
 functions = data['functions']
 
 driver_name = data["config"]["driver_name"]
 driver_name_pascal = common_helpers.driver_name_to_pascal(driver_name)
 driver_name_caps_underscore = common_helpers.driver_name_add_underscore(data["config"]["driver_name"])
-module_name = data["config"]["module_name"]
-
-driver_name_camel = common_helpers.pascal_to_camel(driver_name_pascal)
-c_function_prefix = data["config"]["c_function_prefix"]
-
-service_name = driver_name_pascal + "Service"
-c_function_prefix = config['c_function_prefix']
 
 driver_full_namespace = common_helpers.get_service_namespace(driver_name_caps_underscore)
 driver_namespaces = driver_full_namespace.split(".")
-reversed_driver_namespaces = driver_namespaces.copy()
-reversed_driver_namespaces.reverse()
 define_name = driver_full_namespace + "_interface_h"
 define_name = define_name.upper().replace(".", "_")
 %>\
@@ -52,7 +40,7 @@ class ${driver_name_pascal}Interface {
   handler_helpers.sanitize_names(parameters)
 %>\
 % if not common_helpers.has_array_parameter(f):
-  virtual int ${c_function_prefix}${function}(${handler_helpers.create_params(parameters, driver_name_pascal)}) = 0;
+  virtual int ${function}(${handler_helpers.create_params(parameters, driver_name_pascal)}) = 0;
 % endif
 % endfor
 }
