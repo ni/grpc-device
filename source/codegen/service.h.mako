@@ -60,8 +60,8 @@ namespace ${namespace}
     ::grpc::Status ${function}(::grpc::ServerContext* context, const ${function}Request* request, ${function}Response* response) override;
 % endfor
   private:
-    internal::SharedLibrary* shared_library_;
-    internal::SessionRepository* session_repository_;
+    ni::hardware::grpc::internal::SharedLibrary* shared_library_;
+    ni::hardware::grpc::internal::SessionRepository* session_repository_;
 <%
   used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\

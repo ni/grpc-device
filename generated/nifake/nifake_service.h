@@ -69,8 +69,8 @@ namespace grpc
     ::grpc::Status Use64BitNumber(::grpc::ServerContext* context, const Use64BitNumberRequest* request, Use64BitNumberResponse* response) override;
     ::grpc::Status WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response) override;
   private:
-    internal::SharedLibrary* shared_library_;
-    internal::SessionRepository* session_repository_;
+    ni::hardware::grpc::internal::SharedLibrary* shared_library_;
+    ni::hardware::grpc::internal::SessionRepository* session_repository_;
     std::map<std::int32_t, std::int32_t> color_input_map_ { {1, 1},{2, 2},{5, 5},{42, 42}, };
     std::map<std::int32_t, std::int32_t> color_output_map_ { {1, 1},{2, 2},{5, 5},{42, 42}, };
     std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5},{2, 4.5},{3, 5.5},{4, 6.5},{5, 7.5}, };
