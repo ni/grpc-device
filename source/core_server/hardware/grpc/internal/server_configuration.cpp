@@ -1,5 +1,6 @@
 #include "server_configuration.h"
 #include <iostream>
+#include <climits>
 
 namespace ni {
 namespace hardware {
