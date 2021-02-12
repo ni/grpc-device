@@ -1,5 +1,11 @@
 #include "hardware/grpc/core_service.h"
 
+#if defined(_MSC_VER)
+static const char* syscfg_api_library_name = "nisyscfg.dll";
+#else
+static const char* syscfg_api_library_name = "./libnisyscfg.so";
+#endif
+
 const char* klocalhostAddress = "0.0.0.0:50051";
 
 static void RunServer(int argc, char** argv)
@@ -15,7 +21,7 @@ static void RunServer(int argc, char** argv)
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
   ni::hardware::grpc::CoreService core_service(&session_repository, &device_management, &shared_library);
   builder.RegisterService(&core_service);
 
