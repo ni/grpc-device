@@ -53,6 +53,8 @@ DeviceManagement::DeviceManagement()
 {
 }
 
+// Provides a list of devices or chassis connected to server under localhost. This internally uses the "NI System Configuration API" which automatically gets
+// installed along with LabVIEW. Or it can be downloaded separately from this page: https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
 NISysCfgStatus DeviceManagement::enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
 {
   NISysCfgStatus status = NISysCfg_OK;
