@@ -51,7 +51,7 @@ std::string ServerConfiguration::get_address()
       std::string key(kPortKey);
       auto it = config_file_.find(key);
       if (it != config_file_.end()) {
-         parsed_port = config_file_[key].get<int>();
+         parsed_port = it->get<int>();
       }
    }
    
