@@ -187,18 +187,25 @@ add_library(TestApi SHARED
     "source/tests/test_api/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
+# Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
+    "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
     "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
-    ${server_utilities_grpc_srcs})
+    ${server_utilities_grpc_srcs}
+    "${proto_output_dir}/nifake/nifake_service.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/nifake.pb.cc"
+    "${CMAKE_CURRENT_BINARY_DIR}/nifake.grpc.pb.cc")
 
+target_include_directories(UnitTestsRunner
+    PRIVATE "${proto_output_dir}/nifake")
 target_link_libraries(UnitTestsRunner
     gtest
     ${_GRPC_GRPCPP}
