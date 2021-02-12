@@ -22,4 +22,5 @@ class DeviceManagement
 } // namespace grpc
 } // namespace hardware
 } // namespace ni
+
 #endif // NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
