@@ -9,35 +9,34 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-const char* kdefaultFilename = "server.json";
-const char* kreleaseFolder = "Release";
-
-std::string build_asset_path(const std::string& filename, const std::string& sub_directory)
-{
-  return sub_directory + "/" + filename;
-}
-
 TEST(ServerConfigurationTests, CreateConfigurationWithDefaultConfigFile_ReturnsDefaultLocalAddressAndPort)
 {
-  auto file_path = build_asset_path(kdefaultFilename, kreleaseFolder);
-  ni::hardware::grpc::internal::ServerConfiguration server_configuration(file_path);
-
-  auto address = server_configuration.get_address();
+  std::string address;
+  try {
+    // On Linux the tests run in the Release folder and therefore the default of for "server_config.json" should work
+    ni::hardware::grpc::internal::ServerConfigurationParser server_configuration_linux;
+    address = server_configuration_linux.parse_address();
+  }
+  catch (const ni::hardware::grpc::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
+    // On Windows the tests run one level above the Release folder and therefore we need to add the relative path "Release"
+    const char* file_path = "Release/server_config.json";
+    ni::hardware::grpc::internal::ServerConfigurationParser server_configuration_windows(file_path);
+    address = server_configuration_windows.parse_address();
+  }
   
   EXPECT_EQ(address, "0.0.0.0:50051");
 }
 
 TEST(ServerConfigurationTests, CreateConfigurationWithMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
-  auto file_path = build_asset_path("fake.json", kreleaseFolder);
-  ni::hardware::grpc::internal::ServerConfiguration server_configuration(file_path);
-
+  //auto file_path = build_asset_path("fake.json", kreleaseFolder);
+  const char* file_path = "fake.json";
   bool exception_thrown = false;
   try {
-    auto address = server_configuration.get_address();
+    ni::hardware::grpc::internal::ServerConfigurationParser server_configuration("fake.json");
   }
   catch(const std::exception& ex)  {
-    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfiguration::ConfigFileNotFoundException));
+    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfigurationParser::ConfigFileNotFoundException));
     exception_thrown = true;
   }  
   
@@ -51,14 +50,14 @@ TEST(ServerConfigurationTests, CreateConfigurationWithNegativePortNumber_ThrowsI
       "port": -1
     }
   )"_json;
-  ni::hardware::grpc::internal::ServerConfiguration server_configuration(config_json);
+  ni::hardware::grpc::internal::ServerConfigurationParser server_configuration(config_json);
 
   bool exception_thrown = false;
   try {
-    auto address = server_configuration.get_address();
+    auto address = server_configuration.parse_address();
   }
   catch(const std::exception& ex)  {
-    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfiguration::InvalidPortException));
+    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfigurationParser::InvalidPortException));
     exception_thrown = true;
   }
   
@@ -72,14 +71,14 @@ TEST(ServerConfigurationTests, CreateConfigurationWithPortNumberExceedingMax_Thr
       "port": 65536
     }
   )"_json;
-  ni::hardware::grpc::internal::ServerConfiguration server_configuration(config_json);
+  ni::hardware::grpc::internal::ServerConfigurationParser server_configuration(config_json);
 
   bool exception_thrown = false;
   try {
-    auto address = server_configuration.get_address();
+    auto address = server_configuration.parse_address();
   }
   catch(const std::exception& ex)  {
-    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfiguration::InvalidPortException));
+    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfigurationParser::InvalidPortException));
     exception_thrown = true;
   }  
 

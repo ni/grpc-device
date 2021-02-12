@@ -9,13 +9,14 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-class ServerConfiguration {
+class ServerConfigurationParser {
 
  public:
-  ServerConfiguration(std::string config_file_path);
-  ServerConfiguration(nlohmann::json config_file);
+  ServerConfigurationParser();
+  ServerConfigurationParser(const char* config_file_path);
+  ServerConfigurationParser(const nlohmann::json& config_file);
 
-  std::string get_address();
+  std::string parse_address();
   
   struct ConfigFileNotFoundException : public std::runtime_error
   {
@@ -37,7 +38,7 @@ class ServerConfiguration {
   nlohmann::json config_file_;
   std::string config_file_path_;
 
-  void parse_config();
+  static nlohmann::json load(const char* config_file_path);
 };
 
 }  // namespace internal
