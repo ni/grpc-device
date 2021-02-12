@@ -3,23 +3,29 @@
 namespace ni {
 namespace hardware {
 namespace grpc {
+  
+const char* ServerConfiguration::klocalhostAddressPrefix = "0.0.0.0:";
+const char* ServerConfiguration::kconfigurationFile = "server.json";
+const char* ServerConfiguration::kportKey = "port";
+const char* ServerConfiguration::kConfigFileNotFoundMessage = "The server configuration file was not found.";
+const char* ServerConfiguration::kinvalidPortMessage = "The specified port number must be greater than 0 and less than or equal to 65535.";
 
-const char* klocalhostAddressPrefix = "0.0.0.0:";
-const int kdefaultPort = 50051;
-const char* kconfigurationFile = "server.json";
-const char* kportKey = "port";
-
-ServerConfiguration::ServerConfiguration()
+ServerConfiguration::ServerConfiguration(const std::string& config_file_path)
+  : config_file_path_(config_file_path)
 {
 }
 
 void ServerConfiguration::parse_config()
 {
    if(config_file_ == nullptr){
+     // TODO: Prefer a passed in configuration file path
+     // and then search here (next to the binary) and at
+     // platform specific default config file locations.
       std::ifstream input_stream(kconfigurationFile);
-      if (input_stream) {
-         input_stream >> config_file_;
+      if (!input_stream) {
+        throw ConfigFileNotFoundException();
       }
+      input_stream >> config_file_;
    }
 }
 
@@ -35,13 +41,21 @@ std::string ServerConfiguration::get_address()
       }
    }
    
-   int port = kdefaultPort;
-   if (parsed_port > 0) {
-      port = parsed_port;
+   if (parsed_port < 0 || parsed_port > 65535) {
+      throw InvalidPortException();
    }
-   return klocalhostAddressPrefix + std::to_string(port);
+   return klocalhostAddressPrefix + std::to_string(parsed_port);
 }
 
+ServerConfiguration::ConfigFileNotFoundException::ConfigFileNotFoundException()
+  : std::runtime_error(std::string(kConfigFileNotFoundMessage))
+{
+}
+
+ServerConfiguration::InvalidPortException::InvalidPortException()
+  : std::runtime_error(std::string(kinvalidPortMessage))
+{
+}
 }  // namespace grpc
 }  // namespace hardware
 }  // namespace ni
