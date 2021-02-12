@@ -1,3 +1,6 @@
+#ifndef NI_HARDWARE_GRPC_INTERNAL_SERVERCONFIGURATION
+#define NI_HARDWARE_GRPC_INTERNAL_SERVERCONFIGURATION
+
 #include "nlohmann/json.hpp"
 #include <fstream>
 
@@ -9,8 +12,8 @@ namespace internal {
 class ServerConfiguration {
 
  public:
-  ServerConfiguration(const std::string& config_file_path);
-  ServerConfiguration(nlohmann::json& config_file);
+  ServerConfiguration(std::string config_file_path);
+  ServerConfiguration(nlohmann::json config_file);
 
   std::string get_address();
   
@@ -25,14 +28,14 @@ class ServerConfiguration {
   };
 
  private:
-  static const char* klocalhostAddressPrefix;
-  static const char* kdefaultFilename;
-  static const char* kportKey;
+  static const char* kLocalhostAddressPrefix;
+  static const char* kDefaultFilename;
+  static const char* kPortKey;
   static const char* kConfigFileNotFoundMessage;
-  static const char* kinvalidPortMessage;
+  static const char* kInvalidPortMessage;
   
-  nlohmann::json& config_file_;
-  const std::string& config_file_path_;
+  nlohmann::json config_file_;
+  std::string config_file_path_;
 
   void parse_config();
 };
@@ -41,3 +44,5 @@ class ServerConfiguration {
 }  // namespace grpc
 }  // namespace hardware
 }  // namespace ni
+
+#endif  // NI_HARDWARE_GRPC_INTERNAL_SERVERCONFIGURATION

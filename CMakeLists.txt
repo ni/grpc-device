@@ -81,12 +81,18 @@ target_link_libraries(core_server
    nlohmann_json::nlohmann_json
    )
  
+#----------------------------------------------------------------------
+# Copy server_config.json to binary output directory
+#----------------------------------------------------------------------
 add_custom_command(
    TARGET core_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
-            ${CMAKE_SOURCE_DIR}/server.json
-            $<TARGET_FILE_DIR:core_server>/server.json)
+            ${CMAKE_SOURCE_DIR}/server_config.json
+            $<TARGET_FILE_DIR:core_server>/server_config.json)
  
+#----------------------------------------------------------------------
+# Add JSON parser
+#----------------------------------------------------------------------
 add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
  
 # Add googletest tests
