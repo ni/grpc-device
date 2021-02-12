@@ -121,9 +121,11 @@ add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/server_configuration_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
+    "source/core_server/hardware/grpc/internal/server_configuration.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
     "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
@@ -133,7 +135,8 @@ target_link_libraries(UnitTestsRunner
     gtest
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
-    Threads::Threads)
+    Threads::Threads
+    nlohmann_json::nlohmann_json)
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )

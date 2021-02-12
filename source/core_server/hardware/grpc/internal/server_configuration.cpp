@@ -6,7 +6,7 @@ namespace grpc {
 namespace internal {
   
 const char* ServerConfiguration::klocalhostAddressPrefix = "0.0.0.0:";
-const char* ServerConfiguration::kconfigurationFile = "server.json";
+const char* ServerConfiguration::kdefaultFilename = "server.json";
 const char* ServerConfiguration::kportKey = "port";
 const char* ServerConfiguration::kConfigFileNotFoundMessage = "The server configuration file was not found.";
 const char* ServerConfiguration::kinvalidPortMessage = "The specified port number must between 0 and 65535.";
@@ -18,16 +18,23 @@ ServerConfiguration::ServerConfiguration(const std::string& config_file_path)
 
 void ServerConfiguration::parse_config()
 {
-   if(config_file_ == nullptr){
-     // TODO: Prefer a passed in configuration file path
-     // and then search here (next to the binary) and at
-     // platform specific default config file locations.
-      std::ifstream input_stream(kconfigurationFile);
-      if (!input_stream) {
-        throw ConfigFileNotFoundException();
-      }
-      input_stream >> config_file_;
-   }
+  if(config_file_ == nullptr){
+    // TODO: Prefer a passed in configuration file path and then search next to
+    // the binary and finally at platform specific default config file locations.
+    std::string file_path;
+    if (config_file_path_.empty()){
+      file_path = kdefaultFilename;
+    }
+    else {
+      file_path = config_file_path_;
+    }
+    
+    std::ifstream input_stream(file_path);
+    if (!input_stream) {
+      throw ConfigFileNotFoundException();
+    }
+    input_stream >> config_file_;
+  }
 }
 
 std::string ServerConfiguration::get_address()
