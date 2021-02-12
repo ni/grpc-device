@@ -27,7 +27,6 @@ ServerConfigurationParser::ServerConfigurationParser(const char* config_file_pat
 ServerConfigurationParser::ServerConfigurationParser(const nlohmann::json& config_file)
   : config_file_(config_file)
 {
-    std::cout << "Using JSON constructor" << std::endl;
 }
 
 nlohmann::json ServerConfigurationParser::load(const char* config_file_path)
