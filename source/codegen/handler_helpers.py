@@ -96,7 +96,50 @@ def get_c_type(parameter, driver_name_pascal):
   }
   # This is equivalent to a switch statement with the default case returning the grpc_type
   return grpc_to_c.get(grpc_type, grpc_type)
+  
+def python_to_c(type):
+  python_to_c = {
+    "float": "float",
+    "int": "std::int32_t",
+    "str": "std::string"
+  }
+  return python_to_c.get(type, "std::int32_t")
+  
 
 def should_gen_function_pointer(function):
   '''Returns function metadata only for those functions to include for generating function pointers to driver library'''
   return 'codegen_method' not in function.keys() or function['codegen_method'] != 'no'
+  
+def add_quotes_if_str(str):
+  if type(str).__name__ == "str":
+    str = "\"" + str + "\""
+  return str
+
+  
+def get_input_values(enum_data):
+  out_value_format= ""
+  index = 1
+  for value in enum_data["values"]:
+    is_int = True if type(value["value"]).__name__ == "int" else False
+    if is_int:
+      out_value_format = out_value_format + "{" + str(value["value"]) + ", " + str(value["value"]) + "},"
+    else:
+      formated_value = add_quotes_if_str(value["value"])
+      out_value_format = out_value_format + "{" + str(index) + ", " + str(formated_value) + "},"
+      index = index+1
+  return out_value_format
+  
+def get_output_values(enum_data):
+  out_value_format= ""
+  index = 1
+  for value in enum_data["values"]:
+    is_int = True if type(value["value"]).__name__ == "int" else False
+    if is_int:
+      out_value_format = out_value_format + "{" + str(value["value"]) + ", " + str(value["value"]) + "},"
+    else:
+      formated_value = add_quotes_if_str(value["value"])
+      out_value_format = out_value_format + "{" + str(formated_value) + ", " + str(index) + "},"
+      index = index+1
+  return out_value_format
+
+ 

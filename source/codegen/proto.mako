@@ -64,12 +64,14 @@ nonint_index = 1
 %>\
 % for values in enums:
 % for value in enums[values]:
-<%
-if isinstance(value["value"], int) is False:
-  value["value"] = nonint_index
+% if isinstance(value["value"], int) is False:
+  ${enum_name}_${value["name"]} = ${nonint_index};
+<% 
   nonint_index = nonint_index+1
 %>\
+% else:
   ${enum_name}_${value["name"]} = ${value["value"]};
+%endif
 % endfor   
 % endfor
 }  

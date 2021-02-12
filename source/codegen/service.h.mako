@@ -1,5 +1,6 @@
 <%
 import common_helpers
+import handler_helpers
 attributes = data['attributes']
 config = data['config']
 enums = data['enums']
@@ -33,6 +34,7 @@ define_name = define_name.upper().replace(".", "_")
 #define ${define_name}
 
 ## Include section
+#include <map>
 #include <${common_helpers.camel_to_snake(common_helpers.pascal_to_camel(driver_name_pascal))}.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
@@ -60,6 +62,18 @@ namespace ${namespace}
   private:
     internal::SharedLibrary* shared_library_;
     internal::SessionRepository* session_repository_;
+<%
+  used_enums = common_helpers.get_used_enums(functions, attributes)
+%>\
+% for enum in enums:
+% if enum in used_enums:
+<%
+  value_test = handler_helpers.python_to_c(type(enums[enum]["values"][0]["value"]).__name__)
+%>\
+    std::map<std::int32_t, ${value_test}> ${enum}InputMap { ${handler_helpers.get_input_values(enums[enum])} };
+    std::map<${value_test}, std::int32_t> ${enum}OutputMap { ${handler_helpers.get_output_values(enums[enum])} };
+%endif
+%endfor
   };
 % for namespace in reversed_driver_namespaces:
 } // namespace ${namespace}

@@ -111,9 +111,8 @@ namespace ${namespace}
   paramter_name_ctype = parameter_name + "_ctype"
   parameter_type = handler_helpers.get_c_type(parameter, driver_name_pascal)
 %>\
-%if common_helpers.is_enum(parameter) == True:
-    ## TODO: Handle non integer enums
-    auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
+%if common_helpers.is_enum(parameter) == True: 
+    auto ${parameter_name} = static_cast<${parameter_type}>(${parameter["enum"]}InputMap.find(${handler_helpers.get_request_value(parameter, driver_name_pascal)})->second);
 % else:
     ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, driver_name_pascal)}
 % endif
@@ -148,8 +147,7 @@ namespace ${namespace}
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
-      ##TODO: Handle non int types
-      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${paramter_name_ctype}));
+      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter["enum"]}OutputMap.find(${paramter_name_ctype}))->second);
 % else:
       response->set_${parameter_name}(${parameter_name});
 %endif
