@@ -8,7 +8,7 @@ const char* ServerConfiguration::klocalhostAddressPrefix = "0.0.0.0:";
 const char* ServerConfiguration::kconfigurationFile = "server.json";
 const char* ServerConfiguration::kportKey = "port";
 const char* ServerConfiguration::kConfigFileNotFoundMessage = "The server configuration file was not found.";
-const char* ServerConfiguration::kinvalidPortMessage = "The specified port number must be greater than 0 and less than or equal to 65535.";
+const char* ServerConfiguration::kinvalidPortMessage = "The specified port number must between 0 and 65535.";
 
 ServerConfiguration::ServerConfiguration(const std::string& config_file_path)
   : config_file_path_(config_file_path)

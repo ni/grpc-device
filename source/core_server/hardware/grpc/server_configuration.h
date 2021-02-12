@@ -32,8 +32,6 @@ class ServerConfiguration {
   std::string config_file_path_;
   
   void parse_config();
-  
-  std::string create_error(const std::string& error_message, bool append_exiting);
 };
 
 }  // namespace grpc

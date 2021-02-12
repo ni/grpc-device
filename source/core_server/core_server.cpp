@@ -1,9 +1,6 @@
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/server_configuration.h"
 
-const char* kerrorMessage = "ERROR: ";
-const char* kexitingMessage = " Exiting.";
-
 static void RunServer(int argc, char** argv)
 {
   grpc::EnableDefaultHealthCheckService(true);
@@ -17,7 +14,7 @@ static void RunServer(int argc, char** argv)
     server_address = server_configuration.get_address();
   }
   catch(const std::exception& ex) {
-    std::cerr << ex.what() << std::endl;
+    std::cerr << "ERROR: " << ex.what() << " Exiting." << std::endl;
     exit(EXIT_FAILURE);
   }
 
