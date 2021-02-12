@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_INTERFACE_H
-#define NI_FAKE_GRPC_INTERFACE_H
+#ifndef NI_FAKE_GRPC_LIBRARY_WRAPPER_H
+#define NI_FAKE_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 
@@ -55,4 +55,4 @@ class NiFakeLibraryWrapper {
 }  // namespace grpc
 }  // namespace fake
 }  // namespace ni
-#endif  // NI_FAKE_GRPC_INTERFACE_H
+#endif  // NI_FAKE_GRPC_LIBRARY_WRAPPER_H

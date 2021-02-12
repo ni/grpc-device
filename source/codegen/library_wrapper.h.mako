@@ -11,7 +11,7 @@ driver_full_namespace = common_helpers.get_service_namespace(driver_name_caps_un
 driver_namespaces = driver_full_namespace.split(".")
 reversed_driver_namespaces = driver_namespaces.copy()
 reversed_driver_namespaces.reverse()
-define_name = driver_full_namespace + "_interface_h"
+define_name = driver_full_namespace + "_library_wrapper_h"
 define_name = define_name.upper().replace(".", "_")
 %>\
 //---------------------------------------------------------------------
