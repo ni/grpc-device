@@ -33,18 +33,19 @@ namespace ${namespace} {
 class ${driver_name_pascal}Interface {
  public:
   virtual ::grpc::Status CheckIfFunctionExists(const char* functionName) = 0;
-% for function in functions:
+% for method_name in functions:
 <%
-  f = functions[function]
-  if not common_helpers.should_gen_service_handler(f):
-    continue
-  parameters = f['parameters']
-  handler_helpers.sanitize_names(parameters)
+f = functions[method_name]
+if not handler_helpers.should_gen_function_pointer(f):
+  continue
+parameters = f['parameters']
+handler_helpers.sanitize_names(parameters)
+return_value = f['returns']
 %>\
 % if not common_helpers.has_array_parameter(f):
-  virtual int ${function}(${handler_helpers.create_params(parameters, driver_name_pascal)}) = 0;
+  virtual std::uint32_t ${method_name}(${handler_helpers.create_named_params(parameters, driver_name_pascal)}) = 0;
 % endif
-% endfor
+%endfor
 };
 
 % for namespace in reversed_driver_namespaces:
