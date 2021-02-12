@@ -81,7 +81,8 @@ foreach(api ${ni_apis})
   set(output_files
     ${proto_output_dir}/${api}/${api}.proto
     ${proto_output_dir}/${api}/${api}_service.cpp
-    ${proto_output_dir}/${api}/${api}_service.h)
+    ${proto_output_dir}/${api}/${api}_service.h
+    ${proto_output_dir}/${api}/${api}_interface.h)
   set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${proto_output_dir}/)
   if (api STREQUAL "nifake")
     # Fake library gen goes here. Add flag and files to output_files and gen_command

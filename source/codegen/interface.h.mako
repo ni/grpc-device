@@ -48,6 +48,6 @@ class ${driver_name_pascal}Interface {
 };
 
 % for namespace in reversed_driver_namespaces:
-} // namespace ${namespace}
+}  // namespace ${namespace}
 % endfor
 #endif  // ${define_name}

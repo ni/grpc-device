@@ -37,7 +37,7 @@ class NiFakeInterface {
   virtual int Use64BitNumber(std::uint64_t, std::int64_t, std::int64_t*) = 0;
 };
 
-} // namespace grpc
-} // namespace fake
-} // namespace ni
+}  // namespace grpc
+}  // namespace fake
+}  // namespace ni
 #endif  // NI_FAKE_GRPC_INTERFACE_H
