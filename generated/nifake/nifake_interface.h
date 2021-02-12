@@ -35,6 +35,9 @@ class NiFakeInterface {
   virtual int TwoInputFunction(std::uint64_t, double, std::string) = 0;
   virtual int UnlockSession(std::uint64_t, bool*) = 0;
   virtual int Use64BitNumber(std::uint64_t, std::int64_t, std::int64_t*) = 0;
-}
+};
 
+} // namespace grpc
+} // namespace fake
+} // namespace ni
 #endif  // NI_FAKE_GRPC_INTERFACE_H

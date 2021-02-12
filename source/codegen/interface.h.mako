@@ -9,6 +9,8 @@ driver_name_caps_underscore = common_helpers.driver_name_add_underscore(data["co
 
 driver_full_namespace = common_helpers.get_service_namespace(driver_name_caps_underscore)
 driver_namespaces = driver_full_namespace.split(".")
+reversed_driver_namespaces = driver_namespaces.copy()
+reversed_driver_namespaces.reverse()
 define_name = driver_full_namespace + "_interface_h"
 define_name = define_name.upper().replace(".", "_")
 %>\
@@ -43,6 +45,9 @@ class ${driver_name_pascal}Interface {
   virtual int ${function}(${handler_helpers.create_params(parameters, driver_name_pascal)}) = 0;
 % endif
 % endfor
-}
+};
 
+% for namespace in reversed_driver_namespaces:
+} // namespace ${namespace}
+% endfor
 #endif  // ${define_name}
