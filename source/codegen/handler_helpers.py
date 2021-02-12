@@ -40,12 +40,6 @@ def create_args(parameters):
 def create_params(parameters, driver_name_pascal):
     result = ''
     for parameter in parameters:
-        result = result + create_param(parameter, driver_name_pascal) + ', '
-    return result[:-2]
-
-def create_named_params(parameters, driver_name_pascal):
-    result = ''
-    for parameter in parameters:
         result = result + create_param(parameter, driver_name_pascal) + ' ' + parameter['cppName'] + ', '
     return result[:-2]
 

@@ -43,7 +43,7 @@ handler_helpers.sanitize_names(parameters)
 return_value = f['returns']
 %>\
 % if not common_helpers.has_array_parameter(f):
-  virtual std::uint32_t ${method_name}(${handler_helpers.create_named_params(parameters, driver_name_pascal)}) = 0;
+  virtual std::uint32_t ${method_name}(${handler_helpers.create_params(parameters, driver_name_pascal)}) = 0;
 % endif
 %endfor
 };
