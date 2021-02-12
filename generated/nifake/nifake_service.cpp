@@ -133,7 +133,7 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    auto a_turtle = static_cast<std::uint32_t>(TurtleInputMap.find(request->a_turtle())->second);
+    auto a_turtle = static_cast<std::uint32_t>(turtle_input_map_.find(request->a_turtle())->second);
     auto status = enum_input_function_with_defaults_function(vi, a_turtle);
     response->set_status(status);
     return grpc::Status::OK;
@@ -356,7 +356,7 @@ namespace grpc
     response->set_status(status);
     if (status == 0) {
       response->set_a_quantity(a_quantity);
-      response->set_a_turtle(static_cast<Turtle>(TurtleOutputMap.find(a_turtle_ctype))->second);
+      response->set_a_turtle(static_cast<Turtle>(turtle_output_map_.find(a_turtle_ctype))->second);
     }
     return grpc::Status::OK;
   }
@@ -448,9 +448,9 @@ namespace grpc
     bool a_boolean = request->a_boolean();
     std::int32_t an_int32 = request->an_int32();
     std::int64_t an_int64 = request->an_int64();
-    auto an_int_enum = static_cast<std::uint32_t>(TurtleInputMap.find(request->an_int_enum())->second);
+    auto an_int_enum = static_cast<std::uint32_t>(turtle_input_map_.find(request->an_int_enum())->second);
     double a_float = request->a_float();
-    auto a_float_enum = static_cast<double>(FloatEnumInputMap.find(request->a_float_enum())->second);
+    auto a_float_enum = static_cast<double>(floatenum_input_map_.find(request->a_float_enum())->second);
     std::int32_t string_size = request->string_size();
     std::string a_string = request->a_string().c_str();
     auto status = parameters_are_multiple_types_function(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
@@ -623,7 +623,7 @@ namespace grpc
     }
 
     std::uint64_t vi = request->vi());
-    auto a_mobile_o_s_name = static_cast<std::string>(MobileOSNamesInputMap.find(request->a_mobile_o_s_name())->second);
+    auto a_mobile_o_s_name = static_cast<std::string>(mobileosnames_input_map_.find(request->a_mobile_o_s_name())->second);
     auto status = string_valued_enum_input_function_with_defaults_function(vi, a_mobile_o_s_name);
     response->set_status(status);
     return grpc::Status::OK;
