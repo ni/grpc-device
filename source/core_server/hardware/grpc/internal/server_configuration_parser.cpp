@@ -14,7 +14,7 @@ const char* ServerConfigurationParser::kConfigFileNotFoundMessage = "The server 
 const char* ServerConfigurationParser::kInvalidPortMessage = "The specified port number must between 0 and 65535.";
 const char* ServerConfigurationParser::kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
 const char* ServerConfigurationParser::kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
-const char* ServerConfigurationParser::kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file. \n\n";
+const char* ServerConfigurationParser::kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
 
 ServerConfigurationParser::ServerConfigurationParser()
 {
