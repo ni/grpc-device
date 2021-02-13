@@ -9,8 +9,8 @@ static void RunServer(int argc, char** argv)
   std::string server_address;
   try {
     //TODO: parse config file path from command line argument
-    ni::hardware::grpc::internal::ServerConfigurationParser server_configuration;
-    server_address = server_configuration.parse_address();
+    ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser;
+    server_address = server_config_parser.parse_address();
   }
   catch(const std::exception& ex) {
     std::cerr << "\nERROR:\n\n" << ex.what() << "\n\nExiting.\n" << std::endl;
