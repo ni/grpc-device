@@ -1,5 +1,5 @@
 #include "hardware/grpc/core_service.h"
-#include "hardware/grpc/internal/server_configuration.h"
+#include "hardware/grpc/internal/server_configuration_parser.h"
 
 static void RunServer(int argc, char** argv)
 {
