@@ -28,12 +28,30 @@ class ServerConfigurationParser {
     InvalidPortException();
   };
 
+  struct MalformedJsonException : public std::runtime_error
+  {
+    MalformedJsonException(const std::string& parse_error_details);
+  };
+
+  struct WrongPortTypeException : public std::runtime_error
+  {
+    WrongPortTypeException(const std::string& type_error_details);
+  };
+
+  struct UnspecifiedPortException : public std::runtime_error
+  {
+    UnspecifiedPortException();
+  };
+
  private:
   static const char* kLocalhostAddressPrefix;
   static const char* kDefaultFilename;
   static const char* kPortKey;
   static const char* kConfigFileNotFoundMessage;
   static const char* kInvalidPortMessage;
+  static const char* kMalformedJsonMessage;
+  static const char* kWrongPortTypeMessage;
+  static const char* kUnspecifiedPortMessage;
   
   nlohmann::json config_file_;
   std::string config_file_path_;

@@ -13,7 +13,7 @@ static void RunServer(int argc, char** argv)
     server_address = server_configuration.parse_address();
   }
   catch(const std::exception& ex) {
-    std::cerr << "ERROR: " << ex.what() << " Exiting." << std::endl;
+    std::cerr << "\nERROR:\n\n" << ex.what() << "\n\nExiting.\n" << std::endl;
     exit(EXIT_FAILURE);
   }
 

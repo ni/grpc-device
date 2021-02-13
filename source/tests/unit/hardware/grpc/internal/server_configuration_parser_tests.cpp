@@ -9,7 +9,7 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-TEST(ServerConfigurationParserTests, CreateConfigurationWithDefaultConfigFile_ReturnsDefaultLocalAddressAndPort)
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ReturnsDefaultLocalAddressAndPort)
 {
   std::string address;
   try {
@@ -27,9 +27,8 @@ TEST(ServerConfigurationParserTests, CreateConfigurationWithDefaultConfigFile_Re
   EXPECT_EQ(address, "0.0.0.0:50051");
 }
 
-TEST(ServerConfigurationParserTests, CreateConfigurationWithMissingConfigFile_ThrowsConfigFileNotFoundException)
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
-  //auto file_path = build_asset_path("fake.json", kreleaseFolder);
   const char* file_path = "fake.json";
   bool exception_thrown = false;
   try {
@@ -43,7 +42,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationWithMissingConfigFile_Th
   EXPECT_TRUE(exception_thrown);
 }
 
-TEST(ServerConfigurationParserTests, CreateConfigurationWithNegativePortNumber_ThrowsInvalidPortException)
+TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddress_ThrowsInvalidPortException)
 {
   auto config_json = R"(
     {
@@ -64,7 +63,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationWithNegativePortNumber_T
   EXPECT_TRUE(exception_thrown);
 }
 
-TEST(ServerConfigurationParserTests, CreateConfigurationWithPortNumberExceedingMax_ThrowsInvalidPortException)
+TEST(ServerConfigurationParserTests, JsonConfigWithPortNumberExceedingMax_ParseAddress_ThrowsInvalidPortException)
 {
   auto config_json = R"(
     {
@@ -79,6 +78,48 @@ TEST(ServerConfigurationParserTests, CreateConfigurationWithPortNumberExceedingM
   }
   catch(const std::exception& ex)  {
     EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfigurationParser::InvalidPortException));
+    exception_thrown = true;
+  }  
+
+  EXPECT_TRUE(exception_thrown);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithPortAsString_ParseAddress_ThrowsWrongPortTypeException)
+{
+  auto config_json = R"(
+    {
+      "port" : "9090"
+    }
+  )"_json;
+  ni::hardware::grpc::internal::ServerConfigurationParser server_configuration(config_json);
+
+  bool exception_thrown = false;
+  try {
+    auto address = server_configuration.parse_address();
+  }
+  catch(const std::exception& ex)  {
+    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfigurationParser::WrongPortTypeException));
+    exception_thrown = true;
+  }  
+
+  EXPECT_TRUE(exception_thrown);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_ThrowsUnspecifiedPortException)
+{
+  auto config_json = R"(
+    {
+      "foo" : "bar"
+    }
+  )"_json;
+  ni::hardware::grpc::internal::ServerConfigurationParser server_configuration(config_json);
+
+  bool exception_thrown = false;
+  try {
+    auto address = server_configuration.parse_address();
+  }
+  catch(const std::exception& ex)  {
+    EXPECT_EQ(typeid(ex), typeid(ni::hardware::grpc::internal::ServerConfigurationParser::UnspecifiedPortException));
     exception_thrown = true;
   }  
 

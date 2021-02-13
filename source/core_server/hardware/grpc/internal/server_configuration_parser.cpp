@@ -10,8 +10,11 @@ namespace internal {
 const char* ServerConfigurationParser::kLocalhostAddressPrefix = "0.0.0.0:";
 const char* ServerConfigurationParser::kDefaultFilename = "server_config.json";
 const char* ServerConfigurationParser::kPortKey = "port";
-const char* ServerConfigurationParser::kConfigFileNotFoundMessage = "The server configuration file was not found.";
+const char* ServerConfigurationParser::kConfigFileNotFoundMessage = "The server configuration file was not found at the provided or default locations.";
 const char* ServerConfigurationParser::kInvalidPortMessage = "The specified port number must between 0 and 65535.";
+const char* ServerConfigurationParser::kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
+const char* ServerConfigurationParser::kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
+const char* ServerConfigurationParser::kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file. \n\n";
 
 ServerConfigurationParser::ServerConfigurationParser()
 {
@@ -45,16 +48,31 @@ nlohmann::json ServerConfigurationParser::load(const char* config_file_path)
   if (!input_stream) {
     throw ConfigFileNotFoundException();
   }
-  return nlohmann::json::parse(input_stream);
+
+  try {
+    return nlohmann::json::parse(input_stream);
+  }
+  catch (const nlohmann::json::parse_error& ex) {
+    throw MalformedJsonException(ex.what());
+  }
 }
 
 std::string ServerConfigurationParser::parse_address()
 {
   int parsed_port = -1;
   std::string key(kPortKey);
+
   auto it = config_file_.find(key);
   if (it != config_file_.end()) {
-      parsed_port = it->get<int>();
+      try {
+        parsed_port = it->get<int>();
+      }
+      catch (const nlohmann::json::type_error& ex) {
+        throw WrongPortTypeException(ex.what());
+      }
+  }
+  else {
+    throw UnspecifiedPortException();
   }
    
   if (parsed_port < 0 || parsed_port > USHRT_MAX) {
@@ -70,6 +88,21 @@ ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundExcept
 
 ServerConfigurationParser::InvalidPortException::InvalidPortException()
   : std::runtime_error(kInvalidPortMessage)
+{
+}
+
+ServerConfigurationParser::MalformedJsonException::MalformedJsonException(const std::string& parse_error_details)
+  : std::runtime_error(kMalformedJsonMessage + parse_error_details)
+{
+}
+
+ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const std::string& type_error_details)
+  : std::runtime_error(kWrongPortTypeMessage + type_error_details)
+{
+}
+
+ServerConfigurationParser::UnspecifiedPortException::UnspecifiedPortException()
+  : std::runtime_error(kUnspecifiedPortMessage)
 {
 }
 
