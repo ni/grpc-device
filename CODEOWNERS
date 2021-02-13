@@ -1,0 +1,17 @@
+# Default code owner for the repository
+* @jonlugoatx
+
+# Owners for the build files
+/CMakeLists.txt   @SparkingSpork
+/.github/**/*.yml @SparkingSpork
+/scripts/         @SparkingSpork
+
+# Codegen
+/generated        @reckenro @jonlugoatx
+/source/codegen/  @reckenro @jonlugoatx
+
+# Core server
+/source/core_server/ @epetersoni @kylesull30 @jonlugoatx
+
+# Test
+/source/tests/ @epetersoni @kylesull30
