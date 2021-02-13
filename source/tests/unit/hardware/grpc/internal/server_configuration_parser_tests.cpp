@@ -9,18 +9,20 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ReturnsDefaultLocalAddressAndPort)
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
   std::string address;
   try {
     // On Linux the tests run in the Release folder and therefore the default of for "server_config.json" should work
     ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser_linux;
+    
     address = server_config_parser_linux.parse_address();
   }
   catch (const ni::hardware::grpc::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
     // On Windows the tests run one level above the Release folder and therefore we need to add the relative path "Release"
     const char* file_path = "Release/server_config.json";
     ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser_windows(file_path);
+
     address = server_config_parser_windows.parse_address();
   }
   
