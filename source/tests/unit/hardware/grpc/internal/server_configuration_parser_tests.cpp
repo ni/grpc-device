@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "hardware/grpc/internal/server_configuration.h"
+#include "hardware/grpc/internal/server_configuration_parser.h"
 #include <typeinfo>
 
 namespace ni {
@@ -9,7 +9,7 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-TEST(ServerConfigurationTests, CreateConfigurationWithDefaultConfigFile_ReturnsDefaultLocalAddressAndPort)
+TEST(ServerConfigurationParserTests, CreateConfigurationWithDefaultConfigFile_ReturnsDefaultLocalAddressAndPort)
 {
   std::string address;
   try {
@@ -27,7 +27,7 @@ TEST(ServerConfigurationTests, CreateConfigurationWithDefaultConfigFile_ReturnsD
   EXPECT_EQ(address, "0.0.0.0:50051");
 }
 
-TEST(ServerConfigurationTests, CreateConfigurationWithMissingConfigFile_ThrowsConfigFileNotFoundException)
+TEST(ServerConfigurationParserTests, CreateConfigurationWithMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
   //auto file_path = build_asset_path("fake.json", kreleaseFolder);
   const char* file_path = "fake.json";
@@ -43,7 +43,7 @@ TEST(ServerConfigurationTests, CreateConfigurationWithMissingConfigFile_ThrowsCo
   EXPECT_TRUE(exception_thrown);
 }
 
-TEST(ServerConfigurationTests, CreateConfigurationWithNegativePortNumber_ThrowsInvalidPortException)
+TEST(ServerConfigurationParserTests, CreateConfigurationWithNegativePortNumber_ThrowsInvalidPortException)
 {
   auto config_json = R"(
     {
@@ -64,7 +64,7 @@ TEST(ServerConfigurationTests, CreateConfigurationWithNegativePortNumber_ThrowsI
   EXPECT_TRUE(exception_thrown);
 }
 
-TEST(ServerConfigurationTests, CreateConfigurationWithPortNumberExceedingMax_ThrowsInvalidPortException)
+TEST(ServerConfigurationParserTests, CreateConfigurationWithPortNumberExceedingMax_ThrowsInvalidPortException)
 {
   auto config_json = R"(
     {
