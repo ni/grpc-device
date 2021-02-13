@@ -64,12 +64,12 @@ std::string ServerConfigurationParser::parse_address()
 }
 
 ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException()
-  : std::runtime_error(std::string(kConfigFileNotFoundMessage))
+  : std::runtime_error(kConfigFileNotFoundMessage)
 {
 }
 
 ServerConfigurationParser::InvalidPortException::InvalidPortException()
-  : std::runtime_error(std::string(kInvalidPortMessage))
+  : std::runtime_error(kInvalidPortMessage)
 {
 }
 
