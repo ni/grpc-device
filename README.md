@@ -18,8 +18,9 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 To prepare for cmake + Microsoft Visual C++ compiler build
 - Install Visual Studio 2015, 2017, or 2019 (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
-- Install [CMake](https://cmake.org/download/).
+- Install [CMake](https://cmake.org/download/) 3.12.0 or newer.
 - Install [Python](https://www.python.org/downloads/).
+- Install [mako](https://www.makotemplates.org/download.html)
 
 Launch "x64 Native Tools Command Prompt for Visual Studio"
 
@@ -53,19 +54,31 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git and cmake:
+For Debian/Ubuntu, install git, cmake (3.12.0 or newer), and mako:
 ```
 > sudo apt-get update
 > sudo apt-get install git
 > sudo apt-get install cmake
+> python -m pip install mako
 ```
 
-For NI Linux RT, install git, git-perltools, and cmake:
+For NI Linux RT, install git, git-perltools, cmake (3.12.0 or newer), python3-utils, and mako:
 ```
 > opkg update
 > opkg install git
 > opkg install git-perltools
 > opkg install cmake
+> opkg install python3-misc
+# follow the latest instructions to install pip:
+# https://pip.pypa.io/en/stable/installing/
+> python -m pip install mako
+```
+
+**Note**: Depending on the version of NI Linux RT, installing a newer version of CMake
+may be required. Follow the instructions to [install CMake](https://cmake.org/install/).
+If this is required, make sure to install openssl-dev as well.
+```
+> opkg install openssl-dev
 ```
 
 ### Clone Repo

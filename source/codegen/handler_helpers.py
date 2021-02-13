@@ -40,16 +40,19 @@ def create_args(parameters):
 def create_params(parameters, driver_name_pascal):
     result = ''
     for parameter in parameters:
-        result = result + get_c_type(parameter, driver_name_pascal)
-        if '[]' in parameter['type']:
-          result = result + '['
-          if parameter['size']['mechanism'] == 'fixed':
-            result = result + str(parameter['size']['value'])
-          result = result + ']'
-        if common_helpers.is_output_parameter(parameter):
-          result = result + '*'
-        result = result + ', '
+        result = result + create_param(parameter, driver_name_pascal) + ' ' + parameter['cppName'] + ', '
     return result[:-2]
+
+def create_param(parameter, driver_name_pascal):
+    result = get_c_type(parameter, driver_name_pascal)
+    if '[]' in parameter['type']:
+      result = result + '['
+      if parameter['size']['mechanism'] == 'fixed':
+        result = result + str(parameter['size']['value'])
+      result = result + ']'
+    if common_helpers.is_output_parameter(parameter):
+      result = result + '*'
+    return result
 
 def get_request_value(parameter, driver_name_pascal):
     result = ''
@@ -60,14 +63,18 @@ def get_request_value(parameter, driver_name_pascal):
     is_array = common_helpers.is_array(parameter["type"])
     request_name = proto_helpers.get_grpc_type_from_ivi(param_name, is_array, driver_name_pascal)
     result = f'{result}{request_name}()'
+    is_enum = common_helpers.is_enum(parameter)
+    if  common_helpers.is_enum(parameter) == True:
+        return result
     if parameter['type'] == 'ViConstString':
         result = f'{result}.c_str()'
     if parameter['type'] == 'ViRsrc':
         result = f'{result}.c_str()'
     if parameter['type'] == 'ViChar':
-        result = f'{result}.c_str()'
-    if parameter['type'] == 'ViSession':
-        result = f'{result})'
+        if is_array:
+            result = f'{result}.c_str()'
+        else:
+            result = f'{result}[0]'
     result = f'{result};'
     return result
 
@@ -89,7 +96,9 @@ def get_c_type(parameter, driver_name_pascal):
     "sfixed64": "std::int64_t",
     "bool": "bool",
     "string": "std::string",
-    "bytes": "std::string"
+    "bytes": "std::string",
+    "google.protobuf.Timestamp": "google::protobuf::Timestamp",
+    driver_name_pascal + "Attributes": "std::uint32_t"
   }
   # This is equivalent to a switch statement with the default case returning the grpc_type
   return grpc_to_c.get(grpc_type, grpc_type)

@@ -35,6 +35,11 @@ def is_array(dataType):
   if dataType.find("[]") != -1:
     return True
   return False
+  
+def is_enum(parameter):
+  if "enum" in parameter:
+    return True
+  return False
 
 def has_array_parameter(function):
   for parameter in function['parameters']:
@@ -82,3 +87,14 @@ def get_service_namespace(driver_name_caps_underscore):
   driver_full_namespace = driver_name_caps_underscore + "_" + "grpc"
   driver_full_namespace = driver_full_namespace.lower().replace("_", ".")
   return driver_full_namespace
+  
+def get_used_enums(functions, attributes):
+  used_enums = set()
+  for function in functions:
+    for parameter in functions[function]["parameters"]:
+      if "enum" in parameter:
+        used_enums.add(parameter["enum"])
+  for attribute in attributes:
+    if "enum" in attributes[attribute]:
+      used_enums.add(attributes[attribute]["enum"])
+  return used_enums
