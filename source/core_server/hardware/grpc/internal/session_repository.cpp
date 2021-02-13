@@ -112,13 +112,33 @@ std::shared_ptr<SessionRepository::ReservationInfo> SessionRepository::find_or_c
   return info;
 }
 
-bool SessionRepository::reserve(const std::string& reservation_id, const std::string& client_id)
+// Returns a boolean value indicating whether or not the client_id holds the reservation_id and it also sets the
+// status to an appropriate grpc::Status providing more detail about the circumstances surrounding
+// the returned reservation state. There are two states that are possible but multiple statuses in each state:
+// 1. The provided client_id does not hold the reservation_id:
+//   a. If the reservation_id or client_id are empty then the status is set to INVALID_ARGUMENT
+//   b. If the reservation is not created because an external call like reset_server changed the server state while 
+//      waiting to acquire the reservation then the status is set to ABORTED.
+//   c. If the reserve call is cancelled by a client call to cancel or by exceeding the client's deadline then
+//      the status is set to CANCELLED.
+// 2. The provided client_id does hold the reservation_id:
+//   a. If the reservation requested is already reserved by client_id then status is set to FAILED_PRECONDITION. The 
+//      precondition in this case is that the client_id doesn't already hold the reservation_id.
+//   b. If the reservation is created for client_id or if the reservation is changed from another client to client_id
+//      then the status is set to OK.
+bool SessionRepository::reserve(
+    const ::grpc::ServerContext* context,
+    const std::string& reservation_id,
+    const std::string& client_id,
+    ::grpc::Status& status)
 {
   if (reservation_id.empty() || client_id.empty()) {
+    status = ::grpc::Status(::grpc::INVALID_ARGUMENT, "You must specify a non-empty reservation_id and client_id.");
     return false;
   }
   std::shared_ptr<ReservationInfo> info = find_or_create_reservation(reservation_id, client_id);
   if (!info) {
+    status = ::grpc::Status(::grpc::FAILED_PRECONDITION, "The provided reservation_id is already reserved by the provided client_id.");
     return true;
   }
   // If the info was newly created by find_or_create_reservation, this call
@@ -131,7 +151,19 @@ bool SessionRepository::reserve(const std::string& reservation_id, const std::st
     info->client_count--;
     info->client_id = client_id;
     auto it = reservations_.find(reservation_id);
-    return it != reservations_.end() && client_id == it->second->client_id;
+    if (context->IsCancelled()) {
+      info->lock->notify();
+      if (it != reservations_.end() && info->client_count <= 0) {
+        reservations_.erase(it);
+      }
+      status = ::grpc::Status::CANCELLED;
+      return false;
+    }
+    bool is_reserved = it != reservations_.end() && client_id == it->second->client_id;
+    status = is_reserved 
+      ? ::grpc::Status::OK
+      : ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");
+    return is_reserved;
   }
 }
 
