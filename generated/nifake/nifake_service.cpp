@@ -20,37 +20,37 @@ namespace grpc
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   namespace internal = ni::hardware::grpc::internal;
-  using niFake_AbortPtr = int (*)(std::uint64_t);
-  using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::uint32_t);
-  using niFake_GetABooleanPtr = int (*)(std::uint64_t, bool*);
-  using niFake_GetANumberPtr = int (*)(std::uint64_t, std::uint32_t*);
-  using niFake_GetArraySizeForPythonCodePtr = int (*)(std::uint64_t, std::int32_t*);
-  using niFake_GetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, NiFakeAttributes, bool*);
-  using niFake_GetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, NiFakeAttributes, std::int32_t*);
-  using niFake_GetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, NiFakeAttributes, std::int64_t*);
-  using niFake_GetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, NiFakeAttributes, double*);
-  using niFake_GetCalDateAndTimePtr = int (*)(std::uint64_t, std::int32_t, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*, std::int32_t*);
-  using niFake_GetCalIntervalPtr = int (*)(std::uint64_t, std::int32_t*);
-  using niFake_GetCustomTypePtr = int (*)(std::uint64_t, std::uint64_t*);
-  using niFake_GetEnumValuePtr = int (*)(std::uint64_t, std::int32_t*, std::uint32_t*);
-  using niFake_InitWithOptionsPtr = int (*)(std::string, bool, bool, std::string, std::uint64_t*);
-  using niFake_InitiatePtr = int (*)(std::uint64_t);
-  using niFake_OneInputFunctionPtr = int (*)(std::uint64_t, std::int32_t);
-  using niFake_ParametersAreMultipleTypesPtr = int (*)(std::uint64_t, bool, std::int32_t, std::int64_t, std::uint32_t, double, double, std::int32_t, std::string);
-  using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(std::uint64_t);
-  using niFake_ReadPtr = int (*)(std::uint64_t, double, double*);
-  using niFake_ReadFromChannelPtr = int (*)(std::uint64_t, std::string, std::int32_t, double*);
-  using niFake_ReturnDurationInSecondsPtr = int (*)(std::uint64_t, double*);
-  using niFake_SetAttributeViBooleanPtr = int (*)(std::uint64_t, std::string, NiFakeAttributes, bool);
-  using niFake_SetAttributeViInt32Ptr = int (*)(std::uint64_t, std::string, NiFakeAttributes, std::int32_t);
-  using niFake_SetAttributeViInt64Ptr = int (*)(std::uint64_t, std::string, NiFakeAttributes, std::int64_t);
-  using niFake_SetAttributeViReal64Ptr = int (*)(std::uint64_t, std::string, NiFakeAttributes, double);
-  using niFake_SetAttributeViStringPtr = int (*)(std::uint64_t, std::string, NiFakeAttributes, std::string);
-  using niFake_SetCustomTypePtr = int (*)(std::uint64_t, std::uint64_t);
-  using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t, std::string);
-  using niFake_TwoInputFunctionPtr = int (*)(std::uint64_t, double, std::string);
-  using niFake_Use64BitNumberPtr = int (*)(std::uint64_t, std::int64_t, std::int64_t*);
-  using niFake_closePtr = int (*)(std::uint64_t);
+  using niFake_AbortPtr = int (*)(std::uint64_t vi);
+  using niFake_EnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t vi, std::uint32_t aTurtle);
+  using niFake_GetABooleanPtr = int (*)(std::uint64_t vi, bool* aBoolean);
+  using niFake_GetANumberPtr = int (*)(std::uint64_t vi, std::uint32_t* aNumber);
+  using niFake_GetArraySizeForPythonCodePtr = int (*)(std::uint64_t vi, std::int32_t* sizeOut);
+  using niFake_GetAttributeViBooleanPtr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, bool* attributeValue);
+  using niFake_GetAttributeViInt32Ptr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, std::int32_t* attributeValue);
+  using niFake_GetAttributeViInt64Ptr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, std::int64_t* attributeValue);
+  using niFake_GetAttributeViReal64Ptr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, double* attributeValue);
+  using niFake_GetCalDateAndTimePtr = int (*)(std::uint64_t vi, std::int32_t calType, std::int32_t* month, std::int32_t* day, std::int32_t* year, std::int32_t* hour, std::int32_t* minute);
+  using niFake_GetCalIntervalPtr = int (*)(std::uint64_t vi, std::int32_t* months);
+  using niFake_GetCustomTypePtr = int (*)(std::uint64_t vi, std::uint64_t* cs);
+  using niFake_GetEnumValuePtr = int (*)(std::uint64_t vi, std::int32_t* aQuantity, std::uint32_t* aTurtle);
+  using niFake_InitWithOptionsPtr = int (*)(std::string resourceName, bool idQuery, bool resetDevice, std::string optionString, std::uint64_t* vi);
+  using niFake_InitiatePtr = int (*)(std::uint64_t vi);
+  using niFake_OneInputFunctionPtr = int (*)(std::uint64_t vi, std::int32_t aNumber);
+  using niFake_ParametersAreMultipleTypesPtr = int (*)(std::uint64_t vi, bool aBoolean, std::int32_t anInt32, std::int64_t anInt64, std::uint32_t anIntEnum, double aFloat, double aFloatEnum, std::int32_t stringSize, std::string aString);
+  using niFake_PoorlyNamedSimpleFunctionPtr = int (*)(std::uint64_t vi);
+  using niFake_ReadPtr = int (*)(std::uint64_t vi, double maximumTime, double* reading);
+  using niFake_ReadFromChannelPtr = int (*)(std::uint64_t vi, std::string channelName, std::int32_t maximumTime, double* reading);
+  using niFake_ReturnDurationInSecondsPtr = int (*)(std::uint64_t vi, double* timedelta);
+  using niFake_SetAttributeViBooleanPtr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, bool attributeValue);
+  using niFake_SetAttributeViInt32Ptr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, std::int32_t attributeValue);
+  using niFake_SetAttributeViInt64Ptr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, std::int64_t attributeValue);
+  using niFake_SetAttributeViReal64Ptr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, double attributeValue);
+  using niFake_SetAttributeViStringPtr = int (*)(std::uint64_t vi, std::string channelName, std::uint32_t attributeId, std::string attributeValue);
+  using niFake_SetCustomTypePtr = int (*)(std::uint64_t vi, std::uint64_t cs);
+  using niFake_StringValuedEnumInputFunctionWithDefaultsPtr = int (*)(std::uint64_t vi, std::string aMobileOSName);
+  using niFake_TwoInputFunctionPtr = int (*)(std::uint64_t vi, double aNumber, std::string aString);
+  using niFake_Use64BitNumberPtr = int (*)(std::uint64_t vi, std::int64_t input, std::int64_t* output);
+  using niFake_closePtr = int (*)(std::uint64_t vi);
 
   #if defined(_MSC_VER)
     static const char* driver_api_library_name = "nifake_64.dll";
@@ -292,7 +292,7 @@ namespace grpc
 
     std::uint64_t vi = request->vi();
     std::string channel_name = request->channel_name().c_str();
-    NiFakeAttributes attribute_id = request->attribute_id();
+    std::uint32_t attribute_id = request->attribute_id();
     bool attribute_value;
     auto status = get_attribute_vi_boolean_function(vi, channel_name, attribute_id, &attribute_value);
     response->set_status(status);
@@ -319,7 +319,7 @@ namespace grpc
 
     std::uint64_t vi = request->vi();
     std::string channel_name = request->channel_name().c_str();
-    NiFakeAttributes attribute_id = request->attribute_id();
+    std::uint32_t attribute_id = request->attribute_id();
     std::int32_t attribute_value;
     auto status = get_attribute_vi_int32_function(vi, channel_name, attribute_id, &attribute_value);
     response->set_status(status);
@@ -346,7 +346,7 @@ namespace grpc
 
     std::uint64_t vi = request->vi();
     std::string channel_name = request->channel_name().c_str();
-    NiFakeAttributes attribute_id = request->attribute_id();
+    std::uint32_t attribute_id = request->attribute_id();
     std::int64_t attribute_value;
     auto status = get_attribute_vi_int64_function(vi, channel_name, attribute_id, &attribute_value);
     response->set_status(status);
@@ -373,7 +373,7 @@ namespace grpc
 
     std::uint64_t vi = request->vi();
     std::string channel_name = request->channel_name().c_str();
-    NiFakeAttributes attribute_id = request->attribute_id();
+    std::uint32_t attribute_id = request->attribute_id();
     double attribute_value;
     auto status = get_attribute_vi_real64_function(vi, channel_name, attribute_id, &attribute_value);
     response->set_status(status);
