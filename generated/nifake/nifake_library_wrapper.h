@@ -28,10 +28,8 @@ class NiFakeLibraryWrapper {
   virtual std::uint32_t GetCalInterval(std::uint64_t vi, std::int32_t* months) = 0;
   virtual std::uint32_t GetCustomType(std::uint64_t vi, std::uint64_t* cs) = 0;
   virtual std::uint32_t GetEnumValue(std::uint64_t vi, std::int32_t* aQuantity, std::uint32_t* aTurtle) = 0;
-  virtual std::uint32_t GetLastCalDateAndTime(std::uint64_t vi, std::int32_t calType, google::protobuf::Timestamp* month) = 0;
   virtual std::uint32_t InitWithOptions(std::string resourceName, bool idQuery, bool resetDevice, std::string optionString, std::uint64_t* vi) = 0;
   virtual std::uint32_t Initiate(std::uint64_t vi) = 0;
-  virtual std::uint32_t LockSession(std::uint64_t vi, bool* callerHasLock) = 0;
   virtual std::uint32_t OneInputFunction(std::uint64_t vi, std::int32_t aNumber) = 0;
   virtual std::uint32_t ParametersAreMultipleTypes(std::uint64_t vi, bool aBoolean, std::int32_t anInt32, std::int64_t anInt64, std::uint32_t anIntEnum, double aFloat, double aFloatEnum, std::int32_t stringSize, std::string aString) = 0;
   virtual std::uint32_t PoorlyNamedSimpleFunction(std::uint64_t vi) = 0;
@@ -46,10 +44,8 @@ class NiFakeLibraryWrapper {
   virtual std::uint32_t SetCustomType(std::uint64_t vi, std::uint64_t cs) = 0;
   virtual std::uint32_t StringValuedEnumInputFunctionWithDefaults(std::uint64_t vi, std::string aMobileOSName) = 0;
   virtual std::uint32_t TwoInputFunction(std::uint64_t vi, double aNumber, std::string aString) = 0;
-  virtual std::uint32_t UnlockSession(std::uint64_t vi, bool* callerHasLock) = 0;
   virtual std::uint32_t Use64BitNumber(std::uint64_t vi, std::int64_t input, std::int64_t* output) = 0;
   virtual std::uint32_t close(std::uint64_t vi) = 0;
-  virtual std::uint32_t fancy_self_test(std::uint64_t vi) = 0;
 };
 
 }  // namespace grpc

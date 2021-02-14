@@ -33,11 +33,9 @@ namespace ${namespace} {
 class ${driver_name_pascal}LibraryWrapper {
  public:
   virtual ::grpc::Status check_function_exists(const char* functionName) = 0;
-% for method_name in functions:
+% for method_name in handler_helpers.filter_api_functions(functions):
 <%
 f = functions[method_name]
-if not handler_helpers.should_gen_function_pointer(f):
-  continue
 parameters = f['parameters']
 handler_helpers.sanitize_names(parameters)
 return_value = f['returns']
