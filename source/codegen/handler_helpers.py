@@ -105,4 +105,4 @@ def get_c_type(parameter, driver_name_pascal):
 
 def filter_api_functions(functions):
   '''Returns function metadata only for those functions to include for generating the function types to the API library'''
-  return {k: function for k, function in functions.items() if 'codegen_method' not in function.keys() or function['codegen_method'] != 'no'}
+  return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']
