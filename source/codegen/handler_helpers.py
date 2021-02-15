@@ -134,15 +134,21 @@ def format_value(value):
 def get_input_values(enum_data):
   out_value_format= ""
   index = 1
+  is_int = True if type(enum_data["values"][0]["value"]).__name__ == "int" else False
+  if is_int:
+    out_value_format =  "{0, 0},"
   for value in enum_data["values"]:
-    formated_value = format_value(value["value"])
-    out_value_format = out_value_format + "{" + str(index) + ", " + str(formated_value) + "},"
+    formated_value = str(format_value(value["value"]))
+    out_value_format = out_value_format + "{" + str(index) + ", " + formated_value + "},"
     index = index+1
   return out_value_format
   
 def get_output_values(enum_data):
   out_value_format= ""
   index = 1
+  is_int = True if type(enum_data["values"][0]["value"]).__name__ == "int" else False
+  if is_int:
+    out_value_format =  "{0, 0},"
   for value in enum_data["values"]:
     formated_value = format_value(value["value"])
     out_value_format = out_value_format + "{" + str(formated_value) + ", " + str(index) + "},"
