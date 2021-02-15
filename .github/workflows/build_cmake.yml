@@ -1,4 +1,4 @@
-name: Build Matrix
+name: Desktop OS Builds
 
 on: [push, workflow_dispatch]
 
@@ -15,12 +15,12 @@ jobs:
       matrix:
         config:
         - {
-            name: "Windows Latest MinGW", artifact: "Windows-MinGW.tar.xz",
+            name: "Windows Build", artifact: "Windows.tar.xz",
             os: windows-latest,
             build_type: "Release", cc: "gcc", cxx: "g++"
           }
         - {
-            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-latest,
             build_type: "Release", cc: "gcc", cxx: "g++"
           }
