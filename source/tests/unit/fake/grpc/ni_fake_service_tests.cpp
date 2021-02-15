@@ -1,11 +1,11 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
+#include <nifake_mock_library_wrapper.h>
+#include <nifake_service.h>
 
 #include <thread>
 
 #include "hardware/grpc/internal/session_repository.h"
-#include "hardware/grpc/internal/shared_library.h"
-#include <nifake_service.h>
 
 namespace ni {
 namespace tests {
@@ -13,41 +13,16 @@ namespace unit {
 namespace fake {
 namespace grpc {
 
-#if defined(_MSC_VER)
-static const char* expected_api_library_name = "nifake_64.dll";
-static const char* initial_shared_library_name = "arbitraryName.dll";
-#else
-static const char* expected_api_library_name = "./libnifake.so";
-static const char* initial_shared_library_name = "./libarbitraryName.so";
-#endif
-
-TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryIsNotLoaded)
+TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(initial_shared_library_name);
-
-  ni::fake::grpc::NiFakeService service(&shared_library, &session_repository);
-
-  EXPECT_FALSE(shared_library.is_loaded());
-}
-
-TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryNameIsSet)
-{
-  ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(initial_shared_library_name);
-
-  ni::fake::grpc::NiFakeService service(&shared_library, &session_repository);
-  std::string shared_library_name = shared_library.get_library_name();
-
-  EXPECT_STREQ(expected_api_library_name, shared_library_name.c_str());
-}
-
-TEST(NiFakeServiceTests, LibraryNotPresent_GetABoolean_ReturnsNotFoundGrpcStatusError)
-{
-  ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(initial_shared_library_name);
-  ni::fake::grpc::NiFakeService service(&shared_library, &session_repository);
+  NiFakeMockLibraryWrapper library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::GetABooleanRequest request;
+  EXPECT_CALL(library_wrapper, check_function_exists)
+      .WillOnce(testing::Return(::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetABoolean")));
+  EXPECT_CALL(library_wrapper, GetABoolean)
+      .Times(0);
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetABooleanResponse response;
@@ -55,6 +30,25 @@ TEST(NiFakeServiceTests, LibraryNotPresent_GetABoolean_ReturnsNotFoundGrpcStatus
 
   // Since the ni fake library shouldn't be present, we expect a NOT_FOUND status in response.
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  NiFakeMockLibraryWrapper library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  ni::fake::grpc::GetABooleanRequest request;
+  EXPECT_CALL(library_wrapper, check_function_exists)
+      .WillOnce(testing::Return(::grpc::Status::OK));
+  EXPECT_CALL(library_wrapper, GetABoolean)
+      .Times(1);
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::GetABooleanResponse response;
+  ::grpc::Status status = service.GetABoolean(&context, &request, &response);
+
+  // Since the ni fake library shouldn't be present, we expect a NOT_FOUND status in response.
+  EXPECT_TRUE(status.ok());
 }
 
 }  // namespace grpc

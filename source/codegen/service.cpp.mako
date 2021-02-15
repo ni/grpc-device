@@ -65,9 +65,9 @@ namespace ${namespace} {
 
 <% continue %>
 % endif
-    ::grpc::Status status = library_wrapper_->check_function_exists("${c_function_name}");
-    if (!status.ok()) {
-      return status;
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
     }
 
 %for parameter in input_parameters:

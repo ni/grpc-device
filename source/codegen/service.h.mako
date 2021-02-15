@@ -53,4 +53,4 @@ private:
 % for namespace in reversed(driver_namespaces):
 } // namespace ${namespace}
 % endfor
-#endif ${include_guard_name}
+#endif  // ${include_guard_name}
