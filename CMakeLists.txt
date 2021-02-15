@@ -38,10 +38,10 @@ set(proto_srcs_dir "${CMAKE_CURRENT_BINARY_DIR}/proto")
 file(MAKE_DIRECTORY ${proto_srcs_dir})
 include_directories(
   "${proto_srcs_dir}"
+  "./generated"
   "./imports/includes"
   "./source"
   "./source/core_server"
-  "./source/generated"
 )
 
 #----------------------------------------------------------------------
@@ -71,6 +71,9 @@ set(codegen_scripts
   "${codegen_dir}/handler_helpers.py"
   "${codegen_dir}/proto_helpers.py")
 
+# Populated in the api loop below.
+set(api_service_srcs "")
+
 foreach(api ${ni_apis})
   set(codegen_dependencies
     "${metadata_dir}/${api}/attributes.py"
@@ -90,6 +93,9 @@ foreach(api ${ni_apis})
   set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (api STREQUAL "nifake")
     # Fake library gen goes here. Add flag and files to output_files and gen_command
+  else()
+    set(api_service_srcs
+      "${proto_srcs_dir}/${api}/${api}_service.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -140,13 +146,11 @@ foreach(api ${ni_apis})
     "${proto_srcs_dir}/${api}.pb.h"
     "${proto_srcs_dir}/${api}.grpc.pb.cc"
     "${proto_srcs_dir}/${api}.grpc.pb.h")
-  # Temporary custom target to force generation without changing an existing target
-  add_custom_target(${api}_protocs ALL
-    DEPENDS
+  if(NOT api STREQUAL "nifake")
+    set(api_service_srcs
       "${proto_srcs_dir}/${api}.pb.cc"
-      "${proto_srcs_dir}/${api}.pb.h"
-      "${proto_srcs_dir}/${api}.grpc.pb.cc"
-      "${proto_srcs_dir}/${api}.grpc.pb.h")
+      "${proto_srcs_dir}/${api}.grpc.pb.cc")
+  endif()
 endforeach()
 
 add_executable(core_server
@@ -156,7 +160,8 @@ add_executable(core_server
    "source/core_server/hardware/grpc/internal/session_repository.cpp"
    "source/core_server/hardware/grpc/internal/shared_library.cpp"
    ${server_utilities_proto_srcs}
-   ${server_utilities_grpc_srcs})
+   ${server_utilities_grpc_srcs}
+   ${api_service_srcs})
 
 target_link_libraries(core_server
    ${_REFLECTION}
