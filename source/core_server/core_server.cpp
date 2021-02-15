@@ -15,8 +15,7 @@ static void RunServer(int argc, char** argv)
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library;
-  ni::hardware::grpc::CoreService core_service(&session_repository, &device_management, &shared_library);
+  ni::hardware::grpc::CoreService core_service(&session_repository, &device_management);
   builder.RegisterService(&core_service);
 
   // Assemble the server.

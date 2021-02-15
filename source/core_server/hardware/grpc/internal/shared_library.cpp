@@ -9,11 +9,6 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-SharedLibrary::SharedLibrary()
-    : handle_(nullptr)
-{
-}
-
 SharedLibrary::SharedLibrary(const char* library_name)
     : library_name_(library_name), handle_(nullptr)
 {

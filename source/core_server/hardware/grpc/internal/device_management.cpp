@@ -5,108 +5,58 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-using NISysCfgInitializeSessionPtr = NISysCfgStatus (*)(
-  const char*                            targetName,
-  const char*                            username,
-  const char*                            password,
-  NISysCfgLocale                         language,
-  NISysCfgBool                           forcePropertyRefresh,
-  unsigned int                           connectTimeoutMsec,
-  NISysCfgEnumExpertHandle*              expertEnumHandle,
-  NISysCfgSessionHandle*                 sessionHandle
-  );
-using NISysCfgCreateFilterPtr = NISysCfgStatus(*)(
-  NISysCfgSessionHandle                  sessionHandle,
-  NISysCfgFilterHandle*                  filterHandle
-  );
-using NISysCfgSetFilterPropertyPtr = NISysCfgStatus (*)(
-  NISysCfgFilterHandle                   filterHandle,
-  NISysCfgFilterProperty                 propertyID,
-  ...
-  );
-using NISysCfgFindHardwarePtr = NISysCfgStatus (*)(
-  NISysCfgSessionHandle                  sessionHandle,
-  NISysCfgFilterMode                     filterMode,
-  NISysCfgFilterHandle                   filterHandle,
-  const char*                            expertNames,
-  NISysCfgEnumResourceHandle*            resourceEnumHandle
-  );
-using NISysCfgNextResourcePtr = NISysCfgStatus(*)(
-  NISysCfgSessionHandle                  sessionHandle,
-  NISysCfgEnumResourceHandle             resourceEnumHandle,
-  NISysCfgResourceHandle*                resourceHandle
-  );
-using NISysCfgGetResourceIndexedPropertyPtr = NISysCfgStatus(*)(
-  NISysCfgResourceHandle                 resourceHandle,
-  NISysCfgIndexedProperty                propertyID,
-  unsigned int                           index,
-  void *                                 value
-  );
-using NISysCfgGetResourcePropertyPtr = NISysCfgStatus(*)(
-  NISysCfgResourceHandle                 resourceHandle,
-  NISysCfgResourceProperty               propertyID,
-  void*                                  value
-  );
-using NISysCfgCloseHandlePtr = NISysCfgStatus(*)(void* syscfgHandle);
+#if defined(_MSC_VER)
+static const char* syscfg_api_library_name = "nisyscfg.dll";
+#else
+static const char* syscfg_api_library_name = "libnisyscfg.so";
+#endif
 
 DeviceManagement::DeviceManagement()
 {
+  syscfg_library_->set_library_name(syscfg_api_library_name);
 }
 
-// Provides a list of devices or chassis connected to server under localhost. This internally uses the "NI System Configuration API". If it is not
-// installed on the server, it can be downloaded from this page: https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
-NISysCfgStatus DeviceManagement::enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
+::grpc::Status DeviceManagement::enumerate_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
+{
+  syscfg_library_->load();
+  if (!syscfg_library_->is_loaded()) {
+    std::string message("The library could not be loaded: ");
+    message += syscfg_api_library_name;
+    return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, message.c_str());
+  }
+  NISysCfgStatus status = get_list_of_devices(devices);
+  if (NISysCfg_Failed(status)) {
+    return ::grpc::Status(::grpc::StatusCode::INTERNAL, "Failed to enumerate devices because of internal syscfg error.");
+  }
+  return ::grpc::Status::OK;
+}
+
+void DeviceManagement::set_syscfg_library_name(const char* library_name)
+{
+  if (!syscfg_library_->is_loaded()) {
+    syscfg_library_->set_library_name(library_name);
+  }
+}
+
+std::string DeviceManagement::get_syscfg_library_name() const
+{
+  return syscfg_library_->get_library_name();
+}
+
+bool DeviceManagement::is_syscfg_library_loaded() const
+{
+  return syscfg_library_->is_loaded();
+}
+
+NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
 {
   NISysCfgStatus status = NISysCfg_OK;
-  NISysCfgSessionHandle session = NULL;
-  NISysCfgEnumResourceHandle resources_handle = NULL;
-  NISysCfgResourceHandle resource = NULL;
-  NISysCfgFilterHandle filter = NULL;
-  char expertName[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  char name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-
-  auto syscfg_initialize_session = reinterpret_cast<NISysCfgInitializeSessionPtr>(shared_library->get_function_pointer("NISysCfgInitializeSession"));
-  auto syscfg_create_filter = reinterpret_cast<NISysCfgCreateFilterPtr>(shared_library->get_function_pointer("NISysCfgCreateFilter"));
-  auto syscfg_set_filter_property = reinterpret_cast<NISysCfgSetFilterPropertyPtr>(shared_library->get_function_pointer("NISysCfgSetFilterProperty"));
-  auto syscfg_find_hardware = reinterpret_cast<NISysCfgFindHardwarePtr>(shared_library->get_function_pointer("NISysCfgFindHardware"));
-  auto sysycfg_next_resource = reinterpret_cast<NISysCfgNextResourcePtr>(shared_library->get_function_pointer("NISysCfgNextResource"));
-  auto sysycfg_get_resource_indexed_property = reinterpret_cast<NISysCfgGetResourceIndexedPropertyPtr>(shared_library->get_function_pointer("NISysCfgGetResourceIndexedProperty"));
-  auto sysycfg_get_resource_property = reinterpret_cast<NISysCfgGetResourcePropertyPtr>(shared_library->get_function_pointer("NISysCfgGetResourceProperty"));
-  auto sysycfg_close_handle = reinterpret_cast<NISysCfgCloseHandlePtr>(shared_library->get_function_pointer("NISysCfgCloseHandle"));
-
-  if (NISysCfg_Succeeded(status = syscfg_initialize_session("localhost", NULL, NULL, NISysCfgLocaleEnglish, NISysCfgBoolTrue, 10000, NULL, &session))) {
-    if (NISysCfg_Succeeded(status = syscfg_create_filter(session, &filter))) {
-      syscfg_set_filter_property(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
-      syscfg_set_filter_property(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
-      if (NISysCfg_Succeeded(status = syscfg_find_hardware(session, NISysCfgFilterModeAny, filter, NULL, &resources_handle))) {
-        while (NISysCfg_Succeeded(status) && (status = sysycfg_next_resource(session, resources_handle, &resource)) == NISysCfg_OK) {
-          sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertName, 0, expertName);
-          if ((strcmp(expertName, "network") != 0)) {
-            NiDeviceProperties* properties = devices->Add();
-            sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
-            sysycfg_get_resource_property(resource, NISysCfgResourcePropertyProductName, model);
-            sysycfg_get_resource_property(resource, NISysCfgResourcePropertyVendorName, vendor);
-            sysycfg_get_resource_property(resource, NISysCfgResourcePropertySerialNumber, serial_number);
-            properties->set_name(name);
-            properties->set_model(model);
-            properties->set_vendor(vendor);
-            properties->set_serialnumber(serial_number);
-            status = sysycfg_close_handle(resource);
-          }
-        }
-      }
-    }
-  }
-  sysycfg_close_handle(filter);
-  sysycfg_close_handle(resources_handle);
-  sysycfg_close_handle(session);
+  // This will use syscfg APIs to get a list of devices or chassis under localhost
+  // if any syscfg API gives error, it will be stored in status.
   return status;
 }
 
-} // namespace internal
-} // namespace grpc
-} // namespace hardware
-} // namespace ni
+}  // namespace internal
+}  // namespace grpc
+}  // namespace hardware
+}  // namespace ni

@@ -1,6 +1,8 @@
 #ifndef NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
 #define NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
 
+#include <grpcpp/grpcpp.h>
+
 #include "session_repository.h"
 #include "shared_library.h"
 #include "nisyscfg.h"
@@ -15,7 +17,14 @@ class DeviceManagement
  public:
   DeviceManagement();
 
-  NISysCfgStatus enumerate_devices(SharedLibrary* shared_library, google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
+  ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
+  void set_syscfg_library_name(const char* library_name);
+  std::string get_syscfg_library_name() const;
+  bool is_syscfg_library_loaded() const;
+
+ private:
+  internal::SharedLibrary* syscfg_library_;
+  NISysCfgStatus get_list_of_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
 };
 
 } // namespace internal
