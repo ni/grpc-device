@@ -7,6 +7,7 @@
 #define NI_FAKE_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
+#include <niFake.h>
 
 namespace ni {
 namespace fake {
@@ -15,35 +16,35 @@ namespace grpc {
 class NiFakeLibraryWrapper {
 public:
   virtual ::grpc::Status check_function_exists(const char* functionName) = 0;
-  virtual std::uint32_t Abort(std::uint32_t vi) = 0;
-  virtual std::uint32_t EnumInputFunctionWithDefaults(std::uint32_t vi, std::int32_t aTurtle) = 0;
-  virtual std::uint32_t GetABoolean(std::uint32_t vi, bool* aBoolean) = 0;
-  virtual std::uint32_t GetANumber(std::uint32_t vi, std::int32_t* aNumber) = 0;
-  virtual std::uint32_t GetArraySizeForPythonCode(std::uint32_t vi, std::int32_t* sizeOut) = 0;
-  virtual std::uint32_t GetAttributeViBoolean(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, bool* attributeValue) = 0;
-  virtual std::uint32_t GetAttributeViInt32(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, std::int32_t* attributeValue) = 0;
-  virtual std::uint32_t GetAttributeViInt64(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, std::int64_t* attributeValue) = 0;
-  virtual std::uint32_t GetAttributeViReal64(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, double* attributeValue) = 0;
-  virtual std::uint32_t GetCalDateAndTime(std::uint32_t vi, std::int32_t calType, std::int32_t* month, std::int32_t* day, std::int32_t* year, std::int32_t* hour, std::int32_t* minute) = 0;
-  virtual std::uint32_t GetCalInterval(std::uint32_t vi, std::int32_t* months) = 0;
-  virtual std::uint32_t GetEnumValue(std::uint32_t vi, std::int32_t* aQuantity, std::int32_t* aTurtle) = 0;
-  virtual std::uint32_t InitWithOptions(std::string resourceName, bool idQuery, bool resetDevice, std::string optionString, std::uint32_t* vi) = 0;
-  virtual std::uint32_t Initiate(std::uint32_t vi) = 0;
-  virtual std::uint32_t OneInputFunction(std::uint32_t vi, std::int32_t aNumber) = 0;
-  virtual std::uint32_t ParametersAreMultipleTypes(std::uint32_t vi, bool aBoolean, std::int32_t anInt32, std::int64_t anInt64, std::int32_t anIntEnum, double aFloat, double aFloatEnum, std::int32_t stringSize, std::string aString) = 0;
-  virtual std::uint32_t PoorlyNamedSimpleFunction(std::uint32_t vi) = 0;
-  virtual std::uint32_t Read(std::uint32_t vi, double maximumTime, double* reading) = 0;
-  virtual std::uint32_t ReadFromChannel(std::uint32_t vi, std::string channelName, std::int32_t maximumTime, double* reading) = 0;
-  virtual std::uint32_t ReturnDurationInSeconds(std::uint32_t vi, double* timedelta) = 0;
-  virtual std::uint32_t SetAttributeViBoolean(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, bool attributeValue) = 0;
-  virtual std::uint32_t SetAttributeViInt32(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, std::int32_t attributeValue) = 0;
-  virtual std::uint32_t SetAttributeViInt64(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, std::int64_t attributeValue) = 0;
-  virtual std::uint32_t SetAttributeViReal64(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, double attributeValue) = 0;
-  virtual std::uint32_t SetAttributeViString(std::uint32_t vi, std::string channelName, std::uint32_t attributeId, std::string attributeValue) = 0;
-  virtual std::uint32_t StringValuedEnumInputFunctionWithDefaults(std::uint32_t vi, std::string aMobileOSName) = 0;
-  virtual std::uint32_t TwoInputFunction(std::uint32_t vi, double aNumber, std::string aString) = 0;
-  virtual std::uint32_t Use64BitNumber(std::uint32_t vi, std::int64_t input, std::int64_t* output) = 0;
-  virtual std::uint32_t close(std::uint32_t vi) = 0;
+  virtual ViStatus Abort(ViSession vi) = 0;
+  virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
+  virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
+  virtual ViStatus GetANumber(ViSession vi, ViInt16* aNumber) = 0;
+  virtual ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut) = 0;
+  virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue) = 0;
+  virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue) = 0;
+  virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue) = 0;
+  virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue) = 0;
+  virtual ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute) = 0;
+  virtual ViStatus GetCalInterval(ViSession vi, ViInt32* months) = 0;
+  virtual ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) = 0;
+  virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
+  virtual ViStatus Initiate(ViSession vi) = 0;
+  virtual ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber) = 0;
+  virtual ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString) = 0;
+  virtual ViStatus PoorlyNamedSimpleFunction(ViSession vi) = 0;
+  virtual ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading) = 0;
+  virtual ViStatus ReadFromChannel(ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading) = 0;
+  virtual ViStatus ReturnDurationInSeconds(ViSession vi, ViReal64* timedelta) = 0;
+  virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
+  virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
+  virtual ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue) = 0;
+  virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
+  virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue) = 0;
+  virtual ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName) = 0;
+  virtual ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString) = 0;
+  virtual ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output) = 0;
+  virtual ViStatus close(ViSession vi) = 0;
 };
 
 }  // namespace grpc

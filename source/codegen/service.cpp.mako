@@ -23,6 +23,7 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 //---------------------------------------------------------------------
 #include "${module_name}_service.h"
 
+#include <${config["c_header"]}>
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -40,10 +41,10 @@ namespace ${namespace} {
     f = functions[function]
     parameters = f['parameters']
     handler_helpers.sanitize_names(parameters)
-    return_type = "std::uint32_t"
+    return_type = f['returns']
 %>\
 % if not common_helpers.has_unsupported_parameter(f):
-  using ${c_function_prefix}${function}Ptr = ${return_type} (*)(${handler_helpers.create_params(parameters, service_class_prefix)});
+  using ${c_function_prefix}${function}Ptr = ${return_type} (*)(${handler_helpers.create_params(parameters)});
 % endif
 %endfor
 
@@ -99,22 +100,22 @@ namespace ${namespace} {
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   paramter_name_ctype = parameter_name + "_ctype"
-  parameter_type = handler_helpers.get_c_type(parameter, service_class_prefix)
+  parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True:
     ## TODO: Handle non integer enums
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, service_class_prefix)});
+    // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)});
     ${parameter_type} ${parameter_name};
 % else:
-    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, service_class_prefix)}
+    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
 % endif
 %endfor
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   paramter_name_ctype = parameter_name + "_ctype"
-  parameter_type = handler_helpers.get_c_type(parameter, service_class_prefix)
+  parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True:
     ${parameter_type} ${paramter_name_ctype};
@@ -136,7 +137,7 @@ namespace ${namespace} {
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   paramter_name_ctype = parameter_name + "_ctype"
-  parameter_type = handler_helpers.get_c_type(parameter, service_class_prefix)
+  parameter_type = parameter['type']
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:

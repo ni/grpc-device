@@ -2,6 +2,7 @@
 # This file is generated from NI-FAKE API metadata version 1.2.0d9
 config = {
     'api_version': '1.2.0d9',
+    'c_header': 'niFake.h',
     'c_function_prefix': 'niFake_',
     'service_class_prefix': 'NiFake',
     'grpc_package': 'ni.fake.grpc',
