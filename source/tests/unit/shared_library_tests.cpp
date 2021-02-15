@@ -28,6 +28,22 @@ static const char* test_library_name = "./libTestApi.so";
 static const char* wrong_library_name = "./libWrongTestApi.so";
 #endif
 
+TEST(SharedLibraryTests, LibrayUsingDefaultConstructor_LibraryNameShouldBeEmpty)
+{
+  ni::hardware::grpc::internal::SharedLibrary library;
+
+  EXPECT_EQ("", library.get_library_name());
+}
+
+TEST(SharedLibraryTests, LibrayUsingDefaultConstructor_Load_IsLoadedReturnsFalse)
+{
+  ni::hardware::grpc::internal::SharedLibrary library;
+
+  library.load();
+
+  EXPECT_FALSE(library.is_loaded()) << "The library should not be loaded.";
+}
+
 TEST(SharedLibraryTests, ValidNameForLibrary_Load_IsLoadedReturnsTrue)
 {
   ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
