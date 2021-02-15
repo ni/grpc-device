@@ -29,6 +29,15 @@ def sanitize_names(parameters):
         if parameter['cppName'] in RESERVED_WORDS:
             parameter['cppName'] = parameter['cppName'] + 'Parameter'
 
+def get_include_guard_name(config, suffix):
+    driver_full_namespace = config["grpc_package"]
+    include_guard_name = driver_full_namespace.replace(".", "_") + suffix
+    return include_guard_name.upper()
+
+def get_namespace_segments(config):
+    namespace = config["grpc_package"]
+    return namespace.split(".")
+
 def create_args(parameters):
     result = ''
     for parameter in parameters:
@@ -40,16 +49,19 @@ def create_args(parameters):
 def create_params(parameters, driver_name_pascal):
     result = ''
     for parameter in parameters:
-        result = result + get_c_type(parameter, driver_name_pascal)
-        if '[]' in parameter['type']:
-          result = result + '['
-          if parameter['size']['mechanism'] == 'fixed':
-            result = result + str(parameter['size']['value'])
-          result = result + ']'
-        if common_helpers.is_output_parameter(parameter):
-          result = result + '*'
-        result = result + ', '
+        result = result + create_param(parameter, driver_name_pascal) + ' ' + parameter['cppName'] + ', '
     return result[:-2]
+
+def create_param(parameter, driver_name_pascal):
+    result = get_c_type(parameter, driver_name_pascal)
+    if '[]' in parameter['type']:
+      result = result + '['
+      if parameter['size']['mechanism'] == 'fixed':
+        result = result + str(parameter['size']['value'])
+      result = result + ']'
+    if common_helpers.is_output_parameter(parameter):
+      result = result + '*'
+    return result
 
 def get_request_value(parameter, driver_name_pascal):
     result = ''
@@ -94,7 +106,8 @@ def get_c_type(parameter, driver_name_pascal):
     "bool": "bool",
     "string": "std::string",
     "bytes": "std::string",
-    "google.protobuf.Timestamp": "google::protobuf::Timestamp"
+    "google.protobuf.Timestamp": "google::protobuf::Timestamp",
+    driver_name_pascal + "Attributes": "std::uint32_t"
   }
   # This is equivalent to a switch statement with the default case returning the grpc_type
   return grpc_to_c.get(grpc_type, grpc_type)
@@ -107,7 +120,6 @@ def python_to_c(type):
   }
   return python_to_c.get(type, "std::int32_t")
   
-
 def should_gen_function_pointer(function):
   '''Returns function metadata only for those functions to include for generating function pointers to driver library'''
   return 'codegen_method' not in function.keys() or function['codegen_method'] != 'no'
@@ -116,7 +128,6 @@ def add_quotes_if_str(str):
   if type(str).__name__ == "str":
     str = "\"" + str + "\""
   return str
-
   
 def get_input_values(enum_data):
   out_value_format= ""
@@ -144,4 +155,7 @@ def get_output_values(enum_data):
       index = index+1
   return out_value_format
 
- 
+def filter_api_functions(functions):
+  '''Returns function metadata only for those functions to include for generating the function types to the API library'''
+  return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']
+

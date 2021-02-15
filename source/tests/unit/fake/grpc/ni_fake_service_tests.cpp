@@ -17,8 +17,8 @@ namespace grpc {
 static const char* expected_api_library_name = "nifake_64.dll";
 static const char* initial_shared_library_name = "arbitraryName.dll";
 #else
-static const char* expected_api_library_name = "./nifake.so";
-static const char* initial_shared_library_name = "./arbitraryName.so";
+static const char* expected_api_library_name = "./libnifake.so";
+static const char* initial_shared_library_name = "./libarbitraryName.so";
 #endif
 
 TEST(NiFakeServiceTests, NiFakeService_CreateService_SharedLibraryIsNotLoaded)
