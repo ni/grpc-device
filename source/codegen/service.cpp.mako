@@ -48,11 +48,9 @@ namespace ${namespace}
   //---------------------------------------------------------------------
   namespace internal = ni::hardware::grpc::internal;
 ## Function pointers to driver library
-% for method_name in functions:
+% for method_name in handler_helpers.filter_api_functions(functions):
 <%
     f = functions[method_name]
-    if not handler_helpers.should_gen_function_pointer(f):
-      continue
     parameters = f['parameters']
     handler_helpers.sanitize_names(parameters)
 %>\
@@ -74,11 +72,11 @@ namespace ${namespace}
     shared_library_->set_library_name(driver_api_library_name);
   }
 
-% for method_name in functions:
+% for method_name in common_helpers.filter_proto_rpc_functions(functions):
 <%
+    c_function_name = c_function_prefix + method_name
     f = functions[method_name]
-    if not common_helpers.should_gen_service_handler(f):
-      continue
+    method_name = common_helpers.snake_to_camel(method_name)
     parameters = f['parameters']
     handler_helpers.sanitize_names(parameters)
     input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
@@ -100,9 +98,9 @@ namespace ${namespace}
       message += driver_api_library_name;
       return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
     }
-    auto ${common_helpers.pascal_to_snake(method_name)}_function = reinterpret_cast<${c_function_prefix}${method_name}Ptr>(shared_library_->get_function_pointer("${c_function_prefix}${method_name}"));
+    auto ${common_helpers.pascal_to_snake(method_name)}_function = reinterpret_cast<${c_function_name}Ptr>(shared_library_->get_function_pointer("${c_function_name}"));
     if (${common_helpers.pascal_to_snake(method_name)}_function == nullptr) {
-      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: ${c_function_prefix}${method_name}");
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: ${c_function_name}");
     }
 
 %for parameter in input_parameters:
