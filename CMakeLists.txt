@@ -38,8 +38,10 @@ set(proto_srcs_dir "${CMAKE_CURRENT_BINARY_DIR}/proto")
 file(MAKE_DIRECTORY ${proto_srcs_dir})
 include_directories(
   "${proto_srcs_dir}"
+  "./imports/includes"
   "./source"
   "./source/core_server"
+  "./source/generated"
 )
 
 #----------------------------------------------------------------------
