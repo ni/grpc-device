@@ -16,6 +16,7 @@ class DeviceManagement
 {
  public:
   DeviceManagement();
+  ~DeviceManagement();
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
   void set_syscfg_library_name(const char* library_name);

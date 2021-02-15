@@ -13,7 +13,12 @@ static const char* syscfg_api_library_name = "libnisyscfg.so";
 
 DeviceManagement::DeviceManagement()
 {
-  syscfg_library_->set_library_name(syscfg_api_library_name);
+  syscfg_library_ = new SharedLibrary(syscfg_api_library_name);
+}
+
+DeviceManagement::~DeviceManagement()
+{
+  delete syscfg_library_;
 }
 
 ::grpc::Status DeviceManagement::enumerate_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
