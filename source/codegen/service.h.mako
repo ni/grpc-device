@@ -52,7 +52,7 @@ public:
   used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
 % for enum in enums:
-% if enum in used_enums:
+% if enum in used_enums and "generate-mappings" in enums[enum] and enums[enum]["generate-mappings"] == True:
 <%
   enum_value = handler_helpers.python_to_c(type(enums[enum]["values"][0]["value"]).__name__)
 %>\

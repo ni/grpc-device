@@ -60,7 +60,7 @@ enum ${enum_name} {
 nonint_index = 1
 %>\
 % for value in enum["values"]:
-% if isinstance(value["value"], int) is False:
+% if "generate-mappings" in enum and enum["generate-mappings"] == True:
   ${enum_value_prefix}_${value["name"]} = ${nonint_index};
 <% 
   nonint_index = nonint_index+1

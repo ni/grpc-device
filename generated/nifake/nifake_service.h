@@ -75,14 +75,10 @@ public:
   private:
     ni::hardware::grpc::internal::SharedLibrary* shared_library_;
     ni::hardware::grpc::internal::SessionRepository* session_repository_;
-    std::map<std::int32_t, std::int32_t> color_input_map_ { {1, 1},{2, 2},{5, 5},{42, 42}, };
-    std::map<std::int32_t, std::int32_t> color_output_map_ { {1, 1},{2, 2},{5, 5},{42, 42}, };
-    std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5},{2, 4.5},{3, 5.5},{4, 6.5},{5, 7.5}, };
-    std::map<float, std::int32_t> floatenum_output_map_ { {3.5, 1},{4.5, 2},{5.5, 3},{6.5, 4},{7.5, 5}, };
+    std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
+    std::map<float, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
     std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
     std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
-    std::map<std::int32_t, std::int32_t> turtle_input_map_ { {0, 0},{1, 1},{2, 2},{3, 3}, };
-    std::map<std::int32_t, std::int32_t> turtle_output_map_ { {0, 0},{1, 1},{2, 2},{3, 3}, };
   };
 } // namespace grpc
 } // namespace fake

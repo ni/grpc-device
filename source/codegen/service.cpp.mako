@@ -98,11 +98,14 @@ namespace ${namespace} {
 %for parameter in input_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  paramter_name_ctype = parameter_name + "_ctype"
   parameter_type = handler_helpers.get_c_type(parameter, service_class_prefix)
 %>\
 %if common_helpers.is_enum(parameter) == True: 
-    auto ${parameter_name} = static_cast<${parameter_type}>(${parameter["enum"]}_input_map_.find(${handler_helpers.get_request_value(parameter, driver_name_pascal)})->second);
+%if "generate-mappings" in enums[parameter["enum"]] and enums[parameter["enum"]]["generate-mappings"] == True:
+    auto ${parameter_name} = static_cast<${parameter_type}>(${parameter["enum"].lower()}_input_map_.find(${handler_helpers.get_request_value(parameter, driver_name_pascal)})->second);
+%else:
+    auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
+%endif
 % else:
     ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter, service_class_prefix)}
 % endif
@@ -110,17 +113,9 @@ namespace ${namespace} {
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  paramter_name_ctype = parameter_name + "_ctype"
   parameter_type = handler_helpers.get_c_type(parameter, service_class_prefix)
 %>\
-%if common_helpers.is_enum(parameter) == True:
-    ${parameter_type} ${paramter_name_ctype};
-<%
-     parameter['cppName'] = paramter_name_ctype
-%>\
-%else:
     ${parameter_type} ${parameter_name};
-%endif
 %endfor
     auto status = ${c_function_name}_function(${handler_helpers.create_args(parameters)});
 <%
@@ -132,12 +127,14 @@ namespace ${namespace} {
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  paramter_name_ctype = parameter_name + "_ctype"
-  parameter_type = handler_helpers.get_c_type(parameter, service_class_prefix)
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
-      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter["enum"]}_output_map_.find(${paramter_name_ctype})->second));
+%if "generate-mappings" in enums[parameter["enum"]] and enums[parameter["enum"]]["generate-mappings"] == True:
+      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter["enum"].lower()}_output_map_.find(${parameter_name})->second));
+%else:
+      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter_name}));
+%endif
 % else:
       response->set_${parameter_name}(${parameter_name});
 %endif

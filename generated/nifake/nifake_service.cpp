@@ -127,7 +127,7 @@ namespace grpc {
     }
 
     std::uint32_t vi = request->vi();
-    auto a_turtle = static_cast<std::int32_t>(Turtle_input_map_.find(request->a_turtle())->second);
+    auto a_turtle = static_cast<std::int32_t>(request->a_turtle());
     auto status = niFake_EnumInputFunctionWithDefaults_function(vi, a_turtle);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -476,12 +476,12 @@ namespace grpc {
 
     std::uint32_t vi = request->vi();
     std::int32_t a_quantity;
-    std::int32_t a_turtle_ctype;
-    auto status = niFake_GetEnumValue_function(vi, &a_quantity, &a_turtle_ctype);
+    std::int32_t a_turtle;
+    auto status = niFake_GetEnumValue_function(vi, &a_quantity, &a_turtle);
     response->set_status(status);
     if (status == 0) {
       response->set_a_quantity(a_quantity);
-      response->set_a_turtle(static_cast<Turtle>(Turtle_output_map_.find(a_turtle_ctype)->second));
+      response->set_a_turtle(static_cast<Turtle>(a_turtle));
     }
     return ::grpc::Status::OK;
   }
@@ -576,9 +576,9 @@ namespace grpc {
     bool a_boolean = request->a_boolean();
     std::int32_t an_int32 = request->an_int32();
     std::int64_t an_int64 = request->an_int64();
-    auto an_int_enum = static_cast<std::int32_t>(Turtle_input_map_.find(request->an_int_enum())->second);
+    auto an_int_enum = static_cast<std::int32_t>(request->an_int_enum());
     double a_float = request->a_float();
-    auto a_float_enum = static_cast<double>(FloatEnum_input_map_.find(request->a_float_enum())->second);
+    auto a_float_enum = static_cast<double>(floatenum_input_map_.find(request->a_float_enum())->second);
     std::int32_t string_size = request->string_size();
     std::string a_string = request->a_string().c_str();
     auto status = niFake_ParametersAreMultipleTypes_function(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
@@ -736,7 +736,7 @@ namespace grpc {
     }
 
     std::uint32_t vi = request->vi();
-    auto a_mobile_o_s_name = static_cast<std::string>(MobileOSNames_input_map_.find(request->a_mobile_o_s_name())->second);
+    auto a_mobile_o_s_name = static_cast<std::string>(mobileosnames_input_map_.find(request->a_mobile_o_s_name())->second);
     auto status = niFake_StringValuedEnumInputFunctionWithDefaults_function(vi, a_mobile_o_s_name);
     response->set_status(status);
     return ::grpc::Status::OK;
