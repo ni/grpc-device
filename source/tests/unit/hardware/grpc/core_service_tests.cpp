@@ -19,17 +19,15 @@ namespace grpc {
 
 #if defined(_MSC_VER)
 static const char* syscfg_api_library_name = "nisyscfg.dll";
-static const char* arbitrary_library_name = "arbitraryName.dll";
 #else
-static const char* syscfg_api_library_name = "./libnisyscfg.so";
-static const char* arbitrary_library_name = "./arbitraryName.so";
+static const char* syscfg_api_library_name = "libnisyscfg.so";
 #endif
 
-TEST(CoreServiceTests, SharedLibraryInitializedWithArbitraryName_CreateCoreService_SharedLibraryNameIsSetToSysCfgLibrary)
+TEST(CoreServiceTests,  CreateCoreService_SharedLibraryNameIsSetToSysCfgLibrary)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(arbitrary_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
 
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   std::string shared_library_name = shared_library.get_library_name();
@@ -41,7 +39,7 @@ TEST(CoreServiceTests, CreateCoreService_SharedLibraryIsNotLoaded)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
 
   EXPECT_FALSE(shared_library.is_loaded());
@@ -51,7 +49,7 @@ TEST(CoreServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundG
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
 
   ::grpc::ServerContext context;
@@ -67,7 +65,7 @@ TEST(CoreServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   ni::hardware::grpc::ReserveRequest request;
 
@@ -83,7 +81,7 @@ TEST(CoreServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -100,7 +98,7 @@ TEST(CoreServiceTests, NewReserveIdAndClientId_Reserve_ReservesSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -179,7 +177,7 @@ TEST(CoreServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenRe
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -206,7 +204,7 @@ TEST(CoreServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsForTwoUnreser
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -242,7 +240,7 @@ TEST(CoreServiceTests, IdReserved_ReserveWithSameClientId_ReturnsReserved)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -261,7 +259,7 @@ TEST(CoreServiceTests, IdReserved_ReserveWithSameClientId_ReturnsFailedPrecondit
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
 
@@ -275,7 +273,7 @@ TEST(CoreServiceTests, NoReservations_IsReserved_ReturnsFalse)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
 
   bool is_reserved = call_is_reserved(&service, "foo", "a");
@@ -287,7 +285,7 @@ TEST(CoreServiceTests, Reservation_IsReservedWithDifferentReservationId_ReturnsF
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
 
@@ -300,7 +298,7 @@ TEST(CoreServiceTests, Reservation_IsReservedWithDifferentClientId_ReturnsFalse)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
 
@@ -313,7 +311,7 @@ TEST(CoreServiceTests, Reservation_IsReservedWithSameClientId_ReturnsTrue)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
 
@@ -328,7 +326,7 @@ TEST(CoreServiceTests, NoReservations_Unreserve_ReturnsFalse)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
 
   bool is_unreserved = call_unreserve(&service, "foo", "a");
@@ -340,7 +338,7 @@ TEST(CoreServiceTests, Reservation_UnreserveWithDifferentReservationId_ReturnsFa
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   ni::hardware::grpc::ReserveRequest reserve_request;
   call_reserve(&service, "foo", "a");
@@ -356,7 +354,7 @@ TEST(CoreServiceTests, Reservation_UnreserveWithDifferentClientId_ReturnsFalseAn
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
 
@@ -371,7 +369,7 @@ TEST(CoreServiceTests, Reservation_Unreserve_Unreserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
 
@@ -388,7 +386,7 @@ TEST(CoreServiceTests, Reservation_ResetServer_Unreserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
 
@@ -406,7 +404,7 @@ TEST(CoreServiceTests, ReservationAndSession_ResetServer_UnreservesAndRemovesSes
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   std::string session_name = "session_name";
   uint64_t named_session_id;
@@ -432,7 +430,7 @@ TEST(CoreServiceTests, TwoReservations_ResetServer_Unreserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
   call_reserve(&service, "bar", "b");
@@ -452,7 +450,7 @@ TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_ClientReturnsAnd
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;
@@ -479,7 +477,7 @@ TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClie
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;
@@ -514,7 +512,7 @@ TEST(CoreServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientRet
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;
@@ -539,7 +537,7 @@ TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClie
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::DeviceManagement device_management;
-  ni::hardware::grpc::internal::SharedLibrary shared_library(syscfg_api_library_name);
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
   ni::hardware::grpc::CoreService service(&session_repository, &device_management, &shared_library);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;

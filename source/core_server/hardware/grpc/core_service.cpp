@@ -7,7 +7,7 @@ namespace grpc {
 #if defined(_MSC_VER)
 static const char* syscfg_api_library_name = "nisyscfg.dll";
 #else
-static const char* syscfg_api_library_name = "./libnisyscfg.so";
+static const char* syscfg_api_library_name = "libnisyscfg.so";
 #endif
 
 CoreService::CoreService(internal::SessionRepository* session_repository, internal::DeviceManagement* device_management, internal::SharedLibrary* shared_library)

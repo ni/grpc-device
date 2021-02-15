@@ -11,12 +11,6 @@ namespace integration {
 namespace hardware {
 namespace grpc {
 
-#if defined(_MSC_VER)
-static const char* syscfg_api_library_name = "nisyscfg.dll";
-#else
-static const char* syscfg_api_library_name = "./libnisyscfg.so";
-#endif
-
 class InProcessServerClientTest : public ::testing::Test {
  public:
   virtual ~InProcessServerClientTest() {}
@@ -26,7 +20,7 @@ class InProcessServerClientTest : public ::testing::Test {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
     device_management_ = std::make_unique<ni::hardware::grpc::internal::DeviceManagement>();
-    shared_library_ = std::make_unique<ni::hardware::grpc::internal::SharedLibrary>(syscfg_api_library_name);
+    shared_library_ = std::make_unique<ni::hardware::grpc::internal::SharedLibrary>();
     service_ = std::make_unique<ni::hardware::grpc::CoreService>(session_repository_.get(), device_management_.get(), shared_library_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
