@@ -3,6 +3,10 @@
 config = {
     'api_version': '1.2.0d9',
     'c_function_prefix': 'niFake_',
+    'service_class_prefix': 'NiFake',
+    'grpc_package': 'ni.fake.grpc',
+    'java_package': 'com.ni.fake.grpc',
+    'csharp_namespace': 'NationalInstruments.Fake.Grpc',
     'close_function': 'close',
     'context_manager_name': {
         'abort_function': 'Abort',
@@ -11,9 +15,17 @@ config = {
     },
     'custom_types': [
         {
-            'ctypes_type': 'struct_CustomStruct',
-            'file_name': 'custom_struct',
-            'python_name': 'CustomStruct'
+            'name': 'CustomStruct',
+            'fields': [
+                {
+                    'type': 'ViInt32',
+                    'name': 'structInt'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'structDouble'
+                }
+            ]
         }
     ],
     'driver_name': 'NI-FAKE',
