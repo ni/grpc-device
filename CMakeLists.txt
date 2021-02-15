@@ -94,8 +94,7 @@ foreach(api ${ni_apis})
   if (api STREQUAL "nifake")
     # Fake library gen goes here. Add flag and files to output_files and gen_command
   else()
-    set(api_service_srcs
-      "${proto_srcs_dir}/${api}/${api}_service.cpp")
+    set(api_service_srcs ${api_service_srcs} "${service_output_dir}/${api}/${api}_service.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -148,6 +147,7 @@ foreach(api ${ni_apis})
     "${proto_srcs_dir}/${api}.grpc.pb.h")
   if(NOT api STREQUAL "nifake")
     set(api_service_srcs
+      ${api_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.cc")
   endif()

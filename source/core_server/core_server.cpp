@@ -1,5 +1,7 @@
 #include "hardware/grpc/core_service.h"
 
+#include <niscope/niscope_service.h>
+
 const char* klocalhostAddress = "0.0.0.0:50051";
 
 static void RunServer(int argc, char** argv)
@@ -14,8 +16,13 @@ static void RunServer(int argc, char** argv)
 
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
+
   ni::hardware::grpc::CoreService core_service(&session_repository);
   builder.RegisterService(&core_service);
+
+  ni::hardware::grpc::internal::SharedLibrary scope_library;
+  ni::scope::grpc::NiScopeService scope_service(&scope_library, &session_repository);
+  builder.RegisterService(&scope_service);
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
