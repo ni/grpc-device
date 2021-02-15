@@ -3,7 +3,7 @@
 #if defined(_MSC_VER)
 static const char* syscfg_api_library_name = "nisyscfg.dll";
 #else
-static const char* syscfg_api_library_name = "./libnisyscfg.so";
+static const char* syscfg_api_library_name = "libnisyscfg.so";
 #endif
 
 const char* klocalhostAddress = "0.0.0.0:50051";
