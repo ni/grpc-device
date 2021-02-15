@@ -49,11 +49,9 @@ namespace ${namespace}
   {
   public:
     ${service_name}(ni::hardware::grpc::internal::SharedLibrary* shared_library, ni::hardware::grpc::internal::SessionRepository* session_repository);
-% for function in functions:
+% for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
-    f = functions[function]
-    if not common_helpers.should_gen_service_handler(f):
-      continue
+    function = common_helpers.snake_to_camel(function)
 %>\
     ::grpc::Status ${function}(::grpc::ServerContext* context, const ${function}Request* request, ${function}Response* response) override;
 % endfor

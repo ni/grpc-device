@@ -640,7 +640,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViBoolean': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViBoolean attribute.'
         },
@@ -681,7 +681,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViInt32': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViInt32 attribute.'
         },
@@ -722,7 +722,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViInt64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViInt64 attribute.'
         },
@@ -763,7 +763,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViReal64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViReal attribute.'
         },
@@ -804,7 +804,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViString': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Queries the value of a ViBoolean attribute.'
         },
@@ -857,7 +857,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetCalDateAndTime': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Returns the date and time of the last calibration performed.'
         },
@@ -1110,48 +1110,6 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
-    'GetLastCalDateAndTime': {
-        'codegen_method': 'python-only',
-        'documentation': {
-            'description': 'Returns the date and time of the last calibration performed.'
-        },
-        'method_templates': [
-            {
-                'documentation_filename': 'default_method',
-                'method_python_name_suffix': '',
-                'session_filename': 'datetime_wrappers'
-            }
-        ],
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the type of calibration performed (external or self-calibration).'
-                },
-                'name': 'calType',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates date and time of the last calibration.'
-                },
-                'name': 'month',
-                'type': 'hightime.datetime'
-            }
-        ],
-        'python_name': 'get_cal_date_and_time',
-        'real_datetime_call': 'GetCalDateAndTime',
-        'returns': 'ViStatus'
-    },
     'ImportAttributeConfigurationBuffer': {
         'documentation': {
             'description': 'Import configuration buffer.'
@@ -1182,7 +1140,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'InitWithOptions': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Creates a new IVI instrument driver session.'
         },
@@ -1279,6 +1237,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'LockSession': {
+        'codegen_method': 'no',
         'documentation': {
             'description': 'Lock.'
         },
@@ -2265,6 +2224,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UnlockSession': {
+        'codegen_method': 'no',
         'documentation': {
             'description': 'Unlock'
         },
@@ -2384,7 +2344,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'close': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'documentation': {
             'description': 'Closes the specified session and deallocates resources that it reserved.'
         },
@@ -2440,31 +2400,6 @@ functions = {
         ],
         'returns': 'ViStatus',
         'use_session_lock': False
-    },
-    'fancy_self_test': {
-        'codegen_method': 'python-only',
-        'documentation': {
-            'description': 'Performs a self-test'
-        },
-        'method_templates': [
-            {
-                'documentation_filename': 'default_method',
-                'method_python_name_suffix': '',
-                'session_filename': 'fancy_self_test'
-            }
-        ],
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niDMM_init or niDMM_InitWithOptions.'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'python_name': 'self_test',
-        'returns': 'ViStatus'
     },
     'self_test': {
         'codegen_method': 'private',
