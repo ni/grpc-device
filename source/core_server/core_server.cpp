@@ -5,15 +5,17 @@ static void RunServer(int argc, char** argv)
 {
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
-  
+
   std::string server_address;
   try {
     //TODO: parse config file path from command line argument
     ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser;
     server_address = server_config_parser.parse_address();
   }
-  catch(const std::exception& ex) {
-    std::cerr << "\nERROR:\n\n" << ex.what() << "\n\nExiting.\n" << std::endl;
+  catch (const std::exception& ex) {
+    std::cerr << "\nERROR:\n\n"
+              << ex.what() << "\n\nExiting.\n"
+              << std::endl;
     exit(EXIT_FAILURE);
   }
 
