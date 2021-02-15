@@ -28,7 +28,6 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
   ni::fake::grpc::GetABooleanResponse response;
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 
-  // Since the ni fake library shouldn't be present, we expect a NOT_FOUND status in response.
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
 }
 
@@ -47,7 +46,6 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
   ni::fake::grpc::GetABooleanResponse response;
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 
-  // Since the ni fake library shouldn't be present, we expect a NOT_FOUND status in response.
   EXPECT_TRUE(status.ok());
 }
 
