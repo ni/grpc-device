@@ -72,7 +72,7 @@ def get_request_value(parameter):
     if c_type == 'ViInt8[]' or c_type == 'ViChar[]':
         return f'({c_type[:-2]}*){request_snippet}.c_str()'
     if c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
-        return f'({c_type}){request_snippet}'
+        return f'(${c_type}){request_snippet}'
     return request_snippet
 
 def filter_api_functions(functions):
