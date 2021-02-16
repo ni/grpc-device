@@ -2,7 +2,6 @@
 import common_helpers
 import handler_helpers
 
-attributes = data['attributes']
 config = data['config']
 enums = data['enums']
 functions = data['functions']
@@ -102,7 +101,18 @@ namespace ${namespace} {
 %>\
 %if common_helpers.is_enum(parameter) == True: 
 %if "generate-mappings" in enums[parameter["enum"]] and enums[parameter["enum"]]["generate-mappings"] == True:
-    auto ${parameter_name} = static_cast<${parameter_type}>(${parameter["enum"].lower()}_input_map_.find(${handler_helpers.get_request_value(parameter, driver_name_pascal)})->second);
+<% 
+  map_name = parameter["enum"].lower() + "_input_map_"
+  iterator_name = map_name + "iterator_"
+%>\
+    
+    ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+    if(${iterator_name} == ${map_name}.end()) {
+      std::string message("The data value could not be found: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto ${parameter_name} = static_cast<${parameter_type}>(${iterator_name}->second);
 %else:
     auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter, driver_name_pascal)});
 %endif
@@ -131,7 +141,18 @@ namespace ${namespace} {
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
 %if "generate-mappings" in enums[parameter["enum"]] and enums[parameter["enum"]]["generate-mappings"] == True:
-      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter["enum"].lower()}_output_map_.find(${parameter_name})->second));
+<% 
+  map_name = parameter["enum"].lower() + "_output_map_"
+  iterator_name = map_name + "iterator_"
+%>\
+    
+    ${iterator_name} = ${map_name}.find(${parameter_name});
+    if(${iterator_name} == ${map_name}.end()) {
+      std::string message("The data value could not be found: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${iterator_name}->second));
 %else:
       response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter_name}));
 %endif

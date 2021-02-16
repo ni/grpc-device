@@ -58,6 +58,8 @@ public:
 %>\
     std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${handler_helpers.get_input_values(enums[enum])} };
     std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${handler_helpers.get_output_values(enums[enum])} };
+    std::map<std::int32_t, ${enum_value}>::iterator ${enum.lower()}_input_map_iterator_;
+    std::map<${enum_value}, std::int32_t>::iterator ${enum.lower()}_output_map_iterator_;
 %endif
 %endfor
   };

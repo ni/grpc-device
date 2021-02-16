@@ -119,11 +119,7 @@ def python_to_c(type):
     "str": "std::string"
   }
   return python_to_c.get(type, "std::int32_t")
-  
-def should_gen_function_pointer(function):
-  '''Returns function metadata only for those functions to include for generating function pointers to driver library'''
-  return 'codegen_method' not in function.keys() or function['codegen_method'] != 'no'
-  
+ 
 def format_value(value):
   if type(value).__name__ == "str":
     value = "\"" + value + "\""
