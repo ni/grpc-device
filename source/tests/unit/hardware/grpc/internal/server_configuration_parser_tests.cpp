@@ -3,10 +3,6 @@
 #include "hardware/grpc/internal/server_configuration_parser.h"
 #include <typeinfo>
 
-#include <windows.h>
-#include <windef.h>
-#include <Pathcch.h>
-
 namespace internal = ni::hardware::grpc::internal;
 
 namespace ni {
