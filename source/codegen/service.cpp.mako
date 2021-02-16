@@ -23,7 +23,6 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 //---------------------------------------------------------------------
 #include "${module_name}_service.h"
 
-#include <${config["c_header"]}>
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -35,30 +34,11 @@ namespace ${namespace} {
 % endfor
 
   namespace internal = ni::hardware::grpc::internal;
-## Function pointers to driver library
-% for function in handler_helpers.filter_api_functions(functions):
-<%
-    f = functions[function]
-    parameters = f['parameters']
-    handler_helpers.sanitize_names(parameters)
-    return_type = f['returns']
-%>\
-% if not common_helpers.has_unsupported_parameter(f):
-  using ${c_function_prefix}${function}Ptr = ${return_type} (*)(${handler_helpers.create_params(parameters)});
-% endif
-%endfor
-
-  #if defined(_MSC_VER)
-    static const char* driver_api_library_name = "${windows_libary_name}";
-  #else
-    static const char* driver_api_library_name = "./lib${linux_library_name}.so";
-  #endif
 
 ## Constructors
-  ${service_class_prefix}Service::${service_class_prefix}Service(internal::SharedLibrary* shared_library, internal::SessionRepository* session_repository)
-      : shared_library_(shared_library), session_repository_(session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryWrapper* library_wrapper, internal::SessionRepository* session_repository)
+      : library_wrapper_(library_wrapper), session_repository_(session_repository)
   {
-    shared_library_->set_library_name(driver_api_library_name);
   }
 
   ${service_class_prefix}Service::~${service_class_prefix}Service()
@@ -85,21 +65,15 @@ namespace ${namespace} {
 
 <% continue %>
 % endif
-    shared_library_->load();
-    if (!shared_library_->is_loaded()) {
-      std::string message("The library could not be loaded: ");
-      message += driver_api_library_name;
-      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
-    }
-    auto ${c_function_name}_function = reinterpret_cast<${c_function_name}Ptr>(shared_library_->get_function_pointer("${c_function_name}"));
-    if (${c_function_name}_function == nullptr) {
-      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: ${c_function_name}");
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
     }
 
 %for parameter in input_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  paramter_name_ctype = parameter_name + "_ctype"
+  parameter_name_ctype = parameter_name + "_ctype"
   parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True:
@@ -114,19 +88,19 @@ namespace ${namespace} {
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  paramter_name_ctype = parameter_name + "_ctype"
+  parameter_name_ctype = parameter_name + "_ctype"
   parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True:
-    ${parameter_type} ${paramter_name_ctype};
+    ${parameter_type} ${parameter_name_ctype};
 <%
-     parameter['cppName'] = paramter_name_ctype
+     parameter['cppName'] = parameter_name_ctype
 %>\
 %else:
     ${parameter_type} ${parameter_name};
 %endif
 %endfor
-    auto status = ${c_function_name}_function(${handler_helpers.create_args(parameters)});
+    auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
 <%
      parameter['cppName'] = parameter_name
 %>\
@@ -136,13 +110,13 @@ namespace ${namespace} {
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  paramter_name_ctype = parameter_name + "_ctype"
+  parameter_name_ctype = parameter_name + "_ctype"
   parameter_type = parameter['type']
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
       ##TODO: Handle non int types
-      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${paramter_name_ctype}));
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name_ctype}));
 % else:
       response->set_${parameter_name}(${parameter_name});
 %endif

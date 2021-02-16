@@ -12,6 +12,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <condition_variable>
+#include "nifake_library_wrapper.h"
 #include "core_server/hardware/grpc/internal/shared_library.h"
 #include "core_server/hardware/grpc/internal/session_repository.h"
 
@@ -21,7 +22,7 @@ namespace grpc {
 
 class NiFakeService final : public NiFake::Service {
 public:
-  NiFakeService(ni::hardware::grpc::internal::SharedLibrary* shared_library, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiFakeService(NiFakeLibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~NiFakeService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
@@ -73,11 +74,11 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
 
 private:
-  ni::hardware::grpc::internal::SharedLibrary* shared_library_;
+  NiFakeLibraryWrapper* library_wrapper_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 
 } // namespace grpc
 } // namespace fake
 } // namespace ni
-#endif NI_FAKE_GRPC_SERVICE_H
+#endif  // NI_FAKE_GRPC_SERVICE_H
