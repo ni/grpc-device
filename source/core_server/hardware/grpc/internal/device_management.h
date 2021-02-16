@@ -15,14 +15,17 @@ namespace internal {
 class DeviceManagement
 {
  public:
-  DeviceManagement(internal::SharedLibrary* syscfg_library);
+  DeviceManagement();
+  DeviceManagement(const char* library_name);
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
+  std::string get_syscfg_library_name() const;
+  bool is_syscfg_library_loaded() const;
 
  private:
   NISysCfgStatus get_list_of_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices);
 
-  internal::SharedLibrary* syscfg_library_;
+  internal::SharedLibrary syscfg_library_;
 };
 
 } // namespace internal
