@@ -45,7 +45,6 @@ std::string ServerConfigurationParser::get_exe_path()
     std::string exe_filename(filename);
   #endif
   return exe_filename.erase(exe_filename.find_last_of("\\") + 1);
-
 }
 
 nlohmann::json ServerConfigurationParser::load(const std::string& config_file_path)
