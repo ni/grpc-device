@@ -36,7 +36,7 @@ static void RunServer(int argc, char** argv)
     std::cout << "Server failed to start on " << server_address << std::endl;
     exit(EXIT_FAILURE);
   }
-  
+
   std::cout << "Server listening on port " << *listeningPort << std::endl;
   // This call will block until another thread shuts down the server.
   server->Wait();
