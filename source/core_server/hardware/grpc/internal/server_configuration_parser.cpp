@@ -53,6 +53,7 @@ nlohmann::json ServerConfigurationParser::load(const std::string& config_file_pa
   // TODO: Prefer a passed in configuration file path and then search next to
   // the binary and finally at platform specific default config file locations.
   std::ifstream input_stream(config_file_path);
+
   if (!input_stream) {
     throw ConfigFileNotFoundException();
   }
