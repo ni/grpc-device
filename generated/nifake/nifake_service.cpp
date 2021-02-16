@@ -510,16 +510,25 @@ namespace grpc {
     if (niFake_InitWithOptions_function == nullptr) {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_InitWithOptions");
     }
-
     ViString resource_name = (ViString)request->resource_name().c_str();
     ViBoolean id_query = request->id_query();
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
-    ViSession vi;
-    auto status = niFake_InitWithOptions_function(resource_name, id_query, reset_device, option_string, &vi);
-    response->set_status(status);
+    
+    auto lambda = [niFake_InitWithOptions_function, resource_name, id_query, reset_device, option_string] () -> std::tuple<int, uint32_t>{
+      ViSession vi;
+      auto status = niFake_InitWithOptions_function(resource_name, id_query, reset_device, option_string, &vi);
+      return std::tuple<int, uint32_t>(status, vi);
+      };
+    uint32_t session_id;
+    std::string session_name = request->session_name();
+    auto cleanupFunc = [this] (uint32_t id) {this->CleanupVISession(id);};
+    int status = session_repository_->add_session(session_name, lambda, cleanupFunc, session_id);
     if (status == 0) {
-      response->set_allocated_vi(new ni::hardware::grpc::Session()); // TODO: Go through session_repository_
+      ni::hardware::grpc::Session session;
+      session.set_name(session_name);
+      session.set_id(session_id);
+      response->set_allocated_vi(&session);
     }
     return ::grpc::Status::OK;
   }

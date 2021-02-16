@@ -85,6 +85,61 @@ namespace ${namespace} {
 
 <% continue %>
 % endif
+## Handle init session methods
+% if f.get('is_init_method', False):
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+    }
+    auto ${c_function_name}_function = reinterpret_cast<${c_function_name}Ptr>(shared_library_->get_function_pointer("${c_function_name}"));
+    if (${c_function_name}_function == nullptr) {
+      return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: ${c_function_name}");
+    }
+<%
+  capture = f'[{c_function_name}_function, '
+%>\
+%for parameter in input_parameters:
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  paramter_name_ctype = parameter_name + "_ctype"
+  parameter_type = parameter['type']
+  capture = f'{capture}{parameter_name}, '
+%>\
+%if common_helpers.is_enum(parameter) == True:
+    ## TODO: Handle non integer enums
+    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
+    // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)})
+    ${parameter_type} ${parameter_name};
+% else:
+    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)}
+% endif
+%endfor
+<%
+  session_output_var_name = "vi"
+%>\
+    
+    auto lambda = ${capture[:-2]}] () -> std::tuple<int, uint32_t>{
+      ViSession ${session_output_var_name};
+      auto status = ${c_function_name}_function(${handler_helpers.create_args(parameters)});
+      return std::tuple<int, uint32_t>(status, vi);
+      };
+    uint32_t session_id;
+    std::string session_name = request->session_name();
+    auto cleanupFunc = [this] (uint32_t id) {this->CleanupVISession(id);};
+    int status = session_repository_->add_session(session_name, lambda, cleanupFunc, session_id);
+    if (status == 0) {
+      ni::hardware::grpc::Session session;
+      session.set_name(session_name);
+      session.set_id(session_id);
+      response->set_allocated_${session_output_var_name}(&session);
+    }
+    return ::grpc::Status::OK;
+  }
+
+<% continue %>
+% endif ## Handle Init Session Methods
     shared_library_->load();
     if (!shared_library_->is_loaded()) {
       std::string message("The library could not be loaded: ");
@@ -139,7 +194,6 @@ namespace ${namespace} {
   paramter_name_ctype = parameter_name + "_ctype"
   parameter_type = parameter['type']
 %>\
-## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
       ##TODO: Handle non int types
       response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${paramter_name_ctype}));

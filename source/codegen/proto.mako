@@ -76,6 +76,9 @@ if isinstance(value["value"], int) is False:
 <%
   parameter_array = functions[function]["parameters"]
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
+  if functions[function].get('is_init_method', False):
+    session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
+    input_parameters.insert(0, session_name_param)
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
   index = 0
 %>\
