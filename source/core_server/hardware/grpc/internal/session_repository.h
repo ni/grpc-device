@@ -7,7 +7,6 @@
 #include <shared_mutex>
 
 #include "hardware/grpc/internal/semaphore.h"
-#include <functional>
 
 namespace ni {
 namespace hardware {
