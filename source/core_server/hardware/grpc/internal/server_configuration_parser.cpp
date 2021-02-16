@@ -43,8 +43,10 @@ std::string ServerConfigurationParser::get_exe_path()
   #else
     //TODO
     char filepath[PATH_MAX];
-    readlink("/proc/self/exe", filepath, PATH_MAX);
-    std::cout << "Current path: " << filepath << std::endl;
+    readlink("/proc/self/exe", filename, PATH_MAX);
+    std::string exe_filename(filename);
+    std::cout << "Current path: " << exe_filename << std::endl;
+    return exe_filename.erase(exe_filename.find_last_of("\\") + 1);
   #endif
 }
 
