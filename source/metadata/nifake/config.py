@@ -8,6 +8,7 @@ config = {
     'grpc_package': 'ni.fake.grpc',
     'java_package': 'com.ni.fake.grpc',
     'csharp_namespace': 'NationalInstruments.Fake.Grpc',
+    'unique_namespace_component': 'fake',
     'close_function': 'close',
     'context_manager_name': {
         'abort_function': 'Abort',
