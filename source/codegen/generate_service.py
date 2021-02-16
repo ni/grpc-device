@@ -39,6 +39,6 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description = "Generate files for specified NI driver API gRPC service.")
   parser.add_argument("metadata", help = "The path to the directory containing the metadata for the API being generated.")
   parser.add_argument("--output", "-o", help = "The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.")
-  parser.add_argument("--generate-mock", "-g",  action = 'store_true', help = "Generate a mock of the LibraryWrapper for the API being generated.")
+  parser.add_argument("--generate-mock", "-m",  action = 'store_true', help = "Generate a mock of the LibraryWrapper for the API being generated.")
   args = parser.parse_args()
   generate_all(args.metadata, "." if args.output is None else args.output, args.generate_mock)

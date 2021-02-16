@@ -18,13 +18,13 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibraryWrapper library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  ni::fake::grpc::GetABooleanRequest request;
   EXPECT_CALL(library_wrapper, check_function_exists("niFake_GetABoolean"))
       .WillOnce(testing::Return(::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetABoolean")));
   EXPECT_CALL(library_wrapper, GetABoolean)
       .Times(0);
 
   ::grpc::ServerContext context;
+  ni::fake::grpc::GetABooleanRequest request;
   ni::fake::grpc::GetABooleanResponse response;
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 
@@ -36,13 +36,13 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibraryWrapper library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  ni::fake::grpc::GetABooleanRequest request;
   EXPECT_CALL(library_wrapper, check_function_exists("niFake_GetABoolean"))
       .WillOnce(testing::Return(::grpc::Status::OK));
   EXPECT_CALL(library_wrapper, GetABoolean)
       .Times(1);
 
   ::grpc::ServerContext context;
+  ni::fake::grpc::GetABooleanRequest request;
   ni::fake::grpc::GetABooleanResponse response;
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 

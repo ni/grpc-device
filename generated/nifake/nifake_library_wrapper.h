@@ -14,7 +14,7 @@ namespace fake {
 namespace grpc {
 
 class NiFakeLibraryWrapper {
-public:
+ public:
   virtual ~NiFakeLibraryWrapper() {}
 
   virtual ::grpc::Status check_function_exists(std::string functionName) = 0;

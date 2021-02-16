@@ -27,7 +27,7 @@ namespace ${namespace} {
 % endfor
 
 class ${service_class_prefix}LibraryWrapper {
-public:
+ public:
   virtual ~${service_class_prefix}LibraryWrapper() {}
 
   virtual ::grpc::Status check_function_exists(std::string functionName) = 0;
