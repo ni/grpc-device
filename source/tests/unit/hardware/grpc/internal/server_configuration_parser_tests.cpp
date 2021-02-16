@@ -15,7 +15,7 @@ namespace internal {
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
-  ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser;
+  ::internal::ServerConfigurationParser server_config_parser;
     
   auto address = server_config_parser.parse_address();
   
@@ -26,67 +26,67 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
 {
   const char* file_path = "fake.json";
   try {
-    ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser("fake.json");
+    ::internal::ServerConfigurationParser server_config_parser("fake.json");
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
-  catch(const ni::hardware::grpc::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex)  {
-    EXPECT_EQ(std::string(ex.what()), ni::hardware::grpc::internal::kConfigFileNotFoundMessage);
+  catch(const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex)  {
+    EXPECT_EQ(std::string(ex.what()), ::internal::kConfigFileNotFoundMessage);
   }  
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddress_ThrowsInvalidPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port": -1 })");
-  ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser(config_json);
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
     FAIL() << "InvalidPortException not thrown";
   }
-  catch(const ni::hardware::grpc::internal::ServerConfigurationParser::InvalidPortException& ex)  {
-    EXPECT_EQ(std::string(ex.what()), ni::hardware::grpc::internal::kInvalidPortMessage);
+  catch(const ::internal::ServerConfigurationParser::InvalidPortException& ex)  {
+    EXPECT_EQ(std::string(ex.what()), ::internal::kInvalidPortMessage);
   }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithPortNumberExceedingMax_ParseAddress_ThrowsInvalidPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port": 65536 })");
-  ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser(config_json);
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
     FAIL() << "InvalidPortException not thrown";
   }
-  catch(const ni::hardware::grpc::internal::ServerConfigurationParser::InvalidPortException& ex)  {
-    EXPECT_EQ(std::string(ex.what()), ni::hardware::grpc::internal::kInvalidPortMessage);
+  catch(const ::internal::ServerConfigurationParser::InvalidPortException& ex)  {
+    EXPECT_EQ(std::string(ex.what()), ::internal::kInvalidPortMessage);
   }  
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithPortAsString_ParseAddress_ThrowsWrongPortTypeException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port" : "9090" })");
-  ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser(config_json);
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
     FAIL() << "WrongPortTypeException not thrown";
   }
-  catch(const ni::hardware::grpc::internal::ServerConfigurationParser::WrongPortTypeException& ex)  {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr( ni::hardware::grpc::internal::kWrongPortTypeMessage));
+  catch(const ::internal::ServerConfigurationParser::WrongPortTypeException& ex)  {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kWrongPortTypeMessage));
   }  
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_ThrowsUnspecifiedPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "foo" : "bar" })");
-  ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser(config_json);
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
     FAIL() << "UnspecifiedPortException not thrown";
   }
-  catch(const ni::hardware::grpc::internal::ServerConfigurationParser::UnspecifiedPortException& ex)  {
-    EXPECT_EQ(std::string(ex.what()), ni::hardware::grpc::internal::kUnspecifiedPortMessage);
+  catch(const ::internal::ServerConfigurationParser::UnspecifiedPortException& ex)  {
+    EXPECT_EQ(std::string(ex.what()), ::internal::kUnspecifiedPortMessage);
   }  
 }
 
