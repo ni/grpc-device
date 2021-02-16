@@ -2,10 +2,6 @@
 
 #include "core_server/hardware/grpc/internal/device_management.h"
 
-#if defined(__GNUC__)
-  #include <dlfcn.h>
-#endif
-
 namespace ni {
 namespace tests {
 namespace unit {
@@ -19,19 +15,21 @@ static const char* expected_syscfg_api_library_name = "nisyscfg.dll";
 static const char* expected_syscfg_api_library_name = "libnisyscfg.so";
 #endif
 
-TEST(DeviceManagementTests, DeviceManagementInstance_SharedLibraryNameIsSetToSysCfgLibrary)
+TEST(DeviceManagementTests, CreateDeviceManagement_SharedLibraryNameIsSetToSysCfgLibrary)
 {
-  ni::hardware::grpc::internal::DeviceManagement device_management;
-  std::string library_name = device_management.get_syscfg_library_name();
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::internal::DeviceManagement device_management(&shared_library);
+  std::string shared_library_name = shared_library.get_library_name();
 
-  EXPECT_STREQ(expected_syscfg_api_library_name, library_name.c_str());
+  EXPECT_STREQ(expected_syscfg_api_library_name, shared_library_name.c_str());
 }
 
-TEST(DeviceManagementTests, DeviceManagementInstance_SharedLibraryIsNotLoaded)
+TEST(DeviceManagementTests, CreateDeviceManagement_SharedLibraryIsNotLoaded)
 {
-  ni::hardware::grpc::internal::DeviceManagement device_management;
+  ni::hardware::grpc::internal::SharedLibrary shared_library;
+  ni::hardware::grpc::internal::DeviceManagement device_management(&shared_library);
 
-  EXPECT_FALSE(device_management.is_syscfg_library_loaded());
+  EXPECT_FALSE(shared_library.is_loaded());
 }
 
 }  // namespace internal

@@ -34,10 +34,10 @@ message Session {
 }
 
 message NiDeviceProperties {
-  string Name = 1;
-  string Model = 2;
-  string Vendor = 3;
-  string SerialNumber = 4;
+  string name = 1;
+  string model = 2;
+  string vendor = 3;
+  string serial_number = 4;
 }
 
 message EnumerateDevicesRequest {

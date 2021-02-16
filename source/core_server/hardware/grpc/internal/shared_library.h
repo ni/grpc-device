@@ -20,6 +20,7 @@ typedef void* LibraryHandle;
 
 class SharedLibrary {
  public:
+  SharedLibrary();
   SharedLibrary(const char* library_name);
   SharedLibrary(const SharedLibrary& other);
   virtual ~SharedLibrary();

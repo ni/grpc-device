@@ -11,16 +11,14 @@ static const char* syscfg_api_library_name = "nisyscfg.dll";
 static const char* syscfg_api_library_name = "libnisyscfg.so";
 #endif
 
-DeviceManagement::DeviceManagement()
+DeviceManagement::DeviceManagement(internal::SharedLibrary* syscfg_library)
+    : syscfg_library_(syscfg_library)
 {
-  syscfg_library_ = new SharedLibrary(syscfg_api_library_name);
+  syscfg_library_->set_library_name(syscfg_api_library_name);
 }
 
-DeviceManagement::~DeviceManagement()
-{
-  delete syscfg_library_;
-}
-
+// Provides a list of devices or chassis connected to server under localhost. This internally uses the "NI System Configuration API". If it is not
+// currently installed, it can be downloaded from this page: https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
 ::grpc::Status DeviceManagement::enumerate_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
 {
   syscfg_library_->load();
@@ -31,26 +29,9 @@ DeviceManagement::~DeviceManagement()
   }
   NISysCfgStatus status = get_list_of_devices(devices);
   if (NISysCfg_Failed(status)) {
-    return ::grpc::Status(::grpc::StatusCode::INTERNAL, "Failed to enumerate devices because of internal syscfg error.");
+    return ::grpc::Status(::grpc::StatusCode::INTERNAL, "The NI System Configuration API was unable to enumerate the devices.");
   }
   return ::grpc::Status::OK;
-}
-
-void DeviceManagement::set_syscfg_library_name(const char* library_name)
-{
-  if (!syscfg_library_->is_loaded()) {
-    syscfg_library_->set_library_name(library_name);
-  }
-}
-
-std::string DeviceManagement::get_syscfg_library_name() const
-{
-  return syscfg_library_->get_library_name();
-}
-
-bool DeviceManagement::is_syscfg_library_loaded() const
-{
-  return syscfg_library_->is_loaded();
 }
 
 NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
