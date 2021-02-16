@@ -6,7 +6,7 @@
 #if defined(_MSC_VER)
 #include <windows.h>
 #else
-    //TODO
+#include <unistd.h>
 #endif
 
 namespace ni {
@@ -42,6 +42,9 @@ std::string ServerConfigurationParser::get_exe_path()
     return exe_filename.erase(exe_filename.find_last_of("\\") + 1);
   #else
     //TODO
+    char filepath[PATH_MAX];
+    readlink("/proc/self/exe", filepath, PATH_MAX)
+    std::cout << "Current path: " << filepath << std::endl;
   #endif
 }
 
