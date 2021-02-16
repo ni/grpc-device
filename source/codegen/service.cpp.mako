@@ -129,6 +129,7 @@ namespace ${namespace} {
     std::string session_name = request->session_name();
     auto cleanupFunc = [this] (uint32_t id) {this->CleanupVISession(id);};
     int status = session_repository_->add_session(session_name, lambda, cleanupFunc, session_id);
+    response->set_status(status);
     if (status == 0) {
       ni::hardware::grpc::Session session;
       session.set_name(session_name);
