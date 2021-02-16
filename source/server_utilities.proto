@@ -26,7 +26,7 @@ service ServerUtilities {
 message Session {
   oneof session {
     string name = 1;
-    fixed64 id = 2;
+    fixed32 id = 2;
   }
 }
 

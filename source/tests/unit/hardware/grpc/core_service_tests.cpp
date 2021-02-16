@@ -328,7 +328,7 @@ TEST(CoreServiceTests, ReservationAndSession_ResetServer_UnreservesAndRemovesSes
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService service(&session_repository);
   std::string session_name = "session_name";
-  uint64_t named_session_id;
+  uint32_t named_session_id;
   int status = session_repository.add_session(
       session_name,
       []() { return std::make_tuple(0, 42); },

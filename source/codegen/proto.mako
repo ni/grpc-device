@@ -26,6 +26,8 @@ option csharp_namespace = "${config["csharp_namespace"]}";
 
 package ${config["grpc_package"]};
 
+import "server_utilities.proto";
+
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%

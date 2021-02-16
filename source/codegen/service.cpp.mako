@@ -105,10 +105,10 @@ namespace ${namespace} {
 %if common_helpers.is_enum(parameter) == True:
     ## TODO: Handle non integer enums
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)});
+    // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)})
     ${parameter_type} ${parameter_name};
 % else:
-    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
+    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)}
 % endif
 %endfor
 %for parameter in output_parameters:
@@ -144,7 +144,7 @@ namespace ${namespace} {
       ##TODO: Handle non int types
       response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${paramter_name_ctype}));
 % else:
-      response->set_${parameter_name}(${parameter_name});
+      ${handler_helpers.get_response_value(parameter)}
 %endif
 %endfor
     }

@@ -78,7 +78,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_Abort");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     auto status = niFake_Abort_function(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -127,9 +127,9 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_EnumInputFunctionWithDefaults");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_turtle = static_cast<ViInt16>(($ViInt16)request->a_turtle());
+    // auto a_turtle = static_cast<ViInt16>(($ViInt16)request->a_turtle();)
     ViInt16 a_turtle;
     auto status = niFake_EnumInputFunctionWithDefaults_function(vi, a_turtle);
     response->set_status(status);
@@ -165,7 +165,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetABoolean");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViBoolean a_boolean;
     auto status = niFake_GetABoolean_function(vi, &a_boolean);
     response->set_status(status);
@@ -190,7 +190,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetANumber");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViInt16 a_number;
     auto status = niFake_GetANumber_function(vi, &a_number);
     response->set_status(status);
@@ -257,7 +257,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetArraySizeForPythonCode");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViInt32 size_out;
     auto status = niFake_GetArraySizeForPythonCode_function(vi, &size_out);
     response->set_status(status);
@@ -289,7 +289,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViBoolean");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViBoolean attribute_value;
@@ -316,7 +316,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViInt32");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt32 attribute_value;
@@ -343,7 +343,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViInt64");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt64 attribute_value;
@@ -370,7 +370,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetAttributeViReal64");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViReal64 attribute_value;
@@ -404,7 +404,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetCalDateAndTime");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViInt32 cal_type = request->cal_type();
     ViInt32 month;
     ViInt32 day;
@@ -438,7 +438,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetCalInterval");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViInt32 months;
     auto status = niFake_GetCalInterval_function(vi, &months);
     response->set_status(status);
@@ -477,7 +477,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetEnumValue");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViInt32 a_quantity;
     ViInt16 a_turtle_ctype;
     auto status = niFake_GetEnumValue_function(vi, &a_quantity, &a_turtle_ctype);
@@ -519,7 +519,7 @@ namespace grpc {
     auto status = niFake_InitWithOptions_function(resource_name, id_query, reset_device, option_string, &vi);
     response->set_status(status);
     if (status == 0) {
-      response->set_vi(vi);
+      response->set_allocated_vi(new ni::hardware::grpc::Session()); // TODO: Go through session_repository_
     }
     return ::grpc::Status::OK;
   }
@@ -553,7 +553,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_OneInputFunction");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViInt32 a_number = request->a_number();
     auto status = niFake_OneInputFunction_function(vi, a_number);
     response->set_status(status);
@@ -575,16 +575,16 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_ParametersAreMultipleTypes");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViBoolean a_boolean = request->a_boolean();
     ViInt32 an_int32 = request->an_int32();
     ViInt64 an_int64 = request->an_int64();
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto an_int_enum = static_cast<ViInt16>(($ViInt16)request->an_int_enum());
+    // auto an_int_enum = static_cast<ViInt16>(($ViInt16)request->an_int_enum();)
     ViInt16 an_int_enum;
     ViReal64 a_float = request->a_float();
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_float_enum = static_cast<ViReal64>(($ViReal64)request->a_float_enum());
+    // auto a_float_enum = static_cast<ViReal64>(($ViReal64)request->a_float_enum();)
     ViReal64 a_float_enum;
     ViInt32 string_size = request->string_size();
     ViConstString a_string = request->a_string().c_str();
@@ -608,7 +608,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_PoorlyNamedSimpleFunction");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     auto status = niFake_PoorlyNamedSimpleFunction_function(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -629,7 +629,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_Read");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViReal64 maximum_time = request->maximum_time();
     ViReal64 reading;
     auto status = niFake_Read_function(vi, maximum_time, &reading);
@@ -655,7 +655,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_ReadFromChannel");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViConstString channel_name = request->channel_name().c_str();
     ViInt32 maximum_time = request->maximum_time();
     ViReal64 reading;
@@ -689,7 +689,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_ReturnDurationInSeconds");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViReal64 timedelta;
     auto status = niFake_ReturnDurationInSeconds_function(vi, &timedelta);
     response->set_status(status);
@@ -742,9 +742,9 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_StringValuedEnumInputFunctionWithDefaults");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_mobile_o_s_name = static_cast<ViConstString>(request->a_mobile_o_s_name().c_str());
+    // auto a_mobile_o_s_name = static_cast<ViConstString>(request->a_mobile_o_s_name().c_str();)
     ViConstString a_mobile_o_s_name;
     auto status = niFake_StringValuedEnumInputFunctionWithDefaults_function(vi, a_mobile_o_s_name);
     response->set_status(status);
@@ -766,7 +766,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_TwoInputFunction");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViReal64 a_number = request->a_number();
     ViString a_string = (ViString)request->a_string().c_str();
     auto status = niFake_TwoInputFunction_function(vi, a_number, a_string);
@@ -789,7 +789,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_Use64BitNumber");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     ViInt64 input = request->input();
     ViInt64 output;
     auto status = niFake_Use64BitNumber_function(vi, input, &output);
@@ -822,7 +822,7 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_close");
     }
 
-    ViSession vi = request->vi();
+    ViSession vi = (request->vi()).id(); // TODO: Go through session_repository_ instead of directly using the id.
     auto status = niFake_close_function(vi);
     response->set_status(status);
     return ::grpc::Status::OK;

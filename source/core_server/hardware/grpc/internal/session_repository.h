@@ -17,11 +17,11 @@ class SessionRepository {
  public:
   SessionRepository();
 
-  using CleanupSessionFunc = void (*)(uint64_t session_id);
+  using CleanupSessionFunc = void (*)(uint32_t session_id);
 
-  int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionFunc cleanup_func, uint64_t& session_id);
-  uint64_t access_session(uint64_t session_id, const std::string& session_name);
-  void remove_session(uint64_t id);
+  int add_session(const std::string& session_name, std::function<std::tuple<int, uint32_t>()> init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
+  uint32_t access_session(uint32_t session_id, const std::string& session_name);
+  void remove_session(uint32_t id);
 
   bool reserve(
       const ::grpc::ServerContext* context,
@@ -44,14 +44,14 @@ class SessionRepository {
   struct SessionInfo {
     virtual ~SessionInfo();
 
-    uint64_t id;
+    uint32_t id;
     std::string name;
     std::chrono::steady_clock::time_point last_access_time;
     SessionRepository::CleanupSessionFunc cleanup_func;
   };
 
   using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
-  using SessionMap = std::map<uint64_t, std::shared_ptr<SessionInfo>>;
+  using SessionMap = std::map<uint32_t, std::shared_ptr<SessionInfo>>;
   using ReservationMap = std::map<std::string, std::shared_ptr<ReservationInfo>>;
 
   std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
