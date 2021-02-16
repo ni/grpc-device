@@ -23,7 +23,7 @@ DeviceManagement::DeviceManagement(const char* library_name)
 
 // Provides a list of devices or chassis connected to server under localhost. This internally uses the "NI System Configuration API". If it is not
 // currently installed, it can be downloaded from this page: https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
-::grpc::Status DeviceManagement::enumerate_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
+::grpc::Status DeviceManagement::enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
   syscfg_library_.load();
   if (!syscfg_library_.is_loaded()) {
@@ -48,7 +48,7 @@ bool DeviceManagement::is_syscfg_library_loaded() const
   return syscfg_library_.is_loaded();
 }
 
-NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedPtrField<NiDeviceProperties>* devices)
+NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
   NISysCfgStatus status = NISysCfg_OK;
   // This will use syscfg APIs to get a list of devices or chassis under localhost

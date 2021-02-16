@@ -33,7 +33,7 @@ message Session {
   }
 }
 
-message NiDeviceProperties {
+message DeviceProperties {
   string name = 1;
   string model = 2;
   string vendor = 3;
@@ -44,7 +44,7 @@ message EnumerateDevicesRequest {
 }
 
 message EnumerateDevicesResponse {
-  repeated NiDeviceProperties devices = 1;
+  repeated DeviceProperties devices = 1;
 }
 
 message ReserveRequest {
