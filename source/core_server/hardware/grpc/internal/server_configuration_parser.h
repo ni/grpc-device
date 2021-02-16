@@ -45,7 +45,7 @@ class ServerConfigurationParser {
   };
 
  private:
-  static std::string ServerConfigurationParser::get_exe_path();
+  static std::string get_exe_path();
   static nlohmann::json load(const std::string& config_file_path);
 
   nlohmann::json config_file_;
