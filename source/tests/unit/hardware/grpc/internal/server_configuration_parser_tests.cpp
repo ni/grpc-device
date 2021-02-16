@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <typeinfo>
 
 #include "hardware/grpc/internal/server_configuration_parser.h"
@@ -16,9 +17,9 @@ namespace internal {
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
   ::internal::ServerConfigurationParser server_config_parser;
-    
+
   auto address = server_config_parser.parse_address();
-  
+
   EXPECT_EQ(address, "0.0.0.0:50051");
 }
 
@@ -29,9 +30,9 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
     ::internal::ServerConfigurationParser server_config_parser("fake.json");
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
-  catch(const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex)  {
+  catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
     EXPECT_EQ(std::string(ex.what()), ::internal::kConfigFileNotFoundMessage);
-  }  
+  }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddress_ThrowsInvalidPortException)
@@ -43,7 +44,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddre
     auto address = server_config_parser.parse_address();
     FAIL() << "InvalidPortException not thrown";
   }
-  catch(const ::internal::ServerConfigurationParser::InvalidPortException& ex)  {
+  catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
     EXPECT_EQ(std::string(ex.what()), ::internal::kInvalidPortMessage);
   }
 }
@@ -57,9 +58,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithPortNumberExceedingMax_ParseA
     auto address = server_config_parser.parse_address();
     FAIL() << "InvalidPortException not thrown";
   }
-  catch(const ::internal::ServerConfigurationParser::InvalidPortException& ex)  {
+  catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
     EXPECT_EQ(std::string(ex.what()), ::internal::kInvalidPortMessage);
-  }  
+  }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithPortAsString_ParseAddress_ThrowsWrongPortTypeException)
@@ -71,9 +72,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithPortAsString_ParseAddress_Thr
     auto address = server_config_parser.parse_address();
     FAIL() << "WrongPortTypeException not thrown";
   }
-  catch(const ::internal::ServerConfigurationParser::WrongPortTypeException& ex)  {
+  catch (const ::internal::ServerConfigurationParser::WrongPortTypeException& ex) {
     EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kWrongPortTypeMessage));
-  }  
+  }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_ThrowsUnspecifiedPortException)
@@ -85,9 +86,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_Throw
     auto address = server_config_parser.parse_address();
     FAIL() << "UnspecifiedPortException not thrown";
   }
-  catch(const ::internal::ServerConfigurationParser::UnspecifiedPortException& ex)  {
+  catch (const ::internal::ServerConfigurationParser::UnspecifiedPortException& ex) {
     EXPECT_EQ(std::string(ex.what()), ::internal::kUnspecifiedPortMessage);
-  }  
+  }
 }
 
 }  // namespace internal
