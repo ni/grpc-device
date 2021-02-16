@@ -3,6 +3,12 @@
 #include <climits>
 #include <iostream>
 
+#if defined(_MSC_VER)
+#include <windows.h>
+#else
+    //TODO
+#endif
+
 namespace ni {
 namespace hardware {
 namespace grpc {
@@ -11,14 +17,9 @@ namespace internal {
 static const char* kDefaultAddressPrefix = "0.0.0.0:";
 static const char* kDefaultFilename = "server_config.json";
 static const char* kPortKey = "port";
-static const char* kConfigFileNotFoundMessage = "The server configuration file was not found at the provided or default locations.";
-static const char* kInvalidPortMessage = "The specified port number must between 0 and 65535.";
-static const char* kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
-static const char* kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
-static const char* kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
 
 ServerConfigurationParser::ServerConfigurationParser()
-    : config_file_(load(kDefaultFilename))
+    : config_file_(load(get_exe_path() + kDefaultFilename))
 {
 }
 
@@ -32,7 +33,19 @@ ServerConfigurationParser::ServerConfigurationParser(const nlohmann::json& confi
 {
 }
 
-nlohmann::json ServerConfigurationParser::load(const char* config_file_path)
+std::string ServerConfigurationParser::get_exe_path()
+{
+  #if defined(_MSC_VER)
+    char filename[MAX_PATH];
+    GetModuleFileNameA(NULL, filename, MAX_PATH);
+    std::string exe_filename(filename);
+    return exe_filename.erase(exe_filename.find_last_of("\\") + 1);
+  #else
+    //TODO
+  #endif
+}
+
+nlohmann::json ServerConfigurationParser::load(const std::string& config_file_path)
 {
   // TODO: Prefer a passed in configuration file path and then search next to
   // the binary and finally at platform specific default config file locations.

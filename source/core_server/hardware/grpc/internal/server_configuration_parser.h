@@ -10,6 +10,12 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
+static const char* kConfigFileNotFoundMessage = "The server configuration file was not found at the provided or default locations.";
+static const char* kInvalidPortMessage = "The specified port number must between 0 and 65535.";
+static const char* kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
+static const char* kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
+static const char* kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
+
 class ServerConfigurationParser {
  public:
   ServerConfigurationParser();
@@ -39,7 +45,8 @@ class ServerConfigurationParser {
   };
 
  private:
-  static nlohmann::json load(const char* config_file_path);
+  static std::string ServerConfigurationParser::get_exe_path();
+  static nlohmann::json load(const std::string& config_file_path);
 
   nlohmann::json config_file_;
   std::string config_file_path_;

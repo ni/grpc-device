@@ -228,6 +228,7 @@ target_include_directories(UnitTestsRunner
     PRIVATE "${proto_output_dir}/nifake")
 target_link_libraries(UnitTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads
