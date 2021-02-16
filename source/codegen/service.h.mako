@@ -6,7 +6,6 @@ config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-driver_namespaces = handler_helpers.get_namespace_segments(config)
 include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
 %>\
 
@@ -29,9 +28,9 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H"
 #include "core_server/hardware/grpc/internal/shared_library.h"
 #include "core_server/hardware/grpc/internal/session_repository.h"
 
-% for namespace in driver_namespaces:
-namespace ${namespace} {
-% endfor
+namespace ni {
+namespace ${config["namespace_component"]} {
+namespace grpc {
 
 class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
 public:
@@ -50,7 +49,7 @@ private:
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 
-% for namespace in reversed(driver_namespaces):
-} // namespace ${namespace}
-% endfor
+} // namespace grpc
+} // namespace ${config["namespace_component"]}
+} // namespace ni
 #endif  // ${include_guard_name}
