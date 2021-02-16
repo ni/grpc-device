@@ -31,7 +31,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
-    EXPECT_EQ(std::string(ex.what()), ::internal::kConfigFileNotFoundMessage);
+    EXPECT_EQ(std::string(::internal::kConfigFileNotFoundMessage), ex.what());
   }
 }
 
@@ -45,7 +45,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddre
     FAIL() << "InvalidPortException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
-    EXPECT_EQ(std::string(ex.what()), ::internal::kInvalidPortMessage);
+    EXPECT_EQ(std::string(::internal::kInvalidPortMessage), ex.what());
   }
 }
 
@@ -59,7 +59,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithPortNumberExceedingMax_ParseA
     FAIL() << "InvalidPortException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
-    EXPECT_EQ(std::string(ex.what()), ::internal::kInvalidPortMessage);
+    EXPECT_EQ(std::string(::internal::kInvalidPortMessage), ex.what());
   }
 }
 
@@ -87,7 +87,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_Throw
     FAIL() << "UnspecifiedPortException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::UnspecifiedPortException& ex) {
-    EXPECT_EQ(std::string(ex.what()), ::internal::kUnspecifiedPortMessage);
+    EXPECT_EQ(std::string(::internal::kUnspecifiedPortMessage), ex.what());
   }
 }
 
