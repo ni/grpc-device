@@ -2,10 +2,10 @@
 #define NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
 
 #include <grpcpp/grpcpp.h>
+#include <nisyscfg.h>
 
 #include "session_repository.h"
 #include "shared_library.h"
-#include "nisyscfg.h"
 
 namespace ni {
 namespace hardware {
