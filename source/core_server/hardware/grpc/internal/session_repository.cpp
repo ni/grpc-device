@@ -83,6 +83,23 @@ void SessionRepository::remove_session(uint64_t id)
   }
 }
 
+// This method caches the NISysCfgSession into cached_SysCfgSession field.
+// This takes an optional reinitialize boolean as input which can be used to enforce initialization when needed.
+// This method takes a unique lock to access cached_SysCfgSession and returns if its not null otherwise creates a new session
+// when reinitialize is true or cached_SysCfgSession is null and returns it.
+// This method doesn't check for return of null session after failed initialization.
+NISysCfgSessionHandle SessionRepository::getSysCfgSession(bool reinitialize = false)
+{
+  std::unique_lock<std::shared_mutex> lock(session_mutex);
+  if (!reinitialize && cached_SysCfgSession != nullptr) {
+      return cached_SysCfgSession;
+  }
+  else {
+    NISysCfgInitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_SysCfgSession);
+    return cached_SysCfgSession;
+   }
+}
+
 // This method has three behaviors:
 // 1) If no ReservationInfo exists with the given reservation_id, it creates a new ReservationInfo,
 //    adds it to reservations_, and returns it.

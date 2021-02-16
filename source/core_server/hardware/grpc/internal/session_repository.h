@@ -7,6 +7,7 @@
 #include <shared_mutex>
 
 #include "hardware/grpc/internal/semaphore.h"
+#include "../../imports/includes/nisyscfg.h"
 
 namespace ni {
 namespace hardware {
@@ -22,6 +23,8 @@ class SessionRepository {
   int add_session(const std::string& session_name, std::function<std::tuple<int, uint64_t>()> init_func, CleanupSessionFunc cleanup_func, uint64_t& session_id);
   uint64_t access_session(uint64_t session_id, const std::string& session_name);
   void remove_session(uint64_t id);
+
+  NISysCfgSessionHandle getSysCfgSession(bool reinitialize);
 
   bool reserve(
       const ::grpc::ServerContext* context,
@@ -64,6 +67,10 @@ class SessionRepository {
   // These entries point at SessionInfo objects that are also contained in sessions_.
   NamedSessionMap named_sessions_;
   ReservationMap reservations_;
+
+  std::shared_mutex session_mutex;
+  NISysCfgSessionHandle cached_SysCfgSession;
+
 };
 
 }  // namespace internal
