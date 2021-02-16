@@ -80,7 +80,7 @@ namespace grpc {
 
     ViSession vi = request->vi();
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_turtle = static_cast<ViInt16>(($ViInt16)request->a_turtle());
+    // auto a_turtle = static_cast<ViInt16>((ViInt16)request->a_turtle());
     ViInt16 a_turtle;
     auto status = library_wrapper_->EnumInputFunctionWithDefaults(vi, a_turtle);
     response->set_status(status);
@@ -453,11 +453,11 @@ namespace grpc {
     ViInt32 an_int32 = request->an_int32();
     ViInt64 an_int64 = request->an_int64();
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto an_int_enum = static_cast<ViInt16>(($ViInt16)request->an_int_enum());
+    // auto an_int_enum = static_cast<ViInt16>((ViInt16)request->an_int_enum());
     ViInt16 an_int_enum;
     ViReal64 a_float = request->a_float();
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_float_enum = static_cast<ViReal64>(($ViReal64)request->a_float_enum());
+    // auto a_float_enum = static_cast<ViReal64>((ViReal64)request->a_float_enum());
     ViReal64 a_float_enum;
     ViInt32 string_size = request->string_size();
     ViConstString a_string = request->a_string().c_str();
