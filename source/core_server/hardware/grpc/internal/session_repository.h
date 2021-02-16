@@ -7,6 +7,7 @@
 #include <shared_mutex>
 
 #include "hardware/grpc/internal/semaphore.h"
+#include <functional>
 
 namespace ni {
 namespace hardware {
@@ -17,7 +18,7 @@ class SessionRepository {
  public:
   SessionRepository();
 
-  using CleanupSessionFunc = void (*)(uint32_t session_id);
+  typedef std::function< void(uint32_t) > CleanupSessionFunc;
 
   int add_session(const std::string& session_name, std::function<std::tuple<int, uint32_t>()> init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
   uint32_t access_session(uint32_t session_id, const std::string& session_name);

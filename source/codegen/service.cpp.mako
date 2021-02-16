@@ -153,6 +153,27 @@ namespace ${namespace} {
   }
 
 % endfor
+## Protected CleanupVISession method
+<%
+  f = functions[config['close_function']]
+  c_function_name = c_function_prefix + function
+  method_name = "CleanupVISession"
+%>\
+ void ${service_class_prefix}Service::${method_name}(uint32_t session_id)
+ {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return;
+    }
+    auto ${c_function_name}_function = reinterpret_cast<${c_function_name}Ptr>(shared_library_->get_function_pointer("${c_function_name}"));
+    if (${c_function_name}_function == nullptr) {
+      return;
+    }
+    ${c_function_name}_function(session_id);
+ }
+
 % for namespace in reversed(driver_namespaces):
 } // namespace ${namespace}
 % endfor

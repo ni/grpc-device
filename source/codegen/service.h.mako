@@ -43,6 +43,8 @@ public:
 %>\
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
 % endfor
+protected:
+  void CleanupVISession(uint32_t session_id);
 
 private:
   ni::hardware::grpc::internal::SharedLibrary* shared_library_;

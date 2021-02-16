@@ -828,6 +828,21 @@ namespace grpc {
     return ::grpc::Status::OK;
   }
 
+ void NiFakeService::CleanupVISession(uint32_t session_id)
+ {
+    shared_library_->load();
+    if (!shared_library_->is_loaded()) {
+      std::string message("The library could not be loaded: ");
+      message += driver_api_library_name;
+      return;
+    }
+    auto niFake_close_function = reinterpret_cast<niFake_closePtr>(shared_library_->get_function_pointer("niFake_close"));
+    if (niFake_close_function == nullptr) {
+      return;
+    }
+    niFake_close_function(session_id);
+ }
+
 } // namespace grpc
 } // namespace fake
 } // namespace ni
