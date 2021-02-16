@@ -26,15 +26,18 @@ DeviceManagement::DeviceManagement(const char* library_name)
 ::grpc::Status DeviceManagement::enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
   syscfg_library_.load();
+
   if (!syscfg_library_.is_loaded()) {
     std::string message("The library could not be loaded: ");
     message += syscfg_api_library_name;
     return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, message.c_str());
   }
+
   NISysCfgStatus status = get_list_of_devices(devices);
   if (NISysCfg_Failed(status)) {
     return ::grpc::Status(::grpc::StatusCode::INTERNAL, "The NI System Configuration API was unable to enumerate the devices.");
   }
+
   return ::grpc::Status::OK;
 }
 
