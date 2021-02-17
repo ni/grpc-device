@@ -69,9 +69,8 @@ nlohmann::json ServerConfigurationParser::load(const std::string& config_file_pa
 std::string ServerConfigurationParser::parse_address()
 {
   int parsed_port = -1;
-  std::string key(kPortKey);
 
-  auto it = config_file_.find(key);
+  auto it = config_file_.find(kPortKey);
   if (it != config_file_.end()) {
     try {
       parsed_port = it->get<int>();

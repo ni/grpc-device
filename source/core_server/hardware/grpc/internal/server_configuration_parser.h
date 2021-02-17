@@ -21,6 +21,7 @@ class ServerConfigurationParser {
   ServerConfigurationParser();
   ServerConfigurationParser(const char* config_file_path);
   ServerConfigurationParser(const nlohmann::json& config_file);
+  virtual ~ServerConfigurationParser();
 
   std::string parse_address();
 
