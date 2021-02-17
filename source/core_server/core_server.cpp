@@ -20,8 +20,8 @@ static void RunServer(int argc, char** argv)
 
   // Listen on the given address without any authentication mechanism.
   grpc::ServerBuilder builder;
-  int* listeningPort = new int(0);
-  builder.AddListeningPort(server_address, grpc::InsecureServerCredentials(), listeningPort);
+  int listeningPort = 0;
+  builder.AddListeningPort(server_address, grpc::InsecureServerCredentials(), &listeningPort);
 
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -36,7 +36,7 @@ static void RunServer(int argc, char** argv)
     exit(EXIT_FAILURE);
   }
 
-  std::cout << "Server listening on port " << *listeningPort << std::endl;
+  std::cout << "Server listening on port " << listeningPort << std::endl;
   // This call will block until another thread shuts down the server.
   server->Wait();
 }
