@@ -20,7 +20,7 @@ static void RunServer(int argc, char** argv)
 
   // Listen on the given address without any authentication mechanism.
   grpc::ServerBuilder builder;
-  int* listeningPort;
+  int* listeningPort = new int(0);
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials(), listeningPort);
 
   // Register services available on the server.
