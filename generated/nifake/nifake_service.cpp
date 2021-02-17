@@ -452,12 +452,10 @@ namespace grpc {
     ViInt64 an_int64 = request->an_int64();
     auto an_int_enum = static_cast<ViInt16>((ViInt16)request->an_int_enum());
     ViReal64 a_float = request->a_float();
-    floatenum_input_map_iterator_ = floatenum_input_map_.find(request->a_float_enum());
+    auto floatenum_input_map_iterator_ = floatenum_input_map_.find(request->a_float_enum());
 	
     if(floatenum_input_map_iterator_ == floatenum_input_map_.end()) {
-      std::string message("The data value could not be found: ");
-      message += driver_api_library_name;
-      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+      return ::grpc::Status(::grpc::INVALID_ARG, "The value for a_float_enum was not specified or out of range.");
     }
 	
     auto a_float_enum = static_cast<ViReal64>(floatenum_input_map_iterator_->second);
@@ -588,12 +586,10 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    mobileosnames_input_map_iterator_ = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
+    auto mobileosnames_input_map_iterator_ = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
 	
     if(mobileosnames_input_map_iterator_ == mobileosnames_input_map_.end()) {
-      std::string message("The data value could not be found: ");
-      message += driver_api_library_name;
-      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+      return ::grpc::Status(::grpc::INVALID_ARG, "The value for a_mobile_o_s_name was not specified or out of range.");
     }
 	
     auto a_mobile_o_s_name = static_cast<ViConstString>(mobileosnames_input_map_iterator_->second);

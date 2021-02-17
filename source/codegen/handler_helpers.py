@@ -86,25 +86,27 @@ def get_c_type(parameter, driver_name_pascal):
   # This is equivalent to a switch statement with the default case returning the grpc_type
   return grpc_to_c.get(grpc_type, grpc_type)
   
-def python_to_c(type):
-  python_to_c = {
-    "float": "float",
-    "int": "std::int32_t",
-    "str": "std::string"
-  }
-  return python_to_c.get(type, "std::int32_t")
+def python_to_c(enum):
+  enum_value = enum["values"][0]["value"]
+  if isinstance(enum_value, float):
+    return "float"
+  if isinstance(enum_value, int):
+    return "std::int32_t"
+  if isinstance(enum_value, str):
+    return "std::string"
+  return "std::int32_t"
  
 def format_value(value):
-  if type(value).__name__ == "str":
-    value = "\"" + value + "\""
-  if type(value).__name__ == "float":
-    value = str(value)+"f"
+  if isinstance(value, str):
+    value = f"\"{value}\""
+  if isinstance(value, float):
+    value = f"{value}f"
   return value
   
-def get_input_values(enum_data):
+def lookup_input_values(enum_data):
   out_value_format= ""
   index = 1
-  is_int = True if type(enum_data["values"][0]["value"]).__name__ == "int" else False
+  is_int = isinstance(enum_data["values"][0]["value"], int)
   if is_int:
     out_value_format =  "{0, 0},"
   for value in enum_data["values"]:
@@ -113,10 +115,10 @@ def get_input_values(enum_data):
     index = index+1
   return out_value_format
   
-def get_output_values(enum_data):
+def lookup_output_values(enum_data):
   out_value_format= ""
   index = 1
-  is_int = True if type(enum_data["values"][0]["value"]).__name__ == "int" else False
+  is_int = isinstance(enum_data["values"][0]["value"], int)
   if is_int:
     out_value_format =  "{0, 0},"
   for value in enum_data["values"]:

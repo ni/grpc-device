@@ -72,36 +72,32 @@ namespace ${namespace} {
 %for parameter in input_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True: 
-%if enums[parameter["enum"]].get("generate-mappings", false):
+%if enums[parameter["enum"]].get("generate-mappings", False):
 <% 
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = map_name + "iterator_"
 %>\
-    ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+    auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
 	
     if(${iterator_name} == ${map_name}.end()) {
-      std::string message("The data value could not be found: ");
-      message += driver_api_library_name;
-      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+      return ::grpc::Status(::grpc::INVALID_ARG, "The value for ${parameter_name} was not specified or out of range.");
     }
 	
-    auto ${parameter_name} = static_cast<${parameter_type}>(${iterator_name}->second);
+    auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
 %else:
-    auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)});
+    auto ${parameter_name} = static_cast<${parameter['type']}>(${handler_helpers.get_request_value(parameter)});
 %endif
 % else:
-    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
+    ${parameter['type']} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
 % endif
 %endfor
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  parameter_type = parameter['type']
 %>\
-    ${parameter_type} ${parameter_name};
+    ${parameter['type']} ${parameter_name};
 %endfor
     auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
 <%
@@ -116,17 +112,15 @@ namespace ${namespace} {
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
-%if enums[parameter["enum"]].get("generate-mappings", false):
+%if enums[parameter["enum"]].get("generate-mappings", False):
 <% 
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = map_name + "iterator_"
 %>\
     
-    ${iterator_name} = ${map_name}.find(${parameter_name});
+    auto ${iterator_name} = ${map_name}.find(${parameter_name});
     if(${iterator_name} == ${map_name}.end()) {
-      std::string message("The data value could not be found: ");
-      message += driver_api_library_name;
-      return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
+      return ::grpc::Status(::grpc::INVALID_ARG, "The value for ${parameter_name} was not specified or out of range.");
     }
       response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${iterator_name}->second));
 %else:
