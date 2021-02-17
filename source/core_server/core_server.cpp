@@ -14,8 +14,7 @@ static void RunServer(int argc, char** argv)
   }
   catch (const std::exception& ex) {
     std::cerr << "\nERROR:\n\n"
-              << ex.what() << "\n\nExiting.\n"
-              << std::endl;
+              << ex.what() << "\n\nExiting.\n";
     exit(EXIT_FAILURE);
   }
 
