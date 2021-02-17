@@ -578,13 +578,14 @@ namespace grpc {
     std::int64_t an_int64 = request->an_int64();
     auto an_int_enum = static_cast<std::int32_t>(request->an_int_enum());
     double a_float = request->a_float();
-    
     floatenum_input_map_iterator_ = floatenum_input_map_.find(request->a_float_enum());
+	
     if(floatenum_input_map_iterator_ == floatenum_input_map_.end()) {
       std::string message("The data value could not be found: ");
       message += driver_api_library_name;
       return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
     }
+	
     auto a_float_enum = static_cast<double>(floatenum_input_map_iterator_->second);
     std::int32_t string_size = request->string_size();
     std::string a_string = request->a_string().c_str();
@@ -743,13 +744,14 @@ namespace grpc {
     }
 
     std::uint32_t vi = request->vi();
-    
     mobileosnames_input_map_iterator_ = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
+	
     if(mobileosnames_input_map_iterator_ == mobileosnames_input_map_.end()) {
       std::string message("The data value could not be found: ");
       message += driver_api_library_name;
       return ::grpc::Status(::grpc::NOT_FOUND, message.c_str());
     }
+	
     auto a_mobile_o_s_name = static_cast<std::string>(mobileosnames_input_map_iterator_->second);
     auto status = niFake_StringValuedEnumInputFunctionWithDefaults_function(vi, a_mobile_o_s_name);
     response->set_status(status);
