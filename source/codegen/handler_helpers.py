@@ -46,45 +46,19 @@ def create_args(parameters):
         result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
-def create_params(parameters, driver_name_pascal):
+def create_params(parameters):
     result = ''
     for parameter in parameters:
-        result = result + create_param(parameter, driver_name_pascal) + ' ' + parameter['cppName'] + ', '
+        result = result + create_param(parameter) + ' ' + parameter['cppName'] + ', '
     return result[:-2]
 
-def create_param(parameter, driver_name_pascal):
-    result = get_c_type(parameter, driver_name_pascal)
-    if '[]' in parameter['type']:
-      result = result + '['
-      if parameter['size']['mechanism'] == 'fixed':
-        result = result + str(parameter['size']['value'])
-      result = result + ']'
+def create_param(parameter):
+    result = parameter['type']
+    if result.endswith('[]') and parameter['size']['mechanism'] == 'fixed':
+        size = parameter['size']['value'];
+        result.replace('[]', f'[{size}]')
     if common_helpers.is_output_parameter(parameter):
-      result = result + '*'
-    return result
-
-def get_request_value(parameter, driver_name_pascal):
-    result = ''
-    if parameter['type'] == 'ViChar':
-        result = '%(result)s(char*)'
-    result = f'{result}request->'
-    param_name = common_helpers.camel_to_snake(parameter['cppName'])
-    is_array = common_helpers.is_array(parameter["type"])
-    request_name = proto_helpers.get_grpc_type_from_ivi(param_name, is_array, driver_name_pascal)
-    result = f'{result}{request_name}()'
-    is_enum = common_helpers.is_enum(parameter)
-    if  common_helpers.is_enum(parameter) == True:
-        return result
-    if parameter['type'] == 'ViConstString':
-        result = f'{result}.c_str()'
-    if parameter['type'] == 'ViRsrc':
-        result = f'{result}.c_str()'
-    if parameter['type'] == 'ViChar':
-        if is_array:
-            result = f'{result}.c_str()'
-        else:
-            result = f'{result}[0]'
-    result = f'{result};'
+        result = result + '*'
     return result
 
 def get_c_type(parameter, driver_name_pascal):
@@ -150,6 +124,20 @@ def get_output_values(enum_data):
     out_value_format = out_value_format + "{" + str(formated_value) + ", " + str(index) + "},"
     index = index+1
   return out_value_format
+
+def get_request_value(parameter):
+    field_name = common_helpers.camel_to_snake(parameter["name"])
+    request_snippet = f'request->{field_name}()'
+    c_type = parameter['type']
+    if c_type == 'ViConstString':
+        return f'{request_snippet}.c_str()';
+    if c_type == 'ViString' or c_type == 'ViRsrc':
+        return f'({c_type}){request_snippet}.c_str()'
+    if c_type == 'ViInt8[]' or c_type == 'ViChar[]':
+        return f'({c_type[:-2]}*){request_snippet}.c_str()'
+    if c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
+        return f'({c_type}){request_snippet}'
+    return request_snippet
 
 def filter_api_functions(functions):
   '''Returns function metadata only for those functions to include for generating the function types to the API library'''
