@@ -93,7 +93,7 @@ def python_to_c(enum):
   if isinstance(enum_value, int):
     return "std::int32_t"
   if isinstance(enum_value, str):
-    return "std::string"
+    return "ViConstString"
   return "std::int32_t"
  
 def format_value(value):

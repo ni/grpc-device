@@ -82,7 +82,7 @@ namespace ${namespace} {
     auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
 	
     if(${iterator_name} == ${map_name}.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARG, "The value for ${parameter_name} was not specified or out of range.");
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
     }
 	
     auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
@@ -120,7 +120,7 @@ namespace ${namespace} {
     
     auto ${iterator_name} = ${map_name}.find(${parameter_name});
     if(${iterator_name} == ${map_name}.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARG, "The value for ${parameter_name} was not specified or out of range.");
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
     }
       response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${iterator_name}->second));
 %else:

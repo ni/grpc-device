@@ -455,7 +455,7 @@ namespace grpc {
     auto floatenum_input_map_iterator_ = floatenum_input_map_.find(request->a_float_enum());
 	
     if(floatenum_input_map_iterator_ == floatenum_input_map_.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARG, "The value for a_float_enum was not specified or out of range.");
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
     }
 	
     auto a_float_enum = static_cast<ViReal64>(floatenum_input_map_iterator_->second);
@@ -589,7 +589,7 @@ namespace grpc {
     auto mobileosnames_input_map_iterator_ = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
 	
     if(mobileosnames_input_map_iterator_ == mobileosnames_input_map_.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARG, "The value for a_mobile_o_s_name was not specified or out of range.");
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
     }
 	
     auto a_mobile_o_s_name = static_cast<ViConstString>(mobileosnames_input_map_iterator_->second);
