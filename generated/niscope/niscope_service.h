@@ -12,6 +12,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <condition_variable>
+#include "niscope_library_wrapper.h"
 #include "core_server/hardware/grpc/internal/shared_library.h"
 #include "core_server/hardware/grpc/internal/session_repository.h"
 
@@ -21,7 +22,7 @@ namespace grpc {
 
 class NiScopeService final : public NiScope::Service {
 public:
-  NiScopeService(ni::hardware::grpc::internal::SharedLibrary* shared_library, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiScopeService(NiScopeLibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~NiScopeService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response) override;
@@ -80,11 +81,11 @@ public:
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
 
 private:
-  ni::hardware::grpc::internal::SharedLibrary* shared_library_;
+  NiScopeLibraryWrapper* library_wrapper_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 
 } // namespace grpc
 } // namespace scope
 } // namespace ni
-#endif NI_SCOPE_GRPC_SERVICE_H
+#endif  // NI_SCOPE_GRPC_SERVICE_H

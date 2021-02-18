@@ -14,8 +14,10 @@ namespace scope {
 namespace grpc {
 
 class NiScopeLibraryWrapper {
-public:
-  virtual ::grpc::Status check_function_exists(const char* functionName) = 0;
+ public:
+  virtual ~NiScopeLibraryWrapper() {}
+
+  virtual ::grpc::Status check_function_exists(std::string functionName) = 0;
   virtual ViStatus Abort(ViSession vi) = 0;
   virtual ViStatus AcquisitionStatus(ViSession vi, ViInt32* acquisitionStatus) = 0;
   virtual ViStatus ActualMeasWfmSize(ViSession vi, ViInt32 arrayMeasFunction, ViInt32* measWaveformSize) = 0;

@@ -6,7 +6,6 @@ config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-driver_namespaces = handler_helpers.get_namespace_segments(config)
 include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
 %>\
 
@@ -25,16 +24,17 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H"
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <condition_variable>
+#include "${config["module_name"]}_library_wrapper.h"
 #include "core_server/hardware/grpc/internal/shared_library.h"
 #include "core_server/hardware/grpc/internal/session_repository.h"
 
-% for namespace in driver_namespaces:
-namespace ${namespace} {
-% endfor
+namespace ni {
+namespace ${config["namespace_component"]} {
+namespace grpc {
 
 class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
 public:
-  ${service_class_prefix}Service(ni::hardware::grpc::internal::SharedLibrary* shared_library, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  ${service_class_prefix}Service(${service_class_prefix}LibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~${service_class_prefix}Service();
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
@@ -45,11 +45,11 @@ public:
 % endfor
 
 private:
-  ni::hardware::grpc::internal::SharedLibrary* shared_library_;
+  ${service_class_prefix}LibraryWrapper* library_wrapper_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 
-% for namespace in reversed(driver_namespaces):
-} // namespace ${namespace}
-% endfor
-#endif ${include_guard_name}
+} // namespace grpc
+} // namespace ${config["namespace_component"]}
+} // namespace ni
+#endif  // ${include_guard_name}
