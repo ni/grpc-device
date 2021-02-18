@@ -89,11 +89,11 @@ namespace grpc {
   session_output_var_name = "vi"
 %>\
     
-    auto init_lambda = [&] () -> std::tuple<int, uint32_t>{
-      ViSession ${session_output_var_name};
-      int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
-      return std::make_tuple(status, vi);
-      };
+    auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+    ViSession ${session_output_var_name};
+    int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+    return std::make_tuple(status, vi);
+    };
     uint32_t session_id;
     std::string session_name = request->session_name();
     auto cleanup_lambda = [&] (uint32_t id) {library_wrapper_->${config['close_function']}(id);};
