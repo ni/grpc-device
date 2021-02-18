@@ -65,7 +65,7 @@ namespace grpc {
 <% continue %>
 % endif
 ## Handle init session methods
-% if f.get('is_init_method', False):
+% if function == config['init_function']:
     ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
     if (!libraryStatus.ok()) {
       return libraryStatus;
