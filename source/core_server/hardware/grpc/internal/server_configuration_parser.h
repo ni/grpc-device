@@ -24,6 +24,9 @@ class ServerConfigurationParser {
   virtual ~ServerConfigurationParser() {}
 
   std::string parse_address();
+  std::string parse_server_cert();
+  std::string parse_server_key();
+  std::string parse_root_cert();
 
   struct ConfigFileNotFoundException : public std::runtime_error {
     ConfigFileNotFoundException();
@@ -48,6 +51,9 @@ class ServerConfigurationParser {
  private:
   static std::string get_exe_path();
   static nlohmann::json load(const std::string& config_file_path);
+  static std::string read_keycert(const std::string& filename);
+  std::string parse_string_value(const char* key);
+
 
   nlohmann::json config_file_;
   std::string config_file_path_;

@@ -2,6 +2,7 @@
 
 #include <climits>
 #include <iostream>
+#include <sstream>
 
 #if defined(_MSC_VER)
   #include <windows.h>
@@ -17,6 +18,10 @@ namespace internal {
 static const char* kDefaultAddressPrefix = "0.0.0.0:";
 static const char* kDefaultFilename = "server_config.json";
 static const char* kPortKey = "port";
+static const char* kCertServerKey = "server_cert";
+static const char* kKeyServerKey = "server_key";
+static const char* kCertRootKey = "root_cert";
+static const char* kCertFolder = "cert/";
 
 ServerConfigurationParser::ServerConfigurationParser()
     : config_file_(load(get_exe_path() + kDefaultFilename))
@@ -87,6 +92,54 @@ std::string ServerConfigurationParser::parse_address()
     throw InvalidPortException();
   }
   return kDefaultAddressPrefix + std::to_string(parsed_port);
+}
+
+std::string ServerConfigurationParser::parse_server_cert()
+{
+  auto file_path = parse_string_value(kCertServerKey);
+  return read_keycert(file_path);
+}
+
+std::string ServerConfigurationParser::parse_server_key()
+{
+  auto file_path = parse_string_value(kKeyServerKey);
+  return read_keycert(file_path);
+}
+
+std::string ServerConfigurationParser::parse_root_cert()
+{
+  auto file_path = parse_string_value(kCertRootKey);
+  return read_keycert(file_path);
+}
+
+std::string ServerConfigurationParser::parse_string_value(const char* key)
+{
+  std::string parsed_value;
+
+  auto it = config_file_.find(key);
+  if (it != config_file_.end()) {
+    try {
+      parsed_value = it->get<std::string>();
+    }
+    catch (const nlohmann::json::type_error& ex) {
+      //throw WrongPortTypeException(ex.what());
+    }
+  }
+  return parsed_value;
+}
+
+std::string ServerConfigurationParser::read_keycert(const std::string& filename)
+{	
+	std::string data;
+	std::ifstream file(filename.c_str(), std::ios::in);
+	if (file.is_open())
+	{
+		std::stringstream key_cert_contents;
+		key_cert_contents << file.rdbuf();
+		file.close();
+		data = key_cert_contents.str();
+	}
+	return data;
 }
 
 ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException()
