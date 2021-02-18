@@ -400,10 +400,10 @@ namespace grpc {
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
     
-    auto lambda = [this, resource_name, id_query, reset_device, option_string] () -> std::tuple<int, uint32_t>{
+    auto lambda = [&] () -> std::tuple<int, uint32_t>{
       ViSession vi;
-      auto status = this->library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
-      return std::tuple<int, uint32_t>(status, vi);
+      int status = this->library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+      return std::make_tuple(status, vi);
       };
     uint32_t session_id;
     std::string session_name = request->session_name();

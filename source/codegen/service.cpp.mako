@@ -70,15 +70,11 @@ namespace grpc {
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
-<%
-  capture = f'[this, '
-%>\
 %for parameter in input_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   paramter_name_ctype = parameter_name + "_ctype"
   parameter_type = parameter['type']
-  capture = f'{capture}{parameter_name}, '
 %>\
 %if common_helpers.is_enum(parameter) == True:
     ## TODO: Handle non integer enums
@@ -93,10 +89,10 @@ namespace grpc {
   session_output_var_name = "vi"
 %>\
     
-    auto lambda = ${capture[:-2]}] () -> std::tuple<int, uint32_t>{
+    auto lambda = [&] () -> std::tuple<int, uint32_t>{
       ViSession ${session_output_var_name};
-      auto status = this->library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
-      return std::tuple<int, uint32_t>(status, vi);
+      int status = this->library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+      return std::make_tuple(status, vi);
       };
     uint32_t session_id;
     std::string session_name = request->session_name();
