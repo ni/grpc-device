@@ -91,12 +91,12 @@ namespace grpc {
     
     auto lambda = [&] () -> std::tuple<int, uint32_t>{
       ViSession ${session_output_var_name};
-      int status = this->library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+      int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
       return std::make_tuple(status, vi);
       };
     uint32_t session_id;
     std::string session_name = request->session_name();
-    auto cleanupFunc = [this] (uint32_t id) {this->CleanupVISession(id);};
+    auto cleanupFunc = [&] (uint32_t id) {library_wrapper_->${config['close_function']}(id);};
     int status = session_repository_->add_session(session_name, lambda, cleanupFunc, session_id);
     response->set_status(status);
     if (status == 0) {
@@ -171,21 +171,6 @@ namespace grpc {
   }
 
 % endfor
-## Protected CleanupVISession method
-<%
-  function = config['close_function']
-  f = functions[function]
-  c_function_name = c_function_prefix + function
-  method_name = "CleanupVISession"
-%>\
- ::grpc::Status ${service_class_prefix}Service::${method_name}(uint32_t session_id)
- {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
-    }
-    library_wrapper_->${function}(session_id);
- }
 
 } // namespace grpc
 } // namespace ${config["namespace_component"]}

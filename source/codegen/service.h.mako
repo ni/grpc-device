@@ -43,8 +43,6 @@ public:
 %>\
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
 % endfor
-protected:
-  ::grpc::Status CleanupVISession(uint32_t session_id);
 
 private:
   ${service_class_prefix}LibraryWrapper* library_wrapper_;
