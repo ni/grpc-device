@@ -156,6 +156,7 @@ add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
    "source/core_server/hardware/grpc/internal/semaphore.cpp"
+   "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
    "source/core_server/hardware/grpc/internal/session_repository.cpp"
    "source/core_server/hardware/grpc/internal/shared_library.cpp"
    ${server_utilities_proto_srcs}
@@ -166,12 +167,27 @@ target_link_libraries(core_server
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
    ${CMAKE_DL_LIBS}
+   nlohmann_json::nlohmann_json
    )
-
+ 
+#----------------------------------------------------------------------
+# Copy server_config.json to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+   TARGET core_server POST_BUILD
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
+            ${CMAKE_SOURCE_DIR}/server_config.json
+            $<TARGET_FILE_DIR:core_server>/server_config.json)
+ 
+#----------------------------------------------------------------------
+# Add JSON parser
+#----------------------------------------------------------------------
+add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
+ 
 # Add googletest tests
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
+add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
 
 # Link test executable against gtest
 add_executable(CoreServiceTestsRunner
@@ -202,10 +218,12 @@ add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/server_configuration_parser_tests.cpp"
     "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
+    "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
     "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
@@ -221,7 +239,8 @@ target_link_libraries(UnitTestsRunner
     gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
-    Threads::Threads)
+    Threads::Threads
+    nlohmann_json::nlohmann_json)
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )

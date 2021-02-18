@@ -30,13 +30,8 @@ def sanitize_names(parameters):
             parameter['cppName'] = parameter['cppName'] + 'Parameter'
 
 def get_include_guard_name(config, suffix):
-    driver_full_namespace = config["grpc_package"]
-    include_guard_name = driver_full_namespace.replace(".", "_") + suffix
+    include_guard_name = 'ni_' + config['namespace_component'] + '_grpc' + suffix
     return include_guard_name.upper()
-
-def get_namespace_segments(config):
-    namespace = config["grpc_package"]
-    return namespace.split(".")
 
 def create_args(parameters):
     result = ''
