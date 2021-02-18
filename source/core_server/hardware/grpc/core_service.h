@@ -12,7 +12,7 @@ namespace grpc {
 
 class CoreService final : public ServerUtilities::Service {
  public:
-  CoreService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_management);
+  CoreService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator);
 
   ::grpc::Status EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response) override;
   ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
