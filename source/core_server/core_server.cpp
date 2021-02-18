@@ -1,7 +1,5 @@
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/server_configuration_parser.h"
-#include <niscope/niscope_service.h>
-
 
 static void RunServer(int argc, char** argv)
 {
@@ -27,13 +25,8 @@ static void RunServer(int argc, char** argv)
 
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
-
   ni::hardware::grpc::CoreService core_service(&session_repository);
   builder.RegisterService(&core_service);
-
-  ni::hardware::grpc::internal::SharedLibrary scope_library;
-  ni::scope::grpc::NiScopeService scope_service(&scope_library, &session_repository);
-  builder.RegisterService(&scope_service);
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
