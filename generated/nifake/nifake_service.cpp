@@ -657,8 +657,7 @@ namespace grpc {
     }
 
     ViSession vi = session_repository_->access_session((request->vi()).id(), (request->vi()).name());
-    auto status = library_wrapper_->close(vi);
-    response->set_status(status);
+    session_repository_->remove_session(vi);
     return ::grpc::Status::OK;
   }
 

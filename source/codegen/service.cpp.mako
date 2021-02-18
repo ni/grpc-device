@@ -144,11 +144,15 @@ namespace grpc {
     ${parameter_type} ${parameter_name};
 %endif
 %endfor
+%if function == config['close_function']:
+    session_repository_->remove_session(${handler_helpers.create_args(parameters)});
+%else:
     auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+    response->set_status(status);
+%endif
 <%
      parameter['cppName'] = parameter_name
 %>\
-    response->set_status(status);
 %if output_parameters:
     if (status == 0) {
 %for parameter in output_parameters:
