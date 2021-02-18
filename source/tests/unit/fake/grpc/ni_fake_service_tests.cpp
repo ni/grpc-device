@@ -1,6 +1,6 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
-#include <nifake_mock_library_wrapper.h>
+#include <nifake_mock_library.h>
 #include <nifake_service.h>
 
 #include <thread>
@@ -29,7 +29,7 @@ ViConstString kChannelName = "channel";
 TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibraryWrapper library_wrapper;
+  NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   EXPECT_CALL(library_wrapper, check_function_exists("niFake_GetABoolean"))
       .WillOnce(Return(::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetABoolean")));
@@ -47,7 +47,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibraryWrapper library_wrapper;
+  NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   EXPECT_CALL(library_wrapper, check_function_exists("niFake_GetABoolean"))
       .WillOnce(Return(::grpc::Status::OK));
@@ -65,7 +65,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
 TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseDoesNotIncludeReturnValue)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViBoolean aBoolean = true;
   EXPECT_CALL(library_wrapper, GetABoolean(kViSession, _))
@@ -85,7 +85,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseDoesNotInclude
 TEST(NiFakeServiceTests, NiFakeService_FunctionCallSucceeds_ResponseIncludesReturnValue)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViBoolean aBoolean = true;
   EXPECT_CALL(library_wrapper, GetABoolean(kViSession, _))
@@ -106,7 +106,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallSucceeds_ResponseIncludesRetu
 TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   EXPECT_CALL(library_wrapper, Abort(kViSession))
       .WillOnce(Return(kDriverSuccess));
@@ -124,7 +124,7 @@ TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
 TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViInt16 aNumber = 15;
   EXPECT_CALL(library_wrapper, GetANumber(kViSession, _))
@@ -144,7 +144,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
 TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForPythonCode_CallsGetArraySizeForPythonCode)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViInt32 arraySize = 1000;
   EXPECT_CALL(library_wrapper, GetArraySizeForPythonCode(kViSession, _))
@@ -164,7 +164,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForPythonCode_CallsGetArraySi
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeViBoolean)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_BOOL;
   ViBoolean attributeValue = true;
@@ -187,7 +187,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeVi
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViInt32)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_INTEGER;
   ViInt32 attributeValue = 12345;
@@ -210,7 +210,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViIn
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViInt64)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_INT64;
   ViInt64 attributeValue = -12345;
@@ -233,7 +233,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViIn
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViReal64)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
   ViReal64 attributeValue = 12.345;
@@ -256,7 +256,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
 TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViInt32 calType = 0;
   ViInt32 month = 1, day = 17, year = 2021, hour = 0, minute = 0;
@@ -288,7 +288,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
 TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiceMock<NiFakeMockLibraryWrapper> library_wrapper;
+  NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
   ViInt32 months = 24;

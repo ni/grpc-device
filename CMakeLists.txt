@@ -85,7 +85,7 @@ foreach(api ${ni_apis})
     "${metadata_dir}/${api}/__init__.py")
   set(output_files
     ${service_output_dir}/${api}/${api}_library_wrapper.h
-	${service_output_dir}/${api}/${api}_mock_library_wrapper.h
+	${service_output_dir}/${api}/${api}_mock_library.h
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
     ${service_output_dir}/${api}/${api}_service.h)
