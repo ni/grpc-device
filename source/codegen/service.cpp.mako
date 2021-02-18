@@ -86,7 +86,8 @@ namespace grpc {
 % endif
 %endfor
 <%
-  session_output_var_name = "vi"
+  session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
+  session_output_var_name = session_output_param['cppName']
 %>\
     
     auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
