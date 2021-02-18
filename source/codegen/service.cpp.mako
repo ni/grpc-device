@@ -89,15 +89,15 @@ namespace grpc {
   session_output_var_name = "vi"
 %>\
     
-    auto lambda = [&] () -> std::tuple<int, uint32_t>{
+    auto init_lambda = [&] () -> std::tuple<int, uint32_t>{
       ViSession ${session_output_var_name};
       int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
       return std::make_tuple(status, vi);
       };
     uint32_t session_id;
     std::string session_name = request->session_name();
-    auto cleanupFunc = [&] (uint32_t id) {library_wrapper_->${config['close_function']}(id);};
-    int status = session_repository_->add_session(session_name, lambda, cleanupFunc, session_id);
+    auto cleanup_lambda = [&] (uint32_t id) {library_wrapper_->${config['close_function']}(id);};
+    int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
     response->set_status(status);
     if (status == 0) {
       ni::hardware::grpc::Session session;
