@@ -24,7 +24,7 @@ option java_package = "${config["java_package"]}";
 option java_outer_classname = "${service_class_prefix}";
 option csharp_namespace = "${config["csharp_namespace"]}";
 
-package ${config["grpc_package"]};
+package ni.${config["namespace_component"]}.grpc;
 
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):

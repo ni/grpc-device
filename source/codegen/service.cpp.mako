@@ -7,8 +7,7 @@ enums = data['enums']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-driver_namespaces = handler_helpers.get_namespace_segments(config)
-namespace_prefix = "::".join(driver_namespaces) + "::"
+namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
@@ -28,9 +27,9 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 #include <atomic>
 
 ## Namespaces
-% for namespace in driver_namespaces:
-namespace ${namespace} {
-% endfor
+namespace ni {
+namespace ${config["namespace_component"]} {
+namespace grpc {
 
   namespace internal = ni::hardware::grpc::internal;
 
@@ -138,7 +137,7 @@ namespace ${namespace} {
     return ::grpc::Status::OK;
   }
 
-% endfor
-% for namespace in reversed(driver_namespaces):
-} // namespace ${namespace}
-% endfor
+%endfor
+} // namespace grpc
+} // namespace ${config["namespace_component"]}
+} // namespace ni

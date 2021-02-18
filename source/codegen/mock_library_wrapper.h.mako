@@ -6,8 +6,7 @@ config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-driver_namespaces = handler_helpers.get_namespace_segments(config)
-driver_namespace = '::'.join(str(namespace) for namespace in driver_namespaces)
+namespace_prefix = "ni::" + config["namespace_component"] + "::grpc"
 include_guard_name = handler_helpers.get_include_guard_name(config, "_MOCK_LIBRARY_WRAPPER_H")
 %>\
 //---------------------------------------------------------------------
@@ -28,10 +27,10 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_MOCK_LIBRA
 namespace ni {
 namespace tests {
 namespace unit {
-namespace ${config["module_name"][2:]} {
+namespace ${config["namespace_component"]} {
 namespace grpc {
 
-namespace driverNamespace = ${driver_namespace};
+namespace driverNamespace = ${namespace_prefix};
 
 class ${service_class_prefix}MockLibraryWrapper : public driverNamespace::${service_class_prefix}LibraryWrapper {
  public:
@@ -50,7 +49,7 @@ class ${service_class_prefix}MockLibraryWrapper : public driverNamespace::${serv
 };
 
 }  // namespace grpc
-}  // namespace ${config["module_name"][2:]}
+}  // namespace ${config["namespace_component"]}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
