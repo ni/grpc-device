@@ -1,5 +1,6 @@
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/server_configuration_parser.h"
+#include <../generated/niswitch/niswitch_service.h>
 
 static void RunServer(int argc, char** argv)
 {
@@ -27,6 +28,10 @@ static void RunServer(int argc, char** argv)
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService core_service(&session_repository);
   builder.RegisterService(&core_service);
+
+  ni::hardware::grpc::internal::SharedLibrary switch_library;
+  ni::niswitch::grpc::NiSwitchService switch_service(&switch_library, &session_repository);
+  builder.RegisterService(&switch_service);
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
