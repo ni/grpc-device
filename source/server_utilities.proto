@@ -43,7 +43,6 @@ message DeviceProperties {
 }
 
 message EnumerateDevicesRequest {
-  bool includeNetworkDevices = 1;
 }
 
 message EnumerateDevicesResponse {
