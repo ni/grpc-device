@@ -38,9 +38,12 @@ message DeviceProperties {
   string model = 2;
   string vendor = 3;
   string serial_number = 4;
+  string parent = 5;
+  string slot_number = 6;
 }
 
 message EnumerateDevicesRequest {
+  bool includeNetworkDevices = 1;
 }
 
 message EnumerateDevicesResponse {

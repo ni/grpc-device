@@ -1,4 +1,6 @@
 #include "device_management.h"
+#include <map>
+#include <string>
 
 namespace ni {
 namespace hardware {
@@ -107,6 +109,11 @@ NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedP
   char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  char provides_link_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  char connects_to_link_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  int slot = 0;
+  std::string slot_number = "";
+  std::map<std::string , std::string> provideslinkname_to_name;
 
   auto syscfg_initialize_session = reinterpret_cast<NISysCfgInitializeSessionPtr>(syscfg_library_.get_function_pointer("NISysCfgInitializeSession"));
   auto syscfg_create_filter = reinterpret_cast<NISysCfgCreateFilterPtr>(syscfg_library_.get_function_pointer("NISysCfgCreateFilter"));
@@ -125,15 +132,41 @@ NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedP
         while (NISysCfg_Succeeded(status) && (status = sysycfg_next_resource(session, resources_handle, &resource)) == NISysCfg_OK) {
           sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
           if ((strcmp(expert_name, "network") != 0)) {
+            sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
+            sysycfg_get_resource_property(resource, NISysCfgResourcePropertyProvidesLinkName, provides_link_name);
+            
+            provideslinkname_to_name[provides_link_name] = name;
+            status = sysycfg_close_handle(resource);
+          }
+        }
+      }
+      if (NISysCfg_Succeeded(status = syscfg_find_hardware(session, NISysCfgFilterModeAny, filter, NULL, &resources_handle))) {
+        while (NISysCfg_Succeeded(status) && (status = sysycfg_next_resource(session, resources_handle, &resource)) == NISysCfg_OK) {
+          sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
+          if ((strcmp(expert_name, "network") != 0)) {
             DeviceProperties* properties = devices->Add();
             sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
             sysycfg_get_resource_property(resource, NISysCfgResourcePropertyProductName, model);
             sysycfg_get_resource_property(resource, NISysCfgResourcePropertyVendorName, vendor);
             sysycfg_get_resource_property(resource, NISysCfgResourcePropertySerialNumber, serial_number);
+            sysycfg_get_resource_property(resource, NISysCfgResourcePropertyProvidesLinkName, provides_link_name);
+            sysycfg_get_resource_property(resource, NISysCfgResourcePropertyConnectsToLinkName, connects_to_link_name);
+            sysycfg_get_resource_property(resource, NISysCfgResourcePropertySlotNumber, &slot);
+
+            if(slot != 0){
+              slot_number = std::to_string(slot);
+            }
+            std::string parent = connects_to_link_name;
+            if(parent.size()!=0){
+              parent = provideslinkname_to_name[parent];
+            }
+
             properties->set_name(name);
             properties->set_model(model);
             properties->set_vendor(vendor);
             properties->set_serial_number(serial_number);
+            properties->set_slot_number(slot_number);
+            properties->set_parent(parent);            
             status = sysycfg_close_handle(resource);
           }
         }
