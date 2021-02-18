@@ -17,6 +17,7 @@ using ::testing::_;
 using ::testing::DoAll;
 using ::testing::NiceMock;
 using ::testing::Return;
+using ::testing::Pointee;
 using ::testing::SetArgPointee;
 
 const ViSession kViSession = 12345678;
@@ -185,7 +186,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeVi
   const char* channelName = "channel";
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_BOOL;
   ViBoolean attributeValue = true;
-  EXPECT_CALL(library_wrapper, GetAttributeViBoolean(kViSession, _, attributeId, _))
+  EXPECT_CALL(library_wrapper, GetAttributeViBoolean(kViSession, Pointee(*channelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
