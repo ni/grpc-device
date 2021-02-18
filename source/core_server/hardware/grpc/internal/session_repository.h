@@ -17,9 +17,10 @@ class SessionRepository {
  public:
   SessionRepository();
 
-  typedef std::function< void(uint32_t) > CleanupSessionFunc;
+  typedef std::function<std::tuple<int, uint32_t>()> InitFunc;
+  typedef std::function<void(uint32_t)> CleanupSessionFunc;
 
-  int add_session(const std::string& session_name, std::function<std::tuple<int, uint32_t>()> init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
+  int add_session(const std::string& session_name, InitFunc init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
   uint32_t access_session(uint32_t session_id, const std::string& session_name);
   void remove_session(uint32_t id);
 

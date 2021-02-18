@@ -16,7 +16,7 @@ SessionRepository::SessionRepository()
 // value is the status returned from the init_func, or 0 if an existing named session is found.
 int SessionRepository::add_session(
     const std::string& session_name,
-    std::function<std::tuple<int, uint32_t>()> init_func,
+    InitFunc init_func,
     CleanupSessionFunc cleanup_func,
     uint32_t& session_id)
 {
