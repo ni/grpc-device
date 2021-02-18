@@ -6,6 +6,7 @@ config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
+driver_namespaces = handler_helpers.get_namespace_segments(config)
 include_guard_name = handler_helpers.get_include_guard_name(config, "_LIBRARY_WRAPPER_H")
 %>\
 //---------------------------------------------------------------------
@@ -21,9 +22,9 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_LIBRARY_WR
 #include <grpcpp/grpcpp.h>
 #include <${config["c_header"]}>
 
-namespace ni {
-namespace ${config["namespace_component"]} {
-namespace grpc {
+% for namespace in driver_namespaces:
+namespace ${namespace} {
+% endfor
 
 class ${service_class_prefix}LibraryWrapper {
  public:
@@ -43,7 +44,7 @@ class ${service_class_prefix}LibraryWrapper {
 %endfor
 };
 
-}  // namespace grpc
-}  // namespace ${config["namespace_component"]}
-}  // namespace ni
+% for namespace in reversed(driver_namespaces):
+}  // namespace ${namespace}
+% endfor
 #endif  // ${include_guard_name}
