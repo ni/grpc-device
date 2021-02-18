@@ -3,7 +3,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <server_utilities.grpc.pb.h>
 
-#include "hardware/grpc/internal/device_management.h"
+#include "hardware/grpc/internal/device_enumerator.h"
 #include "hardware/grpc/internal/session_repository.h"
 
 namespace ni {
@@ -12,7 +12,7 @@ namespace grpc {
 
 class CoreService final : public ServerUtilities::Service {
  public:
-  CoreService(internal::SessionRepository* session_repository, internal::DeviceManagement* device_management);
+  CoreService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_management);
 
   ::grpc::Status EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response) override;
   ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
@@ -22,7 +22,7 @@ class CoreService final : public ServerUtilities::Service {
 
  private:
   internal::SessionRepository* session_repository_;
-  internal::DeviceManagement* device_management_;
+  internal::DeviceEnumerator* device_enumerator_;
 };
 
 }  // namespace grpc

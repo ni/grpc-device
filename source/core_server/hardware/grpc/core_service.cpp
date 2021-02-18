@@ -4,14 +4,14 @@ namespace ni {
 namespace hardware {
 namespace grpc {
 
-CoreService::CoreService(internal::SessionRepository* session_repository, internal::DeviceManagement* device_management)
-    : session_repository_(session_repository), device_management_(device_management)
+CoreService::CoreService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator)
+    : session_repository_(session_repository), device_enumerator_(device_enumerator)
 {
 }
 
 ::grpc::Status CoreService::EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response)
 {
-  return device_management_->enumerate_devices(response->mutable_devices());
+  return device_enumerator_->enumerate_devices(response->mutable_devices());
 }
 
 ::grpc::Status CoreService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)

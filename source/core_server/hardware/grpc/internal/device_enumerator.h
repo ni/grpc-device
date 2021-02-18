@@ -12,11 +12,11 @@ namespace hardware {
 namespace grpc {
 namespace internal {
   
-class DeviceManagement
+class DeviceEnumerator
 {
  public:
-  DeviceManagement();
-  DeviceManagement(const char* library_name);
+  DeviceEnumerator();
+  DeviceEnumerator(const char* library_name);
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
   std::string get_syscfg_library_name() const;
