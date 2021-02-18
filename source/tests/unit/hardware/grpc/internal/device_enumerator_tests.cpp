@@ -17,7 +17,7 @@ static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
 static const char* kFakeSysCfgApiLibraryName = "FakeSysCfgApi.so";
 #endif
 
-TEST(DeviceManagementTests, CreateDeviceManagement_SharedLibraryNameIsSetToSysCfgLibrary)
+TEST(DeviceEnumeratorTests, CreateDeviceEnumerator_SharedLibraryNameIsSetToSysCfgLibrary)
 {
   ni::hardware::grpc::internal::DeviceEnumerator device_management;
   std::string shared_library_name = device_management.get_syscfg_library_name();
@@ -25,7 +25,7 @@ TEST(DeviceManagementTests, CreateDeviceManagement_SharedLibraryNameIsSetToSysCf
   EXPECT_STREQ(kSysCfgApiLibraryName, shared_library_name.c_str());
 }
 
-TEST(DeviceManagementTests, CreateDeviceManagementWithFakeLibraryName_SharedLibraryNameIsSetToFakeLibrary)
+TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithFakeLibraryName_SharedLibraryNameIsSetToFakeLibrary)
 {
   ni::hardware::grpc::internal::DeviceEnumerator device_management(kFakeSysCfgApiLibraryName);
   std::string shared_library_name = device_management.get_syscfg_library_name();
@@ -33,7 +33,7 @@ TEST(DeviceManagementTests, CreateDeviceManagementWithFakeLibraryName_SharedLibr
   EXPECT_STREQ(kFakeSysCfgApiLibraryName, shared_library_name.c_str());
 }
 
-TEST(DeviceManagementTests, CreateDeviceManagement_SharedLibraryIsNotLoaded)
+TEST(DeviceEnumeratorTests, CreateDeviceEnumerator_SharedLibraryIsNotLoaded)
 {
   ni::hardware::grpc::internal::DeviceEnumerator device_management;
 
