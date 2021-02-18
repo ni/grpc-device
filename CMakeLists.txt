@@ -62,14 +62,15 @@ endforeach()
 # Create NI Driver APIs proto and server files
 #----------------------------------------------------------------------
 set(codegen_scripts
-  "${codegen_dir}/library_wrapper.h.mako"
-  "${codegen_dir}/proto.mako"
-  "${codegen_dir}/service.cpp.mako"
-  "${codegen_dir}/service.h.mako"
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
   "${codegen_dir}/handler_helpers.py"
-  "${codegen_dir}/proto_helpers.py")
+  "${codegen_dir}/library_wrapper.h.mako"
+  "${codegen_dir}/mock_library_wrapper.h.mako"
+  "${codegen_dir}/proto.mako"
+  "${codegen_dir}/proto_helpers.py"
+  "${codegen_dir}/service.cpp.mako"
+  "${codegen_dir}/service.h.mako")
 
 foreach(api ${ni_apis})
   set(codegen_dependencies
@@ -83,16 +84,12 @@ foreach(api ${ni_apis})
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
   set(output_files
+    ${service_output_dir}/${api}/${api}_library_wrapper.h
+	${service_output_dir}/${api}/${api}_mock_library_wrapper.h
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
-    ${service_output_dir}/${api}/${api}_service.h
-    ${service_output_dir}/${api}/${api}_library_wrapper.h)
+    ${service_output_dir}/${api}/${api}_service.h)
   set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
-  if (api STREQUAL "nifake")
-    set(codegen_dependencies ${codegen_dependencies} "${codegen_dir}/mock_library_wrapper.h.mako")
-    set(output_files ${output_files} ${service_output_dir}/${api}/${api}_mock_library_wrapper.h)
-    set(gen_command ${gen_command} --generate-mock)
-  endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
     COMMENT "Generating proto file and service for ${api}"
