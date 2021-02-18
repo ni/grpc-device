@@ -61,31 +61,6 @@ def create_param(parameter):
         result = result + '*'
     return result
 
-def get_c_type(parameter, driver_name_pascal):
-  is_array = common_helpers.is_array(parameter["type"])
-  grpc_type = proto_helpers.get_grpc_type_from_ivi(parameter['type'], is_array, driver_name_pascal)
-  grpc_to_c = {
-    "double": "double",
-    "float": "float",
-    "int32": "std::int32_t",
-    "int64": "std::int64_t",
-    "uint32": "std::uint32_t",
-    "uint64": "std::uint64_t",
-    "sint32": "std::int32_t",
-    "sint64": "std::int64_t",
-    "fixed32": "std::uint32_t",
-    "fixed64": "std::uint64_t",
-    "sfixed32": "std::int32_t",
-    "sfixed64": "std::int64_t",
-    "bool": "bool",
-    "string": "std::string",
-    "bytes": "std::string",
-    "google.protobuf.Timestamp": "google::protobuf::Timestamp",
-    driver_name_pascal + "Attributes": "std::uint32_t"
-  }
-  # This is equivalent to a switch statement with the default case returning the grpc_type
-  return grpc_to_c.get(grpc_type, grpc_type)
-  
 def python_to_c(enum):
   enum_value = enum["values"][0]["value"]
   if isinstance(enum_value, float):
@@ -93,7 +68,7 @@ def python_to_c(enum):
   if isinstance(enum_value, int):
     return "std::int32_t"
   if isinstance(enum_value, str):
-    return "ViConstString"
+    return "std::string"
   return "std::int32_t"
  
 def format_value(value):
@@ -103,7 +78,7 @@ def format_value(value):
     value = f"{value}f"
   return value
   
-def lookup_input_values(enum_data):
+def get_input_lookup_values(enum_data):
   out_value_format= ""
   index = 1
   is_int = isinstance(enum_data["values"][0]["value"], int)
@@ -115,7 +90,7 @@ def lookup_input_values(enum_data):
     index = index+1
   return out_value_format
   
-def lookup_output_values(enum_data):
+def get_output_lookup_values(enum_data):
   out_value_format= ""
   index = 1
   is_int = isinstance(enum_data["values"][0]["value"], int)

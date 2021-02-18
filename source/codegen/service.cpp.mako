@@ -77,17 +77,20 @@ namespace ${namespace} {
 %if enums[parameter["enum"]].get("generate-mappings", False):
 <% 
   map_name = parameter["enum"].lower() + "_input_map_"
-  iterator_name = map_name + "iterator_"
+  iterator_name = parameter_name + "_imap_it"
 %>\
     auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
-	
-    if(${iterator_name} == ${map_name}.end()) {
+    
+    if (${iterator_name} == ${map_name}.end()) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
     }
-	
-    auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
+%if parameter['type'] == "ViConstString": 
+    auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
 %else:
-    auto ${parameter_name} = static_cast<${parameter['type']}>(${handler_helpers.get_request_value(parameter)});
+    auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
+%endif
+%else:
+    auto ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
 %endif
 % else:
     ${parameter['type']} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
@@ -97,7 +100,7 @@ namespace ${namespace} {
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
-    ${parameter['type']} ${parameter_name};
+    ${parameter['type']} ${parameter_name} {};
 %endfor
     auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
 <%
@@ -115,16 +118,16 @@ namespace ${namespace} {
 %if enums[parameter["enum"]].get("generate-mappings", False):
 <% 
   map_name = parameter["enum"].lower() + "_output_map_"
-  iterator_name = map_name + "iterator_"
+  iterator_name = parameter_name + "_imap_it"
 %>\
     
     auto ${iterator_name} = ${map_name}.find(${parameter_name});
     if(${iterator_name} == ${map_name}.end()) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
     }
-      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${iterator_name}->second));
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
 %else:
-      response->set_${parameter_name}(static_cast<${parameter["enum"]}>(${parameter_name}));
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
 % else:
       response->set_${parameter_name}(${parameter_name});
