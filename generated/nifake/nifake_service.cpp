@@ -400,11 +400,11 @@ namespace grpc {
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
     
-    auto init_lambda = [&] () -> std::tuple<int, uint32_t>{
-      ViSession vi;
-      int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
-      return std::make_tuple(status, vi);
-      };
+    auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+    ViSession vi;
+    int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+    return std::make_tuple(status, vi);
+    };
     uint32_t session_id;
     std::string session_name = request->session_name();
     auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->close(id); };
@@ -412,7 +412,6 @@ namespace grpc {
     response->set_status(status);
     if (status == 0) {
       ni::hardware::grpc::Session session;
-      session.set_name(session_name);
       session.set_id(session_id);
       response->set_allocated_vi(&session);
     }

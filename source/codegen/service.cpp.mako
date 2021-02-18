@@ -96,12 +96,11 @@ namespace grpc {
     };
     uint32_t session_id;
     std::string session_name = request->session_name();
-    auto cleanup_lambda = [&] (uint32_t id) {library_wrapper_->${config['close_function']}(id);};
+    auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->${config['close_function']}(id); };
     int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
     response->set_status(status);
     if (status == 0) {
       ni::hardware::grpc::Session session;
-      session.set_name(session_name);
       session.set_id(session_id);
       response->set_allocated_${session_output_var_name}(&session);
     }
