@@ -94,6 +94,7 @@ enums = {
         ]
     },
     'FloatEnum': {
+        'generate-mappings': True,
         'values': [
             {
                 'documentation': {
@@ -133,6 +134,7 @@ enums = {
         ]
     },
     'MobileOSNames': {
+        'generate-mappings': True,
         'values': [
             {
                 'documentation': {

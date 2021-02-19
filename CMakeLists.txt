@@ -38,10 +38,10 @@ set(proto_srcs_dir "${CMAKE_CURRENT_BINARY_DIR}/proto")
 file(MAKE_DIRECTORY ${proto_srcs_dir})
 include_directories(
   "${proto_srcs_dir}"
+  "./generated"
   "./imports/includes"
   "./source"
   "./source/core_server"
-  "./source/generated"
 )
 
 #----------------------------------------------------------------------
@@ -71,6 +71,9 @@ set(codegen_scripts
   "${codegen_dir}/handler_helpers.py"
   "${codegen_dir}/proto_helpers.py")
 
+# Populated in the api loop below.
+set(api_service_srcs "")
+
 foreach(api ${ni_apis})
   set(codegen_dependencies
     "${metadata_dir}/${api}/attributes.py"
@@ -92,6 +95,8 @@ foreach(api ${ni_apis})
     set(codegen_dependencies ${codegen_dependencies} "${codegen_dir}/mock_library_wrapper.h.mako")
     set(output_files ${output_files} ${service_output_dir}/${api}/${api}_mock_library_wrapper.h)
     set(gen_command ${gen_command} --generate-mock)
+  else()
+    set(api_service_srcs ${api_service_srcs} "${service_output_dir}/${api}/${api}_service.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -143,24 +148,25 @@ foreach(api ${ni_apis})
     "${proto_srcs_dir}/${api}.pb.h"
     "${proto_srcs_dir}/${api}.grpc.pb.cc"
     "${proto_srcs_dir}/${api}.grpc.pb.h")
-  # Temporary custom target to force generation without changing an existing target
-  add_custom_target(${api}_protocs ALL
-    DEPENDS
+  if(NOT api STREQUAL "nifake")
+    set(api_service_srcs
+      ${api_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
-      "${proto_srcs_dir}/${api}.pb.h"
-      "${proto_srcs_dir}/${api}.grpc.pb.cc"
-      "${proto_srcs_dir}/${api}.grpc.pb.h")
+      "${proto_srcs_dir}/${api}.grpc.pb.cc")
+  endif()
 endforeach()
 
 add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
+   "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
    "source/core_server/hardware/grpc/internal/semaphore.cpp"
    "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
    "source/core_server/hardware/grpc/internal/session_repository.cpp"
    "source/core_server/hardware/grpc/internal/shared_library.cpp"
    ${server_utilities_proto_srcs}
-   ${server_utilities_grpc_srcs})
+   ${server_utilities_grpc_srcs}
+   ${api_service_srcs})
 
 target_link_libraries(core_server
    ${_REFLECTION}
@@ -194,8 +200,10 @@ add_executable(CoreServiceTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
+    "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 
@@ -217,11 +225,13 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/device_enumerator_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/server_configuration_parser_tests.cpp"
     "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"

@@ -2,7 +2,6 @@
 import common_helpers
 import handler_helpers
 
-attributes = data['attributes']
 config = data['config']
 enums = data['enums']
 functions = data['functions']
@@ -115,12 +114,8 @@ ${request_input_parameters(f)}\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  parameter['cppName'] = parameter_name
-  if common_helpers.is_enum(parameter):
-    parameter['cppName'] = parameter['cppName'] + "_ctype"
-  parameter_type = parameter['type']
 %>\
-    ${parameter_type} ${parameter['cppName']};
+    ${parameter['type']} ${parameter_name} {};
 %endfor
 %if function == config['close_function']:
     session_repository_->remove_session(${handler_helpers.create_args(parameters)});
@@ -131,11 +126,26 @@ ${request_input_parameters(f)}\
 %if output_parameters:
     if (status == 0) {
 %for parameter in output_parameters:
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+%>\
 %if common_helpers.is_enum(parameter) == True:
-      ##TODO: Handle non int types
-      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter['cppName']}));
+%if enums[parameter["enum"]].get("generate-mappings", False):
+<% 
+  map_name = parameter["enum"].lower() + "_output_map_"
+  iterator_name = parameter_name + "_imap_it"
+%>\
+
+    auto ${iterator_name} = ${map_name}.find(${parameter_name});
+    if(${iterator_name} == ${map_name}.end()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+    }
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
+%else:
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+%endif
 % else:
-      ${handler_helpers.get_response_value(parameter)}
+      response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor
     }
@@ -162,6 +172,7 @@ ${request_input_parameters(f)}\
 <%def name="request_input_parameters(function)">\
 <%
     parameters = function['parameters']
+    handler_helpers.sanitize_names(parameters)
     input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
@@ -176,24 +187,34 @@ ${initialize_input_param_snippet(parameter=parameter)}
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   parameter_name_ctype = parameter_name + "_ctype"
-  parameter_type = parameter['type']
   field_name = common_helpers.camel_to_snake(parameter["name"])
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
 %>\
-%if common_helpers.is_enum(parameter) == True:
-    ## TODO: Handle non integer enums
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    ${parameter_type} ${parameter_name};\
+%if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
+<%
+  map_name = parameter["enum"].lower() + "_input_map_"
+  iterator_name = parameter_name + "_imap_it"
+%>\
+    auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+
+    if (${iterator_name} == ${map_name}.end()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+    }
+%if parameter['type'] == "ViConstString": 
+    auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
+%else:
+    auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
+%endif
 % else:
   % if c_type == 'ViConstString':
-    ${parameter_type} ${parameter_name} = ${request_snippet}.c_str();\
+    ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
   % elif c_type == 'ViString' or c_type == 'ViRsrc':
-    ${parameter_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
+    ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
   % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
-    ${parameter_type} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
+    ${c_type} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
   % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
-    ${parameter_type} ${parameter_name} = (${c_type})${request_snippet};\
+    ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
   % elif c_type == 'ViSession':
     auto session = request->${field_name}();
     int id = 0;
@@ -207,9 +228,9 @@ ${initialize_input_param_snippet(parameter=parameter)}
         id = session.id();
         break;
     }
-    ${parameter_type} ${parameter_name} = session_repository_->access_session(id, name);\
+    ${c_type} ${parameter_name} = session_repository_->access_session(id, name);\
   % else:
-    ${parameter_type} ${parameter_name} = ${request_snippet};\
+    ${c_type} ${parameter_name} = ${request_snippet};\
   % endif
 % endif
 </%def>

@@ -62,12 +62,14 @@ enum ${enum_name} {
 nonint_index = 1
 %>\
 % for value in enum["values"]:
-<%
-if isinstance(value["value"], int) is False:
-  value["value"] = nonint_index
+% if enum.get("generate-mappings", false):
+  ${enum_value_prefix}_${value["name"]} = ${nonint_index};
+<% 
   nonint_index = nonint_index+1
 %>\
+% else:
   ${enum_value_prefix}_${value["name"]} = ${value["value"]};
+%endif
 % endfor
 }
 
