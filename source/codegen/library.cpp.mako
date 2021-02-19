@@ -73,7 +73,7 @@ ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 #if defined(_MSC_VER)
   return ${c_function_prefix}${method_name}(${argument_list});
 #else
-  return function_pointers_.${method_name}(${argument_list})
+  return function_pointers_.${method_name}(${argument_list});
 #endif
 }
 

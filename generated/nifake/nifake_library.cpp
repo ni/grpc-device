@@ -101,7 +101,7 @@ ViStatus NiFakeLibrary::Abort(ViSession vi)
 #if defined(_MSC_VER)
   return niFake_Abort(vi);
 #else
-  return function_pointers_.Abort(vi)
+  return function_pointers_.Abort(vi);
 #endif
 }
 
@@ -113,7 +113,7 @@ ViStatus NiFakeLibrary::AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 cou
 #if defined(_MSC_VER)
   return niFake_AcceptListOfDurationsInSeconds(vi, count, delays);
 #else
-  return function_pointers_.AcceptListOfDurationsInSeconds(vi, count, delays)
+  return function_pointers_.AcceptListOfDurationsInSeconds(vi, count, delays);
 #endif
 }
 
@@ -125,7 +125,7 @@ ViStatus NiFakeLibrary::BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfEl
 #if defined(_MSC_VER)
   return niFake_BoolArrayOutputFunction(vi, numberOfElements, anArray);
 #else
-  return function_pointers_.BoolArrayOutputFunction(vi, numberOfElements, anArray)
+  return function_pointers_.BoolArrayOutputFunction(vi, numberOfElements, anArray);
 #endif
 }
 
@@ -137,7 +137,7 @@ ViStatus NiFakeLibrary::DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViRe
 #if defined(_MSC_VER)
   return niFake_DoubleAllTheNums(vi, numberCount, numbers);
 #else
-  return function_pointers_.DoubleAllTheNums(vi, numberCount, numbers)
+  return function_pointers_.DoubleAllTheNums(vi, numberCount, numbers);
 #endif
 }
 
@@ -149,7 +149,7 @@ ViStatus NiFakeLibrary::EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfEl
 #if defined(_MSC_VER)
   return niFake_EnumArrayOutputFunction(vi, numberOfElements, anArray);
 #else
-  return function_pointers_.EnumArrayOutputFunction(vi, numberOfElements, anArray)
+  return function_pointers_.EnumArrayOutputFunction(vi, numberOfElements, anArray);
 #endif
 }
 
@@ -161,7 +161,7 @@ ViStatus NiFakeLibrary::EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTur
 #if defined(_MSC_VER)
   return niFake_EnumInputFunctionWithDefaults(vi, aTurtle);
 #else
-  return function_pointers_.EnumInputFunctionWithDefaults(vi, aTurtle)
+  return function_pointers_.EnumInputFunctionWithDefaults(vi, aTurtle);
 #endif
 }
 
@@ -173,7 +173,7 @@ ViStatus NiFakeLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32
 #if defined(_MSC_VER)
   return niFake_ExportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #else
-  return function_pointers_.ExportAttributeConfigurationBuffer(vi, sizeInBytes, configuration)
+  return function_pointers_.ExportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #endif
 }
 
@@ -185,7 +185,7 @@ ViStatus NiFakeLibrary::FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViR
 #if defined(_MSC_VER)
   return niFake_FetchWaveform(vi, numberOfSamples, waveformData, actualNumberOfSamples);
 #else
-  return function_pointers_.FetchWaveform(vi, numberOfSamples, waveformData, actualNumberOfSamples)
+  return function_pointers_.FetchWaveform(vi, numberOfSamples, waveformData, actualNumberOfSamples);
 #endif
 }
 
@@ -197,7 +197,7 @@ ViStatus NiFakeLibrary::GetABoolean(ViSession vi, ViBoolean* aBoolean)
 #if defined(_MSC_VER)
   return niFake_GetABoolean(vi, aBoolean);
 #else
-  return function_pointers_.GetABoolean(vi, aBoolean)
+  return function_pointers_.GetABoolean(vi, aBoolean);
 #endif
 }
 
@@ -209,7 +209,7 @@ ViStatus NiFakeLibrary::GetANumber(ViSession vi, ViInt16* aNumber)
 #if defined(_MSC_VER)
   return niFake_GetANumber(vi, aNumber);
 #else
-  return function_pointers_.GetANumber(vi, aNumber)
+  return function_pointers_.GetANumber(vi, aNumber);
 #endif
 }
 
@@ -221,7 +221,7 @@ ViStatus NiFakeLibrary::GetAStringOfFixedMaximumSize(ViSession vi, ViChar aStrin
 #if defined(_MSC_VER)
   return niFake_GetAStringOfFixedMaximumSize(vi, aString);
 #else
-  return function_pointers_.GetAStringOfFixedMaximumSize(vi, aString)
+  return function_pointers_.GetAStringOfFixedMaximumSize(vi, aString);
 #endif
 }
 
@@ -233,7 +233,7 @@ ViStatus NiFakeLibrary::GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber,
 #if defined(_MSC_VER)
   return niFake_GetAStringUsingPythonCode(vi, aNumber, aString);
 #else
-  return function_pointers_.GetAStringUsingPythonCode(vi, aNumber, aString)
+  return function_pointers_.GetAStringUsingPythonCode(vi, aNumber, aString);
 #endif
 }
 
@@ -245,7 +245,7 @@ ViStatus NiFakeLibrary::GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, Vi
 #if defined(_MSC_VER)
   return niFake_GetAnIviDanceString(vi, bufferSize, aString);
 #else
-  return function_pointers_.GetAnIviDanceString(vi, bufferSize, aString)
+  return function_pointers_.GetAnIviDanceString(vi, bufferSize, aString);
 #endif
 }
 
@@ -257,7 +257,7 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViSession vi, ViInt32 buff
 #if defined(_MSC_VER)
   return niFake_GetAnIviDanceWithATwistString(vi, bufferSize, aString, actualSize);
 #else
-  return function_pointers_.GetAnIviDanceWithATwistString(vi, bufferSize, aString, actualSize)
+  return function_pointers_.GetAnIviDanceWithATwistString(vi, bufferSize, aString, actualSize);
 #endif
 }
 
@@ -269,7 +269,7 @@ ViStatus NiFakeLibrary::GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 nu
 #if defined(_MSC_VER)
   return niFake_GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
 #else
-  return function_pointers_.GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut)
+  return function_pointers_.GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
 #endif
 }
 
@@ -281,7 +281,7 @@ ViStatus NiFakeLibrary::GetArrayForPythonCodeDouble(ViSession vi, ViInt32 number
 #if defined(_MSC_VER)
   return niFake_GetArrayForPythonCodeDouble(vi, numberOfElements, arrayOut);
 #else
-  return function_pointers_.GetArrayForPythonCodeDouble(vi, numberOfElements, arrayOut)
+  return function_pointers_.GetArrayForPythonCodeDouble(vi, numberOfElements, arrayOut);
 #endif
 }
 
@@ -293,7 +293,7 @@ ViStatus NiFakeLibrary::GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut
 #if defined(_MSC_VER)
   return niFake_GetArraySizeForPythonCode(vi, sizeOut);
 #else
-  return function_pointers_.GetArraySizeForPythonCode(vi, sizeOut)
+  return function_pointers_.GetArraySizeForPythonCode(vi, sizeOut);
 #endif
 }
 
@@ -305,7 +305,7 @@ ViStatus NiFakeLibrary::GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, V
 #if defined(_MSC_VER)
   return niFake_GetArrayUsingIviDance(vi, arraySize, arrayOut);
 #else
-  return function_pointers_.GetArrayUsingIviDance(vi, arraySize, arrayOut)
+  return function_pointers_.GetArrayUsingIviDance(vi, arraySize, arrayOut);
 #endif
 }
 
@@ -317,7 +317,7 @@ ViStatus NiFakeLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channe
 #if defined(_MSC_VER)
   return niFake_GetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.GetAttributeViBoolean(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.GetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -329,7 +329,7 @@ ViStatus NiFakeLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelN
 #if defined(_MSC_VER)
   return niFake_GetAttributeViInt32(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.GetAttributeViInt32(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.GetAttributeViInt32(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -341,7 +341,7 @@ ViStatus NiFakeLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelN
 #if defined(_MSC_VER)
   return niFake_GetAttributeViInt64(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.GetAttributeViInt64(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.GetAttributeViInt64(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -353,7 +353,7 @@ ViStatus NiFakeLibrary::GetAttributeViReal64(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niFake_GetAttributeViReal64(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.GetAttributeViReal64(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.GetAttributeViReal64(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -365,7 +365,7 @@ ViStatus NiFakeLibrary::GetAttributeViString(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niFake_GetAttributeViString(vi, channelName, attributeId, bufferSize, attributeValue);
 #else
-  return function_pointers_.GetAttributeViString(vi, channelName, attributeId, bufferSize, attributeValue)
+  return function_pointers_.GetAttributeViString(vi, channelName, attributeId, bufferSize, attributeValue);
 #endif
 }
 
@@ -377,7 +377,7 @@ ViStatus NiFakeLibrary::GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32
 #if defined(_MSC_VER)
   return niFake_GetCalDateAndTime(vi, calType, month, day, year, hour, minute);
 #else
-  return function_pointers_.GetCalDateAndTime(vi, calType, month, day, year, hour, minute)
+  return function_pointers_.GetCalDateAndTime(vi, calType, month, day, year, hour, minute);
 #endif
 }
 
@@ -389,7 +389,7 @@ ViStatus NiFakeLibrary::GetCalInterval(ViSession vi, ViInt32* months)
 #if defined(_MSC_VER)
   return niFake_GetCalInterval(vi, months);
 #else
-  return function_pointers_.GetCalInterval(vi, months)
+  return function_pointers_.GetCalInterval(vi, months);
 #endif
 }
 
@@ -401,7 +401,7 @@ ViStatus NiFakeLibrary::GetCustomType(ViSession vi, struct CustomStruct* cs)
 #if defined(_MSC_VER)
   return niFake_GetCustomType(vi, cs);
 #else
-  return function_pointers_.GetCustomType(vi, cs)
+  return function_pointers_.GetCustomType(vi, cs);
 #endif
 }
 
@@ -413,7 +413,7 @@ ViStatus NiFakeLibrary::GetCustomTypeArray(ViSession vi, ViInt32 numberOfElement
 #if defined(_MSC_VER)
   return niFake_GetCustomTypeArray(vi, numberOfElements, cs);
 #else
-  return function_pointers_.GetCustomTypeArray(vi, numberOfElements, cs)
+  return function_pointers_.GetCustomTypeArray(vi, numberOfElements, cs);
 #endif
 }
 
@@ -425,7 +425,7 @@ ViStatus NiFakeLibrary::GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* 
 #if defined(_MSC_VER)
   return niFake_GetEnumValue(vi, aQuantity, aTurtle);
 #else
-  return function_pointers_.GetEnumValue(vi, aQuantity, aTurtle)
+  return function_pointers_.GetEnumValue(vi, aQuantity, aTurtle);
 #endif
 }
 
@@ -437,7 +437,7 @@ ViStatus NiFakeLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 buff
 #if defined(_MSC_VER)
   return niFake_GetError(vi, errorCode, bufferSize, description);
 #else
-  return function_pointers_.GetError(vi, errorCode, bufferSize, description)
+  return function_pointers_.GetError(vi, errorCode, bufferSize, description);
 #endif
 }
 
@@ -449,7 +449,7 @@ ViStatus NiFakeLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32
 #if defined(_MSC_VER)
   return niFake_ImportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #else
-  return function_pointers_.ImportAttributeConfigurationBuffer(vi, sizeInBytes, configuration)
+  return function_pointers_.ImportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #endif
 }
 
@@ -461,7 +461,7 @@ ViStatus NiFakeLibrary::InitWithOptions(ViString resourceName, ViBoolean idQuery
 #if defined(_MSC_VER)
   return niFake_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 #else
-  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi)
+  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 #endif
 }
 
@@ -473,7 +473,7 @@ ViStatus NiFakeLibrary::Initiate(ViSession vi)
 #if defined(_MSC_VER)
   return niFake_Initiate(vi);
 #else
-  return function_pointers_.Initiate(vi)
+  return function_pointers_.Initiate(vi);
 #endif
 }
 
@@ -485,7 +485,7 @@ ViStatus NiFakeLibrary::MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize
 #if defined(_MSC_VER)
   return niFake_MultipleArrayTypes(vi, outputArraySize, outputArray, outputArrayOfFixedLength, inputArraySizes, inputArrayOfFloats, inputArrayOfIntegers);
 #else
-  return function_pointers_.MultipleArrayTypes(vi, outputArraySize, outputArray, outputArrayOfFixedLength, inputArraySizes, inputArrayOfFloats, inputArrayOfIntegers)
+  return function_pointers_.MultipleArrayTypes(vi, outputArraySize, outputArray, outputArrayOfFixedLength, inputArraySizes, inputArrayOfFloats, inputArrayOfIntegers);
 #endif
 }
 
@@ -497,7 +497,7 @@ ViStatus NiFakeLibrary::MultipleArraysSameSize(ViSession vi, ViReal64 values1[],
 #if defined(_MSC_VER)
   return niFake_MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
 #else
-  return function_pointers_.MultipleArraysSameSize(vi, values1, values2, values3, values4, size)
+  return function_pointers_.MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
 #endif
 }
 
@@ -509,7 +509,7 @@ ViStatus NiFakeLibrary::OneInputFunction(ViSession vi, ViInt32 aNumber)
 #if defined(_MSC_VER)
   return niFake_OneInputFunction(vi, aNumber);
 #else
-  return function_pointers_.OneInputFunction(vi, aNumber)
+  return function_pointers_.OneInputFunction(vi, aNumber);
 #endif
 }
 
@@ -521,7 +521,7 @@ ViStatus NiFakeLibrary::ParametersAreMultipleTypes(ViSession vi, ViBoolean aBool
 #if defined(_MSC_VER)
   return niFake_ParametersAreMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, stringSize, aString);
 #else
-  return function_pointers_.ParametersAreMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, stringSize, aString)
+  return function_pointers_.ParametersAreMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, stringSize, aString);
 #endif
 }
 
@@ -533,7 +533,7 @@ ViStatus NiFakeLibrary::PoorlyNamedSimpleFunction(ViSession vi)
 #if defined(_MSC_VER)
   return niFake_PoorlyNamedSimpleFunction(vi);
 #else
-  return function_pointers_.PoorlyNamedSimpleFunction(vi)
+  return function_pointers_.PoorlyNamedSimpleFunction(vi);
 #endif
 }
 
@@ -545,7 +545,7 @@ ViStatus NiFakeLibrary::Read(ViSession vi, ViReal64 maximumTime, ViReal64* readi
 #if defined(_MSC_VER)
   return niFake_Read(vi, maximumTime, reading);
 #else
-  return function_pointers_.Read(vi, maximumTime, reading)
+  return function_pointers_.Read(vi, maximumTime, reading);
 #endif
 }
 
@@ -557,7 +557,7 @@ ViStatus NiFakeLibrary::ReadFromChannel(ViSession vi, ViConstString channelName,
 #if defined(_MSC_VER)
   return niFake_ReadFromChannel(vi, channelName, maximumTime, reading);
 #else
-  return function_pointers_.ReadFromChannel(vi, channelName, maximumTime, reading)
+  return function_pointers_.ReadFromChannel(vi, channelName, maximumTime, reading);
 #endif
 }
 
@@ -569,7 +569,7 @@ ViStatus NiFakeLibrary::ReturnANumberAndAString(ViSession vi, ViInt16* aNumber, 
 #if defined(_MSC_VER)
   return niFake_ReturnANumberAndAString(vi, aNumber, aString);
 #else
-  return function_pointers_.ReturnANumberAndAString(vi, aNumber, aString)
+  return function_pointers_.ReturnANumberAndAString(vi, aNumber, aString);
 #endif
 }
 
@@ -581,7 +581,7 @@ ViStatus NiFakeLibrary::ReturnDurationInSeconds(ViSession vi, ViReal64* timedelt
 #if defined(_MSC_VER)
   return niFake_ReturnDurationInSeconds(vi, timedelta);
 #else
-  return function_pointers_.ReturnDurationInSeconds(vi, timedelta)
+  return function_pointers_.ReturnDurationInSeconds(vi, timedelta);
 #endif
 }
 
@@ -593,7 +593,7 @@ ViStatus NiFakeLibrary::ReturnListOfDurationsInSeconds(ViSession vi, ViInt32 num
 #if defined(_MSC_VER)
   return niFake_ReturnListOfDurationsInSeconds(vi, numberOfElements, timedeltas);
 #else
-  return function_pointers_.ReturnListOfDurationsInSeconds(vi, numberOfElements, timedeltas)
+  return function_pointers_.ReturnListOfDurationsInSeconds(vi, numberOfElements, timedeltas);
 #endif
 }
 
@@ -605,7 +605,7 @@ ViStatus NiFakeLibrary::ReturnMultipleTypes(ViSession vi, ViBoolean* aBoolean, V
 #if defined(_MSC_VER)
   return niFake_ReturnMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, arraySize, anArray, stringSize, aString);
 #else
-  return function_pointers_.ReturnMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, arraySize, anArray, stringSize, aString)
+  return function_pointers_.ReturnMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, arraySize, anArray, stringSize, aString);
 #endif
 }
 
@@ -617,7 +617,7 @@ ViStatus NiFakeLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channe
 #if defined(_MSC_VER)
   return niFake_SetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.SetAttributeViBoolean(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.SetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -629,7 +629,7 @@ ViStatus NiFakeLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelN
 #if defined(_MSC_VER)
   return niFake_SetAttributeViInt32(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.SetAttributeViInt32(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.SetAttributeViInt32(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -641,7 +641,7 @@ ViStatus NiFakeLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelN
 #if defined(_MSC_VER)
   return niFake_SetAttributeViInt64(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.SetAttributeViInt64(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.SetAttributeViInt64(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -653,7 +653,7 @@ ViStatus NiFakeLibrary::SetAttributeViReal64(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niFake_SetAttributeViReal64(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.SetAttributeViReal64(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.SetAttributeViReal64(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -665,7 +665,7 @@ ViStatus NiFakeLibrary::SetAttributeViString(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niFake_SetAttributeViString(vi, channelName, attributeId, attributeValue);
 #else
-  return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue)
+  return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -677,7 +677,7 @@ ViStatus NiFakeLibrary::SetCustomType(ViSession vi, struct CustomStruct cs)
 #if defined(_MSC_VER)
   return niFake_SetCustomType(vi, cs);
 #else
-  return function_pointers_.SetCustomType(vi, cs)
+  return function_pointers_.SetCustomType(vi, cs);
 #endif
 }
 
@@ -689,7 +689,7 @@ ViStatus NiFakeLibrary::SetCustomTypeArray(ViSession vi, ViInt32 numberOfElement
 #if defined(_MSC_VER)
   return niFake_SetCustomTypeArray(vi, numberOfElements, cs);
 #else
-  return function_pointers_.SetCustomTypeArray(vi, numberOfElements, cs)
+  return function_pointers_.SetCustomTypeArray(vi, numberOfElements, cs);
 #endif
 }
 
@@ -701,7 +701,7 @@ ViStatus NiFakeLibrary::StringValuedEnumInputFunctionWithDefaults(ViSession vi, 
 #if defined(_MSC_VER)
   return niFake_StringValuedEnumInputFunctionWithDefaults(vi, aMobileOSName);
 #else
-  return function_pointers_.StringValuedEnumInputFunctionWithDefaults(vi, aMobileOSName)
+  return function_pointers_.StringValuedEnumInputFunctionWithDefaults(vi, aMobileOSName);
 #endif
 }
 
@@ -713,7 +713,7 @@ ViStatus NiFakeLibrary::TwoInputFunction(ViSession vi, ViReal64 aNumber, ViStrin
 #if defined(_MSC_VER)
   return niFake_TwoInputFunction(vi, aNumber, aString);
 #else
-  return function_pointers_.TwoInputFunction(vi, aNumber, aString)
+  return function_pointers_.TwoInputFunction(vi, aNumber, aString);
 #endif
 }
 
@@ -725,7 +725,7 @@ ViStatus NiFakeLibrary::Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* out
 #if defined(_MSC_VER)
   return niFake_Use64BitNumber(vi, input, output);
 #else
-  return function_pointers_.Use64BitNumber(vi, input, output)
+  return function_pointers_.Use64BitNumber(vi, input, output);
 #endif
 }
 
@@ -737,7 +737,7 @@ ViStatus NiFakeLibrary::WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViR
 #if defined(_MSC_VER)
   return niFake_WriteWaveform(vi, numberOfSamples, waveform);
 #else
-  return function_pointers_.WriteWaveform(vi, numberOfSamples, waveform)
+  return function_pointers_.WriteWaveform(vi, numberOfSamples, waveform);
 #endif
 }
 
@@ -749,7 +749,7 @@ ViStatus NiFakeLibrary::close(ViSession vi)
 #if defined(_MSC_VER)
   return niFake_close(vi);
 #else
-  return function_pointers_.close(vi)
+  return function_pointers_.close(vi);
 #endif
 }
 
@@ -761,7 +761,7 @@ ViStatus NiFakeLibrary::error_message(ViSession vi, ViStatus errorCode, ViChar e
 #if defined(_MSC_VER)
   return niFake_error_message(vi, errorCode, errorMessage);
 #else
-  return function_pointers_.error_message(vi, errorCode, errorMessage)
+  return function_pointers_.error_message(vi, errorCode, errorMessage);
 #endif
 }
 
@@ -773,7 +773,7 @@ ViStatus NiFakeLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViChar 
 #if defined(_MSC_VER)
   return niFake_self_test(vi, selfTestResult, selfTestMessage);
 #else
-  return function_pointers_.self_test(vi, selfTestResult, selfTestMessage)
+  return function_pointers_.self_test(vi, selfTestResult, selfTestMessage);
 #endif
 }
 

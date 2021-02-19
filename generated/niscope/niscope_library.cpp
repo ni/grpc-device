@@ -102,7 +102,7 @@ ViStatus NiScopeLibrary::Abort(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_Abort(vi);
 #else
-  return function_pointers_.Abort(vi)
+  return function_pointers_.Abort(vi);
 #endif
 }
 
@@ -114,7 +114,7 @@ ViStatus NiScopeLibrary::AcquisitionStatus(ViSession vi, ViInt32* acquisitionSta
 #if defined(_MSC_VER)
   return niScope_AcquisitionStatus(vi, acquisitionStatus);
 #else
-  return function_pointers_.AcquisitionStatus(vi, acquisitionStatus)
+  return function_pointers_.AcquisitionStatus(vi, acquisitionStatus);
 #endif
 }
 
@@ -126,7 +126,7 @@ ViStatus NiScopeLibrary::ActualMeasWfmSize(ViSession vi, ViInt32 arrayMeasFuncti
 #if defined(_MSC_VER)
   return niScope_ActualMeasWfmSize(vi, arrayMeasFunction, measWaveformSize);
 #else
-  return function_pointers_.ActualMeasWfmSize(vi, arrayMeasFunction, measWaveformSize)
+  return function_pointers_.ActualMeasWfmSize(vi, arrayMeasFunction, measWaveformSize);
 #endif
 }
 
@@ -138,7 +138,7 @@ ViStatus NiScopeLibrary::ActualNumWfms(ViSession vi, ViConstString channelList, 
 #if defined(_MSC_VER)
   return niScope_ActualNumWfms(vi, channelList, numWfms);
 #else
-  return function_pointers_.ActualNumWfms(vi, channelList, numWfms)
+  return function_pointers_.ActualNumWfms(vi, channelList, numWfms);
 #endif
 }
 
@@ -150,7 +150,7 @@ ViStatus NiScopeLibrary::AddWaveformProcessing(ViSession vi, ViConstString chann
 #if defined(_MSC_VER)
   return niScope_AddWaveformProcessing(vi, channelList, measFunction);
 #else
-  return function_pointers_.AddWaveformProcessing(vi, channelList, measFunction)
+  return function_pointers_.AddWaveformProcessing(vi, channelList, measFunction);
 #endif
 }
 
@@ -162,7 +162,7 @@ ViStatus NiScopeLibrary::AutoSetup(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_AutoSetup(vi);
 #else
-  return function_pointers_.AutoSetup(vi)
+  return function_pointers_.AutoSetup(vi);
 #endif
 }
 
@@ -174,7 +174,7 @@ ViStatus NiScopeLibrary::CalSelfCalibrate(ViSession vi, ViConstString channelLis
 #if defined(_MSC_VER)
   return niScope_CalSelfCalibrate(vi, channelList, option);
 #else
-  return function_pointers_.CalSelfCalibrate(vi, channelList, option)
+  return function_pointers_.CalSelfCalibrate(vi, channelList, option);
 #endif
 }
 
@@ -186,7 +186,7 @@ ViStatus NiScopeLibrary::ClearWaveformMeasurementStats(ViSession vi, ViConstStri
 #if defined(_MSC_VER)
   return niScope_ClearWaveformMeasurementStats(vi, channelList, clearableMeasurementFunction);
 #else
-  return function_pointers_.ClearWaveformMeasurementStats(vi, channelList, clearableMeasurementFunction)
+  return function_pointers_.ClearWaveformMeasurementStats(vi, channelList, clearableMeasurementFunction);
 #endif
 }
 
@@ -198,7 +198,7 @@ ViStatus NiScopeLibrary::ClearWaveformProcessing(ViSession vi, ViConstString cha
 #if defined(_MSC_VER)
   return niScope_ClearWaveformProcessing(vi, channelList);
 #else
-  return function_pointers_.ClearWaveformProcessing(vi, channelList)
+  return function_pointers_.ClearWaveformProcessing(vi, channelList);
 #endif
 }
 
@@ -210,7 +210,7 @@ ViStatus NiScopeLibrary::Commit(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_Commit(vi);
 #else
-  return function_pointers_.Commit(vi)
+  return function_pointers_.Commit(vi);
 #endif
 }
 
@@ -222,7 +222,7 @@ ViStatus NiScopeLibrary::ConfigureChanCharacteristics(ViSession vi, ViConstStrin
 #if defined(_MSC_VER)
   return niScope_ConfigureChanCharacteristics(vi, channelList, inputImpedance, maxInputFrequency);
 #else
-  return function_pointers_.ConfigureChanCharacteristics(vi, channelList, inputImpedance, maxInputFrequency)
+  return function_pointers_.ConfigureChanCharacteristics(vi, channelList, inputImpedance, maxInputFrequency);
 #endif
 }
 
@@ -234,7 +234,7 @@ ViStatus NiScopeLibrary::ConfigureEqualizationFilterCoefficients(ViSession vi, V
 #if defined(_MSC_VER)
   return niScope_ConfigureEqualizationFilterCoefficients(vi, channelList, numberOfCoefficients, coefficients);
 #else
-  return function_pointers_.ConfigureEqualizationFilterCoefficients(vi, channelList, numberOfCoefficients, coefficients)
+  return function_pointers_.ConfigureEqualizationFilterCoefficients(vi, channelList, numberOfCoefficients, coefficients);
 #endif
 }
 
@@ -246,7 +246,7 @@ ViStatus NiScopeLibrary::ConfigureHorizontalTiming(ViSession vi, ViReal64 minSam
 #if defined(_MSC_VER)
   return niScope_ConfigureHorizontalTiming(vi, minSampleRate, minNumPts, refPosition, numRecords, enforceRealtime);
 #else
-  return function_pointers_.ConfigureHorizontalTiming(vi, minSampleRate, minNumPts, refPosition, numRecords, enforceRealtime)
+  return function_pointers_.ConfigureHorizontalTiming(vi, minSampleRate, minNumPts, refPosition, numRecords, enforceRealtime);
 #endif
 }
 
@@ -258,7 +258,7 @@ ViStatus NiScopeLibrary::ConfigureTriggerDigital(ViSession vi, ViConstString tri
 #if defined(_MSC_VER)
   return niScope_ConfigureTriggerDigital(vi, triggerSource, slope, holdoff, delay);
 #else
-  return function_pointers_.ConfigureTriggerDigital(vi, triggerSource, slope, holdoff, delay)
+  return function_pointers_.ConfigureTriggerDigital(vi, triggerSource, slope, holdoff, delay);
 #endif
 }
 
@@ -270,7 +270,7 @@ ViStatus NiScopeLibrary::ConfigureTriggerEdge(ViSession vi, ViConstString trigge
 #if defined(_MSC_VER)
   return niScope_ConfigureTriggerEdge(vi, triggerSource, level, slope, triggerCoupling, holdoff, delay);
 #else
-  return function_pointers_.ConfigureTriggerEdge(vi, triggerSource, level, slope, triggerCoupling, holdoff, delay)
+  return function_pointers_.ConfigureTriggerEdge(vi, triggerSource, level, slope, triggerCoupling, holdoff, delay);
 #endif
 }
 
@@ -282,7 +282,7 @@ ViStatus NiScopeLibrary::ConfigureTriggerHysteresis(ViSession vi, ViConstString 
 #if defined(_MSC_VER)
   return niScope_ConfigureTriggerHysteresis(vi, triggerSource, level, hysteresis, slope, triggerCoupling, holdoff, delay);
 #else
-  return function_pointers_.ConfigureTriggerHysteresis(vi, triggerSource, level, hysteresis, slope, triggerCoupling, holdoff, delay)
+  return function_pointers_.ConfigureTriggerHysteresis(vi, triggerSource, level, hysteresis, slope, triggerCoupling, holdoff, delay);
 #endif
 }
 
@@ -294,7 +294,7 @@ ViStatus NiScopeLibrary::ConfigureTriggerImmediate(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_ConfigureTriggerImmediate(vi);
 #else
-  return function_pointers_.ConfigureTriggerImmediate(vi)
+  return function_pointers_.ConfigureTriggerImmediate(vi);
 #endif
 }
 
@@ -306,7 +306,7 @@ ViStatus NiScopeLibrary::ConfigureTriggerSoftware(ViSession vi, ViReal64 holdoff
 #if defined(_MSC_VER)
   return niScope_ConfigureTriggerSoftware(vi, holdoff, delay);
 #else
-  return function_pointers_.ConfigureTriggerSoftware(vi, holdoff, delay)
+  return function_pointers_.ConfigureTriggerSoftware(vi, holdoff, delay);
 #endif
 }
 
@@ -318,7 +318,7 @@ ViStatus NiScopeLibrary::ConfigureTriggerVideo(ViSession vi, ViConstString trigg
 #if defined(_MSC_VER)
   return niScope_ConfigureTriggerVideo(vi, triggerSource, enableDcRestore, signalFormat, eventParameter, lineNumber, polarity, triggerCoupling, holdoff, delay);
 #else
-  return function_pointers_.ConfigureTriggerVideo(vi, triggerSource, enableDcRestore, signalFormat, eventParameter, lineNumber, polarity, triggerCoupling, holdoff, delay)
+  return function_pointers_.ConfigureTriggerVideo(vi, triggerSource, enableDcRestore, signalFormat, eventParameter, lineNumber, polarity, triggerCoupling, holdoff, delay);
 #endif
 }
 
@@ -330,7 +330,7 @@ ViStatus NiScopeLibrary::ConfigureTriggerWindow(ViSession vi, ViConstString trig
 #if defined(_MSC_VER)
   return niScope_ConfigureTriggerWindow(vi, triggerSource, lowLevel, highLevel, windowMode, triggerCoupling, holdoff, delay);
 #else
-  return function_pointers_.ConfigureTriggerWindow(vi, triggerSource, lowLevel, highLevel, windowMode, triggerCoupling, holdoff, delay)
+  return function_pointers_.ConfigureTriggerWindow(vi, triggerSource, lowLevel, highLevel, windowMode, triggerCoupling, holdoff, delay);
 #endif
 }
 
@@ -342,7 +342,7 @@ ViStatus NiScopeLibrary::ConfigureVertical(ViSession vi, ViConstString channelLi
 #if defined(_MSC_VER)
   return niScope_ConfigureVertical(vi, channelList, range, offset, coupling, probeAttenuation, enabled);
 #else
-  return function_pointers_.ConfigureVertical(vi, channelList, range, offset, coupling, probeAttenuation, enabled)
+  return function_pointers_.ConfigureVertical(vi, channelList, range, offset, coupling, probeAttenuation, enabled);
 #endif
 }
 
@@ -354,7 +354,7 @@ ViStatus NiScopeLibrary::Disable(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_Disable(vi);
 #else
-  return function_pointers_.Disable(vi)
+  return function_pointers_.Disable(vi);
 #endif
 }
 
@@ -366,7 +366,7 @@ ViStatus NiScopeLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt3
 #if defined(_MSC_VER)
   return niScope_ExportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #else
-  return function_pointers_.ExportAttributeConfigurationBuffer(vi, sizeInBytes, configuration)
+  return function_pointers_.ExportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #endif
 }
 
@@ -378,7 +378,7 @@ ViStatus NiScopeLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstS
 #if defined(_MSC_VER)
   return niScope_ExportAttributeConfigurationFile(vi, filePath);
 #else
-  return function_pointers_.ExportAttributeConfigurationFile(vi, filePath)
+  return function_pointers_.ExportAttributeConfigurationFile(vi, filePath);
 #endif
 }
 
@@ -390,7 +390,7 @@ ViStatus NiScopeLibrary::Fetch(ViSession vi, ViConstString channelList, ViReal64
 #if defined(_MSC_VER)
   return niScope_Fetch(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #else
-  return function_pointers_.Fetch(vi, channelList, timeout, numSamples, waveform, wfmInfo)
+  return function_pointers_.Fetch(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #endif
 }
 
@@ -402,7 +402,7 @@ ViStatus NiScopeLibrary::FetchArrayMeasurement(ViSession vi, ViConstString chann
 #if defined(_MSC_VER)
   return niScope_FetchArrayMeasurement(vi, channelList, timeout, arrayMeasFunction, measurementWaveformSize, measWfm, wfmInfo);
 #else
-  return function_pointers_.FetchArrayMeasurement(vi, channelList, timeout, arrayMeasFunction, measurementWaveformSize, measWfm, wfmInfo)
+  return function_pointers_.FetchArrayMeasurement(vi, channelList, timeout, arrayMeasFunction, measurementWaveformSize, measWfm, wfmInfo);
 #endif
 }
 
@@ -414,7 +414,7 @@ ViStatus NiScopeLibrary::FetchBinary16(ViSession vi, ViConstString channelList, 
 #if defined(_MSC_VER)
   return niScope_FetchBinary16(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #else
-  return function_pointers_.FetchBinary16(vi, channelList, timeout, numSamples, waveform, wfmInfo)
+  return function_pointers_.FetchBinary16(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #endif
 }
 
@@ -426,7 +426,7 @@ ViStatus NiScopeLibrary::FetchBinary32(ViSession vi, ViConstString channelList, 
 #if defined(_MSC_VER)
   return niScope_FetchBinary32(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #else
-  return function_pointers_.FetchBinary32(vi, channelList, timeout, numSamples, waveform, wfmInfo)
+  return function_pointers_.FetchBinary32(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #endif
 }
 
@@ -438,7 +438,7 @@ ViStatus NiScopeLibrary::FetchBinary8(ViSession vi, ViConstString channelList, V
 #if defined(_MSC_VER)
   return niScope_FetchBinary8(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #else
-  return function_pointers_.FetchBinary8(vi, channelList, timeout, numSamples, waveform, wfmInfo)
+  return function_pointers_.FetchBinary8(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #endif
 }
 
@@ -450,7 +450,7 @@ ViStatus NiScopeLibrary::FetchMeasurementStats(ViSession vi, ViConstString chann
 #if defined(_MSC_VER)
   return niScope_FetchMeasurementStats(vi, channelList, timeout, scalarMeasFunction, result, mean, stdev, min, max, numInStats);
 #else
-  return function_pointers_.FetchMeasurementStats(vi, channelList, timeout, scalarMeasFunction, result, mean, stdev, min, max, numInStats)
+  return function_pointers_.FetchMeasurementStats(vi, channelList, timeout, scalarMeasFunction, result, mean, stdev, min, max, numInStats);
 #endif
 }
 
@@ -462,7 +462,7 @@ ViStatus NiScopeLibrary::GetAttributeViBoolean(ViSession vi, ViConstString chann
 #if defined(_MSC_VER)
   return niScope_GetAttributeViBoolean(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.GetAttributeViBoolean(vi, channelList, attributeId, value)
+  return function_pointers_.GetAttributeViBoolean(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -474,7 +474,7 @@ ViStatus NiScopeLibrary::GetAttributeViInt32(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niScope_GetAttributeViInt32(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.GetAttributeViInt32(vi, channelList, attributeId, value)
+  return function_pointers_.GetAttributeViInt32(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -486,7 +486,7 @@ ViStatus NiScopeLibrary::GetAttributeViInt64(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niScope_GetAttributeViInt64(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.GetAttributeViInt64(vi, channelList, attributeId, value)
+  return function_pointers_.GetAttributeViInt64(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -498,7 +498,7 @@ ViStatus NiScopeLibrary::GetAttributeViReal64(ViSession vi, ViConstString channe
 #if defined(_MSC_VER)
   return niScope_GetAttributeViReal64(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.GetAttributeViReal64(vi, channelList, attributeId, value)
+  return function_pointers_.GetAttributeViReal64(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -510,7 +510,7 @@ ViStatus NiScopeLibrary::GetAttributeViString(ViSession vi, ViConstString channe
 #if defined(_MSC_VER)
   return niScope_GetAttributeViString(vi, channelList, attributeId, bufSize, value);
 #else
-  return function_pointers_.GetAttributeViString(vi, channelList, attributeId, bufSize, value)
+  return function_pointers_.GetAttributeViString(vi, channelList, attributeId, bufSize, value);
 #endif
 }
 
@@ -522,7 +522,7 @@ ViStatus NiScopeLibrary::GetEqualizationFilterCoefficients(ViSession vi, ViConst
 #if defined(_MSC_VER)
   return niScope_GetEqualizationFilterCoefficients(vi, channel, numberOfCoefficients, coefficients);
 #else
-  return function_pointers_.GetEqualizationFilterCoefficients(vi, channel, numberOfCoefficients, coefficients)
+  return function_pointers_.GetEqualizationFilterCoefficients(vi, channel, numberOfCoefficients, coefficients);
 #endif
 }
 
@@ -534,7 +534,7 @@ ViStatus NiScopeLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 buf
 #if defined(_MSC_VER)
   return niScope_GetError(vi, errorCode, bufferSize, description);
 #else
-  return function_pointers_.GetError(vi, errorCode, bufferSize, description)
+  return function_pointers_.GetError(vi, errorCode, bufferSize, description);
 #endif
 }
 
@@ -546,7 +546,7 @@ ViStatus NiScopeLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt3
 #if defined(_MSC_VER)
   return niScope_ImportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #else
-  return function_pointers_.ImportAttributeConfigurationBuffer(vi, sizeInBytes, configuration)
+  return function_pointers_.ImportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
 #endif
 }
 
@@ -558,7 +558,7 @@ ViStatus NiScopeLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstS
 #if defined(_MSC_VER)
   return niScope_ImportAttributeConfigurationFile(vi, filePath);
 #else
-  return function_pointers_.ImportAttributeConfigurationFile(vi, filePath)
+  return function_pointers_.ImportAttributeConfigurationFile(vi, filePath);
 #endif
 }
 
@@ -570,7 +570,7 @@ ViStatus NiScopeLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery,
 #if defined(_MSC_VER)
   return niScope_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 #else
-  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi)
+  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 #endif
 }
 
@@ -582,7 +582,7 @@ ViStatus NiScopeLibrary::InitiateAcquisition(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_InitiateAcquisition(vi);
 #else
-  return function_pointers_.InitiateAcquisition(vi)
+  return function_pointers_.InitiateAcquisition(vi);
 #endif
 }
 
@@ -594,7 +594,7 @@ ViStatus NiScopeLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 #if defined(_MSC_VER)
   return niScope_LockSession(vi, callerHasLock);
 #else
-  return function_pointers_.LockSession(vi, callerHasLock)
+  return function_pointers_.LockSession(vi, callerHasLock);
 #endif
 }
 
@@ -606,7 +606,7 @@ ViStatus NiScopeLibrary::ProbeCompensationSignalStart(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_ProbeCompensationSignalStart(vi);
 #else
-  return function_pointers_.ProbeCompensationSignalStart(vi)
+  return function_pointers_.ProbeCompensationSignalStart(vi);
 #endif
 }
 
@@ -618,7 +618,7 @@ ViStatus NiScopeLibrary::ProbeCompensationSignalStop(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_ProbeCompensationSignalStop(vi);
 #else
-  return function_pointers_.ProbeCompensationSignalStop(vi)
+  return function_pointers_.ProbeCompensationSignalStop(vi);
 #endif
 }
 
@@ -630,7 +630,7 @@ ViStatus NiScopeLibrary::Read(ViSession vi, ViConstString channelList, ViReal64 
 #if defined(_MSC_VER)
   return niScope_Read(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #else
-  return function_pointers_.Read(vi, channelList, timeout, numSamples, waveform, wfmInfo)
+  return function_pointers_.Read(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #endif
 }
 
@@ -642,7 +642,7 @@ ViStatus NiScopeLibrary::ResetDevice(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_ResetDevice(vi);
 #else
-  return function_pointers_.ResetDevice(vi)
+  return function_pointers_.ResetDevice(vi);
 #endif
 }
 
@@ -654,7 +654,7 @@ ViStatus NiScopeLibrary::ResetWithDefaults(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_ResetWithDefaults(vi);
 #else
-  return function_pointers_.ResetWithDefaults(vi)
+  return function_pointers_.ResetWithDefaults(vi);
 #endif
 }
 
@@ -666,7 +666,7 @@ ViStatus NiScopeLibrary::SendSoftwareTriggerEdge(ViSession vi, ViInt32 whichTrig
 #if defined(_MSC_VER)
   return niScope_SendSoftwareTriggerEdge(vi, whichTrigger);
 #else
-  return function_pointers_.SendSoftwareTriggerEdge(vi, whichTrigger)
+  return function_pointers_.SendSoftwareTriggerEdge(vi, whichTrigger);
 #endif
 }
 
@@ -678,7 +678,7 @@ ViStatus NiScopeLibrary::SetAttributeViBoolean(ViSession vi, ViConstString chann
 #if defined(_MSC_VER)
   return niScope_SetAttributeViBoolean(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.SetAttributeViBoolean(vi, channelList, attributeId, value)
+  return function_pointers_.SetAttributeViBoolean(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -690,7 +690,7 @@ ViStatus NiScopeLibrary::SetAttributeViInt32(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niScope_SetAttributeViInt32(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.SetAttributeViInt32(vi, channelList, attributeId, value)
+  return function_pointers_.SetAttributeViInt32(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -702,7 +702,7 @@ ViStatus NiScopeLibrary::SetAttributeViInt64(ViSession vi, ViConstString channel
 #if defined(_MSC_VER)
   return niScope_SetAttributeViInt64(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.SetAttributeViInt64(vi, channelList, attributeId, value)
+  return function_pointers_.SetAttributeViInt64(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -714,7 +714,7 @@ ViStatus NiScopeLibrary::SetAttributeViReal64(ViSession vi, ViConstString channe
 #if defined(_MSC_VER)
   return niScope_SetAttributeViReal64(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.SetAttributeViReal64(vi, channelList, attributeId, value)
+  return function_pointers_.SetAttributeViReal64(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -726,7 +726,7 @@ ViStatus NiScopeLibrary::SetAttributeViString(ViSession vi, ViConstString channe
 #if defined(_MSC_VER)
   return niScope_SetAttributeViString(vi, channelList, attributeId, value);
 #else
-  return function_pointers_.SetAttributeViString(vi, channelList, attributeId, value)
+  return function_pointers_.SetAttributeViString(vi, channelList, attributeId, value);
 #endif
 }
 
@@ -738,7 +738,7 @@ ViStatus NiScopeLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 #if defined(_MSC_VER)
   return niScope_UnlockSession(vi, callerHasLock);
 #else
-  return function_pointers_.UnlockSession(vi, callerHasLock)
+  return function_pointers_.UnlockSession(vi, callerHasLock);
 #endif
 }
 
@@ -750,7 +750,7 @@ ViStatus NiScopeLibrary::close(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_close(vi);
 #else
-  return function_pointers_.close(vi)
+  return function_pointers_.close(vi);
 #endif
 }
 
@@ -762,7 +762,7 @@ ViStatus NiScopeLibrary::error_message(ViSession vi, ViStatus errorCode, ViChar 
 #if defined(_MSC_VER)
   return niScope_error_message(vi, errorCode, errorMessage);
 #else
-  return function_pointers_.error_message(vi, errorCode, errorMessage)
+  return function_pointers_.error_message(vi, errorCode, errorMessage);
 #endif
 }
 
@@ -774,7 +774,7 @@ ViStatus NiScopeLibrary::reset(ViSession vi)
 #if defined(_MSC_VER)
   return niScope_reset(vi);
 #else
-  return function_pointers_.reset(vi)
+  return function_pointers_.reset(vi);
 #endif
 }
 
@@ -786,7 +786,7 @@ ViStatus NiScopeLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViChar
 #if defined(_MSC_VER)
   return niScope_self_test(vi, selfTestResult, selfTestMessage);
 #else
-  return function_pointers_.self_test(vi, selfTestResult, selfTestMessage)
+  return function_pointers_.self_test(vi, selfTestResult, selfTestMessage);
 #endif
 }
 
