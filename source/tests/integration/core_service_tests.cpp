@@ -8,8 +8,6 @@
 namespace ni {
 namespace tests {
 namespace integration {
-namespace hardware {
-namespace grpc {
 
 class InProcessServerClientTest : public ::testing::Test {
  public:
@@ -140,8 +138,6 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
   EXPECT_TRUE(call_is_reserved("foo", "c"));
 }
 
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace integration
 }  // namespace tests
 }  // namespace ni

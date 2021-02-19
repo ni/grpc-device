@@ -10,9 +10,6 @@ namespace internal = ni::hardware::grpc::internal;
 namespace ni {
 namespace tests {
 namespace unit {
-namespace hardware {
-namespace grpc {
-namespace internal {
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
@@ -91,9 +88,6 @@ TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_Throw
   }
 }
 
-}  // namespace internal
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

@@ -49,8 +49,8 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
   EXPECT_TRUE(status.ok());
 }
 
-}  // namespace grpc
-}  // namespace fake
+}
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
