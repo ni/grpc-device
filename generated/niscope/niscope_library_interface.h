@@ -31,7 +31,6 @@ class NiScopeLibraryInterface {
   virtual ViStatus ConfigureChanCharacteristics(ViSession vi, ViConstString channelList, ViReal64 inputImpedance, ViReal64 maxInputFrequency) = 0;
   virtual ViStatus ConfigureEqualizationFilterCoefficients(ViSession vi, ViConstString channelList, ViInt32 numberOfCoefficients, ViReal64 coefficients[]) = 0;
   virtual ViStatus ConfigureHorizontalTiming(ViSession vi, ViReal64 minSampleRate, ViInt32 minNumPts, ViReal64 refPosition, ViInt32 numRecords, ViBoolean enforceRealtime) = 0;
-  virtual ViStatus ConfigureRefLevels(ViSession vi, ViReal64 low, ViReal64 mid, ViReal64 high) = 0;
   virtual ViStatus ConfigureTriggerDigital(ViSession vi, ViConstString triggerSource, ViInt32 slope, ViReal64 holdoff, ViReal64 delay) = 0;
   virtual ViStatus ConfigureTriggerEdge(ViSession vi, ViConstString triggerSource, ViReal64 level, ViInt32 slope, ViInt32 triggerCoupling, ViReal64 holdoff, ViReal64 delay) = 0;
   virtual ViStatus ConfigureTriggerHysteresis(ViSession vi, ViConstString triggerSource, ViReal64 level, ViReal64 hysteresis, ViInt32 slope, ViInt32 triggerCoupling, ViReal64 holdoff, ViReal64 delay) = 0;

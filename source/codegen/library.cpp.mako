@@ -36,12 +36,12 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : shared_librar
 {
   shared_library_.load();
   bool loaded = shared_library_.is_loaded();
-  memset(&load_status_, false, sizeof(load_status_));
+  memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
 % for method_name in handler_helpers.filter_api_functions(functions):
-  load_status_.${method_name}Exists = shared_library_.function_exists("${c_function_prefix}${method_name}");
+  function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_function_prefix}${method_name}"));
 %endfor
 }
 
@@ -62,13 +62,19 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
   parameters = f['parameters']
   handler_helpers.sanitize_names(parameters)
   return_type = f['returns']
+  parameter_list = handler_helpers.create_params(parameters)
+  argument_list = ', '.join(p['cppName'] for p in parameters)
 %>\
-${return_type} ${service_class_prefix}Library::${method_name}(${handler_helpers.create_params(parameters)})
+${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 {
-  if (!load_status_.${method_name}Exists) {
+  if (!function_pointers_.${method_name}) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find ${c_function_prefix}${method_name}.");
   }
-  return ${c_function_prefix}${method_name}(${', '.join(p['cppName'] for p in parameters)});
+#if defined(_MSC_VER)
+  return ${c_function_prefix}${method_name}(${argument_list});
+#else
+  return function_pointers_.${method_name}(${argument_list})
+#endif
 }
 
 %endfor

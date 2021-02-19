@@ -36,7 +36,6 @@ public:
   ::grpc::Status ConfigureChanCharacteristics(::grpc::ServerContext* context, const ConfigureChanCharacteristicsRequest* request, ConfigureChanCharacteristicsResponse* response) override;
   ::grpc::Status ConfigureEqualizationFilterCoefficients(::grpc::ServerContext* context, const ConfigureEqualizationFilterCoefficientsRequest* request, ConfigureEqualizationFilterCoefficientsResponse* response) override;
   ::grpc::Status ConfigureHorizontalTiming(::grpc::ServerContext* context, const ConfigureHorizontalTimingRequest* request, ConfigureHorizontalTimingResponse* response) override;
-  ::grpc::Status ConfigureRefLevels(::grpc::ServerContext* context, const ConfigureRefLevelsRequest* request, ConfigureRefLevelsResponse* response) override;
   ::grpc::Status ConfigureTriggerDigital(::grpc::ServerContext* context, const ConfigureTriggerDigitalRequest* request, ConfigureTriggerDigitalResponse* response) override;
   ::grpc::Status ConfigureTriggerEdge(::grpc::ServerContext* context, const ConfigureTriggerEdgeRequest* request, ConfigureTriggerEdgeResponse* response) override;
   ::grpc::Status ConfigureTriggerHysteresis(::grpc::ServerContext* context, const ConfigureTriggerHysteresisRequest* request, ConfigureTriggerHysteresisResponse* response) override;

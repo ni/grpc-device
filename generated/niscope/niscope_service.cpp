@@ -210,24 +210,6 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::ConfigureRefLevels(::grpc::ServerContext* context, const ConfigureRefLevelsRequest* request, ConfigureRefLevelsResponse* response)
-  {
-    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureRefLevels");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
-    }
-
-    ViSession vi = request->vi();
-    ViReal64 low = request->low();
-    ViReal64 mid = request->mid();
-    ViReal64 high = request->high();
-    auto status = library_->ConfigureRefLevels(vi, low, mid, high);
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerDigital(::grpc::ServerContext* context, const ConfigureTriggerDigitalRequest* request, ConfigureTriggerDigitalResponse* response)
   {
     ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerDigital");

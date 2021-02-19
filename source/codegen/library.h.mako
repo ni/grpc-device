@@ -17,8 +17,6 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_MOCK_LIBRA
 #ifndef ${include_guard_name}
 #define ${include_guard_name}
 
-## Include section
-
 #include "${config["module_name"]}_library_interface.h"
 
 #include <hardware/grpc/internal/shared_library.h>
@@ -44,14 +42,23 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
 %endfor
 
  private:
-  typedef struct FunctionLoadStatus {
+ % for method_name in handler_helpers.filter_api_functions(functions):
+<%
+  f = functions[method_name]
+  parameters = f['parameters']
+  return_type = f['returns']
+%>\
+  using ${method_name}Ptr = ${return_type} (*)(${handler_helpers.create_params(parameters)});
+%endfor
+
+  typedef struct FunctionPointers {
 % for method_name in handler_helpers.filter_api_functions(functions):
-    bool ${method_name}Exists;
+    ${method_name}Ptr ${method_name};
 %endfor
   } FunctionLoadStatus;
 
   ni::hardware::grpc::internal::SharedLibrary shared_library_;
-  FunctionLoadStatus load_status_;
+  FunctionPointers function_pointers_;
 };
 
 }  // namespace grpc

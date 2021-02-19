@@ -43,6 +43,7 @@ include_directories(
   "./source"
   "./source/core_server"
 )
+link_directories("./imports/lib/win64")
 
 #----------------------------------------------------------------------
 # Get list of NI Driver APIs and directories to generate from
@@ -51,12 +52,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 file(GLOB proto_directories RELATIVE ${metadata_dir} CONFIGURE_DEPENDS ${metadata_dir}/*)
-set(ni_apis "")
-foreach(proto_dir ${proto_directories})
-  if(IS_DIRECTORY ${metadata_dir}/${proto_dir})
-    set(ni_apis ${ni_apis} ${proto_dir})
-  endif()
-endforeach()
+set(ni_apis "nifake" "niscope")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -181,21 +177,27 @@ target_link_libraries(core_server
    ${CMAKE_DL_LIBS}
    nlohmann_json::nlohmann_json
    )
- 
+
+if(WIN32)
+  target_link_libraries(core_server Delayimp niScope)
+  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll" )
+  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll")
+endif()
+
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory
 #----------------------------------------------------------------------
 add_custom_command(
    TARGET core_server POST_BUILD
-   COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_SOURCE_DIR}/server_config.json
             $<TARGET_FILE_DIR:core_server>/server_config.json)
- 
+
 #----------------------------------------------------------------------
 # Add JSON parser
 #----------------------------------------------------------------------
 add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
- 
+
 # Add googletest tests
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
