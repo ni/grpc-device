@@ -75,9 +75,7 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-      // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-      // auto a_turtle = static_cast<ViInt16>((ViInt16)request->a_turtle());
-      ViInt16 a_turtle;
+      auto a_turtle = (ViInt16)request->a_turtle();
       auto status = library_wrapper_->EnumInputFunctionWithDefaults(vi, a_turtle);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -107,7 +105,7 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-    ViBoolean a_boolean;
+      ViBoolean a_boolean {};
       auto status = library_wrapper_->GetABoolean(vi, &a_boolean);
       response->set_status(status);
       if (status == 0) {
@@ -126,7 +124,7 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-    ViInt16 a_number;
+      ViInt16 a_number {};
       auto status = library_wrapper_->GetANumber(vi, &a_number);
       response->set_status(status);
       if (status == 0) {
@@ -187,7 +185,7 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-    ViInt32 size_out;
+      ViInt32 size_out {};
       auto status = library_wrapper_->GetArraySizeForPythonCode(vi, &size_out);
       response->set_status(status);
       if (status == 0) {
@@ -215,7 +213,7 @@ namespace grpc {
       ViSession vi = request->vi();
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-    ViBoolean attribute_value;
+      ViBoolean attribute_value {};
       auto status = library_wrapper_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
@@ -236,7 +234,7 @@ namespace grpc {
       ViSession vi = request->vi();
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-    ViInt32 attribute_value;
+      ViInt32 attribute_value {};
       auto status = library_wrapper_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
@@ -257,7 +255,7 @@ namespace grpc {
       ViSession vi = request->vi();
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-    ViInt64 attribute_value;
+      ViInt64 attribute_value {};
       auto status = library_wrapper_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
@@ -278,7 +276,7 @@ namespace grpc {
       ViSession vi = request->vi();
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-    ViReal64 attribute_value;
+      ViReal64 attribute_value {};
       auto status = library_wrapper_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
@@ -305,11 +303,11 @@ namespace grpc {
     try {
       ViSession vi = request->vi();
       ViInt32 cal_type = request->cal_type();
-    ViInt32 month;
-    ViInt32 day;
-    ViInt32 year;
-    ViInt32 hour;
-    ViInt32 minute;
+      ViInt32 month {};
+      ViInt32 day {};
+      ViInt32 year {};
+      ViInt32 hour {};
+      ViInt32 minute {};
       auto status = library_wrapper_->GetCalDateAndTime(vi, cal_type, &month, &day, &year, &hour, &minute);
       response->set_status(status);
       if (status == 0) {
@@ -332,7 +330,7 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-    ViInt32 months;
+      ViInt32 months {};
       auto status = library_wrapper_->GetCalInterval(vi, &months);
       response->set_status(status);
       if (status == 0) {
@@ -365,13 +363,13 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-    ViInt32 a_quantity;
-      ViInt16 a_turtle_ctype;
-      auto status = library_wrapper_->GetEnumValue(vi, &a_quantity, &a_turtle_ctype);
+      ViInt32 a_quantity {};
+      ViInt16 a_turtle {};
+      auto status = library_wrapper_->GetEnumValue(vi, &a_quantity, &a_turtle);
       response->set_status(status);
       if (status == 0) {
         response->set_a_quantity(a_quantity);
-        response->set_a_turtle(static_cast<ni::fake::grpc::Turtle>(a_turtle_ctype));
+      response->set_a_turtle(static_cast<ni::fake::grpc::Turtle>(a_turtle));
       }
       return ::grpc::Status::OK;
     }
@@ -396,7 +394,7 @@ namespace grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       ViConstString option_string = request->option_string().c_str();
-    ViSession vi;
+      ViSession vi {};
       auto status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
       response->set_status(status);
       if (status == 0) {
@@ -448,13 +446,14 @@ namespace grpc {
       ViBoolean a_boolean = request->a_boolean();
       ViInt32 an_int32 = request->an_int32();
       ViInt64 an_int64 = request->an_int64();
-      // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-      // auto an_int_enum = static_cast<ViInt16>((ViInt16)request->an_int_enum());
-      ViInt16 an_int_enum;
+      auto an_int_enum = (ViInt16)request->an_int_enum();
       ViReal64 a_float = request->a_float();
-      // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-      // auto a_float_enum = static_cast<ViReal64>((ViReal64)request->a_float_enum());
-      ViReal64 a_float_enum;
+      auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
+
+      if (a_float_enum_imap_it == floatenum_input_map_.end()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+      }
+      auto a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
       ViInt32 string_size = request->string_size();
       ViConstString a_string = request->a_string().c_str();
       auto status = library_wrapper_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
@@ -488,7 +487,7 @@ namespace grpc {
     try {
       ViSession vi = request->vi();
       ViReal64 maximum_time = request->maximum_time();
-    ViReal64 reading;
+      ViReal64 reading {};
       auto status = library_wrapper_->Read(vi, maximum_time, &reading);
       response->set_status(status);
       if (status == 0) {
@@ -509,7 +508,7 @@ namespace grpc {
       ViSession vi = request->vi();
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 maximum_time = request->maximum_time();
-    ViReal64 reading;
+      ViReal64 reading {};
       auto status = library_wrapper_->ReadFromChannel(vi, channel_name, maximum_time, &reading);
       response->set_status(status);
       if (status == 0) {
@@ -535,7 +534,7 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-    ViReal64 timedelta;
+      ViReal64 timedelta {};
       auto status = library_wrapper_->ReturnDurationInSeconds(vi, &timedelta);
       response->set_status(status);
       if (status == 0) {
@@ -582,9 +581,12 @@ namespace grpc {
   {
     try {
       ViSession vi = request->vi();
-      // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-      // auto a_mobile_o_s_name = static_cast<ViConstString>(request->a_mobile_o_s_name().c_str());
-      ViConstString a_mobile_o_s_name;
+      auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
+
+      if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
+      }
+      auto a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
       auto status = library_wrapper_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_o_s_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -618,7 +620,7 @@ namespace grpc {
     try {
       ViSession vi = request->vi();
       ViInt64 input = request->input();
-    ViInt64 output;
+      ViInt64 output {};
       auto status = library_wrapper_->Use64BitNumber(vi, input, &output);
       response->set_status(status);
       if (status == 0) {

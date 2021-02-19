@@ -24,7 +24,7 @@ option java_package = "${config["java_package"]}";
 option java_outer_classname = "${service_class_prefix}";
 option csharp_namespace = "${config["csharp_namespace"]}";
 
-package ${config["grpc_package"]};
+package ni.${config["namespace_component"]}.grpc;
 
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
@@ -60,12 +60,14 @@ enum ${enum_name} {
 nonint_index = 1
 %>\
 % for value in enum["values"]:
-<%
-if isinstance(value["value"], int) is False:
-  value["value"] = nonint_index
+% if enum.get("generate-mappings", false):
+  ${enum_value_prefix}_${value["name"]} = ${nonint_index};
+<% 
   nonint_index = nonint_index+1
 %>\
+% else:
   ${enum_value_prefix}_${value["name"]} = ${value["value"]};
+%endif
 % endfor
 }
 

@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryWrapper for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_MOCK_LIBRARY__H
-#define NI_FAKE_GRPC_MOCK_LIBRARY__H
+#ifndef NI_FAKE_GRPC_MOCK_LIBRARY_H
+#define NI_FAKE_GRPC_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -57,4 +57,4 @@ class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // NI_FAKE_GRPC_MOCK_LIBRARY__H
+#endif  // NI_FAKE_GRPC_MOCK_LIBRARY_H

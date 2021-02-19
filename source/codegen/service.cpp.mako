@@ -2,14 +2,12 @@
 import common_helpers
 import handler_helpers
 
-attributes = data['attributes']
 config = data['config']
 enums = data['enums']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-driver_namespaces = handler_helpers.get_namespace_segments(config)
-namespace_prefix = "::".join(driver_namespaces) + "::"
+namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
@@ -29,9 +27,9 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 #include <atomic>
 
 ## Namespaces
-% for namespace in driver_namespaces:
-namespace ${namespace} {
-% endfor
+namespace ni {
+namespace ${config["namespace_component"]} {
+namespace grpc {
 
   namespace internal = ni::hardware::grpc::internal;
 
@@ -69,32 +67,35 @@ namespace ${namespace} {
 %for parameter in input_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  parameter_name_ctype = parameter_name + "_ctype"
-  parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True:
-      ## TODO: Handle non integer enums
-      // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-      // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)});
-      ${parameter_type} ${parameter_name};
+%if enums[parameter["enum"]].get("generate-mappings", False):
+<%
+  map_name = parameter["enum"].lower() + "_input_map_"
+  iterator_name = parameter_name + "_imap_it"
+%>\
+      auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+
+      if (${iterator_name} == ${map_name}.end()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+      }
+%if parameter['type'] == "ViConstString":
+      auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
+%else:
+      auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
+%endif
+%else:
+      auto ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
+%endif
 % else:
-      ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
+      ${parameter['type']} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
 % endif
 %endfor
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  parameter_name_ctype = parameter_name + "_ctype"
-  parameter_type = parameter['type']
 %>\
-%if common_helpers.is_enum(parameter) == True:
-      ${parameter_type} ${parameter_name_ctype};
-<%
-     parameter['cppName'] = parameter_name_ctype
-%>\
-%else:
-    ${parameter_type} ${parameter_name};
-%endif
+      ${parameter['type']} ${parameter_name} {};
 %endfor
       auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
 <%
@@ -106,13 +107,23 @@ namespace ${namespace} {
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  parameter_name_ctype = parameter_name + "_ctype"
-  parameter_type = parameter['type']
 %>\
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
-      ##TODO: Handle non int types
-        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name_ctype}));
+%if enums[parameter["enum"]].get("generate-mappings", False):
+<%
+  map_name = parameter["enum"].lower() + "_output_map_"
+  iterator_name = parameter_name + "_imap_it"
+%>\
+
+    auto ${iterator_name} = ${map_name}.find(${parameter_name});
+    if(${iterator_name} == ${map_name}.end()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+    }
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
+%else:
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+%endif
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif
@@ -126,7 +137,7 @@ namespace ${namespace} {
     }
   }
 
-% endfor
-% for namespace in reversed(driver_namespaces):
-} // namespace ${namespace}
-% endfor
+%endfor
+} // namespace grpc
+} // namespace ${config["namespace_component"]}
+} // namespace ni
