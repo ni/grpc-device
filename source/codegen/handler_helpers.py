@@ -56,6 +56,47 @@ def create_param(parameter):
         result = result + '*'
     return result
 
+def python_to_c(enum):
+  enum_value = enum["values"][0]["value"]
+  if isinstance(enum_value, float):
+    return "float"
+  if isinstance(enum_value, int):
+    return "std::int32_t"
+  if isinstance(enum_value, str):
+    return "std::string"
+  return "std::int32_t"
+ 
+def format_value(value):
+  if isinstance(value, str):
+    value = f"\"{value}\""
+  if isinstance(value, float):
+    value = f"{value}f"
+  return value
+  
+def get_input_lookup_values(enum_data):
+  out_value_format= ""
+  index = 1
+  is_int = isinstance(enum_data["values"][0]["value"], int)
+  if is_int:
+    out_value_format =  "{0, 0},"
+  for value in enum_data["values"]:
+    formated_value = str(format_value(value["value"]))
+    out_value_format = out_value_format + "{" + str(index) + ", " + formated_value + "},"
+    index = index+1
+  return out_value_format
+  
+def get_output_lookup_values(enum_data):
+  out_value_format= ""
+  index = 1
+  is_int = isinstance(enum_data["values"][0]["value"], int)
+  if is_int:
+    out_value_format =  "{0, 0},"
+  for value in enum_data["values"]:
+    formated_value = format_value(value["value"])
+    out_value_format = out_value_format + "{" + str(formated_value) + ", " + str(index) + "},"
+    index = index+1
+  return out_value_format
+
 def get_request_value(parameter):
     field_name = common_helpers.camel_to_snake(parameter["name"])
     request_snippet = f'request->{field_name}()'
@@ -73,3 +114,4 @@ def get_request_value(parameter):
 def filter_api_functions(functions):
   '''Returns function metadata only for those functions to include for generating the function types to the API library'''
   return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']
+
