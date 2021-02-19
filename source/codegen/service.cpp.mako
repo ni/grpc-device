@@ -41,21 +41,23 @@ namespace grpc {
   {
   }
 
-% for function in common_helpers.filter_proto_rpc_functions(functions):
+% for function_name in common_helpers.filter_proto_rpc_functions(functions):
 <%
-    f = functions[function]
-    method_name = common_helpers.snake_to_camel(function)
+    function_data = functions[function_name]
+    method_name = common_helpers.snake_to_camel(function_name)
+    parameters = function_data['parameters']
+    handler_helpers.sanitize_names(parameters)
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
   {
-% if common_helpers.has_unsupported_parameter(f):
+% if common_helpers.has_unsupported_parameter(function_data):
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-% elif function == config['init_function']:
-${gen_init_method_body(function)}
+% elif function_name == config['init_function']:
+${gen_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % else:
-${gen_simple_method_body(function)}
+${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
   }
 
@@ -69,21 +71,18 @@ ${gen_simple_method_body(function)}
 \
 \
 \
-<%def name="gen_init_method_body(function)">\
+<%def name="gen_init_method_body(function_name, function_data, parameters)">\
 <%
-  f = functions[function]
-  parameters = f['parameters']
-  handler_helpers.sanitize_names(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
   session_output_var_name = session_output_param['cppName']
 %>\
-${check_if_function_exists(function)}
+${check_if_function_exists(function_name)}
 
-${request_input_parameters(f)}
+${request_input_parameters(parameters)}
     auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
       ViSession ${session_output_var_name};
-      int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+      int status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
       return std::make_tuple(status, vi);
     };
     uint32_t session_id = 0;
@@ -102,26 +101,23 @@ ${request_input_parameters(f)}
 \
 \
 \
-<%def name="gen_simple_method_body(function)">\
+<%def name="gen_simple_method_body(function_name, function_data, parameters)">\
 <%
-  f = functions[function]
-  parameters = f['parameters']
-  handler_helpers.sanitize_names(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${check_if_function_exists(function)}
+${check_if_function_exists(function_name)}
 
-${request_input_parameters(f)}\
+${request_input_parameters(parameters)}\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
     ${parameter['type']} ${parameter_name} {};
 %endfor
-%if function == config['close_function']:
+%if function_name == config['close_function']:
     session_repository_->remove_session(${handler_helpers.create_args(parameters)});
 %else:
-    auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+    auto status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
     response->set_status(status);
 %endif
 %if output_parameters:
@@ -135,9 +131,9 @@ ${set_response_values(output_parameters=output_parameters)}\
 \
 \
 \
-<%def name="check_if_function_exists(function)">\
+<%def name="check_if_function_exists(function_name)">\
 <%
-  c_function_name = c_function_prefix + function
+  c_function_name = c_function_prefix + function_name
 %>\
     ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
     if (!libraryStatus.ok()) {
@@ -148,10 +144,8 @@ ${set_response_values(output_parameters=output_parameters)}\
 \
 \
 \
-<%def name="request_input_parameters(function)">\
+<%def name="request_input_parameters(parameters)">\
 <%
-    parameters = function['parameters']
-    handler_helpers.sanitize_names(parameters)
     input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
