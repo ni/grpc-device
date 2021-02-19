@@ -38,7 +38,7 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 > mkdir build
 > cd build
-> cmake ..
+> cmake .. -A x64
 > cmake --build .
 ```
 
@@ -46,7 +46,7 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 > mkdir build
 > cd build
-> cmake ..
+> cmake .. -A x64
 > cmake --build . --config Release
 ```
 
