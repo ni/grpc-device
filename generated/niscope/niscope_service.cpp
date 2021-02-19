@@ -913,7 +913,7 @@ namespace grpc {
     int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
     return std::make_tuple(status, vi);
     };
-    uint32_t session_id;
+    uint32_t session_id = 0;
     std::string session_name = request->session_name();
     auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->close(id); };
     int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
