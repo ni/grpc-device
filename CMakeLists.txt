@@ -176,9 +176,23 @@ target_link_libraries(core_server
 add_custom_command(
    TARGET core_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
-            ${CMAKE_SOURCE_DIR}/server_config.json
+            ${CMAKE_SOURCE_DIR}/example_config/insecure_config.json
             $<TARGET_FILE_DIR:core_server>/server_config.json)
- 
+
+#----------------------------------------------------------------------
+# Copy config and certs folders to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+  TARGET core_server POST_BUILD
+  COMMAND  ${CMAKE_COMMAND} -E copy_directory 
+           ${CMAKE_SOURCE_DIR}/example_config/
+           $<TARGET_FILE_DIR:core_server>/example_config/)
+
+add_custom_command(
+  TARGET core_server POST_BUILD
+  COMMAND  ${CMAKE_COMMAND} -E copy_directory 
+           ${CMAKE_SOURCE_DIR}/certs/
+           $<TARGET_FILE_DIR:core_server>/certs/)
 #----------------------------------------------------------------------
 # Add JSON parser
 #----------------------------------------------------------------------

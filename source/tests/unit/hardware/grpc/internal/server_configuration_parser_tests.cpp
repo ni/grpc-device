@@ -13,6 +13,14 @@ namespace unit {
 namespace hardware {
 namespace grpc {
 namespace internal {
+  
+#if defined(_MSC_VER)
+  const char* kServerSideTlsConfigFile = "config\\server_side_tls.json";
+  const char* kMutualTlsConfigFile = "config\\mutual_tls.json";
+#else
+  const char* kServerSideTlsConfigFile = "config/server_side_tls/server/server_config.json";
+  const char* kMutualTlsConfigFile = "config/mutual_tls/server/server_config.json";
+#endif
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
@@ -25,9 +33,8 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
-  const char* file_path = "fake.json";
   try {
-    ::internal::ServerConfigurationParser server_config_parser("fake.json");
+    ::internal::ServerConfigurationParser server_config_parser("fake.json", true);
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
@@ -90,6 +97,46 @@ TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_Throw
     EXPECT_EQ(std::string(::internal::kUnspecifiedPortMessage), ex.what());
   }
 }
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromServerSideTlsConfigFile_ParseServerKey_NotEmpty)
+{
+  ::internal::ServerConfigurationParser server_config_parser(kServerSideTlsConfigFile, true);
+
+  auto server_key = server_config_parser.parse_server_key();
+
+  EXPECT_FALSE(server_key.empty());
+}
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromServerSideTlsConfigFile_ParseServerCert_NotEmpty)
+{
+  ::internal::ServerConfigurationParser server_config_parser(kServerSideTlsConfigFile, true);
+
+  auto server_cert = server_config_parser.parse_server_cert();
+
+  EXPECT_FALSE(server_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromServerSideTlsConfigFile_ParseRootCert_NotEmpty)
+{
+  ::internal::ServerConfigurationParser server_config_parser(kServerSideTlsConfigFile, true);
+
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_TRUE(root_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
+{
+  ::internal::ServerConfigurationParser server_config_parser(kMutualTlsConfigFile, true);
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_FALSE(server_key.empty());
+  EXPECT_FALSE(server_cert.empty());
+  EXPECT_FALSE(root_cert.empty());
+} 
 
 }  // namespace internal
 }  // namespace grpc

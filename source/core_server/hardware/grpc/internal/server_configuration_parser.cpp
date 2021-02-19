@@ -22,14 +22,15 @@ static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
 static const char* kSecurityJsonKey = "security";
+static const char* kCertsFolderName = "certs";
 
 ServerConfigurationParser::ServerConfigurationParser()
     : config_file_(load(get_exe_path() + kDefaultFilename))
 {
 }
 
-ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path)
-    : config_file_path_(config_file_path), config_file_(load(config_file_path))
+ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path, bool relative_path = false)
+    : config_file_path_(config_file_path), config_file_(load((relative_path ? get_exe_path() : "") + config_file_path))
 {
 }
 
@@ -96,20 +97,20 @@ std::string ServerConfigurationParser::parse_address()
 
 std::string ServerConfigurationParser::parse_server_cert()
 {
-  auto file_path = parse_security_section(kServerCertJsonKey);
-  return read_keycert(file_path);
+  auto file_name = parse_security_section(kServerCertJsonKey);
+  return read_keycert(get_exe_path() + kCertsFolderName + file_name);
 }
 
 std::string ServerConfigurationParser::parse_server_key()
 {
-  auto file_path = parse_security_section(kServerKeyJsonKey);
-  return read_keycert(file_path);
+  auto file_name = parse_security_section(kServerKeyJsonKey);
+  return read_keycert(get_exe_path() + kCertsFolderName + file_name);
 }
 
 std::string ServerConfigurationParser::parse_root_cert()
 {
-  auto file_path = parse_security_section(kRootCertJsonKey);
-  return read_keycert(file_path);
+  auto file_name = parse_security_section(kRootCertJsonKey);
+  return read_keycert(get_exe_path() + kCertsFolderName + file_name);
 }
 
 std::string ServerConfigurationParser::parse_security_section(const char* key)
