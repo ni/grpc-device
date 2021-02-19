@@ -122,7 +122,7 @@ std::string ServerConfigurationParser::parse_security_section(const char* key)
 {
   std::string parsed_value;
 
-  auto security_section_it =  config_file_.find(kSecurityJsonKey);
+  auto security_section_it = config_file_.find(kSecurityJsonKey);
   if (security_section_it != config_file_.end()) {
     auto it = security_section_it->find(key);
     if (it != security_section_it->end()) {
@@ -138,17 +138,16 @@ std::string ServerConfigurationParser::parse_security_section(const char* key)
 }
 
 std::string ServerConfigurationParser::read_keycert(const std::string& filename)
-{	
-	std::string data;
-	std::ifstream file(filename);
-	if (file)
-	{
-		std::stringstream key_cert_contents;
-		key_cert_contents << file.rdbuf();
-		file.close();
-		data = key_cert_contents.str();
-	}
-	return data;
+{
+  std::string data;
+  std::ifstream file(filename);
+  if (file) {
+    std::stringstream key_cert_contents;
+    key_cert_contents << file.rdbuf();
+    file.close();
+    data = key_cert_contents.str();
+  }
+  return data;
 }
 
 ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException()

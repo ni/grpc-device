@@ -13,7 +13,7 @@ namespace unit {
 namespace hardware {
 namespace grpc {
 namespace internal {
-  
+
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
   ::internal::ServerConfigurationParser server_config_parser;
@@ -143,7 +143,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseRootCert_N
 
 TEST(ServerConfigurationParserTests, JsonConfigWithMutualTls_ParseAllSecurityKeys_NoneEmpty)
 {
-    nlohmann::json config_json = nlohmann::json::parse(R"(
+  nlohmann::json config_json = nlohmann::json::parse(R"(
     {
       "security" : {
           "server_cert": "server_self_signed_crt.pem",
@@ -160,7 +160,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMutualTls_ParseAllSecurityKey
   EXPECT_FALSE(server_key.empty());
   EXPECT_FALSE(server_cert.empty());
   EXPECT_FALSE(root_cert.empty());
-} 
+}
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAllSecurityKeys_AllEmpty)
 {

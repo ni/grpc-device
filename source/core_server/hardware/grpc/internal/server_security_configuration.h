@@ -1,8 +1,9 @@
 #ifndef NI_HARDWARE_GRPC_INTERNAL_SERVERSECURITYCONFIGURATION
 #define NI_HARDWARE_GRPC_INTERNAL_SERVERSECURITYCONFIGURATION
 
-#include <string>
 #include <grpcpp/grpcpp.h>
+
+#include <string>
 
 namespace ni {
 namespace hardware {
