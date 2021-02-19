@@ -63,7 +63,7 @@ ${gen_simple_method_body(function)}
 
 } // namespace grpc
 } // namespace ${config["namespace_component"]}
-} // namespace ni
+} // namespace ni\
 
 \
 \
