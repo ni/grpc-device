@@ -35,7 +35,7 @@ ServerConfigurationParser::ServerConfigurationParser()
 }
 
 ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path, bool relative_path = false)
-    : config_file_path_(config_file_path), config_file_(load((relative_path ? get_exe_path() : "") + config_file_path))
+    : config_file_path_(config_file_path), config_file_(load((relative_path ? get_exe_path() + config_file_path : config_file_path)))
 {
 }
 

@@ -15,7 +15,7 @@ class ServerSecurityConfiguration {
   ServerSecurityConfiguration(const std::string& server_cert, const std::string& server_key, const std::string& root_cert);
 
   std::shared_ptr<::grpc::ServerCredentials> get_credentials();
-  bool ServerSecurityConfiguration::try_get_options(::grpc::SslServerCredentialsOptions* options);
+  bool try_get_options(::grpc::SslServerCredentialsOptions* options);
 
  private:
   ::grpc::SslServerCredentialsOptions security_configuration_;
