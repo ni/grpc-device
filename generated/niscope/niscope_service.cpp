@@ -51,11 +51,11 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    ViInt32 acquisition_status_ctype;
-    auto status = library_wrapper_->AcquisitionStatus(vi, &acquisition_status_ctype);
+    ViInt32 acquisition_status {};
+    auto status = library_wrapper_->AcquisitionStatus(vi, &acquisition_status);
     response->set_status(status);
     if (status == 0) {
-      response->set_acquisition_status(static_cast<ni::scope::grpc::AcquisitionStatus>(acquisition_status_ctype));
+      response->set_acquisition_status(static_cast<ni::scope::grpc::AcquisitionStatus>(acquisition_status));
     }
     return ::grpc::Status::OK;
   }
@@ -71,9 +71,7 @@ namespace grpc {
 
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto meas_function = static_cast<ViInt32>((ViInt32)request->meas_function());
-    ViInt32 meas_function;
+    auto meas_function = (ViInt32)request->meas_function();
     auto status = library_wrapper_->AddWaveformProcessing(vi, channel_list, meas_function);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -105,9 +103,7 @@ namespace grpc {
 
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto option = static_cast<ViInt32>((ViInt32)request->option());
-    ViInt32 option;
+    auto option = (ViInt32)request->option();
     auto status = library_wrapper_->CalSelfCalibrate(vi, channel_list, option);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -124,9 +120,7 @@ namespace grpc {
 
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto clearable_measurement_function = static_cast<ViInt32>((ViInt32)request->clearable_measurement_function());
-    ViInt32 clearable_measurement_function;
+    auto clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
     auto status = library_wrapper_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -237,9 +231,7 @@ namespace grpc {
 
     ViSession vi = request->vi();
     ViConstString trigger_source = request->trigger_source().c_str();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto slope = static_cast<ViInt32>((ViInt32)request->slope());
-    ViInt32 slope;
+    auto slope = (ViInt32)request->slope();
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
     auto status = library_wrapper_->ConfigureTriggerDigital(vi, trigger_source, slope, holdoff, delay);
@@ -259,12 +251,8 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString trigger_source = request->trigger_source().c_str();
     ViReal64 level = request->level();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto slope = static_cast<ViInt32>((ViInt32)request->slope());
-    ViInt32 slope;
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto trigger_coupling = static_cast<ViInt32>((ViInt32)request->trigger_coupling());
-    ViInt32 trigger_coupling;
+    auto slope = (ViInt32)request->slope();
+    auto trigger_coupling = (ViInt32)request->trigger_coupling();
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
     auto status = library_wrapper_->ConfigureTriggerEdge(vi, trigger_source, level, slope, trigger_coupling, holdoff, delay);
@@ -285,12 +273,8 @@ namespace grpc {
     ViConstString trigger_source = request->trigger_source().c_str();
     ViReal64 level = request->level();
     ViReal64 hysteresis = request->hysteresis();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto slope = static_cast<ViInt32>((ViInt32)request->slope());
-    ViInt32 slope;
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto trigger_coupling = static_cast<ViInt32>((ViInt32)request->trigger_coupling());
-    ViInt32 trigger_coupling;
+    auto slope = (ViInt32)request->slope();
+    auto trigger_coupling = (ViInt32)request->trigger_coupling();
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
     auto status = library_wrapper_->ConfigureTriggerHysteresis(vi, trigger_source, level, hysteresis, slope, trigger_coupling, holdoff, delay);
@@ -342,19 +326,11 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString trigger_source = request->trigger_source().c_str();
     ViBoolean enable_dc_restore = request->enable_dc_restore();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto signal_format = static_cast<ViInt32>((ViInt32)request->signal_format());
-    ViInt32 signal_format;
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto event_parameter = static_cast<ViInt32>((ViInt32)request->event());
-    ViInt32 event_parameter;
+    auto signal_format = (ViInt32)request->signal_format();
+    auto event_parameter = (ViInt32)request->event();
     ViInt32 line_number = request->line_number();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto polarity = static_cast<ViInt32>((ViInt32)request->polarity());
-    ViInt32 polarity;
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto trigger_coupling = static_cast<ViInt32>((ViInt32)request->trigger_coupling());
-    ViInt32 trigger_coupling;
+    auto polarity = (ViInt32)request->polarity();
+    auto trigger_coupling = (ViInt32)request->trigger_coupling();
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
     auto status = library_wrapper_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
@@ -375,12 +351,8 @@ namespace grpc {
     ViConstString trigger_source = request->trigger_source().c_str();
     ViReal64 low_level = request->low_level();
     ViReal64 high_level = request->high_level();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto window_mode = static_cast<ViInt32>((ViInt32)request->window_mode());
-    ViInt32 window_mode;
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto trigger_coupling = static_cast<ViInt32>((ViInt32)request->trigger_coupling());
-    ViInt32 trigger_coupling;
+    auto window_mode = (ViInt32)request->window_mode();
+    auto trigger_coupling = (ViInt32)request->trigger_coupling();
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
     auto status = library_wrapper_->ConfigureTriggerWindow(vi, trigger_source, low_level, high_level, window_mode, trigger_coupling, holdoff, delay);
@@ -401,9 +373,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 range = request->range();
     ViReal64 offset = request->offset();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto coupling = static_cast<ViInt32>((ViInt32)request->coupling());
-    ViInt32 coupling;
+    auto coupling = (ViInt32)request->coupling();
     ViReal64 probe_attenuation = request->probe_attenuation();
     ViBoolean enabled = request->enabled();
     auto status = library_wrapper_->ConfigureVertical(vi, channel_list, range, offset, coupling, probe_attenuation, enabled);
@@ -503,7 +473,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViBoolean value;
+    ViBoolean value {};
     auto status = library_wrapper_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -524,7 +494,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViInt32 value;
+    ViInt32 value {};
     auto status = library_wrapper_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -545,7 +515,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViInt64 value;
+    ViInt64 value {};
     auto status = library_wrapper_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -566,7 +536,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViReal64 value;
+    ViReal64 value {};
     auto status = library_wrapper_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -625,7 +595,7 @@ namespace grpc {
     ViBoolean id_query = request->id_query();
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
-    ViSession vi;
+    ViSession vi {};
     auto status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
     response->set_status(status);
     if (status == 0) {
@@ -659,7 +629,7 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    ViBoolean caller_has_lock;
+    ViBoolean caller_has_lock {};
     auto status = library_wrapper_->LockSession(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
@@ -745,9 +715,7 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto which_trigger = static_cast<ViInt32>((ViInt32)request->which_trigger());
-    ViInt32 which_trigger;
+    auto which_trigger = (ViInt32)request->which_trigger();
     auto status = library_wrapper_->SendSoftwareTriggerEdge(vi, which_trigger);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -853,7 +821,7 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    ViBoolean caller_has_lock;
+    ViBoolean caller_has_lock {};
     auto status = library_wrapper_->UnlockSession(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
