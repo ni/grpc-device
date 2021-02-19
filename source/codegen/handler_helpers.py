@@ -97,20 +97,6 @@ def get_output_lookup_values(enum_data):
     index = index+1
   return out_value_format
 
-def get_request_value(parameter):
-    field_name = common_helpers.camel_to_snake(parameter["name"])
-    request_snippet = f'request->{field_name}()'
-    c_type = parameter['type']
-    if c_type == 'ViConstString':
-        return f'{request_snippet}.c_str()';
-    if c_type == 'ViString' or c_type == 'ViRsrc':
-        return f'({c_type}){request_snippet}.c_str()'
-    if c_type == 'ViInt8[]' or c_type == 'ViChar[]':
-        return f'({c_type[:-2]}*){request_snippet}.c_str()'
-    if c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
-        return f'({c_type}){request_snippet}'
-    return request_snippet
-
 def filter_api_functions(functions):
   '''Returns function metadata only for those functions to include for generating the function types to the API library'''
   return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']

@@ -35,7 +35,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->Abort(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -78,8 +79,9 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
-    auto a_turtle = (ViInt16)request->a_turtle();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViInt16 a_turtle = (ViInt16)request->a_turtle();
     auto status = library_wrapper_->EnumInputFunctionWithDefaults(vi, a_turtle);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -108,7 +110,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViBoolean a_boolean {};
     auto status = library_wrapper_->GetABoolean(vi, &a_boolean);
     response->set_status(status);
@@ -127,7 +130,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt16 a_number {};
     auto status = library_wrapper_->GetANumber(vi, &a_number);
     response->set_status(status);
@@ -188,7 +192,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt32 size_out {};
     auto status = library_wrapper_->GetArraySizeForPythonCode(vi, &size_out);
     response->set_status(status);
@@ -214,7 +219,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViBoolean attribute_value {};
@@ -235,7 +241,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt32 attribute_value {};
@@ -256,7 +263,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt64 attribute_value {};
@@ -277,7 +285,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_name = request->channel_name().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViReal64 attribute_value {};
@@ -305,7 +314,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt32 cal_type = request->cal_type();
     ViInt32 month {};
     ViInt32 day {};
@@ -333,7 +343,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt32 months {};
     auto status = library_wrapper_->GetCalInterval(vi, &months);
     response->set_status(status);
@@ -366,7 +377,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt32 a_quantity {};
     ViInt16 a_turtle {};
     auto status = library_wrapper_->GetEnumValue(vi, &a_quantity, &a_turtle);
@@ -398,11 +410,21 @@ namespace grpc {
     ViBoolean id_query = request->id_query();
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
-    ViSession vi {};
-    auto status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+
+    auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+      ViSession vi;
+      int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+      return std::make_tuple(status, vi);
+    };
+    uint32_t session_id = 0;
+    const std::string& session_name = request->session_name();
+    auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->close(id); };
+    int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
     response->set_status(status);
     if (status == 0) {
-      response->set_vi(vi);
+      ni::hardware::grpc::Session session;
+      session.set_id(session_id);
+      response->set_allocated_vi(&session);
     }
     return ::grpc::Status::OK;
   }
@@ -430,7 +452,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt32 a_number = request->a_number();
     auto status = library_wrapper_->OneInputFunction(vi, a_number);
     response->set_status(status);
@@ -446,18 +469,20 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViBoolean a_boolean = request->a_boolean();
     ViInt32 an_int32 = request->an_int32();
     ViInt64 an_int64 = request->an_int64();
-    auto an_int_enum = (ViInt16)request->an_int_enum();
+    ViInt16 an_int_enum = (ViInt16)request->an_int_enum();
     ViReal64 a_float = request->a_float();
     auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
-    
+
     if (a_float_enum_imap_it == floatenum_input_map_.end()) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
     }
     auto a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
+
     ViInt32 string_size = request->string_size();
     ViConstString a_string = request->a_string().c_str();
     auto status = library_wrapper_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
@@ -474,7 +499,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->PoorlyNamedSimpleFunction(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -489,7 +515,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViReal64 maximum_time = request->maximum_time();
     ViReal64 reading {};
     auto status = library_wrapper_->Read(vi, maximum_time, &reading);
@@ -509,7 +536,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_name = request->channel_name().c_str();
     ViInt32 maximum_time = request->maximum_time();
     ViReal64 reading {};
@@ -537,7 +565,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViReal64 timedelta {};
     auto status = library_wrapper_->ReturnDurationInSeconds(vi, &timedelta);
     response->set_status(status);
@@ -584,13 +613,15 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
-    
+
     if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
     }
     auto a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+
     auto status = library_wrapper_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_o_s_name);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -605,7 +636,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViReal64 a_number = request->a_number();
     ViString a_string = (ViString)request->a_string().c_str();
     auto status = library_wrapper_->TwoInputFunction(vi, a_number, a_string);
@@ -622,7 +654,8 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt64 input = request->input();
     ViInt64 output {};
     auto status = library_wrapper_->Use64BitNumber(vi, input, &output);
@@ -649,11 +682,12 @@ namespace grpc {
       return libraryStatus;
     }
 
-    ViSession vi = request->vi();
-    auto status = library_wrapper_->close(vi);
-    response->set_status(status);
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    session_repository_->remove_session(vi);
     return ::grpc::Status::OK;
   }
+
 
 } // namespace grpc
 } // namespace fake

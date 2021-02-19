@@ -13,6 +13,8 @@ option csharp_namespace = "NationalInstruments.Scope.Grpc";
 
 package ni.scope.grpc;
 
+import "server_utilities.proto";
+
 service NiScope {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc AcquisitionStatus(AcquisitionStatusRequest) returns (AcquisitionStatusResponse);
@@ -647,7 +649,7 @@ enum WidthPolarity {
 }
 
 message AbortRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message AbortResponse {
@@ -655,7 +657,7 @@ message AbortResponse {
 }
 
 message AcquisitionStatusRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message AcquisitionStatusResponse {
@@ -664,7 +666,7 @@ message AcquisitionStatusResponse {
 }
 
 message AddWaveformProcessingRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   ArrayMeasurement meas_function = 3;
 }
@@ -674,7 +676,7 @@ message AddWaveformProcessingResponse {
 }
 
 message AutoSetupRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message AutoSetupResponse {
@@ -682,7 +684,7 @@ message AutoSetupResponse {
 }
 
 message CalSelfCalibrateRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   Option option = 3;
 }
@@ -692,7 +694,7 @@ message CalSelfCalibrateResponse {
 }
 
 message ClearWaveformMeasurementStatsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   ClearableMeasurement clearable_measurement_function = 3;
 }
@@ -702,7 +704,7 @@ message ClearWaveformMeasurementStatsResponse {
 }
 
 message ClearWaveformProcessingRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
 }
 
@@ -711,7 +713,7 @@ message ClearWaveformProcessingResponse {
 }
 
 message CommitRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message CommitResponse {
@@ -719,7 +721,7 @@ message CommitResponse {
 }
 
 message ConfigureChanCharacteristicsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double input_impedance = 3;
   double max_input_frequency = 4;
@@ -730,7 +732,7 @@ message ConfigureChanCharacteristicsResponse {
 }
 
 message ConfigureEqualizationFilterCoefficientsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   sint32 number_of_coefficients = 3;
   repeated double coefficients = 4;
@@ -741,7 +743,7 @@ message ConfigureEqualizationFilterCoefficientsResponse {
 }
 
 message ConfigureHorizontalTimingRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   double min_sample_rate = 2;
   sint32 min_num_pts = 3;
   double ref_position = 4;
@@ -754,7 +756,7 @@ message ConfigureHorizontalTimingResponse {
 }
 
 message ConfigureRefLevelsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   double low = 2;
   double mid = 3;
   double high = 4;
@@ -765,7 +767,7 @@ message ConfigureRefLevelsResponse {
 }
 
 message ConfigureTriggerDigitalRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string trigger_source = 2;
   TriggerSlope slope = 3;
   double holdoff = 4;
@@ -777,7 +779,7 @@ message ConfigureTriggerDigitalResponse {
 }
 
 message ConfigureTriggerEdgeRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string trigger_source = 2;
   double level = 3;
   TriggerSlope slope = 4;
@@ -791,7 +793,7 @@ message ConfigureTriggerEdgeResponse {
 }
 
 message ConfigureTriggerHysteresisRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string trigger_source = 2;
   double level = 3;
   double hysteresis = 4;
@@ -806,7 +808,7 @@ message ConfigureTriggerHysteresisResponse {
 }
 
 message ConfigureTriggerImmediateRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ConfigureTriggerImmediateResponse {
@@ -814,7 +816,7 @@ message ConfigureTriggerImmediateResponse {
 }
 
 message ConfigureTriggerSoftwareRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   double holdoff = 2;
   double delay = 3;
 }
@@ -824,7 +826,7 @@ message ConfigureTriggerSoftwareResponse {
 }
 
 message ConfigureTriggerVideoRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string trigger_source = 2;
   bool enable_dc_restore = 3;
   VideoSignalFormat signal_format = 4;
@@ -841,7 +843,7 @@ message ConfigureTriggerVideoResponse {
 }
 
 message ConfigureTriggerWindowRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string trigger_source = 2;
   double low_level = 3;
   double high_level = 4;
@@ -856,7 +858,7 @@ message ConfigureTriggerWindowResponse {
 }
 
 message ConfigureVerticalRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double range = 3;
   double offset = 4;
@@ -870,7 +872,7 @@ message ConfigureVerticalResponse {
 }
 
 message DisableRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message DisableResponse {
@@ -878,7 +880,7 @@ message DisableResponse {
 }
 
 message ExportAttributeConfigurationBufferRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   sint32 size_in_bytes = 2;
 }
 
@@ -888,7 +890,7 @@ message ExportAttributeConfigurationBufferResponse {
 }
 
 message ExportAttributeConfigurationFileRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string file_path = 2;
 }
 
@@ -897,7 +899,7 @@ message ExportAttributeConfigurationFileResponse {
 }
 
 message FetchRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
   sint32 num_samples = 4;
@@ -910,7 +912,7 @@ message FetchResponse {
 }
 
 message FetchArrayMeasurementRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
   ArrayMeasurement array_meas_function = 4;
@@ -924,7 +926,7 @@ message FetchArrayMeasurementResponse {
 }
 
 message FetchBinary16Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
   sint32 num_samples = 4;
@@ -937,7 +939,7 @@ message FetchBinary16Response {
 }
 
 message FetchBinary32Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
   sint32 num_samples = 4;
@@ -950,7 +952,7 @@ message FetchBinary32Response {
 }
 
 message FetchBinary8Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
   sint32 num_samples = 4;
@@ -963,7 +965,7 @@ message FetchBinary8Response {
 }
 
 message FetchMeasurementStatsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
   ScalarMeasurement scalar_meas_function = 4;
@@ -980,7 +982,7 @@ message FetchMeasurementStatsResponse {
 }
 
 message GetAttributeViBooleanRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
 }
@@ -991,7 +993,7 @@ message GetAttributeViBooleanResponse {
 }
 
 message GetAttributeViInt32Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
 }
@@ -1002,7 +1004,7 @@ message GetAttributeViInt32Response {
 }
 
 message GetAttributeViInt64Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
 }
@@ -1013,7 +1015,7 @@ message GetAttributeViInt64Response {
 }
 
 message GetAttributeViReal64Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
 }
@@ -1024,7 +1026,7 @@ message GetAttributeViReal64Response {
 }
 
 message GetAttributeViStringRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   sint32 buf_size = 4;
@@ -1036,7 +1038,7 @@ message GetAttributeViStringResponse {
 }
 
 message GetEqualizationFilterCoefficientsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel = 2;
   sint32 number_of_coefficients = 3;
 }
@@ -1047,7 +1049,7 @@ message GetEqualizationFilterCoefficientsResponse {
 }
 
 message ImportAttributeConfigurationBufferRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   sint32 size_in_bytes = 2;
   bytes configuration = 3;
 }
@@ -1057,7 +1059,7 @@ message ImportAttributeConfigurationBufferResponse {
 }
 
 message ImportAttributeConfigurationFileRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string file_path = 2;
 }
 
@@ -1066,19 +1068,20 @@ message ImportAttributeConfigurationFileResponse {
 }
 
 message InitWithOptionsRequest {
-  string resource_name = 1;
-  bool id_query = 2;
-  bool reset_device = 3;
-  string option_string = 4;
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
+  string option_string = 5;
 }
 
 message InitWithOptionsResponse {
   int32 status = 1;
-  fixed32 vi = 2;
+  ni.hardware.grpc.Session vi = 2;
 }
 
 message InitiateAcquisitionRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message InitiateAcquisitionResponse {
@@ -1086,7 +1089,7 @@ message InitiateAcquisitionResponse {
 }
 
 message LockSessionRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message LockSessionResponse {
@@ -1095,7 +1098,7 @@ message LockSessionResponse {
 }
 
 message ProbeCompensationSignalStartRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ProbeCompensationSignalStartResponse {
@@ -1103,7 +1106,7 @@ message ProbeCompensationSignalStartResponse {
 }
 
 message ProbeCompensationSignalStopRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ProbeCompensationSignalStopResponse {
@@ -1111,7 +1114,7 @@ message ProbeCompensationSignalStopResponse {
 }
 
 message ReadRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
   sint32 num_samples = 4;
@@ -1124,7 +1127,7 @@ message ReadResponse {
 }
 
 message ResetDeviceRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ResetDeviceResponse {
@@ -1132,7 +1135,7 @@ message ResetDeviceResponse {
 }
 
 message ResetWithDefaultsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ResetWithDefaultsResponse {
@@ -1140,7 +1143,7 @@ message ResetWithDefaultsResponse {
 }
 
 message SendSoftwareTriggerEdgeRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   WhichTrigger which_trigger = 2;
 }
 
@@ -1149,7 +1152,7 @@ message SendSoftwareTriggerEdgeResponse {
 }
 
 message SetAttributeViBooleanRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   bool value = 4;
@@ -1160,7 +1163,7 @@ message SetAttributeViBooleanResponse {
 }
 
 message SetAttributeViInt32Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   sint32 value = 4;
@@ -1171,7 +1174,7 @@ message SetAttributeViInt32Response {
 }
 
 message SetAttributeViInt64Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   int64 value = 4;
@@ -1182,7 +1185,7 @@ message SetAttributeViInt64Response {
 }
 
 message SetAttributeViReal64Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   double value = 4;
@@ -1193,7 +1196,7 @@ message SetAttributeViReal64Response {
 }
 
 message SetAttributeViStringRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   string value = 4;
@@ -1204,7 +1207,7 @@ message SetAttributeViStringResponse {
 }
 
 message UnlockSessionRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message UnlockSessionResponse {
@@ -1213,7 +1216,7 @@ message UnlockSessionResponse {
 }
 
 message CloseRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message CloseResponse {
@@ -1221,7 +1224,7 @@ message CloseResponse {
 }
 
 message ResetRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ResetResponse {
@@ -1229,7 +1232,7 @@ message ResetResponse {
 }
 
 message SelfTestRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message SelfTestResponse {
