@@ -14,14 +14,6 @@ namespace hardware {
 namespace grpc {
 namespace internal {
   
-#if defined(_MSC_VER)
-  const char* kServerSideTlsConfigFile = "example_config\\server_side_tls.json";
-  const char* kMutualTlsConfigFile = "example_config\\mutual_tls.json";
-#else
-  const char* kServerSideTlsConfigFile = "example_config/server_side_tls.json";
-  const char* kMutualTlsConfigFile = "example_config/mutual_tls.json";
-#endif
-
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
   ::internal::ServerConfigurationParser server_config_parser;
@@ -34,7 +26,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
   try {
-    ::internal::ServerConfigurationParser server_config_parser("fake.json", true);
+    ::internal::ServerConfigurationParser server_config_parser("fake.json");
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
@@ -98,36 +90,68 @@ TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_Throw
   }
 }
 
-TEST(ServerConfigurationParserTests, CreateConfigurationParserFromServerSideTlsConfigFile_ParseServerKey_NotEmpty)
+TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerCert_NotEmpty)
 {
-  ::internal::ServerConfigurationParser server_config_parser(kServerSideTlsConfigFile, true);
-
-  auto server_key = server_config_parser.parse_server_key();
-
-  EXPECT_FALSE(server_key.empty());
-}
-
-TEST(ServerConfigurationParserTests, CreateConfigurationParserFromServerSideTlsConfigFile_ParseServerCert_NotEmpty)
-{
-  ::internal::ServerConfigurationParser server_config_parser(kServerSideTlsConfigFile, true);
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+  {
+    "security" : {
+        "server_cert": "server_self_signed_crt.pem",
+        "server_key": "server_privatekey.pem",
+        "root_cert": ""
+    }
+  })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto server_cert = server_config_parser.parse_server_cert();
 
   EXPECT_FALSE(server_cert.empty());
 }
 
-TEST(ServerConfigurationParserTests, CreateConfigurationParserFromServerSideTlsConfigFile_ParseRootCert_NotEmpty)
+TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerKey_NotEmpty)
 {
-  ::internal::ServerConfigurationParser server_config_parser(kServerSideTlsConfigFile, true);
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+  {
+    "security" : {
+        "server_cert": "server_self_signed_crt.pem",
+        "server_key": "server_privatekey.pem",
+        "root_cert": ""
+    }
+  })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto server_key = server_config_parser.parse_server_key();
+
+  EXPECT_FALSE(server_key.empty());
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseRootCert_NotEmpty)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+  {
+    "security" : {
+        "server_cert": "server_self_signed_crt.pem",
+        "server_key": "server_privatekey.pem",
+        "root_cert": ""
+    }
+  })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto root_cert = server_config_parser.parse_root_cert();
 
   EXPECT_TRUE(root_cert.empty());
 }
 
-TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
+TEST(ServerConfigurationParserTests, JsonConfigWithMutualTls_ParseAllSecurityKeys_NoneEmpty)
 {
-  ::internal::ServerConfigurationParser server_config_parser(kMutualTlsConfigFile, true);
+    nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_cert": "server_self_signed_crt.pem",
+          "server_key": "server_privatekey.pem",
+          "root_cert": "client_self_signed_crt.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto server_key = server_config_parser.parse_server_key();
   auto server_cert = server_config_parser.parse_server_cert();

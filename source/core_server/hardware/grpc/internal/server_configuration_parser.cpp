@@ -34,8 +34,8 @@ ServerConfigurationParser::ServerConfigurationParser()
 {
 }
 
-ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path, bool relative_path = false)
-    : config_file_path_(config_file_path), config_file_(load((relative_path ? get_exe_path() + config_file_path : config_file_path)))
+ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path)
+    : config_file_path_(config_file_path), config_file_(load(config_file_path))
 {
 }
 
@@ -50,12 +50,12 @@ std::string ServerConfigurationParser::get_exe_path()
   char filename[MAX_PATH];
   GetModuleFileNameA(NULL, filename, MAX_PATH);
   std::string exe_filename(filename);
-  return exe_filename.erase(exe_filename.find_last_of("\\") + 1);
+  return exe_filename.erase(exe_filename.find_last_of(kPathDelimitter) + 1);
 #else
   char filename[PATH_MAX];
   readlink("/proc/self/exe", filename, PATH_MAX);
   std::string exe_filename(filename);
-  return exe_filename.erase(exe_filename.find_last_of("/") + 1);
+  return exe_filename.erase(exe_filename.find_last_of(kPathDelimitter) + 1);
 #endif
 }
 

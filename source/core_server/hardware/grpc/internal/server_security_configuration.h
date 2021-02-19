@@ -16,10 +16,11 @@ class ServerSecurityConfiguration {
 
   std::shared_ptr<::grpc::ServerCredentials> get_credentials();
   bool try_get_options(::grpc::SslServerCredentialsOptions* options);
+  bool is_insecure_credentials();
 
  private:
-  ::grpc::SslServerCredentialsOptions security_configuration_;
-  std::shared_ptr<::grpc::ServerCredentials> server_credential_options_;
+  ::grpc::SslServerCredentialsOptions credentials_options_;
+  std::shared_ptr<::grpc::ServerCredentials> server_credentials_;
 };
 
 }  // namespace internal

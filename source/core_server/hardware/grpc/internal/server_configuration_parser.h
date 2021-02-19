@@ -20,7 +20,7 @@ static const char* kValueTypeNotStringMessage = "The following key must be speci
 class ServerConfigurationParser {
  public:
   ServerConfigurationParser();
-ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path, bool relative_path);
+  ServerConfigurationParser(const char* config_file_path);
   ServerConfigurationParser(const nlohmann::json& config_file);
   virtual ~ServerConfigurationParser() {}
 

@@ -180,14 +180,8 @@ add_custom_command(
             $<TARGET_FILE_DIR:core_server>/server_config.json)
 
 #----------------------------------------------------------------------
-# Copy config and certs folders to binary output directory
+# Copy certs folder to binary output directory
 #----------------------------------------------------------------------
-add_custom_command(
-  TARGET core_server POST_BUILD
-  COMMAND  ${CMAKE_COMMAND} -E copy_directory 
-           ${CMAKE_SOURCE_DIR}/example_config/
-           $<TARGET_FILE_DIR:core_server>/example_config/)
-
 add_custom_command(
   TARGET core_server POST_BUILD
   COMMAND  ${CMAKE_COMMAND} -E copy_directory 
@@ -233,6 +227,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/server_configuration_parser_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/server_security_configuration_tests.cpp"
     "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
