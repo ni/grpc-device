@@ -26,7 +26,6 @@ The following `python-only` functions were removed:
 - `fancy_self_test`
 
 The following functions were changed from `private` to `public`:
-- `ConfigureRefLevels`
 - `Fetch`
 - `FetchArrayMeasurement`
 - `FetchBinary16`
@@ -49,3 +48,8 @@ The following functions were changed from `private` to `public`:
 - `SetAttributeViString`
 - `close`
 - `self_test`
+
+The following functions were changed from 'private' to 'no' because they did not exist in niScope.h:
+- `CalFetchDate` - not found in niScope.h
+- `CalFetchTemperature` - not found in niScope.h
+- `ConfigureRefLevels` - obsolete

@@ -8,13 +8,14 @@
 #define NI_FAKE_GRPC_SERVICE_H
 
 #include <nifake.grpc.pb.h>
+#include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <condition_variable>
-#include "nifake_library_wrapper.h"
-#include "core_server/hardware/grpc/internal/shared_library.h"
-#include "core_server/hardware/grpc/internal/session_repository.h"
+#include <hardware/grpc/internal/session_repository.h>
+#include <hardware/grpc/internal/shared_library.h>
+
+#include "nifake_library_interface.h"
 
 namespace ni {
 namespace fake {
@@ -22,7 +23,7 @@ namespace grpc {
 
 class NiFakeService final : public NiFake::Service {
 public:
-  NiFakeService(NiFakeLibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiFakeService(NiFakeLibraryInterface* library, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~NiFakeService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
@@ -74,7 +75,7 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
 
 private:
-  NiFakeLibraryWrapper* library_wrapper_;
+  NiFakeLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 

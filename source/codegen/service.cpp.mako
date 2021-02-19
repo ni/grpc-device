@@ -35,8 +35,8 @@ namespace grpc {
   namespace internal = ni::hardware::grpc::internal;
 
 ## Constructors
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryWrapper* library_wrapper, internal::SessionRepository* session_repository)
-      : library_wrapper_(library_wrapper), session_repository_(session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
+      : library_(library), session_repository_(session_repository)
   {
   }
 
@@ -64,7 +64,7 @@ namespace grpc {
 
 <% continue %>
 % endif
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
+    ::grpc::Status libraryStatus = library_->check_function_exists("${c_function_name}");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -99,7 +99,7 @@ namespace grpc {
     ${parameter_type} ${parameter_name};
 %endif
 %endfor
-    auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+    auto status = library_->${function}(${handler_helpers.create_args(parameters)});
 <%
      parameter['cppName'] = parameter_name
 %>\

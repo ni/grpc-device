@@ -1,6 +1,9 @@
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/server_configuration_parser.h"
 
+#include <niscope/niscope_library.h>
+#include <niscope/niscope_service.h>
+
 static void RunServer(int argc, char** argv)
 {
   grpc::EnableDefaultHealthCheckService(true);
@@ -27,6 +30,10 @@ static void RunServer(int argc, char** argv)
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService core_service(&session_repository);
   builder.RegisterService(&core_service);
+
+  ni::scope::grpc::NiScopeLibrary niscope_library;
+  ni::scope::grpc::NiScopeService niscope_service(&niscope_library, &session_repository);
+  builder.RegisterService(&niscope_service);
 
   // Assemble the server.
   auto server = builder.BuildAndStart();

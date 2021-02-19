@@ -20,13 +20,14 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H"
 
 ## Include section
 #include <${config["module_name"]}.grpc.pb.h>
+#include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <condition_variable>
-#include "${config["module_name"]}_library_wrapper.h"
-#include "core_server/hardware/grpc/internal/shared_library.h"
-#include "core_server/hardware/grpc/internal/session_repository.h"
+#include <hardware/grpc/internal/session_repository.h>
+#include <hardware/grpc/internal/shared_library.h>
+
+#include "${config["module_name"]}_library_interface.h"
 
 namespace ni {
 namespace ${config["namespace_component"]} {
@@ -34,7 +35,7 @@ namespace grpc {
 
 class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
 public:
-  ${service_class_prefix}Service(${service_class_prefix}LibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~${service_class_prefix}Service();
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
@@ -45,7 +46,7 @@ public:
 % endfor
 
 private:
-  ${service_class_prefix}LibraryWrapper* library_wrapper_;
+  ${service_class_prefix}LibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 

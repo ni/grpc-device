@@ -1,6 +1,6 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
-#include <nifake_mock_library_wrapper.h>
+#include <nifake_mock_library.h>
 #include <nifake_service.h>
 
 #include <thread>
@@ -16,11 +16,11 @@ namespace grpc {
 TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibraryWrapper library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, check_function_exists("niFake_GetABoolean"))
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  EXPECT_CALL(library, check_function_exists("niFake_GetABoolean"))
       .WillOnce(testing::Return(::grpc::Status(::grpc::NOT_FOUND, "The requested function was not found: niFake_GetABoolean")));
-  EXPECT_CALL(library_wrapper, GetABoolean)
+  EXPECT_CALL(library, GetABoolean)
       .Times(0);
 
   ::grpc::ServerContext context;
@@ -34,11 +34,11 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibraryWrapper library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, check_function_exists("niFake_GetABoolean"))
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  EXPECT_CALL(library, check_function_exists("niFake_GetABoolean"))
       .WillOnce(testing::Return(::grpc::Status::OK));
-  EXPECT_CALL(library_wrapper, GetABoolean)
+  EXPECT_CALL(library, GetABoolean)
       .Times(1);
 
   ::grpc::ServerContext context;

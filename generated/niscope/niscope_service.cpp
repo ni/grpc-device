@@ -17,8 +17,8 @@ namespace grpc {
 
   namespace internal = ni::hardware::grpc::internal;
 
-  NiScopeService::NiScopeService(NiScopeLibraryWrapper* library_wrapper, internal::SessionRepository* session_repository)
-      : library_wrapper_(library_wrapper), session_repository_(session_repository)
+  NiScopeService::NiScopeService(NiScopeLibraryInterface* library, internal::SessionRepository* session_repository)
+      : library_(library), session_repository_(session_repository)
   {
   }
 
@@ -30,13 +30,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_Abort");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_Abort");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->Abort(vi);
+    auto status = library_->Abort(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -45,14 +45,14 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_AcquisitionStatus");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_AcquisitionStatus");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
     ViInt32 acquisition_status_ctype;
-    auto status = library_wrapper_->AcquisitionStatus(vi, &acquisition_status_ctype);
+    auto status = library_->AcquisitionStatus(vi, &acquisition_status_ctype);
     response->set_status(status);
     if (status == 0) {
       response->set_acquisition_status(static_cast<ni::scope::grpc::AcquisitionStatus>(acquisition_status_ctype));
@@ -64,7 +64,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::AddWaveformProcessing(::grpc::ServerContext* context, const AddWaveformProcessingRequest* request, AddWaveformProcessingResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_AddWaveformProcessing");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_AddWaveformProcessing");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -74,7 +74,7 @@ namespace grpc {
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
     // auto meas_function = static_cast<ViInt32>((ViInt32)request->meas_function());
     ViInt32 meas_function;
-    auto status = library_wrapper_->AddWaveformProcessing(vi, channel_list, meas_function);
+    auto status = library_->AddWaveformProcessing(vi, channel_list, meas_function);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -83,13 +83,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::AutoSetup(::grpc::ServerContext* context, const AutoSetupRequest* request, AutoSetupResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_AutoSetup");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_AutoSetup");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->AutoSetup(vi);
+    auto status = library_->AutoSetup(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -98,7 +98,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_CalSelfCalibrate");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_CalSelfCalibrate");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -108,7 +108,7 @@ namespace grpc {
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
     // auto option = static_cast<ViInt32>((ViInt32)request->option());
     ViInt32 option;
-    auto status = library_wrapper_->CalSelfCalibrate(vi, channel_list, option);
+    auto status = library_->CalSelfCalibrate(vi, channel_list, option);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -117,7 +117,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ClearWaveformMeasurementStats(::grpc::ServerContext* context, const ClearWaveformMeasurementStatsRequest* request, ClearWaveformMeasurementStatsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ClearWaveformMeasurementStats");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ClearWaveformMeasurementStats");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -127,7 +127,7 @@ namespace grpc {
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
     // auto clearable_measurement_function = static_cast<ViInt32>((ViInt32)request->clearable_measurement_function());
     ViInt32 clearable_measurement_function;
-    auto status = library_wrapper_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
+    auto status = library_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -136,14 +136,14 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ClearWaveformProcessing(::grpc::ServerContext* context, const ClearWaveformProcessingRequest* request, ClearWaveformProcessingResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ClearWaveformProcessing");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ClearWaveformProcessing");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
-    auto status = library_wrapper_->ClearWaveformProcessing(vi, channel_list);
+    auto status = library_->ClearWaveformProcessing(vi, channel_list);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -152,13 +152,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_Commit");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_Commit");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->Commit(vi);
+    auto status = library_->Commit(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -167,7 +167,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureChanCharacteristics(::grpc::ServerContext* context, const ConfigureChanCharacteristicsRequest* request, ConfigureChanCharacteristicsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureChanCharacteristics");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureChanCharacteristics");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -176,7 +176,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 input_impedance = request->input_impedance();
     ViReal64 max_input_frequency = request->max_input_frequency();
-    auto status = library_wrapper_->ConfigureChanCharacteristics(vi, channel_list, input_impedance, max_input_frequency);
+    auto status = library_->ConfigureChanCharacteristics(vi, channel_list, input_impedance, max_input_frequency);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -192,7 +192,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureHorizontalTiming(::grpc::ServerContext* context, const ConfigureHorizontalTimingRequest* request, ConfigureHorizontalTimingResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureHorizontalTiming");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureHorizontalTiming");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -203,7 +203,7 @@ namespace grpc {
     ViReal64 ref_position = request->ref_position();
     ViInt32 num_records = request->num_records();
     ViBoolean enforce_realtime = request->enforce_realtime();
-    auto status = library_wrapper_->ConfigureHorizontalTiming(vi, min_sample_rate, min_num_pts, ref_position, num_records, enforce_realtime);
+    auto status = library_->ConfigureHorizontalTiming(vi, min_sample_rate, min_num_pts, ref_position, num_records, enforce_realtime);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -212,7 +212,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureRefLevels(::grpc::ServerContext* context, const ConfigureRefLevelsRequest* request, ConfigureRefLevelsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureRefLevels");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureRefLevels");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -221,7 +221,7 @@ namespace grpc {
     ViReal64 low = request->low();
     ViReal64 mid = request->mid();
     ViReal64 high = request->high();
-    auto status = library_wrapper_->ConfigureRefLevels(vi, low, mid, high);
+    auto status = library_->ConfigureRefLevels(vi, low, mid, high);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -230,7 +230,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerDigital(::grpc::ServerContext* context, const ConfigureTriggerDigitalRequest* request, ConfigureTriggerDigitalResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureTriggerDigital");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerDigital");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -242,7 +242,7 @@ namespace grpc {
     ViInt32 slope;
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
-    auto status = library_wrapper_->ConfigureTriggerDigital(vi, trigger_source, slope, holdoff, delay);
+    auto status = library_->ConfigureTriggerDigital(vi, trigger_source, slope, holdoff, delay);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -251,7 +251,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerEdge(::grpc::ServerContext* context, const ConfigureTriggerEdgeRequest* request, ConfigureTriggerEdgeResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureTriggerEdge");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerEdge");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -267,7 +267,7 @@ namespace grpc {
     ViInt32 trigger_coupling;
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
-    auto status = library_wrapper_->ConfigureTriggerEdge(vi, trigger_source, level, slope, trigger_coupling, holdoff, delay);
+    auto status = library_->ConfigureTriggerEdge(vi, trigger_source, level, slope, trigger_coupling, holdoff, delay);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -276,7 +276,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerHysteresis(::grpc::ServerContext* context, const ConfigureTriggerHysteresisRequest* request, ConfigureTriggerHysteresisResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureTriggerHysteresis");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerHysteresis");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -293,7 +293,7 @@ namespace grpc {
     ViInt32 trigger_coupling;
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
-    auto status = library_wrapper_->ConfigureTriggerHysteresis(vi, trigger_source, level, hysteresis, slope, trigger_coupling, holdoff, delay);
+    auto status = library_->ConfigureTriggerHysteresis(vi, trigger_source, level, hysteresis, slope, trigger_coupling, holdoff, delay);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -302,13 +302,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerImmediate(::grpc::ServerContext* context, const ConfigureTriggerImmediateRequest* request, ConfigureTriggerImmediateResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureTriggerImmediate");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerImmediate");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->ConfigureTriggerImmediate(vi);
+    auto status = library_->ConfigureTriggerImmediate(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -317,7 +317,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerSoftware(::grpc::ServerContext* context, const ConfigureTriggerSoftwareRequest* request, ConfigureTriggerSoftwareResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureTriggerSoftware");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerSoftware");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -325,7 +325,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
-    auto status = library_wrapper_->ConfigureTriggerSoftware(vi, holdoff, delay);
+    auto status = library_->ConfigureTriggerSoftware(vi, holdoff, delay);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -334,7 +334,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerVideo(::grpc::ServerContext* context, const ConfigureTriggerVideoRequest* request, ConfigureTriggerVideoResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureTriggerVideo");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerVideo");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -357,7 +357,7 @@ namespace grpc {
     ViInt32 trigger_coupling;
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
-    auto status = library_wrapper_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
+    auto status = library_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -366,7 +366,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerWindow(::grpc::ServerContext* context, const ConfigureTriggerWindowRequest* request, ConfigureTriggerWindowResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureTriggerWindow");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureTriggerWindow");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -383,7 +383,7 @@ namespace grpc {
     ViInt32 trigger_coupling;
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
-    auto status = library_wrapper_->ConfigureTriggerWindow(vi, trigger_source, low_level, high_level, window_mode, trigger_coupling, holdoff, delay);
+    auto status = library_->ConfigureTriggerWindow(vi, trigger_source, low_level, high_level, window_mode, trigger_coupling, holdoff, delay);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -392,7 +392,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureVertical(::grpc::ServerContext* context, const ConfigureVerticalRequest* request, ConfigureVerticalResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ConfigureVertical");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ConfigureVertical");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -406,7 +406,7 @@ namespace grpc {
     ViInt32 coupling;
     ViReal64 probe_attenuation = request->probe_attenuation();
     ViBoolean enabled = request->enabled();
-    auto status = library_wrapper_->ConfigureVertical(vi, channel_list, range, offset, coupling, probe_attenuation, enabled);
+    auto status = library_->ConfigureVertical(vi, channel_list, range, offset, coupling, probe_attenuation, enabled);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -415,13 +415,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_Disable");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_Disable");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->Disable(vi);
+    auto status = library_->Disable(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -437,14 +437,14 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ExportAttributeConfigurationFile");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ExportAttributeConfigurationFile");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
     ViConstString file_path = request->file_path().c_str();
-    auto status = library_wrapper_->ExportAttributeConfigurationFile(vi, file_path);
+    auto status = library_->ExportAttributeConfigurationFile(vi, file_path);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -495,7 +495,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_GetAttributeViBoolean");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_GetAttributeViBoolean");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -504,7 +504,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViBoolean value;
-    auto status = library_wrapper_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
+    auto status = library_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
       response->set_value(value);
@@ -516,7 +516,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_GetAttributeViInt32");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_GetAttributeViInt32");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -525,7 +525,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt32 value;
-    auto status = library_wrapper_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
+    auto status = library_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
       response->set_value(value);
@@ -537,7 +537,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_GetAttributeViInt64");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_GetAttributeViInt64");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -546,7 +546,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt64 value;
-    auto status = library_wrapper_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
+    auto status = library_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
       response->set_value(value);
@@ -558,7 +558,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_GetAttributeViReal64");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_GetAttributeViReal64");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -567,7 +567,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViReal64 value;
-    auto status = library_wrapper_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
+    auto status = library_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
       response->set_value(value);
@@ -600,14 +600,14 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ImportAttributeConfigurationFile");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ImportAttributeConfigurationFile");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
     ViConstString file_path = request->file_path().c_str();
-    auto status = library_wrapper_->ImportAttributeConfigurationFile(vi, file_path);
+    auto status = library_->ImportAttributeConfigurationFile(vi, file_path);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -616,7 +616,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_InitWithOptions");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_InitWithOptions");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -626,7 +626,7 @@ namespace grpc {
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
     ViSession vi;
-    auto status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+    auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
     response->set_status(status);
     if (status == 0) {
       response->set_vi(vi);
@@ -638,13 +638,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::InitiateAcquisition(::grpc::ServerContext* context, const InitiateAcquisitionRequest* request, InitiateAcquisitionResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_InitiateAcquisition");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_InitiateAcquisition");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->InitiateAcquisition(vi);
+    auto status = library_->InitiateAcquisition(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -653,14 +653,14 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_LockSession");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_LockSession");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
     ViBoolean caller_has_lock;
-    auto status = library_wrapper_->LockSession(vi, &caller_has_lock);
+    auto status = library_->LockSession(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
       response->set_caller_has_lock(caller_has_lock);
@@ -672,13 +672,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ProbeCompensationSignalStart(::grpc::ServerContext* context, const ProbeCompensationSignalStartRequest* request, ProbeCompensationSignalStartResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ProbeCompensationSignalStart");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ProbeCompensationSignalStart");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->ProbeCompensationSignalStart(vi);
+    auto status = library_->ProbeCompensationSignalStart(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -687,13 +687,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ProbeCompensationSignalStop(::grpc::ServerContext* context, const ProbeCompensationSignalStopRequest* request, ProbeCompensationSignalStopResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ProbeCompensationSignalStop");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ProbeCompensationSignalStop");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->ProbeCompensationSignalStop(vi);
+    auto status = library_->ProbeCompensationSignalStop(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -709,13 +709,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ResetDevice");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ResetDevice");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->ResetDevice(vi);
+    auto status = library_->ResetDevice(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -724,13 +724,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_ResetWithDefaults");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_ResetWithDefaults");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->ResetWithDefaults(vi);
+    auto status = library_->ResetWithDefaults(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -739,7 +739,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::SendSoftwareTriggerEdge(::grpc::ServerContext* context, const SendSoftwareTriggerEdgeRequest* request, SendSoftwareTriggerEdgeResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_SendSoftwareTriggerEdge");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_SendSoftwareTriggerEdge");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -748,7 +748,7 @@ namespace grpc {
     // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
     // auto which_trigger = static_cast<ViInt32>((ViInt32)request->which_trigger());
     ViInt32 which_trigger;
-    auto status = library_wrapper_->SendSoftwareTriggerEdge(vi, which_trigger);
+    auto status = library_->SendSoftwareTriggerEdge(vi, which_trigger);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -757,7 +757,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_SetAttributeViBoolean");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_SetAttributeViBoolean");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -766,7 +766,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViBoolean value = request->value();
-    auto status = library_wrapper_->SetAttributeViBoolean(vi, channel_list, attribute_id, value);
+    auto status = library_->SetAttributeViBoolean(vi, channel_list, attribute_id, value);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -775,7 +775,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_SetAttributeViInt32");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_SetAttributeViInt32");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -784,7 +784,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt32 value = request->value();
-    auto status = library_wrapper_->SetAttributeViInt32(vi, channel_list, attribute_id, value);
+    auto status = library_->SetAttributeViInt32(vi, channel_list, attribute_id, value);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -793,7 +793,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::SetAttributeViInt64(::grpc::ServerContext* context, const SetAttributeViInt64Request* request, SetAttributeViInt64Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_SetAttributeViInt64");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_SetAttributeViInt64");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -802,7 +802,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt64 value = request->value();
-    auto status = library_wrapper_->SetAttributeViInt64(vi, channel_list, attribute_id, value);
+    auto status = library_->SetAttributeViInt64(vi, channel_list, attribute_id, value);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -811,7 +811,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_SetAttributeViReal64");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_SetAttributeViReal64");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -820,7 +820,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViReal64 value = request->value();
-    auto status = library_wrapper_->SetAttributeViReal64(vi, channel_list, attribute_id, value);
+    auto status = library_->SetAttributeViReal64(vi, channel_list, attribute_id, value);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -829,7 +829,7 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_SetAttributeViString");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_SetAttributeViString");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
@@ -838,7 +838,7 @@ namespace grpc {
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViConstString value = request->value().c_str();
-    auto status = library_wrapper_->SetAttributeViString(vi, channel_list, attribute_id, value);
+    auto status = library_->SetAttributeViString(vi, channel_list, attribute_id, value);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -847,14 +847,14 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_UnlockSession");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_UnlockSession");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
     ViBoolean caller_has_lock;
-    auto status = library_wrapper_->UnlockSession(vi, &caller_has_lock);
+    auto status = library_->UnlockSession(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
       response->set_caller_has_lock(caller_has_lock);
@@ -866,13 +866,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_close");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_close");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->close(vi);
+    auto status = library_->close(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -881,13 +881,13 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niScope_reset");
+    ::grpc::Status libraryStatus = library_->check_function_exists("niScope_reset");
     if (!libraryStatus.ok()) {
       return libraryStatus;
     }
 
     ViSession vi = request->vi();
-    auto status = library_wrapper_->reset(vi);
+    auto status = library_->reset(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
   }

@@ -8,13 +8,14 @@
 #define NI_SCOPE_GRPC_SERVICE_H
 
 #include <niscope.grpc.pb.h>
+#include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <condition_variable>
-#include "niscope_library_wrapper.h"
-#include "core_server/hardware/grpc/internal/shared_library.h"
-#include "core_server/hardware/grpc/internal/session_repository.h"
+#include <hardware/grpc/internal/session_repository.h>
+#include <hardware/grpc/internal/shared_library.h>
+
+#include "niscope_library_interface.h"
 
 namespace ni {
 namespace scope {
@@ -22,7 +23,7 @@ namespace grpc {
 
 class NiScopeService final : public NiScope::Service {
 public:
-  NiScopeService(NiScopeLibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiScopeService(NiScopeLibraryInterface* library, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~NiScopeService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response) override;
@@ -81,7 +82,7 @@ public:
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
 
 private:
-  NiScopeLibraryWrapper* library_wrapper_;
+  NiScopeLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 
