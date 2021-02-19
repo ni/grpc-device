@@ -8,21 +8,43 @@ option csharp_namespace = "NationalInstruments.Hardware.Grpc";
 package ni.hardware.grpc;
 
 service ServerUtilities {
-  // Reserve a set of client defined resources for exclusive use
-  rpc Reserve (ReserveRequest) returns (ReserveResponse);
+  // Provides a list of devices or chassis connected to server under localhost
+  rpc EnumerateDevices (EnumerateDevicesRequest) returns (EnumerateDevicesResponse);
 
-  // Determines if a set of client defined resources is currently reserved by a specific client
-  rpc IsReservedByClient (IsReservedByClientRequest) returns (IsReservedByClientResponse);
+  // Reserve a set of client defined resources for exclusive use
+  rpc Reserve(ReserveRequest) returns (ReserveResponse);
+
+  // Determines if a set of client defined resources is currently reserved by a
+  // specific client
+  rpc IsReservedByClient(IsReservedByClientRequest)
+      returns (IsReservedByClientResponse);
 
   // Unreserves a previously reserved resource
-  rpc Unreserve (UnreserveRequest) returns (UnreserveResponse);
+  rpc Unreserve(UnreserveRequest) returns (UnreserveResponse);
+
+  // Resets the server to a default state with no open sessions
+  rpc ResetServer(ResetServerRequest) returns (ResetServerResponse);
 }
 
 message Session {
-   oneof session {
-      string name = 1;
-      fixed64 id = 2;
-   }
+  oneof session {
+    string name = 1;
+    fixed64 id = 2;
+  }
+}
+
+message DeviceProperties {
+  string name = 1;
+  string model = 2;
+  string vendor = 3;
+  string serial_number = 4;
+}
+
+message EnumerateDevicesRequest {
+}
+
+message EnumerateDevicesResponse {
+  repeated DeviceProperties devices = 1;
 }
 
 message ReserveRequest {
@@ -48,7 +70,7 @@ message IsReservedByClientResponse {
 }
 
 message UnreserveRequest {
-   // client defined string representing a set of reservable resources
+  // client defined string representing a set of reservable resources
   string reservation_id = 1;
   // client defined identifier for a specific client
   string client_id = 2;
@@ -56,4 +78,10 @@ message UnreserveRequest {
 
 message UnreserveResponse {
   bool is_unreserved = 1;
+}
+
+message ResetServerRequest {}
+
+message ResetServerResponse {
+  bool is_server_reset = 1;
 }

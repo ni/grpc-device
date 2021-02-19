@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.12.0)
 
 project(core_server C CXX)
 
@@ -34,11 +34,75 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #----------------------------------------------------------------------
 # Include generated *.pb.h files
 #----------------------------------------------------------------------
+set(proto_srcs_dir "${CMAKE_CURRENT_BINARY_DIR}/proto")
+file(MAKE_DIRECTORY ${proto_srcs_dir})
 include_directories(
-  "${CMAKE_CURRENT_BINARY_DIR}"
+  "${proto_srcs_dir}"
+  "./generated"
+  "./imports/includes"
   "./source"
   "./source/core_server"
 )
+
+#----------------------------------------------------------------------
+# Get list of NI Driver APIs and directories to generate from
+#----------------------------------------------------------------------
+set(metadata_dir ${CMAKE_SOURCE_DIR}/source/metadata)
+set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
+set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
+file(GLOB proto_directories RELATIVE ${metadata_dir} CONFIGURE_DEPENDS ${metadata_dir}/*)
+set(ni_apis "")
+foreach(proto_dir ${proto_directories})
+  if(IS_DIRECTORY ${metadata_dir}/${proto_dir})
+    set(ni_apis ${ni_apis} ${proto_dir})
+  endif()
+endforeach()
+
+#----------------------------------------------------------------------
+# Create NI Driver APIs proto and server files
+#----------------------------------------------------------------------
+set(codegen_scripts
+  "${codegen_dir}/library_wrapper.h.mako"
+  "${codegen_dir}/proto.mako"
+  "${codegen_dir}/service.cpp.mako"
+  "${codegen_dir}/service.h.mako"
+  "${codegen_dir}/common_helpers.py"
+  "${codegen_dir}/generate_service.py"
+  "${codegen_dir}/handler_helpers.py"
+  "${codegen_dir}/proto_helpers.py")
+
+# Populated in the api loop below.
+set(api_service_srcs "")
+
+foreach(api ${ni_apis})
+  set(codegen_dependencies
+    "${metadata_dir}/${api}/attributes.py"
+    "${metadata_dir}/${api}/attributes_addon.py"
+    "${metadata_dir}/${api}/config.py"
+    "${metadata_dir}/${api}/config_addon.py"
+    "${metadata_dir}/${api}/enums.py"
+    "${metadata_dir}/${api}/enums_addon.py"
+    "${metadata_dir}/${api}/functions.py"
+    "${metadata_dir}/${api}/functions_addon.py"
+    "${metadata_dir}/${api}/__init__.py")
+  set(output_files
+    ${service_output_dir}/${api}/${api}.proto
+    ${service_output_dir}/${api}/${api}_service.cpp
+    ${service_output_dir}/${api}/${api}_service.h
+    ${service_output_dir}/${api}/${api}_library_wrapper.h)
+  set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
+  if (api STREQUAL "nifake")
+    set(codegen_dependencies ${codegen_dependencies} "${codegen_dir}/mock_library_wrapper.h.mako")
+    set(output_files ${output_files} ${service_output_dir}/${api}/${api}_mock_library_wrapper.h)
+    set(gen_command ${gen_command} --generate-mock)
+  else()
+    set(api_service_srcs ${api_service_srcs} "${service_output_dir}/${api}/${api}_service.cpp")
+  endif()
+  add_custom_command(OUTPUT ${output_files}
+    ${gen_command}
+    COMMENT "Generating proto file and service for ${api}"
+    DEPENDS ${codegen_dependencies} ${codegen_scripts})
+endforeach()
 
 #----------------------------------------------------------------------
 # Proto file
@@ -47,83 +111,145 @@ get_filename_component(server_utilities_proto "source/server_utilities.proto" AB
 get_filename_component(server_utilities_proto_path "${server_utilities_proto}" PATH)
 
 #----------------------------------------------------------------------
-# Generated sources
+# Generate sources from proto files
 #----------------------------------------------------------------------
-set(server_utilities_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.pb.cc")
-set(server_utilities_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.pb.h")
-set(server_utilities_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.grpc.pb.cc")
-set(server_utilities_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/server_utilities.grpc.pb.h")
-add_custom_command(
-  OUTPUT "${server_utilities_proto_srcs}" "${server_utilities_proto_hdrs}" "${server_utilities_grpc_srcs}" "${server_utilities_grpc_hdrs}"
-  COMMAND ${_PROTOBUF_PROTOC}
-  ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
-    --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
-    -I "${server_utilities_proto_path}"
-    --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-    "${server_utilities_proto}"
-  DEPENDS "${server_utilities_proto}")
+function(GenerateGrpcSources proto_file proto_path proto_srcs proto_hdrs grpc_srcs grpc_hdrs)
+  get_filename_component(proto_out_path "${proto_srcs}" PATH)
+  add_custom_command(
+    OUTPUT "${proto_srcs}" "${proto_hdrs}" "${grpc_srcs}" "${grpc_hdrs}"
+    COMMAND ${_PROTOBUF_PROTOC}
+    ARGS --grpc_out "${proto_out_path}"
+      --cpp_out "${proto_out_path}"
+      -I "${proto_path}"
+      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+      --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
+      "${proto_file}"
+    DEPENDS "${proto_file}")
+endfunction()
+
+set(server_utilities_proto_srcs "${proto_srcs_dir}/server_utilities.pb.cc")
+set(server_utilities_proto_hdrs "${proto_srcs_dir}/server_utilities.pb.h")
+set(server_utilities_grpc_srcs "${proto_srcs_dir}/server_utilities.grpc.pb.cc")
+set(server_utilities_grpc_hdrs "${proto_srcs_dir}/server_utilities.grpc.pb.h")
+GenerateGrpcSources(
+  ${server_utilities_proto}
+  ${server_utilities_proto_path}
+  ${server_utilities_proto_srcs}
+  ${server_utilities_proto_hdrs}
+  ${server_utilities_grpc_srcs}
+  ${server_utilities_grpc_hdrs})
+
+foreach(api ${ni_apis})
+  GenerateGrpcSources(
+    ${service_output_dir}/${api}/${api}.proto
+    ${service_output_dir}/${api}/
+    "${proto_srcs_dir}/${api}.pb.cc"
+    "${proto_srcs_dir}/${api}.pb.h"
+    "${proto_srcs_dir}/${api}.grpc.pb.cc"
+    "${proto_srcs_dir}/${api}.grpc.pb.h")
+  if(NOT api STREQUAL "nifake")
+    set(api_service_srcs
+      ${api_service_srcs}
+      "${proto_srcs_dir}/${api}.pb.cc"
+      "${proto_srcs_dir}/${api}.grpc.pb.cc")
+  endif()
+endforeach()
 
 add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
+   "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
    "source/core_server/hardware/grpc/internal/semaphore.cpp"
+   "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
    "source/core_server/hardware/grpc/internal/session_repository.cpp"
    "source/core_server/hardware/grpc/internal/shared_library.cpp"
    ${server_utilities_proto_srcs}
-   ${server_utilities_grpc_srcs})
+   ${server_utilities_grpc_srcs}
+   ${api_service_srcs})
 
 target_link_libraries(core_server
    ${_REFLECTION}
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
    ${CMAKE_DL_LIBS}
+   nlohmann_json::nlohmann_json
    )
-
+ 
+#----------------------------------------------------------------------
+# Copy server_config.json to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+   TARGET core_server POST_BUILD
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
+            ${CMAKE_SOURCE_DIR}/server_config.json
+            $<TARGET_FILE_DIR:core_server>/server_config.json)
+ 
+#----------------------------------------------------------------------
+# Add JSON parser
+#----------------------------------------------------------------------
+add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
+ 
 # Add googletest tests
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest} EXCLUDE_FROM_ALL)
+add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
 
 # Link test executable against gtest
 add_executable(CoreServiceTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
-    "source/core_server/hardware/grpc/internal/semaphore.cpp"
-    "source/core_server/hardware/grpc/internal/session_repository.cpp"
-    ${server_utilities_proto_srcs}
-    ${server_utilities_grpc_srcs})
-
-target_link_libraries(CoreServiceTestsRunner
-    gtest
-    ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS})
-
-add_library(TestApi SHARED
-    "source/tests/test_api/test_api.cpp")
-add_compile_definitions(TestApi TEST_API_BUILDING)
-
-set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
-
-add_executable(UnitTestsRunner
-    "source/tests/run_all_tests.cpp"
-    "source/tests/unit/hardware/grpc/core_service_tests.cpp"
-    "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
-    "source/tests/unit/shared_library_tests.cpp"
-    "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
     "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 
-target_link_libraries(UnitTestsRunner
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+    find_package(Threads REQUIRED)
+
+target_link_libraries(CoreServiceTestsRunner
     gtest
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
+
+add_library(TestApi SHARED
+    "source/tests/test_api/test_api.cpp")
+add_compile_definitions(TestApi TEST_API_BUILDING)
+
+# Hardcode ni-fake sources in right now to get it building the unit tests.
+add_executable(UnitTestsRunner
+    "source/tests/run_all_tests.cpp"
+    "source/tests/unit/hardware/grpc/core_service_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/device_enumerator_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/server_configuration_parser_tests.cpp"
+    "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
+    "source/tests/unit/shared_library_tests.cpp"
+    "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
+    "source/core_server/hardware/grpc/internal/semaphore.cpp"
+    "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
+    "source/core_server/hardware/grpc/internal/session_repository.cpp"
+    "source/core_server/hardware/grpc/internal/shared_library.cpp"
+    ${server_utilities_proto_srcs}
+    ${server_utilities_grpc_srcs}
+    "${service_output_dir}/nifake/nifake_service.cpp"
+    "${proto_srcs_dir}/nifake.pb.cc"
+    "${proto_srcs_dir}/nifake.grpc.pb.cc")
+
+target_include_directories(UnitTestsRunner
+    PRIVATE "${service_output_dir}/nifake")
+target_link_libraries(UnitTestsRunner
+    gtest
+    gmock
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS}
+    Threads::Threads
+    nlohmann_json::nlohmann_json)
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )

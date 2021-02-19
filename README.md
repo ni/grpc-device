@@ -18,8 +18,9 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 To prepare for cmake + Microsoft Visual C++ compiler build
 - Install Visual Studio 2015, 2017, or 2019 (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
-- Install [CMake](https://cmake.org/download/).
+- Install [CMake](https://cmake.org/download/) 3.12.0 or newer.
 - Install [Python](https://www.python.org/downloads/).
+- Install [mako](https://www.makotemplates.org/download.html)
 
 Launch "x64 Native Tools Command Prompt for Visual Studio"
 
@@ -53,19 +54,31 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git and cmake:
+For Debian/Ubuntu, install git, cmake (3.12.0 or newer), and mako:
 ```
 > sudo apt-get update
 > sudo apt-get install git
 > sudo apt-get install cmake
+> python -m pip install mako
 ```
 
-For NI Linux RT, install git, git-perltools, and cmake:
+For NI Linux RT, install git, git-perltools, cmake (3.12.0 or newer), python3-utils, and mako:
 ```
 > opkg update
 > opkg install git
 > opkg install git-perltools
 > opkg install cmake
+> opkg install python3-misc
+# follow the latest instructions to install pip:
+# https://pip.pypa.io/en/stable/installing/
+> python -m pip install mako
+```
+
+**Note**: Depending on the version of NI Linux RT, installing a newer version of CMake
+may be required. Follow the instructions to [install CMake](https://cmake.org/install/).
+If this is required, make sure to install openssl-dev as well.
+```
+> opkg install openssl-dev
 ```
 
 ### Clone Repo
@@ -95,6 +108,21 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 > cmake -DCMAKE_BUILD_TYPE=Release ../..
 > make
 ```
+
+## C++ Coding Conventions
+
+This project follows the Google style guidelines for all C++ and protobuf files with the exceptions documented below.
+
+The C++ style is encoded in the `clang-format` file at the root of the repository.<br>
+See https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+Setting | Google | Ours | Justification
+--|--|--|--
+`ColumnLimit` | `80` | `0` | Some times a long line is appropriate. We should police that in PRs, not with our tooling.
+`AlignAfterOpenBracket` | `Align` | `AlwaysBreak` | Either all parameters should be on one line or all of them on separate lines. Without this the formatter would allow you to leave parameters on the first line and would align the other lines with the first parameter. This adds a lot of whitespace.
+`BreakBeforeBraces` | `Attach` | `Stroustrup` | This puts function curly braces on the next line and puts `else` blocks on the next line. This helps with control flow readability.
+`DerivePointerAlignment` | `true` | `false` | We should be consistent with our pointer alignment. Left alignment (`void* foo`) is more standard than right (`void *foo`) and is the default Google style.
+`IndentPPDirectives` | `None` | `BeforeHash` | Indented `#include` directives inside `#defined` blocks improves readability.
 
 ## Running the gRPC Server
 
