@@ -2,38 +2,6 @@
 #include "hardware/grpc/internal/server_configuration_parser.h"
 #include "hardware/grpc/internal/server_security_configuration.h"
 
-/*std::shared_ptr<grpc::ServerCredentials> CreateCredentials(ni::hardware::grpc::internal::ServerConfigurationParser& server_config_parser)
-{
-  std::string server_cert, server_key, root_cert;
-
-	std::shared_ptr<grpc::ServerCredentials> credentials;
-  
-  server_cert = server_config_parser.parse_server_cert();
-  server_key = server_config_parser.parse_server_key();
-  root_cert = server_config_parser.parse_root_cert();
-
-	if (server_cert.empty())
-	{
-    credentials = grpc::InsecureServerCredentials();
-	}
-	else
-	{
-		grpc::SslServerCredentialsOptions::PemKeyCertPair key_cert_pair;
-		key_cert_pair.private_key = server_key;
-		key_cert_pair.cert_chain = server_cert;
-		
-    grpc::SslServerCredentialsOptions ssl_opts;
-		ssl_opts.pem_key_cert_pairs.push_back(key_cert_pair);
-    ssl_opts.client_certificate_request = root_cert.empty()
-      ? GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE 
-      : GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY;
- 		ssl_opts.pem_root_certs=root_cert;
-
-		credentials = grpc::SslServerCredentials(ssl_opts);
-  }
-	return credentials;
-}*/
-
 static void RunServer(int argc, char** argv)
 {
   grpc::EnableDefaultHealthCheckService(true);
