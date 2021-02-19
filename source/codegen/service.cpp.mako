@@ -125,29 +125,7 @@ ${request_input_parameters(f)}\
 %endif
 %if output_parameters:
     if (status == 0) {
-%for parameter in output_parameters:
-<%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-%>\
-%if common_helpers.is_enum(parameter) == True:
-%if enums[parameter["enum"]].get("generate-mappings", False):
-<% 
-  map_name = parameter["enum"].lower() + "_output_map_"
-  iterator_name = parameter_name + "_imap_it"
-%>\
-
-    auto ${iterator_name} = ${map_name}.find(${parameter_name});
-    if(${iterator_name} == ${map_name}.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
-    }
-      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
-%else:
-      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
-%endif
-% else:
-      response->set_${parameter_name}(${parameter_name});
-%endif
-%endfor
+${set_response_values(output_parameters=output_parameters)}\
     }
 %endif
     return ::grpc::Status::OK;\
@@ -240,4 +218,33 @@ ${initialize_enum_with_mapping_snippet(parameter)}
 %else:
     auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
 %endif
+</%def>\
+\
+\
+\
+\
+<%def name="set_response_values(output_parameters)">\
+%for parameter in output_parameters:
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+%>\
+%if common_helpers.is_enum(parameter) == True:
+%if enums[parameter["enum"]].get("generate-mappings", False):
+<% 
+  map_name = parameter["enum"].lower() + "_output_map_"
+  iterator_name = parameter_name + "_imap_it"
+%>\
+
+    auto ${iterator_name} = ${map_name}.find(${parameter_name});
+    if(${iterator_name} == ${map_name}.end()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+    }
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
+%else:
+      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+%endif
+% else:
+      response->set_${parameter_name}(${parameter_name});
+%endif
+%endfor
 </%def>
