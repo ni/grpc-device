@@ -86,7 +86,7 @@ ${request_input_parameters(f)}
       return std::make_tuple(status, vi);
     };
     uint32_t session_id = 0;
-    std::string session_name = request->session_name();
+    const std::string& session_name = request->session_name();
     auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->${config['close_function']}(id); };
     int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
     response->set_status(status);
