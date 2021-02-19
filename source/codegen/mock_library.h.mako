@@ -35,7 +35,6 @@ namespace driverNamespace = ${driver_namespace};
 
 class ${service_class_prefix}MockLibrary : public driverNamespace::${service_class_prefix}LibraryWrapper {
  public:
-  MOCK_METHOD(::grpc::Status, check_function_exists, (std::string functionName), (override));
 % for method_name in handler_helpers.filter_api_functions(functions):
 <%
   f = functions[method_name]

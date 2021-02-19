@@ -1,6 +1,7 @@
 #ifndef NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
 #define NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
 
+#include <stdexcept>
 #include <string>
 
 #if defined(_MSC_VER)
@@ -32,6 +33,10 @@ class SharedLibrary {
   const void* get_function_pointer(const char* name) const;
   void set_library_name(const char* library_name);
   std::string get_library_name() const;
+
+  struct LibraryLoadException : public std::runtime_error {
+    LibraryLoadException(const std::string& library_error_details);
+  };
 
  private:
   std::string library_name_;

@@ -65,11 +65,7 @@ namespace ${namespace} {
 
 <% continue %>
 % endif
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
-    }
-
+    try {
 %for parameter in input_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
@@ -77,12 +73,12 @@ namespace ${namespace} {
   parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True:
-    ## TODO: Handle non integer enums
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)});
-    ${parameter_type} ${parameter_name};
+      ## TODO: Handle non integer enums
+      // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
+      // auto ${parameter_name} = static_cast<${parameter_type}>(${handler_helpers.get_request_value(parameter)});
+      ${parameter_type} ${parameter_name};
 % else:
-    ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
+      ${parameter_type} ${parameter_name} = ${handler_helpers.get_request_value(parameter)};
 % endif
 %endfor
 %for parameter in output_parameters:
@@ -92,7 +88,7 @@ namespace ${namespace} {
   parameter_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True:
-    ${parameter_type} ${parameter_name_ctype};
+      ${parameter_type} ${parameter_name_ctype};
 <%
      parameter['cppName'] = parameter_name_ctype
 %>\
@@ -100,13 +96,13 @@ namespace ${namespace} {
     ${parameter_type} ${parameter_name};
 %endif
 %endfor
-    auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+      auto status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
 <%
      parameter['cppName'] = parameter_name
 %>\
-    response->set_status(status);
+      response->set_status(status);
 %if output_parameters:
-    if (status == 0) {
+      if (status == 0) {
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
@@ -116,14 +112,18 @@ namespace ${namespace} {
 ## TODO: Figure out how to format ViSession responses. Look at Cifra's example for an idea.
 %if common_helpers.is_enum(parameter) == True:
       ##TODO: Handle non int types
-      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name_ctype}));
+        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name_ctype}));
 % else:
-      response->set_${parameter_name}(${parameter_name});
+        response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor
-    }
+      }
 %endif
-    return ::grpc::Status::OK;
+      return ::grpc::Status::OK;
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
 % endfor

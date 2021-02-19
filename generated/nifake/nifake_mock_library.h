@@ -21,7 +21,6 @@ namespace driverNamespace = ni::fake::grpc;
 
 class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
  public:
-  MOCK_METHOD(::grpc::Status, check_function_exists, (std::string functionName), (override));
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, EnumInputFunctionWithDefaults, (ViSession vi, ViInt16 aTurtle), (override));
   MOCK_METHOD(ViStatus, GetABoolean, (ViSession vi, ViBoolean* aBoolean), (override));
