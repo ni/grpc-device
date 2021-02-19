@@ -53,9 +53,9 @@ namespace grpc {
 % if common_helpers.has_unsupported_parameter(f):
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
 % elif function == config['init_function']:
-${handle_initmethod(function)}
+${gen_init_method_body(function)}
 % else:
-${handle_simple_method(function)}
+${gen_simple_method_body(function)}
 % endif
   }
 
@@ -68,7 +68,7 @@ ${handle_simple_method(function)}
 \
 \
 \
-<%def name="handle_initmethod(function)">\
+<%def name="gen_init_method_body(function)">\
 <%
   f = functions[function]
   parameters = f['parameters']
@@ -101,7 +101,7 @@ ${request_input_parameters(f)}
 \
 \
 \
-<%def name="handle_simple_method(function)">\
+<%def name="gen_simple_method_body(function)">\
 <%
   f = functions[function]
   parameters = f['parameters']
