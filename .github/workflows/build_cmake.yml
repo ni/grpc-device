@@ -23,7 +23,7 @@ jobs:
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-latest,
-            build_type: "Release", cc: "gcc", cxx: "g++"
+            build_type: "Release", cc: "gcc", cxx: "g++",
             cmake_platform: ""
           }
 
