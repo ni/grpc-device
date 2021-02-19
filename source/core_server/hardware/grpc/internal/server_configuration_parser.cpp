@@ -23,6 +23,11 @@ static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
 static const char* kSecurityJsonKey = "security";
 static const char* kCertsFolderName = "certs";
+#if defined(_MSC_VER)
+static const char* kPathDelimitter = "\\";
+#else
+static const char* kPathDelimitter = "/";
+#endif
 
 ServerConfigurationParser::ServerConfigurationParser()
     : config_file_(load(get_exe_path() + kDefaultFilename))
@@ -98,19 +103,19 @@ std::string ServerConfigurationParser::parse_address()
 std::string ServerConfigurationParser::parse_server_cert()
 {
   auto file_name = parse_security_section(kServerCertJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + file_name);
+  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_server_key()
 {
   auto file_name = parse_security_section(kServerKeyJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + file_name);
+  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_root_cert()
 {
   auto file_name = parse_security_section(kRootCertJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + file_name);
+  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_security_section(const char* key)
