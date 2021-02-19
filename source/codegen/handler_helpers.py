@@ -69,7 +69,7 @@ def get_request_value(parameter):
     if c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
         return f'(${c_type}){request_snippet};'
     if c_type == 'ViSession':
-        return f'session_repository_->access_session(({request_snippet}).id(), ({request_snippet}).name());'
+        return f'session_repository_->access_session({request_snippet}.id(), {request_snippet}.name());'
     return f'{request_snippet};'
 
 def get_response_value(parameter):
