@@ -19,6 +19,7 @@ using ::testing::NiceMock;
 using ::testing::Pointee;
 using ::testing::Return;
 using ::testing::SetArgPointee;
+using ::testing::Throw;
 
 const ViSession kViSession = 12345678;
 const ViStatus kDriverSuccess = 0;
@@ -26,13 +27,14 @@ const ViStatus kDriverFailure = 1;
 ViConstString kChannelName = "channel";
 
 // Error logic tests using GetABoolean
-TEST(DISABLED_NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
+TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  std::string message = "Exception!";
   EXPECT_CALL(library_wrapper, GetABoolean)
-      .Times(0);
+      .WillOnce(Throw(ni::hardware::grpc::internal::SharedLibrary::LibraryLoadException(message)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetABooleanRequest request;
@@ -40,22 +42,7 @@ TEST(DISABLED_NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunc
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
-}
-
-TEST(DISABLED_NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
-{
-  ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, GetABoolean)
-      .Times(1);
-
-  ::grpc::ServerContext context;
-  ni::fake::grpc::GetABooleanRequest request;
-  ni::fake::grpc::GetABooleanResponse response;
-  ::grpc::Status status = service.GetABoolean(&context, &request, &response);
-
-  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(message, status.error_message());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseDoesNotIncludeReturnValue)
@@ -78,7 +65,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseDoesNotInclude
   EXPECT_NE(aBoolean, response.a_boolean());
 }
 
-TEST(NiFakeServiceTests, NiFakeService_FunctionCallSucceeds_ResponseIncludesReturnValue)
+TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiceMock<NiFakeMockLibrary> library_wrapper;
