@@ -181,18 +181,7 @@ ${initialize_enum_with_mapping_snippet(parameter)}
     ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
   % elif c_type == 'ViSession':
     auto session = request->${field_name}();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ${c_type} ${parameter_name} = session_repository_->access_session(id, name);\
+    ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
   % else:
     ${c_type} ${parameter_name} = ${request_snippet};\
   % endif

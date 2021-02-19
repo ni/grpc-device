@@ -36,18 +36,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->Abort(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -63,18 +52,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt32 acquisition_status {};
     auto status = library_wrapper_->AcquisitionStatus(vi, &acquisition_status);
     response->set_status(status);
@@ -94,18 +72,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViInt32 meas_function = (ViInt32)request->meas_function();
     auto status = library_wrapper_->AddWaveformProcessing(vi, channel_list, meas_function);
@@ -123,18 +90,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->AutoSetup(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -150,18 +106,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViInt32 option = (ViInt32)request->option();
     auto status = library_wrapper_->CalSelfCalibrate(vi, channel_list, option);
@@ -179,18 +124,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViInt32 clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
     auto status = library_wrapper_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
@@ -208,18 +142,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     auto status = library_wrapper_->ClearWaveformProcessing(vi, channel_list);
     response->set_status(status);
@@ -236,18 +159,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->Commit(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -263,18 +175,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 input_impedance = request->input_impedance();
     ViReal64 max_input_frequency = request->max_input_frequency();
@@ -300,18 +201,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViReal64 min_sample_rate = request->min_sample_rate();
     ViInt32 min_num_pts = request->min_num_pts();
     ViReal64 ref_position = request->ref_position();
@@ -332,18 +222,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViReal64 low = request->low();
     ViReal64 mid = request->mid();
     ViReal64 high = request->high();
@@ -362,18 +241,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString trigger_source = request->trigger_source().c_str();
     ViInt32 slope = (ViInt32)request->slope();
     ViReal64 holdoff = request->holdoff();
@@ -393,18 +261,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString trigger_source = request->trigger_source().c_str();
     ViReal64 level = request->level();
     ViInt32 slope = (ViInt32)request->slope();
@@ -426,18 +283,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString trigger_source = request->trigger_source().c_str();
     ViReal64 level = request->level();
     ViReal64 hysteresis = request->hysteresis();
@@ -460,18 +306,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->ConfigureTriggerImmediate(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -487,18 +322,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViReal64 holdoff = request->holdoff();
     ViReal64 delay = request->delay();
     auto status = library_wrapper_->ConfigureTriggerSoftware(vi, holdoff, delay);
@@ -516,18 +340,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString trigger_source = request->trigger_source().c_str();
     ViBoolean enable_dc_restore = request->enable_dc_restore();
     ViInt32 signal_format = (ViInt32)request->signal_format();
@@ -552,18 +365,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString trigger_source = request->trigger_source().c_str();
     ViReal64 low_level = request->low_level();
     ViReal64 high_level = request->high_level();
@@ -586,18 +388,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 range = request->range();
     ViReal64 offset = request->offset();
@@ -619,18 +410,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->Disable(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -653,18 +433,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString file_path = request->file_path().c_str();
     auto status = library_wrapper_->ExportAttributeConfigurationFile(vi, file_path);
     response->set_status(status);
@@ -723,18 +492,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViBoolean value {};
@@ -756,18 +514,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt32 value {};
@@ -789,18 +536,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt64 value {};
@@ -822,18 +558,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViReal64 value {};
@@ -876,18 +601,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString file_path = request->file_path().c_str();
     auto status = library_wrapper_->ImportAttributeConfigurationFile(vi, file_path);
     response->set_status(status);
@@ -936,18 +650,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->InitiateAcquisition(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -963,18 +666,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViBoolean caller_has_lock {};
     auto status = library_wrapper_->LockSession(vi, &caller_has_lock);
     response->set_status(status);
@@ -994,18 +686,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->ProbeCompensationSignalStart(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -1021,18 +702,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->ProbeCompensationSignalStop(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -1055,18 +725,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->ResetDevice(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -1082,18 +741,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->ResetWithDefaults(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -1109,18 +757,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViInt32 which_trigger = (ViInt32)request->which_trigger();
     auto status = library_wrapper_->SendSoftwareTriggerEdge(vi, which_trigger);
     response->set_status(status);
@@ -1137,18 +774,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViBoolean value = request->value();
@@ -1167,18 +793,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt32 value = request->value();
@@ -1197,18 +812,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViInt64 value = request->value();
@@ -1227,18 +831,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViReal64 value = request->value();
@@ -1257,18 +850,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
     ViConstString value = request->value().c_str();
@@ -1287,18 +869,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViBoolean caller_has_lock {};
     auto status = library_wrapper_->UnlockSession(vi, &caller_has_lock);
     response->set_status(status);
@@ -1318,18 +889,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     session_repository_->remove_session(vi);
     return ::grpc::Status::OK;
   }
@@ -1344,18 +904,7 @@ namespace grpc {
     }
 
     auto session = request->vi();
-    int id = 0;
-    std::string name = "";
-    switch (session.session_case())
-    {
-      case ni::hardware::grpc::Session::SessionCase::kName:
-        name = session.name();
-        break;
-      default:
-        id = session.id();
-        break;
-    }
-    ViSession vi = session_repository_->access_session(id, name);
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
     auto status = library_wrapper_->reset(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
