@@ -10,8 +10,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace fake {
-namespace grpc {
 
 TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
@@ -49,8 +47,6 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
   EXPECT_TRUE(status.ok());
 }
 
-}
-}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
