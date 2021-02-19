@@ -66,7 +66,7 @@ set(codegen_scripts
   "${codegen_dir}/generate_service.py"
   "${codegen_dir}/handler_helpers.py"
   "${codegen_dir}/library_wrapper.h.mako"
-  "${codegen_dir}/mock_library_wrapper.h.mako"
+  "${codegen_dir}/mock_library.h.mako"
   "${codegen_dir}/proto.mako"
   "${codegen_dir}/proto_helpers.py"
   "${codegen_dir}/service.cpp.mako"
