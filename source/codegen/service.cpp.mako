@@ -186,26 +186,12 @@ ${initialize_input_param_snippet(parameter=parameter)}
 <%def name="initialize_input_param_snippet(parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  parameter_name_ctype = parameter_name + "_ctype"
   field_name = common_helpers.camel_to_snake(parameter["name"])
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
 %>\
 %if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
-<%
-  map_name = parameter["enum"].lower() + "_input_map_"
-  iterator_name = parameter_name + "_imap_it"
-%>\
-    auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
-
-    if (${iterator_name} == ${map_name}.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
-    }
-%if parameter['type'] == "ViConstString": 
-    auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
-%else:
-    auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
-%endif
+${initialize_enum_with_mapping_snippet(parameter)}
 % else:
   % if c_type == 'ViConstString':
     ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
@@ -233,4 +219,25 @@ ${initialize_input_param_snippet(parameter=parameter)}
     ${c_type} ${parameter_name} = ${request_snippet};\
   % endif
 % endif
+</%def>\
+\
+\
+\
+\
+<%def name="initialize_enum_with_mapping_snippet(parameter)">\
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  map_name = parameter["enum"].lower() + "_input_map_"
+  iterator_name = parameter_name + "_imap_it"
+%>\
+    auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+
+    if (${iterator_name} == ${map_name}.end()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+    }
+%if parameter['type'] == "ViConstString": 
+    auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());\
+%else:
+    auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
+%endif
 </%def>
