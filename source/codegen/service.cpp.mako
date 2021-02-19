@@ -81,9 +81,9 @@ ${check_if_function_exists(function)}
 
 ${request_input_parameters(f)}
     auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
-    ViSession ${session_output_var_name};
-    int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
-    return std::make_tuple(status, vi);
+      ViSession ${session_output_var_name};
+      int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
+      return std::make_tuple(status, vi);
     };
     uint32_t session_id = 0;
     std::string session_name = request->session_name();

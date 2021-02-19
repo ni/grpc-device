@@ -623,9 +623,9 @@ namespace grpc {
     ViConstString option_string = request->option_string().c_str();
 
     auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
-    ViSession vi;
-    int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
-    return std::make_tuple(status, vi);
+      ViSession vi;
+      int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+      return std::make_tuple(status, vi);
     };
     uint32_t session_id = 0;
     std::string session_name = request->session_name();
