@@ -189,7 +189,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
 
 # Link test executable against gtest
-add_executable(CoreServiceTestsRunner
+add_executable(IntegrationTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/integration/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
