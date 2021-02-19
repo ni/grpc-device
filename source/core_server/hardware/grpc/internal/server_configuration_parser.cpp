@@ -49,12 +49,11 @@ std::string ServerConfigurationParser::get_exe_path()
 #if defined(_MSC_VER)
   char filename[MAX_PATH];
   GetModuleFileNameA(NULL, filename, MAX_PATH);
-  std::string exe_filename(filename);
 #else
   char filename[PATH_MAX];
   readlink("/proc/self/exe", filename, PATH_MAX);
-  std::string exe_filename(filename);
 #endif
+  std::string exe_filename(filename);
   return exe_filename.erase(exe_filename.find_last_of(kPathDelimitter) + 1);
 }
 
