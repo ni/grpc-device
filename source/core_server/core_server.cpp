@@ -14,22 +14,24 @@ std::shared_ptr<grpc::ServerCredentials> CreateCredentials(ni::hardware::grpc::i
 	if (server_cert.empty())
 	{
     credentials = grpc::InsecureServerCredentials();
+    std::cout << "Not using any credentials " << std::endl;
 	}
 	else
 	{
 		grpc::SslServerCredentialsOptions::PemKeyCertPair key_cert_pair;
-		key_cert_pair.private_key = server_key;
-		key_cert_pair.cert_chain = server_cert;
-
-		grpc::SslServerCredentialsOptions ssl_opts;
+		key_cert_pair.private_key = server_key.c_str();
+		key_cert_pair.cert_chain = server_cert.c_str();
+		
+    grpc::SslServerCredentialsOptions ssl_opts;
 		ssl_opts.pem_key_cert_pairs.push_back(key_cert_pair);
     ssl_opts.client_certificate_request = root_cert.empty()
-    ? GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE 
-    : GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY;
- 		ssl_opts.pem_root_certs=root_cert;
+      ? GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE 
+      : GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY;
+ 		ssl_opts.pem_root_certs=root_cert.c_str();
 
-		credentials = grpc::SslServerCredentials(ssl_opts);	}
-	  return credentials;
+		credentials = grpc::SslServerCredentials(ssl_opts);	
+  }
+	return credentials;
 }
 
 static void RunServer(int argc, char** argv)
@@ -55,7 +57,6 @@ static void RunServer(int argc, char** argv)
   grpc::ServerBuilder builder;
   int listeningPort = 0;
   builder.AddListeningPort(server_address, credentials, &listeningPort);
-
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::CoreService core_service(&session_repository);
@@ -65,7 +66,7 @@ static void RunServer(int argc, char** argv)
   auto server = builder.BuildAndStart();
 
   if (!server) {
-    std::cout << "Server failed to start on " << server_address << std::endl;
+    std::cerr << "Server failed to start on " << server_address << std::endl;
     exit(EXIT_FAILURE);
   }
 

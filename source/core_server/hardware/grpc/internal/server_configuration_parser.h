@@ -15,6 +15,7 @@ static const char* kInvalidPortMessage = "The specified port number must between
 static const char* kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
 static const char* kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
 static const char* kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
+//static const char* kUnspecifiedPortMessage = "The following key was requested but is not specified in the server's configuration file: ";
 
 class ServerConfigurationParser {
  public:
@@ -52,7 +53,7 @@ class ServerConfigurationParser {
   static std::string get_exe_path();
   static nlohmann::json load(const std::string& config_file_path);
   static std::string read_keycert(const std::string& filename);
-  std::string parse_string_value(const char* key);
+  std::string parse_security_string(const char* key);
 
 
   nlohmann::json config_file_;

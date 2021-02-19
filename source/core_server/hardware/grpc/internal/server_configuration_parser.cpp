@@ -15,13 +15,13 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-static const char* kDefaultAddressPrefix = "0.0.0.0:";
+static const char* kDefaultAddressPrefix = "[::]:";
 static const char* kDefaultFilename = "server_config.json";
-static const char* kPortKey = "port";
-static const char* kCertServerKey = "server_cert";
-static const char* kKeyServerKey = "server_key";
-static const char* kCertRootKey = "root_cert";
-static const char* kCertFolder = "cert/";
+static const char* kPortJsonKey = "port";
+static const char* kServerCertJsonKey = "server_cert";
+static const char* kServerKeyJsonKey = "server_key";
+static const char* kRootCertKeyJsonKey = "root_cert";
+static const char* kSecurityJsonKey = "security";
 
 ServerConfigurationParser::ServerConfigurationParser()
     : config_file_(load(get_exe_path() + kDefaultFilename))
@@ -75,7 +75,7 @@ std::string ServerConfigurationParser::parse_address()
 {
   int parsed_port = -1;
 
-  auto it = config_file_.find(kPortKey);
+  auto it = config_file_.find(kPortJsonKey);
   if (it != config_file_.end()) {
     try {
       parsed_port = it->get<int>();
@@ -96,33 +96,37 @@ std::string ServerConfigurationParser::parse_address()
 
 std::string ServerConfigurationParser::parse_server_cert()
 {
-  auto file_path = parse_string_value(kCertServerKey);
+  auto file_path = parse_security_string(kServerCertJsonKey);
   return read_keycert(file_path);
 }
 
 std::string ServerConfigurationParser::parse_server_key()
 {
-  auto file_path = parse_string_value(kKeyServerKey);
+  auto file_path = parse_security_string(kServerKeyJsonKey);
   return read_keycert(file_path);
 }
 
 std::string ServerConfigurationParser::parse_root_cert()
 {
-  auto file_path = parse_string_value(kCertRootKey);
+  auto file_path = parse_security_string(kRootCertKeyJsonKey);
   return read_keycert(file_path);
 }
 
-std::string ServerConfigurationParser::parse_string_value(const char* key)
+std::string ServerConfigurationParser::parse_security_string(const char* key)
 {
   std::string parsed_value;
 
-  auto it = config_file_.find(key);
-  if (it != config_file_.end()) {
-    try {
-      parsed_value = it->get<std::string>();
-    }
-    catch (const nlohmann::json::type_error& ex) {
-      //throw WrongPortTypeException(ex.what());
+  auto security_section_it =  config_file_.find(kSecurityJsonKey);
+  if (security_section_it != config_file_.end()) {
+    auto it = security_section_it->find(key);
+    if (it != security_section_it->end()) {
+      try {
+        parsed_value = it->get<std::string>();
+      }
+      catch (const nlohmann::json::type_error& ex) {
+
+        //throw WrongPortTypeException(ex.what());
+      }
     }
   }
   return parsed_value;
@@ -131,8 +135,8 @@ std::string ServerConfigurationParser::parse_string_value(const char* key)
 std::string ServerConfigurationParser::read_keycert(const std::string& filename)
 {	
 	std::string data;
-	std::ifstream file(filename.c_str(), std::ios::in);
-	if (file.is_open())
+	std::ifstream file(filename);
+	if (file)
 	{
 		std::stringstream key_cert_contents;
 		key_cert_contents << file.rdbuf();
