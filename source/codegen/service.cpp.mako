@@ -45,11 +45,7 @@ namespace grpc {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
     f = functions[function]
-    c_function_name = c_function_prefix + function
     method_name = common_helpers.snake_to_camel(function)
-    parameters = f['parameters']
-    handler_helpers.sanitize_names(parameters)
-    output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -57,23 +53,34 @@ namespace grpc {
   {
 % if common_helpers.has_unsupported_parameter(f):
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+% elif function == config['init_function']:
+${handle_initmethod(function)}
+% else:
+${handle_simple_method(function)}
+% endif
   }
 
-<% continue %>
-% endif
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
-    }
+% endfor
 
-${request_input_parameters(f)}\
-## Handle init session methods
-% if function == config['init_function']:
+} // namespace grpc
+} // namespace ${config["namespace_component"]}
+} // namespace ni
+\
+\
+\
+\
+<%def name="handle_initmethod(function)">\
 <%
+  f = functions[function]
+  parameters = f['parameters']
+  handler_helpers.sanitize_names(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
   session_output_var_name = session_output_param['cppName']
 %>\
-    
+${check_if_function_exists(function)}
+
+${request_input_parameters(f)}
     auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
     ViSession ${session_output_var_name};
     int status = library_wrapper_->${function}(${handler_helpers.create_args(parameters)});
@@ -89,11 +96,22 @@ ${request_input_parameters(f)}\
       session.set_id(session_id);
       response->set_allocated_${session_output_var_name}(&session);
     }
-    return ::grpc::Status::OK;
-  }
+    return ::grpc::Status::OK;\
+</%def>\
+\
+\
+\
+\
+<%def name="handle_simple_method(function)">\
+<%
+  f = functions[function]
+  parameters = f['parameters']
+  handler_helpers.sanitize_names(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+%>\
+${check_if_function_exists(function)}
 
-<% continue %>
-% endif ## Handle Init Session Methods
+${request_input_parameters(f)}\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
@@ -122,17 +140,23 @@ ${request_input_parameters(f)}\
 %endfor
     }
 %endif
-    return ::grpc::Status::OK;
-  }
-
-% endfor
-
-} // namespace grpc
-} // namespace ${config["namespace_component"]}
-} // namespace ni
+    return ::grpc::Status::OK;\
+</%def>\
 \
 \
-## Def helper section:
+\
+\
+<%def name="check_if_function_exists(function)">\
+<%
+  c_function_name = c_function_prefix + function
+%>\
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }\
+</%def>\
+\
+\
 \
 \
 <%def name="request_input_parameters(function)">\
@@ -146,9 +170,8 @@ ${initialize_input_param_snippet(parameter=parameter)}
 </%def>\
 \
 \
-<%doc>
-  Get the snippet for initializing an input parameter.
-</%doc>\
+\
+\
 <%def name="initialize_input_param_snippet(parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])

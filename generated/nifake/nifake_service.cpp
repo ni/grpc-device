@@ -543,7 +543,7 @@ namespace grpc {
     ViBoolean id_query = request->id_query();
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
-    
+
     auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
     ViSession vi;
     int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
