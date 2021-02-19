@@ -20,7 +20,7 @@ static const char* kDefaultFilename = "server_config.json";
 static const char* kPortJsonKey = "port";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
-static const char* kRootCertKeyJsonKey = "root_cert";
+static const char* kRootCertJsonKey = "root_cert";
 static const char* kSecurityJsonKey = "security";
 
 ServerConfigurationParser::ServerConfigurationParser()
@@ -96,23 +96,23 @@ std::string ServerConfigurationParser::parse_address()
 
 std::string ServerConfigurationParser::parse_server_cert()
 {
-  auto file_path = parse_security_string(kServerCertJsonKey);
+  auto file_path = parse_security_section(kServerCertJsonKey);
   return read_keycert(file_path);
 }
 
 std::string ServerConfigurationParser::parse_server_key()
 {
-  auto file_path = parse_security_string(kServerKeyJsonKey);
+  auto file_path = parse_security_section(kServerKeyJsonKey);
   return read_keycert(file_path);
 }
 
 std::string ServerConfigurationParser::parse_root_cert()
 {
-  auto file_path = parse_security_string(kRootCertKeyJsonKey);
+  auto file_path = parse_security_section(kRootCertJsonKey);
   return read_keycert(file_path);
 }
 
-std::string ServerConfigurationParser::parse_security_string(const char* key)
+std::string ServerConfigurationParser::parse_security_section(const char* key)
 {
   std::string parsed_value;
 
@@ -124,8 +124,7 @@ std::string ServerConfigurationParser::parse_security_string(const char* key)
         parsed_value = it->get<std::string>();
       }
       catch (const nlohmann::json::type_error& ex) {
-
-        //throw WrongPortTypeException(ex.what());
+        throw ValueTypeNotStringException(key);
       }
     }
   }
@@ -168,6 +167,11 @@ ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const 
 
 ServerConfigurationParser::UnspecifiedPortException::UnspecifiedPortException()
     : std::runtime_error(kUnspecifiedPortMessage)
+{
+}
+
+ServerConfigurationParser::ValueTypeNotStringException::ValueTypeNotStringException(const std::string& key)
+    : std::runtime_error(kValueTypeNotStringMessage + key)
 {
 }
 
