@@ -9,7 +9,7 @@ package ni.hardware.grpc;
 
 service ServerUtilities {
   // Provides a list of devices or chassis connected to server under localhost
-  rpc EnumerateDevices (EnumerateDevicesRequest) returns (EnumerateDevicesResponse) {};
+  rpc EnumerateDevices (EnumerateDevicesRequest) returns (EnumerateDevicesResponse);
 
   // Reserve a set of client defined resources for exclusive use
   rpc Reserve(ReserveRequest) returns (ReserveResponse);
