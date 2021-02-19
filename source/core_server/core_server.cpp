@@ -56,7 +56,6 @@ static void RunServer(int argc, char** argv)
     exit(EXIT_FAILURE);
   }
 
-  // Listen on the given address without any authentication mechanism.
   grpc::ServerBuilder builder;
   int listeningPort = 0;
   ni::hardware::grpc::internal::ServerSecurityConfiguration server_security_config(server_cert, server_key, root_cert);
