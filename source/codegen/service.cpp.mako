@@ -49,7 +49,6 @@ namespace grpc {
     method_name = common_helpers.snake_to_camel(function)
     parameters = f['parameters']
     handler_helpers.sanitize_names(parameters)
-    input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
     output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
   //---------------------------------------------------------------------
@@ -67,9 +66,7 @@ namespace grpc {
       return libraryStatus;
     }
 
-%for parameter in input_parameters:
-${initialize_input_param_snippet(parameter=parameter)}
-%endfor
+${request_input_parameters(f)}\
 ## Handle init session methods
 % if function == config['init_function']:
 <%
@@ -136,6 +133,17 @@ ${initialize_input_param_snippet(parameter=parameter)}
 \
 \
 ## Def helper section:
+\
+\
+<%def name="request_input_parameters(function)">\
+<%
+    parameters = function['parameters']
+    input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
+%>\
+% for parameter in input_parameters:
+${initialize_input_param_snippet(parameter=parameter)}
+% endfor
+</%def>\
 \
 \
 <%doc>
