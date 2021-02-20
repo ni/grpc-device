@@ -16,9 +16,9 @@ SessionRepository::SessionRepository()
 // value is the status returned from the init_func, or 0 if an existing named session is found.
 int SessionRepository::add_session(
     const std::string& session_name,
-    std::function<std::tuple<int, uint64_t>()> init_func,
+    InitFunc init_func,
     CleanupSessionFunc cleanup_func,
-    uint64_t& session_id)
+    uint32_t& session_id)
 {
   session_id = 0;
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
@@ -51,7 +51,7 @@ int SessionRepository::add_session(
 // the ID of the session that matches the given ID or name, or 0 if such a session is not found.
 // Only one of the two parameters needs to be specified.
 // Passing only a name returns the corresponding ID.
-uint64_t SessionRepository::access_session(uint64_t session_id, const std::string& session_name)
+uint32_t SessionRepository::access_session(uint32_t session_id, const std::string& session_name)
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto now = std::chrono::steady_clock::now();
@@ -70,7 +70,7 @@ uint64_t SessionRepository::access_session(uint64_t session_id, const std::strin
 
 // Removes a session by ID.
 // To remove a session by name, use access_session to get the session ID.
-void SessionRepository::remove_session(uint64_t id)
+void SessionRepository::remove_session(uint32_t id)
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto it = sessions_.find(id);

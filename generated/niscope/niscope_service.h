@@ -7,6 +7,7 @@
 #ifndef NI_SCOPE_GRPC_SERVICE_H
 #define NI_SCOPE_GRPC_SERVICE_H
 
+#include <map>
 #include <niscope.grpc.pb.h>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
@@ -79,8 +80,7 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
-
-private:
+  private:
   NiScopeLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };

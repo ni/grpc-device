@@ -1,7 +1,8 @@
 <%
 import common_helpers
 import handler_helpers
-
+attributes = data['attributes']
+enums = data['enums']
 config = data['config']
 functions = data['functions']
 
@@ -19,6 +20,7 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H"
 #define ${include_guard_name}
 
 ## Include section
+#include <map>
 #include <${config["module_name"]}.grpc.pb.h>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
@@ -44,10 +46,21 @@ public:
 %>\
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
 % endfor
-
-private:
+  private:
   ${service_class_prefix}LibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
+<%
+  used_enums = common_helpers.get_used_enums(functions, attributes)
+%>\
+% for enum in enums:
+% if enum in used_enums and "generate-mappings" in enums[enum] and enums[enum]["generate-mappings"] == True:
+<%
+  enum_value = handler_helpers.python_to_c(enums[enum])
+%>\
+    std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${handler_helpers.get_input_lookup_values(enums[enum])} };
+    std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${handler_helpers.get_output_lookup_values(enums[enum])} };
+%endif
+%endfor
 };
 
 } // namespace grpc

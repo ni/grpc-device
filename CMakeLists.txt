@@ -126,9 +126,10 @@ function(GenerateGrpcSources proto_file proto_path proto_srcs proto_hdrs grpc_sr
       --cpp_out "${proto_out_path}"
       -I "${proto_path}"
       -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+      -I ${CMAKE_SOURCE_DIR}/source
       --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
       "${proto_file}"
-    DEPENDS "${proto_file}")
+    DEPENDS "${proto_file}" "${server_utilities_proto}")
 endfunction()
 
 set(server_utilities_proto_srcs "${proto_srcs_dir}/server_utilities.pb.cc")
@@ -162,6 +163,7 @@ endforeach()
 add_executable(core_server
    "source/core_server/core_server.cpp"
    "source/core_server/hardware/grpc/core_service.cpp"
+   "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
    "source/core_server/hardware/grpc/internal/semaphore.cpp"
    "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
    "source/core_server/hardware/grpc/internal/session_repository.cpp"
@@ -208,8 +210,10 @@ add_executable(CoreServiceTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/integration/hardware/grpc/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
+    "source/core_server/hardware/grpc/internal/shared_library.cpp"
     ${server_utilities_proto_srcs}
     ${server_utilities_grpc_srcs})
 
@@ -231,11 +235,13 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/unit/hardware/grpc/core_service_tests.cpp"
+    "source/tests/unit/hardware/grpc/internal/device_enumerator_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
     "source/tests/unit/hardware/grpc/internal/server_configuration_parser_tests.cpp"
     "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
+    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
     "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
     "source/core_server/hardware/grpc/internal/session_repository.cpp"
