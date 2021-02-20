@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
-#define NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#ifndef NI_FAKE_GRPC_LIBRARY_H
+#define NI_FAKE_GRPC_LIBRARY_H
 
 #include "nifake_library_interface.h"
 
@@ -205,4 +205,4 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
 }  // namespace fake
 }  // namespace ni
 
-#endif  // NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#endif  // NI_FAKE_GRPC_LIBRARY_H

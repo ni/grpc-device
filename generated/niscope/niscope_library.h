@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_MOCK_LIBRARY_WRAPPER_H
-#define NI_SCOPE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#ifndef NI_SCOPE_GRPC_LIBRARY_H
+#define NI_SCOPE_GRPC_LIBRARY_H
 
 #include "niscope_library_interface.h"
 
@@ -208,4 +208,4 @@ class NiScopeLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
 }  // namespace scope
 }  // namespace ni
 
-#endif  // NI_SCOPE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#endif  // NI_SCOPE_GRPC_LIBRARY_H

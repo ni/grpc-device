@@ -898,7 +898,6 @@ namespace grpc {
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
-
 } // namespace grpc
 } // namespace scope
 } // namespace ni

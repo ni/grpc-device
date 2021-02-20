@@ -51,7 +51,6 @@ link_directories("./imports/lib/win64")
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
-file(GLOB proto_directories RELATIVE ${metadata_dir} CONFIGURE_DEPENDS ${metadata_dir}/*)
 set(ni_apis "nifake" "niscope")
 
 #----------------------------------------------------------------------

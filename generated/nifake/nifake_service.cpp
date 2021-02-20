@@ -688,7 +688,6 @@ namespace grpc {
     return ::grpc::Status::OK;
   }
 
-
 } // namespace grpc
 } // namespace fake
 } // namespace ni

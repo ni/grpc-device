@@ -62,11 +62,10 @@ ${gen_simple_method_body(function_name=function_name, function_data=function_dat
   }
 
 % endfor
-
 } // namespace grpc
 } // namespace ${config["namespace_component"]}
-} // namespace ni\
-
+} // namespace ni
+\
 \
 \
 \
@@ -197,7 +196,7 @@ ${initialize_enum_with_mapping_snippet(parameter)}
     if (${iterator_name} == ${map_name}.end()) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
     }
-%if parameter['type'] == "ViConstString": 
+%if parameter['type'] == "ViConstString":
     auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());\
 %else:
     auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
@@ -214,7 +213,7 @@ ${initialize_enum_with_mapping_snippet(parameter)}
 %>\
 %if common_helpers.is_enum(parameter) == True:
 %if enums[parameter["enum"]].get("generate-mappings", False):
-<% 
+<%
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
