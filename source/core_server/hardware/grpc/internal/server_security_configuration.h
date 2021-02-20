@@ -1,5 +1,5 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SERVERSECURITYCONFIGURATION
-#define NI_HARDWARE_GRPC_INTERNAL_SERVERSECURITYCONFIGURATION
+#ifndef NI_HARDWARE_GRPC_INTERNAL_SERVER_SECURITY_CONFIGURATION_H_
+#define NI_HARDWARE_GRPC_INTERNAL_SERVER_SECURITY_CONFIGURATION_H_
 
 #include <grpcpp/grpcpp.h>
 
@@ -20,6 +20,7 @@ class ServerSecurityConfiguration {
   bool is_insecure_credentials();
 
  private:
+  const bool kIsInsecureCredentials;
   ::grpc::SslServerCredentialsOptions credentials_options_;
   std::shared_ptr<::grpc::ServerCredentials> server_credentials_;
 };
@@ -29,4 +30,4 @@ class ServerSecurityConfiguration {
 }  // namespace hardware
 }  // namespace ni
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SERVERSECURITYCONFIGURATION
+#endif  // NI_HARDWARE_GRPC_INTERNAL_SERVER_SECURITY_CONFIGURATION_H_
