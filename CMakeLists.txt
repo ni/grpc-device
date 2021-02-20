@@ -180,13 +180,14 @@ add_custom_command(
             $<TARGET_FILE_DIR:core_server>/server_config.json)
 
 #----------------------------------------------------------------------
-# Copy certs folder to binary output directory
+# Copy test asset certificates to binary output certs sub-directory
 #----------------------------------------------------------------------
 add_custom_command(
   TARGET core_server POST_BUILD
   COMMAND  ${CMAKE_COMMAND} -E copy_directory 
-           ${CMAKE_SOURCE_DIR}/certs/
+           ${CMAKE_SOURCE_DIR}/source/tests/assets/server_configuration_parser_tests/
            $<TARGET_FILE_DIR:core_server>/certs/)
+
 #----------------------------------------------------------------------
 # Add JSON parser
 #----------------------------------------------------------------------

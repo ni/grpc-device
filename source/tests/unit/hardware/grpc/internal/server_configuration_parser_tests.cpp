@@ -95,8 +95,8 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerCert
   nlohmann::json config_json = nlohmann::json::parse(R"(
   {
     "security" : {
-        "server_cert": "server_self_signed_crt.pem",
-        "server_key": "server_privatekey.pem",
+        "server_cert": "test_server_self_signed_crt.pem",
+        "server_key": "test_server_privatekey.pem",
         "root_cert": ""
     }
   })");
@@ -112,8 +112,8 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerKey_
   nlohmann::json config_json = nlohmann::json::parse(R"(
   {
     "security" : {
-        "server_cert": "server_self_signed_crt.pem",
-        "server_key": "server_privatekey.pem",
+        "server_cert": "test_server_self_signed_crt.pem",
+        "server_key": "test_server_privatekey.pem",
         "root_cert": ""
     }
   })");
@@ -129,8 +129,8 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseRootCert_N
   nlohmann::json config_json = nlohmann::json::parse(R"(
   {
     "security" : {
-        "server_cert": "server_self_signed_crt.pem",
-        "server_key": "server_privatekey.pem",
+        "server_cert": "test_server_self_signed_crt.pem",
+        "server_key": "test_server_privatekey.pem",
         "root_cert": ""
     }
   })");
@@ -146,9 +146,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMutualTls_ParseAllSecurityKey
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
       "security" : {
-          "server_cert": "server_self_signed_crt.pem",
-          "server_key": "server_privatekey.pem",
-          "root_cert": "client_self_signed_crt.pem"
+          "server_cert": "test_server_self_signed_crt.pem",
+          "server_key": "test_server_privatekey.pem",
+          "root_cert": "test_client_self_signed_crt.pem"
       }
     })");
   ::internal::ServerConfigurationParser server_config_parser(config_json);
@@ -181,8 +181,8 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerCertAsInteger_ParseServ
     {
       "security" : {
           "server_cert": 9,
-          "server_key": "server_privatekey.pem",
-          "root_cert": "client_self_signed_crt.pem"
+          "server_key": "test_server_privatekey.pem",
+          "root_cert": "test_client_self_signed_crt.pem"
       }
     })");
   ::internal::ServerConfigurationParser server_config_parser(config_json);
@@ -201,9 +201,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerKeyAsNull_ParseServerKe
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
       "security" : {
-          "server_cert": "server_self_signed_crt.pem",
+          "server_cert": "test_server_self_signed_crt.pem",
           "server_key": null,
-          "root_cert": "client_self_signed_crt.pem"
+          "root_cert": "test_client_self_signed_crt.pem"
       }
     })");
   ::internal::ServerConfigurationParser server_config_parser(config_json);
@@ -222,8 +222,8 @@ TEST(ServerConfigurationParserTests, JsonConfigWithRootCertAsBoolean_ParseRootCe
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
       "security" : {
-          "server_cert": "server_self_signed_crt.pem",
-          "server_key": "server_privatekey.pem",
+          "server_cert": "test_server_self_signed_crt.pem",
+          "server_key": "test_server_privatekey.pem",
           "root_cert": true
       }
     })");
@@ -242,9 +242,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithValidPemFilesButWithoutSecuri
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "server_cert": "server_self_signed_crt.pem",
-      "server_key": "server_privatekey.pem",
-      "root_cert": "client_self_signed_crt.pem"
+      "server_cert": "test_server_self_signed_crt.pem",
+      "server_key": "test_server_privatekey.pem",
+      "root_cert": "test_client_self_signed_crt.pem"
     })");
   ::internal::ServerConfigurationParser server_config_parser(config_json);
 
@@ -262,9 +262,9 @@ TEST(ServerConfigurationParserTests, JsonConfigForExistingPemFilesUnderSecurityP
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
       "security" : {
-          "server_cert": "server_self_signed_crt.pem",
-          "server_key": "server_privatekey.pem",
-          "root_cert": "client_self_signed_crt.pem"
+          "server_cert": "test_server_self_signed_crt.pem",
+          "server_key": "test_server_privatekey.pem",
+          "root_cert": "test_client_self_signed_crt.pem"
       }
     })");
   ::internal::ServerConfigurationParser server_config_parser(config_json);
