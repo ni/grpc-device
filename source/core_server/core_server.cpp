@@ -40,7 +40,17 @@ static void RunServer(int argc, char** argv)
     exit(EXIT_FAILURE);
   }
 
-  std::cout << "Server listening on port " << listeningPort << std::endl;
+  std::cout << "Server listening on port " << listeningPort << ". ";
+
+  std::string security_description(server_security_config.is_insecure_credentials() ? "Insecure Credentials" : "Secure Credentials");
+  std::string tls_description;
+  ::grpc::SslServerCredentialsOptions credentials_options;
+  if (server_security_config.try_get_options(&credentials_options)) {
+    tls_description = credentials_options.client_certificate_request == GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE
+                          ? " (Server-Side TLS)"
+                          : " (Mutual TLS)";
+  }
+  std::cout << "Security is configured with " << security_description << tls_description << "." << std::endl;
   // This call will block until another thread shuts down the server.
   server->Wait();
 }
