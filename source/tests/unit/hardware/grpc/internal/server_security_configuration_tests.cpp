@@ -23,7 +23,7 @@ std::shared_ptr<::grpc::ServerCredentials> get_insecure_credentials_comparison()
   return ::grpc::InsecureServerCredentials();
 }
 
-TEST(ServerConfigurationParserTests, DefaultServerSecurityConfiguration_GetCredentials_InsecureServerCredentials)
+TEST(ServerSecurityConfigurationTests, DefaultServerSecurityConfiguration_GetCredentials_InsecureServerCredentials)
 {
   ::internal::ServerSecurityConfiguration server_security_config;
 
@@ -33,7 +33,7 @@ TEST(ServerConfigurationParserTests, DefaultServerSecurityConfiguration_GetCrede
   EXPECT_TRUE(server_security_config.is_insecure_credentials());
 }
 
-TEST(ServerConfigurationParserTests, ServerCertEmptyAndServerKeyNotEmpty_GetCredentials_InsecureServerCredentials)
+TEST(ServerSecurityConfigurationTests, ServerCertEmptyAndServerKeyNotEmpty_GetCredentials_InsecureServerCredentials)
 {
   ::internal::ServerSecurityConfiguration server_security_config("", "server key data", "");
 
@@ -43,7 +43,7 @@ TEST(ServerConfigurationParserTests, ServerCertEmptyAndServerKeyNotEmpty_GetCred
   EXPECT_TRUE(server_security_config.is_insecure_credentials());
 }
 
-TEST(ServerConfigurationParserTests, ServerCertNotEmptyAndServerKeyEmpty_GetCredentials_InsecureServerCredentials)
+TEST(ServerSecurityConfigurationTests, ServerCertNotEmptyAndServerKeyEmpty_GetCredentials_InsecureServerCredentials)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "", "");
 
@@ -53,7 +53,7 @@ TEST(ServerConfigurationParserTests, ServerCertNotEmptyAndServerKeyEmpty_GetCred
   EXPECT_TRUE(server_security_config.is_insecure_credentials());
 }
 
-TEST(ServerConfigurationParserTests, ServerCertAndKeyEmptyAndRootCertNotEmpty_GetCredentials_InsecureServerCredentials)
+TEST(ServerSecurityConfigurationTests, ServerCertAndKeyEmptyAndRootCertNotEmpty_GetCredentials_InsecureServerCredentials)
 {
   ::internal::ServerSecurityConfiguration server_security_config("", "", "root cert data");
 
@@ -63,7 +63,7 @@ TEST(ServerConfigurationParserTests, ServerCertAndKeyEmptyAndRootCertNotEmpty_Ge
   EXPECT_TRUE(server_security_config.is_insecure_credentials());
 }
 
-TEST(ServerConfigurationParserTests, ServerCertAndKeyNotEmpty_GetCredentials_SslServerCredentials)
+TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmpty_GetCredentials_SslServerCredentials)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "");
 
@@ -73,7 +73,7 @@ TEST(ServerConfigurationParserTests, ServerCertAndKeyNotEmpty_GetCredentials_Ssl
   EXPECT_FALSE(server_security_config.is_insecure_credentials());
 }
 
-TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertNotEmpty_GetCredentials_SslServerCredentials)
+TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_GetCredentials_SslServerCredentials)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
 
@@ -83,7 +83,7 @@ TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertNotEmpty_GetC
   EXPECT_FALSE(server_security_config.is_insecure_credentials());
 }
 
-TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertEmpty_TryGetOptions_Unsuccessful)
+TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertEmpty_TryGetOptions_Unsuccessful)
 {
   ::internal::ServerSecurityConfiguration server_security_config("", "", "");
   ::grpc::SslServerCredentialsOptions credentials_options_;
@@ -93,7 +93,7 @@ TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertEmpty_TryGetO
   EXPECT_FALSE(is_successful);
 }
 
-TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_Successful)
+TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_Successful)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
   ::grpc::SslServerCredentialsOptions credentials_options_;
@@ -103,7 +103,7 @@ TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertNotEmpty_TryG
   EXPECT_TRUE(is_successful);
 }
 
-TEST(ServerConfigurationParserTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_DoesNotRequestClientCertificate)
+TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_DoesNotRequestClientCertificate)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "");
   ::grpc::SslServerCredentialsOptions credentials_options_;
@@ -114,7 +114,7 @@ TEST(ServerConfigurationParserTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_Tr
   EXPECT_EQ(GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE, credentials_options_.client_certificate_request);
 }
 
-TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_RequestsAndVerifiesClientCertificate)
+TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_RequestsAndVerifiesClientCertificate)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
   ::grpc::SslServerCredentialsOptions credentials_options_;
@@ -125,7 +125,7 @@ TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertNotEmpty_TryG
   EXPECT_EQ(GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY, credentials_options_.client_certificate_request);
 }
 
-TEST(ServerConfigurationParserTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_PemCertPairsNotEmptyAndPemRootCertsEmpty)
+TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_PemCertPairsNotEmptyAndPemRootCertsEmpty)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "");
   ::grpc::SslServerCredentialsOptions credentials_options_;
@@ -137,7 +137,7 @@ TEST(ServerConfigurationParserTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_Tr
   EXPECT_TRUE(credentials_options_.pem_root_certs.empty());
 }
 
-TEST(ServerConfigurationParserTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_PemCertPairsAndPemRootCertsNotEmpty)
+TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_PemCertPairsAndPemRootCertsNotEmpty)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
   ::grpc::SslServerCredentialsOptions credentials_options_;
