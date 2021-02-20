@@ -1,5 +1,16 @@
 # Changes in metadata from the nimi-python metadata
 
+## config.py
+
+The following metadata was added:
+- `'service_class_prefix': 'NiScope'`
+- `'java_package': 'com.ni.scope.grpc'`
+- `'csharp_namespace': 'NationalInstruments.Scope.Grpc'`
+- `'namespace_component': 'scope'`
+
+The fields of the custom waveform-info struct were added to `'custom_types'` in place of the `'ctypes_type'`,
+`'file_name'`, and `'python_name'`.
+
 ## functions.py
 
 The occurrences of `'default_value'` were not removed but should be removed once enum support is complete.
