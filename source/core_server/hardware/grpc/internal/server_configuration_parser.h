@@ -57,7 +57,7 @@ class ServerConfigurationParser {
   static std::string get_exe_path();
   static nlohmann::json load(const std::string& config_file_path);
   static std::string read_keycert(const std::string& filename);
-  std::string parse_security_section(const char* key);
+  std::string parse_key_from_security_section(const char* key);
 
   nlohmann::json config_file_;
   std::string config_file_path_;

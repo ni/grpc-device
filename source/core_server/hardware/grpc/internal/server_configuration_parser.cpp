@@ -100,23 +100,23 @@ std::string ServerConfigurationParser::parse_address()
 
 std::string ServerConfigurationParser::parse_server_cert()
 {
-  auto file_name = parse_security_section(kServerCertJsonKey);
+  auto file_name = parse_key_from_security_section(kServerCertJsonKey);
   return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_server_key()
 {
-  auto file_name = parse_security_section(kServerKeyJsonKey);
+  auto file_name = parse_key_from_security_section(kServerKeyJsonKey);
   return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_root_cert()
 {
-  auto file_name = parse_security_section(kRootCertJsonKey);
+  auto file_name = parse_key_from_security_section(kRootCertJsonKey);
   return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
-std::string ServerConfigurationParser::parse_security_section(const char* key)
+std::string ServerConfigurationParser::parse_key_from_security_section(const char* key)
 {
   std::string parsed_value;
 
