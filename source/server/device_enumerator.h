@@ -11,7 +11,7 @@ namespace ni {
 namespace hardware {
 namespace grpc {
 namespace internal {
-  
+
 class DeviceEnumerator
 {
  public:

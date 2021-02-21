@@ -1,20 +1,20 @@
-#include "core_service.h"
+#include "session_utilities_service.h"
 
 namespace ni {
 namespace hardware {
 namespace grpc {
 
-CoreService::CoreService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator)
+SessionUtilitiesService::SessionUtilitiesService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator)
     : session_repository_(session_repository), device_enumerator_(device_enumerator)
 {
 }
 
-::grpc::Status CoreService::EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response)
+::grpc::Status SessionUtilitiesService::EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response)
 {
   return device_enumerator_->enumerate_devices(response->mutable_devices());
 }
 
-::grpc::Status CoreService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
+::grpc::Status SessionUtilitiesService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
 {
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
@@ -25,7 +25,7 @@ CoreService::CoreService(internal::SessionRepository* session_repository, intern
   return status;
 }
 
-::grpc::Status CoreService::IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response)
+::grpc::Status SessionUtilitiesService::IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response)
 {
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
@@ -35,7 +35,7 @@ CoreService::CoreService(internal::SessionRepository* session_repository, intern
   return ::grpc::Status::OK;
 }
 
-::grpc::Status CoreService::Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)
+::grpc::Status SessionUtilitiesService::Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response)
 {
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
@@ -45,7 +45,7 @@ CoreService::CoreService(internal::SessionRepository* session_repository, intern
   return ::grpc::Status::OK;
 }
 
-::grpc::Status CoreService::ResetServer(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
+::grpc::Status SessionUtilitiesService::ResetServer(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response)
 {
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;

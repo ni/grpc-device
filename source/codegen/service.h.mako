@@ -20,15 +20,16 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H"
 #define ${include_guard_name}
 
 ## Include section
-#include <map>
 #include <${config["module_name"]}.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <condition_variable>
+#include <map>
+#include <server/shared_library.h>
+#include <server/session_repository.h>
+
 #include "${config["module_name"]}_library_wrapper.h"
-#include "core_server/hardware/grpc/internal/shared_library.h"
-#include "core_server/hardware/grpc/internal/session_repository.h"
 
 namespace ni {
 namespace ${config["namespace_component"]} {

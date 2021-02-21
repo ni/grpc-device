@@ -1,17 +1,14 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
-#include <nifake_mock_library_wrapper.h>
-#include <nifake_service.h>
+#include <nifake/nifake_mock_library_wrapper.h>
+#include <nifake/nifake_service.h>
+#include <server/session_repository.h>
 
 #include <thread>
-
-#include "hardware/grpc/internal/session_repository.h"
 
 namespace ni {
 namespace tests {
 namespace unit {
-namespace fake {
-namespace grpc {
 
 TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
@@ -49,8 +46,6 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionFound_CallsLibraryFunction)
   EXPECT_TRUE(status.ok());
 }
 
-}  // namespace grpc
-}  // namespace fake
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

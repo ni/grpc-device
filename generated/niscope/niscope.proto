@@ -13,7 +13,7 @@ option csharp_namespace = "NationalInstruments.Scope.Grpc";
 
 package ni.scope.grpc;
 
-import "server_utilities.proto";
+import "session.proto";
 
 service NiScope {
   rpc Abort(AbortRequest) returns (AbortResponse);

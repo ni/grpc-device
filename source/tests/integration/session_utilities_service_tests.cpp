@@ -2,14 +2,12 @@
 
 #include <thread>
 
-#include "hardware/grpc/core_service.h"
-#include "hardware/grpc/internal/semaphore.h"
+#include <server/session_utilities_service.h>
+#include <server/semaphore.h>
 
 namespace ni {
 namespace tests {
 namespace integration {
-namespace hardware {
-namespace grpc {
 
 class InProcessServerClientTest : public ::testing::Test {
  public:
@@ -20,7 +18,7 @@ class InProcessServerClientTest : public ::testing::Test {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
     device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
-    service_ = std::make_unique<ni::hardware::grpc::CoreService>(session_repository_.get(), device_enumerator_.get());
+    service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
     ResetStub();
@@ -34,10 +32,10 @@ class InProcessServerClientTest : public ::testing::Test {
   void ResetStub()
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    stub_ = ni::hardware::grpc::ServerUtilities::NewStub(channel_);
+    stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
   }
 
-  std::unique_ptr<ni::hardware::grpc::ServerUtilities::Stub>& GetStub()
+  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub>& GetStub()
   {
     return stub_;
   }
@@ -84,14 +82,14 @@ class InProcessServerClientTest : public ::testing::Test {
 
  private:
   std::shared_ptr<::grpc::Channel> channel_;
-  std::unique_ptr<::ni::hardware::grpc::ServerUtilities::Stub> stub_;
+  std::unique_ptr<::ni::hardware::grpc::SessionUtilities::Stub> stub_;
   std::unique_ptr<ni::hardware::grpc::internal::SessionRepository> session_repository_;
   std::unique_ptr<ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<ni::hardware::grpc::CoreService> service_;
+  std::unique_ptr<ni::hardware::grpc::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(InProcessServerClientTest, CoreServiceClient_RequestIsServerRunning_ResponseIsTrue)
+TEST_F(InProcessServerClientTest, SessionUtilitiesServiceClient_RequestIsServerRunning_ResponseIsTrue)
 {
   ni::hardware::grpc::IsReservedByClientRequest request;
   ni::hardware::grpc::IsReservedByClientResponse response;
@@ -154,8 +152,6 @@ TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDe
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
 }
 
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace integration
 }  // namespace tests
 }  // namespace ni
