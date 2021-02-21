@@ -253,5 +253,5 @@ target_link_libraries(UnitTestsRunner
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )
-add_test( NAME SessionUtilitiesServiceTests COMMAND IntegrationTestsRunner )
+add_test( NAME IntegrationTests COMMAND IntegrationTestsRunner )
 add_test( NAME UnitTests COMMAND UnitTestsRunner )
