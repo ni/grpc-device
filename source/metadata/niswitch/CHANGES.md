@@ -18,14 +18,12 @@ The following `python-only` functions were removed:
 The following functions were changed from `private` to `public`:
 - `GetAttributeViBoolean`
 - `GetAttributeViInt32`
-- `GetAttributeViInt64`
 - `GetAttributeViReal64`
 - `GetAttributeViString`
 - `InitWithTopology`
 - `InitiateScan`
 - `SetAttributeViBoolean`
 - `SetAttributeViInt32`
-- `SetAttributeViInt64`
 - `SetAttributeViReal64`
 - `SetAttributeViString`
 - `close`
