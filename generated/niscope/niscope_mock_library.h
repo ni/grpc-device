@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryInterface for NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_MOCK_LIBRARY_WRAPPER_H
-#define NI_SCOPE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#ifndef NI_SCOPE_GRPC_MOCK_LIBRARY_H
+#define NI_SCOPE_GRPC_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -14,12 +14,9 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace scope {
-namespace grpc {
 
 class NiScopeMockLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
  public:
-  MOCK_METHOD(::grpc::Status, check_function_exists, (std::string functionName), (override));
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AcquisitionStatus, (ViSession vi, ViInt32* acquisitionStatus), (override));
   MOCK_METHOD(ViStatus, ActualMeasWfmSize, (ViSession vi, ViInt32 arrayMeasFunction, ViInt32* measWaveformSize), (override));
@@ -80,9 +77,7 @@ class NiScopeMockLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
 };
 
-}  // namespace grpc
-}  // namespace scope
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // NI_SCOPE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#endif  // NI_SCOPE_GRPC_MOCK_LIBRARY_H

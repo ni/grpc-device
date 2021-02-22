@@ -17,7 +17,6 @@ class NiFakeLibraryInterface {
  public:
   virtual ~NiFakeLibraryInterface() {}
 
-  virtual ::grpc::Status check_function_exists(std::string functionName) = 0;
   virtual ViStatus Abort(ViSession vi) = 0;
   virtual ViStatus AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[]) = 0;
   virtual ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;

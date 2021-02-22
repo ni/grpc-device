@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryInterface for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
-#define NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#ifndef NI_FAKE_GRPC_MOCK_LIBRARY_H
+#define NI_FAKE_GRPC_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -14,12 +14,9 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace fake {
-namespace grpc {
 
 class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
  public:
-  MOCK_METHOD(::grpc::Status, check_function_exists, (std::string functionName), (override));
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AcceptListOfDurationsInSeconds, (ViSession vi, ViInt32 count, ViReal64 delays[]), (override));
   MOCK_METHOD(ViStatus, BoolArrayOutputFunction, (ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]), (override));
@@ -79,9 +76,7 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
 };
 
-}  // namespace grpc
-}  // namespace fake
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#endif  // NI_FAKE_GRPC_MOCK_LIBRARY_H
