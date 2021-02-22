@@ -2,7 +2,7 @@
 # This example lists out devices/chassis in a Hierarchial Manner 
 # by estabilishing communication with the server over gRPC
 #
-# Copyright 2020 National Instruments
+# Copyright 2021 National Instruments
 # Licensed under the MIT license
 #
 # Getting Started:
