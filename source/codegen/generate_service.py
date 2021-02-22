@@ -34,8 +34,7 @@ def generate_all(metadata_dir, gen_dir, gen_mock):
   generate_service_file(metadata, "library_interface.h.mako", "_library_interface.h", gen_dir)
   generate_service_file(metadata, "library.cpp.mako", "_library.cpp", gen_dir)
   generate_service_file(metadata, "library.h.mako", "_library.h", gen_dir)
-  if gen_mock:
-      generate_service_file(metadata, "library_mock.h.mako", "_mock_library.h", gen_dir)
+  generate_service_file(metadata, "mock_library.h.mako", "_mock_library.h", gen_dir)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description = "Generate files for specified NI driver API gRPC service.")
