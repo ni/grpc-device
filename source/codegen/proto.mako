@@ -26,6 +26,8 @@ option csharp_namespace = "${config["csharp_namespace"]}";
 
 package ni.${config["namespace_component"]}.grpc;
 
+import "server_utilities.proto";
+
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
@@ -76,6 +78,9 @@ nonint_index = 1
 <%
   parameter_array = functions[function]["parameters"]
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
+  if function == config['init_function']:
+    session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
+    input_parameters.insert(0, session_name_param)
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
   index = 0
 %>\

@@ -21,7 +21,7 @@ using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::Throw;
 
-const ViSession kViSession = 12345678;
+ni::hardware::grpc::Session kSession;
 const ViStatus kDriverSuccess = 0;
 const ViStatus kDriverFailure = 1;
 ViConstString kChannelName = "channel";
@@ -51,12 +51,12 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseDoesNotInclude
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViBoolean aBoolean = true;
-  EXPECT_CALL(library_wrapper, GetABoolean(kViSession, _))
+  EXPECT_CALL(library_wrapper, GetABoolean(_, _))
       .WillOnce(DoAll(SetArgPointee<1>(aBoolean), Return(kDriverFailure)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetABooleanRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   ni::fake::grpc::GetABooleanResponse response;
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 
@@ -71,12 +71,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViBoolean aBoolean = true;
-  EXPECT_CALL(library_wrapper, GetABoolean(kViSession, _))
+  EXPECT_CALL(library_wrapper, GetABoolean(_, _))
       .WillOnce(DoAll(SetArgPointee<1>(aBoolean), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetABooleanRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   ni::fake::grpc::GetABooleanResponse response;
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 
@@ -91,12 +91,12 @@ TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, Abort(kViSession))
+  EXPECT_CALL(library_wrapper, Abort(_))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::AbortRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   ni::fake::grpc::AbortResponse response;
   ::grpc::Status status = service.Abort(&context, &request, &response);
 
@@ -110,12 +110,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViInt16 aNumber = 15;
-  EXPECT_CALL(library_wrapper, GetANumber(kViSession, _))
+  EXPECT_CALL(library_wrapper, GetANumber(_, _))
       .WillOnce(DoAll(SetArgPointee<1>(aNumber), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetANumberRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   ni::fake::grpc::GetANumberResponse response;
   ::grpc::Status status = service.GetANumber(&context, &request, &response);
 
@@ -130,12 +130,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForPythonCode_CallsGetArraySi
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViInt32 arraySize = 1000;
-  EXPECT_CALL(library_wrapper, GetArraySizeForPythonCode(kViSession, _))
+  EXPECT_CALL(library_wrapper, GetArraySizeForPythonCode(_, _))
       .WillOnce(DoAll(SetArgPointee<1>(arraySize), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetArraySizeForPythonCodeRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   ni::fake::grpc::GetArraySizeForPythonCodeResponse response;
   ::grpc::Status status = service.GetArraySizeForPythonCode(&context, &request, &response);
 
@@ -151,12 +151,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeVi
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_BOOL;
   ViBoolean attributeValue = true;
-  EXPECT_CALL(library_wrapper, GetAttributeViBoolean(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library_wrapper, GetAttributeViBoolean(_, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetAttributeViBooleanRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   request.set_channel_name(kChannelName);
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViBooleanResponse response;
@@ -174,12 +174,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViIn
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_INTEGER;
   ViInt32 attributeValue = 12345;
-  EXPECT_CALL(library_wrapper, GetAttributeViInt32(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library_wrapper, GetAttributeViInt32(_, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetAttributeViInt32Request request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   request.set_channel_name(kChannelName);
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViInt32Response response;
@@ -197,12 +197,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViIn
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_INT64;
   ViInt64 attributeValue = -12345;
-  EXPECT_CALL(library_wrapper, GetAttributeViInt64(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library_wrapper, GetAttributeViInt64(_, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetAttributeViInt64Request request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   request.set_channel_name(kChannelName);
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViInt64Response response;
@@ -220,12 +220,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
   ViReal64 attributeValue = 12.345;
-  EXPECT_CALL(library_wrapper, GetAttributeViReal64(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library_wrapper, GetAttributeViReal64(_, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetAttributeViReal64Request request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   request.set_channel_name(kChannelName);
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViReal64Response response;
@@ -243,7 +243,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViInt32 calType = 0;
   ViInt32 month = 1, day = 17, year = 2021, hour = 0, minute = 0;
-  EXPECT_CALL(library_wrapper, GetCalDateAndTime(kViSession, calType, _, _, _, _, _))
+  EXPECT_CALL(library_wrapper, GetCalDateAndTime(_, calType, _, _, _, _, _))
       .WillOnce(DoAll(
           SetArgPointee<2>(month),
           SetArgPointee<3>(day),
@@ -254,7 +254,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetCalDateAndTimeRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   request.set_cal_type(calType);
   ni::fake::grpc::GetCalDateAndTimeResponse response;
   ::grpc::Status status = service.GetCalDateAndTime(&context, &request, &response);
@@ -275,12 +275,12 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
   ViInt32 months = 24;
-  EXPECT_CALL(library_wrapper, GetCalInterval(kViSession, _))
+  EXPECT_CALL(library_wrapper, GetCalInterval(_, _))
       .WillOnce(DoAll(SetArgPointee<1>(months), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetCalIntervalRequest request;
-  request.set_vi(kViSession);
+  request.set_allocated_vi(&kSession);
   ni::fake::grpc::GetCalIntervalResponse response;
   ::grpc::Status status = service.GetCalInterval(&context, &request, &response);
 

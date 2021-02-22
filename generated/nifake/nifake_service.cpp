@@ -31,7 +31,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       auto status = library_wrapper_->Abort(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -45,28 +46,48 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::BoolArrayOutputFunction(::grpc::ServerContext* context, const BoolArrayOutputFunctionRequest* request, BoolArrayOutputFunctionResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::DoubleAllTheNums(::grpc::ServerContext* context, const DoubleAllTheNumsRequest* request, DoubleAllTheNumsResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::EnumArrayOutputFunction(::grpc::ServerContext* context, const EnumArrayOutputFunctionRequest* request, EnumArrayOutputFunctionResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -74,8 +95,9 @@ namespace grpc {
   ::grpc::Status NiFakeService::EnumInputFunctionWithDefaults(::grpc::ServerContext* context, const EnumInputFunctionWithDefaultsRequest* request, EnumInputFunctionWithDefaultsResponse* response)
   {
     try {
-      ViSession vi = request->vi();
-      auto a_turtle = (ViInt16)request->a_turtle();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt16 a_turtle = (ViInt16)request->a_turtle();
       auto status = library_wrapper_->EnumInputFunctionWithDefaults(vi, a_turtle);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -89,14 +111,24 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::FetchWaveform(::grpc::ServerContext* context, const FetchWaveformRequest* request, FetchWaveformResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -104,7 +136,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetABoolean(::grpc::ServerContext* context, const GetABooleanRequest* request, GetABooleanResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViBoolean a_boolean {};
       auto status = library_wrapper_->GetABoolean(vi, &a_boolean);
       response->set_status(status);
@@ -123,7 +156,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetANumber(::grpc::ServerContext* context, const GetANumberRequest* request, GetANumberResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 a_number {};
       auto status = library_wrapper_->GetANumber(vi, &a_number);
       response->set_status(status);
@@ -141,42 +175,72 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAStringOfFixedMaximumSize(::grpc::ServerContext* context, const GetAStringOfFixedMaximumSizeRequest* request, GetAStringOfFixedMaximumSizeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAStringUsingPythonCode(::grpc::ServerContext* context, const GetAStringUsingPythonCodeRequest* request, GetAStringUsingPythonCodeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetArrayForPythonCodeCustomType(::grpc::ServerContext* context, const GetArrayForPythonCodeCustomTypeRequest* request, GetArrayForPythonCodeCustomTypeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetArrayForPythonCodeDouble(::grpc::ServerContext* context, const GetArrayForPythonCodeDoubleRequest* request, GetArrayForPythonCodeDoubleResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -184,7 +248,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetArraySizeForPythonCode(::grpc::ServerContext* context, const GetArraySizeForPythonCodeRequest* request, GetArraySizeForPythonCodeResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 size_out {};
       auto status = library_wrapper_->GetArraySizeForPythonCode(vi, &size_out);
       response->set_status(status);
@@ -202,7 +267,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetArrayUsingIviDance(::grpc::ServerContext* context, const GetArrayUsingIviDanceRequest* request, GetArrayUsingIviDanceResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -210,7 +280,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
@@ -231,7 +302,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
@@ -252,7 +324,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value {};
@@ -273,7 +346,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
@@ -293,7 +367,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -301,7 +380,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetCalDateAndTime(::grpc::ServerContext* context, const GetCalDateAndTimeRequest* request, GetCalDateAndTimeResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 cal_type = request->cal_type();
       ViInt32 month {};
       ViInt32 day {};
@@ -329,7 +409,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetCalInterval(::grpc::ServerContext* context, const GetCalIntervalRequest* request, GetCalIntervalResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 months {};
       auto status = library_wrapper_->GetCalInterval(vi, &months);
       response->set_status(status);
@@ -347,14 +428,24 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCustomType(::grpc::ServerContext* context, const GetCustomTypeRequest* request, GetCustomTypeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCustomTypeArray(::grpc::ServerContext* context, const GetCustomTypeArrayRequest* request, GetCustomTypeArrayResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -362,14 +453,15 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetEnumValue(::grpc::ServerContext* context, const GetEnumValueRequest* request, GetEnumValueResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 a_quantity {};
       ViInt16 a_turtle {};
       auto status = library_wrapper_->GetEnumValue(vi, &a_quantity, &a_turtle);
       response->set_status(status);
       if (status == 0) {
         response->set_a_quantity(a_quantity);
-      response->set_a_turtle(static_cast<ni::fake::grpc::Turtle>(a_turtle));
+        response->set_a_turtle(static_cast<ni::fake::grpc::Turtle>(a_turtle));
       }
       return ::grpc::Status::OK;
     }
@@ -382,7 +474,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -394,11 +491,21 @@ namespace grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       ViConstString option_string = request->option_string().c_str();
-      ViSession vi {};
-      auto status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->set_vi(vi);
+        ni::hardware::grpc::Session session;
+        session.set_id(session_id);
+        response->set_allocated_vi(&session);
       }
       return ::grpc::Status::OK;
     }
@@ -411,14 +518,24 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::MultipleArrayTypes(::grpc::ServerContext* context, const MultipleArrayTypesRequest* request, MultipleArrayTypesResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::MultipleArraysSameSize(::grpc::ServerContext* context, const MultipleArraysSameSizeRequest* request, MultipleArraysSameSizeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -426,7 +543,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::OneInputFunction(::grpc::ServerContext* context, const OneInputFunctionRequest* request, OneInputFunctionResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 a_number = request->a_number();
       auto status = library_wrapper_->OneInputFunction(vi, a_number);
       response->set_status(status);
@@ -442,11 +560,12 @@ namespace grpc {
   ::grpc::Status NiFakeService::ParametersAreMultipleTypes(::grpc::ServerContext* context, const ParametersAreMultipleTypesRequest* request, ParametersAreMultipleTypesResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViBoolean a_boolean = request->a_boolean();
       ViInt32 an_int32 = request->an_int32();
       ViInt64 an_int64 = request->an_int64();
-      auto an_int_enum = (ViInt16)request->an_int_enum();
+      ViInt16 an_int_enum = (ViInt16)request->an_int_enum();
       ViReal64 a_float = request->a_float();
       auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
 
@@ -454,6 +573,7 @@ namespace grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
       }
       auto a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
+
       ViInt32 string_size = request->string_size();
       ViConstString a_string = request->a_string().c_str();
       auto status = library_wrapper_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
@@ -470,7 +590,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::PoorlyNamedSimpleFunction(::grpc::ServerContext* context, const PoorlyNamedSimpleFunctionRequest* request, PoorlyNamedSimpleFunctionResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       auto status = library_wrapper_->PoorlyNamedSimpleFunction(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -485,7 +606,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViReal64 maximum_time = request->maximum_time();
       ViReal64 reading {};
       auto status = library_wrapper_->Read(vi, maximum_time, &reading);
@@ -505,7 +627,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::ReadFromChannel(::grpc::ServerContext* context, const ReadFromChannelRequest* request, ReadFromChannelResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 maximum_time = request->maximum_time();
       ViReal64 reading {};
@@ -525,7 +648,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReturnANumberAndAString(::grpc::ServerContext* context, const ReturnANumberAndAStringRequest* request, ReturnANumberAndAStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -533,7 +661,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::ReturnDurationInSeconds(::grpc::ServerContext* context, const ReturnDurationInSecondsRequest* request, ReturnDurationInSecondsResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViReal64 timedelta {};
       auto status = library_wrapper_->ReturnDurationInSeconds(vi, &timedelta);
       response->set_status(status);
@@ -551,28 +680,48 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReturnListOfDurationsInSeconds(::grpc::ServerContext* context, const ReturnListOfDurationsInSecondsRequest* request, ReturnListOfDurationsInSecondsResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReturnMultipleTypes(::grpc::ServerContext* context, const ReturnMultipleTypesRequest* request, ReturnMultipleTypesResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::SetCustomType(::grpc::ServerContext* context, const SetCustomTypeRequest* request, SetCustomTypeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::SetCustomTypeArray(::grpc::ServerContext* context, const SetCustomTypeArrayRequest* request, SetCustomTypeArrayResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -580,13 +729,15 @@ namespace grpc {
   ::grpc::Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(::grpc::ServerContext* context, const StringValuedEnumInputFunctionWithDefaultsRequest* request, StringValuedEnumInputFunctionWithDefaultsResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
 
       if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
       }
       auto a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+
       auto status = library_wrapper_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_o_s_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -601,7 +752,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::TwoInputFunction(::grpc::ServerContext* context, const TwoInputFunctionRequest* request, TwoInputFunctionResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViReal64 a_number = request->a_number();
       ViString a_string = (ViString)request->a_string().c_str();
       auto status = library_wrapper_->TwoInputFunction(vi, a_number, a_string);
@@ -618,7 +770,8 @@ namespace grpc {
   ::grpc::Status NiFakeService::Use64BitNumber(::grpc::ServerContext* context, const Use64BitNumberRequest* request, Use64BitNumberResponse* response)
   {
     try {
-      ViSession vi = request->vi();
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt64 input = request->input();
       ViInt64 output {};
       auto status = library_wrapper_->Use64BitNumber(vi, input, &output);
@@ -637,7 +790,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -645,9 +803,9 @@ namespace grpc {
   ::grpc::Status NiFakeService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     try {
-      ViSession vi = request->vi();
-      auto status = library_wrapper_->close(vi);
-      response->set_status(status);
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
     }
     catch (internal::SharedLibrary::LibraryLoadException& ex) {
@@ -655,6 +813,8 @@ namespace grpc {
     }
   }
 
+
 } // namespace grpc
 } // namespace fake
 } // namespace ni
+

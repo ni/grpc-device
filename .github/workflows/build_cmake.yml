@@ -17,12 +17,14 @@ jobs:
         - {
             name: "Windows Build", artifact: "Windows.tar.xz",
             os: windows-latest,
-            build_type: "Release", cc: "gcc", cxx: "g++"
+            build_type: "Release", cc: "gcc", cxx: "g++",
+            cmake_platform: "-A x64"
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-latest,
-            build_type: "Release", cc: "gcc", cxx: "g++"
+            build_type: "Release", cc: "gcc", cxx: "g++",
+            cmake_platform: ""
           }
 
     steps:
@@ -61,6 +63,7 @@ jobs:
             -S .
             -B build
             -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
+            ${{ matrix.config.cmake_platform }}
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)
