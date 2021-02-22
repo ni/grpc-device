@@ -179,7 +179,7 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'direction': 'in',,
+                'direction': 'in',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
@@ -580,7 +580,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SendSoftwareTrigger': {
-        'documentation': {
         'parameters': [
             {
                 'direction': 'in',
@@ -743,7 +742,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'WaitForScanComplete': {
-        'documentation': {
         'parameters': [
             {
                 'direction': 'in',

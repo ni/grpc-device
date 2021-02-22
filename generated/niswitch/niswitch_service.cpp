@@ -175,6 +175,76 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_GetAttributeViBoolean");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    ViConstString channel_name = request->channel_name().c_str();
+    ViAttr attribute_id = request->attribute_id();
+    ViBoolean attribute_value;
+    auto status = library_wrapper_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_attribute_value(attribute_value);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_GetAttributeViInt32");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    ViConstString channel_name = request->channel_name().c_str();
+    ViAttr attribute_id = request->attribute_id();
+    ViInt32 attribute_value;
+    auto status = library_wrapper_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_attribute_value(attribute_value);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_GetAttributeViReal64");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    ViConstString channel_name = request->channel_name().c_str();
+    ViAttr attribute_id = request->attribute_id();
+    ViReal64 attribute_value;
+    auto status = library_wrapper_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_attribute_value(attribute_value);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
+  {
+    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
@@ -231,6 +301,43 @@ namespace grpc {
     if (status == 0) {
       response->set_relay_position(static_cast<ni::niswitch::grpc::RelayPosition>(relay_position_ctype));
     }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::InitWithTopology(::grpc::ServerContext* context, const InitWithTopologyRequest* request, InitWithTopologyResponse* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_InitWithTopology");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+    ViConstString topology = request->topology().c_str();
+    ViBoolean simulate = request->simulate();
+    ViBoolean reset_device = request->reset_device();
+    ViSession vi;
+    auto status = library_wrapper_->InitWithTopology(resource_name, topology, simulate, reset_device, &vi);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_vi(vi);
+    }
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::InitiateScan(::grpc::ServerContext* context, const InitiateScanRequest* request, InitiateScanResponse* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_InitiateScan");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    auto status = library_wrapper_->InitiateScan(vi);
+    response->set_status(status);
     return ::grpc::Status::OK;
   }
 
@@ -348,6 +455,78 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_SetAttributeViBoolean");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    ViConstString channel_name = request->channel_name().c_str();
+    ViAttr attribute_id = request->attribute_id();
+    ViBoolean attribute_value = request->attribute_value();
+    auto status = library_wrapper_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_SetAttributeViInt32");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    ViConstString channel_name = request->channel_name().c_str();
+    ViAttr attribute_id = request->attribute_id();
+    ViInt32 attribute_value = request->attribute_value();
+    auto status = library_wrapper_->SetAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_SetAttributeViReal64");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    ViConstString channel_name = request->channel_name().c_str();
+    ViAttr attribute_id = request->attribute_id();
+    ViReal64 attribute_value = request->attribute_value();
+    auto status = library_wrapper_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_SetAttributeViString");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    ViConstString channel_name = request->channel_name().c_str();
+    ViAttr attribute_id = request->attribute_id();
+    ViString attribute_value = (ViString)request->attribute_value().c_str();
+    auto status = library_wrapper_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::SetPath(::grpc::ServerContext* context, const SetPathRequest* request, SetPathResponse* response)
   {
     ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_SetPath");
@@ -415,6 +594,21 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
+  {
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_close");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    auto status = library_wrapper_->close(vi);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
     ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niSwitch_reset");
@@ -426,6 +620,13 @@ namespace grpc {
     auto status = library_wrapper_->reset(vi);
     response->set_status(status);
     return ::grpc::Status::OK;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
+  {
+    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
   }
 
 } // namespace grpc

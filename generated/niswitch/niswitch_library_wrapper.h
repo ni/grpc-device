@@ -49,7 +49,6 @@ class NiSwitchLibraryWrapper {
   virtual ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs) = 0;
   virtual ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs) = 0;
   virtual ViStatus close(ViSession vi) = 0;
-  virtual ViStatus fancy_self_test(ViSession vi) = 0;
   virtual ViStatus reset(ViSession vi) = 0;
 };
 
