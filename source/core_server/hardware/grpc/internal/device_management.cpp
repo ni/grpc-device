@@ -26,26 +26,26 @@ DeviceManagement::DeviceManagement(internal::SharedLibrary* syscfg_library)
 // This method doesn't check for return of null session after failed initialization.
 NISysCfgSessionHandle DeviceManagement::get_syscfg_session(bool reinitialize = false)
 {
-  if (cached_syscfg_session == nullptr) {
-    syscfg_library_->load();
-    if (!syscfg_library_->is_loaded()) {
-      std::string message("The library could not be loaded: ");
-      message += syscfg_api_library_name;
-    }
-
   std::unique_lock<std::shared_mutex> lock(session_mutex);
   if (!reinitialize && cached_syscfg_session != nullptr) {
     return cached_syscfg_session;
   }
   else {
+
+      if (cached_syscfg_session == nullptr) {
+      syscfg_library_->load();
+      if (!syscfg_library_->is_loaded()) {
+        std::string message("The library could not be loaded: ");
+        message += syscfg_api_library_name;
+      }
     
-      cached_syscfg_session = get_syscfg_session(true);
       // Need to Initialize syscfg session here by calling NISysCfgInitializeSession. NISysCfgInitializeSession should exist.
+      /*
       auto niSysCfg_Initialize_Session_function = (NISysCfgSessionHandle*)syscfg_library_->get_function_pointer("NISysCfgInitializeSession");
       if (niSysCfg_Initialize_Session_function == nullptr) {
         return nullptr;
       }
-      niSysCfg_Initialize_Session_function("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session);
+      niSysCfg_Initialize_Session_function("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session); */
       return cached_syscfg_session;
   }
 }
