@@ -28,6 +28,7 @@ def generate_all(metadata_dir, gen_dir, gen_mock):
   spec.loader.exec_module(module)
 
   metadata = module.metadata;
+  metadata["metadata_dir"] = metadata_dir
   generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
   generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
   generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)

@@ -61,7 +61,13 @@ public:
 %endif
 %endfor
 };
-
+<%
+from mako.lookup import TemplateLookup
+from mako.template import Template
+mylookup = TemplateLookup(directories=data["metadata_dir"])
+mytemplate = mylookup.get_template("custom_header.mako")
+%>\
+${mytemplate.render()}
 } // namespace grpc
 } // namespace ${config["namespace_component"]}
 } // namespace ni

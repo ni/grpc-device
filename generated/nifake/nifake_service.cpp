@@ -347,7 +347,19 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCustomType(::grpc::ServerContext* context, const GetCustomTypeRequest* request, GetCustomTypeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetCustomType");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    CustomStruct cs {};
+    auto status = library_wrapper_->GetCustomType(vi, &cs);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_cs(cs);
+    }
+    return ::grpc::Status::OK;
   }
 
   //---------------------------------------------------------------------
@@ -565,7 +577,16 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::SetCustomType(::grpc::ServerContext* context, const SetCustomTypeRequest* request, SetCustomTypeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_SetCustomType");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
+    }
+
+    ViSession vi = request->vi();
+    CustomStruct cs = request->cs();
+    auto status = library_wrapper_->SetCustomType(vi, cs);
+    response->set_status(status);
+    return ::grpc::Status::OK;
   }
 
   //---------------------------------------------------------------------

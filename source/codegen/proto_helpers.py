@@ -48,8 +48,8 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     type = 'fixed64'
   if 'int' == type:
     type = 'sint32'
-  if type.startswith('struct'):
-    type = 'fixed64'
+  if "[]" in type:
+    type = type.replace("[]","")
 
   return "repeated " + type if add_repeated else type
 

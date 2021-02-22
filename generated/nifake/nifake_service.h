@@ -81,7 +81,10 @@ public:
     std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
     std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
 };
-
+struct CustomStruct {
+  std::int32_t struct_int;
+  double struct_double;
+}
 } // namespace grpc
 } // namespace fake
 } // namespace ni

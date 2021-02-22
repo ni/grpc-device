@@ -29,6 +29,7 @@ class NiFakeLibraryWrapper {
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue) = 0;
   virtual ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetCalInterval(ViSession vi, ViInt32* months) = 0;
+  virtual ViStatus GetCustomType(ViSession vi, CustomStruct* cs) = 0;
   virtual ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
@@ -43,6 +44,7 @@ class NiFakeLibraryWrapper {
   virtual ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue) = 0;
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue) = 0;
+  virtual ViStatus SetCustomType(ViSession vi, CustomStruct cs) = 0;
   virtual ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName) = 0;
   virtual ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString) = 0;
   virtual ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output) = 0;

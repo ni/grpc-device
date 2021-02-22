@@ -531,7 +531,7 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self.get_array_size_for_python_code()'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'CustomStruct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -967,7 +967,7 @@ functions = {
                     'description': 'Set using custom type'
                 },
                 'name': 'cs',
-                'type': 'struct CustomStruct'
+                'type': 'CustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -1004,7 +1004,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'numberOfElements'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'CustomStruct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2107,7 +2107,7 @@ functions = {
                     'description': 'Set using custom type'
                 },
                 'name': 'cs',
-                'type': 'struct CustomStruct'
+                'type': 'CustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2144,7 +2144,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfElements'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'CustomStruct[]'
             }
         ],
         'returns': 'ViStatus'

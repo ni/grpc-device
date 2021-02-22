@@ -72,6 +72,13 @@ nonint_index = 1
 }
 
 % endfor
+<%
+from mako.lookup import TemplateLookup
+from mako.template import Template
+mylookup = TemplateLookup(directories=data["metadata_dir"])
+mytemplate = mylookup.get_template("custom_proto.mako")
+%>\
+${mytemplate.render()}
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   parameter_array = functions[function]["parameters"]
@@ -102,25 +109,5 @@ message ${common_helpers.snake_to_camel(function)}Response {
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
 %endfor
 }
-% endfor
 
-<%
-import sys
-sys.path.append("../..")
-from apis.nifake.cutom_types import customStructs
-
-custom_structs = customStructs
-%>\
-% for struct in custom_structs:
-<%
-index = 1
-%>\
-message ${struct.__name__} {
-% for field in struct._fields_:
-${field[1].__name__} ${field[0]} = ${index}
-<%
-index = index + 1;
-%>\
-% endfor
-}
 % endfor
