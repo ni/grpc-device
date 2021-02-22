@@ -89,7 +89,9 @@ foreach(api ${ni_apis})
     ${service_output_dir}/${api}/${api}_library_wrapper.h)
   set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (api STREQUAL "nifake")
-    # Fake library gen goes here. Add flag and files to output_files and gen_command
+    set(codegen_dependencies ${codegen_dependencies} "${codegen_dir}/mock_library_wrapper.h.mako")
+    set(output_files ${output_files} ${service_output_dir}/${api}/${api}_mock_library_wrapper.h)
+    set(gen_command ${gen_command} --generate-mock)
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -220,6 +222,7 @@ target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake")
 target_link_libraries(UnitTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
