@@ -21,6 +21,7 @@ class NiFakeLibraryWrapper {
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
   virtual ViStatus GetANumber(ViSession vi, ViInt16* aNumber) = 0;
+  virtual ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]) = 0;
   virtual ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue) = 0;
@@ -36,6 +37,7 @@ class NiFakeLibraryWrapper {
   virtual ViStatus PoorlyNamedSimpleFunction(ViSession vi) = 0;
   virtual ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading) = 0;
   virtual ViStatus ReadFromChannel(ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading) = 0;
+  virtual ViStatus ReturnANumberAndAString(ViSession vi, ViInt16* aNumber, ViChar aString[256]) = 0;
   virtual ViStatus ReturnDurationInSeconds(ViSession vi, ViReal64* timedelta) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
@@ -46,6 +48,8 @@ class NiFakeLibraryWrapper {
   virtual ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString) = 0;
   virtual ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output) = 0;
   virtual ViStatus close(ViSession vi) = 0;
+  virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
 }  // namespace grpc

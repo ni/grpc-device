@@ -62,7 +62,9 @@ class NiScopeLibraryWrapper {
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value) = 0;
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus close(ViSession vi) = 0;
+  virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus reset(ViSession vi) = 0;
+  virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
 }  // namespace grpc

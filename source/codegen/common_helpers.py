@@ -44,7 +44,9 @@ def has_unsupported_parameter(function):
 
 def is_unsupported_parameter(parameter):
   type = parameter['type']
-  return is_array(type) or type.startswith('struct')
+  supported_size_mechanisms = {'fixed'}
+  is_unsupported_array = is_array(type) and parameter['size']['mechanism'] not in supported_size_mechanisms
+  return is_unsupported_array or type.startswith('struct')
 
 def camel_to_snake(camelString):
   camelString = list(camelString)

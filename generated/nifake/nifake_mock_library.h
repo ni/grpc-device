@@ -23,6 +23,7 @@ class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
   MOCK_METHOD(ViStatus, EnumInputFunctionWithDefaults, (ViSession vi, ViInt16 aTurtle), (override));
   MOCK_METHOD(ViStatus, GetABoolean, (ViSession vi, ViBoolean* aBoolean), (override));
   MOCK_METHOD(ViStatus, GetANumber, (ViSession vi, ViInt16* aNumber), (override));
+  MOCK_METHOD(ViStatus, GetAStringOfFixedMaximumSize, (ViSession vi, ViChar aString[256]), (override));
   MOCK_METHOD(ViStatus, GetArraySizeForPythonCode, (ViSession vi, ViInt32* sizeOut), (override));
   MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue), (override));
@@ -38,6 +39,7 @@ class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
   MOCK_METHOD(ViStatus, PoorlyNamedSimpleFunction, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Read, (ViSession vi, ViReal64 maximumTime, ViReal64* reading), (override));
   MOCK_METHOD(ViStatus, ReadFromChannel, (ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading), (override));
+  MOCK_METHOD(ViStatus, ReturnANumberAndAString, (ViSession vi, ViInt16* aNumber, ViChar aString[256]), (override));
   MOCK_METHOD(ViStatus, ReturnDurationInSeconds, (ViSession vi, ViReal64* timedelta), (override));
   MOCK_METHOD(ViStatus, SetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue), (override));
@@ -48,6 +50,8 @@ class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
   MOCK_METHOD(ViStatus, TwoInputFunction, (ViSession vi, ViReal64 aNumber, ViString aString), (override));
   MOCK_METHOD(ViStatus, Use64BitNumber, (ViSession vi, ViInt64 input, ViInt64* output), (override));
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, error_message, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
+  MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
 };
 
 }  // namespace unit

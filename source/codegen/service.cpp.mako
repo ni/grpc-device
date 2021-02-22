@@ -109,12 +109,7 @@ ${request_input_parameters(parameters)}
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
 ${request_input_parameters(parameters)}\
-%for parameter in output_parameters:
-<%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-%>\
-      ${parameter['type']} ${parameter_name} {};
-%endfor
+${initialize_output_variables_snippet(output_parameters)}\
 %if function_name == config['close_function']:
       session_repository_->remove_session(${handler_helpers.create_args(parameters)});
 %else:
@@ -190,6 +185,27 @@ ${initialize_enum_with_mapping_snippet(parameter)}
 %else:
       auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
 %endif
+</%def>\
+\
+\
+\
+\
+<%def name="initialize_output_variables_snippet(output_parameters)">\
+%for parameter in output_parameters:
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+%>\
+% if common_helpers.is_array(parameter['type']):
+% if parameter['size']['mechanism'] == 'fixed':
+<%
+  type_without_brackets = parameter['type'].replace('[]', '')
+%>\
+    ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
+% endif
+% else:
+    ${parameter['type']} ${parameter_name} {};
+% endif
+%endfor
 </%def>\
 \
 \

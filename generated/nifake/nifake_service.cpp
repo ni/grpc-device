@@ -175,12 +175,20 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAStringOfFixedMaximumSize(::grpc::ServerContext* context, const GetAStringOfFixedMaximumSizeRequest* request, GetAStringOfFixedMaximumSizeResponse* response)
   {
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetAStringOfFixedMaximumSize");
+    if (!libraryStatus.ok()) {
+      return libraryStatus;
     }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViChar a_string[256];
+    auto status = library_wrapper_->GetAStringOfFixedMaximumSize(vi, a_string);
+    response->set_status(status);
+    if (status == 0) {
+      response->set_a_string(a_string);
     }
+    return ::grpc::Status::OK;
   }
 
   //---------------------------------------------------------------------

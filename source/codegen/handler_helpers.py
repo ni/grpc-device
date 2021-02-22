@@ -36,7 +36,7 @@ def get_include_guard_name(config, suffix):
 def create_args(parameters):
     result = ''
     for parameter in parameters:
-        if common_helpers.is_input_parameter(parameter) == False:
+        if not common_helpers.is_array(parameter['type']) and common_helpers.is_input_parameter(parameter) == False:
             result = result + '&'
         result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
@@ -44,17 +44,22 @@ def create_args(parameters):
 def create_params(parameters):
     result = ''
     for parameter in parameters:
-        result = result + create_param(parameter) + ' ' + parameter['cppName'] + ', '
+        result = result + create_param(parameter) + ', '
     return result[:-2]
 
 def create_param(parameter):
-    result = parameter['type']
-    if result.endswith('[]') and parameter['size']['mechanism'] == 'fixed':
-        size = parameter['size']['value'];
-        result.replace('[]', f'[{size}]')
-    if common_helpers.is_output_parameter(parameter):
-        result = result + '*'
-    return result
+    type = parameter['type']
+    parameter_name = parameter['cppName']
+    is_array = common_helpers.is_array(type)
+    if is_array:
+      type = type.replace('[]','')
+      if parameter['size']['mechanism'] == 'fixed':
+        size = parameter['size']['value']
+        parameter_name = f'{parameter_name}[{size}]'
+    
+    if not is_array and common_helpers.is_output_parameter(parameter):
+        type = type + '*'
+    return type + ' ' + parameter_name
 
 def python_to_c(enum):
   enum_value = enum["values"][0]["value"]
