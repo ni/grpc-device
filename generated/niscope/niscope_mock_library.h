@@ -14,8 +14,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace scope {
-namespace grpc {
 
 namespace driverNamespace = ni::scope::grpc;
 
@@ -69,8 +67,6 @@ class NiScopeMockLibrary : public driverNamespace::NiScopeLibraryWrapper {
   MOCK_METHOD(ViStatus, reset, (ViSession vi), (override));
 };
 
-}  // namespace grpc
-}  // namespace scope
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
