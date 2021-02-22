@@ -18,6 +18,8 @@ class NiFakeLibraryWrapper {
   virtual ~NiFakeLibraryWrapper() {}
 
   virtual ViStatus Abort(ViSession vi) = 0;
+  virtual ViStatus AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[]) = 0;
+  virtual ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]) = 0;
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
   virtual ViStatus GetANumber(ViSession vi, ViInt16* aNumber) = 0;
@@ -30,8 +32,10 @@ class NiFakeLibraryWrapper {
   virtual ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetCalInterval(ViSession vi, ViInt32* months) = 0;
   virtual ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) = 0;
+  virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
+  virtual ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size) = 0;
   virtual ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber) = 0;
   virtual ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString) = 0;
   virtual ViStatus PoorlyNamedSimpleFunction(ViSession vi) = 0;
@@ -47,6 +51,7 @@ class NiFakeLibraryWrapper {
   virtual ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName) = 0;
   virtual ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString) = 0;
   virtual ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output) = 0;
+  virtual ViStatus WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]) = 0;
   virtual ViStatus close(ViSession vi) = 0;
   virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;

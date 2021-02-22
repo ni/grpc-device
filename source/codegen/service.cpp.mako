@@ -140,36 +140,25 @@ ${initialize_input_param_snippet(parameter=parameter)}
 \
 \
 <%def name="initialize_input_param_snippet(parameter)">\
+%if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
+${initialize_enum_input_param(parameter)}
+% elif parameter.get("determine_size_from", '') != '':
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  field_name = common_helpers.camel_to_snake(parameter["name"])
+  field_name = common_helpers.camel_to_snake(parameter["determine_size_from"])
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
 %>\
-%if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
-${initialize_enum_with_mapping_snippet(parameter)}
+    ${c_type} ${parameter_name} = request->${field_name}().size();\
 % else:
-  % if c_type == 'ViConstString':
-      ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
-  % elif c_type == 'ViString' or c_type == 'ViRsrc':
-      ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
-  % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
-      ${c_type} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
-  % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
-      ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
-  % elif c_type == 'ViSession':
-      auto session = request->${field_name}();
-      ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
-  % else:
-      ${c_type} ${parameter_name} = ${request_snippet};\
-  % endif
+${initialize_standard_input_param(parameter)}\
 % endif
 </%def>\
 \
 \
 \
 \
-<%def name="initialize_enum_with_mapping_snippet(parameter)">\
+<%def name="initialize_enum_input_param(parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   map_name = parameter["enum"].lower() + "_input_map_"
@@ -185,6 +174,35 @@ ${initialize_enum_with_mapping_snippet(parameter)}
 %else:
       auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
 %endif
+</%def>\
+\
+\
+\
+\
+<%def name="initialize_standard_input_param(parameter)">\
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  field_name = common_helpers.camel_to_snake(parameter["name"])
+  request_snippet = f'request->{field_name}()'
+  c_type = parameter['type']
+  c_type_pointer = c_type.replace('[]','*')
+%>\
+  % if c_type == 'ViConstString':
+    ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
+  % elif c_type == 'ViString' or c_type == 'ViRsrc':
+    ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
+  % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
+    ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
+  % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
+    ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
+  % elif c_type == 'ViSession':
+    auto session = ${request_snippet};
+    ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
+  % elif common_helpers.is_array(c_type):
+    ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.data();\
+  % else:
+    ${c_type} ${parameter_name} = ${request_snippet};\
+  % endif
 </%def>\
 \
 \

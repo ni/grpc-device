@@ -266,6 +266,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'determine_size_from': 'coefficients',
                 'name': 'numberOfCoefficients',
                 'type': 'ViInt32'
             },
@@ -1243,6 +1244,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'determine_size_from': 'configuration',
                 'name': 'sizeInBytes',
                 'type': 'ViInt32'
             },

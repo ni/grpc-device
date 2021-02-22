@@ -20,6 +20,8 @@ namespace driverNamespace = ni::fake::grpc;
 class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, AcceptListOfDurationsInSeconds, (ViSession vi, ViInt32 count, ViReal64 delays[]), (override));
+  MOCK_METHOD(ViStatus, DoubleAllTheNums, (ViSession vi, ViInt32 numberCount, ViReal64 numbers[]), (override));
   MOCK_METHOD(ViStatus, EnumInputFunctionWithDefaults, (ViSession vi, ViInt16 aTurtle), (override));
   MOCK_METHOD(ViStatus, GetABoolean, (ViSession vi, ViBoolean* aBoolean), (override));
   MOCK_METHOD(ViStatus, GetANumber, (ViSession vi, ViInt16* aNumber), (override));
@@ -32,8 +34,10 @@ class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
   MOCK_METHOD(ViStatus, GetCalDateAndTime, (ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetCalInterval, (ViSession vi, ViInt32* months), (override));
   MOCK_METHOD(ViStatus, GetEnumValue, (ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle), (override));
+  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, MultipleArraysSameSize, (ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size), (override));
   MOCK_METHOD(ViStatus, OneInputFunction, (ViSession vi, ViInt32 aNumber), (override));
   MOCK_METHOD(ViStatus, ParametersAreMultipleTypes, (ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString), (override));
   MOCK_METHOD(ViStatus, PoorlyNamedSimpleFunction, (ViSession vi), (override));
@@ -49,6 +53,7 @@ class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
   MOCK_METHOD(ViStatus, StringValuedEnumInputFunctionWithDefaults, (ViSession vi, ViConstString aMobileOSName), (override));
   MOCK_METHOD(ViStatus, TwoInputFunction, (ViSession vi, ViReal64 aNumber, ViString aString), (override));
   MOCK_METHOD(ViStatus, Use64BitNumber, (ViSession vi, ViInt64 input, ViInt64* output), (override));
+  MOCK_METHOD(ViStatus, WriteWaveform, (ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]), (override));
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, error_message, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));

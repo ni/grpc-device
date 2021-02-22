@@ -56,6 +56,8 @@ def create_param(parameter):
       if parameter['size']['mechanism'] == 'fixed':
         size = parameter['size']['value']
         parameter_name = f'{parameter_name}[{size}]'
+      else:
+        parameter_name = f'{parameter_name}[]'
     
     if not is_array and common_helpers.is_output_parameter(parameter):
         type = type + '*'

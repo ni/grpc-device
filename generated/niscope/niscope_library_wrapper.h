@@ -30,6 +30,7 @@ class NiScopeLibraryWrapper {
   virtual ViStatus ClearWaveformProcessing(ViSession vi, ViConstString channelList) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus ConfigureChanCharacteristics(ViSession vi, ViConstString channelList, ViReal64 inputImpedance, ViReal64 maxInputFrequency) = 0;
+  virtual ViStatus ConfigureEqualizationFilterCoefficients(ViSession vi, ViConstString channelList, ViInt32 numberOfCoefficients, ViReal64 coefficients[]) = 0;
   virtual ViStatus ConfigureHorizontalTiming(ViSession vi, ViReal64 minSampleRate, ViInt32 minNumPts, ViReal64 refPosition, ViInt32 numRecords, ViBoolean enforceRealtime) = 0;
   virtual ViStatus ConfigureRefLevels(ViSession vi, ViReal64 low, ViReal64 mid, ViReal64 high) = 0;
   virtual ViStatus ConfigureTriggerDigital(ViSession vi, ViConstString triggerSource, ViInt32 slope, ViReal64 holdoff, ViReal64 delay) = 0;
@@ -46,6 +47,7 @@ class NiScopeLibraryWrapper {
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32* value) = 0;
   virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt64* value) = 0;
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelList, ViAttr attributeId, ViReal64* value) = 0;
+  virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus InitiateAcquisition(ViSession vi) = 0;
