@@ -5,9 +5,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace hardware {
-namespace grpc {
-namespace internal {
 
 #if defined(_MSC_VER)
 static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
@@ -40,9 +37,6 @@ TEST(DeviceEnumeratorTests, CreateDeviceEnumerator_SharedLibraryIsNotLoaded)
   EXPECT_FALSE(device_management.is_syscfg_library_loaded());
 }
 
-}  // namespace internal
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
