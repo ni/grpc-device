@@ -140,6 +140,7 @@ NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedP
           }
         }
       }
+      sysycfg_close_handle(resources_handle);
       if (NISysCfg_Succeeded(status = syscfg_find_hardware(session, NISysCfgFilterModeAny, filter, NULL, &resources_handle))) {
         while (NISysCfg_Succeeded(status) && (status = sysycfg_next_resource(session, resources_handle, &resource)) == NISysCfg_OK) {
           sysycfg_get_resource_indexed_property(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
