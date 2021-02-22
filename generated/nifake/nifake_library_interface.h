@@ -13,39 +13,67 @@ namespace ni {
 namespace fake {
 namespace grpc {
 
-class NiFakeLibraryWrapper {
+class NiFakeLibraryInterface {
  public:
-  virtual ~NiFakeLibraryWrapper() {}
+  virtual ~NiFakeLibraryInterface() {}
 
   virtual ViStatus Abort(ViSession vi) = 0;
+  virtual ViStatus AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[]) = 0;
+  virtual ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;
+  virtual ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]) = 0;
+  virtual ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]) = 0;
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
+  virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
+  virtual ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples) = 0;
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
   virtual ViStatus GetANumber(ViSession vi, ViInt16* aNumber) = 0;
+  virtual ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]) = 0;
+  virtual ViStatus GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber, ViChar aString[]) = 0;
+  virtual ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]) = 0;
+  virtual ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize) = 0;
+  virtual ViStatus GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 numberOfElements, struct CustomStruct arrayOut[]) = 0;
+  virtual ViStatus GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]) = 0;
   virtual ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut) = 0;
+  virtual ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue) = 0;
   virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue) = 0;
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue) = 0;
+  virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]) = 0;
   virtual ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetCalInterval(ViSession vi, ViInt32* months) = 0;
+  virtual ViStatus GetCustomType(ViSession vi, struct CustomStruct* cs) = 0;
+  virtual ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]) = 0;
   virtual ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) = 0;
+  virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
+  virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
+  virtual ViStatus MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]) = 0;
+  virtual ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size) = 0;
   virtual ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber) = 0;
   virtual ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString) = 0;
   virtual ViStatus PoorlyNamedSimpleFunction(ViSession vi) = 0;
   virtual ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading) = 0;
   virtual ViStatus ReadFromChannel(ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading) = 0;
+  virtual ViStatus ReturnANumberAndAString(ViSession vi, ViInt16* aNumber, ViChar aString[256]) = 0;
   virtual ViStatus ReturnDurationInSeconds(ViSession vi, ViReal64* timedelta) = 0;
+  virtual ViStatus ReturnListOfDurationsInSeconds(ViSession vi, ViInt32 numberOfElements, ViReal64 timedeltas[]) = 0;
+  virtual ViStatus ReturnMultipleTypes(ViSession vi, ViBoolean* aBoolean, ViInt32* anInt32, ViInt64* anInt64, ViInt16* anIntEnum, ViReal64* aFloat, ViReal64* aFloatEnum, ViInt32 arraySize, ViReal64 anArray[], ViInt32 stringSize, ViChar aString[]) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
   virtual ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue) = 0;
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue) = 0;
+  virtual ViStatus SetCustomType(ViSession vi, struct CustomStruct cs) = 0;
+  virtual ViStatus SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]) = 0;
   virtual ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName) = 0;
   virtual ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString) = 0;
   virtual ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output) = 0;
+  virtual ViStatus WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]) = 0;
   virtual ViStatus close(ViSession vi) = 0;
+  virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
 }  // namespace grpc

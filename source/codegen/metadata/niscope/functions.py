@@ -104,7 +104,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CalFetchDate': {
-        'codegen_method': 'private',
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -136,7 +136,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CalFetchTemperature': {
-        'codegen_method': 'private',
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -317,7 +317,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureRefLevels': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
