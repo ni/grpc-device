@@ -27,8 +27,6 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_MOCK_LIBRA
 namespace ni {
 namespace tests {
 namespace unit {
-namespace ${config["namespace_component"]} {
-namespace grpc {
 
 namespace driverNamespace = ${namespace_prefix};
 
@@ -47,8 +45,6 @@ class ${service_class_prefix}MockLibrary : public driverNamespace::${service_cla
 %endfor
 };
 
-}  // namespace grpc
-}  // namespace ${config["namespace_component"]}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

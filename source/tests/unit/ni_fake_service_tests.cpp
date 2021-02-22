@@ -10,8 +10,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace fake {
-namespace grpc {
 
 using ::testing::_;
 using ::testing::DoAll;
@@ -324,8 +322,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
   EXPECT_EQ(months, response.months());
 }
 
-}  // namespace grpc
-}  // namespace fake
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
