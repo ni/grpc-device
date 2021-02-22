@@ -24,8 +24,6 @@ class SessionRepository {
   uint64_t access_session(uint64_t session_id, const std::string& session_name);
   void remove_session(uint64_t id);
 
-  NISysCfgSessionHandle get_syscfg_session(bool reinitialize);
-
   bool reserve(
       const ::grpc::ServerContext* context,
       const std::string& reservation_id,
@@ -67,9 +65,6 @@ class SessionRepository {
   // These entries point at SessionInfo objects that are also contained in sessions_.
   NamedSessionMap named_sessions_;
   ReservationMap reservations_;
-
-  std::shared_mutex session_mutex;
-  NISysCfgSessionHandle cached_syscfg_session;
 
 };
 
