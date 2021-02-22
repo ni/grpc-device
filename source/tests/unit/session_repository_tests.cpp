@@ -6,9 +6,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace hardware {
-namespace grpc {
-namespace internal {
 
 TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNotStoreSession)
 {
@@ -173,9 +170,6 @@ TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBot
   EXPECT_TRUE(is_server_reset);
 }
 
-}  // namespace internal
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

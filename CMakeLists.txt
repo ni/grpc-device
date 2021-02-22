@@ -196,9 +196,9 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
 
 # Link test executable against gtest
-add_executable(CoreServiceTestsRunner
+add_executable(IntegrationTestsRunner
     "source/tests/run_all_tests.cpp"
-    "source/tests/integration/hardware/grpc/core_service_tests.cpp"
+    "source/tests/integration/core_service_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
     "source/core_server/hardware/grpc/internal/semaphore.cpp"
@@ -211,24 +211,24 @@ add_executable(CoreServiceTestsRunner
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
     find_package(Threads REQUIRED)
 
-target_link_libraries(CoreServiceTestsRunner
+target_link_libraries(IntegrationTestsRunner
     gtest
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
 
 add_library(TestApi SHARED
-    "source/tests/test_api/test_api.cpp")
+    "source/tests/utilities/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
 # Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
     "source/tests/run_all_tests.cpp"
-    "source/tests/unit/hardware/grpc/core_service_tests.cpp"
-    "source/tests/unit/hardware/grpc/internal/device_enumerator_tests.cpp"
-    "source/tests/unit/hardware/grpc/internal/session_repository_tests.cpp"
-    "source/tests/unit/hardware/grpc/internal/server_configuration_parser_tests.cpp"
-    "source/tests/unit/fake/grpc/ni_fake_service_tests.cpp"
+    "source/tests/unit/core_service_tests.cpp"
+    "source/tests/unit/device_enumerator_tests.cpp"
+    "source/tests/unit/session_repository_tests.cpp"
+    "source/tests/unit/server_configuration_parser_tests.cpp"
+    "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/core_server/hardware/grpc/core_service.cpp"
     "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
@@ -244,6 +244,7 @@ add_executable(UnitTestsRunner
 
 target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake")
+
 target_link_libraries(UnitTestsRunner
     gtest
     gmock
@@ -252,7 +253,18 @@ target_link_libraries(UnitTestsRunner
     Threads::Threads
     nlohmann_json::nlohmann_json)
 
+add_executable(SystemTestsRunner
+    "source/tests/run_all_tests.cpp"
+    "source/tests/system/stub_test.cpp")
+
+target_link_libraries(SystemTestsRunner
+    gtest
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS})
+
+
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )
-add_test( NAME CoreServiceTests COMMAND CoreServiceTestsRunner )
 add_test( NAME UnitTests COMMAND UnitTestsRunner )
+add_test( NAME IntegrationTests COMMAND IntegrationTestsRunner )
+add_test( NAME SystemTests COMMAND SystemTestsRunner )

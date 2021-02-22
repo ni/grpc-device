@@ -14,8 +14,6 @@ static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 namespace ni {
 namespace tests {
 namespace unit {
-namespace hardware {
-namespace grpc {
 
 TEST(CoreServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
@@ -515,8 +513,6 @@ TEST(CoreServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClie
   EXPECT_EQ(status_c.error_code(), ::grpc::ABORTED);
 }
 
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
