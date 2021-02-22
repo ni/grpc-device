@@ -14,8 +14,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace fake {
-namespace grpc {
 
 namespace driverNamespace = ni::fake::grpc;
 
@@ -53,8 +51,6 @@ class NiFakeMockLibraryWrapper : public driverNamespace::NiFakeLibraryWrapper {
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
 };
 
-}  // namespace grpc
-}  // namespace fake
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
