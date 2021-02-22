@@ -43,6 +43,7 @@ include_directories(
   "./source"
   "./source/core_server"
 )
+link_directories("./imports/lib/win64")
 
 #----------------------------------------------------------------------
 # Get list of NI Driver APIs and directories to generate from
@@ -50,13 +51,7 @@ include_directories(
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
-file(GLOB proto_directories RELATIVE ${metadata_dir} CONFIGURE_DEPENDS ${metadata_dir}/*)
-set(ni_apis "")
-foreach(proto_dir ${proto_directories})
-  if(IS_DIRECTORY ${metadata_dir}/${proto_dir})
-    set(ni_apis ${ni_apis} ${proto_dir})
-  endif()
-endforeach()
+set(ni_apis "nifake" "niscope")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -65,7 +60,9 @@ set(codegen_scripts
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
   "${codegen_dir}/handler_helpers.py"
-  "${codegen_dir}/library_wrapper.h.mako"
+  "${codegen_dir}/library_interface.h.mako"
+  "${codegen_dir}/library.cpp.mako"
+  "${codegen_dir}/library.h.mako"
   "${codegen_dir}/mock_library.h.mako"
   "${codegen_dir}/proto.mako"
   "${codegen_dir}/proto_helpers.py"
@@ -87,14 +84,19 @@ foreach(api ${ni_apis})
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
   set(output_files
-    ${service_output_dir}/${api}/${api}_library_wrapper.h
+    ${service_output_dir}/${api}/${api}_library_interface.h
+    ${service_output_dir}/${api}/${api}_library.cpp
+    ${service_output_dir}/${api}/${api}_library.h
     ${service_output_dir}/${api}/${api}_mock_library.h
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
     ${service_output_dir}/${api}/${api}_service.h)
   set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api STREQUAL "nifake")
-    set(api_service_srcs ${api_service_srcs} "${service_output_dir}/${api}/${api}_service.cpp")
+    set(api_service_srcs
+      ${api_service_srcs}
+      "${service_output_dir}/${api}/${api}_service.cpp"
+      "${service_output_dir}/${api}/${api}_library.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -173,6 +175,12 @@ target_link_libraries(core_server
    ${CMAKE_DL_LIBS}
    nlohmann_json::nlohmann_json
    )
+
+if(WIN32)
+  target_link_libraries(core_server Delayimp niScope)
+  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll" )
+  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll")
+endif()
 
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory

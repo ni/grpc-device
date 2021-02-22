@@ -86,6 +86,11 @@ const void* SharedLibrary::get_function_pointer(const char* name) const
 #endif
 }
 
+bool SharedLibrary::function_exists(const char* name) const
+{
+  return get_function_pointer(name) != nullptr;
+}
+
 void SharedLibrary::set_library_name(const char* library_name)
 {
   if (!is_loaded())

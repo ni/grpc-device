@@ -25,9 +25,9 @@ namespace ni {
 namespace ${config["namespace_component"]} {
 namespace grpc {
 
-class ${service_class_prefix}LibraryWrapper {
+class ${service_class_prefix}LibraryInterface {
  public:
-  virtual ~${service_class_prefix}LibraryWrapper() {}
+  virtual ~${service_class_prefix}LibraryInterface() {}
 
 % for method_name in handler_helpers.filter_api_functions(functions):
 <%
@@ -36,9 +36,7 @@ class ${service_class_prefix}LibraryWrapper {
   handler_helpers.sanitize_names(parameters)
   return_type = f['returns']
 %>\
-% if not common_helpers.has_unsupported_parameter(f):
   virtual ${return_type} ${method_name}(${handler_helpers.create_params(parameters)}) = 0;
-% endif
 %endfor
 };
 
