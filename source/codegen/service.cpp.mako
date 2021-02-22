@@ -61,7 +61,7 @@ ${gen_init_method_body(function_name=function_name, function_data=function_data,
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
     }
-    catch (internal::SharedLibrary::LibraryLoadException& ex) {
+    catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }

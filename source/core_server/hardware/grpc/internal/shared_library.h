@@ -19,6 +19,13 @@ typedef HMODULE LibraryHandle;
 typedef void* LibraryHandle;
 #endif
 
+struct LibraryLoadException : std::runtime_error
+{
+  LibraryLoadException(const std::string& message) : std::runtime_error(message) { }
+  LibraryLoadException(const char* message) : std::runtime_error(message) { }
+  LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) { }
+};
+
 class SharedLibrary {
  public:
   SharedLibrary();
@@ -34,10 +41,6 @@ class SharedLibrary {
   const void* get_function_pointer(const char* name) const;
   void set_library_name(const char* library_name);
   std::string get_library_name() const;
-
-  struct LibraryLoadException : public std::runtime_error {
-    LibraryLoadException(const std::string& library_error_details);
-  };
 
  private:
   std::string library_name_;

@@ -34,7 +34,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   std::string message = "Exception!";
   EXPECT_CALL(library_wrapper, GetABoolean)
-      .WillOnce(Throw(ni::hardware::grpc::internal::SharedLibrary::LibraryLoadException(message)));
+      .WillOnce(Throw(ni::hardware::grpc::internal::LibraryLoadException(message)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetABooleanRequest request;

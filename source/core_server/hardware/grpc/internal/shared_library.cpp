@@ -97,11 +97,6 @@ std::string SharedLibrary::get_library_name() const
   return library_name_;
 }
 
-SharedLibrary::LibraryLoadException::LibraryLoadException(const std::string& library_error_details)
-    : std::runtime_error(library_error_details)
-{
-}
-
 }  // namespace internal
 }  // namespace grpc
 }  // namespace hardware
