@@ -52,13 +52,18 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
   {
+    try {
 % if common_helpers.has_unsupported_parameter(function_data):
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
 % elif function_name == config['init_function']:
 ${gen_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % else:
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
 % endfor
@@ -77,25 +82,23 @@ ${gen_simple_method_body(function_name=function_name, function_data=function_dat
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
   session_output_var_name = session_output_param['cppName']
 %>\
-${check_if_function_exists(function_name)}
-
 ${request_input_parameters(parameters)}
-    auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
-      ViSession ${session_output_var_name};
-      int status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
-      return std::make_tuple(status, vi);
-    };
-    uint32_t session_id = 0;
-    const std::string& session_name = request->session_name();
-    auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->${config['close_function']}(id); };
-    int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
-    response->set_status(status);
-    if (status == 0) {
-      ni::hardware::grpc::Session session;
-      session.set_id(session_id);
-      response->set_allocated_${session_output_var_name}(&session);
-    }
-    return ::grpc::Status::OK;\
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession ${session_output_var_name};
+        int status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->${config['close_function']}(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        ni::hardware::grpc::Session session;
+        session.set_id(session_id);
+        response->set_allocated_${session_output_var_name}(&session);
+      }
+      return ::grpc::Status::OK;\
 </%def>\
 \
 \
@@ -105,40 +108,25 @@ ${request_input_parameters(parameters)}
 <%
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${check_if_function_exists(function_name)}
-
 ${request_input_parameters(parameters)}\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
-    ${parameter['type']} ${parameter_name} {};
+      ${parameter['type']} ${parameter_name} {};
 %endfor
 %if function_name == config['close_function']:
-    session_repository_->remove_session(${handler_helpers.create_args(parameters)});
+      session_repository_->remove_session(${handler_helpers.create_args(parameters)});
 %else:
-    auto status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
-    response->set_status(status);
+      auto status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
+      response->set_status(status);
 %endif
 %if output_parameters:
-    if (status == 0) {
+      if (status == 0) {
 ${set_response_values(output_parameters=output_parameters)}\
-    }
+      }
 %endif
-    return ::grpc::Status::OK;\
-</%def>\
-\
-\
-\
-\
-<%def name="check_if_function_exists(function_name)">\
-<%
-  c_function_name = c_function_prefix + function_name
-%>\
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("${c_function_name}");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
-    }\
+      return ::grpc::Status::OK;\
 </%def>\
 \
 \
@@ -167,18 +155,18 @@ ${initialize_input_param_snippet(parameter=parameter)}
 ${initialize_enum_with_mapping_snippet(parameter)}
 % else:
   % if c_type == 'ViConstString':
-    ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
+      ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
   % elif c_type == 'ViString' or c_type == 'ViRsrc':
-    ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
+      ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
   % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
-    ${c_type} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
+      ${c_type} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
   % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
-    ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
+      ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
   % elif c_type == 'ViSession':
-    auto session = request->${field_name}();
-    ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
+      auto session = request->${field_name}();
+      ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
   % else:
-    ${c_type} ${parameter_name} = ${request_snippet};\
+      ${c_type} ${parameter_name} = ${request_snippet};\
   % endif
 % endif
 </%def>\
@@ -192,15 +180,15 @@ ${initialize_enum_with_mapping_snippet(parameter)}
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
-    auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+      auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
 
-    if (${iterator_name} == ${map_name}.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
-    }
-%if parameter['type'] == "ViConstString": 
-    auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());\
+      if (${iterator_name} == ${map_name}.end()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+      }
+%if parameter['type'] == "ViConstString":
+      auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());\
 %else:
-    auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
+      auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
 %endif
 </%def>\
 \
@@ -214,21 +202,21 @@ ${initialize_enum_with_mapping_snippet(parameter)}
 %>\
 %if common_helpers.is_enum(parameter) == True:
 %if enums[parameter["enum"]].get("generate-mappings", False):
-<% 
+<%
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
 
-    auto ${iterator_name} = ${map_name}.find(${parameter_name});
-    if(${iterator_name} == ${map_name}.end()) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
-    }
-      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
+        auto ${iterator_name} = ${map_name}.find(${parameter_name});
+        if(${iterator_name} == ${map_name}.end()) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+        }
+        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
 %else:
-      response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
 % else:
-      response->set_${parameter_name}(${parameter_name});
+        response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor
 </%def>

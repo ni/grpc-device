@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryWrapper for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
-#define NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#ifndef NI_FAKE_GRPC_MOCK_LIBRARY_H
+#define NI_FAKE_GRPC_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -17,9 +17,8 @@ namespace unit {
 
 namespace driverNamespace = ni::fake::grpc;
 
-class NiFakeMockLibraryWrapper : public driverNamespace::NiFakeLibraryWrapper {
+class NiFakeMockLibrary : public driverNamespace::NiFakeLibraryWrapper {
  public:
-  MOCK_METHOD(::grpc::Status, check_function_exists, (std::string functionName), (override));
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, EnumInputFunctionWithDefaults, (ViSession vi, ViInt16 aTurtle), (override));
   MOCK_METHOD(ViStatus, GetABoolean, (ViSession vi, ViBoolean* aBoolean), (override));
@@ -54,4 +53,4 @@ class NiFakeMockLibraryWrapper : public driverNamespace::NiFakeLibraryWrapper {
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // NI_FAKE_GRPC_MOCK_LIBRARY_WRAPPER_H
+#endif  // NI_FAKE_GRPC_MOCK_LIBRARY_H
