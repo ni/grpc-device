@@ -29,7 +29,6 @@ class ${service_class_prefix}LibraryWrapper {
  public:
   virtual ~${service_class_prefix}LibraryWrapper() {}
 
-  virtual ::grpc::Status check_function_exists(std::string functionName) = 0;
 % for method_name in handler_helpers.filter_api_functions(functions):
 <%
   f = functions[method_name]

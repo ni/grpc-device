@@ -17,7 +17,6 @@ class NiFakeLibraryWrapper {
  public:
   virtual ~NiFakeLibraryWrapper() {}
 
-  virtual ::grpc::Status check_function_exists(std::string functionName) = 0;
   virtual ViStatus Abort(ViSession vi) = 0;
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
