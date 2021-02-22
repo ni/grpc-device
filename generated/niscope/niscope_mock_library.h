@@ -32,6 +32,7 @@ class NiScopeMockLibrary : public driverNamespace::NiScopeLibraryWrapper {
   MOCK_METHOD(ViStatus, ClearWaveformProcessing, (ViSession vi, ViConstString channelList), (override));
   MOCK_METHOD(ViStatus, Commit, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ConfigureChanCharacteristics, (ViSession vi, ViConstString channelList, ViReal64 inputImpedance, ViReal64 maxInputFrequency), (override));
+  MOCK_METHOD(ViStatus, ConfigureEqualizationFilterCoefficients, (ViSession vi, ViConstString channelList, ViInt32 numberOfCoefficients, ViReal64 coefficients[]), (override));
   MOCK_METHOD(ViStatus, ConfigureHorizontalTiming, (ViSession vi, ViReal64 minSampleRate, ViInt32 minNumPts, ViReal64 refPosition, ViInt32 numRecords, ViBoolean enforceRealtime), (override));
   MOCK_METHOD(ViStatus, ConfigureRefLevels, (ViSession vi, ViReal64 low, ViReal64 mid, ViReal64 high), (override));
   MOCK_METHOD(ViStatus, ConfigureTriggerDigital, (ViSession vi, ViConstString triggerSource, ViInt32 slope, ViReal64 holdoff, ViReal64 delay), (override));
@@ -48,6 +49,7 @@ class NiScopeMockLibrary : public driverNamespace::NiScopeLibraryWrapper {
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt64, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt64* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViReal64, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViReal64* value), (override));
+  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitiateAcquisition, (ViSession vi), (override));
@@ -64,7 +66,9 @@ class NiScopeMockLibrary : public driverNamespace::NiScopeLibraryWrapper {
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value), (override));
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, error_message, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, reset, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
 };
 
 }  // namespace unit

@@ -149,7 +149,7 @@ ${initialize_enum_input_param(parameter)}
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
 %>\
-    ${c_type} ${parameter_name} = request->${field_name}().size();\
+      ${c_type} ${parameter_name} = request->${field_name}().size();\
 % else:
 ${initialize_standard_input_param(parameter)}\
 % endif
@@ -187,22 +187,22 @@ ${initialize_standard_input_param(parameter)}\
   c_type = parameter['type']
   c_type_pointer = c_type.replace('[]','*')
 %>\
-  % if c_type == 'ViConstString':
-    ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
-  % elif c_type == 'ViString' or c_type == 'ViRsrc':
-    ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
-  % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
-    ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
-  % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
-    ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
-  % elif c_type == 'ViSession':
-    auto session = ${request_snippet};
-    ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
-  % elif common_helpers.is_array(c_type):
-    ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.data();\
-  % else:
-    ${c_type} ${parameter_name} = ${request_snippet};\
-  % endif
+    % if c_type == 'ViConstString':
+      ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
+    % elif c_type == 'ViString' or c_type == 'ViRsrc':
+      ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
+    % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
+      ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
+    % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
+      ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
+    % elif c_type == 'ViSession':
+      auto session = ${request_snippet};
+      ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
+    % elif common_helpers.is_array(c_type):
+      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.data();\
+    % else:
+      ${c_type} ${parameter_name} = ${request_snippet};\
+    % endif
 </%def>\
 \
 \
@@ -218,10 +218,10 @@ ${initialize_standard_input_param(parameter)}\
 <%
   type_without_brackets = parameter['type'].replace('[]', '')
 %>\
-    ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
+      ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
 % endif
 % else:
-    ${parameter['type']} ${parameter_name} {};
+      ${parameter['type']} ${parameter_name} {};
 % endif
 %endfor
 </%def>\
