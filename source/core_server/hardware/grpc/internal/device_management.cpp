@@ -77,6 +77,7 @@ NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedP
 
 void DeviceManagement::clear_sysconfig_session()
 {
+  std::unique_lock<std::shared_mutex> lock(session_mutex);
   cached_syscfg_session = nullptr;
 }
 
