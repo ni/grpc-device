@@ -10,7 +10,7 @@ namespace unit {
 TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNotStoreSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id = 42;
+  uint32_t session_id = 42;
   int status = session_repository.add_session(
       "",
       [session_id]() { return std::make_tuple(1, session_id); },
@@ -24,7 +24,7 @@ TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNot
 TEST(SessionRepositoryTests, AddSession_StoresSessionWithGivenId)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id;
+  uint32_t session_id;
   int status = session_repository.add_session(
       "",
       []() { return std::make_tuple(0, 42); },
@@ -40,7 +40,7 @@ TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
 {
   std::string session_name = "session_name";
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id;
+  uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
       []() { return std::make_tuple(0, 42); },
@@ -56,7 +56,7 @@ TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
 TEST(SessionRepositoryTests, UnnamedSessionAdded_RemoveSession_RemovesSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id;
+  uint32_t session_id;
   session_repository.add_session(
       "",
       []() { return std::make_tuple(0, 42); },
@@ -72,7 +72,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_RemoveSession_RemovesSession)
 {
   std::string session_name = "session_name";
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id;
+  uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
       []() { return std::make_tuple(0, 42); },
@@ -89,7 +89,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_AddSessionWithSameName_ReturnsFir
 {
   std::string session_name = "session_name";
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id;
+  uint32_t session_id;
   session_repository.add_session(
       session_name,
       []() { return std::make_tuple(0, 42); },
@@ -115,7 +115,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
 {
   std::string session_name = "session_name";
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id;
+  uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
       []() { return std::make_tuple(0, 42); },
@@ -132,7 +132,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
 TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t session_id;
+  uint32_t session_id;
   session_repository.add_session(
       "",
       []() { return std::make_tuple(0, 42); },
@@ -149,13 +149,13 @@ TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBot
 {
   std::string session_name = "session_name";
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  uint64_t named_session_id;
+  uint32_t named_session_id;
   int status = session_repository.add_session(
       session_name,
       []() { return std::make_tuple(0, 42); },
       NULL,
       named_session_id);
-  uint64_t unnamed_session_id;
+  uint32_t unnamed_session_id;
   session_repository.add_session(
       "",
       []() { return std::make_tuple(0, 42); },

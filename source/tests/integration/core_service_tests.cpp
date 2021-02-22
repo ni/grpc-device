@@ -17,7 +17,8 @@ class InProcessServerClientTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    service_ = std::make_unique<ni::hardware::grpc::CoreService>(session_repository_.get());
+    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
+    service_ = std::make_unique<ni::hardware::grpc::CoreService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
     ResetStub();
@@ -83,6 +84,7 @@ class InProcessServerClientTest : public ::testing::Test {
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::ni::hardware::grpc::ServerUtilities::Stub> stub_;
   std::unique_ptr<ni::hardware::grpc::internal::SessionRepository> session_repository_;
+  std::unique_ptr<ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<ni::hardware::grpc::CoreService> service_;
   std::unique_ptr<::grpc::Server> server_;
 };
@@ -136,6 +138,18 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
 
   EXPECT_FALSE(call_is_reserved("foo", "b"));
   EXPECT_TRUE(call_is_reserved("foo", "c"));
+}
+
+TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDevices_ReturnsNotFoundGrpcStatusError)
+{
+  ni::hardware::grpc::EnumerateDevicesRequest request;
+  ni::hardware::grpc::EnumerateDevicesResponse response;
+  ::grpc::ClientContext context;
+
+  ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
+
+  // Since the syscfg library will not be present in github repo, we expect a NOT_FOUND status in response.
+  EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
 }
 
 }  // namespace integration

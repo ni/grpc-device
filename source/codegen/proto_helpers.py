@@ -1,9 +1,9 @@
 import common_helpers
 
 def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
-  add_repeated = is_array;
+  add_repeated = is_array
   if 'ViSession' in type:
-    type = 'fixed32'
+    type = 'ni.hardware.grpc.Session'
   if 'ViBoolean' in type:
     type = 'bool'
   if 'ViReal64' in type:
@@ -64,8 +64,9 @@ def determine_function_parameter_type(parameter, driver_name_pascal):
   return parameter_type
 
 def determine_allow_alias(enums):
-  for values in enums:
-    for value in enums[values]:
-      if value["value"] == 0:
-        return True
+  if enums.get("generate-mappings", False):
+    return False
+  for value in enums["values"]:
+    if value["value"] == 0:
+      return True
   return False
