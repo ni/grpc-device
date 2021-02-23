@@ -188,7 +188,7 @@ endif()
 #----------------------------------------------------------------------
 add_custom_command(
    TARGET core_server POST_BUILD
-   COMMAND  ${CMAKE_COMMAND} -E copy_if_different 
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_SOURCE_DIR}/source/config/insecure_config.json
             $<TARGET_FILE_DIR:core_server>/server_config.json)
 
