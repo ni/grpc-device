@@ -17,8 +17,8 @@ namespace grpc {
 
   namespace internal = ni::hardware::grpc::internal;
 
-  NiScopeService::NiScopeService(NiScopeLibraryWrapper* library_wrapper, internal::SessionRepository* session_repository)
-      : library_wrapper_(library_wrapper), session_repository_(session_repository)
+  NiScopeService::NiScopeService(NiScopeLibraryInterface* library, internal::SessionRepository* session_repository)
+      : library_(library), session_repository_(session_repository)
   {
   }
 
@@ -33,7 +33,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->Abort(vi);
+      auto status = library_->Abort(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -50,7 +50,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 acquisition_status {};
-      auto status = library_wrapper_->AcquisitionStatus(vi, &acquisition_status);
+      auto status = library_->AcquisitionStatus(vi, &acquisition_status);
       response->set_status(status);
       if (status == 0) {
         response->set_acquisition_status(static_cast<ni::scope::grpc::AcquisitionStatus>(acquisition_status));
@@ -71,7 +71,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 meas_function = (ViInt32)request->meas_function();
-      auto status = library_wrapper_->AddWaveformProcessing(vi, channel_list, meas_function);
+      auto status = library_->AddWaveformProcessing(vi, channel_list, meas_function);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -87,7 +87,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->AutoSetup(vi);
+      auto status = library_->AutoSetup(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -105,7 +105,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 option = (ViInt32)request->option();
-      auto status = library_wrapper_->CalSelfCalibrate(vi, channel_list, option);
+      auto status = library_->CalSelfCalibrate(vi, channel_list, option);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -123,7 +123,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
-      auto status = library_wrapper_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
+      auto status = library_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -140,7 +140,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_list = request->channel_list().c_str();
-      auto status = library_wrapper_->ClearWaveformProcessing(vi, channel_list);
+      auto status = library_->ClearWaveformProcessing(vi, channel_list);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -156,7 +156,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->Commit(vi);
+      auto status = library_->Commit(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -175,7 +175,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViReal64 input_impedance = request->input_impedance();
       ViReal64 max_input_frequency = request->max_input_frequency();
-      auto status = library_wrapper_->ConfigureChanCharacteristics(vi, channel_list, input_impedance, max_input_frequency);
+      auto status = library_->ConfigureChanCharacteristics(vi, channel_list, input_impedance, max_input_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -194,7 +194,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 number_of_coefficients = request->coefficients().size();
       ViReal64* coefficients = (ViReal64*)request->coefficients().data();
-      auto status = library_wrapper_->ConfigureEqualizationFilterCoefficients(vi, channel_list, number_of_coefficients, coefficients);
+      auto status = library_->ConfigureEqualizationFilterCoefficients(vi, channel_list, number_of_coefficients, coefficients);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -215,26 +215,7 @@ namespace grpc {
       ViReal64 ref_position = request->ref_position();
       ViInt32 num_records = request->num_records();
       ViBoolean enforce_realtime = request->enforce_realtime();
-      auto status = library_wrapper_->ConfigureHorizontalTiming(vi, min_sample_rate, min_num_pts, ref_position, num_records, enforce_realtime);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::ConfigureRefLevels(::grpc::ServerContext* context, const ConfigureRefLevelsRequest* request, ConfigureRefLevelsResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViReal64 low = request->low();
-      ViReal64 mid = request->mid();
-      ViReal64 high = request->high();
-      auto status = library_wrapper_->ConfigureRefLevels(vi, low, mid, high);
+      auto status = library_->ConfigureHorizontalTiming(vi, min_sample_rate, min_num_pts, ref_position, num_records, enforce_realtime);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -254,7 +235,7 @@ namespace grpc {
       ViInt32 slope = (ViInt32)request->slope();
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
-      auto status = library_wrapper_->ConfigureTriggerDigital(vi, trigger_source, slope, holdoff, delay);
+      auto status = library_->ConfigureTriggerDigital(vi, trigger_source, slope, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -276,7 +257,7 @@ namespace grpc {
       ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
-      auto status = library_wrapper_->ConfigureTriggerEdge(vi, trigger_source, level, slope, trigger_coupling, holdoff, delay);
+      auto status = library_->ConfigureTriggerEdge(vi, trigger_source, level, slope, trigger_coupling, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -299,7 +280,7 @@ namespace grpc {
       ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
-      auto status = library_wrapper_->ConfigureTriggerHysteresis(vi, trigger_source, level, hysteresis, slope, trigger_coupling, holdoff, delay);
+      auto status = library_->ConfigureTriggerHysteresis(vi, trigger_source, level, hysteresis, slope, trigger_coupling, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -315,7 +296,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->ConfigureTriggerImmediate(vi);
+      auto status = library_->ConfigureTriggerImmediate(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -333,7 +314,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
-      auto status = library_wrapper_->ConfigureTriggerSoftware(vi, holdoff, delay);
+      auto status = library_->ConfigureTriggerSoftware(vi, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -358,7 +339,7 @@ namespace grpc {
       ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
-      auto status = library_wrapper_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
+      auto status = library_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -381,7 +362,7 @@ namespace grpc {
       ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
-      auto status = library_wrapper_->ConfigureTriggerWindow(vi, trigger_source, low_level, high_level, window_mode, trigger_coupling, holdoff, delay);
+      auto status = library_->ConfigureTriggerWindow(vi, trigger_source, low_level, high_level, window_mode, trigger_coupling, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -403,7 +384,7 @@ namespace grpc {
       ViInt32 coupling = (ViInt32)request->coupling();
       ViReal64 probe_attenuation = request->probe_attenuation();
       ViBoolean enabled = request->enabled();
-      auto status = library_wrapper_->ConfigureVertical(vi, channel_list, range, offset, coupling, probe_attenuation, enabled);
+      auto status = library_->ConfigureVertical(vi, channel_list, range, offset, coupling, probe_attenuation, enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -419,7 +400,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->Disable(vi);
+      auto status = library_->Disable(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -448,7 +429,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString file_path = request->file_path().c_str();
-      auto status = library_wrapper_->ExportAttributeConfigurationFile(vi, file_path);
+      auto status = library_->ExportAttributeConfigurationFile(vi, file_path);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -539,7 +520,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean value {};
-      auto status = library_wrapper_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
+      auto status = library_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -561,7 +542,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 value {};
-      auto status = library_wrapper_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
+      auto status = library_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -583,7 +564,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 value {};
-      auto status = library_wrapper_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
+      auto status = library_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -605,7 +586,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value {};
-      auto status = library_wrapper_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
+      auto status = library_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -650,7 +631,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 size_in_bytes = request->configuration().size();
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
-      auto status = library_wrapper_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+      auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -667,7 +648,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString file_path = request->file_path().c_str();
-      auto status = library_wrapper_->ImportAttributeConfigurationFile(vi, file_path);
+      auto status = library_->ImportAttributeConfigurationFile(vi, file_path);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -688,12 +669,12 @@ namespace grpc {
 
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession vi;
-        int status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->close(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -715,7 +696,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->InitiateAcquisition(vi);
+      auto status = library_->InitiateAcquisition(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -732,7 +713,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViBoolean caller_has_lock {};
-      auto status = library_wrapper_->LockSession(vi, &caller_has_lock);
+      auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
         response->set_caller_has_lock(caller_has_lock);
@@ -751,7 +732,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->ProbeCompensationSignalStart(vi);
+      auto status = library_->ProbeCompensationSignalStart(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -767,7 +748,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->ProbeCompensationSignalStop(vi);
+      auto status = library_->ProbeCompensationSignalStop(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -795,7 +776,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->ResetDevice(vi);
+      auto status = library_->ResetDevice(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -811,7 +792,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->ResetWithDefaults(vi);
+      auto status = library_->ResetWithDefaults(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -828,7 +809,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 which_trigger = (ViInt32)request->which_trigger();
-      auto status = library_wrapper_->SendSoftwareTriggerEdge(vi, which_trigger);
+      auto status = library_->SendSoftwareTriggerEdge(vi, which_trigger);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -847,7 +828,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean value = request->value();
-      auto status = library_wrapper_->SetAttributeViBoolean(vi, channel_list, attribute_id, value);
+      auto status = library_->SetAttributeViBoolean(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -866,7 +847,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 value = request->value();
-      auto status = library_wrapper_->SetAttributeViInt32(vi, channel_list, attribute_id, value);
+      auto status = library_->SetAttributeViInt32(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -885,7 +866,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 value = request->value();
-      auto status = library_wrapper_->SetAttributeViInt64(vi, channel_list, attribute_id, value);
+      auto status = library_->SetAttributeViInt64(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -904,7 +885,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value = request->value();
-      auto status = library_wrapper_->SetAttributeViReal64(vi, channel_list, attribute_id, value);
+      auto status = library_->SetAttributeViReal64(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -923,7 +904,7 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViConstString value = request->value().c_str();
-      auto status = library_wrapper_->SetAttributeViString(vi, channel_list, attribute_id, value);
+      auto status = library_->SetAttributeViString(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -940,7 +921,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViBoolean caller_has_lock {};
-      auto status = library_wrapper_->UnlockSession(vi, &caller_has_lock);
+      auto status = library_->UnlockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
         response->set_caller_has_lock(caller_has_lock);
@@ -974,7 +955,7 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_wrapper_->reset(vi);
+      auto status = library_->reset(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -992,7 +973,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 self_test_result {};
       ViChar self_test_message[256];
-      auto status = library_wrapper_->self_test(vi, &self_test_result, self_test_message);
+      auto status = library_->self_test(vi, &self_test_result, self_test_message);
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);
@@ -1004,7 +985,6 @@ namespace grpc {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
-
 
 } // namespace grpc
 } // namespace scope

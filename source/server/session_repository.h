@@ -2,11 +2,10 @@
 #define NI_HARDWARE_GRPC_INTERNAL_SESSIONREPOSITORY
 
 #include <grpcpp/grpcpp.h>
-#include <server_utilities.grpc.pb.h>
-
+#include <session.grpc.pb.h>
 #include <shared_mutex>
 
-#include "hardware/grpc/internal/semaphore.h"
+#include "semaphore.h"
 
 namespace ni {
 namespace hardware {

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core_server/hardware/grpc/internal/shared_library.h"
+#include <server/shared_library.h>
 
 #if defined(__GNUC__)
   #include <dlfcn.h>

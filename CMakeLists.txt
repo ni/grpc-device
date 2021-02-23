@@ -39,24 +39,18 @@ file(MAKE_DIRECTORY ${proto_srcs_dir})
 include_directories(
   "${proto_srcs_dir}"
   "./generated"
-  "./imports/includes"
+  "./imports/include"
   "./source"
-  "./source/core_server"
 )
+link_directories("./imports/lib/win64")
 
 #----------------------------------------------------------------------
 # Get list of NI Driver APIs and directories to generate from
 #----------------------------------------------------------------------
-set(metadata_dir ${CMAKE_SOURCE_DIR}/source/metadata)
+set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
-file(GLOB proto_directories RELATIVE ${metadata_dir} CONFIGURE_DEPENDS ${metadata_dir}/*)
-set(ni_apis "")
-foreach(proto_dir ${proto_directories})
-  if(IS_DIRECTORY ${metadata_dir}/${proto_dir})
-    set(ni_apis ${ni_apis} ${proto_dir})
-  endif()
-endforeach()
+set(nidrivers "nifake" "niscope")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -65,7 +59,9 @@ set(codegen_scripts
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
   "${codegen_dir}/handler_helpers.py"
-  "${codegen_dir}/library_wrapper.h.mako"
+  "${codegen_dir}/library_interface.h.mako"
+  "${codegen_dir}/library.cpp.mako"
+  "${codegen_dir}/library.h.mako"
   "${codegen_dir}/mock_library.h.mako"
   "${codegen_dir}/proto.mako"
   "${codegen_dir}/proto_helpers.py"
@@ -73,9 +69,9 @@ set(codegen_scripts
   "${codegen_dir}/service.h.mako")
 
 # Populated in the api loop below.
-set(api_service_srcs "")
+set(nidriver_service_srcs "")
 
-foreach(api ${ni_apis})
+foreach(api ${nidrivers})
   set(codegen_dependencies
     "${metadata_dir}/${api}/attributes.py"
     "${metadata_dir}/${api}/attributes_addon.py"
@@ -87,14 +83,19 @@ foreach(api ${ni_apis})
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
   set(output_files
-    ${service_output_dir}/${api}/${api}_library_wrapper.h
+    ${service_output_dir}/${api}/${api}_library_interface.h
+    ${service_output_dir}/${api}/${api}_library.cpp
+    ${service_output_dir}/${api}/${api}_library.h
     ${service_output_dir}/${api}/${api}_mock_library.h
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
     ${service_output_dir}/${api}/${api}_service.h)
   set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api STREQUAL "nifake")
-    set(api_service_srcs ${api_service_srcs} "${service_output_dir}/${api}/${api}_service.cpp")
+    set(nidriver_service_srcs
+      ${nidriver_service_srcs}
+      "${service_output_dir}/${api}/${api}_service.cpp"
+      "${service_output_dir}/${api}/${api}_library.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -105,8 +106,8 @@ endforeach()
 #----------------------------------------------------------------------
 # Proto file
 #----------------------------------------------------------------------
-get_filename_component(server_utilities_proto "source/server_utilities.proto" ABSOLUTE)
-get_filename_component(server_utilities_proto_path "${server_utilities_proto}" PATH)
+get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
+get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
 # Generate sources from proto files
@@ -120,25 +121,25 @@ function(GenerateGrpcSources proto_file proto_path proto_srcs proto_hdrs grpc_sr
       --cpp_out "${proto_out_path}"
       -I "${proto_path}"
       -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-      -I ${CMAKE_SOURCE_DIR}/source
+      -I ${CMAKE_SOURCE_DIR}/source/protobuf
       --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
       "${proto_file}"
-    DEPENDS "${proto_file}" "${server_utilities_proto}")
+    DEPENDS "${proto_file}" "${session_proto}")
 endfunction()
 
-set(server_utilities_proto_srcs "${proto_srcs_dir}/server_utilities.pb.cc")
-set(server_utilities_proto_hdrs "${proto_srcs_dir}/server_utilities.pb.h")
-set(server_utilities_grpc_srcs "${proto_srcs_dir}/server_utilities.grpc.pb.cc")
-set(server_utilities_grpc_hdrs "${proto_srcs_dir}/server_utilities.grpc.pb.h")
+set(session_proto_srcs "${proto_srcs_dir}/session.pb.cc")
+set(session_proto_hdrs "${proto_srcs_dir}/session.pb.h")
+set(session_grpc_srcs "${proto_srcs_dir}/session.grpc.pb.cc")
+set(session_grpc_hdrs "${proto_srcs_dir}/session.grpc.pb.h")
 GenerateGrpcSources(
-  ${server_utilities_proto}
-  ${server_utilities_proto_path}
-  ${server_utilities_proto_srcs}
-  ${server_utilities_proto_hdrs}
-  ${server_utilities_grpc_srcs}
-  ${server_utilities_grpc_hdrs})
+  ${session_proto}
+  ${session_proto_path}
+  ${session_proto_srcs}
+  ${session_proto_hdrs}
+  ${session_grpc_srcs}
+  ${session_grpc_hdrs})
 
-foreach(api ${ni_apis})
+foreach(api ${nidrivers})
   GenerateGrpcSources(
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/
@@ -147,24 +148,24 @@ foreach(api ${ni_apis})
     "${proto_srcs_dir}/${api}.grpc.pb.cc"
     "${proto_srcs_dir}/${api}.grpc.pb.h")
   if(NOT api STREQUAL "nifake")
-    set(api_service_srcs
-      ${api_service_srcs}
+    set(nidriver_service_srcs
+      ${nidriver_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.cc")
   endif()
 endforeach()
 
 add_executable(core_server
-   "source/core_server/core_server.cpp"
-   "source/core_server/hardware/grpc/core_service.cpp"
-   "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
-   "source/core_server/hardware/grpc/internal/semaphore.cpp"
-   "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
-   "source/core_server/hardware/grpc/internal/session_repository.cpp"
-   "source/core_server/hardware/grpc/internal/shared_library.cpp"
-   ${server_utilities_proto_srcs}
-   ${server_utilities_grpc_srcs}
-   ${api_service_srcs})
+   "source/server/core_server.cpp"
+   "source/server/device_enumerator.cpp"
+   "source/server/semaphore.cpp"
+   "source/server/server_configuration_parser.cpp"
+   "source/server/session_repository.cpp"
+   "source/server/session_utilities_service.cpp"
+   "source/server/shared_library.cpp"
+   ${session_proto_srcs}
+   ${session_grpc_srcs}
+   ${nidriver_service_srcs})
 
 target_link_libraries(core_server
    ${_REFLECTION}
@@ -173,6 +174,12 @@ target_link_libraries(core_server
    ${CMAKE_DL_LIBS}
    nlohmann_json::nlohmann_json
    )
+
+if(WIN32)
+  target_link_libraries(core_server Delayimp niScope)
+  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll" )
+  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll")
+endif()
 
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory
@@ -195,15 +202,15 @@ add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FRO
 
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
-    "source/tests/run_all_tests.cpp"
-    "source/tests/integration/core_service_tests.cpp"
-    "source/core_server/hardware/grpc/core_service.cpp"
-    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
-    "source/core_server/hardware/grpc/internal/semaphore.cpp"
-    "source/core_server/hardware/grpc/internal/session_repository.cpp"
-    "source/core_server/hardware/grpc/internal/shared_library.cpp"
-    ${server_utilities_proto_srcs}
-    ${server_utilities_grpc_srcs})
+    "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/integration/session_utilities_service_tests.cpp"
+    "source/server/device_enumerator.cpp"
+    "source/server/semaphore.cpp"
+    "source/server/session_repository.cpp"
+    "source/server/session_utilities_service.cpp"
+    "source/server/shared_library.cpp"
+    ${session_proto_srcs}
+    ${session_grpc_srcs})
 
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
@@ -221,21 +228,21 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 
 # Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
-    "source/tests/run_all_tests.cpp"
-    "source/tests/unit/core_service_tests.cpp"
+    "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
-    "source/core_server/hardware/grpc/core_service.cpp"
-    "source/core_server/hardware/grpc/internal/device_enumerator.cpp"
-    "source/core_server/hardware/grpc/internal/semaphore.cpp"
-    "source/core_server/hardware/grpc/internal/server_configuration_parser.cpp"
-    "source/core_server/hardware/grpc/internal/session_repository.cpp"
-    "source/core_server/hardware/grpc/internal/shared_library.cpp"
-    ${server_utilities_proto_srcs}
-    ${server_utilities_grpc_srcs}
+    "source/server/device_enumerator.cpp"
+    "source/server/semaphore.cpp"
+    "source/server/server_configuration_parser.cpp"
+    "source/server/session_repository.cpp"
+    "source/server/session_utilities_service.cpp"
+    "source/server/shared_library.cpp"
+    ${session_proto_srcs}
+    ${session_grpc_srcs}
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc")
@@ -252,7 +259,7 @@ target_link_libraries(UnitTestsRunner
     nlohmann_json::nlohmann_json)
 
 add_executable(SystemTestsRunner
-    "source/tests/run_all_tests.cpp"
+    "source/tests/utilities/run_all_tests.cpp"
     "source/tests/system/stub_test.cpp")
 
 target_link_libraries(SystemTestsRunner

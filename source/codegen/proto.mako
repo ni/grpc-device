@@ -26,7 +26,7 @@ option csharp_namespace = "${config["csharp_namespace"]}";
 
 package ni.${config["namespace_component"]}.grpc;
 
-import "server_utilities.proto";
+import "session.proto";
 
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):

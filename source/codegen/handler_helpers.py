@@ -42,26 +42,19 @@ def create_args(parameters):
     return result[:-2]
 
 def create_params(parameters):
-    result = ''
-    for parameter in parameters:
-        result = result + create_param(parameter) + ', '
-    return result[:-2]
+    return ', '.join(create_param(p) for p in parameters)
 
 def create_param(parameter):
     type = parameter['type']
-    parameter_name = parameter['cppName']
-    is_array = common_helpers.is_array(type)
-    if is_array:
-      type = type.replace('[]','')
-      if parameter['size']['mechanism'] == 'fixed':
-        size = parameter['size']['value']
-        parameter_name = f'{parameter_name}[{size}]'
-      else:
-        parameter_name = f'{parameter_name}[]'
-    
-    if not is_array and common_helpers.is_output_parameter(parameter):
-        type = type + '*'
-    return type + ' ' + parameter_name
+    name = parameter['cppName']
+    if common_helpers.is_array(type):
+        is_fixed = parameter['size']['mechanism'] == 'fixed'
+        array_size = parameter['size']['value'] if is_fixed else ''
+        return f'{type[:-2]} {name}[{array_size}]'
+    elif common_helpers.is_output_parameter(parameter):
+        return f'{type}* {name}'
+    else:
+        return f'{type} {name}'
 
 def python_to_c(enum):
   enum_value = enum["values"][0]["value"]

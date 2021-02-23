@@ -32,8 +32,8 @@ namespace grpc {
 
   namespace internal = ni::hardware::grpc::internal;
 
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryWrapper* library_wrapper, internal::SessionRepository* session_repository)
-      : library_wrapper_(library_wrapper), session_repository_(session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
+      : library_(library), session_repository_(session_repository)
   {
   }
 
@@ -67,11 +67,10 @@ ${gen_simple_method_body(function_name=function_name, function_data=function_dat
   }
 
 % endfor
-
 } // namespace grpc
 } // namespace ${config["namespace_component"]}
-} // namespace ni\
-
+} // namespace ni
+\
 \
 \
 \
@@ -85,12 +84,12 @@ ${gen_simple_method_body(function_name=function_name, function_data=function_dat
 ${request_input_parameters(parameters)}
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession ${session_output_var_name};
-        int status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
+        int status = library_->${function_name}(${handler_helpers.create_args(parameters)});
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_wrapper_->${config['close_function']}(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->${config['close_function']}(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -113,7 +112,7 @@ ${initialize_output_variables_snippet(output_parameters)}\
 %if function_name == config['close_function']:
       session_repository_->remove_session(${handler_helpers.create_args(parameters)});
 %else:
-      auto status = library_wrapper_->${function_name}(${handler_helpers.create_args(parameters)});
+      auto status = library_->${function_name}(${handler_helpers.create_args(parameters)});
       response->set_status(status);
 %endif
 %if output_parameters:
