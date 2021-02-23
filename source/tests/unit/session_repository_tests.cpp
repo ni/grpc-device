@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
-
-#include "hardware/grpc/internal/semaphore.h"
-#include "hardware/grpc/internal/session_repository.h"
+#include <server/semaphore.h>
+#include <server/session_repository.h>
 
 namespace ni {
 namespace tests {

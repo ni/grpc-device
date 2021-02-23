@@ -1,11 +1,10 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
-#include <nifake_mock_library.h>
-#include <nifake_service.h>
+#include <nifake/nifake_mock_library.h>
+#include <nifake/nifake_service.h>
+#include <server/session_repository.h>
 
 #include <thread>
-
-#include "hardware/grpc/internal/session_repository.h"
 
 namespace ni {
 namespace tests {
@@ -39,10 +38,10 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::string message = "Exception!";
-  EXPECT_CALL(library_wrapper, GetABoolean)
+  EXPECT_CALL(library, GetABoolean)
       .WillOnce(Throw(ni::hardware::grpc::internal::LibraryLoadException(message)));
 
   ::grpc::ServerContext context;
@@ -59,10 +58,10 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseValuesNotSet)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViBoolean aBoolean = true;
-  EXPECT_CALL(library_wrapper, GetABoolean(kViSession, _))
+  EXPECT_CALL(library, GetABoolean(kViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(aBoolean), Return(kDriverFailure)));
 
   ::grpc::ServerContext context;
@@ -80,10 +79,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViBoolean aBoolean = true;
-  EXPECT_CALL(library_wrapper, GetABoolean(kViSession, _))
+  EXPECT_CALL(library, GetABoolean(kViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(aBoolean), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -102,9 +101,9 @@ TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, Abort(kViSession))
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  EXPECT_CALL(library, Abort(kViSession))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -121,10 +120,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt16 aNumber = 15;
-  EXPECT_CALL(library_wrapper, GetANumber(kViSession, _))
+  EXPECT_CALL(library, GetANumber(kViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(aNumber), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -142,10 +141,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForPythonCode_CallsGetArraySi
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 arraySize = 1000;
-  EXPECT_CALL(library_wrapper, GetArraySizeForPythonCode(kViSession, _))
+  EXPECT_CALL(library, GetArraySizeForPythonCode(kViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(arraySize), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -163,11 +162,11 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeVi
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_BOOL;
   ViBoolean attributeValue = true;
-  EXPECT_CALL(library_wrapper, GetAttributeViBoolean(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library, GetAttributeViBoolean(kViSession, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -187,11 +186,11 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViIn
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_INTEGER;
   ViInt32 attributeValue = 12345;
-  EXPECT_CALL(library_wrapper, GetAttributeViInt32(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library, GetAttributeViInt32(kViSession, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -211,11 +210,11 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViIn
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_INT64;
   ViInt64 attributeValue = -12345;
-  EXPECT_CALL(library_wrapper, GetAttributeViInt64(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library, GetAttributeViInt64(kViSession, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -235,11 +234,11 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
   ViReal64 attributeValue = 12.345;
-  EXPECT_CALL(library_wrapper, GetAttributeViReal64(kViSession, Pointee(*kChannelName), attributeId, _))
+  EXPECT_CALL(library, GetAttributeViReal64(kViSession, Pointee(*kChannelName), attributeId, _))
       .WillOnce(DoAll(SetArgPointee<3>(attributeValue), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -259,11 +258,11 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 calType = 0;
   ViInt32 month = 1, day = 17, year = 2021, hour = 0, minute = 0;
-  EXPECT_CALL(library_wrapper, GetCalDateAndTime(kViSession, calType, _, _, _, _, _))
+  EXPECT_CALL(library, GetCalDateAndTime(kViSession, calType, _, _, _, _, _))
       .WillOnce(DoAll(
           SetArgPointee<2>(month),
           SetArgPointee<3>(day),
@@ -292,11 +291,11 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t sessionId = create_session(session_repository, kViSession);
-  NiceMock<NiFakeMockLibrary> library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiceMock<NiFakeMockLibrary> library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
   ViInt32 months = 24;
-  EXPECT_CALL(library_wrapper, GetCalInterval(kViSession, _))
+  EXPECT_CALL(library, GetCalInterval(kViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(months), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;

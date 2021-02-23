@@ -7,14 +7,14 @@
 #ifndef NI_SCOPE_GRPC_SERVICE_H
 #define NI_SCOPE_GRPC_SERVICE_H
 
-#include <map>
 #include <niscope.grpc.pb.h>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <hardware/grpc/internal/session_repository.h>
-#include <hardware/grpc/internal/shared_library.h>
+#include <map>
+#include <server/session_repository.h>
+#include <server/shared_library.h>
 
 #include "niscope_library_interface.h"
 

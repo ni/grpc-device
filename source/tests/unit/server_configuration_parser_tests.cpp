@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <server/server_configuration_parser.h>
 
 #include <typeinfo>
-
-#include "hardware/grpc/internal/server_configuration_parser.h"
 
 namespace internal = ni::hardware::grpc::internal;
 

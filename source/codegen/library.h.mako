@@ -19,7 +19,7 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_LIBRARY_H"
 
 #include "${config["module_name"]}_library_interface.h"
 
-#include <hardware/grpc/internal/shared_library.h>
+#include <server/shared_library.h>
 
 namespace ni {
 namespace ${config["namespace_component"]} {
