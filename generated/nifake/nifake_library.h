@@ -8,7 +8,7 @@
 
 #include "nifake_library_interface.h"
 
-#include <hardware/grpc/internal/shared_library.h>
+#include <server/shared_library.h>
 
 namespace ni {
 namespace fake {

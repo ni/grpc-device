@@ -1,18 +1,18 @@
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
-#include <server_utilities.grpc.pb.h>
+#include <session.grpc.pb.h>
 
-#include "hardware/grpc/internal/device_enumerator.h"
-#include "hardware/grpc/internal/session_repository.h"
+#include "device_enumerator.h"
+#include "session_repository.h"
 
 namespace ni {
 namespace hardware {
 namespace grpc {
 
-class CoreService final : public ServerUtilities::Service {
+class SessionUtilitiesService final : public SessionUtilities::Service {
  public:
-  CoreService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator);
+  SessionUtilitiesService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator);
 
   ::grpc::Status EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response) override;
   ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;

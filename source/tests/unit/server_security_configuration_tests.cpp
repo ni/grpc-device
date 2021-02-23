@@ -1,9 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
+#include <server/server_security_configuration.h>
 #include <typeinfo>
-
-#include "hardware/grpc/internal/server_security_configuration.h"
 
 namespace internal = ni::hardware::grpc::internal;
 

@@ -2,8 +2,7 @@
 #define NI_HARDWARE_GRPC_INTERNAL_SERVER_CONFIGURATION_PARSER_H_
 
 #include <fstream>
-
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 
 namespace ni {
 namespace hardware {
