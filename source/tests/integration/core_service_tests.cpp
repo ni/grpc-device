@@ -8,8 +8,6 @@
 namespace ni {
 namespace tests {
 namespace integration {
-namespace hardware {
-namespace grpc {
 
 class InProcessServerClientTest : public ::testing::Test {
  public:
@@ -154,8 +152,6 @@ TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDe
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
 }
 
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace integration
 }  // namespace tests
 }  // namespace ni

@@ -27,7 +27,6 @@ service NiScope {
   rpc ConfigureChanCharacteristics(ConfigureChanCharacteristicsRequest) returns (ConfigureChanCharacteristicsResponse);
   rpc ConfigureEqualizationFilterCoefficients(ConfigureEqualizationFilterCoefficientsRequest) returns (ConfigureEqualizationFilterCoefficientsResponse);
   rpc ConfigureHorizontalTiming(ConfigureHorizontalTimingRequest) returns (ConfigureHorizontalTimingResponse);
-  rpc ConfigureRefLevels(ConfigureRefLevelsRequest) returns (ConfigureRefLevelsResponse);
   rpc ConfigureTriggerDigital(ConfigureTriggerDigitalRequest) returns (ConfigureTriggerDigitalResponse);
   rpc ConfigureTriggerEdge(ConfigureTriggerEdgeRequest) returns (ConfigureTriggerEdgeResponse);
   rpc ConfigureTriggerHysteresis(ConfigureTriggerHysteresisRequest) returns (ConfigureTriggerHysteresisResponse);
@@ -752,17 +751,6 @@ message ConfigureHorizontalTimingRequest {
 }
 
 message ConfigureHorizontalTimingResponse {
-  int32 status = 1;
-}
-
-message ConfigureRefLevelsRequest {
-  ni.hardware.grpc.Session vi = 1;
-  double low = 2;
-  double mid = 3;
-  double high = 4;
-}
-
-message ConfigureRefLevelsResponse {
   int32 status = 1;
 }
 

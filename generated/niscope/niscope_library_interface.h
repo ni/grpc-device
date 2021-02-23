@@ -13,26 +13,23 @@ namespace ni {
 namespace scope {
 namespace grpc {
 
-class NiScopeLibraryWrapper {
+class NiScopeLibraryInterface {
  public:
-  virtual ~NiScopeLibraryWrapper() {}
+  virtual ~NiScopeLibraryInterface() {}
 
-  virtual ::grpc::Status check_function_exists(std::string functionName) = 0;
   virtual ViStatus Abort(ViSession vi) = 0;
   virtual ViStatus AcquisitionStatus(ViSession vi, ViInt32* acquisitionStatus) = 0;
   virtual ViStatus ActualMeasWfmSize(ViSession vi, ViInt32 arrayMeasFunction, ViInt32* measWaveformSize) = 0;
   virtual ViStatus ActualNumWfms(ViSession vi, ViConstString channelList, ViInt32* numWfms) = 0;
   virtual ViStatus AddWaveformProcessing(ViSession vi, ViConstString channelList, ViInt32 measFunction) = 0;
   virtual ViStatus AutoSetup(ViSession vi) = 0;
-  virtual ViStatus CalFetchDate(ViSession vi, ViInt32 whichOne, ViInt32* year, ViInt32* month, ViInt32* day) = 0;
-  virtual ViStatus CalFetchTemperature(ViSession vi, ViInt32 whichOne, ViReal64* temperature) = 0;
   virtual ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelList, ViInt32 option) = 0;
   virtual ViStatus ClearWaveformMeasurementStats(ViSession vi, ViConstString channelList, ViInt32 clearableMeasurementFunction) = 0;
   virtual ViStatus ClearWaveformProcessing(ViSession vi, ViConstString channelList) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus ConfigureChanCharacteristics(ViSession vi, ViConstString channelList, ViReal64 inputImpedance, ViReal64 maxInputFrequency) = 0;
+  virtual ViStatus ConfigureEqualizationFilterCoefficients(ViSession vi, ViConstString channelList, ViInt32 numberOfCoefficients, ViReal64 coefficients[]) = 0;
   virtual ViStatus ConfigureHorizontalTiming(ViSession vi, ViReal64 minSampleRate, ViInt32 minNumPts, ViReal64 refPosition, ViInt32 numRecords, ViBoolean enforceRealtime) = 0;
-  virtual ViStatus ConfigureRefLevels(ViSession vi, ViReal64 low, ViReal64 mid, ViReal64 high) = 0;
   virtual ViStatus ConfigureTriggerDigital(ViSession vi, ViConstString triggerSource, ViInt32 slope, ViReal64 holdoff, ViReal64 delay) = 0;
   virtual ViStatus ConfigureTriggerEdge(ViSession vi, ViConstString triggerSource, ViReal64 level, ViInt32 slope, ViInt32 triggerCoupling, ViReal64 holdoff, ViReal64 delay) = 0;
   virtual ViStatus ConfigureTriggerHysteresis(ViSession vi, ViConstString triggerSource, ViReal64 level, ViReal64 hysteresis, ViInt32 slope, ViInt32 triggerCoupling, ViReal64 holdoff, ViReal64 delay) = 0;
@@ -42,17 +39,29 @@ class NiScopeLibraryWrapper {
   virtual ViStatus ConfigureTriggerWindow(ViSession vi, ViConstString triggerSource, ViReal64 lowLevel, ViReal64 highLevel, ViInt32 windowMode, ViInt32 triggerCoupling, ViReal64 holdoff, ViReal64 delay) = 0;
   virtual ViStatus ConfigureVertical(ViSession vi, ViConstString channelList, ViReal64 range, ViReal64 offset, ViInt32 coupling, ViReal64 probeAttenuation, ViBoolean enabled) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
+  virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
+  virtual ViStatus Fetch(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], struct niScope_wfmInfo wfmInfo[]) = 0;
+  virtual ViStatus FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], struct niScope_wfmInfo wfmInfo[]) = 0;
+  virtual ViStatus FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], struct niScope_wfmInfo wfmInfo[]) = 0;
+  virtual ViStatus FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], struct niScope_wfmInfo wfmInfo[]) = 0;
+  virtual ViStatus FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], struct niScope_wfmInfo wfmInfo[]) = 0;
+  virtual ViStatus FetchMeasurementStats(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[], ViReal64 mean[], ViReal64 stdev[], ViReal64 min[], ViReal64 max[], ViInt32 numInStats[]) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean* value) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32* value) = 0;
   virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt64* value) = 0;
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelList, ViAttr attributeId, ViReal64* value) = 0;
+  virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32 bufSize, ViChar value[]) = 0;
+  virtual ViStatus GetEqualizationFilterCoefficients(ViSession vi, ViConstString channel, ViInt32 numberOfCoefficients, ViReal64 coefficients[]) = 0;
+  virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
+  virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus InitiateAcquisition(ViSession vi) = 0;
   virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus ProbeCompensationSignalStart(ViSession vi) = 0;
   virtual ViStatus ProbeCompensationSignalStop(ViSession vi) = 0;
+  virtual ViStatus Read(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], struct niScope_wfmInfo wfmInfo[]) = 0;
   virtual ViStatus ResetDevice(ViSession vi) = 0;
   virtual ViStatus ResetWithDefaults(ViSession vi) = 0;
   virtual ViStatus SendSoftwareTriggerEdge(ViSession vi, ViInt32 whichTrigger) = 0;
@@ -63,7 +72,9 @@ class NiScopeLibraryWrapper {
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value) = 0;
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus close(ViSession vi) = 0;
+  virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus reset(ViSession vi) = 0;
+  virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
 }  // namespace grpc
