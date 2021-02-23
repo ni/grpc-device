@@ -907,7 +907,7 @@ message FetchRequest {
 message FetchResponse {
   int32 status = 1;
   repeated double waveform = 2;
-  repeated struct niScope_wfmInfo wfm_info = 3;
+  repeated niScope_wfmInfo wfm_info = 3;
 }
 
 message FetchArrayMeasurementRequest {
@@ -921,7 +921,7 @@ message FetchArrayMeasurementRequest {
 message FetchArrayMeasurementResponse {
   int32 status = 1;
   repeated double meas_wfm = 2;
-  repeated struct niScope_wfmInfo wfm_info = 3;
+  repeated niScope_wfmInfo wfm_info = 3;
 }
 
 message FetchBinary16Request {
@@ -934,7 +934,7 @@ message FetchBinary16Request {
 message FetchBinary16Response {
   int32 status = 1;
   repeated sint32 waveform = 2;
-  repeated struct niScope_wfmInfo wfm_info = 3;
+  repeated niScope_wfmInfo wfm_info = 3;
 }
 
 message FetchBinary32Request {
@@ -947,7 +947,7 @@ message FetchBinary32Request {
 message FetchBinary32Response {
   int32 status = 1;
   repeated sint32 waveform = 2;
-  repeated struct niScope_wfmInfo wfm_info = 3;
+  repeated niScope_wfmInfo wfm_info = 3;
 }
 
 message FetchBinary8Request {
@@ -960,7 +960,7 @@ message FetchBinary8Request {
 message FetchBinary8Response {
   int32 status = 1;
   bytes waveform = 2;
-  repeated struct niScope_wfmInfo wfm_info = 3;
+  repeated niScope_wfmInfo wfm_info = 3;
 }
 
 message FetchMeasurementStatsRequest {
@@ -1121,7 +1121,7 @@ message ReadRequest {
 message ReadResponse {
   int32 status = 1;
   repeated double waveform = 2;
-  repeated struct niScope_wfmInfo wfm_info = 3;
+  repeated niScope_wfmInfo wfm_info = 3;
 }
 
 message ResetDeviceRequest {

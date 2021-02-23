@@ -531,7 +531,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self.get_array_size_for_python_code()'
                 },
-                'type': 'CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated CustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -967,7 +968,8 @@ functions = {
                     'description': 'Set using custom type'
                 },
                 'name': 'cs',
-                'type': 'CustomStruct'
+                'type': 'struct CustomStruct',
+                'grpc_type': 'CustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -1004,7 +1006,8 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'numberOfElements'
                 },
-                'type': 'CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'CustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2088,7 +2091,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetCustomType': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function takes a custom type.'
         },
@@ -2107,13 +2110,14 @@ functions = {
                     'description': 'Set using custom type'
                 },
                 'name': 'cs',
-                'type': 'CustomStruct'
+                'type': 'struct CustomStruct',
+                'grpc_type': 'CustomStruct'
             }
         ],
         'returns': 'ViStatus'
     },
     'SetCustomTypeArray': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function takes an array of custom types.'
         },
@@ -2144,7 +2148,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfElements'
                 },
-                'type': 'CustomStruct[]'
+                'type': 'struct CustomStruct[]'
             }
         ],
         'returns': 'ViStatus'

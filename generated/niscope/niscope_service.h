@@ -84,7 +84,6 @@ public:
   NiScopeLibraryWrapper* library_wrapper_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
-
 } // namespace grpc
 } // namespace scope
 } // namespace ni

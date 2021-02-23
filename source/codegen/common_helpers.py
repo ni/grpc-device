@@ -44,7 +44,7 @@ def has_unsupported_parameter(function):
 
 def is_unsupported_parameter(parameter):
   type = parameter['type']
-  return is_array(type) or type.startswith('struct')
+  return is_array(type)
 
 def camel_to_snake(camelString):
   camelString = list(camelString)

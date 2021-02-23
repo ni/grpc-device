@@ -51,7 +51,7 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    ViInt32 acquisition_status;
+    ViInt32 acquisition_status {};
     auto status = library_wrapper_->AcquisitionStatus(vi, &acquisition_status);
     response->set_status(status);
     if (status == 0) {
@@ -473,7 +473,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViBoolean value;
+    ViBoolean value {};
     auto status = library_wrapper_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -494,7 +494,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViInt32 value;
+    ViInt32 value {};
     auto status = library_wrapper_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -515,7 +515,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViInt64 value;
+    ViInt64 value {};
     auto status = library_wrapper_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -536,7 +536,7 @@ namespace grpc {
     ViSession vi = request->vi();
     ViConstString channel_list = request->channel_list().c_str();
     ViAttr attribute_id = request->attribute_id();
-    ViReal64 value;
+    ViReal64 value {};
     auto status = library_wrapper_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
     response->set_status(status);
     if (status == 0) {
@@ -595,7 +595,7 @@ namespace grpc {
     ViBoolean id_query = request->id_query();
     ViBoolean reset_device = request->reset_device();
     ViConstString option_string = request->option_string().c_str();
-    ViSession vi;
+    ViSession vi {};
     auto status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
     response->set_status(status);
     if (status == 0) {
@@ -629,7 +629,7 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    ViBoolean caller_has_lock;
+    ViBoolean caller_has_lock {};
     auto status = library_wrapper_->LockSession(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
@@ -821,7 +821,7 @@ namespace grpc {
     }
 
     ViSession vi = request->vi();
-    ViBoolean caller_has_lock;
+    ViBoolean caller_has_lock {};
     auto status = library_wrapper_->UnlockSession(vi, &caller_has_lock);
     response->set_status(status);
     if (status == 0) {
