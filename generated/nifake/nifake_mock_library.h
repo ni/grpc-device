@@ -65,8 +65,6 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViInt64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue), (override));
-  MOCK_METHOD(ViStatus, SetCustomType, (ViSession vi, struct CustomStruct cs), (override));
-  MOCK_METHOD(ViStatus, SetCustomTypeArray, (ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]), (override));
   MOCK_METHOD(ViStatus, StringValuedEnumInputFunctionWithDefaults, (ViSession vi, ViConstString aMobileOSName), (override));
   MOCK_METHOD(ViStatus, TwoInputFunction, (ViSession vi, ViReal64 aNumber, ViString aString), (override));
   MOCK_METHOD(ViStatus, Use64BitNumber, (ViSession vi, ViInt64 input, ViInt64* output), (override));
