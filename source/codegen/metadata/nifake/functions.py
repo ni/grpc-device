@@ -34,7 +34,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'delays',
                 'documentation': {
                     'description': 'Count of input values.'
                 },
@@ -110,7 +109,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'numbers',
                 'documentation': {
                     'description': 'Number of elements in the number array'
                 },
@@ -1124,7 +1122,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'configuration',
                 'name': 'sizeInBytes',
                 'type': 'ViInt32'
             },
@@ -1323,7 +1320,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'inputArrayOfFloats',
                 'documentation': {
                     'description': 'Size of inputArrayOfFloats and inputArrayOfIntegers'
                 },
@@ -1421,7 +1417,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'values1',
                 'documentation': {
                     'description': 'Size for all arrays'
                 },
@@ -1540,7 +1535,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'aString',
                 'documentation': {
                     'description': 'Number of bytes allocated for aString'
                 },
@@ -2134,7 +2128,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'cs',
                 'documentation': {
                     'description': 'Number of elements in the array.'
                 },
@@ -2327,7 +2320,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'determine_size_from': 'waveform',
                 'documentation': {
                     'description': 'How many samples the waveform contains.'
                 },
