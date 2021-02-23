@@ -376,32 +376,126 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
 
 TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsImportAttributeConfigurationBuffer)
 {
-  // TODO: Finish Implementation
-  EXPECT_TRUE(false);
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  EXPECT_CALL(library_wrapper, ImportAttributeConfigurationBuffer)
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::ImportAttributeConfigurationBufferRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  std::vector<ViInt8> char_vector = {'a', 'b', 'c'};
+  request.mutable_configuration()->append(char_vector.begin(), char_vector.end());
+  ni::fake::grpc::ImportAttributeConfigurationBufferResponse response;
+  ::grpc::Status status = service.ImportAttributeConfigurationBuffer(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArraysSameSize)
 {
-  // TODO: Finish Implementation
-  EXPECT_TRUE(false);
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  EXPECT_CALL(library_wrapper, MultipleArraysSameSize)
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::MultipleArraysSameSizeRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  std::vector<ViReal64> doubles = {0.2, -2.3, 4.5};
+  for (ViReal64 num : doubles)
+  {
+      request.add_values1(num);
+      request.add_values2(num);
+      request.add_values3(num);
+      request.add_values4(num);
+  }
+  ni::fake::grpc::MultipleArraysSameSizeResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSize(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParametersAreMultipleTypes)
 {
-  // TODO: Finish Implementation
-  EXPECT_TRUE(false);
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  EXPECT_CALL(library_wrapper, ParametersAreMultipleTypes)
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::ParametersAreMultipleTypesRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  request.set_a_boolean(true);
+  request.set_an_int32(42);
+  request.set_an_int64(4242);
+  request.set_a_float(4.3);
+  request.set_a_float_enum(ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE);
+  request.set_an_int_enum(ni::fake::grpc::Turtle::TURTLE_MICHELANGELO);
+  request.set_a_string("Hello There!");
+  ni::fake::grpc::ParametersAreMultipleTypesResponse response;
+  ::grpc::Status status = service.ParametersAreMultipleTypes(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumberAndAString)
 {
-  // TODO: Finish Implementation
-  EXPECT_TRUE(false);
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  ViInt16 a_number = 42;
+  ViChar a_string[256] = "Hello World!";
+  EXPECT_CALL(library_wrapper, ReturnANumberAndAString(kViSession, _, _))
+      .WillOnce(DoAll(
+          SetArgPointee<1>(a_number),
+          ::testing::SetArrayArgument<2>(a_string, a_string + 256),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::ReturnANumberAndAStringRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  ni::fake::grpc::ReturnANumberAndAStringResponse response;
+  ::grpc::Status status = service.ReturnANumberAndAString(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(a_number, response.a_number());
+  EXPECT_STREQ(a_string, response.a_string().c_str());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
 {
-  // TODO: Finish Implementation
-  EXPECT_TRUE(false);
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  EXPECT_CALL(library_wrapper, WriteWaveform)
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::WriteWaveformRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  std::vector<ViReal64> waveforms = {53.4, 42, -120.3};
+  for (ViReal64 waveform : waveforms)
+  {
+    request.add_waveform(waveform);
+  }
+  ni::fake::grpc::WriteWaveformResponse response;
+  ::grpc::Status status = service.WriteWaveform(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
 }
 
 }  // namespace unit
