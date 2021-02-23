@@ -72,4 +72,4 @@ def determine_allow_alias(enums):
   return False
 
 def filter_parameters_for_grpc_fields(parameters):
-  return [parameter for parameter in parameters if parameter.get('determine_size_from', '') == '']
+  return [p for p in parameters if p.get('determine_size_from', '') == '']
