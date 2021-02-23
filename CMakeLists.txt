@@ -193,15 +193,6 @@ add_custom_command(
             $<TARGET_FILE_DIR:core_server>/server_config.json)
 
 #----------------------------------------------------------------------
-# Copy test asset certificates to binary output certs sub-directory
-#----------------------------------------------------------------------
-add_custom_command(
-  TARGET core_server POST_BUILD
-  COMMAND  ${CMAKE_COMMAND} -E copy_directory 
-           ${CMAKE_SOURCE_DIR}/source/tests/assets/
-           $<TARGET_FILE_DIR:core_server>/certs/)
-
-#----------------------------------------------------------------------
 # Add JSON parser
 #----------------------------------------------------------------------
 add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
@@ -271,6 +262,15 @@ target_link_libraries(UnitTestsRunner
     Threads::Threads
     nlohmann_json::nlohmann_json)
 
+#----------------------------------------------------------------------
+# Copy test asset certificates to binary output certs sub-directory
+#----------------------------------------------------------------------
+add_custom_command(
+  TARGET UnitTestsRunner POST_BUILD
+  COMMAND  ${CMAKE_COMMAND} -E copy_directory 
+           ${CMAKE_SOURCE_DIR}/source/tests/assets/
+           $<TARGET_FILE_DIR:core_server>/certs/)
+           
 add_executable(SystemTestsRunner
     "source/tests/run_all_tests.cpp"
     "source/tests/system/stub_test.cpp")
