@@ -15,19 +15,6 @@ config = {
         'task': 'scan'
     },
     'custom_types': [
-    {
-            'name': 'CustomStruct',
-            'fields': [
-                {
-                    'type': 'ViInt32',
-                    'name': 'structInt'
-                },
-                {
-                    'type': 'ViReal64',
-                    'name': 'structDouble'
-                }
-            ]
-        }
     ],
     'driver_name': 'NI-SWITCH',
     'extra_errors_used': [

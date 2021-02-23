@@ -13,6 +13,8 @@ option csharp_namespace = "NationalInstruments.NISwitch.Grpc";
 
 package ni.niswitch.grpc;
 
+import "server_utilities.proto";
+
 service NiSwitch {
   rpc AbortScan(AbortScanRequest) returns (AbortScanResponse);
   rpc CanConnect(CanConnectRequest) returns (CanConnectResponse);
@@ -241,7 +243,7 @@ enum TriggerInputPolarity {
 }
 
 message AbortScanRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message AbortScanResponse {
@@ -249,7 +251,7 @@ message AbortScanResponse {
 }
 
 message CanConnectRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel1 = 2;
   string channel2 = 3;
 }
@@ -260,7 +262,7 @@ message CanConnectResponse {
 }
 
 message CommitRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message CommitResponse {
@@ -268,7 +270,7 @@ message CommitResponse {
 }
 
 message ConnectRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel1 = 2;
   string channel2 = 3;
 }
@@ -278,7 +280,7 @@ message ConnectResponse {
 }
 
 message ConnectMultipleRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string connection_list = 2;
 }
 
@@ -287,7 +289,7 @@ message ConnectMultipleResponse {
 }
 
 message DisableRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message DisableResponse {
@@ -295,7 +297,7 @@ message DisableResponse {
 }
 
 message DisconnectRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel1 = 2;
   string channel2 = 3;
 }
@@ -305,7 +307,7 @@ message DisconnectResponse {
 }
 
 message DisconnectAllRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message DisconnectAllResponse {
@@ -313,7 +315,7 @@ message DisconnectAllResponse {
 }
 
 message DisconnectMultipleRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string disconnection_list = 2;
 }
 
@@ -322,7 +324,7 @@ message DisconnectMultipleResponse {
 }
 
 message GetAttributeViBooleanRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
 }
@@ -333,7 +335,7 @@ message GetAttributeViBooleanResponse {
 }
 
 message GetAttributeViInt32Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
 }
@@ -344,7 +346,7 @@ message GetAttributeViInt32Response {
 }
 
 message GetAttributeViReal64Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
 }
@@ -355,7 +357,7 @@ message GetAttributeViReal64Response {
 }
 
 message GetAttributeViStringRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
   sint32 array_size = 4;
@@ -367,7 +369,7 @@ message GetAttributeViStringResponse {
 }
 
 message GetChannelNameRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   sint32 index = 2;
   sint32 buffer_size = 3;
 }
@@ -378,7 +380,7 @@ message GetChannelNameResponse {
 }
 
 message GetPathRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel1 = 2;
   string channel2 = 3;
   sint32 buffer_size = 4;
@@ -390,7 +392,7 @@ message GetPathResponse {
 }
 
 message GetRelayCountRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string relay_name = 2;
 }
 
@@ -400,7 +402,7 @@ message GetRelayCountResponse {
 }
 
 message GetRelayNameRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   sint32 index = 2;
   sint32 relay_name_buffer_size = 3;
 }
@@ -411,7 +413,7 @@ message GetRelayNameResponse {
 }
 
 message GetRelayPositionRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string relay_name = 2;
 }
 
@@ -421,19 +423,20 @@ message GetRelayPositionResponse {
 }
 
 message InitWithTopologyRequest {
-  string resource_name = 1;
-  string topology = 2;
-  bool simulate = 3;
-  bool reset_device = 4;
+  string session_name = 1;
+  string resource_name = 2;
+  string topology = 3;
+  bool simulate = 4;
+  bool reset_device = 5;
 }
 
 message InitWithTopologyResponse {
   int32 status = 1;
-  fixed32 vi = 2;
+  ni.hardware.grpc.Session vi = 2;
 }
 
 message InitiateScanRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message InitiateScanResponse {
@@ -441,7 +444,7 @@ message InitiateScanResponse {
 }
 
 message LockSessionRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message LockSessionResponse {
@@ -450,7 +453,7 @@ message LockSessionResponse {
 }
 
 message RelayControlRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string relay_name = 2;
   RelayAction relay_action = 3;
 }
@@ -460,7 +463,7 @@ message RelayControlResponse {
 }
 
 message ResetWithDefaultsRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ResetWithDefaultsResponse {
@@ -468,7 +471,7 @@ message ResetWithDefaultsResponse {
 }
 
 message RouteScanAdvancedOutputRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   ScanAdvancedOutput scan_advanced_output_connector = 2;
   ScanAdvancedOutput scan_advanced_output_bus_line = 3;
   bool invert = 4;
@@ -479,7 +482,7 @@ message RouteScanAdvancedOutputResponse {
 }
 
 message RouteTriggerInputRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   TriggerInput trigger_input_connector = 2;
   TriggerInput trigger_input_bus_line = 3;
   bool invert = 4;
@@ -490,7 +493,7 @@ message RouteTriggerInputResponse {
 }
 
 message SendSoftwareTriggerRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message SendSoftwareTriggerResponse {
@@ -498,7 +501,7 @@ message SendSoftwareTriggerResponse {
 }
 
 message SetAttributeViBooleanRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
   bool attribute_value = 4;
@@ -509,7 +512,7 @@ message SetAttributeViBooleanResponse {
 }
 
 message SetAttributeViInt32Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
   sint32 attribute_value = 4;
@@ -520,7 +523,7 @@ message SetAttributeViInt32Response {
 }
 
 message SetAttributeViReal64Request {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
   double attribute_value = 4;
@@ -531,7 +534,7 @@ message SetAttributeViReal64Response {
 }
 
 message SetAttributeViStringRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
   string attribute_value = 4;
@@ -542,7 +545,7 @@ message SetAttributeViStringResponse {
 }
 
 message SetPathRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   string path_list = 2;
 }
 
@@ -551,7 +554,7 @@ message SetPathResponse {
 }
 
 message UnlockSessionRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message UnlockSessionResponse {
@@ -560,7 +563,7 @@ message UnlockSessionResponse {
 }
 
 message WaitForDebounceRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   sint32 maximum_time_ms = 2;
 }
 
@@ -569,7 +572,7 @@ message WaitForDebounceResponse {
 }
 
 message WaitForScanCompleteRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
   sint32 maximum_time_ms = 2;
 }
 
@@ -578,7 +581,7 @@ message WaitForScanCompleteResponse {
 }
 
 message CloseRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message CloseResponse {
@@ -586,7 +589,7 @@ message CloseResponse {
 }
 
 message ResetRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message ResetResponse {
@@ -594,7 +597,7 @@ message ResetResponse {
 }
 
 message SelfTestRequest {
-  fixed32 vi = 1;
+  ni.hardware.grpc.Session vi = 1;
 }
 
 message SelfTestResponse {

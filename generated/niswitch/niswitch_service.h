@@ -7,14 +7,16 @@
 #ifndef NI_NISWITCH_GRPC_SERVICE_H
 #define NI_NISWITCH_GRPC_SERVICE_H
 
+#include <map>
 #include <niswitch.grpc.pb.h>
+#include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <condition_variable>
-#include "niswitch_library_wrapper.h"
-#include "core_server/hardware/grpc/internal/shared_library.h"
-#include "core_server/hardware/grpc/internal/session_repository.h"
+#include <hardware/grpc/internal/session_repository.h>
+#include <hardware/grpc/internal/shared_library.h>
+
+#include "niswitch_library_interface.h"
 
 namespace ni {
 namespace niswitch {
@@ -22,7 +24,7 @@ namespace grpc {
 
 class NiSwitchService final : public NiSwitch::Service {
 public:
-  NiSwitchService(NiSwitchLibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiSwitchService(NiSwitchLibraryInterface* library, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~NiSwitchService();
   ::grpc::Status AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response) override;
   ::grpc::Status CanConnect(::grpc::ServerContext* context, const CanConnectRequest* request, CanConnectResponse* response) override;
@@ -61,9 +63,8 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
-
-private:
-  NiSwitchLibraryWrapper* library_wrapper_;
+  private:
+  NiSwitchLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
 };
 

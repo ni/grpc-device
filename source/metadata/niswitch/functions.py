@@ -9,7 +9,6 @@ functions = {
                 'type': 'ViSession'
             }
         ],
-        'python_name': 'abort',
         'returns': 'ViStatus'
     },
     'CanConnect': {
