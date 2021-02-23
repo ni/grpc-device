@@ -143,13 +143,7 @@ ${initialize_input_param_snippet(parameter=parameter)}
 %if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
 ${initialize_enum_input_param(parameter)}
 % elif parameter.get("determine_size_from", '') != '':
-<%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  field_name = common_helpers.camel_to_snake(parameter["determine_size_from"])
-  request_snippet = f'request->{field_name}()'
-  c_type = parameter['type']
-%>\
-      ${c_type} ${parameter_name} = request->${field_name}().size();\
+${initialize_len_input_param(parameter)}\
 % else:
 ${initialize_standard_input_param(parameter)}\
 % endif
@@ -174,6 +168,17 @@ ${initialize_standard_input_param(parameter)}\
 %else:
       auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
 %endif
+</%def>\
+\
+\
+\
+\
+<%def name="initialize_len_input_param(parameter)">\
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  field_name = common_helpers.camel_to_snake(parameter["determine_size_from"])
+%>\
+      ${parameter['type']} ${parameter_name} = request->${field_name}().size();\
 </%def>\
 \
 \
