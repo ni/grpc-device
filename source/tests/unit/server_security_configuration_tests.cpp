@@ -83,67 +83,61 @@ TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_Ge
 TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertEmpty_TryGetOptions_Unsuccessful)
 {
   ::internal::ServerSecurityConfiguration server_security_config("", "", "");
-  ::grpc::SslServerCredentialsOptions credentials_options_;
 
-  auto is_successful = server_security_config.try_get_options(&credentials_options_);
+  auto credentials_options = server_security_config.try_get_options();
 
-  EXPECT_FALSE(is_successful);
+  EXPECT_EQ(nullptr, credentials_options);
 }
 
 TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_Successful)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
-  ::grpc::SslServerCredentialsOptions credentials_options_;
 
-  auto is_successful = server_security_config.try_get_options(&credentials_options_);
+  auto credentials_options = server_security_config.try_get_options();
 
-  EXPECT_TRUE(is_successful);
+  EXPECT_NE(nullptr, credentials_options);
 }
 
 TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_DoesNotRequestClientCertificate)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "");
-  ::grpc::SslServerCredentialsOptions credentials_options_;
 
-  auto is_successful = server_security_config.try_get_options(&credentials_options_);
+  auto credentials_options = server_security_config.try_get_options();
 
-  EXPECT_TRUE(is_successful);
-  EXPECT_EQ(GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE, credentials_options_.client_certificate_request);
+  EXPECT_NE(nullptr, credentials_options);
+  EXPECT_EQ(GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE, credentials_options->client_certificate_request);
 }
 
 TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_RequestsAndVerifiesClientCertificate)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
-  ::grpc::SslServerCredentialsOptions credentials_options_;
 
-  auto is_successful = server_security_config.try_get_options(&credentials_options_);
+  auto credentials_options = server_security_config.try_get_options();
 
-  EXPECT_TRUE(is_successful);
-  EXPECT_EQ(GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY, credentials_options_.client_certificate_request);
+  EXPECT_NE(nullptr, credentials_options);
+  EXPECT_EQ(GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY, credentials_options->client_certificate_request);
 }
 
 TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_PemCertPairsNotEmptyAndPemRootCertsEmpty)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "");
-  ::grpc::SslServerCredentialsOptions credentials_options_;
 
-  auto is_successful = server_security_config.try_get_options(&credentials_options_);
+  auto credentials_options = server_security_config.try_get_options();
 
-  EXPECT_TRUE(is_successful);
-  EXPECT_FALSE(credentials_options_.pem_key_cert_pairs.empty());
-  EXPECT_TRUE(credentials_options_.pem_root_certs.empty());
+  EXPECT_NE(nullptr, credentials_options);
+  EXPECT_FALSE(credentials_options->pem_key_cert_pairs.empty());
+  EXPECT_TRUE(credentials_options->pem_root_certs.empty());
 }
 
 TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_PemCertPairsAndPemRootCertsNotEmpty)
 {
   ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
-  ::grpc::SslServerCredentialsOptions credentials_options_;
 
-  auto is_successful = server_security_config.try_get_options(&credentials_options_);
+  auto credentials_options = server_security_config.try_get_options();
 
-  EXPECT_TRUE(is_successful);
-  EXPECT_FALSE(credentials_options_.pem_key_cert_pairs.empty());
-  EXPECT_FALSE(credentials_options_.pem_root_certs.empty());
+  EXPECT_NE(nullptr, credentials_options);
+  EXPECT_FALSE(credentials_options->pem_key_cert_pairs.empty());
+  EXPECT_FALSE(credentials_options->pem_root_certs.empty());
 }
 
 }  // namespace unit

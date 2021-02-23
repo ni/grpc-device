@@ -75,7 +75,7 @@ nlohmann::json ServerConfigurationParser::load(const std::string& config_file_pa
   }
 }
 
-std::string ServerConfigurationParser::parse_address()
+std::string ServerConfigurationParser::parse_address() const
 {
   int parsed_port = -1;
 
@@ -98,25 +98,25 @@ std::string ServerConfigurationParser::parse_address()
   return kDefaultAddressPrefix + std::to_string(parsed_port);
 }
 
-std::string ServerConfigurationParser::parse_server_cert()
+std::string ServerConfigurationParser::parse_server_cert() const
 {
   auto file_name = parse_key_from_security_section(kServerCertJsonKey);
   return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
-std::string ServerConfigurationParser::parse_server_key()
+std::string ServerConfigurationParser::parse_server_key() const
 {
   auto file_name = parse_key_from_security_section(kServerKeyJsonKey);
   return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
-std::string ServerConfigurationParser::parse_root_cert()
+std::string ServerConfigurationParser::parse_root_cert() const
 {
   auto file_name = parse_key_from_security_section(kRootCertJsonKey);
   return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
-std::string ServerConfigurationParser::parse_key_from_security_section(const char* key)
+std::string ServerConfigurationParser::parse_key_from_security_section(const char* key) const
 {
   std::string parsed_value;
 

@@ -50,11 +50,13 @@ static void RunServer(int argc, char** argv)
 
   std::cout << "Server listening on port " << listeningPort << ". ";
 
-  std::string security_description(server_security_config.is_insecure_credentials() ? "Insecure Credentials" : "Secure Credentials");
-  std::string tls_description;
-  ::grpc::SslServerCredentialsOptions credentials_options;
-  if (server_security_config.try_get_options(&credentials_options)) {
-    tls_description = credentials_options.client_certificate_request == GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE
+  const char* security_description = server_security_config.is_insecure_credentials() 
+    ? "insecure credentials"
+    : "secure credentials";
+  const char* tls_description = "";
+  auto credentials_options = server_security_config.try_get_options();
+  if (credentials_options != nullptr) {
+    tls_description = credentials_options->client_certificate_request == GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE
                           ? " (Server-Side TLS)"
                           : " (Mutual TLS)";
   }

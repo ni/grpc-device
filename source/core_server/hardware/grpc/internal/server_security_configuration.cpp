@@ -13,9 +13,9 @@ ServerSecurityConfiguration::ServerSecurityConfiguration()
 }
 
 ServerSecurityConfiguration::ServerSecurityConfiguration(const std::string& server_cert, const std::string& server_key, const std::string& root_cert)
-  : kIsInsecureCredentials(server_cert.empty() || server_key.empty())
+  : is_insecure_credentials_(server_cert.empty() || server_key.empty())
 {
-  if (kIsInsecureCredentials) {
+  if (is_insecure_credentials_) {
     server_credentials_ = ::grpc::InsecureServerCredentials();
     return;
   }
@@ -29,23 +29,22 @@ ServerSecurityConfiguration::ServerSecurityConfiguration(const std::string& serv
   server_credentials_ = ::grpc::SslServerCredentials(credentials_options_);
 }
 
-std::shared_ptr<::grpc::ServerCredentials> ServerSecurityConfiguration::get_credentials()
+std::shared_ptr<::grpc::ServerCredentials> ServerSecurityConfiguration::get_credentials() const
 {
   return server_credentials_;
 }
 
-bool ServerSecurityConfiguration::try_get_options(::grpc::SslServerCredentialsOptions* credentials_options)
+const ::grpc::SslServerCredentialsOptions* ServerSecurityConfiguration::try_get_options() const
 {
-  if (kIsInsecureCredentials) {
-    return false;
+  if (is_insecure_credentials_) {
+    return nullptr;
   }
-  *credentials_options = credentials_options_;
-  return true;
+  return &credentials_options_;
 }
 
-bool ServerSecurityConfiguration::is_insecure_credentials()
+bool ServerSecurityConfiguration::is_insecure_credentials() const
 {
-  return kIsInsecureCredentials;
+  return is_insecure_credentials_;
 }
 }  // namespace internal
 }  // namespace grpc
