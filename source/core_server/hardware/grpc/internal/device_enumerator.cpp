@@ -65,7 +65,7 @@ NISysCfgStatus DeviceEnumerator::get_list_of_devices(google::protobuf::RepeatedP
 // This method takes a unique lock to access cached_syscfg_session and returns if its not null otherwise creates a new session
 // when reinitialize is true or cached_syscfg_session is null and returns it.
 // This method doesn't check for return of null session after failed initialization.
-NISysCfgSessionHandle DeviceEnumerator::get_syscfg_session(bool reinitialize = false)
+NISysCfgSessionHandle DeviceEnumerator::get_syscfg_session(bool reinitialize)
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
   if (!reinitialize && cached_syscfg_session != nullptr) {
