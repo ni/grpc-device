@@ -2,9 +2,6 @@
 # This file is generated from NI-SWITCH API metadata version 19.6.0d7
 functions = {
     'AbortScan': {
-        'documentation': {
-            'description': '\nAborts the scan in progress. Initiate a scan with\nniSwitch_InitiateScan. If the switch module is not scanning,\nNISWITCH_ERROR_NO_SCAN_IN_PROGRESS error is returned.\n'
-        },
         'parameters': [
             {
                 'direction': 'in',
@@ -75,9 +72,6 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'documentation': {
-                    'description': '\nA particular NI-SWITCH session established with\nniSwitch_InitWithTopology, niSwitch_InitWithOptions, or niSwitch_init\nand used for all subsequent NI-SWITCH calls.\n'
-                },
                 'name': 'vi',
                 'type': 'ViSession'
             },
@@ -227,9 +221,6 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'documentation': {
-                    'description': '\nA particular NI-SWITCH session established with\nniSwitch_InitWithTopology, niSwitch_InitWithOptions, or niSwitch_init\nand used for all subsequent NI-SWITCH calls.\n'
-                },
                 'name': 'vi',
                 'type': 'ViSession'
             },
@@ -514,9 +505,6 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'documentation': {
-                    'description': '\nA particular NI-SWITCH session established with\nniSwitch_InitWithTopology, niSwitch_InitWithOptions, or niSwitch_init\nand used for all subsequent NI-SWITCH calls.\n'
-                },
                 'name': 'vi',
                 'type': 'ViSession'
             }
@@ -797,15 +785,9 @@ functions = {
         'use_session_lock': False
     },
     'reset': {
-        'documentation': {
-            'description': '\nDisconnects all created paths and returns the switch module to the state\nat initialization. Configuration channel and source channel settings\nremain unchanged.\n'
-        },
         'parameters': [
             {
                 'direction': 'in',
-                'documentation': {
-                    'description': '\nA particular NI-SWITCH session established with\nniSwitch_InitWithTopology, niSwitch_InitWithOptions, or niSwitch_init\nand used for all subsequent NI-SWITCH calls.\n'
-                },
                 'name': 'vi',
                 'type': 'ViSession'
             }

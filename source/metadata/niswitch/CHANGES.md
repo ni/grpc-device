@@ -28,3 +28,26 @@ The following functions were changed from `private` to `public`:
 - `SetAttributeViString`
 - `close`
 - `self_test`
+
+The following APIs are missing (compared to the C API documentation)
+- Init
+- InitWithOptions
+- IsDebounced
+- Scan
+- IsScanning
+- ConfigureScanList
+- ConfigureScanTrigger
+- SetContinuousScan
+- ErrorQuery
+- GetError
+- ClearError
+- ErrorMessage
+- GetNextInterchangeWarning
+- ResetInterchangeCheck
+- ClearInterchangeWarnings
+- GetNextCoercionRecord
+- InvalidateAllAttributes
+- RevisionQuery
+- GetAttributeViSession
+- SetAttributeViSession
+- All the CheckAttribute APIs
