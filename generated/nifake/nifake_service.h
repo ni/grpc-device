@@ -7,14 +7,16 @@
 #ifndef NI_FAKE_GRPC_SERVICE_H
 #define NI_FAKE_GRPC_SERVICE_H
 
+#include <map>
 #include <nifake.grpc.pb.h>
+#include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <condition_variable>
-#include "nifake_library_wrapper.h"
-#include "core_server/hardware/grpc/internal/shared_library.h"
-#include "core_server/hardware/grpc/internal/session_repository.h"
+#include <hardware/grpc/internal/session_repository.h>
+#include <hardware/grpc/internal/shared_library.h>
+
+#include "nifake_library_interface.h"
 
 namespace ni {
 namespace fake {
@@ -22,7 +24,7 @@ namespace grpc {
 
 class NiFakeService final : public NiFake::Service {
 public:
-  NiFakeService(NiFakeLibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiFakeService(NiFakeLibraryInterface* library, ni::hardware::grpc::internal::SessionRepository* session_repository);
   virtual ~NiFakeService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
@@ -72,10 +74,13 @@ public:
   ::grpc::Status Use64BitNumber(::grpc::ServerContext* context, const Use64BitNumberRequest* request, Use64BitNumberResponse* response) override;
   ::grpc::Status WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
-
-private:
-  NiFakeLibraryWrapper* library_wrapper_;
+  private:
+  NiFakeLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
+    std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
+    std::map<float, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
+    std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
+    std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
 };
 
 } // namespace grpc

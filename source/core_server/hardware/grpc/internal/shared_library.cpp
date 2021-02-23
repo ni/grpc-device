@@ -9,6 +9,11 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
+SharedLibrary::SharedLibrary()
+    : handle_(nullptr)
+{
+}
+
 SharedLibrary::SharedLibrary(const char* library_name)
     : library_name_(library_name), handle_(nullptr)
 {
@@ -79,6 +84,11 @@ const void* SharedLibrary::get_function_pointer(const char* name) const
 #else
   return ::dlsym(handle_, name);
 #endif
+}
+
+bool SharedLibrary::function_exists(const char* name) const
+{
+  return get_function_pointer(name) != nullptr;
 }
 
 void SharedLibrary::set_library_name(const char* library_name)

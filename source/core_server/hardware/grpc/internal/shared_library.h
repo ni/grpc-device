@@ -1,6 +1,7 @@
 #ifndef NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
 #define NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
 
+#include <stdexcept>
 #include <string>
 
 #if defined(_MSC_VER)
@@ -18,8 +19,16 @@ typedef HMODULE LibraryHandle;
 typedef void* LibraryHandle;
 #endif
 
+struct LibraryLoadException : std::runtime_error
+{
+  LibraryLoadException(const std::string& message) : std::runtime_error(message) { }
+  LibraryLoadException(const char* message) : std::runtime_error(message) { }
+  LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) { }
+};
+
 class SharedLibrary {
  public:
+  SharedLibrary();
   SharedLibrary(const char* library_name);
   SharedLibrary(const SharedLibrary& other);
   virtual ~SharedLibrary();
@@ -30,6 +39,7 @@ class SharedLibrary {
   void load();
   void unload();
   const void* get_function_pointer(const char* name) const;
+  bool function_exists(const char* name) const;
   void set_library_name(const char* library_name);
   std::string get_library_name() const;
 
