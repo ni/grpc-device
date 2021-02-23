@@ -310,6 +310,101 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
   EXPECT_EQ(months, response.months());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAcceptListOfDurationsInSeconds)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  EXPECT_CALL(library_wrapper, AcceptListOfDurationsInSeconds)
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::AcceptListOfDurationsInSecondsRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  std::vector<ViReal32> delays(5, 0);
+  request.mutable_delays()->Add(delays.begin(), delays.end());
+  ni::fake::grpc::AcceptListOfDurationsInSecondsResponse response;
+  ::grpc::Status status = service.AcceptListOfDurationsInSeconds(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  EXPECT_CALL(library_wrapper, DoubleAllTheNums)
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::DoubleAllTheNumsRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  std::vector<ViReal64> numbers(5, 0.0);
+  request.mutable_numbers()->Add(numbers.begin(), numbers.end());
+  ni::fake::grpc::DoubleAllTheNumsResponse response;
+  ::grpc::Status status = service.DoubleAllTheNums(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStringOfFixedMaximumSize)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t sessionId = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  ViChar output_string[256] = "Hello World!";
+  EXPECT_CALL(library_wrapper, GetAStringOfFixedMaximumSize)
+      .WillOnce(DoAll(
+          ::testing::SetArrayArgument<1>(output_string, output_string + 256),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::GetAStringOfFixedMaximumSizeRequest request;
+  request.mutable_vi()->set_id(sessionId);
+  ni::fake::grpc::GetAStringOfFixedMaximumSizeResponse response;
+  ::grpc::Status status = service.GetAStringOfFixedMaximumSize(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_STREQ(output_string, response.a_string().c_str());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsImportAttributeConfigurationBuffer)
+{
+  // TODO: Finish Implementation
+  EXPECT_TRUE(false);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArraysSameSize)
+{
+  // TODO: Finish Implementation
+  EXPECT_TRUE(false);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParametersAreMultipleTypes)
+{
+  // TODO: Finish Implementation
+  EXPECT_TRUE(false);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumberAndAString)
+{
+  // TODO: Finish Implementation
+  EXPECT_TRUE(false);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
+{
+  // TODO: Finish Implementation
+  EXPECT_TRUE(false);
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
