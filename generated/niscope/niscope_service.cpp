@@ -665,9 +665,7 @@ namespace grpc {
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        ni::hardware::grpc::Session session;
-        session.set_id(session_id);
-        response->set_allocated_vi(&session);
+        response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }

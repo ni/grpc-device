@@ -93,9 +93,7 @@ ${request_input_parameters(parameters)}
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        ni::hardware::grpc::Session session;
-        session.set_id(session_id);
-        response->set_allocated_${session_output_var_name}(&session);
+        response->mutable_${session_output_var_name}()->set_id(session_id);
       }
       return ::grpc::Status::OK;\
 </%def>\
