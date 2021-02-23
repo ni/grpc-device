@@ -37,7 +37,6 @@ TEST(DeviceEnumeratorTests, CreateDeviceEnumerator_SharedLibraryIsNotLoaded)
   EXPECT_FALSE(device_management.is_syscfg_library_loaded());
 }
 
-<<<<<<< HEAD:source/tests/unit/hardware/grpc/internal/device_enumerator_tests.cpp
 TEST(DeviceEnumeratorTests, DeviceEnumerator_SysCfgSessionWithReinitializeTrueReturnsValidSession)
 {
   ni::hardware::grpc::internal::DeviceEnumerator device_management;
@@ -45,11 +44,6 @@ TEST(DeviceEnumeratorTests, DeviceEnumerator_SysCfgSessionWithReinitializeTrueRe
   EXPECT_NE(nullptr, device_management.get_syscfg_session());
 }
 
-}  // namespace internal
-}  // namespace grpc
-}  // namespace hardware
-=======
->>>>>>> main:source/tests/unit/device_enumerator_tests.cpp
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
