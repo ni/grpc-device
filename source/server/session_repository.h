@@ -42,7 +42,7 @@ class SessionRepository {
   };
 
   struct SessionInfo {
-    virtual ~SessionInfo();
+    virtual ~SessionInfo() {};
 
     uint32_t id;
     std::string name;
@@ -56,6 +56,8 @@ class SessionRepository {
 
   std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
   void clear_reservations();
+  template<class MapType>
+  void close_sessions(MapType& map);
   bool release_reservation(const ReservationInfo* reservation_info);
 
   std::shared_mutex repository_lock_;

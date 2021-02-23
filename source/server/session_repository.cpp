@@ -117,12 +117,12 @@ std::shared_ptr<SessionRepository::ReservationInfo> SessionRepository::find_or_c
 // the returned reservation state. There are two states that are possible but multiple statuses in each state:
 // 1. The provided client_id does not hold the reservation_id:
 //   a. If the reservation_id or client_id are empty then the status is set to INVALID_ARGUMENT
-//   b. If the reservation is not created because an external call like reset_server changed the server state while 
+//   b. If the reservation is not created because an external call like reset_server changed the server state while
 //      waiting to acquire the reservation then the status is set to ABORTED.
 //   c. If the reserve call is cancelled by a client call to cancel or by exceeding the client's deadline then
 //      the status is set to CANCELLED.
 // 2. The provided client_id does hold the reservation_id:
-//   a. If the reservation requested is already reserved by client_id then status is set to FAILED_PRECONDITION. The 
+//   a. If the reservation requested is already reserved by client_id then status is set to FAILED_PRECONDITION. The
 //      precondition in this case is that the client_id doesn't already hold the reservation_id.
 //   b. If the reservation is created for client_id or if the reservation is changed from another client to client_id
 //      then the status is set to OK.
@@ -160,7 +160,7 @@ bool SessionRepository::reserve(
       return false;
     }
     bool is_reserved = it != reservations_.end() && client_id == it->second->client_id;
-    status = is_reserved 
+    status = is_reserved
       ? ::grpc::Status::OK
       : ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");
     return is_reserved;
@@ -213,17 +213,29 @@ bool SessionRepository::reset_server()
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   clear_reservations();
-  named_sessions_.clear();
-  sessions_.clear();
+  close_sessions(named_sessions_);
+  close_sessions(sessions_);
   auto is_server_reset = named_sessions_.empty() && sessions_.empty();
   return is_server_reset && reservations_.empty();
 }
 
-SessionRepository::SessionInfo::~SessionInfo()
+template<class MapType>
+void SessionRepository::close_sessions(MapType& map)
 {
-  if (cleanup_func != nullptr) {
-    cleanup_func(id);
-  }
+   for (auto it = map.begin(); it != map.end();)
+   {
+      if (it != map.end()) {
+         auto sessionInfo = it->second;
+         auto cleanupProcess  = sessionInfo->cleanup_func;
+         if (cleanupProcess != NULL){
+            cleanupProcess(sessionInfo->id);
+         }
+         it = map.erase(it);
+      }
+      else {
+         ++it;
+      }
+   }
 }
 
 }  // namespace internal

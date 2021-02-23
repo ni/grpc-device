@@ -33,6 +33,37 @@ std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& se
   return session_id;
 }
 
+// Init and Close function tests
+TEST(NiFakeServiceTests, NiFakeService_InitWithOptions_CreatesAndRegistersSession)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  ViConstString resourceName = "Dev0";
+  ViBoolean idQuery, resetDevice = true;
+  ViConstString optionString = "Simulate = 1";
+  std::string sessionName = "sessionName";
+  ViSession vi = kViSession;
+  EXPECT_CALL(library, InitWithOptions(Pointee(*resourceName), idQuery, resetDevice, Pointee(*optionString), _))
+    .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::InitWithOptionsRequest request;
+  request.set_resource_name(resourceName);
+  request.set_id_query(idQuery);
+  request.set_reset_device(resetDevice);
+  request.set_option_string(optionString);
+  request.set_session_name(sessionName);
+  ni::fake::grpc::InitWithOptionsResponse response;
+  ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  ni::hardware::grpc::Session session = response.vi();
+  EXPECT_EQ(vi, session_repository.access_session(session.id(), ""));
+  EXPECT_EQ(vi, session_repository.access_session(0, sessionName));
+}
+
 // Error logic tests using GetABoolean
 TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
