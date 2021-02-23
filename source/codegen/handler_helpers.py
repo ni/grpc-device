@@ -42,19 +42,19 @@ def create_args(parameters):
     return result[:-2]
 
 def create_params(parameters):
-    result = ''
-    for parameter in parameters:
-        result = result + create_param(parameter) + ' ' + parameter['cppName'] + ', '
-    return result[:-2]
+    return ', '.join(create_param(p) for p in parameters)
 
 def create_param(parameter):
-    result = parameter['type']
-    if result.endswith('[]') and parameter['size']['mechanism'] == 'fixed':
-        size = parameter['size']['value'];
-        result.replace('[]', f'[{size}]')
-    if common_helpers.is_output_parameter(parameter):
-        result = result + '*'
-    return result
+    type = parameter['type']
+    name = parameter['cppName']
+    if common_helpers.is_array(type):
+        is_fixed = parameter['size']['mechanism'] == 'fixed'
+        array_size = parameter['size']['value'] if is_fixed else ''
+        return f'{type[:-2]} {name}[{array_size}]'
+    elif common_helpers.is_output_parameter(parameter):
+        return f'{type}* {name}'
+    else:
+        return f'{type} {name}'
 
 def python_to_c(enum):
   enum_value = enum["values"][0]["value"]
@@ -96,20 +96,6 @@ def get_output_lookup_values(enum_data):
     out_value_format = out_value_format + "{" + str(formated_value) + ", " + str(index) + "},"
     index = index+1
   return out_value_format
-
-def get_request_value(parameter):
-    field_name = common_helpers.camel_to_snake(parameter["name"])
-    request_snippet = f'request->{field_name}()'
-    c_type = parameter['type']
-    if c_type == 'ViConstString':
-        return f'{request_snippet}.c_str()';
-    if c_type == 'ViString' or c_type == 'ViRsrc':
-        return f'({c_type}){request_snippet}.c_str()'
-    if c_type == 'ViInt8[]' or c_type == 'ViChar[]':
-        return f'({c_type[:-2]}*){request_snippet}.c_str()'
-    if c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
-        return f'({c_type}){request_snippet}'
-    return request_snippet
 
 def filter_api_functions(functions):
   '''Returns function metadata only for those functions to include for generating the function types to the API library'''
