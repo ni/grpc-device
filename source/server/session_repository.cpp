@@ -79,6 +79,11 @@ void SessionRepository::remove_session(uint32_t id)
     if (named_it != named_sessions_.end()) {
       named_sessions_.erase(named_it);
     }
+    auto sessionInfo = it->second;
+    auto cleanupProcess  = sessionInfo->cleanup_func;
+    if (cleanupProcess != NULL){
+      cleanupProcess(sessionInfo->id);
+    }
     sessions_.erase(it);
   }
 }
@@ -213,8 +218,8 @@ bool SessionRepository::reset_server()
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   clear_reservations();
-  close_sessions(named_sessions_);
   close_sessions(sessions_);
+  named_sessions_.clear();
   auto is_server_reset = named_sessions_.empty() && sessions_.empty();
   return is_server_reset && reservations_.empty();
 }
@@ -222,20 +227,15 @@ bool SessionRepository::reset_server()
 template<class MapType>
 void SessionRepository::close_sessions(MapType& map)
 {
-   for (auto it = map.begin(); it != map.end();)
-   {
-      if (it != map.end()) {
-         auto sessionInfo = it->second;
-         auto cleanupProcess  = sessionInfo->cleanup_func;
-         if (cleanupProcess != NULL){
-            cleanupProcess(sessionInfo->id);
-         }
-         it = map.erase(it);
-      }
-      else {
-         ++it;
-      }
-   }
+  for (auto it = map.begin(); it != map.end();)
+  {
+    auto sessionInfo = it->second;
+    auto cleanupProcess  = sessionInfo->cleanup_func;
+    if (cleanupProcess != NULL){
+      cleanupProcess(sessionInfo->id);
+    }
+    it = map.erase(it);
+  }
 }
 
 }  // namespace internal
