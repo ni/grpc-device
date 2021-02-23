@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
 #include <typeinfo>
 
 #include "hardware/grpc/internal/server_security_configuration.h"

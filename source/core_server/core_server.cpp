@@ -1,9 +1,9 @@
+#include <niscope/niscope_library.h>
+#include <niscope/niscope_service.h>
+
 #include "hardware/grpc/core_service.h"
 #include "hardware/grpc/internal/server_configuration_parser.h"
 #include "hardware/grpc/internal/server_security_configuration.h"
-
-#include <niscope/niscope_library.h>
-#include <niscope/niscope_service.h>
 
 static void RunServer(int argc, char** argv)
 {
@@ -50,9 +50,9 @@ static void RunServer(int argc, char** argv)
 
   std::cout << "Server listening on port " << listeningPort << ". ";
 
-  const char* security_description = server_security_config.is_insecure_credentials() 
-    ? "insecure credentials"
-    : "secure credentials";
+  const char* security_description = server_security_config.is_insecure_credentials()
+                                         ? "insecure credentials"
+                                         : "secure credentials";
   const char* tls_description = "";
   auto credentials_options = server_security_config.try_get_options();
   if (credentials_options != nullptr) {
