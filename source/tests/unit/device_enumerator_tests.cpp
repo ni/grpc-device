@@ -43,7 +43,6 @@ TEST(DeviceEnumeratorTests, DeviceEnumerator_SysCfgSessionWithReinitializeTrueRe
 
   EXPECT_NE(nullptr, device_management.get_syscfg_session());
 }
-
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
