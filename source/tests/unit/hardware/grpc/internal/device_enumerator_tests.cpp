@@ -40,6 +40,13 @@ TEST(DeviceEnumeratorTests, CreateDeviceEnumerator_SharedLibraryIsNotLoaded)
   EXPECT_FALSE(device_management.is_syscfg_library_loaded());
 }
 
+TEST(DeviceEnumeratorTests, DeviceEnumerator_SysCfgSessionWithReinitializeTrueReturnsValidSession)
+{
+  ni::hardware::grpc::internal::DeviceEnumerator device_management;
+
+  EXPECT_NE(nullptr, device_management.get_syscfg_session());
+}
+
 }  // namespace internal
 }  // namespace grpc
 }  // namespace hardware
