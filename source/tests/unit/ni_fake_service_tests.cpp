@@ -11,7 +11,10 @@ namespace tests {
 namespace unit {
 
 using ::testing::_;
+using ::testing::AllOf;
+using ::testing::Args;
 using ::testing::DoAll;
+using ::testing::ElementsAreArray;
 using ::testing::NiceMock;
 using ::testing::Pointee;
 using ::testing::Return;
@@ -32,16 +35,6 @@ std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& se
   uint32_t session_id;
   session_repo.add_session("", init_lambda, NULL, session_id);
   return session_id;
-}
-
-// Matcher used for array arguments to ensure each element in the argument matches a set of expected values.
-MATCHER_P2(ElementsMatch, expected_values, size, "")
-{
-  for (int i = 0; i < size; i++) {
-    if (expected_values[i] != arg[i])
-      return false;
-  }
-  return true;
 }
 
 // Error logic tests using GetABoolean
@@ -328,7 +321,8 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   const ViReal64 delays[] = {1, 2, 3, 4, 5};
   ViInt32 expectedSize = 5;
-  EXPECT_CALL(library_wrapper, AcceptListOfDurationsInSeconds(kViSession, expectedSize, ElementsMatch(delays, expectedSize)))
+  EXPECT_CALL(library_wrapper, AcceptListOfDurationsInSeconds(kViSession, expectedSize, _))
+      .With(Args<2, 1>(ElementsAreArray(delays)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -352,7 +346,8 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   const ViReal64 numbers[] = {1, 2, 3, 4, 5};
   ViInt32 expectedSize = 5;
-  EXPECT_CALL(library_wrapper, DoubleAllTheNums(kViSession, expectedSize, ElementsMatch(numbers, expectedSize)))
+  EXPECT_CALL(library_wrapper, DoubleAllTheNums(kViSession, expectedSize, _))
+      .With(Args<2, 1>(ElementsAreArray(numbers)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -399,7 +394,8 @@ TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsI
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   const ViInt8 char_array[] = {'a', 'b', 'c'};
   ViInt32 expectedSize = 3;
-  EXPECT_CALL(library_wrapper, ImportAttributeConfigurationBuffer(kViSession, expectedSize, ElementsMatch(char_array, 3)))
+  EXPECT_CALL(library_wrapper, ImportAttributeConfigurationBuffer(kViSession, expectedSize, _))
+      .With(Args<2, 1>(ElementsAreArray(char_array)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -421,17 +417,14 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  ViReal64 doubles[] = {0.2, -2.3, 4.5};
+  const ViReal64 doubles[] = {0.2, -2.3, 4.5};
   ViInt32 expectedSize = 3;
-  EXPECT_CALL(
-      library_wrapper,
-      MultipleArraysSameSize(
-          kViSession,
-          ElementsMatch(doubles, expectedSize),
-          ElementsMatch(doubles, expectedSize),
-          ElementsMatch(doubles, expectedSize),
-          ElementsMatch(doubles, expectedSize),
-          expectedSize))
+  EXPECT_CALL(library_wrapper, MultipleArraysSameSize(kViSession, _, _, _, _, expectedSize))
+      .With(AllOf(
+          Args<1, 5>(ElementsAreArray(doubles, expectedSize)),
+          Args<2, 5>(ElementsAreArray(doubles, expectedSize)),
+          Args<3, 5>(ElementsAreArray(doubles, expectedSize)),
+          Args<4, 5>(ElementsAreArray(doubles, expectedSize))))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -464,7 +457,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   ni::fake::grpc::FloatEnum aFloatEnum = ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE;
   float expectedFloatEnumValue = 6.5;
   ViInt32 expectedStringSize = 12;
-  ViConstString aString = "Hello There!";
+  ViChar aString[] = "Hello There!";
   EXPECT_CALL(
       library_wrapper,
       ParametersAreMultipleTypes(
@@ -476,7 +469,8 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
           aFloat,
           expectedFloatEnumValue,
           expectedStringSize,
-          ElementsMatch(aString, expectedStringSize)))
+          _))
+      .With(Args<8, 7>(ElementsAreArray(aString, expectedStringSize)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -530,7 +524,8 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViReal64 waveforms[] = {53.4, 42, -120.3};
   ViInt32 expectedNumberOfSamples = 3;
-  EXPECT_CALL(library_wrapper, WriteWaveform(kViSession, expectedNumberOfSamples, ElementsMatch(waveforms, expectedNumberOfSamples)))
+  EXPECT_CALL(library_wrapper, WriteWaveform(kViSession, expectedNumberOfSamples, _))
+      .With(Args<2, 1>(ElementsAreArray(waveforms)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
