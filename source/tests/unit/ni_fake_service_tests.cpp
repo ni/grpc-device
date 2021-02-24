@@ -33,6 +33,17 @@ std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& se
   return session_id;
 }
 
+// Matcher used for array arguments to ensure each element in the argument matches a set of expected values.
+MATCHER_P2(ElementsMatch, expected_values, size, "")
+{
+    for (int i=0; i < size; i++)
+    {
+      if (expected_values[i] != arg[i])
+        return false;
+    }
+    return true;
+}
+
 // Error logic tests using GetABoolean
 TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
@@ -315,14 +326,18 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, AcceptListOfDurationsInSeconds)
+  const ViReal64 delays[] = {1, 2, 3, 4, 5};
+  ViInt32 expectedSize = 5;
+  EXPECT_CALL(library_wrapper, AcceptListOfDurationsInSeconds(kViSession, expectedSize, ElementsMatch(delays, expectedSize)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::AcceptListOfDurationsInSecondsRequest request;
   request.mutable_vi()->set_id(sessionId);
-  std::vector<ViReal32> delays(5, 0);
-  request.mutable_delays()->Add(delays.begin(), delays.end());
+  for (ViReal64 delay : delays)
+  {
+    request.add_delays(delay);
+  }
   ni::fake::grpc::AcceptListOfDurationsInSecondsResponse response;
   ::grpc::Status status = service.AcceptListOfDurationsInSeconds(&context, &request, &response);
 
@@ -336,14 +351,18 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, DoubleAllTheNums)
+  const ViReal64 numbers[] = {1, 2, 3, 4, 5};
+  ViInt32 expectedSize = 5;
+  EXPECT_CALL(library_wrapper, DoubleAllTheNums(kViSession, expectedSize, ElementsMatch(numbers, expectedSize)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::DoubleAllTheNumsRequest request;
   request.mutable_vi()->set_id(sessionId);
-  std::vector<ViReal64> numbers(5, 0.0);
-  request.mutable_numbers()->Add(numbers.begin(), numbers.end());
+  for (ViReal64 number : numbers)
+  {
+    request.add_numbers(number);
+  }
   ni::fake::grpc::DoubleAllTheNumsResponse response;
   ::grpc::Status status = service.DoubleAllTheNums(&context, &request, &response);
 
@@ -358,7 +377,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   ViChar output_string[256] = "Hello World!";
-  EXPECT_CALL(library_wrapper, GetAStringOfFixedMaximumSize)
+  EXPECT_CALL(library_wrapper, GetAStringOfFixedMaximumSize(kViSession, _))
       .WillOnce(DoAll(
           ::testing::SetArrayArgument<1>(output_string, output_string + 256),
           Return(kDriverSuccess)));
@@ -380,14 +399,18 @@ TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsI
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, ImportAttributeConfigurationBuffer)
+  const ViInt8 char_array[] = {'a', 'b', 'c'};
+  ViInt32 expectedSize = 3;
+  EXPECT_CALL(library_wrapper, ImportAttributeConfigurationBuffer(kViSession, expectedSize, ElementsMatch(char_array, 3)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::ImportAttributeConfigurationBufferRequest request;
   request.mutable_vi()->set_id(sessionId);
-  std::vector<ViInt8> char_vector = {'a', 'b', 'c'};
-  request.mutable_configuration()->append(char_vector.begin(), char_vector.end());
+  for (ViInt8 character : char_array)
+  {
+    request.mutable_configuration()->push_back(character);
+  }
   ni::fake::grpc::ImportAttributeConfigurationBufferResponse response;
   ::grpc::Status status = service.ImportAttributeConfigurationBuffer(&context, &request, &response);
 
@@ -401,13 +424,22 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, MultipleArraysSameSize)
+  ViReal64 doubles[] = {0.2, -2.3, 4.5};
+  ViInt32 expectedSize = 3;
+  EXPECT_CALL(
+      library_wrapper, 
+      MultipleArraysSameSize(
+          kViSession, 
+          ElementsMatch(doubles, expectedSize), 
+          ElementsMatch(doubles, expectedSize), 
+          ElementsMatch(doubles, expectedSize), 
+          ElementsMatch(doubles, expectedSize), 
+          expectedSize))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::MultipleArraysSameSizeRequest request;
   request.mutable_vi()->set_id(sessionId);
-  std::vector<ViReal64> doubles = {0.2, -2.3, 4.5};
   for (ViReal64 num : doubles)
   {
       request.add_values1(num);
@@ -428,19 +460,39 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, ParametersAreMultipleTypes)
+  ViBoolean aBoolean = true;
+  ViInt32 anInt32 = 35;
+  ViInt64 anInt64 = 42;
+  ni::fake::grpc::Turtle anIntEnum = ni::fake::grpc::Turtle::TURTLE_MICHELANGELO;
+  ViReal64 aFloat = 4.2;
+  ni::fake::grpc::FloatEnum aFloatEnum = ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE;
+  float expectedFloatEnumValue = 6.5;
+  ViInt32 expectedStringSize = 12;
+  ViConstString aString = "Hello There!";
+  EXPECT_CALL(
+      library_wrapper,
+      ParametersAreMultipleTypes(
+          kViSession,
+          aBoolean,
+          anInt32,
+          anInt64,
+          anIntEnum,
+          aFloat,
+          expectedFloatEnumValue,
+          expectedStringSize,
+          ElementsMatch(aString, expectedStringSize)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::ParametersAreMultipleTypesRequest request;
   request.mutable_vi()->set_id(sessionId);
-  request.set_a_boolean(true);
-  request.set_an_int32(42);
-  request.set_an_int64(4242);
-  request.set_a_float(4.3);
-  request.set_a_float_enum(ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE);
-  request.set_an_int_enum(ni::fake::grpc::Turtle::TURTLE_MICHELANGELO);
-  request.set_a_string("Hello There!");
+  request.set_a_boolean(aBoolean);
+  request.set_an_int32(anInt32);
+  request.set_an_int64(anInt64);
+  request.set_an_int_enum(anIntEnum);
+  request.set_a_float(aFloat);
+  request.set_a_float_enum(aFloatEnum);
+  request.set_a_string(aString);
   ni::fake::grpc::ParametersAreMultipleTypesResponse response;
   ::grpc::Status status = service.ParametersAreMultipleTypes(&context, &request, &response);
 
@@ -480,13 +532,14 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiceMock<NiFakeMockLibrary> library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  EXPECT_CALL(library_wrapper, WriteWaveform)
+  ViReal64 waveforms[] = {53.4, 42, -120.3};
+  ViInt32 expectedNumberOfSamples = 3;
+  EXPECT_CALL(library_wrapper, WriteWaveform(kViSession, expectedNumberOfSamples, ElementsMatch(waveforms, expectedNumberOfSamples)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::WriteWaveformRequest request;
   request.mutable_vi()->set_id(sessionId);
-  std::vector<ViReal64> waveforms = {53.4, 42, -120.3};
   for (ViReal64 waveform : waveforms)
   {
     request.add_waveform(waveform);
