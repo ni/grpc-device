@@ -68,6 +68,7 @@ service NiScope {
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
 }
@@ -1209,6 +1210,16 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
+}
+
+message ErrorMessageRequest {
+  ni.hardware.grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
 }
 
 message ResetRequest {

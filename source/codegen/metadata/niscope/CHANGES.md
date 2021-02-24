@@ -49,6 +49,7 @@ The following functions were changed from `private` to `public`:
 - `GetAttributeViReal64`
 - `GetAttributeViString`
 - `GetEqualizationFilterCoefficients`
+- `error_message`
 - `InitWithOptions`
 - `InitiateAcquisition`
 - `Read`
