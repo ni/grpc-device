@@ -274,6 +274,18 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
+  {
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetPath(::grpc::ServerContext* context, const GetPathRequest* request, GetPathResponse* response)
   {
     try {
@@ -650,6 +662,18 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
+  {
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

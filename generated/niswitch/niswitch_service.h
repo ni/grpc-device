@@ -7,14 +7,14 @@
 #ifndef NI_NISWITCH_GRPC_SERVICE_H
 #define NI_NISWITCH_GRPC_SERVICE_H
 
-#include <map>
 #include <niswitch.grpc.pb.h>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <hardware/grpc/internal/session_repository.h>
-#include <hardware/grpc/internal/shared_library.h>
+#include <map>
+#include <server/session_repository.h>
+#include <server/shared_library.h>
 
 #include "niswitch_library_interface.h"
 
@@ -40,6 +40,7 @@ public:
   ::grpc::Status GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response) override;
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;
   ::grpc::Status GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response) override;
+  ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetPath(::grpc::ServerContext* context, const GetPathRequest* request, GetPathResponse* response) override;
   ::grpc::Status GetRelayCount(::grpc::ServerContext* context, const GetRelayCountRequest* request, GetRelayCountResponse* response) override;
   ::grpc::Status GetRelayName(::grpc::ServerContext* context, const GetRelayNameRequest* request, GetRelayNameResponse* response) override;
@@ -61,6 +62,7 @@ public:
   ::grpc::Status WaitForDebounce(::grpc::ServerContext* context, const WaitForDebounceRequest* request, WaitForDebounceResponse* response) override;
   ::grpc::Status WaitForScanComplete(::grpc::ServerContext* context, const WaitForScanCompleteRequest* request, WaitForScanCompleteResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
+  ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
   private:

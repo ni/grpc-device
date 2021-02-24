@@ -13,7 +13,7 @@ option csharp_namespace = "NationalInstruments.NISwitch.Grpc";
 
 package ni.niswitch.grpc;
 
-import "server_utilities.proto";
+import "session.proto";
 
 service NiSwitch {
   rpc AbortScan(AbortScanRequest) returns (AbortScanResponse);
@@ -30,6 +30,7 @@ service NiSwitch {
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetPath(GetPathRequest) returns (GetPathResponse);
   rpc GetRelayCount(GetRelayCountRequest) returns (GetRelayCountResponse);
   rpc GetRelayName(GetRelayNameRequest) returns (GetRelayNameResponse);
@@ -51,6 +52,7 @@ service NiSwitch {
   rpc WaitForDebounce(WaitForDebounceRequest) returns (WaitForDebounceResponse);
   rpc WaitForScanComplete(WaitForScanCompleteRequest) returns (WaitForScanCompleteResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
 }
@@ -379,6 +381,17 @@ message GetChannelNameResponse {
   string channel_name_buffer = 2;
 }
 
+message GetErrorRequest {
+  ni.hardware.grpc.Session vi = 1;
+  sint32 buffer_size = 2;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  sint32 code = 2;
+  string description = 3;
+}
+
 message GetPathRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel1 = 2;
@@ -586,6 +599,16 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
+}
+
+message ErrorMessageRequest {
+  ni.hardware.grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
 }
 
 message ResetRequest {

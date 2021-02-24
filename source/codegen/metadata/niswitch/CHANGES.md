@@ -1,5 +1,13 @@
 # Changes in metadata from the nimi-python metadata
 
+## config.py
+
+The following metadata was added : 
+- 'service_class_prefix': 'NiSwitch',
+- 'java_package': 'com.ni.niswitch.grpc',
+- 'csharp_namespace': 'NationalInstruments.NISwitch.Grpc',
+- 'namespace_component': 'niswitch',
+
 ## functions.py
 
 The occurrences of `'default_value'` were not removed but should be removed once enum support is complete.
@@ -20,6 +28,8 @@ The following functions were changed from `private` to `public`:
 - `GetAttributeViInt32`
 - `GetAttributeViReal64`
 - `GetAttributeViString`
+- `GetError`
+- `ErrorMessage`
 - `InitWithTopology`
 - `InitiateScan`
 - `SetAttributeViBoolean`
@@ -39,9 +49,7 @@ The following APIs are missing (compared to the C API documentation)
 - ConfigureScanTrigger
 - SetContinuousScan
 - ErrorQuery
-- GetError
 - ClearError
-- ErrorMessage
 - GetNextInterchangeWarning
 - ResetInterchangeCheck
 - ClearInterchangeWarnings

@@ -280,7 +280,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetError': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'is_error_handling': True,
         'parameters': [
             {
@@ -757,7 +757,7 @@ functions = {
         'use_session_lock': False
     },
     'error_message': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'is_error_handling': True,
         'parameters': [
             {
