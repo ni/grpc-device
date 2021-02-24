@@ -25,7 +25,7 @@ ViConstString kChannelName = "channel";
 
 std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& session_repo, ViSession sessionToStore)
 {
-  auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+  auto init_lambda = [&]() -> std::tuple<int, uint32_t> {
     return std::make_tuple(0, sessionToStore);
   };
   uint32_t session_id;
@@ -36,12 +36,11 @@ std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& se
 // Matcher used for array arguments to ensure each element in the argument matches a set of expected values.
 MATCHER_P2(ElementsMatch, expected_values, size, "")
 {
-    for (int i=0; i < size; i++)
-    {
-      if (expected_values[i] != arg[i])
-        return false;
-    }
-    return true;
+  for (int i = 0; i < size; i++) {
+    if (expected_values[i] != arg[i])
+      return false;
+  }
+  return true;
 }
 
 // Error logic tests using GetABoolean
@@ -258,7 +257,8 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
   request.set_channel_name(kChannelName);
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViReal64Response response;
-  ::grpc::Status status = service.GetAttributeViReal64(&context, &request, &response);;
+  ::grpc::Status status = service.GetAttributeViReal64(&context, &request, &response);
+  ;
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
@@ -334,8 +334,7 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
   ::grpc::ServerContext context;
   ni::fake::grpc::AcceptListOfDurationsInSecondsRequest request;
   request.mutable_vi()->set_id(sessionId);
-  for (ViReal64 delay : delays)
-  {
+  for (ViReal64 delay : delays) {
     request.add_delays(delay);
   }
   ni::fake::grpc::AcceptListOfDurationsInSecondsResponse response;
@@ -359,8 +358,7 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
   ::grpc::ServerContext context;
   ni::fake::grpc::DoubleAllTheNumsRequest request;
   request.mutable_vi()->set_id(sessionId);
-  for (ViReal64 number : numbers)
-  {
+  for (ViReal64 number : numbers) {
     request.add_numbers(number);
   }
   ni::fake::grpc::DoubleAllTheNumsResponse response;
@@ -407,8 +405,7 @@ TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsI
   ::grpc::ServerContext context;
   ni::fake::grpc::ImportAttributeConfigurationBufferRequest request;
   request.mutable_vi()->set_id(sessionId);
-  for (ViInt8 character : char_array)
-  {
+  for (ViInt8 character : char_array) {
     request.mutable_configuration()->push_back(character);
   }
   ni::fake::grpc::ImportAttributeConfigurationBufferResponse response;
@@ -427,25 +424,24 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   ViReal64 doubles[] = {0.2, -2.3, 4.5};
   ViInt32 expectedSize = 3;
   EXPECT_CALL(
-      library_wrapper, 
+      library_wrapper,
       MultipleArraysSameSize(
-          kViSession, 
-          ElementsMatch(doubles, expectedSize), 
-          ElementsMatch(doubles, expectedSize), 
-          ElementsMatch(doubles, expectedSize), 
-          ElementsMatch(doubles, expectedSize), 
+          kViSession,
+          ElementsMatch(doubles, expectedSize),
+          ElementsMatch(doubles, expectedSize),
+          ElementsMatch(doubles, expectedSize),
+          ElementsMatch(doubles, expectedSize),
           expectedSize))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::MultipleArraysSameSizeRequest request;
   request.mutable_vi()->set_id(sessionId);
-  for (ViReal64 num : doubles)
-  {
-      request.add_values1(num);
-      request.add_values2(num);
-      request.add_values3(num);
-      request.add_values4(num);
+  for (ViReal64 num : doubles) {
+    request.add_values1(num);
+    request.add_values2(num);
+    request.add_values3(num);
+    request.add_values4(num);
   }
   ni::fake::grpc::MultipleArraysSameSizeResponse response;
   ::grpc::Status status = service.MultipleArraysSameSize(&context, &request, &response);
@@ -540,8 +536,7 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   ::grpc::ServerContext context;
   ni::fake::grpc::WriteWaveformRequest request;
   request.mutable_vi()->set_id(sessionId);
-  for (ViReal64 waveform : waveforms)
-  {
+  for (ViReal64 waveform : waveforms) {
     request.add_waveform(waveform);
   }
   ni::fake::grpc::WriteWaveformResponse response;
