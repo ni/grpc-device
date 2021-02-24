@@ -120,7 +120,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerKey_
   EXPECT_FALSE(server_key.empty());
 }
 
-TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseRootCert_NotEmpty)
+TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseRootCert_Empty)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
   {
