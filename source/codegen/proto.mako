@@ -26,6 +26,8 @@ option csharp_namespace = "${config["csharp_namespace"]}";
 
 package ni.${config["namespace_component"]}.grpc;
 
+import "session.proto";
+
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
@@ -60,12 +62,14 @@ enum ${enum_name} {
 nonint_index = 1
 %>\
 % for value in enum["values"]:
-<%
-if isinstance(value["value"], int) is False:
-  value["value"] = nonint_index
+% if enum.get("generate-mappings", false):
+  ${enum_value_prefix}_${value["name"]} = ${nonint_index};
+<% 
   nonint_index = nonint_index+1
 %>\
+% else:
   ${enum_value_prefix}_${value["name"]} = ${value["value"]};
+%endif
 % endfor
 }
 
@@ -74,6 +78,9 @@ if isinstance(value["value"], int) is False:
 <%
   parameter_array = functions[function]["parameters"]
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
+  if function == config['init_function']:
+    session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
+    input_parameters.insert(0, session_name_param)
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
   index = 0
 %>\

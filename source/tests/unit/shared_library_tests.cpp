@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core_server/hardware/grpc/internal/shared_library.h"
+#include <server/shared_library.h>
 
 #if defined(__GNUC__)
   #include <dlfcn.h>
@@ -9,9 +9,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace hardware {
-namespace grpc {
-namespace internal {
 
 using TestSession = void*;
 using TestApiCreateSessionPtr = int (*)(TestSession* session);
@@ -162,9 +159,6 @@ TEST(SharedLibraryTests, UnloadedLibrary_SetLibraryName_UpdatesLibraryName)
   EXPECT_STREQ(new_library_name, name_after_attempted_rename.c_str());
 }
 
-}  // namespace internal
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

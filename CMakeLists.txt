@@ -51,6 +51,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(nidrivers "nifake" "niscope" "niswitch")
+set(nidrivers "nifake" "niscope")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -186,7 +187,6 @@ if(WIN32)
   set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niswitch.dll" )
   set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niswitch.dll")
 endif()
-
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory
 #----------------------------------------------------------------------
