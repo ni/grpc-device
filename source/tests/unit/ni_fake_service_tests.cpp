@@ -34,7 +34,7 @@ std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& se
 }
 
 // Init and Close function tests
-TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndRegistersSession)
+TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibrary library;
@@ -63,12 +63,12 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndRegiste
   EXPECT_EQ(vi, session_repository.access_session(0, sessionName));
 }
 
-TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_SessionIsNotRegistered)
+TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
-  std::string message = "Exception!";
+  const char* message = "Exception!";
   ViSession vi = kViSession;
   EXPECT_CALL(library, InitWithOptions)
     .WillOnce(DoAll(SetArgPointee<4>(vi), Throw(ni::hardware::grpc::internal::LibraryLoadException(message))));
@@ -106,7 +106,6 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsAndResetServer_SessionIsCl
   ni::hardware::grpc::Session session = response.vi();
   EXPECT_EQ(vi, session_repository.access_session(session.id(), ""));
   EXPECT_EQ(vi, session_repository.access_session(0, sessionName));
-
   bool resetStatus = session_repository.reset_server();
 
   EXPECT_TRUE(resetStatus);
@@ -135,7 +134,6 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
   ni::hardware::grpc::Session session = initResponse.vi();
   EXPECT_EQ(vi, session_repository.access_session(session.id(), ""));
   EXPECT_EQ(vi, session_repository.access_session(0, sessionName));
-
   ni::fake::grpc::CloseRequest closeRequest;
   closeRequest.mutable_vi()->set_id(session.id());
   ni::fake::grpc::CloseResponse closeResponse;
@@ -154,7 +152,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
   std::uint32_t sessionId = create_session(session_repository, kViSession);
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
-  std::string message = "Exception!";
+  const char* message = "Exception!";
   EXPECT_CALL(library, GetABoolean)
       .WillOnce(Throw(ni::hardware::grpc::internal::LibraryLoadException(message)));
 
