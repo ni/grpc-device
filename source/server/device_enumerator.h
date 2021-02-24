@@ -4,6 +4,7 @@
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 
+#include "device_enumerator_library_interface.h"
 #include "session_repository.h"
 #include "shared_library.h"
 
@@ -12,20 +13,17 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-class DeviceEnumerator
-{
+class DeviceEnumerator {
  public:
-  DeviceEnumerator();
-  DeviceEnumerator(const char* library_name);
+  DeviceEnumerator(DeviceEnumeratorLibraryInterface* library);
+  virtual ~DeviceEnumerator();
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
-  std::string get_syscfg_library_name() const;
-  bool is_syscfg_library_loaded() const;
 
  private:
   NISysCfgStatus get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
 
-  internal::SharedLibrary syscfg_library_;
+  DeviceEnumeratorLibraryInterface* library_;
 };
 
 } // namespace internal

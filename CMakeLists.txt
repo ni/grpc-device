@@ -158,6 +158,7 @@ endforeach()
 add_executable(core_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
+   "source/server/device_enumerator_library.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
    "source/server/session_repository.cpp"
@@ -205,6 +206,7 @@ add_executable(IntegrationTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
     "source/server/device_enumerator.cpp"
+    "source/server/device_enumerator_library.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
@@ -229,13 +231,14 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 # Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/unit/session_utilities_service_tests.cpp"
-    "source/tests/unit/device_enumerator_tests.cpp"
+    "source/tests/unit/device_enumerator_library_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
+    "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
-    "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
+    "source/tests/unit/ni_fake_service_tests.cpp"
     "source/server/device_enumerator.cpp"
+    "source/server/device_enumerator_library.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
     "source/server/session_repository.cpp"

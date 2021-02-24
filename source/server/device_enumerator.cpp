@@ -5,19 +5,12 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-#if defined(_MSC_VER)
-static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
-#else
-static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
-#endif
-
-DeviceEnumerator::DeviceEnumerator()
-    : syscfg_library_(kSysCfgApiLibraryName)
+DeviceEnumerator::DeviceEnumerator(DeviceEnumeratorLibraryInterface* library)
+    : library_(library)
 {
 }
 
-DeviceEnumerator::DeviceEnumerator(const char* library_name)
-    : syscfg_library_(library_name)
+DeviceEnumerator::~DeviceEnumerator()
 {
 }
 
@@ -26,30 +19,17 @@ DeviceEnumerator::DeviceEnumerator(const char* library_name)
 // https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
 ::grpc::Status DeviceEnumerator::enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
-  syscfg_library_.load();
-
-  if (!syscfg_library_.is_loaded()) {
-    std::string message("The library could not be loaded: ");
-    message += kSysCfgApiLibraryName;
-    return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, message.c_str());
+  ::grpc::Status library_status = library_->check_library_exists();
+  if (!library_status.ok()) {
+    return library_status;
   }
 
-  NISysCfgStatus status = get_list_of_devices(devices);
-  if (NISysCfg_Failed(status)) {
+  NISysCfgStatus syscfg_status = get_list_of_devices(devices);
+  if (NISysCfg_Failed(syscfg_status)) {
     return ::grpc::Status(::grpc::StatusCode::INTERNAL, "The NI System Configuration API was unable to enumerate the devices.");
   }
 
   return ::grpc::Status::OK;
-}
-
-std::string DeviceEnumerator::get_syscfg_library_name() const
-{
-  return syscfg_library_.get_library_name();
-}
-
-bool DeviceEnumerator::is_syscfg_library_loaded() const
-{
-  return syscfg_library_.is_loaded();
 }
 
 NISysCfgStatus DeviceEnumerator::get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)

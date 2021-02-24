@@ -1,3 +1,4 @@
+#include "device_enumerator_library.h"
 #include "server_configuration_parser.h"
 #include "session_utilities_service.h"
 
@@ -28,7 +29,9 @@ static void RunServer(int argc, char** argv)
 
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator;
+
+  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
   ni::hardware::grpc::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
   builder.RegisterService(&core_service);
 
