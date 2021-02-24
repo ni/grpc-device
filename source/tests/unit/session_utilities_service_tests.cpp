@@ -191,22 +191,16 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsF
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator;
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
-  request.set_reservation_id("foo");
-  request.set_client_id("a");
-  ::grpc::ServerContext context;
-  ni::hardware::grpc::ReserveResponse response;
-  service.Reserve(&context, &request, &response);
+  call_reserve(&service, "foo", "a");
 
   ni::hardware::grpc::ReserveRequest clientb_request, clientc_request;
   ni::hardware::grpc::ReserveResponse clientb_response, clientc_response;
   ::grpc::Status clientb_status, clientc_status;
   std::atomic<bool> clientb_requested(false), clientc_requested(false);
-  clientb_request.set_reservation_id("foo");
-  clientb_request.set_client_id("b");
+  set_reserve_request(clientb_request, "foo", "b");
   std::thread reserve_b(call_reserve_task, &service, &clientb_request, &clientb_response, &clientb_status, &clientb_requested);
   wait_until_true(clientb_requested);
-  clientc_request.set_reservation_id("foo");
-  clientc_request.set_client_id("c");
+  set_reserve_request(clientc_request, "foo", "c");
   std::thread reserve_c(call_reserve_task, &service, &clientc_request, &clientc_response, &clientc_status, &clientc_requested);
   wait_until_true(clientc_requested);
 
