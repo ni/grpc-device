@@ -1,11 +1,11 @@
 #ifndef NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARY_H
 #define NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARY_H
 
-#include "device_enumerator_library_interface.h"
-#include "shared_library.h"
-
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
+
+#include "device_enumerator_library_interface.h"
+#include "shared_library.h"
 
 namespace ni {
 namespace hardware {
