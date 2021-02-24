@@ -7,7 +7,7 @@
 #
 # Getting Started:
 #
-# To run this example, users need to have the "NI System Configuration API" installed on their machine.
+# To run this example, users have to make sure that the "NI System Configuration API" is installed on the server machine.
 # Link : https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html
 #
 # Install the gRPC tools for Python
@@ -32,8 +32,6 @@ channel = grpc.insecure_channel(serverAddress)
 # Create communication with the server using the created communication channel
 server = grpcServer.ServerUtilitiesStub(channel)
 print("Connecting: ")
-
-# Give error message if connection is not estabilished
 
 ###################################################################################################
 
