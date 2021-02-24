@@ -1,9 +1,8 @@
 #include <gtest/gtest.h>
+#include <server/semaphore.h>
+#include <server/session_utilities_service.h>
 
 #include <thread>
-
-#include <server/session_utilities_service.h>
-#include <server/semaphore.h>
 
 namespace ni {
 namespace tests {
@@ -135,15 +134,17 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
   call_reserve("foo", "a");
   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
   std::atomic<bool> clientc_requested(false);
-  std::thread reserve_c([this, &clientc_requested] { call_reserve("foo", "c", std::chrono::system_clock::now() + std::chrono::seconds(1), &clientc_requested); });
+  std::thread reserve_c([this, &clientc_requested] {
+    call_reserve("foo", "c", std::chrono::system_clock::now() + std::chrono::seconds(1), &clientc_requested);
+  });
   while (!clientc_requested) {
     std::this_thread::sleep_for(std::chrono::milliseconds(5));
   }
   std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
   call_unreserve("foo", "a");
+  
   reserve_c.join();
-
   EXPECT_FALSE(call_is_reserved("foo", "b"));
   EXPECT_TRUE(call_is_reserved("foo", "c"));
 }
