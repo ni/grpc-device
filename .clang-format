@@ -8,4 +8,5 @@ BreakBeforeBraces: Stroustrup
 DerivePointerAlignment: false
 IndentPPDirectives: BeforeHash
 PointerAlignment: Left
+AlignOperands: DontAlign
 ---
