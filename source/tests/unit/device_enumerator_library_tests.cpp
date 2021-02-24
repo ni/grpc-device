@@ -7,10 +7,8 @@ namespace unit {
 
 #if defined(_MSC_VER)
 static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
-static const char* kFakeSysCfgApiLibraryName = "FakeSysCfgApi.dll";
 #else
 static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
-static const char* kFakeSysCfgApiLibraryName = "FakeSysCfgApi.so";
 #endif
 
 TEST(DeviceEnumeratorLibraryTests, CreateDeviceEnumeratorLibrary_SharedLibraryNameIsSetToSysCfgLibrary)
