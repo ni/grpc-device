@@ -16,12 +16,11 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
   auto address = server_config_parser.parse_address();
 
-  EXPECT_EQ(address, "0.0.0.0:50051");
+  EXPECT_EQ(address, ::internal::kDefaultAddressPrefix + std::string("50051"));
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
-  const char* file_path = "fake.json";
   try {
     ::internal::ServerConfigurationParser server_config_parser("fake.json");
     FAIL() << "ConfigFileNotFoundException not thrown";
@@ -85,6 +84,209 @@ TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_Throw
   catch (const ::internal::ServerConfigurationParser::UnspecifiedPortException& ex) {
     EXPECT_EQ(std::string(::internal::kUnspecifiedPortMessage), ex.what());
   }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerCert_NotEmpty)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+  {
+    "security" : {
+        "server_cert": "test_server_self_signed_crt.pem",
+        "server_key": "test_server_privatekey.pem",
+        "root_cert": ""
+    }
+  })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto server_cert = server_config_parser.parse_server_cert();
+
+  EXPECT_FALSE(server_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerKey_NotEmpty)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+  {
+    "security" : {
+        "server_cert": "test_server_self_signed_crt.pem",
+        "server_key": "test_server_privatekey.pem",
+        "root_cert": ""
+    }
+  })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto server_key = server_config_parser.parse_server_key();
+
+  EXPECT_FALSE(server_key.empty());
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseRootCert_Empty)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+  {
+    "security" : {
+        "server_cert": "test_server_self_signed_crt.pem",
+        "server_key": "test_server_privatekey.pem",
+        "root_cert": ""
+    }
+  })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_TRUE(root_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithMutualTls_ParseAllSecurityKeys_NoneEmpty)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_cert": "test_server_self_signed_crt.pem",
+          "server_key": "test_server_privatekey.pem",
+          "root_cert": "test_client_self_signed_crt.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_FALSE(server_key.empty());
+  EXPECT_FALSE(server_cert.empty());
+  EXPECT_FALSE(root_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAllSecurityKeys_AllEmpty)
+{
+  ::internal::ServerConfigurationParser server_config_parser;
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_TRUE(server_key.empty());
+  EXPECT_TRUE(server_cert.empty());
+  EXPECT_TRUE(root_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithServerCertAsInteger_ParseServerCert_ValueTypeNotStringException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_cert": 9,
+          "server_key": "test_server_privatekey.pem",
+          "root_cert": "test_client_self_signed_crt.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_server_cert();
+    FAIL() << "ValueTypeNotStringException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kValueTypeNotStringMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithServerKeyAsNull_ParseServerKey_ValueTypeNotStringException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_cert": "test_server_self_signed_crt.pem",
+          "server_key": null,
+          "root_cert": "test_client_self_signed_crt.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_server_key();
+    FAIL() << "ValueTypeNotStringException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kValueTypeNotStringMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithRootCertAsBoolean_ParseRootCert_ValueTypeNotStringException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_cert": "test_server_self_signed_crt.pem",
+          "server_key": "test_server_privatekey.pem",
+          "root_cert": true
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_root_cert();
+    FAIL() << "ValueTypeNotStringException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kValueTypeNotStringMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithValidPemFilesButWithoutSecurityParentKey_ParseAllSecurityKeys_AllEmpty)
+{
+  // This JSON configuration is missing the "security" parent key
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "server_cert": "test_server_self_signed_crt.pem",
+      "server_key": "test_server_privatekey.pem",
+      "root_cert": "test_client_self_signed_crt.pem"
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_TRUE(server_key.empty());
+  EXPECT_TRUE(server_cert.empty());
+  EXPECT_TRUE(root_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigForExistingPemFilesUnderSecurityParentKey_ParseAllSecurityKeys_NoneEmpty)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_cert": "test_server_self_signed_crt.pem",
+          "server_key": "test_server_privatekey.pem",
+          "root_cert": "test_client_self_signed_crt.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_FALSE(server_key.empty());
+  EXPECT_FALSE(server_cert.empty());
+  EXPECT_FALSE(root_cert.empty());
+}
+
+TEST(ServerConfigurationParserTests, EmptyJsonConfig_ParseAllSecurityKeys_AllEmpty)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({})");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_TRUE(server_key.empty());
+  EXPECT_TRUE(server_cert.empty());
+  EXPECT_TRUE(root_cert.empty());
 }
 
 }  // namespace unit
