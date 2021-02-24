@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
-
-#include "core_server/hardware/grpc/internal/device_enumerator.h"
+#include <server/device_enumerator.h>
 
 namespace ni {
 namespace tests {
