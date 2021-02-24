@@ -146,7 +146,9 @@ void set_reserve_request(ni::hardware::grpc::ReserveRequest& request, const char
   request.set_client_id(client_id);
 }
 
-void wait_until_true(const std::atomic<bool>& waiting_client_one_requested, const std::atomic<bool>& waiting_client_two_requested)
+void wait_until_true(
+    const std::atomic<bool>& waiting_client_one_requested,
+    const std::atomic<bool>& waiting_client_two_requested)
 {
   while (!waiting_client_one_requested || !waiting_client_two_requested) {
     std::this_thread::sleep_for(std::chrono::milliseconds(5));
