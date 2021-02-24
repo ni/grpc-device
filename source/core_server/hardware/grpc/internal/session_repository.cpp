@@ -149,7 +149,6 @@ bool SessionRepository::reserve(
   {
     std::unique_lock<std::shared_mutex> lock(repository_lock_);
     info->client_count--;
-    info->client_id = client_id;
     auto it = reservations_.find(reservation_id);
     if (context->IsCancelled()) {
       info->lock->notify();
@@ -159,6 +158,7 @@ bool SessionRepository::reserve(
       status = ::grpc::Status::CANCELLED;
       return false;
     }
+    info->client_id = client_id;
     bool is_reserved = it != reservations_.end() && client_id == it->second->client_id;
     status = is_reserved 
       ? ::grpc::Status::OK
