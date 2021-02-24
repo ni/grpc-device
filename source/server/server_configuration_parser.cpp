@@ -15,7 +15,6 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-static const char* kDefaultAddressPrefix = "[::]:";
 static const char* kDefaultFilename = "server_config.json";
 static const char* kPortJsonKey = "port";
 static const char* kServerCertJsonKey = "server_cert";

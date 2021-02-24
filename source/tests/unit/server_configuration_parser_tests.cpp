@@ -16,7 +16,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
   auto address = server_config_parser.parse_address();
 
-  EXPECT_EQ(address, "[::]:50051");
+  EXPECT_EQ(address, ::internal::kDefaultAddressPrefix + std::string("50051"));
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
@@ -236,6 +236,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithRootCertAsBoolean_ParseRootCe
 
 TEST(ServerConfigurationParserTests, JsonConfigWithValidPemFilesButWithoutSecurityParentKey_ParseAllSecurityKeys_AllEmpty)
 {
+  // This JSON configuration is missing the "security" parent key
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
       "server_cert": "test_server_self_signed_crt.pem",
