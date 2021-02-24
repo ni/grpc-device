@@ -258,7 +258,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViReal64Response response;
   ::grpc::Status status = service.GetAttributeViReal64(&context, &request, &response);
-  ;
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
