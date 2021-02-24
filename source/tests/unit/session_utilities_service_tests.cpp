@@ -1,9 +1,9 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
-#include <server/session_utilities_service.h>
 #include <server/device_enumerator.h>
 #include <server/semaphore.h>
 #include <server/session_repository.h>
+#include <server/session_utilities_service.h>
 
 #include <thread>
 
@@ -78,11 +78,11 @@ TEST(SessionUtilitiesServiceTests, NewReserveIdAndClientId_Reserve_ReservesSessi
 }
 
 void call_reserve_task(
-  ni::hardware::grpc::SessionUtilitiesService* service,
-  ni::hardware::grpc::ReserveRequest* request,
-  ni::hardware::grpc::ReserveResponse* response,
-  ::grpc::Status* status,
-  std::atomic<bool>* reservation_requested)
+    ni::hardware::grpc::SessionUtilitiesService* service,
+    ni::hardware::grpc::ReserveRequest* request,
+    ni::hardware::grpc::ReserveResponse* response,
+    ::grpc::Status* status,
+    std::atomic<bool>* reservation_requested)
 {
   ::grpc::ServerContext context;
   *reservation_requested = true;
@@ -103,7 +103,7 @@ bool call_unreserve(ni::hardware::grpc::SessionUtilitiesService* service, std::s
 bool call_unreserve(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
 {
   ::grpc::Status status;
-  return  call_unreserve(service, reservation_id, client_id, status);
+  return call_unreserve(service, reservation_id, client_id, status);
 }
 
 bool call_is_reserved(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
@@ -120,7 +120,7 @@ bool call_is_reserved(ni::hardware::grpc::SessionUtilitiesService* service, std:
 bool call_is_reserved(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
 {
   ::grpc::Status status;
-  return  call_is_reserved(service, reservation_id, client_id, status);
+  return call_is_reserved(service, reservation_id, client_id, status);
 }
 
 bool call_reserve(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
