@@ -24,6 +24,17 @@ service SessionUtilities {
 
   // Resets the server to a default state with no open sessions
   rpc ResetServer(ResetServerRequest) returns (ResetServerResponse);
+
+  rpc NewServiceMethod(NewServiceMethodRequest) returns (NewServiceMethodResponse);
+}
+
+message NewServiceMethodRequest {
+  int first_field = 1;
+  int second_field = 2;
+}
+
+message NewServiceMethodResponse {
+  int status = 1;
 }
 
 message Session {
