@@ -287,6 +287,43 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerCert_ParseSe
   }
 }
 
+TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerKey_ParseServerKey_ThrowsFileNotFoundException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_key": "missing_server_key.pem"
+      }
+    })");
+    ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_server_key();
+    FAIL() << "FileNotFoundException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingRootCert_ParseRootCert_ThrowsFileNotFoundException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "root_cert": "missing_root_cert.pem"
+      }
+    })");
+    ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_root_cert();
+    FAIL() << "FileNotFoundException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  }
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
