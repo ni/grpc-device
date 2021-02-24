@@ -47,7 +47,7 @@ namespace grpc {
     method_name = common_helpers.snake_to_camel(function_name)
     parameters = function_data['parameters']
     handler_helpers.sanitize_names(parameters)
-    common_helpers.mark_len_params(parameters)
+    common_helpers.mark_non_grpc_params(parameters)
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------

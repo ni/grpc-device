@@ -31,7 +31,7 @@ import "session.proto";
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
-  common_helpers.mark_len_params(functions[function]["parameters"])
+  common_helpers.mark_non_grpc_params(functions[function]["parameters"])
   method_name = common_helpers.snake_to_camel(function)
 %>\
   rpc ${method_name}(${method_name}Request) returns (${method_name}Response);

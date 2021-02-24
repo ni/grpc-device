@@ -100,18 +100,25 @@ def get_used_enums(functions, attributes):
       used_enums.add(attributes[attribute]["enum"])
   return used_enums
 
-def determine_size_from(parameter, parameters):
-  """Returns a string representing the parameter name the given parameter should determine its value from. If none is found returns empty string."""
-  expected_len_name = parameter['name']
-  for possible_size_from_param in parameters:
-    if possible_size_from_param.get('size', {}).get('mechanism', '') == 'len':
-      if possible_size_from_param['size']['value'] == expected_len_name:
-        return possible_size_from_param['name']
-  return ''
-
-def mark_len_params(parameters):
+def mark_non_grpc_param(parameter, parameters):
   """Adds a 'determine_size_from' field for parameters that are determined by the size of another array parameter."""
+  expected_name = parameter['name']
+  for possible_size_from_param in parameters:
+    size = possible_size_from_param.get('size', {})
+    mechanism = size.get('mechanism', '')
+    if mechanism == 'len':
+      if size.get('value', '') == expected_name:
+        parameter['gen_proto_field'] = False
+        parameter['determine_size_from'] = possible_size_from_param['name']
+        break
+    elif mechanism == 'ivi-dance':
+      if size.get('value', '') == expected_name:
+        parameter['gen_proto_field'] = False
+        parameter['ivi_dance_array'] = possible_size_from_param['name']
+        break
+
+def mark_non_grpc_params(parameters):
+  """Adds a 'gen_proto_field' set to False for any parameter that shouldn't be included in the gRPC messages.
+     Also adds fields to these parameters with metadata about related parameters if applicable."""
   for parameter in parameters:
-      determine_size_from_name = determine_size_from(parameter, parameters)
-      if (determine_size_from != ''):
-        parameter['determine_size_from'] = determine_size_from_name
+      mark_non_grpc_param(parameter, parameters)
