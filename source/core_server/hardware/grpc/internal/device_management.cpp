@@ -113,8 +113,8 @@ NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedP
   char connects_to_link_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   int slot = -1;
   std::string slot_number = "";
-  std::unordered_map<std::string , std::string> linkname_to_name; 
-  std::unordered_map<std::string , std::string> name_to_linkname; 
+  std::unordered_map<std::string , std::string> linkname_to_name_map; 
+  std::unordered_map<std::string , std::string> name_to_linkname_map; 
 
   auto syscfg_initialize_session = reinterpret_cast<NISysCfgInitializeSessionPtr>(syscfg_library_.get_function_pointer("NISysCfgInitializeSession"));
   auto syscfg_create_filter = reinterpret_cast<NISysCfgCreateFilterPtr>(syscfg_library_.get_function_pointer("NISysCfgCreateFilter"));
@@ -149,8 +149,8 @@ NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedP
             properties->set_vendor(vendor);
             properties->set_serial_number(serial_number);
             properties->set_slot_number(slot_number);
-            linkname_to_name[provides_link_name] = name;
-            name_to_linkname[name] = connects_to_link_name;
+            linkname_to_name_map[provides_link_name] = name;
+            name_to_linkname_map[name] = connects_to_link_name;
             status = sysycfg_close_handle(resource);
           }
         }
@@ -160,13 +160,13 @@ NISysCfgStatus DeviceManagement::get_list_of_devices(google::protobuf::RepeatedP
 
   // For each device/chassis, First we find out the link name between that device/chassis and its parent and store it in a string
   // If that string is empty, we set the parent field for that device as empty.
-  // If that string is not empty, then we find out the alias name of the parent device/chassis from that linkname using the map linkname_to_name
+  // If that string is not empty, then we find out the alias name of the parent device/chassis from that linkname using linkname_to_name_map
   // and finally we set the parent field for that device.
   for(auto it = devices->begin(); it != devices->end(); it++){
     std::string name = it->name();
-    std::string parent = name_to_linkname[name];
+    std::string parent = name_to_linkname_map[name];
     if(!parent.empty()){
-      parent = linkname_to_name[parent];
+      parent = linkname_to_name_map[parent];
     }
     it->set_parent(parent);
   }
