@@ -1,7 +1,8 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
-#include <server/device_enumerator_library.h>
 #include <server/session_utilities_service.h>
+#include <server/device_enumerator.h>
+#include <server/device_enumerator_library.h>
 #include <server/semaphore.h>
 #include <server/session_repository.h>
 
