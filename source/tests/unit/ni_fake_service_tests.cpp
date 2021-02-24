@@ -16,6 +16,7 @@ using ::testing::NiceMock;
 using ::testing::Pointee;
 using ::testing::Return;
 using ::testing::SetArgPointee;
+using ::testing::SetArrayArgument;
 using ::testing::Throw;
 
 const ViSession kViSession = 12345678;
@@ -376,7 +377,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
   ViChar output_string[256] = "Hello World!";
   EXPECT_CALL(library_wrapper, GetAStringOfFixedMaximumSize(kViSession, _))
       .WillOnce(DoAll(
-          ::testing::SetArrayArgument<1>(output_string, output_string + 256),
+          SetArrayArgument<1>(output_string, output_string + 256),
           Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -506,7 +507,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumbe
   EXPECT_CALL(library_wrapper, ReturnANumberAndAString(kViSession, _, _))
       .WillOnce(DoAll(
           SetArgPointee<1>(a_number),
-          ::testing::SetArrayArgument<2>(a_string, a_string + 256),
+          SetArrayArgument<2>(a_string, a_string + 256),
           Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
