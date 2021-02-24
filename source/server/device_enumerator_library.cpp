@@ -41,6 +41,30 @@ bool DeviceEnumeratorLibrary::is_library_loaded() const
   return shared_library_.is_loaded();
 }
 
+NISysCfgStatus DeviceEnumeratorLibrary::FindHardware()
+{
+  // Implementation will be added in upcoming PRs.
+  return NISysCfg_OK;
+}
+
+NISysCfgStatus DeviceEnumeratorLibrary::NextResource(NISysCfgResourceHandle* resourceHandle)
+{
+  // Implementation will be added in upcoming PRs.
+  return NISysCfg_OK;
+}
+
+NISysCfgStatus DeviceEnumeratorLibrary::GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, void* value)
+{
+  // Implementation will be added in upcoming PRs.
+  return NISysCfg_OK;
+}
+
+NISysCfgStatus DeviceEnumeratorLibrary::CloseHandle(void* syscfgHandle)
+{
+  // Implementation will be added in upcoming PRs.
+  return NISysCfg_OK;
+}
+
 }  // namespace internal
 }  // namespace grpc
 }  // namespace hardware

@@ -35,8 +35,20 @@ DeviceEnumerator::~DeviceEnumerator()
 NISysCfgStatus DeviceEnumerator::get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
   NISysCfgStatus status = NISysCfg_OK;
-  // This will use syscfg APIs to get a list of devices or chassis under localhost
-  // if any syscfg API gives error, it will be stored in status.
+  // Note: Since this is just an RFC PR, I have given simple implementation below. But when actual PR is created,
+  // then all steps starting from InitializeSession will be followed correctly.
+  NISysCfgResourceHandle resource = NULL;
+  char name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+
+  if (NISysCfg_Succeeded(status = library_->FindHardware())) {
+    while (NISysCfg_Succeeded(status) && (status = library_->NextResource(&resource)) == NISysCfg_OK) {
+      DeviceProperties* properties = devices->Add();
+      library_->GetResourceProperty(resource, name);
+      properties->set_name(name);
+      library_->CloseHandle(resource);
+    }
+  }
+
   return status;
 }
 
