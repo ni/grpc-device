@@ -1,10 +1,10 @@
 def driver_name_to_pascal(driver_name):
   driver_name = list(driver_name.lower())
   index = 0
-  driver_name[index] = driver_name[index].upper();
+  driver_name[index] = driver_name[index].upper()
   for x in driver_name :
       if x == '-' :
-          driver_name[index + 1] = driver_name[index + 1].upper();
+          driver_name[index + 1] = driver_name[index + 1].upper()
           del driver_name[index]
 
       index = index + 1
@@ -15,7 +15,7 @@ def driver_name_add_underscore(driver_name):
   index = 0
   for x in driver_name :
       if x == '-' :
-          driver_name[index] = "_";
+          driver_name[index] = "_"
 
       index = index + 1
   return ("".join(driver_name))
@@ -44,7 +44,7 @@ def has_unsupported_parameter(function):
 
 def is_unsupported_parameter(parameter):
   type = parameter['type']
-  supported_size_mechanisms = {'fixed', 'len'}
+  supported_size_mechanisms = {'fixed', 'len', 'ivi-dance'}
   is_unsupported_array = is_array(type) and parameter['size']['mechanism'] not in supported_size_mechanisms
   return is_unsupported_array or type.startswith('struct')
 
@@ -53,7 +53,7 @@ def camel_to_snake(camelString):
   index = 0
   for x in camelString :
       if x.isupper():
-          camelString[index] = camelString[index].lower();
+          camelString[index] = camelString[index].lower()
           camelString.insert(index, "_")
 
       index = index + 1
@@ -62,10 +62,10 @@ def camel_to_snake(camelString):
 def snake_to_camel(snake_string):
   snake_string = list(snake_string)
   index = 0
-  snake_string[index] = snake_string[index].upper();
+  snake_string[index] = snake_string[index].upper()
   for x in snake_string :
       if x == '_':
-          snake_string[index + 1] = snake_string[index + 1].upper();
+          snake_string[index + 1] = snake_string[index + 1].upper()
           del snake_string[index]
       index = index + 1
   return ("".join(snake_string))

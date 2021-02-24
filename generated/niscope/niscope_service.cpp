@@ -414,7 +414,15 @@ namespace grpc {
   ::grpc::Status NiScopeService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 size_in_bytes = request->size_in_bytes();
+      auto status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_configuration(configuration);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -603,7 +611,17 @@ namespace grpc {
   ::grpc::Status NiScopeService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString channel_list = request->channel_list().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViInt32 buf_size = request->buf_size();
+      auto status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
