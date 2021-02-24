@@ -231,12 +231,12 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 # Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/device_enumerator_library_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
-    "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
-    "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
+    "source/tests/unit/shared_library_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/device_enumerator_library.cpp"
     "source/server/semaphore.cpp"
