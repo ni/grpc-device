@@ -100,19 +100,19 @@ std::string ServerConfigurationParser::parse_address() const
 std::string ServerConfigurationParser::parse_server_cert() const
 {
   auto file_name = parse_key_from_security_section(kServerCertJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_server_key() const
 {
   auto file_name = parse_key_from_security_section(kServerKeyJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_root_cert() const
 {
   auto file_name = parse_key_from_security_section(kRootCertJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_key_from_security_section(const char* key) const
@@ -138,12 +138,13 @@ std::string ServerConfigurationParser::read_keycert(const std::string& filename)
 {
   std::string data;
   std::ifstream file(filename);
-  if (file) {
-    std::stringstream key_cert_contents;
-    key_cert_contents << file.rdbuf();
-    file.close();
-    data = key_cert_contents.str();
+  if (!file) {
+    throw FileNotFoundException(filename);
   }
+  std::stringstream key_cert_contents;
+  key_cert_contents << file.rdbuf();
+  file.close();
+  data = key_cert_contents.str();
   return data;
 }
 
@@ -174,6 +175,11 @@ ServerConfigurationParser::UnspecifiedPortException::UnspecifiedPortException()
 
 ServerConfigurationParser::ValueTypeNotStringException::ValueTypeNotStringException(const std::string& key)
     : std::runtime_error(kValueTypeNotStringMessage + key)
+{
+}
+
+ServerConfigurationParser::FileNotFoundException::FileNotFoundException(const std::string& filepath)
+    : std::runtime_error(kFileNotFoundMessage + filepath)
 {
 }
 
