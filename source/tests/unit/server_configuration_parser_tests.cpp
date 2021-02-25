@@ -23,6 +23,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
 {
   try {
     ::internal::ServerConfigurationParser server_config_parser("fake.json");
+
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
@@ -37,6 +38,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddre
 
   try {
     auto address = server_config_parser.parse_address();
+
     FAIL() << "InvalidPortException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
@@ -51,6 +53,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithPortNumberExceedingMax_ParseA
 
   try {
     auto address = server_config_parser.parse_address();
+
     FAIL() << "InvalidPortException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
@@ -65,6 +68,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithPortAsString_ParseAddress_Thr
 
   try {
     auto address = server_config_parser.parse_address();
+
     FAIL() << "WrongPortTypeException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::WrongPortTypeException& ex) {
@@ -185,6 +189,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerCertAsInteger_ParseServ
 
   try {
     auto address = server_config_parser.parse_server_cert();
+
     FAIL() << "ValueTypeNotStringException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
@@ -206,6 +211,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerKeyAsNull_ParseServerKe
 
   try {
     auto address = server_config_parser.parse_server_key();
+
     FAIL() << "ValueTypeNotStringException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
@@ -227,6 +233,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithRootCertAsBoolean_ParseRootCe
 
   try {
     auto address = server_config_parser.parse_root_cert();
+
     FAIL() << "ValueTypeNotStringException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
@@ -268,7 +275,7 @@ TEST(ServerConfigurationParserTests, EmptyJsonConfig_ParseAllSecurityKeys_AllEmp
   EXPECT_TRUE(root_cert.empty());
 }
 
-TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerCert_ParseServerCert_ThrowsFileNotFoundException)
+TEST(ServerConfigurationParserTests, JsonConfigWithMissingServerCertFile_ParseServerCert_ThrowsFileNotFoundException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
@@ -280,6 +287,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerCert_ParseSe
 
   try {
     auto address = server_config_parser.parse_server_cert();
+
     FAIL() << "FileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
@@ -287,7 +295,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerCert_ParseSe
   }
 }
 
-TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerKey_ParseServerKey_ThrowsFileNotFoundException)
+TEST(ServerConfigurationParserTests, JsonConfigWithMissingServerKeyFile_ParseServerKey_ThrowsFileNotFoundException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
@@ -299,6 +307,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerKey_ParseSer
 
   try {
     auto address = server_config_parser.parse_server_key();
+
     FAIL() << "FileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
@@ -306,7 +315,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerKey_ParseSer
   }
 }
 
-TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingRootCert_ParseRootCert_ThrowsFileNotFoundException)
+TEST(ServerConfigurationParserTests, JsonConfigWithMissingRootCertFile_ParseRootCert_ThrowsFileNotFoundException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
@@ -318,6 +327,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingRootCert_ParseRoot
 
   try {
     auto address = server_config_parser.parse_root_cert();
+
     FAIL() << "FileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
