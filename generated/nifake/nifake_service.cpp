@@ -24,7 +24,6 @@ void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrF
     output->AddAllocated(&message);
   }
 }
-
 namespace ni {
 namespace fake {
 namespace grpc {

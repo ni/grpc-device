@@ -30,7 +30,6 @@ void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedP
     output->AddAllocated(&message);
   }
 }
-
 namespace ni {
 namespace scope {
 namespace grpc {
