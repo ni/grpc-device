@@ -13,9 +13,7 @@ class SysCfgLibraryInterface {
  public:
   virtual ~SysCfgLibraryInterface() {}
 
-  virtual NISysCfgStatus FindHardware() = 0;
   // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.
-  
   virtual NISysCfgStatus FindHardware() = 0;
   virtual NISysCfgStatus NextResource(NISysCfgResourceHandle* resourceHandle) = 0;
   virtual NISysCfgStatus GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value) = 0;

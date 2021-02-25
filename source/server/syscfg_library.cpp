@@ -43,12 +43,6 @@ bool SysCfgLibrary::is_library_loaded() const
   return shared_library_.is_loaded();
 }
 
-NISysCfgStatus SysCfgLibrary::FindHardware()
-{
-  // Implementation will be added in upcoming PRs.
-  return NISysCfg_OK;
-}
-
 NISysCfgStatus SysCfgLibrary::NextResource(NISysCfgResourceHandle* resourceHandle)
 {
   // Implementation will be added in upcoming PRs.
