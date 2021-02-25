@@ -23,12 +23,8 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
 {
   const char* missing_file_path = "fake.json";
   try {
-<<<<<<< HEAD
     ::internal::ServerConfigurationParser server_config_parser(missing_file_path);
-=======
-    ::internal::ServerConfigurationParser server_config_parser("fake.json");
 
->>>>>>> main
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
