@@ -8,6 +8,7 @@ namespace unit {
 
 using ::testing::_;
 using ::testing::Return;
+using ::testing::Throw;
 
 TEST(DeviceEnumeratorTests, ExpectedFindHardwareThrowException_EnumerateDevices_ReturnsNotFoundGrpcStatus)
 {
@@ -16,7 +17,7 @@ TEST(DeviceEnumeratorTests, ExpectedFindHardwareThrowException_EnumerateDevices_
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   std::string message = "The NI System Configuration library was not found";
   EXPECT_CALL(mock_library, FindHardware)
-      .Throw(ni::hardware::grpc::internal::LibraryLoadException(message));
+      .WillOnce(Throw(ni::hardware::grpc::internal::LibraryLoadException(message)));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
