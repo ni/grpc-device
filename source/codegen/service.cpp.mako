@@ -117,7 +117,7 @@ ${request_input_parameters(non_ivi_params)}\
   size_param = next(p for p in ivi_params if common_helpers.is_ivi_dance_size_param(p))
   array_param = next(p for p in ivi_params if common_helpers.is_ivi_dance_array_param(p))
 %>\
-      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters, size_param, array_param)});
+      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters, size_param)});
       if (status < 0) {
         response->set_status(status);
         return ::grpc::Status::OK;

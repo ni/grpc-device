@@ -253,7 +253,25 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+
+      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 array_size = status;
+
+      ViChar* attribute_value;
+      status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, attribute_value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -265,7 +283,24 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 index = request->index();
+
+      auto status = library_->GetChannelName(vi, index, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      ViChar* channel_name_buffer;
+      status = library_->GetChannelName(vi, index, buffer_size, channel_name_buffer);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_channel_name_buffer(channel_name_buffer);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -277,7 +312,25 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+
+      auto status = library_->GetError(vi, nullptr, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      ViStatus code {};
+      ViChar* description;
+      status = library_->GetError(vi, &code, buffer_size, description);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_code(code);
+        response->set_description(description);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -289,7 +342,25 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetPath(::grpc::ServerContext* context, const GetPathRequest* request, GetPathResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString channel1 = request->channel1().c_str();
+      ViConstString channel2 = request->channel2().c_str();
+
+      auto status = library_->GetPath(vi, channel1, channel2, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      ViChar* path;
+      status = library_->GetPath(vi, channel1, channel2, buffer_size, path);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_path(path);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -322,7 +393,24 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetRelayName(::grpc::ServerContext* context, const GetRelayNameRequest* request, GetRelayNameResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 index = request->index();
+
+      auto status = library_->GetRelayName(vi, index, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 relay_name_buffer_size = status;
+
+      ViChar* relay_name_buffer;
+      status = library_->GetRelayName(vi, index, relay_name_buffer_size, relay_name_buffer);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_relay_name_buffer(relay_name_buffer);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

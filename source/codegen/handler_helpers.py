@@ -41,16 +41,14 @@ def create_args(parameters):
       result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
-def create_args_for_ivi_dance(parameters, zero_parameter, nullptr_parameter):
+def create_args_for_ivi_dance(parameters, zero_parameter):
     result = ''
     for parameter in parameters:
       if parameter == zero_parameter:
         result = f'{result}0, '
-      elif parameter == nullptr_parameter:
+      elif common_helpers.is_output_parameter(parameter):
         result = f'{result}nullptr, '
       else:
-        if not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
-            result = result + '&'
         result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
