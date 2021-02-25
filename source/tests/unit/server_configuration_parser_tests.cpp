@@ -276,7 +276,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerCert_ParseSe
           "server_cert": "missing_server_cert.pem"
       }
     })");
-    ::internal::ServerConfigurationParser server_config_parser(config_json);
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_server_cert();
@@ -295,7 +295,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingServerKey_ParseSer
           "server_key": "missing_server_key.pem"
       }
     })");
-    ::internal::ServerConfigurationParser server_config_parser(config_json);
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_server_key();
@@ -314,7 +314,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithWithMissingRootCert_ParseRoot
           "root_cert": "missing_root_cert.pem"
       }
     })");
-    ::internal::ServerConfigurationParser server_config_parser(config_json);
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_root_cert();
