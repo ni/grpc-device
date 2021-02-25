@@ -58,6 +58,8 @@ namespace grpc {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
 % elif function_name == config['init_function']:
 ${gen_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+% elif common_helpers.has_ivi_dance_param(parameters):
+${gen_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % else:
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
@@ -96,6 +98,40 @@ ${request_input_parameters(parameters)}
       if (status == 0) {
         response->mutable_${session_output_var_name}()->set_id(session_id);
       }
+      return ::grpc::Status::OK;\
+</%def>\
+\
+\
+\
+\
+<%def name="gen_ivi_dance_method_body(function_name, function_data, parameters)">\
+<%
+  ivi_params = [p for p in parameters if common_helpers.is_ivi_param(p)]
+  assert(len(ivi_params) == 2)
+  non_ivi_params = [p for p in parameters if p not in ivi_params]
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+%>\
+${request_input_parameters(non_ivi_params)}\
+
+<%
+  size_param = next(p for p in ivi_params if common_helpers.is_ivi_dance_size_param(p))
+  array_param = next(p for p in ivi_params if common_helpers.is_ivi_dance_array_param(p))
+%>\
+      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters, size_param, array_param)});
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ${size_param['type']} ${common_helpers.camel_to_snake(size_param['cppName'])} = status;
+
+${initialize_output_variables_snippet(output_parameters)}\
+      status = library_->${function_name}(${handler_helpers.create_args(parameters)});
+      response->set_status(status);
+%if output_parameters:
+      if (status == 0) {
+${set_response_values(output_parameters=output_parameters)}\
+      }
+%endif
       return ::grpc::Status::OK;\
 </%def>\
 \
@@ -217,11 +253,13 @@ ${initialize_standard_input_param(parameter)}\
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
 % if common_helpers.is_array(parameter['type']):
-% if parameter['size']['mechanism'] == 'fixed':
 <%
   type_without_brackets = parameter['type'].replace('[]', '')
 %>\
+% if parameter['size']['mechanism'] == 'fixed':
       ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
+% else:
+      ${type_without_brackets}* ${parameter_name};
 % endif
 % else:
       ${parameter['type']} ${parameter_name} {};
@@ -236,6 +274,7 @@ ${initialize_standard_input_param(parameter)}\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  is_array = common_helpers.is_array(parameter['type'])
 %>\
 %if common_helpers.is_enum(parameter) == True:
 %if enums[parameter["enum"]].get("generate-mappings", False):
@@ -252,6 +291,16 @@ ${initialize_standard_input_param(parameter)}\
 %else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
+% elif is_array:
+% if parameter['type'] == 'ViInt8[]':
+        response->set_${parameter_name}((char*)${parameter_name});
+% elif parameter['type'] == 'ViChar[]':
+        response->set_${parameter_name}(${parameter_name});
+% else:
+        for (int i = 0; i < ${common_helpers.camel_to_snake(parameter['size']['value'])}; i++) {
+          response->set_${parameter_name}(i, ${parameter_name}[i]);
+        }
+% endif
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif

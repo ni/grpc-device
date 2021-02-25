@@ -416,11 +416,19 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 size_in_bytes = request->size_in_bytes();
-      auto status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+
+      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 size_in_bytes = status;
+
+      ViInt8* configuration;
+      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       response->set_status(status);
       if (status == 0) {
-        response->set_configuration(configuration);
+        response->set_configuration((char*)configuration);
       }
       return ::grpc::Status::OK;
     }
@@ -615,8 +623,16 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViInt32 buf_size = request->buf_size();
-      auto status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, value);
+
+      auto status = library_->GetAttributeViString(vi, channel_list, attribute_id, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buf_size = status;
+
+      ViChar* value;
+      status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);

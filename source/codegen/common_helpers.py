@@ -122,3 +122,20 @@ def mark_non_grpc_params(parameters):
      Also adds fields to these parameters with metadata about related parameters if applicable."""
   for parameter in parameters:
       mark_non_grpc_param(parameter, parameters)
+
+def is_ivi_dance_size_param(parameter):
+  return parameter.get('ivi_dance_array', '') != ''
+
+def is_ivi_dance_array_param(parameter):
+  size = parameter.get('size', {})
+  mechanism = size.get('mechanism', '')
+  return mechanism == 'ivi-dance'
+
+def is_ivi_param(parameter):
+  return is_ivi_dance_size_param(parameter) or is_ivi_dance_array_param(parameter)
+
+def has_ivi_dance_param(parameters):
+  for parameter in parameters:
+    if is_ivi_param(parameter=parameter):
+      return True
+  return False

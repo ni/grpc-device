@@ -126,11 +126,19 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 size_in_bytes = request->size_in_bytes();
-      auto status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+
+      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 size_in_bytes = status;
+
+      ViInt8* configuration;
+      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       response->set_status(status);
       if (status == 0) {
-        response->set_configuration(configuration);
+        response->set_configuration((char*)configuration);
       }
       return ::grpc::Status::OK;
     }
@@ -230,8 +238,16 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 buffer_size = request->buffer_size();
-      auto status = library_->GetAnIviDanceString(vi, buffer_size, a_string);
+
+      auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      ViChar* a_string;
+      status = library_->GetAnIviDanceString(vi, buffer_size, a_string);
       response->set_status(status);
       if (status == 0) {
         response->set_a_string(a_string);
@@ -306,11 +322,21 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 array_size = request->array_size();
-      auto status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
+
+      auto status = library_->GetArrayUsingIviDance(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 array_size = status;
+
+      ViReal64* array_out;
+      status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
       response->set_status(status);
       if (status == 0) {
-        response->set_array_out(array_out);
+        for (int i = 0; i < array_size; i++) {
+          response->set_array_out(i, array_out[i]);
+        }
       }
       return ::grpc::Status::OK;
     }
@@ -416,8 +442,16 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViInt32 buffer_size = request->buffer_size();
-      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, attribute_value);
+
+      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      ViChar* attribute_value;
+      status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, attribute_value);
       response->set_status(status);
       if (status == 0) {
         response->set_attribute_value(attribute_value);
