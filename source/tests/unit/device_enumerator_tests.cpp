@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <server/device_enumerator.h>
-#include <tests/utilities/device_enumerator_mock_library.h>
+#include <tests/utilities/syscfg_mock_library.h>
 
 namespace ni {
 namespace tests {
@@ -11,7 +11,7 @@ using ::testing::Return;
 
 TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithMockLibrary_LibraryDoesNotExist_DoesNotCallSysCfgFunction)
 {
-  ni::tests::utilities::DeviceEnumeratorMockLibrary mock_library;
+  ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   std::string message = "The NI System Configuration library was not found";
@@ -29,7 +29,7 @@ TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithMockLibrary_LibraryDoesNot
 
 TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithMockLibrary_EnumerateDevices_ReturnsExpectedNameOfDevices)
 {
-  ni::tests::utilities::DeviceEnumeratorMockLibrary mock_library;
+  ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, check_library_exists)
@@ -79,7 +79,7 @@ TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithMockLibrary_EnumerateDevic
 
 TEST(DeviceEnumeratorTests, ExpectFindHardwareToReturnError_EnumerateDevices_DoesNotCallNextResource)
 {
-  ni::tests::utilities::DeviceEnumeratorMockLibrary mock_library;
+  ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, check_library_exists)

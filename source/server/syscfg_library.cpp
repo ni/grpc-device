@@ -41,25 +41,25 @@ bool SysCfgLibrary::is_library_loaded() const
   return shared_library_.is_loaded();
 }
 
-NISysCfgStatus DeviceEnumeratorLibrary::FindHardware()
+NISysCfgStatus SysCfgLibrary::FindHardware()
 {
   // Implementation will be added in upcoming PRs.
   return NISysCfg_OK;
 }
 
-NISysCfgStatus DeviceEnumeratorLibrary::NextResource(NISysCfgResourceHandle* resourceHandle)
+NISysCfgStatus SysCfgLibrary::NextResource(NISysCfgResourceHandle* resourceHandle)
 {
   // Implementation will be added in upcoming PRs.
   return NISysCfg_OK;
 }
 
-NISysCfgStatus DeviceEnumeratorLibrary::GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value)
+NISysCfgStatus SysCfgLibrary::GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value)
 {
   // Implementation will be added in upcoming PRs.
   return NISysCfg_OK;
 }
 
-NISysCfgStatus DeviceEnumeratorLibrary::CloseHandle(void* syscfgHandle)
+NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfgHandle)
 {
   // Implementation will be added in upcoming PRs.
   return NISysCfg_OK;
