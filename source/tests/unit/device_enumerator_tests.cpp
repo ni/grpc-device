@@ -10,7 +10,7 @@ using ::testing::_;
 using ::testing::Return;
 using ::testing::Throw;
 
-TEST(DeviceEnumeratorTests, ExpectedFindHardwareThrowException_EnumerateDevices_ReturnsNotFoundGrpcStatus)
+TEST(DeviceEnumeratorTests, ExpectFindHardwareToThrowException_EnumerateDevices_ReturnsNotFoundGrpcStatus)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
