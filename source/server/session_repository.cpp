@@ -162,8 +162,8 @@ bool SessionRepository::reserve(
     }
     bool is_reserved = it != reservations_.end() && client_id == it->second->client_id;
     status = is_reserved
-                 ? ::grpc::Status::OK
-                 : ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");
+        ? ::grpc::Status::OK
+        : ::grpc::Status(::grpc::ABORTED, "The reservation attempt was aborted by another server operation.");
     return is_reserved;
   }
 }
@@ -214,7 +214,7 @@ bool SessionRepository::reset_server()
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   clear_reservations();
-  auto is_server_reset = close_sessions();
+  bool is_server_reset = close_sessions();
   return is_server_reset && reservations_.empty();
 }
 
@@ -228,11 +228,11 @@ bool SessionRepository::close_sessions()
   return named_sessions_.empty() && sessions_.empty();
 }
 
-void SessionRepository::cleanup_session(std::shared_ptr<SessionInfo> sessionInfo)
+void SessionRepository::cleanup_session(const std::shared_ptr<SessionInfo>& session_info)
 {
-  auto cleanupProcess = sessionInfo->cleanup_func;
-  if (cleanupProcess != NULL) {
-    cleanupProcess(sessionInfo->id);
+  auto cleanup_process = session_info->cleanup_func;
+  if (cleanup_process) {
+    cleanup_process(session_info->id);
   }
 }
 

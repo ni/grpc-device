@@ -25,7 +25,7 @@ ViConstString kChannelName = "channel";
 
 std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& session_repo, ViSession sessionToStore)
 {
-  auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+  auto init_lambda = [&]() -> std::tuple<int, uint32_t> {
     return std::make_tuple(0, sessionToStore);
   };
   uint32_t session_id;
@@ -44,7 +44,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresS
   std::string sessionName = "sessionName";
   ViSession vi = kViSession;
   EXPECT_CALL(library, InitWithOptions(Pointee(*resourceName), idQuery, resetDevice, Pointee(*optionString), _))
-    .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
+      .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::InitWithOptionsRequest request;
@@ -71,7 +71,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
   const char* message = "Exception!";
   ViSession vi = kViSession;
   EXPECT_CALL(library, InitWithOptions)
-    .WillOnce(DoAll(SetArgPointee<4>(vi), Throw(ni::hardware::grpc::internal::LibraryLoadException(message))));
+      .WillOnce(DoAll(SetArgPointee<4>(vi), Throw(ni::hardware::grpc::internal::LibraryLoadException(message))));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::InitWithOptionsRequest request;
@@ -93,9 +93,9 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsAndResetServer_SessionIsCl
   std::string sessionName = "sessionName";
   ViSession vi = kViSession;
   EXPECT_CALL(library, InitWithOptions)
-    .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
+      .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
   EXPECT_CALL(library, close(vi))
-    .WillOnce(Return(kDriverSuccess));
+      .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::InitWithOptionsRequest request;
@@ -121,9 +121,9 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
   std::string sessionName = "sessionName";
   ViSession vi = kViSession;
   EXPECT_CALL(library, InitWithOptions)
-    .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
+      .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
   EXPECT_CALL(library, close(vi))
-    .WillOnce(Return(kDriverSuccess));
+      .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::InitWithOptionsRequest initRequest;
@@ -359,7 +359,8 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
   request.set_channel_name(kChannelName);
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViReal64Response response;
-  ::grpc::Status status = service.GetAttributeViReal64(&context, &request, &response);;
+  ::grpc::Status status = service.GetAttributeViReal64(&context, &request, &response);
+  ;
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
