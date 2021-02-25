@@ -23,7 +23,7 @@ class DeviceEnumeratorLibrary : public DeviceEnumeratorLibraryInterface {
   // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.
   NISysCfgStatus FindHardware();
   NISysCfgStatus NextResource(NISysCfgResourceHandle* resourceHandle);
-  NISysCfgStatus GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, void* value);
+  NISysCfgStatus GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value);
   NISysCfgStatus CloseHandle(void* syscfgHandle);
 
  private:

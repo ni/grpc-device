@@ -38,13 +38,16 @@ NISysCfgStatus DeviceEnumerator::get_list_of_devices(google::protobuf::RepeatedP
   // Note: Since this is just an RFC PR, I have given simple implementation below. But when actual PR is created,
   // then all steps starting from InitializeSession will be followed correctly.
   NISysCfgResourceHandle resource = NULL;
-  char name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
 
   if (NISysCfg_Succeeded(status = library_->FindHardware())) {
     while (NISysCfg_Succeeded(status) && (status = library_->NextResource(&resource)) == NISysCfg_OK) {
       DeviceProperties* properties = devices->Add();
-      library_->GetResourceProperty(resource, name);
-      properties->set_name(name);
+      library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, model);
+      library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, vendor);
+      properties->set_model(model);
+      properties->set_vendor(vendor);
       library_->CloseHandle(resource);
     }
   }

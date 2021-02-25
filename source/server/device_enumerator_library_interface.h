@@ -18,7 +18,7 @@ class DeviceEnumeratorLibraryInterface {
   
   virtual NISysCfgStatus FindHardware() = 0;
   virtual NISysCfgStatus NextResource(NISysCfgResourceHandle* resourceHandle) = 0;
-  virtual NISysCfgStatus GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, void* value) = 0;
+  virtual NISysCfgStatus GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value) = 0;
   virtual NISysCfgStatus CloseHandle(void* syscfgHandle) = 0;
   // Note: Since this is just an RFC to get design approved, I have added only few methods with few parameters.
   // When PRs with actual implementation are created, I will add APIs starting from InitializeSession.

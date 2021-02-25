@@ -53,7 +53,7 @@ NISysCfgStatus DeviceEnumeratorLibrary::NextResource(NISysCfgResourceHandle* res
   return NISysCfg_OK;
 }
 
-NISysCfgStatus DeviceEnumeratorLibrary::GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, void* value)
+NISysCfgStatus DeviceEnumeratorLibrary::GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value)
 {
   // Implementation will be added in upcoming PRs.
   return NISysCfg_OK;
