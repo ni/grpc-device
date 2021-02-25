@@ -1,5 +1,5 @@
 #
-# This example lists out devices/chassis in a Hierarchial Manner 
+# This example lists out devices/chassis in a hierarchial manner 
 # by estabilishing communication with the server over gRPC
 #
 # Copyright 2021 National Instruments
@@ -53,7 +53,7 @@ class Properties :
 # because every device/chassis has a unique name
 nameToProperties = defaultdict()
 
-# This will be used for custom sorting the devices based on the Slot Number
+# This will be used for custom sorting the devices based on the slot number
 def comparator(name):
     deviceProperty = nameToProperties[name]
     slotNumber = int(deviceProperty.slotNumber)
@@ -92,7 +92,7 @@ def listOfDevices() :
     print("Devices: " + "\n") 
     tree = Tree()
 
-    # Creating the tree for the Hierarchy
+    # Creating the tree for the hierarchy
     # "My System" would be the root node and all the devices/chassis would be connected to it.
     # for example                 
     #                                    "My System"
@@ -118,7 +118,7 @@ def listOfDevices() :
         else :
             tree.addEdge(it.parent , it.name)
     
-    # Function to list devices along with the properties in a Hierarchial Manner
+    # Function to list devices along with the properties in a hierarchial manner
     # from the root node
     tree.printHardwareProperties("My System" , 0)
 
