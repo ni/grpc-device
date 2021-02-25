@@ -9,17 +9,14 @@ namespace unit {
 using ::testing::_;
 using ::testing::Return;
 
-TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithMockLibrary_LibraryDoesNotExist_DoesNotCallSysCfgFunction)
+TEST(DeviceEnumeratorTests, ExpectedFindHardwareThrowException_EnumerateDevices_ReturnsNotFoundGrpcStatus)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   std::string message = "The NI System Configuration library was not found";
-  EXPECT_CALL(mock_library, check_library_exists)
-      .Times(1)
-      .WillOnce(Return(::grpc::Status(::grpc::NOT_FOUND, message)));
   EXPECT_CALL(mock_library, FindHardware)
-      .Times(0);
+      .Throw(ni::hardware::grpc::internal::LibraryLoadException(message));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
@@ -32,9 +29,6 @@ TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithMockLibrary_EnumerateDevic
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
-  EXPECT_CALL(mock_library, check_library_exists)
-      .Times(1)
-      .WillOnce(Return(::grpc::Status::OK));
   EXPECT_CALL(mock_library, FindHardware)
       .Times(1)
       .WillOnce(Return(NISysCfg_OK));
@@ -82,9 +76,6 @@ TEST(DeviceEnumeratorTests, ExpectFindHardwareToReturnError_EnumerateDevices_Doe
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
-  EXPECT_CALL(mock_library, check_library_exists)
-      .Times(1)
-      .WillOnce(Return(::grpc::Status::OK));
   EXPECT_CALL(mock_library, FindHardware)
       .WillOnce(testing::Return(NISysCfg_InvalidArg));
   EXPECT_CALL(mock_library, NextResource)

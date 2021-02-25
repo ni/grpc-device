@@ -27,8 +27,8 @@ DeviceEnumerator::~DeviceEnumerator()
   try {
     // Providing dummy implementation below which will be updated in upcoming PRs 
     // to use syscfg APIs properly to enumerate devices.
-    if (NISysCfg_Succeeded(status = library_->FindHardware())) {
-      while (NISysCfg_Succeeded(status) && (status = library_->NextResource(&resource)) == NISysCfg_OK) {
+    if (NISysCfg_Succeeded(syscfg_status = library_->FindHardware())) {
+      while (NISysCfg_Succeeded(syscfg_status) && (syscfg_status = library_->NextResource(&resource)) == NISysCfg_OK) {
         DeviceProperties* properties = devices->Add();
         library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, model);
         library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, vendor);

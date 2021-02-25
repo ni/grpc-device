@@ -10,7 +10,6 @@ namespace utilities {
 
 class SysCfgMockLibrary : public ni::hardware::grpc::internal::SysCfgLibraryInterface {
  public:
-  MOCK_METHOD(::grpc::Status, check_library_exists, (), (override));
   MOCK_METHOD(NISysCfgStatus, FindHardware, (), (override));
   MOCK_METHOD(NISysCfgStatus, NextResource, (NISysCfgResourceHandle * resourceHandle), (override));
   MOCK_METHOD(NISysCfgStatus, GetResourceProperty, (NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value), (override));
