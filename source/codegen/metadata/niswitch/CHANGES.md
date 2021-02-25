@@ -8,6 +8,8 @@ The following metadata was added :
 - 'csharp_namespace': 'NationalInstruments.NISwitch.Grpc',
 - 'namespace_component': 'niswitch',
 
+Removed the 'repeated-capabilities' as it is python specific.
+
 ## functions.py
 
 The occurrences of `'default_value'` were not removed but should be removed once enum support is complete.
@@ -39,7 +41,7 @@ The following functions were changed from `private` to `public`:
 - `close`
 - `self_test`
 
-The following APIs are missing (compared to the C API documentation)
+The following APIs are missing (compared to the C API documentation)(total :23)
 - Init
 - InitWithOptions
 - IsDebounced
@@ -58,4 +60,4 @@ The following APIs are missing (compared to the C API documentation)
 - RevisionQuery
 - GetAttributeViSession
 - SetAttributeViSession
-- All the CheckAttribute APIs
+- All the CheckAttribute APIs(5)

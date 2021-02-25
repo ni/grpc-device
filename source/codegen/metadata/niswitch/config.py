@@ -42,12 +42,6 @@ config = {
     },
     'metadata_version': '2.0',
     'module_name': 'niswitch',
-    'repeated_capabilities': [
-        {
-            'prefix': '',
-            'python_name': 'channels'
-        }
-    ],
     'session_class_description': 'An NI-SWITCH session to a National Instruments Switch Module',
     'session_handle_parameter_name': 'vi'
 }

@@ -176,16 +176,11 @@ target_link_libraries(core_server
    )
 
 if(WIN32)
-  target_link_libraries(core_server Delayimp niScope)
-  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll" )
-  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll")
+  target_link_libraries(core_server Delayimp niScope niswitch)
+  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
 endif()
 
-if(WIN32)
-  target_link_libraries(core_server Delayimp niswitch)
-  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niswitch.dll" )
-  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niswitch.dll")
-endif()
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory
 #----------------------------------------------------------------------
