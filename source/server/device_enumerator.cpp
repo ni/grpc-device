@@ -37,15 +37,6 @@ DeviceEnumerator::~DeviceEnumerator()
   return ::grpc::Status::OK;
 }
 
-NISysCfgStatus DeviceEnumerator::get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
-{
-  NISysCfgStatus status = NISysCfg_OK;
-  // This will use syscfg APIs to get a list of devices or chassis under localhost
-  // if any syscfg API gives error, it will be stored in status.
-  status = library_->FindHardware();
-  return status;
-}
-
 }  // namespace internal
 }  // namespace grpc
 }  // namespace hardware
