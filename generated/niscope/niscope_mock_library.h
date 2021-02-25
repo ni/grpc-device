@@ -41,11 +41,11 @@ class NiScopeMockLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
   MOCK_METHOD(ViStatus, Disable, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
-  MOCK_METHOD(ViStatus, Fetch, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], struct niScope_wfmInfo wfmInfo[]), (override));
-  MOCK_METHOD(ViStatus, FetchArrayMeasurement, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], struct niScope_wfmInfo wfmInfo[]), (override));
-  MOCK_METHOD(ViStatus, FetchBinary16, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], struct niScope_wfmInfo wfmInfo[]), (override));
-  MOCK_METHOD(ViStatus, FetchBinary32, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], struct niScope_wfmInfo wfmInfo[]), (override));
-  MOCK_METHOD(ViStatus, FetchBinary8, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], struct niScope_wfmInfo wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, Fetch, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], niScope_wfmInfo wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, FetchArrayMeasurement, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, FetchBinary16, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, FetchBinary32, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, FetchBinary8, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[]), (override));
   MOCK_METHOD(ViStatus, FetchMeasurementStats, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[], ViReal64 mean[], ViReal64 stdev[], ViReal64 min[], ViReal64 max[], ViInt32 numInStats[]), (override));
   MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32* value), (override));
@@ -61,7 +61,7 @@ class NiScopeMockLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
   MOCK_METHOD(ViStatus, LockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, ProbeCompensationSignalStart, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ProbeCompensationSignalStop, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, Read, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], struct niScope_wfmInfo wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, Read, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], niScope_wfmInfo wfmInfo[]), (override));
   MOCK_METHOD(ViStatus, ResetDevice, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetWithDefaults, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, SendSoftwareTriggerEdge, (ViSession vi, ViInt32 whichTrigger), (override));

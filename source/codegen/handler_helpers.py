@@ -37,7 +37,11 @@ def create_args(parameters):
     result = ''
     for parameter in parameters:
         if common_helpers.is_input_parameter(parameter) == False:
-            result = result + '&'
+            if parameter["type"].startswith("struct"):
+              result = result + common_helpers.camel_to_snake(parameter['cppName']) + ".data()" + ", "
+              continue;
+            else:
+              result = result + '&'
         result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
@@ -47,6 +51,8 @@ def create_params(parameters):
 def create_param(parameter):
     type = parameter['type']
     name = parameter['cppName']
+    if type.startswith("struct"):
+      type = type.replace("struct ", "")
     if common_helpers.is_array(type):
         is_fixed = parameter['size']['mechanism'] == 'fixed'
         array_size = parameter['size']['value'] if is_fixed else ''

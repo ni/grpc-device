@@ -5,6 +5,8 @@ import handler_helpers
 config = data['config']
 enums = data['enums']
 functions = data['functions']
+lookup = data["lookup"]
+custom_template = "custom_cpp.mako"
 
 service_class_prefix = config["service_class_prefix"]
 namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
@@ -12,6 +14,7 @@ module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
 windows_libary_name = config['library_info']['Windows']['64bit']['name']
+custom_type = config["custom_types"][0]
 %>\
 
 //---------------------------------------------------------------------
@@ -25,6 +28,21 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 #include <fstream>
 #include <iostream>
 #include <atomic>
+#include <vector>
+
+void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
+%for field in custom_type["fields"]: 
+ output->set_${field["grpc_name"]}(input.${field["name"]});
+%endfor
+}
+
+void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
+  for (auto item : input) {
+    auto message = ${namespace_prefix}${custom_type["grpc_name"]}();
+    Copy(item, &message);
+    output->AddAllocated(&message);
+  }
+}
 
 namespace ni {
 namespace ${config["namespace_component"]} {
@@ -112,7 +130,11 @@ ${request_input_parameters(parameters)}\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
+%if parameter['type'].startswith("struct ") and common_helpers.is_array(parameter["type"]):
+      std::vector<${parameter['type'].replace("struct ","").replace('[]', '')}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});  
+%else:
       ${parameter['type']} ${parameter_name} {};
+%endif
 %endfor
 %if function_name == config['close_function']:
       session_repository_->remove_session(${handler_helpers.create_args(parameters)});
@@ -214,6 +236,8 @@ ${initialize_enum_with_mapping_snippet(parameter)}
 %else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
+%elif parameter["type"].startswith("struct"):
+        Copy(${parameter_name}, response->mutable_${parameter_name}());
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif

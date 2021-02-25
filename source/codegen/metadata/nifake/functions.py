@@ -496,7 +496,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetArrayForPythonCodeCustomType': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns an array for use in python-code size mechanism.'
         },
@@ -532,7 +532,7 @@ functions = {
                     'value': 'self.get_array_size_for_python_code()'
                 },
                 'type': 'struct CustomStruct[]',
-                'grpc_type': 'repeated CustomStruct'
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -949,7 +949,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetCustomType': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns a custom type.'
         },
@@ -969,7 +969,7 @@ functions = {
                 },
                 'name': 'cs',
                 'type': 'struct CustomStruct',
-                'grpc_type': 'CustomStruct'
+                'grpc_type': 'FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -1007,7 +1007,7 @@ functions = {
                     'value': 'numberOfElements'
                 },
                 'type': 'struct CustomStruct[]',
-                'grpc_type': 'CustomStruct'
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2111,7 +2111,7 @@ functions = {
                 },
                 'name': 'cs',
                 'type': 'struct CustomStruct',
-                'grpc_type': 'CustomStruct'
+                'grpc_type': 'FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'

@@ -108,7 +108,10 @@ message ${common_helpers.snake_to_camel(function)}Response {
 % for parameter in output_parameters:
 <%
   index = index + 1
-  parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix).replace("struct ","")
+  if "grpc_type" in parameter:
+    parameter_type = parameter["grpc_type"]
+  else:
+    parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
 %endfor

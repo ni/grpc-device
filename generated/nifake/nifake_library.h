@@ -34,7 +34,6 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   ViStatus GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
-  ViStatus GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 numberOfElements, struct CustomStruct arrayOut[]);
   ViStatus GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
   ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut);
   ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
@@ -45,8 +44,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]);
   ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute);
   ViStatus GetCalInterval(ViSession vi, ViInt32* months);
-  ViStatus GetCustomType(ViSession vi, struct CustomStruct* cs);
-  ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]);
+  ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
@@ -91,7 +89,6 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   using GetAStringUsingPythonCodePtr = ViStatus (*)(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   using GetAnIviDanceStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   using GetAnIviDanceWithATwistStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
-  using GetArrayForPythonCodeCustomTypePtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, struct CustomStruct arrayOut[]);
   using GetArrayForPythonCodeDoublePtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
   using GetArraySizeForPythonCodePtr = ViStatus (*)(ViSession vi, ViInt32* sizeOut);
   using GetArrayUsingIviDancePtr = ViStatus (*)(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
@@ -102,8 +99,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]);
   using GetCalDateAndTimePtr = ViStatus (*)(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute);
   using GetCalIntervalPtr = ViStatus (*)(ViSession vi, ViInt32* months);
-  using GetCustomTypePtr = ViStatus (*)(ViSession vi, struct CustomStruct* cs);
-  using GetCustomTypeArrayPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]);
+  using GetCustomTypeArrayPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   using GetEnumValuePtr = ViStatus (*)(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
   using ImportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
@@ -148,7 +144,6 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     GetAStringUsingPythonCodePtr GetAStringUsingPythonCode;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
-    GetArrayForPythonCodeCustomTypePtr GetArrayForPythonCodeCustomType;
     GetArrayForPythonCodeDoublePtr GetArrayForPythonCodeDouble;
     GetArraySizeForPythonCodePtr GetArraySizeForPythonCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;
@@ -159,7 +154,6 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     GetAttributeViStringPtr GetAttributeViString;
     GetCalDateAndTimePtr GetCalDateAndTime;
     GetCalIntervalPtr GetCalInterval;
-    GetCustomTypePtr GetCustomType;
     GetCustomTypeArrayPtr GetCustomTypeArray;
     GetEnumValuePtr GetEnumValue;
     GetErrorPtr GetError;
