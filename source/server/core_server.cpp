@@ -1,10 +1,10 @@
+#include <niscope/niscope_library.h>
+#include <niscope/niscope_service.h>
+
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
 #include "session_utilities_service.h"
 #include "syscfg_library.h"
-
-#include <niscope/niscope_library.h>
-#include <niscope/niscope_service.h>
 
 static void RunServer(int argc, char** argv)
 {
@@ -53,14 +53,14 @@ static void RunServer(int argc, char** argv)
   std::cout << "Server listening on port " << listeningPort << ". ";
 
   const char* security_description = server_security_config.is_insecure_credentials()
-                                         ? "insecure credentials"
-                                         : "secure credentials";
+      ? "insecure credentials"
+      : "secure credentials";
   const char* tls_description = "";
   auto credentials_options = server_security_config.try_get_options();
   if (credentials_options != nullptr) {
     tls_description = credentials_options->client_certificate_request == GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE
-                          ? " (Server-Side TLS)"
-                          : " (Mutual TLS)";
+        ? " (Server-Side TLS)"
+        : " (Mutual TLS)";
   }
   std::cout << "Security is configured with " << security_description << tls_description << "." << std::endl;
   // This call will block until another thread shuts down the server.

@@ -31,7 +31,8 @@ import "session.proto";
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
-   method_name = common_helpers.snake_to_camel(function)
+  common_helpers.mark_len_params(functions[function]["parameters"])
+  method_name = common_helpers.snake_to_camel(function)
 %>\
   rpc ${method_name}(${method_name}Request) returns (${method_name}Response);
 % endfor
@@ -76,7 +77,7 @@ nonint_index = 1
 % endfor
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
-  parameter_array = functions[function]["parameters"]
+  parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
   if function == config['init_function']:
     session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
