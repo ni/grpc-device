@@ -1,7 +1,7 @@
-#include "device_enumerator_library.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
 #include "session_utilities_service.h"
+#include "syscfg_library.h"
 
 #include <niscope/niscope_library.h>
 #include <niscope/niscope_service.h>
@@ -33,8 +33,8 @@ static void RunServer(int argc, char** argv)
   builder.AddListeningPort(server_address, server_security_config.get_credentials(), &listeningPort);
   // Register services available on the server.
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
   builder.RegisterService(&core_service);
 

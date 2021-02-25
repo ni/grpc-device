@@ -2,7 +2,7 @@
 
 #include <thread>
 
-#include <server/device_enumerator_library.h>
+#include <server/syscfg_library.h>
 #include <server/session_utilities_service.h>
 #include <server/semaphore.h>
 
@@ -18,8 +18,8 @@ class InProcessServerClientTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    device_enumerator_library_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumeratorLibrary>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>(device_enumerator_library_.get());
+    syscfg_library_ = std::make_unique<ni::hardware::grpc::internal::SysCfgLibrary>();
+    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>(syscfg_library_.get());
     service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
@@ -86,7 +86,7 @@ class InProcessServerClientTest : public ::testing::Test {
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::ni::hardware::grpc::SessionUtilities::Stub> stub_;
   std::unique_ptr<ni::hardware::grpc::internal::SessionRepository> session_repository_;
-  std::unique_ptr<ni::hardware::grpc::internal::DeviceEnumeratorLibrary> device_enumerator_library_;
+  std::unique_ptr<ni::hardware::grpc::internal::SysCfgLibrary> syscfg_library_;
   std::unique_ptr<ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<ni::hardware::grpc::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;

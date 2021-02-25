@@ -5,7 +5,7 @@
 #include <nisyscfg.h>
 #include <session.grpc.pb.h>
 
-#include "device_enumerator_library_interface.h"
+#include "syscfg_library_interface.h"
 
 namespace ni {
 namespace hardware {
@@ -14,7 +14,7 @@ namespace internal {
 
 class DeviceEnumerator {
  public:
-  DeviceEnumerator(DeviceEnumeratorLibraryInterface* library);
+  DeviceEnumerator(SysCfgLibraryInterface* library);
   virtual ~DeviceEnumerator();
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
@@ -22,7 +22,7 @@ class DeviceEnumerator {
  private:
   NISysCfgStatus get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
 
-  DeviceEnumeratorLibraryInterface* library_;
+  SysCfgLibraryInterface* library_;
 };
 
 } // namespace internal

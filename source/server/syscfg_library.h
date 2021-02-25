@@ -4,7 +4,7 @@
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 
-#include "device_enumerator_library_interface.h"
+#include "syscfg_library_interface.h"
 #include "shared_library.h"
 
 namespace ni {
@@ -12,10 +12,10 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-class DeviceEnumeratorLibrary : public DeviceEnumeratorLibraryInterface {
+class SysCfgLibrary : public SysCfgLibraryInterface {
  public:
-  DeviceEnumeratorLibrary();
-  virtual ~DeviceEnumeratorLibrary();
+  SysCfgLibrary();
+  virtual ~SysCfgLibrary();
 
   ::grpc::Status check_library_exists();
   std::string get_library_name() const;
