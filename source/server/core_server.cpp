@@ -5,19 +5,7 @@
 #include "server_security_configuration.h"
 #include "session_utilities_service.h"
 
-static bool try_get_config_path(int argc, char** argv, std::string& config_file_path)
-{
-  if (argc > 2) {
-    throw std::runtime_error("The only acceptable argument is a path to the server's configuration file.");
-  }
-  if (argc == 2) {
-    config_file_path = argv[1];
-    return true;
-  }
-  return false;
-}
-
-static void RunServer(int argc, char** argv)
+static void RunServer(const std::string& config_file_path)
 {
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
@@ -25,10 +13,9 @@ static void RunServer(int argc, char** argv)
   std::string server_address, server_cert, server_key, root_cert;
 
   try {
-    std::string config_file_path;
-    ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser = try_get_config_path(argc, argv, config_file_path)
-        ? ni::hardware::grpc::internal::ServerConfigurationParser(config_file_path.c_str())
-        : ni::hardware::grpc::internal::ServerConfigurationParser();
+    ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser = config_file_path.empty()
+        ? ni::hardware::grpc::internal::ServerConfigurationParser()
+        : ni::hardware::grpc::internal::ServerConfigurationParser(config_file_path.c_str());
     server_address = server_config_parser.parse_address();
     server_cert = server_config_parser.parse_server_cert();
     server_key = server_config_parser.parse_server_key();
@@ -81,6 +68,13 @@ static void RunServer(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-  RunServer(argc, argv);
+  std::string config_file_path;
+  if (argc > 2) {
+    std::cerr << "\nERROR:\n\nThe only acceptable argument is a path to the server's configuration file.\n\nExiting.\n";
+  }
+  if (argc == 2) {
+    config_file_path = argv[1];
+  }
+  RunServer(config_file_path);
   return 0;
 }
