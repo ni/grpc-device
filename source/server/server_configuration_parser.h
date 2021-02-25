@@ -15,6 +15,7 @@ static const char* kMalformedJsonMessage = "The JSON in the server configuration
 static const char* kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
 static const char* kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
 static const char* kValueTypeNotStringMessage = "The following key must be specified in the server's configuration file as a string enclosed with double quotes: ";
+static const char* kInvalidExePathMessage = "The server was unable to resolve the current executable path.";
 static const char* kDefaultAddressPrefix = "[::]:";
 
 class ServerConfigurationParser {
@@ -51,6 +52,10 @@ class ServerConfigurationParser {
 
   struct ValueTypeNotStringException : public std::runtime_error {
     ValueTypeNotStringException(const std::string& key);
+  };
+
+  struct InvalidExePathException : public std::runtime_error {
+    InvalidExePathException();
   };
 
  private:
