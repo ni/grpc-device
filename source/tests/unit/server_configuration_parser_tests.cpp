@@ -23,7 +23,12 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
 {
   const char* missing_file_path = "fake.json";
   try {
+<<<<<<< HEAD
     ::internal::ServerConfigurationParser server_config_parser(missing_file_path);
+=======
+    ::internal::ServerConfigurationParser server_config_parser("fake.json");
+
+>>>>>>> main
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
@@ -38,6 +43,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddre
 
   try {
     auto address = server_config_parser.parse_address();
+
     FAIL() << "InvalidPortException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
@@ -52,6 +58,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithPortNumberExceedingMax_ParseA
 
   try {
     auto address = server_config_parser.parse_address();
+
     FAIL() << "InvalidPortException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
@@ -66,6 +73,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithPortAsString_ParseAddress_Thr
 
   try {
     auto address = server_config_parser.parse_address();
+
     FAIL() << "WrongPortTypeException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::WrongPortTypeException& ex) {
@@ -186,6 +194,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerCertAsInteger_ParseServ
 
   try {
     auto address = server_config_parser.parse_server_cert();
+
     FAIL() << "ValueTypeNotStringException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
@@ -207,6 +216,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerKeyAsNull_ParseServerKe
 
   try {
     auto address = server_config_parser.parse_server_key();
+
     FAIL() << "ValueTypeNotStringException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
@@ -228,6 +238,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithRootCertAsBoolean_ParseRootCe
 
   try {
     auto address = server_config_parser.parse_root_cert();
+
     FAIL() << "ValueTypeNotStringException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
@@ -255,27 +266,6 @@ TEST(ServerConfigurationParserTests, JsonConfigWithValidPemFilesButWithoutSecuri
   EXPECT_TRUE(root_cert.empty());
 }
 
-TEST(ServerConfigurationParserTests, JsonConfigForExistingPemFilesUnderSecurityParentKey_ParseAllSecurityKeys_NoneEmpty)
-{
-  nlohmann::json config_json = nlohmann::json::parse(R"(
-    {
-      "security" : {
-          "server_cert": "test_server_self_signed_crt.pem",
-          "server_key": "test_server_privatekey.pem",
-          "root_cert": "test_client_self_signed_crt.pem"
-      }
-    })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
-
-  auto server_key = server_config_parser.parse_server_key();
-  auto server_cert = server_config_parser.parse_server_cert();
-  auto root_cert = server_config_parser.parse_root_cert();
-
-  EXPECT_FALSE(server_key.empty());
-  EXPECT_FALSE(server_cert.empty());
-  EXPECT_FALSE(root_cert.empty());
-}
-
 TEST(ServerConfigurationParserTests, EmptyJsonConfig_ParseAllSecurityKeys_AllEmpty)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({})");
@@ -290,6 +280,65 @@ TEST(ServerConfigurationParserTests, EmptyJsonConfig_ParseAllSecurityKeys_AllEmp
   EXPECT_TRUE(root_cert.empty());
 }
 
+TEST(ServerConfigurationParserTests, JsonConfigWithMissingServerCertFile_ParseServerCert_ThrowsFileNotFoundException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_cert": "missing_server_cert.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_server_cert();
+
+    FAIL() << "FileNotFoundException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithMissingServerKeyFile_ParseServerKey_ThrowsFileNotFoundException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "server_key": "missing_server_key.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_server_key();
+
+    FAIL() << "FileNotFoundException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithMissingRootCertFile_ParseRootCert_ThrowsFileNotFoundException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "security" : {
+          "root_cert": "missing_root_cert.pem"
+      }
+    })");
+  ::internal::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_root_cert();
+
+    FAIL() << "FileNotFoundException not thrown";
+  }
+  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  }
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
