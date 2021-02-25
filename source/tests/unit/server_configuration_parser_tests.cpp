@@ -21,12 +21,13 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
+  const char* missing_file_path = "fake.json";
   try {
-    ::internal::ServerConfigurationParser server_config_parser("fake.json");
+    ::internal::ServerConfigurationParser server_config_parser(missing_file_path);
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
-    EXPECT_EQ(std::string(::internal::kConfigFileNotFoundMessage), ex.what());
+    EXPECT_EQ(::internal::kConfigFileNotFoundMessage + std::string(missing_file_path), ex.what());
   }
 }
 
