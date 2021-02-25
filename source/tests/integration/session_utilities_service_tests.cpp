@@ -44,7 +44,7 @@ class InProcessServerClientTest : public ::testing::Test {
       std::string client_id,
       const std::chrono::system_clock::time_point& deadline =
           std::chrono::system_clock::now() + std::chrono::seconds(1),
-      std::atomic<bool>* reservation_requested = nullptr)
+      std::atomic<bool>* is_thread_started = nullptr)
   {
     ni::hardware::grpc::ReserveRequest request;
     ni::hardware::grpc::ReserveResponse response;
@@ -52,8 +52,8 @@ class InProcessServerClientTest : public ::testing::Test {
     request.set_client_id(client_id);
     ::grpc::ClientContext context;
     context.set_deadline(deadline);
-    if (reservation_requested != nullptr) {
-      *reservation_requested = true;
+    if (is_thread_started != nullptr) {
+      *is_thread_started = true;
     }
     return GetStub()->Reserve(&context, request, &response);
   }
@@ -133,11 +133,11 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
 {
   call_reserve("foo", "a");
   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
-  std::atomic<bool> clientc_requested(false);
-  std::thread reserve_c([this, &clientc_requested] {
-    call_reserve("foo", "c", std::chrono::system_clock::now() + std::chrono::seconds(1), &clientc_requested);
+  std::atomic<bool> clientc_started(false);
+  std::thread reserve_c([this, &clientc_started] {
+    call_reserve("foo", "c", std::chrono::system_clock::now() + std::chrono::seconds(1), &clientc_started);
   });
-  while (!clientc_requested) {
+  while (!clientc_started) {
     std::this_thread::sleep_for(std::chrono::milliseconds(5));
   }
   std::this_thread::sleep_for(std::chrono::milliseconds(5));
