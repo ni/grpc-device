@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <server/session_utilities_service.h>
 #include <server/device_enumerator.h>
-#include <server/device_enumerator_library.h>
+#include <server/syscfg_library.h>
 #include <server/semaphore.h>
 #include <server/session_repository.h>
 
@@ -18,8 +18,8 @@ namespace unit {
 TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
 
   ::grpc::ServerContext context;
@@ -34,8 +34,8 @@ TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_Retu
 TEST(SessionUtilitiesServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
 
@@ -50,8 +50,8 @@ TEST(SessionUtilitiesServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
 TEST(SessionUtilitiesServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -67,8 +67,8 @@ TEST(SessionUtilitiesServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
 TEST(SessionUtilitiesServiceTests, NewReserveIdAndClientId_Reserve_ReservesSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -146,8 +146,8 @@ bool call_reserve(ni::hardware::grpc::SessionUtilitiesService* service, std::str
 TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenReserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -173,8 +173,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnr
 TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsForTwoUnreservesThenReservesLastClient)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -209,8 +209,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsF
 TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithSameClientId_ReturnsReserved)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
@@ -228,8 +228,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithSameClientId_ReturnsRes
 TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithSameClientId_ReturnsFailedPrecondition)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
@@ -242,8 +242,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithSameClientId_ReturnsFai
 TEST(SessionUtilitiesServiceTests, NoReservations_IsReserved_ReturnsFalse)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
 
   bool is_reserved = call_is_reserved(&service, "foo", "a");
@@ -254,8 +254,8 @@ TEST(SessionUtilitiesServiceTests, NoReservations_IsReserved_ReturnsFalse)
 TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithDifferentReservationId_ReturnsFalse)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
@@ -267,8 +267,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithDifferentReservatio
 TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithDifferentClientId_ReturnsFalse)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
@@ -280,8 +280,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithDifferentClientId_R
 TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithSameClientId_ReturnsTrue)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
@@ -295,8 +295,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithSameClientId_Return
 TEST(SessionUtilitiesServiceTests, NoReservations_Unreserve_ReturnsFalse)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
 
   bool is_unreserved = call_unreserve(&service, "foo", "a");
@@ -307,8 +307,8 @@ TEST(SessionUtilitiesServiceTests, NoReservations_Unreserve_ReturnsFalse)
 TEST(SessionUtilitiesServiceTests, Reservation_UnreserveWithDifferentReservationId_ReturnsFalseAndKeepsReservation)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest reserve_request;
   call_reserve(&service, "foo", "a");
@@ -323,8 +323,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_UnreserveWithDifferentReservation
 TEST(SessionUtilitiesServiceTests, Reservation_UnreserveWithDifferentClientId_ReturnsFalseAndKeepsReservation)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
@@ -338,8 +338,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_UnreserveWithDifferentClientId_Re
 TEST(SessionUtilitiesServiceTests, Reservation_Unreserve_Unreserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
@@ -355,8 +355,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_Unreserve_Unreserves)
 TEST(SessionUtilitiesServiceTests, Reservation_ResetServer_Unreserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
@@ -373,8 +373,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_ResetServer_Unreserves)
 TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesAndRemovesSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   std::string session_name = "session_name";
   uint32_t named_session_id;
@@ -399,8 +399,8 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
 TEST(SessionUtilitiesServiceTests, TwoReservations_ResetServer_Unreserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
   call_reserve(&service, "bar", "b");
@@ -419,8 +419,8 @@ TEST(SessionUtilitiesServiceTests, TwoReservations_ResetServer_Unreserves)
 TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_ClientReturnsAndDoesNotReserve)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;
@@ -446,8 +446,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Clie
 TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnAndDoNotReserve)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;
@@ -481,8 +481,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
 TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_WaitingClientReturnsAborted)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;
@@ -506,8 +506,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Wait
 TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetServer_AllClientsReturnAborted)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::DeviceEnumeratorLibrary device_enumerator_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&device_enumerator_library);
+  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
   ni::hardware::grpc::ReserveRequest request;

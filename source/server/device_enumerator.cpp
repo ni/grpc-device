@@ -5,7 +5,7 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-DeviceEnumerator::DeviceEnumerator(DeviceEnumeratorLibraryInterface* library)
+DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
     : library_(library)
 {
 }

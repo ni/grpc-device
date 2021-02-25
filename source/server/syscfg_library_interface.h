@@ -9,9 +9,9 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-class DeviceEnumeratorLibraryInterface {
+class SysCfgLibraryInterface {
  public:
-  virtual ~DeviceEnumeratorLibraryInterface() {}
+  virtual ~SysCfgLibraryInterface() {}
 
   virtual ::grpc::Status check_library_exists() = 0;
   // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.

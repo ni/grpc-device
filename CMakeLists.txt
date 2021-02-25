@@ -50,7 +50,7 @@ link_directories("./imports/lib/win64")
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
-set(nidrivers "nifake" "niscope")
+set(nidrivers "nifake" "niscope" "niswitch")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -158,13 +158,13 @@ endforeach()
 add_executable(core_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
-   "source/server/device_enumerator_library.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
    "source/server/server_security_configuration.cpp"
    "source/server/session_repository.cpp"
    "source/server/session_utilities_service.cpp"
    "source/server/shared_library.cpp"
+   "source/server/syscfg_library.cpp"
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
@@ -178,9 +178,9 @@ target_link_libraries(core_server
    )
 
 if(WIN32)
-  target_link_libraries(core_server Delayimp niScope)
-  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll" )
-  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll")
+  target_link_libraries(core_server Delayimp niScope niswitch)
+  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -207,11 +207,11 @@ add_executable(IntegrationTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
     "source/server/device_enumerator.cpp"
-    "source/server/device_enumerator_library.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs})
 
@@ -233,21 +233,21 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/session_utilities_service_tests.cpp"
-    "source/tests/unit/device_enumerator_library_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
+    "source/tests/unit/syscfg_library_tests.cpp"
     "source/server/device_enumerator.cpp"
-    "source/server/device_enumerator_library.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
     "source/server/server_security_configuration.cpp"
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${service_output_dir}/nifake/nifake_service.cpp"

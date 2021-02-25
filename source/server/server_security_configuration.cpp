@@ -23,8 +23,8 @@ ServerSecurityConfiguration::ServerSecurityConfiguration(const std::string& serv
   ::grpc::SslServerCredentialsOptions::PemKeyCertPair key_cert_pair = {server_key, server_cert};
   credentials_options_.pem_key_cert_pairs.push_back(key_cert_pair);
   credentials_options_.client_certificate_request = root_cert.empty()
-                                                        ? GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE
-                                                        : GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY;
+      ? GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE
+      : GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY;
   credentials_options_.pem_root_certs = root_cert;
   server_credentials_ = ::grpc::SslServerCredentials(credentials_options_);
 }

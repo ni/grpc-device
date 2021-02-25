@@ -1,4 +1,4 @@
-#include "device_enumerator_library.h"
+#include "syscfg_library.h"
 
 namespace ni {
 namespace hardware {
@@ -11,17 +11,17 @@ static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
 static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
 #endif
 
-DeviceEnumeratorLibrary::DeviceEnumeratorLibrary()
+SysCfgLibrary::SysCfgLibrary()
     : shared_library_(kSysCfgApiLibraryName)
 {
   // Delay loading of nisyscfg dll and initializing function pointers will be implemented in upcoming PRs.
 }
 
-DeviceEnumeratorLibrary::~DeviceEnumeratorLibrary()
+SysCfgLibrary::~SysCfgLibrary()
 {
 }
 
-::grpc::Status DeviceEnumeratorLibrary::check_library_exists()
+::grpc::Status SysCfgLibrary::check_library_exists()
 {
   if (!shared_library_.is_loaded()) {
     std::string message("Could not load the library: ");
@@ -31,12 +31,12 @@ DeviceEnumeratorLibrary::~DeviceEnumeratorLibrary()
   return ::grpc::Status::OK;
 }
 
-std::string DeviceEnumeratorLibrary::get_library_name() const
+std::string SysCfgLibrary::get_library_name() const
 {
   return shared_library_.get_library_name();
 }
 
-bool DeviceEnumeratorLibrary::is_library_loaded() const
+bool SysCfgLibrary::is_library_loaded() const
 {
   return shared_library_.is_loaded();
 }
