@@ -18,10 +18,10 @@ using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::Throw;
 
-const ViSession kViSession = 12345678;
-const ViStatus kDriverSuccess = 0;
-const ViStatus kDriverFailure = 1;
-ViConstString kChannelName = "channel";
+const std::uint32_t kViSession = 12345678;
+const std::uint32_t kDriverSuccess = 0;
+const std::uint32_t kDriverFailure = 1;
+const char* kChannelName = "channel";
 
 std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& session_repo, ViSession sessionToStore)
 {
@@ -39,28 +39,28 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresS
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
-  ViConstString resourceName = "Dev0", optionString = "Simulate = 1";
-  ViBoolean idQuery, resetDevice = true;
-  std::string sessionName = "sessionName";
-  ViSession vi = kViSession;
-  EXPECT_CALL(library, InitWithOptions(Pointee(*resourceName), idQuery, resetDevice, Pointee(*optionString), _))
-      .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
+  const char* resource_name = "Dev0";
+  const char* option_string = "Simulate = 1";
+  bool id_query = false, reset_device = true;
+  const char* session_name = "sessionName";
+  EXPECT_CALL(library, InitWithOptions(Pointee(*resource_name), id_query, reset_device, Pointee(*option_string), _))
+      .WillOnce(DoAll(SetArgPointee<4>(kViSession), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::InitWithOptionsRequest request;
-  request.set_resource_name(resourceName);
-  request.set_id_query(idQuery);
-  request.set_reset_device(resetDevice);
-  request.set_option_string(optionString);
-  request.set_session_name(sessionName);
+  request.set_resource_name(resource_name);
+  request.set_id_query(id_query);
+  request.set_reset_device(reset_device);
+  request.set_option_string(option_string);
+  request.set_session_name(session_name);
   ni::fake::grpc::InitWithOptionsResponse response;
   ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   ni::hardware::grpc::Session session = response.vi();
-  EXPECT_EQ(vi, session_repository.access_session(session.id(), ""));
-  EXPECT_EQ(vi, session_repository.access_session(0, sessionName));
+  EXPECT_EQ(kViSession, session_repository.access_session(session.id(), ""));
+  EXPECT_EQ(kViSession, session_repository.access_session(0, session_name));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
@@ -69,9 +69,8 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const char* message = "Exception!";
-  ViSession vi = kViSession;
   EXPECT_CALL(library, InitWithOptions)
-      .WillOnce(DoAll(SetArgPointee<4>(vi), Throw(ni::hardware::grpc::internal::LibraryLoadException(message))));
+      .WillOnce(DoAll(SetArgPointee<4>(kViSession), Throw(ni::hardware::grpc::internal::LibraryLoadException(message))));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::InitWithOptionsRequest request;
@@ -81,7 +80,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
   EXPECT_EQ(message, status.error_message());
   ni::hardware::grpc::Session session = response.vi();
-  EXPECT_NE(vi, session_repository.access_session(session.id(), ""));
+  EXPECT_NE(kViSession, session_repository.access_session(session.id(), ""));
   EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
 }
 
@@ -90,26 +89,25 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsAndResetServer_SessionIsCl
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
-  std::string sessionName = "sessionName";
-  ViSession vi = kViSession;
+  const char* session_name = "sessionName";
   EXPECT_CALL(library, InitWithOptions)
-      .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
-  EXPECT_CALL(library, close(vi))
+      .WillOnce(DoAll(SetArgPointee<4>(kViSession), Return(kDriverSuccess)));
+  EXPECT_CALL(library, close(kViSession))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::InitWithOptionsRequest request;
-  request.set_session_name(sessionName);
+  request.set_session_name(session_name);
   ni::fake::grpc::InitWithOptionsResponse response;
-  ::grpc::Status initStatus = service.InitWithOptions(&context, &request, &response);
-  EXPECT_TRUE(initStatus.ok());
+  ::grpc::Status init_status = service.InitWithOptions(&context, &request, &response);
+  EXPECT_TRUE(init_status.ok());
   ni::hardware::grpc::Session session = response.vi();
-  EXPECT_EQ(vi, session_repository.access_session(session.id(), ""));
-  EXPECT_EQ(vi, session_repository.access_session(0, sessionName));
-  bool resetStatus = session_repository.reset_server();
+  EXPECT_EQ(kViSession, session_repository.access_session(session.id(), ""));
+  EXPECT_EQ(kViSession, session_repository.access_session(0, session_name));
+  bool reset_status = session_repository.reset_server();
 
-  EXPECT_TRUE(resetStatus);
-  EXPECT_NE(vi, session_repository.access_session(session.id(), ""));
+  EXPECT_TRUE(reset_status);
+  EXPECT_NE(kViSession, session_repository.access_session(session.id(), ""));
   EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
 }
 
@@ -118,29 +116,28 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
   ni::hardware::grpc::internal::SessionRepository session_repository;
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
-  std::string sessionName = "sessionName";
-  ViSession vi = kViSession;
+  std::string session_name = "sessionName";
   EXPECT_CALL(library, InitWithOptions)
-      .WillOnce(DoAll(SetArgPointee<4>(vi), Return(kDriverSuccess)));
-  EXPECT_CALL(library, close(vi))
+      .WillOnce(DoAll(SetArgPointee<4>(kViSession), Return(kDriverSuccess)));
+  EXPECT_CALL(library, close(kViSession))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
-  ni::fake::grpc::InitWithOptionsRequest initRequest;
-  initRequest.set_session_name(sessionName);
-  ni::fake::grpc::InitWithOptionsResponse initResponse;
-  ::grpc::Status initStatus = service.InitWithOptions(&context, &initRequest, &initResponse);
-  EXPECT_TRUE(initStatus.ok());
-  ni::hardware::grpc::Session session = initResponse.vi();
-  EXPECT_EQ(vi, session_repository.access_session(session.id(), ""));
-  EXPECT_EQ(vi, session_repository.access_session(0, sessionName));
-  ni::fake::grpc::CloseRequest closeRequest;
-  closeRequest.mutable_vi()->set_id(session.id());
-  ni::fake::grpc::CloseResponse closeResponse;
-  ::grpc::Status closeStatus = service.Close(&context, &closeRequest, &closeResponse);
+  ni::fake::grpc::InitWithOptionsRequest init_request;
+  init_request.set_session_name(session_name);
+  ni::fake::grpc::InitWithOptionsResponse init_response;
+  ::grpc::Status init_status = service.InitWithOptions(&context, &init_request, &init_response);
+  EXPECT_TRUE(init_status.ok());
+  ni::hardware::grpc::Session session = init_response.vi();
+  EXPECT_EQ(kViSession, session_repository.access_session(session.id(), ""));
+  EXPECT_EQ(kViSession, session_repository.access_session(0, session_name));
+  ni::fake::grpc::CloseRequest close_request;
+  close_request.mutable_vi()->set_id(session.id());
+  ni::fake::grpc::CloseResponse close_response;
+  ::grpc::Status close_status = service.Close(&context, &close_request, &close_response);
 
-  EXPECT_TRUE(closeStatus.ok());
-  EXPECT_EQ(kDriverSuccess, closeResponse.status());
+  EXPECT_TRUE(close_status.ok());
+  EXPECT_EQ(kDriverSuccess, close_response.status());
   EXPECT_NE(kViSession, session_repository.access_session(session.id(), ""));
   EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
 }
