@@ -47,7 +47,7 @@ std::string ServerConfigurationParser::get_exe_path()
 {
 #if defined(_MSC_VER)
   char filename[MAX_PATH];
-  ssize_t path_length = GetModuleFileNameA(NULL, filename, MAX_PATH);
+  size_t path_length = GetModuleFileNameA(NULL, filename, MAX_PATH);
 #else
   char filename[PATH_MAX];
   ssize_t path_length = readlink("/proc/self/exe", filename, PATH_MAX);
