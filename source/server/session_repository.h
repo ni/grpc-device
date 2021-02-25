@@ -42,8 +42,6 @@ class SessionRepository {
   };
 
   struct SessionInfo {
-    virtual ~SessionInfo();
-
     uint32_t id;
     std::string name;
     std::chrono::steady_clock::time_point last_access_time;
@@ -56,6 +54,8 @@ class SessionRepository {
 
   std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
   void clear_reservations();
+  bool close_sessions();
+  void cleanup_session(const std::shared_ptr<SessionInfo>& session_info);
   bool release_reservation(const ReservationInfo* reservation_info);
 
   std::shared_mutex repository_lock_;
