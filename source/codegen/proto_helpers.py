@@ -70,3 +70,8 @@ def determine_allow_alias(enums):
     if value["value"] == 0:
       return True
   return False
+
+def filter_parameters_for_grpc_fields(parameters):
+  """Filter out the parameters that shouldn't be represented by a field on a grpc message.
+     For example, get rid of any parameters whose values should be deteremined from another parameter."""
+  return [p for p in parameters if p.get('determine_size_from', '') == '']

@@ -36,13 +36,12 @@ def get_include_guard_name(config, suffix):
 def create_args(parameters):
     result = ''
     for parameter in parameters:
-        if common_helpers.is_input_parameter(parameter) == False:
-            if parameter["type"].startswith("struct"):
-              result = result + common_helpers.camel_to_snake(parameter['cppName']) + ".data()" + ", "
-              continue;
-            else:
-              result = result + '&'
-        result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
+      if parameter["type"].startswith("struct"):
+        result = result + common_helpers.camel_to_snake(parameter['cppName']) + ".data()" + ", "
+        continue;  
+      if not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
+        result = result + '&'
+      result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
 def create_params(parameters):

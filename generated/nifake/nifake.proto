@@ -125,8 +125,7 @@ message AbortResponse {
 
 message AcceptListOfDurationsInSecondsRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 count = 2;
-  repeated double delays = 3;
+  repeated double delays = 2;
 }
 
 message AcceptListOfDurationsInSecondsResponse {
@@ -145,8 +144,7 @@ message BoolArrayOutputFunctionResponse {
 
 message DoubleAllTheNumsRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 number_count = 2;
-  repeated double numbers = 3;
+  repeated double numbers = 2;
 }
 
 message DoubleAllTheNumsResponse {
@@ -381,8 +379,7 @@ message GetEnumValueResponse {
 
 message ImportAttributeConfigurationBufferRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 size_in_bytes = 2;
-  bytes configuration = 3;
+  bytes configuration = 2;
 }
 
 message ImportAttributeConfigurationBufferResponse {
@@ -405,9 +402,8 @@ message InitWithOptionsResponse {
 message MultipleArrayTypesRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 output_array_size = 2;
-  sint32 input_array_sizes = 3;
-  repeated double input_array_of_floats = 4;
-  repeated sint32 input_array_of_integers = 5;
+  repeated double input_array_of_floats = 3;
+  repeated sint32 input_array_of_integers = 4;
 }
 
 message MultipleArrayTypesResponse {
@@ -422,7 +418,6 @@ message MultipleArraysSameSizeRequest {
   repeated double values2 = 3;
   repeated double values3 = 4;
   repeated double values4 = 5;
-  sint32 size = 6;
 }
 
 message MultipleArraysSameSizeResponse {
@@ -446,8 +441,7 @@ message ParametersAreMultipleTypesRequest {
   Turtle an_int_enum = 5;
   double a_float = 6;
   FloatEnum a_float_enum = 7;
-  sint32 string_size = 8;
-  string a_string = 9;
+  string a_string = 8;
 }
 
 message ParametersAreMultipleTypesResponse {
@@ -561,8 +555,7 @@ message Use64BitNumberResponse {
 
 message WriteWaveformRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 number_of_samples = 2;
-  repeated double waveform = 3;
+  repeated double waveform = 2;
 }
 
 message WriteWaveformResponse {

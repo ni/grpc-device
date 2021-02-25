@@ -44,7 +44,9 @@ def has_unsupported_parameter(function):
 
 def is_unsupported_parameter(parameter):
   type = parameter['type']
-  return is_array(type) and not parameter['type'].startswith("struct")
+  supported_size_mechanisms = {'fixed', 'len'}
+  is_unsupported_array = is_array(type) and parameter['size']['mechanism'] not in supported_size_mechanisms
+  return is_unsupported_array and not parameter['type'].startswith("struct")
 
 def camel_to_snake(camelString):
   camelString = list(camelString)
@@ -97,3 +99,19 @@ def get_used_enums(functions, attributes):
     if "enum" in attributes[attribute]:
       used_enums.add(attributes[attribute]["enum"])
   return used_enums
+
+def determine_size_from(parameter, parameters):
+  """Returns a string representing the parameter name the given parameter should determine its value from. If none is found returns empty string."""
+  expected_len_name = parameter['name']
+  for possible_size_from_param in parameters:
+    if possible_size_from_param.get('size', {}).get('mechanism', '') == 'len':
+      if possible_size_from_param['size']['value'] == expected_len_name:
+        return possible_size_from_param['name']
+  return ''
+
+def mark_len_params(parameters):
+  """Adds a 'determine_size_from' field for parameters that are determined by the size of another array parameter."""
+  for parameter in parameters:
+      determine_size_from_name = determine_size_from(parameter, parameters)
+      if (determine_size_from != ''):
+        parameter['determine_size_from'] = determine_size_from_name
