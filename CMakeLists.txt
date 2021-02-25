@@ -160,6 +160,7 @@ add_executable(core_server
    "source/server/device_enumerator.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
+   "source/server/server_security_configuration.cpp"
    "source/server/session_repository.cpp"
    "source/server/session_utilities_service.cpp"
    "source/server/shared_library.cpp"
@@ -187,7 +188,7 @@ endif()
 add_custom_command(
    TARGET core_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_SOURCE_DIR}/server_config.json
+            ${CMAKE_SOURCE_DIR}/source/config/insecure_config.json
             $<TARGET_FILE_DIR:core_server>/server_config.json)
 
 #----------------------------------------------------------------------
@@ -233,11 +234,13 @@ add_executable(UnitTestsRunner
     "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
+    "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
+    "source/server/server_security_configuration.cpp"
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
@@ -258,6 +261,15 @@ target_link_libraries(UnitTestsRunner
     Threads::Threads
     nlohmann_json::nlohmann_json)
 
+#----------------------------------------------------------------------
+# Copy test asset certificates to binary output certs sub-directory
+#----------------------------------------------------------------------
+add_custom_command(
+  TARGET UnitTestsRunner POST_BUILD
+  COMMAND  ${CMAKE_COMMAND} -E copy_directory 
+           ${CMAKE_SOURCE_DIR}/source/tests/assets/
+           $<TARGET_FILE_DIR:core_server>/certs/)
+           
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/system/stub_test.cpp")
