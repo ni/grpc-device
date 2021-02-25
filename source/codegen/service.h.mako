@@ -62,6 +62,7 @@ public:
 %endif
 %endfor
 };
+
 } // namespace grpc
 } // namespace ${config["namespace_component"]}
 } // namespace ni
