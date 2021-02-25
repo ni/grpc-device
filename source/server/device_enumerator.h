@@ -5,6 +5,7 @@
 #include <nisyscfg.h>
 #include <session.grpc.pb.h>
 
+#include "shared_library.h"
 #include "syscfg_library_interface.h"
 
 namespace ni {

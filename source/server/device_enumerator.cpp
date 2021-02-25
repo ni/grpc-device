@@ -19,12 +19,17 @@ DeviceEnumerator::~DeviceEnumerator()
 // https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
 ::grpc::Status DeviceEnumerator::enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
-  ::grpc::Status library_status = library_->check_library_exists();
-  if (!library_status.ok()) {
-    return library_status;
+  NISysCfgStatus syscfg_status = NISysCfg_OK;
+  
+  try {
+    // Providing dummy implementation below which will be updated in upcoming PRs 
+    // to use syscfg APIs properly to enumerate devices.
+    syscfg_status = library_->FindHardware(); 
   }
-
-  NISysCfgStatus syscfg_status = get_list_of_devices(devices);
+  catch (ni::hardware::grpc::internal::LibraryLoadException& ex) {
+    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  }
+  
   if (NISysCfg_Failed(syscfg_status)) {
     return ::grpc::Status(::grpc::StatusCode::INTERNAL, "The NI System Configuration API was unable to enumerate the devices.");
   }
@@ -37,6 +42,7 @@ NISysCfgStatus DeviceEnumerator::get_list_of_devices(google::protobuf::RepeatedP
   NISysCfgStatus status = NISysCfg_OK;
   // This will use syscfg APIs to get a list of devices or chassis under localhost
   // if any syscfg API gives error, it will be stored in status.
+  status = library_->FindHardware();
   return status;
 }
 

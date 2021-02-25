@@ -17,10 +17,11 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   SysCfgLibrary();
   virtual ~SysCfgLibrary();
 
-  ::grpc::Status check_library_exists();
   std::string get_library_name() const;
   bool is_library_loaded() const;
   // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.
+  // Adding a dummy FindHardware here which will be updated in future
+  NISysCfgStatus FindHardware();
 
  private:
   SharedLibrary shared_library_;

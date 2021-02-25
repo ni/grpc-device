@@ -13,7 +13,7 @@ class SysCfgLibraryInterface {
  public:
   virtual ~SysCfgLibraryInterface() {}
 
-  virtual ::grpc::Status check_library_exists() = 0;
+  virtual NISysCfgStatus FindHardware() = 0;
   // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.
 };
 

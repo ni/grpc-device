@@ -11,7 +11,7 @@ static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
 static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
 #endif
 
-TEST(SysCfgLibraryTests, CreateDeviceEnumeratorLibrary_SharedLibraryNameIsSetToSysCfgLibrary)
+TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibrary)
 {
   ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
   std::string shared_library_name = syscfg_library.get_library_name();
@@ -20,7 +20,7 @@ TEST(SysCfgLibraryTests, CreateDeviceEnumeratorLibrary_SharedLibraryNameIsSetToS
 }
 
 
-TEST(SysCfgLibraryTests, CreateDeviceEnumeratorLibrary_SharedLibraryIsNotLoaded)
+TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryIsNotLoaded)
 {
   ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
 
