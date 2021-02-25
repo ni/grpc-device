@@ -21,14 +21,16 @@ SysCfgLibrary::~SysCfgLibrary()
 {
 }
 
-::grpc::Status SysCfgLibrary::check_library_exists()
+NISysCfgStatus SysCfgLibrary::FindHardware()
 {
+  // In future it will be updated to use function pointers to syscfg APIs. 
+  // Now for proving dummy implementation, throwing exception that library is not found.
   if (!shared_library_.is_loaded()) {
     std::string message("Could not load the library: ");
     message += kSysCfgApiLibraryName;
-    return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, message.c_str());
+    throw ni::hardware::grpc::internal::LibraryLoadException(message);
   }
-  return ::grpc::Status::OK;
+  return NISysCfg_OK;
 }
 
 std::string SysCfgLibrary::get_library_name() const

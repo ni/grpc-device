@@ -17,10 +17,10 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   SysCfgLibrary();
   virtual ~SysCfgLibrary();
 
-  ::grpc::Status check_library_exists();
   std::string get_library_name() const;
   bool is_library_loaded() const;
   // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.
+  // Adding dummy SysCfg APIs here which will be updated in future
   NISysCfgStatus FindHardware();
   NISysCfgStatus NextResource(NISysCfgResourceHandle* resourceHandle);
   NISysCfgStatus GetResourceProperty(NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value);
