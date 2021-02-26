@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
+#include <stdlib.h>
 
 #include <string>
-#include <stdlib.h>
 
 #if defined(_MSC_VER)
 static const char* kPathDelimitter = "\\";

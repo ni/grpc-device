@@ -1,9 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <server/server_configuration_parser.h>
-#include "tests/utilities/test_environment.h"
 
 #include <typeinfo>
+
+#include "tests/utilities/test_environment.h"
 
 namespace internal = ni::hardware::grpc::internal;
 

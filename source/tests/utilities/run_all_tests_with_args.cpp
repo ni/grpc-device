@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "tests/utilities/test_environment.h"
 
 std::string g_binary_output_directory;
