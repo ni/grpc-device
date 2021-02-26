@@ -33,7 +33,7 @@ ServerConfigurationParser::ServerConfigurationParser()
 {
 }
 
-ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path)
+ServerConfigurationParser::ServerConfigurationParser(const std::string& config_file_path)
     : config_file_path_(config_file_path), config_file_(load(config_file_path))
 {
 }
@@ -61,12 +61,10 @@ std::string ServerConfigurationParser::get_exe_path()
 
 nlohmann::json ServerConfigurationParser::load(const std::string& config_file_path)
 {
-  // TODO: Prefer a passed in configuration file path and then search next to
-  // the binary and finally at platform specific default config file locations.
   std::ifstream input_stream(config_file_path);
 
   if (!input_stream) {
-    throw ConfigFileNotFoundException();
+    throw ConfigFileNotFoundException(config_file_path);
   }
 
   try {
@@ -151,8 +149,8 @@ std::string ServerConfigurationParser::read_keycert(const std::string& filename)
   return data;
 }
 
-ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException()
-    : std::runtime_error(kConfigFileNotFoundMessage)
+ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException(const std::string& config_file_path)
+    : std::runtime_error(kConfigFileNotFoundMessage + config_file_path)
 {
 }
 
