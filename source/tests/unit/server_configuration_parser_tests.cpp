@@ -21,7 +21,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
   EXPECT_EQ(address, internal::kDefaultAddressPrefix + std::string("50051"));
 }
 
-TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NoError)
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)
 {
   ::internal::ServerConfigurationParser server_config_parser(std::string(kBinaryOutputDirectory) + "server_config.json");
 
