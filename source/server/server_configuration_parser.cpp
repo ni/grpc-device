@@ -47,12 +47,15 @@ std::string ServerConfigurationParser::get_exe_path()
 {
 #if defined(_MSC_VER)
   char filename[MAX_PATH];
-  GetModuleFileNameA(NULL, filename, MAX_PATH);
+  size_t path_length = GetModuleFileNameA(NULL, filename, MAX_PATH);
 #else
   char filename[PATH_MAX];
-  readlink("/proc/self/exe", filename, PATH_MAX);
+  ssize_t path_length = readlink("/proc/self/exe", filename, PATH_MAX);
 #endif
-  std::string exe_filename(filename);
+  if (path_length <= 0) {
+    throw InvalidExePathException();
+  }
+  std::string exe_filename(filename, path_length);
   return exe_filename.erase(exe_filename.find_last_of(kPathDelimitter) + 1);
 }
 
@@ -190,6 +193,11 @@ ServerConfigurationParser::ValueTypeNotStringException::ValueTypeNotStringExcept
 
 ServerConfigurationParser::FileNotFoundException::FileNotFoundException(const std::string& filepath)
     : std::runtime_error(kFileNotFoundMessage + filepath)
+{
+}
+
+ServerConfigurationParser::InvalidExePathException::InvalidExePathException()
+    : std::runtime_error(kInvalidExePathMessage)
 {
 }
 
