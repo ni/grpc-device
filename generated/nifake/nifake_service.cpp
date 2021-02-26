@@ -330,13 +330,11 @@ namespace grpc {
       }
       ViInt32 array_size = status;
 
-      ViReal64* array_out;
+      response->mutable_array_out()->Reserve(array_size);
+      ViReal64* array_out = response->mutable_array_out()->AddNAlreadyReserved(array_size);
       status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
       response->set_status(status);
       if (status == 0) {
-        for (int i = 0; i < array_size; i++) {
-          response->mutable_array_out()->Add(array_out[i]);
-        }
       }
       return ::grpc::Status::OK;
     }

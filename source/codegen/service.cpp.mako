@@ -259,10 +259,9 @@ ${initialize_standard_input_param(parameter)}\
 %>\
 % if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
       std::string ${parameter_name}(${size}, '\0');
-% elif parameter['size']['mechanism'] == 'fixed':
-      ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
 % else:
-      ${type_without_brackets}* ${parameter_name};
+      response->mutable_${parameter_name}()->Reserve(${size});
+      ${type_without_brackets}* ${parameter_name} = response->mutable_${parameter_name}()->AddNAlreadyReserved(${size});
 % endif
 % else:
       ${parameter['type']} ${parameter_name} {};
@@ -297,10 +296,6 @@ ${initialize_standard_input_param(parameter)}\
 % elif is_array:
 % if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
         response->set_${parameter_name}(${parameter_name});
-% else:
-        for (int i = 0; i < ${common_helpers.camel_to_snake(parameter['size']['value'])}; i++) {
-          response->mutable_${parameter_name}()->Add(${parameter_name}[i]);
-        }
 % endif
 % else:
         response->set_${parameter_name}(${parameter_name});
