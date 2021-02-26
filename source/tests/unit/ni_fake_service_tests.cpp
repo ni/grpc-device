@@ -425,11 +425,11 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const double delays[] = {1, 2, 3, 4, 5};
   std::int32_t expected_size = 5;
-  EXPECT_CALL(library_wrapper, AcceptListOfDurationsInSeconds(kTestViSession, expected_size, _))
+  EXPECT_CALL(library, AcceptListOfDurationsInSeconds(kTestViSession, expected_size, _))
       .With(Args<2, 1>(ElementsAreArray(delays)))
       .WillOnce(Return(kDriverSuccess));
 
@@ -450,11 +450,11 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const double numbers[] = {1, 2, 3, 4, 5};
   std::int32_t expected_size = 5;
-  EXPECT_CALL(library_wrapper, DoubleAllTheNums(kTestViSession, expected_size, _))
+  EXPECT_CALL(library, DoubleAllTheNums(kTestViSession, expected_size, _))
       .With(Args<2, 1>(ElementsAreArray(numbers)))
       .WillOnce(Return(kDriverSuccess));
 
@@ -475,10 +475,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   char output_string[256] = "Hello World!";
-  EXPECT_CALL(library_wrapper, GetAStringOfFixedMaximumSize(kTestViSession, _))
+  EXPECT_CALL(library, GetAStringOfFixedMaximumSize(kTestViSession, _))
       .WillOnce(DoAll(
           SetArrayArgument<1>(output_string, output_string + 256),
           Return(kDriverSuccess)));
@@ -498,11 +498,11 @@ TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsI
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const std::int8_t char_array[] = {'a', 'b', 'c'};
   std::int32_t expected_size = 3;
-  EXPECT_CALL(library_wrapper, ImportAttributeConfigurationBuffer(kTestViSession, expected_size, _))
+  EXPECT_CALL(library, ImportAttributeConfigurationBuffer(kTestViSession, expected_size, _))
       .With(Args<2, 1>(ElementsAreArray(char_array)))
       .WillOnce(Return(kDriverSuccess));
 
@@ -523,11 +523,11 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const double doubles[] = {0.2, -2.3, 4.5};
   std::int32_t expected_size = 3;
-  EXPECT_CALL(library_wrapper, MultipleArraysSameSize(kTestViSession, _, _, _, _, expected_size))
+  EXPECT_CALL(library, MultipleArraysSameSize(kTestViSession, _, _, _, _, expected_size))
       .With(AllOf(
           Args<1, 5>(ElementsAreArray(doubles, expected_size)),
           Args<2, 5>(ElementsAreArray(doubles, expected_size)),
@@ -555,8 +555,8 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   bool a_boolean = true;
   std::int32_t an_int_32 = 35;
   std::int64_t an_int_64 = 42;
@@ -567,7 +567,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   std::int32_t expected_string_size = 12;
   char a_string[] = "Hello There!";
   EXPECT_CALL(
-      library_wrapper,
+      library,
       ParametersAreMultipleTypes(
           kTestViSession,
           a_boolean,
@@ -602,11 +602,11 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumbe
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::int16_t a_number = 42;
   char a_string[256] = "Hello World!";
-  EXPECT_CALL(library_wrapper, ReturnANumberAndAString(kTestViSession, _, _))
+  EXPECT_CALL(library, ReturnANumberAndAString(kTestViSession, _, _))
       .WillOnce(DoAll(
           SetArgPointee<1>(a_number),
           SetArrayArgument<2>(a_string, a_string + 256),
@@ -628,11 +628,11 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library_wrapper;
-  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
   double waveforms[] = {53.4, 42, -120.3};
   std::int32_t expected_number_of_samples = 3;
-  EXPECT_CALL(library_wrapper, WriteWaveform(kTestViSession, expected_number_of_samples, _))
+  EXPECT_CALL(library, WriteWaveform(kTestViSession, expected_number_of_samples, _))
       .With(Args<2, 1>(ElementsAreArray(waveforms)))
       .WillOnce(Return(kDriverSuccess));
 
