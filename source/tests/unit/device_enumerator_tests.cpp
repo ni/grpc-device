@@ -25,50 +25,66 @@ TEST(DeviceEnumeratorTests, ExpectFindHardwareToThrowException_EnumerateDevices_
   EXPECT_EQ(message, status.error_message());
 }
 
-TEST(DeviceEnumeratorTests, CreateDeviceEnumeratorWithMockLibrary_EnumerateDevices_ReturnsExpectedNameOfDevices)
+TEST(DeviceEnumeratorTests, ExpectNextResourceToSetResourceHandle_EnumerateDevices_ResouceHandleValueIsPassedToGetResourceProperty)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, FindHardware)
-      .Times(1)
       .WillOnce(Return(NISysCfg_OK));
   EXPECT_CALL(mock_library, NextResource)
-      .Times(3)
+      .WillOnce([](NISysCfgResourceHandle* resourcesHandle) {
+        *resourcesHandle = (NISysCfgResourceHandle)1;
+        return NISysCfg_OK;
+      })
+      .WillOnce([](NISysCfgResourceHandle* resourcesHandle) {
+        *resourcesHandle = (NISysCfgResourceHandle)2;
+        return NISysCfg_OK;
+      })
+      .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty((NISysCfgEnumResourceHandle)1, _, _))
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, GetResourceProperty((NISysCfgEnumResourceHandle)2, _, _))
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, CloseHandle)
+      .WillRepeatedly(Return(NISysCfg_OK));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
+}
+
+TEST(DeviceEnumeratorTests, ExpectGetResourcePropertyToSetModelName_EnumerateDevices_ReturnsExpectedModelNameOfDevices)
+{
+  ni::tests::utilities::SysCfgMockLibrary mock_library;
+  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, FindHardware)
+      .WillOnce(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyProductName, _))
-      .Times(2)
       .WillOnce([](NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value) {
-        std::string model = "NI PXIe-5122";
-        strcpy(static_cast<char*>(value), model.c_str());
+        strcpy(static_cast<char*>(value), "NI PXIe-5122");
         return NISysCfg_OK;
       })
       .WillOnce([](NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value) {
-        std::string model = "NI PXIe-5441";
-        strcpy(static_cast<char*>(value), model.c_str());
+        strcpy(static_cast<char*>(value), "NI PXIe-5441");
         return NISysCfg_OK;
       });
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyVendorName, _))
-      .Times(2)
-      .WillRepeatedly([](NISysCfgEnumResourceHandle resourceEnumHandle, NISysCfgResourceProperty propertyID, void* value) {
-        std::string vendor = "National Instruments";
-        strcpy(static_cast<char*>(value), vendor.c_str());
-        return NISysCfg_OK;
-      });
+      .WillRepeatedly(Return(NISysCfg_OK));
   EXPECT_CALL(mock_library, CloseHandle)
-      .Times(2)
       .WillRepeatedly(Return(NISysCfg_OK));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   std::vector<std::string> expected_model_names{"NI PXIe-5122", "NI PXIe-5441"};
-  std::string expected_vendor_name = "National Instruments";
   ASSERT_EQ(expected_model_names.size(), devices.size());
   for (int i = 0; i < expected_model_names.size(); i++) {
     EXPECT_EQ(expected_model_names[i], devices.Get(i).model());
-    EXPECT_EQ(expected_vendor_name, devices.Get(i).vendor());
   }
 }
 

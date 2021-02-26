@@ -30,11 +30,11 @@ DeviceEnumerator::~DeviceEnumerator()
     if (NISysCfg_Succeeded(syscfg_status = library_->FindHardware())) {
       while (NISysCfg_Succeeded(syscfg_status) && (syscfg_status = library_->NextResource(&resource)) == NISysCfg_OK) {
         DeviceProperties* properties = devices->Add();
-        library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, model);
-        library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, vendor);
+        syscfg_status = library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, &model);
+        syscfg_status = library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, &vendor);
         properties->set_model(model);
         properties->set_vendor(vendor);
-        library_->CloseHandle(resource);
+        syscfg_status = library_->CloseHandle(resource);
       }
     }
   }
