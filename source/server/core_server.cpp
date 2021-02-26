@@ -69,7 +69,7 @@ static void RunServer(const std::string& config_file_path)
 int main(int argc, char** argv)
 {
   if (argc > 2) {
-    std::cerr << "\nUsage: " << argv[0] <<  " <config-file-path>\n\n";
+    std::cerr << "\nUsage: " << "core_server <config-file-path>\n\n";
     exit(EXIT_FAILURE);
   }
   std::string config_file_path;
