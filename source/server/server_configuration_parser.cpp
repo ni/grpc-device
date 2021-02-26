@@ -70,13 +70,10 @@ std::string ServerConfigurationParser::get_certs_directory(const std::string& co
 
 nlohmann::json ServerConfigurationParser::load(const std::string& config_file_path)
 {
-  // TODO: Prefer a passed in configuration file path and then search next to
-  // the binary and finally at platform specific default config file locations.
   std::ifstream input_stream(config_file_path);
 
   if (!input_stream) {
-    std::cout << config_file_path << std::endl;
-    throw ConfigFileNotFoundException();
+    throw ConfigFileNotFoundException(config_file_path);
   }
 
   try {
@@ -161,8 +158,8 @@ std::string ServerConfigurationParser::read_keycert(const std::string& filename)
   return data;
 }
 
-ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException()
-    : std::runtime_error(kConfigFileNotFoundMessage)
+ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException(const std::string& config_file_path)
+    : std::runtime_error(kConfigFileNotFoundMessage + config_file_path)
 {
 }
 

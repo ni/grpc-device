@@ -14,11 +14,11 @@ namespace unit {
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
-  ::internal::ServerConfigurationParser server_config_parser;
+  internal::ServerConfigurationParser server_config_parser;
 
   auto address = server_config_parser.parse_address();
 
-  EXPECT_EQ(address, ::internal::kDefaultAddressPrefix + std::string("50051"));
+  EXPECT_EQ(address, internal::kDefaultAddressPrefix + std::string("50051"));
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NoError)
@@ -45,73 +45,73 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTl
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
+ std::string missing_file_path = "fake.json";
   try {
-    std::string missing_file = "fake.json";
-    internal::ServerConfigurationParser server_config_parser(missing_file);
+    internal::ServerConfigurationParser server_config_parser(missing_file_path);
 
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
   catch (const internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
-    EXPECT_EQ(std::string(::internal::kConfigFileNotFoundMessage), ex.what());
+    EXPECT_EQ(internal::kConfigFileNotFoundMessage + std::string(missing_file_path), ex.what());
   }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddress_ThrowsInvalidPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port": -1 })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
 
     FAIL() << "InvalidPortException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
-    EXPECT_EQ(std::string(::internal::kInvalidPortMessage), ex.what());
+  catch (const internal::ServerConfigurationParser::InvalidPortException& ex) {
+    EXPECT_EQ(std::string(internal::kInvalidPortMessage), ex.what());
   }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithPortNumberExceedingMax_ParseAddress_ThrowsInvalidPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port": 65536 })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
 
     FAIL() << "InvalidPortException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::InvalidPortException& ex) {
-    EXPECT_EQ(std::string(::internal::kInvalidPortMessage), ex.what());
+  catch (const internal::ServerConfigurationParser::InvalidPortException& ex) {
+    EXPECT_EQ(std::string(internal::kInvalidPortMessage), ex.what());
   }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithPortAsString_ParseAddress_ThrowsWrongPortTypeException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port" : "9090" })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
 
     FAIL() << "WrongPortTypeException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::WrongPortTypeException& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kWrongPortTypeMessage));
+  catch (const internal::ServerConfigurationParser::WrongPortTypeException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(internal::kWrongPortTypeMessage));
   }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithoutPortKey_ParseAddress_ThrowsUnspecifiedPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "foo" : "bar" })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_address();
     FAIL() << "UnspecifiedPortException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::UnspecifiedPortException& ex) {
-    EXPECT_EQ(std::string(::internal::kUnspecifiedPortMessage), ex.what());
+  catch (const internal::ServerConfigurationParser::UnspecifiedPortException& ex) {
+    EXPECT_EQ(std::string(internal::kUnspecifiedPortMessage), ex.what());
   }
 }
 
@@ -125,7 +125,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerCert
         "root_cert": ""
     }
   })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto server_cert = server_config_parser.parse_server_cert();
 
@@ -142,7 +142,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseServerKey_
         "root_cert": ""
     }
   })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto server_key = server_config_parser.parse_server_key();
 
@@ -159,7 +159,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerSideTls_ParseRootCert_E
         "root_cert": ""
     }
   })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto root_cert = server_config_parser.parse_root_cert();
 
@@ -176,7 +176,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMutualTls_ParseAllSecurityKey
           "root_cert": "test_client_self_signed_crt.pem"
       }
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto server_key = server_config_parser.parse_server_key();
   auto server_cert = server_config_parser.parse_server_cert();
@@ -189,7 +189,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMutualTls_ParseAllSecurityKey
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAllSecurityKeys_AllEmpty)
 {
-  ::internal::ServerConfigurationParser server_config_parser;
+  internal::ServerConfigurationParser server_config_parser;
 
   auto server_key = server_config_parser.parse_server_key();
   auto server_cert = server_config_parser.parse_server_cert();
@@ -210,15 +210,15 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerCertAsInteger_ParseServ
           "root_cert": "test_client_self_signed_crt.pem"
       }
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_server_cert();
 
     FAIL() << "ValueTypeNotStringException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kValueTypeNotStringMessage));
+  catch (const internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(internal::kValueTypeNotStringMessage));
   }
 }
 
@@ -232,15 +232,15 @@ TEST(ServerConfigurationParserTests, JsonConfigWithServerKeyAsNull_ParseServerKe
           "root_cert": "test_client_self_signed_crt.pem"
       }
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_server_key();
 
     FAIL() << "ValueTypeNotStringException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kValueTypeNotStringMessage));
+  catch (const internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(internal::kValueTypeNotStringMessage));
   }
 }
 
@@ -254,15 +254,15 @@ TEST(ServerConfigurationParserTests, JsonConfigWithRootCertAsBoolean_ParseRootCe
           "root_cert": true
       }
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_root_cert();
 
     FAIL() << "ValueTypeNotStringException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kValueTypeNotStringMessage));
+  catch (const internal::ServerConfigurationParser::ValueTypeNotStringException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(internal::kValueTypeNotStringMessage));
   }
 }
 
@@ -275,7 +275,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithValidPemFilesButWithoutSecuri
       "server_key": "test_server_privatekey.pem",
       "root_cert": "test_client_self_signed_crt.pem"
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto server_key = server_config_parser.parse_server_key();
   auto server_cert = server_config_parser.parse_server_cert();
@@ -289,7 +289,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithValidPemFilesButWithoutSecuri
 TEST(ServerConfigurationParserTests, EmptyJsonConfig_ParseAllSecurityKeys_AllEmpty)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({})");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   auto server_key = server_config_parser.parse_server_key();
   auto server_cert = server_config_parser.parse_server_cert();
@@ -308,15 +308,15 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMissingServerCertFile_ParseSe
           "server_cert": "missing_server_cert.pem"
       }
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_server_cert();
 
     FAIL() << "FileNotFoundException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  catch (const internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(internal::kFileNotFoundMessage));
   }
 }
 
@@ -328,15 +328,15 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMissingServerKeyFile_ParseSer
           "server_key": "missing_server_key.pem"
       }
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_server_key();
 
     FAIL() << "FileNotFoundException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  catch (const internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(internal::kFileNotFoundMessage));
   }
 }
 
@@ -348,15 +348,15 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMissingRootCertFile_ParseRoot
           "root_cert": "missing_root_cert.pem"
       }
     })");
-  ::internal::ServerConfigurationParser server_config_parser(config_json);
+  internal::ServerConfigurationParser server_config_parser(config_json);
 
   try {
     auto address = server_config_parser.parse_root_cert();
 
     FAIL() << "FileNotFoundException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::FileNotFoundException& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(::internal::kFileNotFoundMessage));
+  catch (const internal::ServerConfigurationParser::FileNotFoundException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(internal::kFileNotFoundMessage));
   }
 }
 }  // namespace unit
