@@ -47,12 +47,15 @@ std::string ServerConfigurationParser::get_exe_path()
 {
 #if defined(_MSC_VER)
   char filename[MAX_PATH];
-  GetModuleFileNameA(NULL, filename, MAX_PATH);
+  size_t path_length = GetModuleFileNameA(NULL, filename, MAX_PATH);
 #else
   char filename[PATH_MAX];
-  readlink("/proc/self/exe", filename, PATH_MAX);
+  ssize_t path_length = readlink("/proc/self/exe", filename, PATH_MAX);
 #endif
-  std::string exe_filename(filename);
+  if (path_length <= 0) {
+    throw InvalidExePathException();
+  }
+  std::string exe_filename(filename, path_length);
   return exe_filename.erase(exe_filename.find_last_of(kPathDelimitter) + 1);
 }
 
@@ -100,19 +103,19 @@ std::string ServerConfigurationParser::parse_address() const
 std::string ServerConfigurationParser::parse_server_cert() const
 {
   auto file_name = parse_key_from_security_section(kServerCertJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_server_key() const
 {
   auto file_name = parse_key_from_security_section(kServerKeyJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_root_cert() const
 {
   auto file_name = parse_key_from_security_section(kRootCertJsonKey);
-  return read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_key_from_security_section(const char* key) const
@@ -138,12 +141,13 @@ std::string ServerConfigurationParser::read_keycert(const std::string& filename)
 {
   std::string data;
   std::ifstream file(filename);
-  if (file) {
-    std::stringstream key_cert_contents;
-    key_cert_contents << file.rdbuf();
-    file.close();
-    data = key_cert_contents.str();
+  if (!file) {
+    throw FileNotFoundException(filename);
   }
+  std::stringstream key_cert_contents;
+  key_cert_contents << file.rdbuf();
+  file.close();
+  data = key_cert_contents.str();
   return data;
 }
 
@@ -174,6 +178,16 @@ ServerConfigurationParser::UnspecifiedPortException::UnspecifiedPortException()
 
 ServerConfigurationParser::ValueTypeNotStringException::ValueTypeNotStringException(const std::string& key)
     : std::runtime_error(kValueTypeNotStringMessage + key)
+{
+}
+
+ServerConfigurationParser::FileNotFoundException::FileNotFoundException(const std::string& filepath)
+    : std::runtime_error(kFileNotFoundMessage + filepath)
+{
+}
+
+ServerConfigurationParser::InvalidExePathException::InvalidExePathException()
+    : std::runtime_error(kInvalidExePathMessage)
 {
 }
 
