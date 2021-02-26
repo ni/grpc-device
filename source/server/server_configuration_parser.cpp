@@ -33,7 +33,7 @@ ServerConfigurationParser::ServerConfigurationParser()
 {
 }
 
-ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path)
+ServerConfigurationParser::ServerConfigurationParser(const std::string& config_file_path)
     : config_file_path_(config_file_path), config_file_(load(config_file_path)), certs_directory_(get_certs_directory(config_file_path))
 {
 }
@@ -72,6 +72,7 @@ nlohmann::json ServerConfigurationParser::load(const std::string& config_file_pa
   std::ifstream input_stream(config_file_path);
 
   if (!input_stream) {
+    std::cout << config_file_path << std::endl;
     throw ConfigFileNotFoundException();
   }
 

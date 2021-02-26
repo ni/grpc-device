@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <server/server_configuration_parser.h>
+#include "tests/utilities/test_environment.h"
 
 #include <typeinfo>
 
@@ -19,14 +20,37 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
   EXPECT_EQ(address, ::internal::kDefaultAddressPrefix + std::string("50051"));
 }
 
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NoError)
+{
+  ::internal::ServerConfigurationParser server_config_parser(g_binary_output_directory + "server_config.json");
+
+  auto address = server_config_parser.parse_address();
+
+  EXPECT_FALSE(address.empty());
+}
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
+{
+  internal::ServerConfigurationParser server_config_parser(g_binary_output_directory + "test_mutual_tls_config.json");
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_FALSE(server_key.empty());
+  EXPECT_FALSE(server_cert.empty());
+  EXPECT_FALSE(root_cert.empty());
+}
+
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
   try {
-    ::internal::ServerConfigurationParser server_config_parser("fake.json");
+    std::string missing_file = "fake.json";
+    internal::ServerConfigurationParser server_config_parser(missing_file);
 
     FAIL() << "ConfigFileNotFoundException not thrown";
   }
-  catch (const ::internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
+  catch (const internal::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
     EXPECT_EQ(std::string(::internal::kConfigFileNotFoundMessage), ex.what());
   }
 }
