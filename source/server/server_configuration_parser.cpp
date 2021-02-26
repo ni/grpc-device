@@ -33,7 +33,7 @@ ServerConfigurationParser::ServerConfigurationParser()
 {
 }
 
-ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path)
+ServerConfigurationParser::ServerConfigurationParser(const std::string& config_file_path)
     : config_file_path_(config_file_path), config_file_(load(config_file_path))
 {
 }

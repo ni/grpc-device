@@ -15,7 +15,7 @@ static void RunServer(const std::string& config_file_path)
   try {
     ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser = config_file_path.empty()
         ? ni::hardware::grpc::internal::ServerConfigurationParser()
-        : ni::hardware::grpc::internal::ServerConfigurationParser(config_file_path.c_str());
+        : ni::hardware::grpc::internal::ServerConfigurationParser(config_file_path);
     server_address = server_config_parser.parse_address();
     server_cert = server_config_parser.parse_server_cert();
     server_key = server_config_parser.parse_server_key();
@@ -68,10 +68,11 @@ static void RunServer(const std::string& config_file_path)
 
 int main(int argc, char** argv)
 {
-  std::string config_file_path;
   if (argc > 2) {
-    std::cerr << "\nERROR:\n\nThe only acceptable argument is a path to the server's configuration file.\n\nExiting.\n";
+    std::cerr << "\nUsage: " << argv[0] <<  " <config-file-path>\n";
+    exit(EXIT_FAILURE);
   }
+  std::string config_file_path;
   if (argc == 2) {
     config_file_path = argv[1];
   }

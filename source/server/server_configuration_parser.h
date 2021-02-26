@@ -21,7 +21,7 @@ static const char* kDefaultAddressPrefix = "[::]:";
 class ServerConfigurationParser {
  public:
   ServerConfigurationParser();
-  ServerConfigurationParser(const char* config_file_path);
+  ServerConfigurationParser(const std::string& config_file_path);
   ServerConfigurationParser(const nlohmann::json& config_file);
   virtual ~ServerConfigurationParser() {}
 
