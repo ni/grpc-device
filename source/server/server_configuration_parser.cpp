@@ -61,10 +61,10 @@ std::string ServerConfigurationParser::get_exe_path()
 
 std::string ServerConfigurationParser::get_certs_directory(const std::string& config_file_path)
 {
-  std::string config_file_directory(config_file_path);
-  size_t end_directory_index = config_file_directory.find_last_of(kPathDelimitter);
-  return end_directory_index != std::string::npos
-      ? config_file_directory.erase(end_directory_index + 1) + kCertsFolderName
+  std::string directory_path(config_file_path);
+  size_t end_of_path_index = directory_path.find_last_of(kPathDelimitter);
+  return end_of_path_index != std::string::npos
+      ? directory_path.erase(end_of_path_index + 1) + kCertsFolderName
       : kCertsFolderName;
 }
 
