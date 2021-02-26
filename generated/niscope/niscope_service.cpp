@@ -424,11 +424,11 @@ namespace grpc {
       }
       ViInt32 size_in_bytes = status;
 
-      ViInt8* configuration;
-      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+      std::string configuration(size_in_bytes, '\0');
+      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
       response->set_status(status);
       if (status == 0) {
-        response->set_configuration((char*)configuration);
+        response->set_configuration(configuration);
       }
       return ::grpc::Status::OK;
     }
@@ -631,8 +631,8 @@ namespace grpc {
       }
       ViInt32 buf_size = status;
 
-      ViChar* value;
-      status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, value);
+      std::string value(buf_size, '\0');
+      status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, (ViChar*)value.data());
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -1004,8 +1004,8 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 self_test_result {};
-      ViChar self_test_message[256];
-      auto status = library_->self_test(vi, &self_test_result, self_test_message);
+      std::string self_test_message(256, '\0');
+      auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);

@@ -265,8 +265,8 @@ namespace grpc {
       }
       ViInt32 array_size = status;
 
-      ViChar* attribute_value;
-      status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, attribute_value);
+      std::string attribute_value(array_size, '\0');
+      status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
       response->set_status(status);
       if (status == 0) {
         response->set_attribute_value(attribute_value);
@@ -294,8 +294,8 @@ namespace grpc {
       }
       ViInt32 buffer_size = status;
 
-      ViChar* channel_name_buffer;
-      status = library_->GetChannelName(vi, index, buffer_size, channel_name_buffer);
+      std::string channel_name_buffer(buffer_size, '\0');
+      status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name_buffer.data());
       response->set_status(status);
       if (status == 0) {
         response->set_channel_name_buffer(channel_name_buffer);
@@ -323,8 +323,8 @@ namespace grpc {
       ViInt32 buffer_size = status;
 
       ViStatus code {};
-      ViChar* description;
-      status = library_->GetError(vi, &code, buffer_size, description);
+      std::string description(buffer_size, '\0');
+      status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
       response->set_status(status);
       if (status == 0) {
         response->set_code(code);
@@ -354,8 +354,8 @@ namespace grpc {
       }
       ViInt32 buffer_size = status;
 
-      ViChar* path;
-      status = library_->GetPath(vi, channel1, channel2, buffer_size, path);
+      std::string path(buffer_size, '\0');
+      status = library_->GetPath(vi, channel1, channel2, buffer_size, (ViChar*)path.data());
       response->set_status(status);
       if (status == 0) {
         response->set_path(path);
@@ -404,8 +404,8 @@ namespace grpc {
       }
       ViInt32 relay_name_buffer_size = status;
 
-      ViChar* relay_name_buffer;
-      status = library_->GetRelayName(vi, index, relay_name_buffer_size, relay_name_buffer);
+      std::string relay_name_buffer(relay_name_buffer_size, '\0');
+      status = library_->GetRelayName(vi, index, relay_name_buffer_size, (ViChar*)relay_name_buffer.data());
       response->set_status(status);
       if (status == 0) {
         response->set_relay_name_buffer(relay_name_buffer);
@@ -762,8 +762,8 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViStatus error_code = request->error_code();
-      ViChar error_message[256];
-      auto status = library_->error_message(vi, error_code, error_message);
+      std::string error_message(256, '\0');
+      auto status = library_->error_message(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
@@ -799,8 +799,8 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 self_test_result {};
-      ViChar self_test_message[256];
-      auto status = library_->self_test(vi, &self_test_result, self_test_message);
+      std::string self_test_message(256, '\0');
+      auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);

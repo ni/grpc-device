@@ -36,9 +36,15 @@ def get_include_guard_name(config, suffix):
 def create_args(parameters):
     result = ''
     for parameter in parameters:
-      if not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
-          result = result + '&'
-      result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
+      parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+      is_string = parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]'
+      if common_helpers.is_output_parameter(parameter) and is_string:
+        type_without_brackets = parameter['type'].replace('[]', '')
+        result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
+      else:
+        if not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
+            result = f'{result}&'
+        result = f'{result}{parameter_name}, '
     return result[:-2]
 
 def create_args_for_ivi_dance(parameters, zero_parameter):

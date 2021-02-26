@@ -255,8 +255,11 @@ ${initialize_standard_input_param(parameter)}\
 % if common_helpers.is_array(parameter['type']):
 <%
   type_without_brackets = parameter['type'].replace('[]', '')
+  size = parameter['size']['value'] if parameter['size']['mechanism'] == 'fixed' else common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
-% if parameter['size']['mechanism'] == 'fixed':
+% if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
+      std::string ${parameter_name}(${size}, '\0');
+% elif parameter['size']['mechanism'] == 'fixed':
       ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
 % else:
       ${type_without_brackets}* ${parameter_name};
@@ -292,9 +295,7 @@ ${initialize_standard_input_param(parameter)}\
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
 % elif is_array:
-% if parameter['type'] == 'ViInt8[]':
-        response->set_${parameter_name}((char*)${parameter_name});
-% elif parameter['type'] == 'ViChar[]':
+% if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
         response->set_${parameter_name}(${parameter_name});
 % else:
         for (int i = 0; i < ${common_helpers.camel_to_snake(parameter['size']['value'])}; i++) {

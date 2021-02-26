@@ -134,11 +134,11 @@ namespace grpc {
       }
       ViInt32 size_in_bytes = status;
 
-      ViInt8* configuration;
-      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+      std::string configuration(size_in_bytes, '\0');
+      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
       response->set_status(status);
       if (status == 0) {
-        response->set_configuration((char*)configuration);
+        response->set_configuration(configuration);
       }
       return ::grpc::Status::OK;
     }
@@ -206,8 +206,8 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViChar a_string[256];
-      auto status = library_->GetAStringOfFixedMaximumSize(vi, a_string);
+      std::string a_string(256, '\0');
+      auto status = library_->GetAStringOfFixedMaximumSize(vi, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
         response->set_a_string(a_string);
@@ -246,8 +246,8 @@ namespace grpc {
       }
       ViInt32 buffer_size = status;
 
-      ViChar* a_string;
-      status = library_->GetAnIviDanceString(vi, buffer_size, a_string);
+      std::string a_string(buffer_size, '\0');
+      status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
         response->set_a_string(a_string);
@@ -450,8 +450,8 @@ namespace grpc {
       }
       ViInt32 buffer_size = status;
 
-      ViChar* attribute_value;
-      status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, attribute_value);
+      std::string attribute_value(buffer_size, '\0');
+      status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
       response->set_status(status);
       if (status == 0) {
         response->set_attribute_value(attribute_value);
@@ -753,8 +753,8 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 a_number {};
-      ViChar a_string[256];
-      auto status = library_->ReturnANumberAndAString(vi, &a_number, a_string);
+      std::string a_string(256, '\0');
+      auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
         response->set_a_number(a_number);
