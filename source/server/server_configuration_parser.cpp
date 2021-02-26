@@ -34,7 +34,9 @@ ServerConfigurationParser::ServerConfigurationParser()
 }
 
 ServerConfigurationParser::ServerConfigurationParser(const std::string& config_file_path)
-    : config_file_path_(config_file_path), config_file_(load(config_file_path)), certs_directory_(get_certs_directory(config_file_path))
+    : config_file_path_(config_file_path),
+      config_file_(load(config_file_path)),
+      certs_directory_(get_certs_directory(config_file_path))
 {
 }
 

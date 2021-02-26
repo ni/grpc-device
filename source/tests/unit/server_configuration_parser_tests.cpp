@@ -23,7 +23,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NoError)
 {
-  ::internal::ServerConfigurationParser server_config_parser(g_binary_output_directory + "server_config.json");
+  ::internal::ServerConfigurationParser server_config_parser(std::string(g_binary_output_directory) + "server_config.json");
 
   auto address = server_config_parser.parse_address();
 
@@ -32,7 +32,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultC
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
 {
-  internal::ServerConfigurationParser server_config_parser(g_binary_output_directory + "test_mutual_tls_config.json");
+  internal::ServerConfigurationParser server_config_parser(std::string(g_binary_output_directory) + "test_mutual_tls_config.json");
 
   auto server_key = server_config_parser.parse_server_key();
   auto server_cert = server_config_parser.parse_server_cert();

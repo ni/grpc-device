@@ -9,4 +9,4 @@ static const char* kPathDelimitter = "\\";
 static const char* kPathDelimitter = "/";
 #endif
 
-extern std::string g_binary_output_directory;
+extern const char* g_binary_output_directory;
