@@ -349,7 +349,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attribute_id = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
-  ViReal64 attribute_value = 12.345;
+  double attribute_value = 12.345;
   EXPECT_CALL(library, GetAttributeViReal64(kTestViSession, Pointee(*kTestChannelName), attribute_id, _))
       .WillOnce(DoAll(SetArgPointee<3>(attribute_value), Return(kDriverSuccess)));
 
@@ -427,7 +427,7 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  const ViReal64 delays[] = {1, 2, 3, 4, 5};
+  const double delays[] = {1, 2, 3, 4, 5};
   std::int32_t expected_size = 5;
   EXPECT_CALL(library_wrapper, AcceptListOfDurationsInSeconds(kTestViSession, expected_size, _))
       .With(Args<2, 1>(ElementsAreArray(delays)))
@@ -436,7 +436,7 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
   ::grpc::ServerContext context;
   ni::fake::grpc::AcceptListOfDurationsInSecondsRequest request;
   request.mutable_vi()->set_id(session_id);
-  for (ViReal64 delay : delays) {
+  for (double delay : delays) {
     request.add_delays(delay);
   }
   ni::fake::grpc::AcceptListOfDurationsInSecondsResponse response;
@@ -452,7 +452,7 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  const ViReal64 numbers[] = {1, 2, 3, 4, 5};
+  const double numbers[] = {1, 2, 3, 4, 5};
   std::int32_t expected_size = 5;
   EXPECT_CALL(library_wrapper, DoubleAllTheNums(kTestViSession, expected_size, _))
       .With(Args<2, 1>(ElementsAreArray(numbers)))
@@ -461,7 +461,7 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
   ::grpc::ServerContext context;
   ni::fake::grpc::DoubleAllTheNumsRequest request;
   request.mutable_vi()->set_id(session_id);
-  for (ViReal64 number : numbers) {
+  for (double number : numbers) {
     request.add_numbers(number);
   }
   ni::fake::grpc::DoubleAllTheNumsResponse response;
@@ -477,7 +477,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  ViChar output_string[256] = "Hello World!";
+  char output_string[256] = "Hello World!";
   EXPECT_CALL(library_wrapper, GetAStringOfFixedMaximumSize(kTestViSession, _))
       .WillOnce(DoAll(
           SetArrayArgument<1>(output_string, output_string + 256),
@@ -525,7 +525,7 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  const ViReal64 doubles[] = {0.2, -2.3, 4.5};
+  const double doubles[] = {0.2, -2.3, 4.5};
   std::int32_t expected_size = 3;
   EXPECT_CALL(library_wrapper, MultipleArraysSameSize(kTestViSession, _, _, _, _, expected_size))
       .With(AllOf(
@@ -538,7 +538,7 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   ::grpc::ServerContext context;
   ni::fake::grpc::MultipleArraysSameSizeRequest request;
   request.mutable_vi()->set_id(session_id);
-  for (ViReal64 num : doubles) {
+  for (double num : doubles) {
     request.add_values1(num);
     request.add_values2(num);
     request.add_values3(num);
@@ -561,11 +561,11 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   std::int32_t an_int_32 = 35;
   std::int64_t an_int_64 = 42;
   ni::fake::grpc::Turtle an_int_enum = ni::fake::grpc::Turtle::TURTLE_MICHELANGELO;
-  ViReal64 a_float = 4.2;
+  double a_float = 4.2;
   ni::fake::grpc::FloatEnum a_float_enum = ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE;
   float expected_float_enum_value = 6.5;
   std::int32_t expected_string_size = 12;
-  ViChar a_string[] = "Hello There!";
+  char a_string[] = "Hello There!";
   EXPECT_CALL(
       library_wrapper,
       ParametersAreMultipleTypes(
@@ -605,7 +605,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumbe
   NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
   std::int16_t a_number = 42;
-  ViChar a_string[256] = "Hello World!";
+  char a_string[256] = "Hello World!";
   EXPECT_CALL(library_wrapper, ReturnANumberAndAString(kTestViSession, _, _))
       .WillOnce(DoAll(
           SetArgPointee<1>(a_number),
@@ -630,7 +630,7 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library_wrapper;
   ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
-  ViReal64 waveforms[] = {53.4, 42, -120.3};
+  double waveforms[] = {53.4, 42, -120.3};
   std::int32_t expected_number_of_samples = 3;
   EXPECT_CALL(library_wrapper, WriteWaveform(kTestViSession, expected_number_of_samples, _))
       .With(Args<2, 1>(ElementsAreArray(waveforms)))
@@ -639,7 +639,7 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   ::grpc::ServerContext context;
   ni::fake::grpc::WriteWaveformRequest request;
   request.mutable_vi()->set_id(session_id);
-  for (ViReal64 waveform : waveforms) {
+  for (double waveform : waveforms) {
     request.add_waveform(waveform);
   }
   ni::fake::grpc::WriteWaveformResponse response;
