@@ -335,7 +335,7 @@ namespace grpc {
       response->set_status(status);
       if (status == 0) {
         for (int i = 0; i < array_size; i++) {
-          response->set_array_out(i, array_out[i]);
+          response->mutable_array_out()->Add(array_out[i]);
         }
       }
       return ::grpc::Status::OK;

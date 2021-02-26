@@ -298,7 +298,7 @@ ${initialize_standard_input_param(parameter)}\
         response->set_${parameter_name}(${parameter_name});
 % else:
         for (int i = 0; i < ${common_helpers.camel_to_snake(parameter['size']['value'])}; i++) {
-          response->set_${parameter_name}(i, ${parameter_name}[i]);
+          response->mutable_${parameter_name}()->Add(${parameter_name}[i]);
         }
 % endif
 % else:

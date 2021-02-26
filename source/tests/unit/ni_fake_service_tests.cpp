@@ -650,6 +650,121 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_ExportAttributeConfigurationBuffer_CallsExportAttributeConfigurationBuffer)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  ViInt8 config_buffer[] = {'A', 'B', 'C'};
+  ViInt32 expected_size = 3;
+  // ivi-dance call
+  EXPECT_CALL(library_wrapper, ExportAttributeConfigurationBuffer(kViSession, 0, nullptr))
+      .WillOnce(Return(expected_size));
+  // follow up call with size returned from ivi-dance setup.
+  EXPECT_CALL(library_wrapper, ExportAttributeConfigurationBuffer(kViSession, expected_size, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(config_buffer, config_buffer + expected_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::ExportAttributeConfigurationBufferRequest request;
+  request.mutable_vi()->set_id(session_id);
+  ni::fake::grpc::ExportAttributeConfigurationBufferResponse response;
+  ::grpc::Status status = service.ExportAttributeConfigurationBuffer(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.configuration(), ElementsAreArray(config_buffer, expected_size));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceString)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  ViChar char_array[] = {'H', 'E', 'L', 'L', 'O'};
+  ViInt32 expected_size = 5;
+  // ivi-dance call
+  EXPECT_CALL(library_wrapper, GetAnIviDanceString(kViSession, 0, nullptr))
+      .WillOnce(Return(expected_size));
+  // follow up call with size returned from ivi-dance setup.
+  EXPECT_CALL(library_wrapper, GetAnIviDanceString(kViSession, expected_size, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(char_array, char_array + expected_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::GetAnIviDanceStringRequest request;
+  request.mutable_vi()->set_id(session_id);
+  ni::fake::grpc::GetAnIviDanceStringResponse response;
+  ::grpc::Status status = service.GetAnIviDanceString(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.a_string(), ElementsAreArray(char_array, expected_size));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingIviDance)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  ViReal64 doubles[] = {53.4, 42, -120.3};
+  ViInt32 expected_size = 3;
+  // ivi-dance call
+  EXPECT_CALL(library_wrapper, GetArrayUsingIviDance(kViSession, 0, nullptr))
+      .WillOnce(Return(expected_size));
+  // follow up call with size returned from ivi-dance setup.
+  EXPECT_CALL(library_wrapper, GetArrayUsingIviDance(kViSession, expected_size, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(doubles, doubles + expected_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::GetArrayUsingIviDanceRequest request;
+  request.mutable_vi()->set_id(session_id);
+  ni::fake::grpc::GetArrayUsingIviDanceResponse response;
+  ::grpc::Status status = service.GetArrayUsingIviDance(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(doubles, expected_size));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViString)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kViSession);
+  NiceMock<NiFakeMockLibrary> library_wrapper;
+  ni::fake::grpc::NiFakeService service(&library_wrapper, &session_repository);
+  ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_READ_WRITE_DOUBLE;
+  ViChar attribute_char_array[] = {'H', 'E', 'L', 'L', 'O'};
+  ViInt32 expected_size = 5;
+  // ivi-dance call
+  EXPECT_CALL(library_wrapper, GetAttributeViString(kViSession, Pointee(*kChannelName), attributeId, 0, nullptr))
+      .WillOnce(Return(expected_size));
+  // follow up call with size returned from ivi-dance setup.
+  EXPECT_CALL(library_wrapper, GetAttributeViString(kViSession, Pointee(*kChannelName), attributeId, expected_size, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<4>(attribute_char_array, attribute_char_array + expected_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::GetAttributeViStringRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_channel_name(kChannelName);
+  request.set_attribute_id(attributeId);
+  ni::fake::grpc::GetAttributeViStringResponse response;
+  ::grpc::Status status = service.GetAttributeViString(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.attribute_value(), ElementsAreArray(attribute_char_array, expected_size));
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
