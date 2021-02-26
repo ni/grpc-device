@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
   ::testing::InitGoogleTest(&argc, argv);
   if (argc != 2) {
-    std::cerr << "\nUsage: " << argv[0] << " <default-config-folder-path>\nExample: " << argv[0] << " .\\Release\n";
+    std::cerr << "\nUsage: " << argv[0] << " <test-config-folder-path>\nExample: " << argv[0] << " .\\Release\n";
     exit(EXIT_FAILURE);
   }
   g_binary_output_directory = strcat(argv[1], kPathDelimitter);
