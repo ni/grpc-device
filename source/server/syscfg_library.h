@@ -1,5 +1,5 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARY_H
-#define NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARY_H
+#ifndef NI_HARDWARE_GRPC_INTERNAL_SYSCFG_LIBRARY_H
+#define NI_HARDWARE_GRPC_INTERNAL_SYSCFG_LIBRARY_H
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
@@ -19,9 +19,9 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
 
   std::string get_library_name() const;
   bool is_library_loaded() const;
-  // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.
-  // Adding a dummy FindHardware here which will be updated in future
-  NISysCfgStatus FindHardware();
+  // Adding a dummy InitializeSession here which will be updated in future.
+  // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
+  NISysCfgStatus InitializeSession();
 
  private:
   SharedLibrary shared_library_;
@@ -32,4 +32,4 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
 }  // namespace hardware
 }  // namespace ni
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARY_H
+#endif  // NI_HARDWARE_GRPC_INTERNAL_SYSCFG_LIBRARY_H

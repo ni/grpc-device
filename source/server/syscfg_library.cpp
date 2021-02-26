@@ -21,7 +21,7 @@ SysCfgLibrary::~SysCfgLibrary()
 {
 }
 
-NISysCfgStatus SysCfgLibrary::FindHardware()
+NISysCfgStatus SysCfgLibrary::InitializeSession()
 {
   // In future it will be updated to use function pointers to syscfg APIs. 
   // Now for proving dummy implementation, throwing exception that library is not found.

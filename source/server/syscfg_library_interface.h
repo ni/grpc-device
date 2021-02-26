@@ -1,5 +1,5 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARYINTERFACE_H
-#define NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARYINTERFACE_H
+#ifndef NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
+#define NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
@@ -13,8 +13,9 @@ class SysCfgLibraryInterface {
  public:
   virtual ~SysCfgLibraryInterface() {}
 
-  virtual NISysCfgStatus FindHardware() = 0;
-  // TODO: Additional methods like InitializeSession, CreateFilter etc. will be added in upcoming PRs.
+  // Adding a dummy method below which will be updated in upcoming PR with corresponding gmock tests.
+  // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
+  virtual NISysCfgStatus InitializeSession() = 0;
 };
 
 }  // namespace internal
@@ -22,4 +23,4 @@ class SysCfgLibraryInterface {
 }  // namespace hardware
 }  // namespace ni
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATORLIBRARYINTERFACE_H
+#endif  // NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
