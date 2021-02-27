@@ -285,6 +285,7 @@ ${initialize_standard_input_param(parameter)}\
   iterator_name = parameter_name + "_imap_it"
 %>\
 
+
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
         if(${iterator_name} == ${map_name}.end()) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
