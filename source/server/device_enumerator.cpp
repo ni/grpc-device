@@ -23,8 +23,6 @@ DeviceEnumerator::~DeviceEnumerator()
   NISysCfgSessionHandle session = NULL;
   
   try {
-    // Providing dummy implementation below which will be updated in upcoming PRs 
-    // to use syscfg APIs properly to enumerate devices.
     syscfg_status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
     syscfg_status = library_->CloseHandle(session);
   }

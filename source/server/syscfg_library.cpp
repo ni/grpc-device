@@ -34,30 +34,44 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
 {
   NISysCfgSessionHandle session = NULL;
   bool is_syscfg_api_installed = false;
+
 #if defined(_MSC_VER)
-  NISysCfgStatus status = NISysCfgInitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
+  NISysCfgStatus status = NISysCfgInitializeSession(
+    targetName,
+    username,
+    password,
+    language,
+    forcePropertyRefresh,
+    connectTimeoutMsec,
+    expertEnumHandle,
+    sessionHandle);
   is_syscfg_api_installed = status != NISysCfg_SysConfigAPINotInstalled;
 #else
   is_syscfg_api_installed = shared_library_.is_loaded();
 #endif
+
   if (!is_syscfg_api_installed) {
     throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
   }
+
   return status;
 }
 
 NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
 {
   bool is_syscfg_api_installed = false;
+
 #if defined(_MSC_VER)
   NISysCfgStatus status = NISysCfgCloseHandle(syscfg_handle);
   is_syscfg_api_installed = status != NISysCfg_SysConfigAPINotInstalled;
 #else
   is_syscfg_api_installed = shared_library_.is_loaded();
 #endif
+
   if (!is_syscfg_api_installed) {
     throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
   }
+
   return status;
 }
 
