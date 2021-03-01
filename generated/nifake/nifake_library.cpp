@@ -37,6 +37,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAStringUsingPythonCode = reinterpret_cast<GetAStringUsingPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetAStringUsingPythonCode"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
+  function_pointers_.GetArrayForPythonCodeCustomType = reinterpret_cast<GetArrayForPythonCodeCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeCustomType"));
   function_pointers_.GetArrayForPythonCodeDouble = reinterpret_cast<GetArrayForPythonCodeDoublePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeDouble"));
   function_pointers_.GetArraySizeForPythonCode = reinterpret_cast<GetArraySizeForPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForPythonCode"));
   function_pointers_.GetArrayUsingIviDance = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("niFake_GetArrayUsingIviDance"));
@@ -254,6 +255,18 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViSession vi, ViInt32 buff
   return niFake_GetAnIviDanceWithATwistString(vi, bufferSize, aString, actualSize);
 #else
   return function_pointers_.GetAnIviDanceWithATwistString(vi, bufferSize, aString, actualSize);
+#endif
+}
+
+ViStatus NiFakeLibrary::GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[])
+{
+  if (!function_pointers_.GetArrayForPythonCodeCustomType) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForPythonCodeCustomType.");
+  }
+#if defined(_MSC_VER)
+  return niFake_GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
+#else
+  return function_pointers_.GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
 #endif
 }
 

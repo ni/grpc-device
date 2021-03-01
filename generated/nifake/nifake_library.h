@@ -34,6 +34,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   ViStatus GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
+  ViStatus GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[]);
   ViStatus GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
   ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut);
   ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
@@ -89,6 +90,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   using GetAStringUsingPythonCodePtr = ViStatus (*)(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   using GetAnIviDanceStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   using GetAnIviDanceWithATwistStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
+  using GetArrayForPythonCodeCustomTypePtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[]);
   using GetArrayForPythonCodeDoublePtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
   using GetArraySizeForPythonCodePtr = ViStatus (*)(ViSession vi, ViInt32* sizeOut);
   using GetArrayUsingIviDancePtr = ViStatus (*)(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
@@ -144,6 +146,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     GetAStringUsingPythonCodePtr GetAStringUsingPythonCode;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
+    GetArrayForPythonCodeCustomTypePtr GetArrayForPythonCodeCustomType;
     GetArrayForPythonCodeDoublePtr GetArrayForPythonCodeDouble;
     GetArraySizeForPythonCodePtr GetArraySizeForPythonCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;

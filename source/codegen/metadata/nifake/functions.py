@@ -496,7 +496,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetArrayForPythonCodeCustomType': {
-        'codegen_method': 'no',
+        'codegen_method': 'custom',
         'documentation': {
             'description': 'This function returns an array for use in python-code size mechanism.'
         },
@@ -510,6 +510,7 @@ functions = {
                 'type': 'ViSession'
             },
             {
+                'gen_proto_field': False,
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the array.'
@@ -552,6 +553,7 @@ functions = {
                 'type': 'ViSession'
             },
             {
+                'gen_proto_field': False,
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the array.'

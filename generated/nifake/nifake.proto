@@ -30,6 +30,7 @@ service NiFake {
   rpc GetAStringUsingPythonCode(GetAStringUsingPythonCodeRequest) returns (GetAStringUsingPythonCodeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
+  rpc GetArrayForPythonCodeCustomType(GetArrayForPythonCodeCustomTypeRequest) returns (GetArrayForPythonCodeCustomTypeResponse);
   rpc GetArrayForPythonCodeDouble(GetArrayForPythonCodeDoubleRequest) returns (GetArrayForPythonCodeDoubleResponse);
   rpc GetArraySizeForPythonCode(GetArraySizeForPythonCodeRequest) returns (GetArraySizeForPythonCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
@@ -249,9 +250,17 @@ message GetAnIviDanceWithATwistStringResponse {
   sint32 actual_size = 3;
 }
 
+message GetArrayForPythonCodeCustomTypeRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message GetArrayForPythonCodeCustomTypeResponse {
+  int32 status = 1;
+  repeated FakeCustomStruct array_out = 2;
+}
+
 message GetArrayForPythonCodeDoubleRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 number_of_elements = 2;
 }
 
 message GetArrayForPythonCodeDoubleResponse {
