@@ -517,7 +517,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArra
   //EXPECT_EQ(kDriverSuccess, response.status());
 
 }
-/*
+
 TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsImportAttributeConfigurationBuffer)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -672,7 +672,7 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
 }
-*/
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
