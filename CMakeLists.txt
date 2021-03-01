@@ -50,6 +50,7 @@ link_directories("./imports/lib/win64")
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
+set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
 set(nidrivers "nifake" "niscope" "niswitch")
 
 #----------------------------------------------------------------------
@@ -155,6 +156,15 @@ foreach(api ${nidrivers})
   endif()
 endforeach()
 
+#Add custom service implementations per driver
+foreach(api ${nidrivers})
+  if(NOT api STREQUAL "nifake")   
+    set(nidriver_service_srcs
+        ${nidriver_service_srcs}
+        "${custom_dir}/${api}_service.custom.cpp")
+  endif()
+endforeach()
+
 add_executable(core_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
@@ -167,6 +177,14 @@ add_executable(core_server
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
+
+# Target include directories so custom service implementations can find service headers.
+foreach(api ${nidrivers})
+  if(NOT api STREQUAL "nifake")
+    target_include_directories(core_server
+      PRIVATE "${service_output_dir}/${api}")
+  endif()
+endforeach()
 
 target_link_libraries(core_server
    ${_REFLECTION}
@@ -247,6 +265,7 @@ add_executable(UnitTestsRunner
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${service_output_dir}/nifake/nifake_service.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc")
 
