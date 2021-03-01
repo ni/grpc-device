@@ -227,7 +227,6 @@ add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
-# Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/session_utilities_service_tests.cpp"
@@ -249,6 +248,12 @@ add_executable(UnitTestsRunner
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc")
+
+# ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
+# This disables that requirement for just the ni_fake_service_tests.cpp file.
+if(MSVC)
+  set_source_files_properties("source/tests/unit/ni_fake_service_tests.cpp" PROPERTIES COMPILE_FLAGS /bigobj)
+endif()
 
 target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake")
