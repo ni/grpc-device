@@ -427,8 +427,8 @@ TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
-  std::int16_t a_turtle = NIFAKE_VAL_LEONARDO;
   std::int32_t a_quantity = 123;
+  std::int16_t a_turtle = NIFAKE_VAL_LEONARDO;
   EXPECT_CALL(library, GetEnumValue(kTestViSession, _, _))
     .WillOnce(DoAll(SetArgPointee<1>(a_quantity), SetArgPointee<2>(a_turtle), Return(kDriverSuccess)));
 
