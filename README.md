@@ -126,7 +126,7 @@ Setting | Google | Ours | Justification
 
 ## Running the gRPC Server
 
-The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support](## SSL/TLS Support) section below.
+The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the SSL/TLS Support section below.
 
 There are two ways to start the server:
 
@@ -164,7 +164,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 3. The server configuration file is malformed and is not in proper JSON format. Refer to JSON configuration files in this readme for example of the expected format.
 4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
 5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
-6. Security configuration errors. See [SSL/TLS Support](## SSL/TLS Support) section below.
+6. Security configuration errors. See SSL/TLS Support section below.
 
 ### Default Configuration File (insecure):
 
