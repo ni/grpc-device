@@ -25,9 +25,9 @@ void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output) {
 
 void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output) {
   for (auto item : input) {
-    auto message = ni::scope::grpc::WaveformInfo();
-    Copy(item, &message);
-    output->AddAllocated(&message);
+    auto message = new ni::scope::grpc::WaveformInfo();
+    Copy(item, message);
+    output->AddAllocated(message);
   }
 }
 namespace ni {

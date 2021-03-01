@@ -6,6 +6,5 @@ message WaveformInfo {
   double offset = 5;
   double gain = 6;
   double reserved1 = 7;
-  double reserved2 = 8;
-  
+  double reserved2 = 8; 
 }                

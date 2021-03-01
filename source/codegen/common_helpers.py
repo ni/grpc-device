@@ -39,14 +39,25 @@ def is_enum(parameter):
     return True
   return False
 
+def is_struct(parameter):
+  return parameter["type"].startswith("struct")
+
+def format_struct_type(struct):
+  return struct.replace("struct ","").replace('[]', '')
+
 def has_unsupported_parameter(function):
   return any(is_unsupported_parameter(p) for p in function['parameters'])
 
 def is_unsupported_parameter(parameter):
   type = parameter['type']
   supported_size_mechanisms = {'fixed', 'len'}
+  supported_struct_size_mechanisms = {'passed-in'}
   is_unsupported_array = is_array(type) and parameter['size']['mechanism'] not in supported_size_mechanisms
-  return is_unsupported_array and not parameter['type'].startswith("struct")
+  is_unsupported_struct_array = is_array(type) and parameter['size']['mechanism'] not in supported_struct_size_mechanisms
+  if is_struct(parameter):
+    return  is_unsupported_struct_array
+  else:
+    return is_unsupported_array
 
 def camel_to_snake(camelString):
   camelString = list(camelString)

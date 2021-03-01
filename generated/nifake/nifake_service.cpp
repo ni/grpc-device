@@ -19,9 +19,9 @@ void Copy(const CustomStruct& input, ni::fake::grpc::FakeCustomStruct* output) {
 
 void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<ni::fake::grpc::FakeCustomStruct>* output) {
   for (auto item : input) {
-    auto message = ni::fake::grpc::FakeCustomStruct();
-    Copy(item, &message);
-    output->AddAllocated(&message);
+    auto message = new ni::fake::grpc::FakeCustomStruct();
+    Copy(item, message);
+    output->AddAllocated(message);
   }
 }
 namespace ni {
@@ -453,7 +453,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 number_of_elements = request->number_of_elements();
-      std::vector<CustomStruct> cs(number_of_elements);  
+      std::vector<CustomStruct> cs(number_of_elements);
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
       response->set_status(status);
       if (status == 0) {

@@ -39,9 +39,9 @@ void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type[
 
 void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
   for (auto item : input) {
-    auto message = ${namespace_prefix}${custom_type["grpc_name"]}();
-    Copy(item, &message);
-    output->AddAllocated(&message);
+    auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
+    Copy(item, message);
+    output->AddAllocated(message);
   }
 }
 %endif
@@ -230,13 +230,28 @@ ${initialize_standard_input_param(parameter)}\
 \
 \
 \
+<%def name="initialize_struct_output(parameter)">\
+<%
+parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+parameter_type = common_helpers.format_struct_type(parameter["type"])
+%>\
+% if common_helpers.is_array(parameter["type"]):
+std::vector<${parameter_type}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});
+% else: 
+parameter_type parameter_name = {};
+% endif
+</%def>\
+\
+\
+\
+\
 <%def name="initialize_output_variables_snippet(output_parameters)">\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
-%if parameter['type'].startswith("struct ") and common_helpers.is_array(parameter["type"]):
-      std::vector<${parameter['type'].replace("struct ","").replace('[]', '')}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});  
+% if common_helpers.is_struct(parameter):
+      ${initialize_struct_output(parameter)}\
 % elif common_helpers.is_array(parameter['type']):
 % if parameter['size']['mechanism'] == 'fixed':
 <%
@@ -273,7 +288,7 @@ ${initialize_standard_input_param(parameter)}\
 %else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
-%elif parameter["type"].startswith("struct"):
+%elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 % else:
         response->set_${parameter_name}(${parameter_name});
