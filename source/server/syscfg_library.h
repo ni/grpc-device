@@ -47,7 +47,7 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   typedef struct FunctionPointers {
     InitializeSessionPtr InitializeSession;
     CloseHandlePtr CloseHandle;
-  };
+  } FunctionLoadStatus;
 
   SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
