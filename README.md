@@ -185,7 +185,7 @@ Coming Soon
 
 ## SSL/TLS Support
 
-The server supports both Server-Side TLS and Mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. To read more about SSL/TLS in gRPC refer to [this document](https://grpc.io/docs/guides/auth/).
+The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server.
 
 In the default case the server expects the `certs` folder to be located in the same folder as the server executable itself:
 
@@ -219,7 +219,7 @@ If a path to the configuration file is specified when starting the server then t
 ```
    
 1. When none of the security-related configuration values are set then the server defaults to an insecure (no SSL/TLS) configuration. Additionally, if one of the `server_cert` or `server_key` values is set but not the other then the server will also default to an insecure configuration. Specifying one of the two is considered an incomplete configuration.
-2. To configure the server for Server-Side TLS then set both the `server_cert` and `server_key` values. In this configuration only the identity of the server is verified:
+2. To configure the server for server-side TLS then set both the `server_cert` and `server_key` values. In this configuration only the identity of the server is verified:
 
 ```
 {
@@ -231,7 +231,7 @@ If a path to the configuration file is specified when starting the server then t
    }
 }
 ```
-3. To configure the server for Mutual TLS then set the `server_cert`, `server_key` and `root_cert` values. This configuration verifies the identity of the client in addition to the identity of the server. When the `root_cert` is specified the server always requests a client certificate:
+3. To configure the server for mutual TLS then set the `server_cert`, `server_key` and `root_cert` values. This configuration verifies the identity of the client in addition to the identity of the server. When the `root_cert` is specified the server always requests a client certificate:
 
 ```
 {
@@ -246,6 +246,65 @@ If a path to the configuration file is specified when starting the server then t
 
 **Note: ** The server's configuration (insecure, server-side TLS or mutual TLS) will always be printed to the terminal when the server starts.
 
+### Creating Certificates
+
+A detailed explanation of security considerations is outside of the scope of this document. To read more about SSL/TLS in gRPC refer to [this document](https://grpc.io/docs/guides/auth/).
+
+There are many tools available to produce certificate files for SSL/TLS. One such tool is `openssl` and below is a simple example that creates self-signed server and client certificates:
+
+```
+openssl genrsa -passout pass:1111 -des3 -out ca.key 2048
+
+openssl req -passin pass:1111 -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=US/ST=Texas/L=Austin/O=NI/OU=R&D/CN=MachineName"
+ 
+openssl genrsa -passout pass:1111 -des3 -out server_privatekey.pem 2048
+ 
+openssl req -passin pass:1111 -new -key server_privatekey.pem -out server_csr.pem -subj "/C=US/ST=Texas/L=Austin/O=NI/OU=R&D/CN=MachineName"
+ 
+openssl x509 -req -passin pass:1111 -days 3650 -in server_csr.pem -CA ca.crt -CAkey ca.key -CAcreateserial -out server_self_signed_crt.pem
+ 
+openssl rsa -passin pass:1111 -in server_privatekey.pem -out server_privatekey.pem
+ 
+openssl genrsa -passout pass:1111 -des3 -out client_privatekey.pem 2048
+ 
+openssl req -passin pass:1111 -new -key client_privatekey.pem -out client_csr.pem -subj "/C=US/ST=Texas/L=Austin/O=NI/OU=R&D/CN=MachineName"
+ 
+openssl x509 -passin pass:1111 -req -days 3650 -in client_csr.pem -CA ca.crt -CAkey ca.key -CAcreateserial -out client_self_signed_crt.pem
+ 
+openssl rsa -passin pass:1111 -in client_privatekey.pem -out client_privatekey.pem
+```
+
+### Configuring the Client (Python Example)
+
+The examples below make use of the certificates generated in the section above. Your specific configuration (i.e. the certificate files you use) will be dependent on how you generate the certificate files.
+
+1. To establish a connection to an insecure server then call the `insecure_channel(..)` method:
+
+```
+channel = grpc.insecure_channel(serverAddress)
+```
+
+2. To establish a connection to a server configured for server-side TLS then call the `secure_channel(..)` method and set `root_certificates` to point to the server's self-signed certificate:
+
+```
+ca_cert = open('server_self_signed_crt.pem', 'rb').read()
+creds = grpc.ssl_channel_credentials(root_certificates=ca_cert)
+channel = grpc.secure_channel(serverAddress, creds)
+```
+
+3. To establish a connection to a server configured for mutual TLS then call the `secure_channel(..)` method and set:
+   a. `root_certificates` to point to the server's self-signed certificate
+   b. `certificate_chain` to point to the client's self-signed certificate
+   c. `private_key` to point to the client's private key
+   
+```
+ca_cert = open('server_self_signed_crt.pem', 'rb').read()
+client_cert = open('client_self_signed_crt.pem', 'rb').read()
+client_key = open('client_privatekey.pem', 'rb').read()
+creds = grpc.ssl_channel_credentials(root_certificates=ca_cert, private_key=client_key, certificate_chain=client_cert)
+channel = grpc.secure_channel(serverAddress, creds)
+```
+
 ### Troubleshooting Security Configuration
 
 1. If the server can't find the certificate file at the expected location then the server will fail to start and an error message will be printed to the terminal. In this case verify that the certificate file exists at the correct location and that the user has read permissions for the file.
@@ -255,7 +314,7 @@ If a path to the configuration file is specified when starting the server then t
 E0301 12:10:55.011000000  1136 ssl_transport_security.cc:1455] Handshake failed with fatal error SSL_ERROR_SSL: error:100000c0:SSL routines:OPENSSL_internal:PEER_DID_NOT_RETURN_A_CERTIFICATE.
 ```
 
-3. One common error state occurs when a client creates a channel for a configuration different from the server. For example, the server might be configured for Mutual TLS and the client configures an insecure channel (no security) or server-side TLS (no client certificate specified). In this case the client will typically see an `UNAVAILABLE` error status on the first RPC call. The gRPC conneciton utilizes lazy intialization and therefore the connection isn't established until the first RPC called is made. Below is an example call stack from a Python client:
+3. One common error state occurs when a client creates a channel for a configuration different from the server. For example, the server might be configured for mutual TLS and the client configures an insecure channel (no security) or server-side TLS (no client certificate specified). In this case the client will typically see an `UNAVAILABLE` error status on the first RPC call. The gRPC conneciton utilizes lazy intialization and therefore the connection isn't established until the first RPC called is made. Below is an example call stack from a Python client:
 
 ```
 <class 'grpc._channel._InactiveRpcError'>
