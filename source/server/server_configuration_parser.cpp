@@ -45,6 +45,9 @@ ServerConfigurationParser::ServerConfigurationParser(const nlohmann::json& confi
 {
 }
 
+// Returns the absolute path to the folder that contains the running executable.
+// The path includes the trailing platform-dependent delimitter (i.e. /path/to/exe/folder/
+// or C:\path\to\exe\folder\) and does not contain the executable name.
 std::string ServerConfigurationParser::get_exe_path()
 {
 #if defined(_MSC_VER)
