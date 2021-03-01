@@ -967,6 +967,27 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
+  {
+    try {
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViStatus error_code = request->error_code();
+      ViChar error_message[256];
+      auto status = library_->error_message(vi, error_code, error_message);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_error_message(error_message);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
     try {
