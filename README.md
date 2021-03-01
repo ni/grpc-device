@@ -153,7 +153,7 @@ If the server starts successfully and registers on the port specified in the con
 Server listening on port 50051. Security is configured with insecure credentials.
 ```
 
-**Note:** If port `0 `is specified then the server will automatically select a port from the dynamic range. The port used will be reflected in the message above.
+**Note:** If port `0 `is specified then the server will automatically select a port from the dynamic range. The port used will be reflected in the startup message.
 
 If the server fails to start (i.e. a port is not specified in the configuration file) then an error message is printed in the terminal and the application will exit.
 
