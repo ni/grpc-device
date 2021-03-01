@@ -692,6 +692,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   ::grpc::Status status = service.StringValuedEnumInputFunctionWithDefaults(&context, &request, &response);
 
   EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+  EXPECT_EQ(NULL, response.status());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaultsWithValidEnumInput_CallsStringValuedEnumInputFunctionWithDefaults)
