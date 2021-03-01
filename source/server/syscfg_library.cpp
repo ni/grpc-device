@@ -16,8 +16,7 @@ SysCfgLibrary::SysCfgLibrary()
 {
   shared_library_.load();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
-  bool loaded = shared_library_.is_loaded();
-  if (!loaded) {
+  if (!shared_library_.is_loaded()) {
     return;
   }
   function_pointers_.InitializeSession = reinterpret_cast<InitializeSessionPtr>(shared_library_.get_function_pointer("NISysCfgInitializeSession"));
