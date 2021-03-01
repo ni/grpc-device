@@ -12,6 +12,14 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
+#if defined(_MSC_VER)
+static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
+#else
+static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
+#endif
+
+static const char* kSysCfgApiNotInstalledMessage = "The NI System Configuration API is not installed on the server.";
+
 class SysCfgLibrary : public SysCfgLibraryInterface {
  public:
   SysCfgLibrary();
