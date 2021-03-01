@@ -43,9 +43,7 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
   // In future it will be updated to use function pointers to syscfg APIs. 
   // Now for proving dummy implementation, throwing exception that library is not found.
   if (!is_syscfg_api_installed) {
-    std::string message("Could not load the library: ");
-    message += kSysCfgApiLibraryName;
-    throw ni::hardware::grpc::internal::LibraryLoadException(message);
+    throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
   }
   return status;
 }
@@ -59,10 +57,8 @@ NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
 #else
   is_syscfg_api_installed = shared_library_.is_loaded();
 #endif
-  if (!is_syscfg_api_installed) {
-    std::string message("Could not load the library: ");
-    message += kSysCfgApiLibraryName;
-    throw ni::hardware::grpc::internal::LibraryLoadException(message);
+  if (!shared_library_.is_loaded()) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
   }
   return status;
 }
