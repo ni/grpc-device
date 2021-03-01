@@ -6,6 +6,8 @@ config = data["config"]
 attributes = data["attributes"]
 enums = data["enums"]
 functions = data["functions"]
+lookup = data["lookup"]
+custom_template = "custom_proto.mako"
 
 service_class_prefix = config["service_class_prefix"]
 attribute_value_prefix = service_class_prefix.upper()
@@ -75,6 +77,7 @@ nonint_index = 1
 }
 
 % endfor
+${lookup.get_template(custom_template).render()}
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])
@@ -89,7 +92,10 @@ message ${common_helpers.snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%
   index  = index + 1
-  parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
+  if 'grpc_type' in parameter:
+    parameter_type = parameter['grpc_type']
+  else:
+    parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
 % endfor
@@ -103,7 +109,10 @@ message ${common_helpers.snake_to_camel(function)}Response {
 % for parameter in output_parameters:
 <%
   index = index + 1
-  parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
+  if "grpc_type" in parameter:
+    parameter_type = parameter["grpc_type"]
+  else:
+    parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
 %endfor

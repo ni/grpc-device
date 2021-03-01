@@ -31,7 +31,6 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, GetAStringUsingPythonCode, (ViSession vi, ViInt16 aNumber, ViChar aString[]), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceString, (ViSession vi, ViInt32 bufferSize, ViChar aString[]), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistString, (ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize), (override));
-  MOCK_METHOD(ViStatus, GetArrayForPythonCodeCustomType, (ViSession vi, ViInt32 numberOfElements, struct CustomStruct arrayOut[]), (override));
   MOCK_METHOD(ViStatus, GetArrayForPythonCodeDouble, (ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]), (override));
   MOCK_METHOD(ViStatus, GetArraySizeForPythonCode, (ViSession vi, ViInt32* sizeOut), (override));
   MOCK_METHOD(ViStatus, GetArrayUsingIviDance, (ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]), (override));
@@ -42,8 +41,7 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]), (override));
   MOCK_METHOD(ViStatus, GetCalDateAndTime, (ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetCalInterval, (ViSession vi, ViInt32* months), (override));
-  MOCK_METHOD(ViStatus, GetCustomType, (ViSession vi, struct CustomStruct* cs), (override));
-  MOCK_METHOD(ViStatus, GetCustomTypeArray, (ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]), (override));
+  MOCK_METHOD(ViStatus, GetCustomTypeArray, (ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]), (override));
   MOCK_METHOD(ViStatus, GetEnumValue, (ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
@@ -65,8 +63,6 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViInt64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue), (override));
-  MOCK_METHOD(ViStatus, SetCustomType, (ViSession vi, struct CustomStruct cs), (override));
-  MOCK_METHOD(ViStatus, SetCustomTypeArray, (ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]), (override));
   MOCK_METHOD(ViStatus, StringValuedEnumInputFunctionWithDefaults, (ViSession vi, ViConstString aMobileOSName), (override));
   MOCK_METHOD(ViStatus, TwoInputFunction, (ViSession vi, ViReal64 aNumber, ViString aString), (override));
   MOCK_METHOD(ViStatus, Use64BitNumber, (ViSession vi, ViInt64 input, ViInt64* output), (override));
