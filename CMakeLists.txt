@@ -96,7 +96,8 @@ foreach(api ${nidrivers})
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
-      "${service_output_dir}/${api}/${api}_library.cpp")
+      "${service_output_dir}/${api}/${api}_library.cpp"
+      "${custom_dir}/${api}_service.custom.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -156,15 +157,6 @@ foreach(api ${nidrivers})
   endif()
 endforeach()
 
-# Add custom service implementations per driver
-foreach(api ${nidrivers})
-  if(NOT api STREQUAL "nifake")   
-    set(nidriver_service_srcs
-        ${nidriver_service_srcs}
-        "${custom_dir}/${api}_service.custom.cpp")
-  endif()
-endforeach()
-
 add_executable(core_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
@@ -177,14 +169,6 @@ add_executable(core_server
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
-
-# Target include directories so custom service implementations can find service headers.
-foreach(api ${nidrivers})
-  if(NOT api STREQUAL "nifake")
-    target_include_directories(core_server
-      PRIVATE "${service_output_dir}/${api}")
-  endif()
-endforeach()
 
 target_link_libraries(core_server
    ${_REFLECTION}

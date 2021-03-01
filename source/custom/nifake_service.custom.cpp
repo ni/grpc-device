@@ -1,9 +1,9 @@
+#include <nifake/nifake_service.h>
+
 #include <atomic>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
-#include "nifake_service.h"
 
 namespace ni {
 namespace fake {

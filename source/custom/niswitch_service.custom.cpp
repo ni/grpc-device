@@ -1,9 +1,9 @@
+#include <niswitch/niswitch_service.h>
+
 #include <atomic>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
-#include "niswitch_service.h"
 
 namespace ni {
 namespace niswitch {

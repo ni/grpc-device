@@ -1,9 +1,9 @@
+#include <niscope/niscope_service.h>
+
 #include <atomic>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
-#include "niscope_service.h"
 
 namespace ni {
 namespace scope {
