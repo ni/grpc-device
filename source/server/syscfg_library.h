@@ -19,9 +19,18 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
 
   std::string get_library_name() const;
   bool is_library_loaded() const;
-  // Adding a dummy InitializeSession here which will be updated in future.
+  NISysCfgStatus InitializeSession(
+    const char *                           targetName,
+    const char *                           username,
+    const char *                           password,
+    NISysCfgLocale                         language,
+    NISysCfgBool                           forcePropertyRefresh,
+    unsigned int                           connectTimeoutMsec,
+    NISysCfgEnumExpertHandle *             expertEnumHandle,
+    NISysCfgSessionHandle *                sessionHandle
+    );
+  NISysCfgStatus CloseHandle(void* syscfgHandle);
   // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
-  NISysCfgStatus InitializeSession();
 
  private:
   SharedLibrary shared_library_;

@@ -13,9 +13,18 @@ class SysCfgLibraryInterface {
  public:
   virtual ~SysCfgLibraryInterface() {}
 
-  // Adding a dummy method below which will be updated in upcoming PR with corresponding gmock tests.
+  virtual NISysCfgStatus InitializeSession(
+    const char *                           targetName,
+    const char *                           username,
+    const char *                           password,
+    NISysCfgLocale                         language,
+    NISysCfgBool                           forcePropertyRefresh,
+    unsigned int                           connectTimeoutMsec,
+    NISysCfgEnumExpertHandle *             expertEnumHandle,
+    NISysCfgSessionHandle *                sessionHandle
+    ) = 0;
+  virtual NISysCfgStatus CloseHandle(void* syscfgHandle) = 0;
   // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
-  virtual NISysCfgStatus InitializeSession() = 0;
 };
 
 }  // namespace internal

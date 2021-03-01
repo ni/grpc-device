@@ -21,16 +21,50 @@ SysCfgLibrary::~SysCfgLibrary()
 {
 }
 
-NISysCfgStatus SysCfgLibrary::InitializeSession()
+NISysCfgStatus SysCfgLibrary::InitializeSession(
+  const char *                           targetName,
+  const char *                           username,
+  const char *                           password,
+  NISysCfgLocale                         language,
+  NISysCfgBool                           forcePropertyRefresh,
+  unsigned int                           connectTimeoutMsec,
+  NISysCfgEnumExpertHandle *             expertEnumHandle,
+  NISysCfgSessionHandle *                sessionHandle
+  )
 {
+  NISysCfgSessionHandle session = NULL;
+  bool is_syscfg_api_installed = false;
+#if defined(_MSC_VER)
+  NISysCfgStatus status = NISysCfgInitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
+  is_syscfg_api_installed = status != NISysCfg_SysConfigAPINotInstalled;
+#else
+  is_syscfg_api_installed = shared_library_.is_loaded();
+#endif
   // In future it will be updated to use function pointers to syscfg APIs. 
   // Now for proving dummy implementation, throwing exception that library is not found.
-  if (!shared_library_.is_loaded()) {
+  if (!is_syscfg_api_installed) {
     std::string message("Could not load the library: ");
     message += kSysCfgApiLibraryName;
     throw ni::hardware::grpc::internal::LibraryLoadException(message);
   }
-  return NISysCfg_OK;
+  return status;
+}
+
+NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
+{
+  bool is_syscfg_api_installed = false;
+#if defined(_MSC_VER)
+  NISysCfgStatus status = NISysCfgCloseHandle(syscfg_handle);
+  is_syscfg_api_installed = status != NISysCfg_SysConfigAPINotInstalled;
+#else
+  is_syscfg_api_installed = shared_library_.is_loaded();
+#endif
+  if (!is_syscfg_api_installed) {
+    std::string message("Could not load the library: ");
+    message += kSysCfgApiLibraryName;
+    throw ni::hardware::grpc::internal::LibraryLoadException(message);
+  }
+  return status;
 }
 
 std::string SysCfgLibrary::get_library_name() const

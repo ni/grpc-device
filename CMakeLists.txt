@@ -178,7 +178,7 @@ target_link_libraries(core_server
    )
 
 if(WIN32)
-  target_link_libraries(core_server Delayimp niScope niswitch)
+  target_link_libraries(core_server Delayimp niScope niswitch nisyscfg)
   set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
   set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
 endif()
@@ -224,6 +224,10 @@ target_link_libraries(IntegrationTestsRunner
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
+
+if(WIN32)
+  target_link_libraries(IntegrationTestsRunner nisyscfg)
+endif()
 
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
