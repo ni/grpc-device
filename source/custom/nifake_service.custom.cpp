@@ -78,8 +78,7 @@ namespace internal = ni::hardware::grpc::internal;
     status = library_->GetArrayForPythonCodeCustomType(vi, number_of_elements, array_out.data());
     response->set_status(status);
     if (status == 0) {
-      // TODO: Figure out how to link to Copy defined in nifake_service.cpp. Possibly add to header file for NiFakeService as private function.
-      // Copy(array_out, response->mutable_array_out());
+      Copy(array_out, response->mutable_array_out());
     }
     return ::grpc::Status::OK;
   }

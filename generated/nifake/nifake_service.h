@@ -71,13 +71,15 @@ public:
   ::grpc::Status Use64BitNumber(::grpc::ServerContext* context, const Use64BitNumberRequest* request, Use64BitNumberResponse* response) override;
   ::grpc::Status WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
-  private:
+private:
   NiFakeLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
-    std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
-    std::map<float, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
-    std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
-    std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
+  void Copy(const CustomStruct& input, ni::fake::grpc::FakeCustomStruct* output);
+  void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<ni::fake::grpc::FakeCustomStruct>* output);
+  std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
+  std::map<float, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
+  std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
+  std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
 };
 
 } // namespace grpc

@@ -30,21 +30,6 @@ if len(config["custom_types"]) > 0:
 #include <atomic>
 #include <vector>
 
-%if 'custom_type' in locals():
-void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
-%for field in custom_type["fields"]: 
- output->set_${field["grpc_name"]}(input.${field["name"]});
-%endfor
-}
-
-void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
-  for (auto item : input) {
-    auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
-    Copy(item, message);
-    output->AddAllocated(message);
-  }
-}
-%endif
 namespace ni {
 namespace ${config["namespace_component"]} {
 namespace grpc {
@@ -59,6 +44,24 @@ namespace grpc {
   ${service_class_prefix}Service::~${service_class_prefix}Service()
   {
   }
+
+  %if 'custom_type' in locals():
+  void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
+  {
+%for field in custom_type["fields"]: 
+    output->set_${field["grpc_name"]}(input.${field["name"]});
+%endfor
+  }
+
+  void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+%endif
 
 % for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
