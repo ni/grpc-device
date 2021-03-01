@@ -60,7 +60,7 @@ namespace grpc {
   {
   }
 
-% for function_name in common_helpers.filter_proto_rpc_functions(functions):
+% for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
     method_name = common_helpers.snake_to_camel(function_name)

@@ -106,3 +106,8 @@ def filter_api_functions(functions):
   '''Returns function metadata only for those functions to include for generating the function types to the API library'''
   return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']
 
+def filter_proto_rpc_functions_to_generate(functions):
+  '''Returns function metadata only for those functions to include for generating proto rpc methods'''
+  functions_for_code_gen = {'public'}
+  return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_code_gen]
+

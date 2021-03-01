@@ -386,7 +386,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAStringUsingPythonCode': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'documentation': {
             'description': 'Returns a number and a string.',
             'note': 'This function rules!'
@@ -538,7 +538,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetArrayForPythonCodeDouble': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'documentation': {
             'description': 'This function returns an array for use in python-code size mechanism.'
         },
