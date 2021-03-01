@@ -156,7 +156,7 @@ foreach(api ${nidrivers})
   endif()
 endforeach()
 
-#Add custom service implementations per driver
+# Add custom service implementations per driver
 foreach(api ${nidrivers})
   if(NOT api STREQUAL "nifake")   
     set(nidriver_service_srcs
