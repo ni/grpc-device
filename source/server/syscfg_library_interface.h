@@ -14,16 +14,16 @@ class SysCfgLibraryInterface {
   virtual ~SysCfgLibraryInterface() {}
 
   virtual NISysCfgStatus InitializeSession(
-    const char*                            targetName,
+    const char*                            target_name,
     const char*                            username,
     const char*                            password,
     NISysCfgLocale                         language,
-    NISysCfgBool                           forcePropertyRefresh,
-    unsigned int                           connectTimeoutMsec,
-    NISysCfgEnumExpertHandle*              expertEnumHandle,
-    NISysCfgSessionHandle*                 sessionHandle
+    NISysCfgBool                           force_property_refresh,
+    unsigned int                           connect_timeout_msec,
+    NISysCfgEnumExpertHandle*              expert_enum_handle,
+    NISysCfgSessionHandle*                 session_handle
     ) = 0;
-  virtual NISysCfgStatus CloseHandle(void* syscfgHandle) = 0;
+  virtual NISysCfgStatus CloseHandle(void* syscfg_handle) = 0;
   // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
 };
 

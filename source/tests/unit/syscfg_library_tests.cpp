@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <server/syscfg_library.h>
 
+namespace internal = ni::hardware::grpc::internal;
+
 namespace ni {
 namespace tests {
 namespace unit {
@@ -11,20 +13,49 @@ static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
 static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
 #endif
 
-TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibrary)
+TEST(SysCfgLibraryTests, SysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibrary)
 {
-  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  internal::SysCfgLibrary syscfg_library;
   std::string shared_library_name = syscfg_library.get_library_name();
 
   EXPECT_STREQ(kSysCfgApiLibraryName, shared_library_name.c_str());
 }
 
 
-TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryIsNotLoaded)
+TEST(SysCfgLibraryTests, SysCfgLibrary_SharedLibraryIsNotLoaded)
 {
-  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
+  internal::SysCfgLibrary syscfg_library;
 
   EXPECT_FALSE(syscfg_library.is_library_loaded());
+}
+
+TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallInitializeSession_ThrowsLibraryLoadException)
+{
+  internal::SysCfgLibrary syscfg_library;
+
+  try {
+    NISysCfgSessionHandle session = NULL;
+    auto status = syscfg_library.InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
+
+    FAIL() << "LibraryLoadException not thrown";
+  }
+  catch (internal::LibraryLoadException& ex) {
+    EXPECT_EQ("The NI System Configuration API is not installed on the server.", ex.what());
+  }
+}
+
+TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallCloseHandle_ThrowsLibraryLoadException)
+{
+  internal::SysCfgLibrary syscfg_library;
+
+  try {
+    auto status = syscfg_library.CloseHandle(NULL);
+
+    FAIL() << "LibraryLoadException not thrown";
+  }
+  catch (internal::LibraryLoadException& ex) {
+    EXPECT_EQ("The NI System Configuration API is not installed on the server.", ex.what());
+  }
 }
 
 }  // namespace unit

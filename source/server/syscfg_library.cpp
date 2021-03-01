@@ -38,14 +38,14 @@ bool SysCfgLibrary::is_library_loaded() const
 }
 
 NISysCfgStatus SysCfgLibrary::InitializeSession(
-  const char*                            targetName,
+  const char*                            target_name,
   const char*                            username,
   const char*                            password,
   NISysCfgLocale                         language,
-  NISysCfgBool                           forcePropertyRefresh,
-  unsigned int                           connectTimeoutMsec,
-  NISysCfgEnumExpertHandle*              expertEnumHandle,
-  NISysCfgSessionHandle*                 sessionHandle
+  NISysCfgBool                           force_property_refresh,
+  unsigned int                           connect_timeout_msec,
+  NISysCfgEnumExpertHandle*              expert_enum_handle,
+  NISysCfgSessionHandle*                 session_handle
   )
 {
   if (!function_pointers_.InitializeSession) {
@@ -53,25 +53,25 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
   }
 #if defined(_MSC_VER)
   return NISysCfgInitializeSession(
-    targetName,
+    target_name,
     username,
     password,
     language,
-    forcePropertyRefresh,
-    connectTimeoutMsec,
-    expertEnumHandle,
-    sessionHandle
+    force_property_refresh,
+    connect_timeout_msec,
+    expert_enum_handle,
+    session_handle
   );
 #else
   return function_pointers_.InitializeSession(
-    targetName,
+    target_name,
     username,
     password,
     language,
-    forcePropertyRefresh,
-    connectTimeoutMsec,
-    expertEnumHandle,
-    sessionHandle
+    force_property_refresh,
+    connect_timeout_msec,
+    expert_enum_handle,
+    session_handle
   );
 #endif
 }
