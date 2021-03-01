@@ -26,9 +26,7 @@ DeviceEnumerator::~DeviceEnumerator()
     // Providing dummy implementation below which will be updated in upcoming PRs 
     // to use syscfg APIs properly to enumerate devices.
     syscfg_status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
-    if (session != NULL) {
-      syscfg_status = library_->CloseHandle(session);
-    }
+    syscfg_status = library_->CloseHandle(session);
   }
   catch (ni::hardware::grpc::internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
