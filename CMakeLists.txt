@@ -229,7 +229,7 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 
 # Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
-    "source/tests/utilities/run_all_tests_with_args.cpp"
+    "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
@@ -282,6 +282,6 @@ target_link_libraries(SystemTestsRunner
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )
-add_test( NAME UnitTests COMMAND UnitTestsRunner  $<TARGET_FILE_DIR:UnitTestsRunner>)
+add_test( NAME UnitTests COMMAND UnitTestsRunner )
 add_test( NAME IntegrationTests COMMAND IntegrationTestsRunner )
 add_test( NAME SystemTests COMMAND SystemTestsRunner )

@@ -4,8 +4,6 @@
 
 #include <typeinfo>
 
-#include "tests/utilities/test_environment.h"
-
 namespace internal = ni::hardware::grpc::internal;
 
 namespace ni {
@@ -23,7 +21,8 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)
 {
-  ::internal::ServerConfigurationParser server_config_parser(std::string(kBinaryOutputDirectory) + "server_config.json");
+  std::string config_file_path = internal::ServerConfigurationParser::get_exe_path() +  "server_config.json";
+  internal::ServerConfigurationParser server_config_parser(config_file_path);
 
   auto address = server_config_parser.parse_address();
 
@@ -32,7 +31,8 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultC
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
 {
-  internal::ServerConfigurationParser server_config_parser(std::string(kBinaryOutputDirectory) + "test_mutual_tls_config.json");
+  std::string config_file_path = internal::ServerConfigurationParser::get_exe_path() +  "test_mutual_tls_config.json";
+  internal::ServerConfigurationParser server_config_parser(config_file_path);
 
   auto server_key = server_config_parser.parse_server_key();
   auto server_cert = server_config_parser.parse_server_cert();
