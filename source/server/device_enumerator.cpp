@@ -24,7 +24,7 @@ DeviceEnumerator::~DeviceEnumerator()
   
   try {
     syscfg_status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
-    syscfg_status = library_->CloseHandle(session);
+    library_->CloseHandle(session);
   }
   catch (ni::hardware::grpc::internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
