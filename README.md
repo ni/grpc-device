@@ -7,9 +7,7 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 ![NI Linux Real-Time Build](https://github.com/ni/ni-driver-apis-grpc/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
 
 ## Note: This project is not yet complete
-* The gRPC server is not yet complete.
 * Testing on Linux not yet implemented.
-* SSL/TLS support not yet implemented.
 * Support for specific NI driver APIs not yet added.
 
 ## Building on Windows 64-bit
@@ -126,7 +124,7 @@ Setting | Google | Ours | Justification
 
 ## Running the gRPC Server
 
-The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the SSL/TLS Support section below.
+The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support).
 
 There are two ways to start the server:
 
@@ -164,7 +162,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 3. The server configuration file is malformed and is not in proper JSON format. Refer to JSON configuration files in this readme for example of the expected format.
 4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
 5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
-6. Security configuration errors. See SSL/TLS Support section below.
+6. Security configuration errors. See [SSL/TLS Support section](#ssltls-support).
 
 ### Default Configuration File (insecure):
 
@@ -190,32 +188,27 @@ The server supports both server-side TLS and mutual TLS. Security configuration 
 In the default case the server expects the `certs` folder to be located in the same folder as the server executable itself:
 
 ```
-<installation directory>
-|
---> core_server
---> server_config.json
---> certs/
-   |
-   --> certfile1.pem
-   --> certfile2.pem
-   --> certfile3.pem
+server_installation_folder/
+├── certs
+│   ├── client_self_signed_crt.pem
+│   ├── server_privatekey.pem
+│   └── server_self_signed_crt.pem
+├── core_server
+└── server_config.json
 ```
 
 If a path to the configuration file is specified when starting the server then the `certs` folder must be located in the same location as the specified configuration file:
 
 ```
-<installation directory>
-|
---> core_server
+server_installation_folder/
+└── core_server
 
-<path specified to config file>
-|
---> server_config.json
---> certs/
-   |
-   --> certfile1.pem
-   --> certfile2.pem
-   --> certfile3.pem
+config_file_folder/
+├── certs
+│   ├── client_self_signed_crt.pem
+│   ├── server_privatekey.pem
+│   └── server_self_signed_crt.pem
+└── mutual_tls.json
 ```
    
 1. When none of the security-related configuration values are set then the server defaults to an insecure (no SSL/TLS) configuration. Additionally, if one of the `server_cert` or `server_key` values is set but not the other then the server will also default to an insecure configuration. Specifying one of the two is considered an incomplete configuration.
@@ -254,29 +247,20 @@ There are many tools available to produce certificate files for SSL/TLS. One suc
 
 ```
 openssl genrsa -passout pass:1111 -des3 -out ca.key 2048
-
 openssl req -passin pass:1111 -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=US/ST=Texas/L=Austin/O=NI/OU=R&D/CN=MachineName"
- 
 openssl genrsa -passout pass:1111 -des3 -out server_privatekey.pem 2048
- 
 openssl req -passin pass:1111 -new -key server_privatekey.pem -out server_csr.pem -subj "/C=US/ST=Texas/L=Austin/O=NI/OU=R&D/CN=MachineName"
- 
 openssl x509 -req -passin pass:1111 -days 3650 -in server_csr.pem -CA ca.crt -CAkey ca.key -CAcreateserial -out server_self_signed_crt.pem
- 
 openssl rsa -passin pass:1111 -in server_privatekey.pem -out server_privatekey.pem
- 
 openssl genrsa -passout pass:1111 -des3 -out client_privatekey.pem 2048
- 
 openssl req -passin pass:1111 -new -key client_privatekey.pem -out client_csr.pem -subj "/C=US/ST=Texas/L=Austin/O=NI/OU=R&D/CN=MachineName"
- 
 openssl x509 -passin pass:1111 -req -days 3650 -in client_csr.pem -CA ca.crt -CAkey ca.key -CAcreateserial -out client_self_signed_crt.pem
- 
 openssl rsa -passin pass:1111 -in client_privatekey.pem -out client_privatekey.pem
 ```
 
 ### Configuring the Client (Python Example)
 
-The examples below make use of the certificates generated in the section above. Your specific configuration (i.e. the certificate files you use) will be dependent on how you generate the certificate files.
+The examples in this section make use of the certificates generated in the [Creating Certificates section](#creating-certificates). Your specific configuration (i.e. the certificate files you use) will be dependent on how you generate the certificate files.
 
 1. To establish a connection to an insecure server then call the `insecure_channel(..)` method:
 
@@ -319,11 +303,11 @@ E0301 12:10:55.011000000  1136 ssl_transport_security.cc:1455] Handshake failed 
 ```
 <class 'grpc._channel._InactiveRpcError'>
 Traceback (most recent call last):
-  File "C:\Users\ksulliva\Desktop\Demo\client.py", line 22, in <module>
+  File "C:\Users\username\Desktop\Demo\client.py", line 22, in <module>
     response = server.IsReservedByClient(serverTypes.IsReservedByClientRequest(reservation_id=reservation_id, client_id=client_id))
-  File "C:\Users\ksulliva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\grpc\_channel.py", line 923, in __call__
+  File "C:\Users\username\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\grpc\_channel.py", line 923, in __call__
     return _end_unary_response_blocking(state, call, False, None)
-  File "C:\Users\ksulliva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\grpc\_channel.py", line 826, in _end_unary_response_blocking
+  File "C:\Users\username\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\grpc\_channel.py", line 826, in _end_unary_response_blocking
     raise _InactiveRpcError(state)
 grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
         status = StatusCode.UNAVAILABLE
