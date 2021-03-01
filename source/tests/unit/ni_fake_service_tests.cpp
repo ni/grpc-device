@@ -208,7 +208,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
   EXPECT_EQ(a_boolean, response.a_boolean());
 }
 
-// Individual Function Tests for functions without enums or arrays
+// Simple Input and Output Type Function Tests
 TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -421,6 +421,30 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
   EXPECT_EQ(months, response.months());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  std::int32_t a_quantity = 123;
+  std::int16_t a_turtle = NIFAKE_VAL_LEONARDO;
+  EXPECT_CALL(library, GetEnumValue(kTestViSession, _, _))
+    .WillOnce(DoAll(SetArgPointee<1>(a_quantity), SetArgPointee<2>(a_turtle), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::GetEnumValueRequest request;
+  request.mutable_vi()->set_id(session_id);
+  ni::fake::grpc::GetEnumValueResponse response;
+  ::grpc::Status status = service.GetEnumValue(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(a_quantity, response.a_quantity());
+  EXPECT_EQ(a_turtle, response.a_turtle());
+}
+
+// Array input and output tests
 TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAcceptListOfDurationsInSeconds)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -644,6 +668,50 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   }
   ni::fake::grpc::WriteWaveformResponse response;
   ::grpc::Status status = service.WriteWaveform(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+// Non-int enum Tests
+TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaultsWithInvalidEnumInput_ReturnsInvalidArgument)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  ni::fake::grpc::MobileOSNames a_mobile_o_s_name = ni::fake::grpc::MOBILE_O_S_NAMES_UNSPECIFIED;
+  EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults)
+    .Times(0);
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_a_mobile_o_s_name(a_mobile_o_s_name);
+  ni::fake::grpc::StringValuedEnumInputFunctionWithDefaultsResponse response;
+  ::grpc::Status status = service.StringValuedEnumInputFunctionWithDefaults(&context, &request, &response);
+
+  EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+  EXPECT_EQ(NULL, response.status());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaultsWithValidEnumInput_CallsStringValuedEnumInputFunctionWithDefaults)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  ni::fake::grpc::MobileOSNames a_mobile_o_s_name = ni::fake::grpc::MOBILE_O_S_NAMES_ANDROID;
+  const char* expected_enum_value = NIFAKE_VAL_ANDROID;
+  EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults(kTestViSession, Pointee(*expected_enum_value)))
+    .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_a_mobile_o_s_name(a_mobile_o_s_name);
+  ni::fake::grpc::StringValuedEnumInputFunctionWithDefaultsResponse response;
+  ::grpc::Status status = service.StringValuedEnumInputFunctionWithDefaults(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
