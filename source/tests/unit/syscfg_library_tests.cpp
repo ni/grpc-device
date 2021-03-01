@@ -34,7 +34,7 @@ TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallInitializeSession_ThrowsLibra
     FAIL() << "LibraryLoadException not thrown";
   }
   catch (internal::LibraryLoadException& ex) {
-    EXPECT_EQ(std::string(internal::kSysCfgApiNotInstalledMessage), ex.what());
+    EXPECT_STREQ(internal::kSysCfgApiNotInstalledMessage, ex.what());
   }
 }
 
@@ -48,7 +48,7 @@ TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallCloseHandle_ThrowsLibraryLoad
     FAIL() << "LibraryLoadException not thrown";
   }
   catch (internal::LibraryLoadException& ex) {
-    EXPECT_EQ(std::string(internal::kSysCfgApiNotInstalledMessage), ex.what());
+    EXPECT_STREQ(internal::kSysCfgApiNotInstalledMessage, ex.what());
   }
 }
 
