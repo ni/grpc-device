@@ -147,7 +147,7 @@ There are two ways to start the server:
 `./core_server \path\to\config\file\server_config.json`
 
 
-If the server starts successfully and registers on the port specified in the configuration file then it will print a message indicating that to the terminal output:
+If the server starts successfully on the port specified in the configuration file, then it will print a message to the terminal output:
 
 ```
 Server listening on port 50051. Security is configured with insecure credentials.
