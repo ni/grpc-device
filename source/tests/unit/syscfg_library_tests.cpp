@@ -40,7 +40,7 @@ TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallInitializeSession_ThrowsLibra
     FAIL() << "LibraryLoadException not thrown";
   }
   catch (internal::LibraryLoadException& ex) {
-    EXPECT_EQ("The NI System Configuration API is not installed on the server.", ex.what());
+    EXPECT_STREQ("The NI System Configuration API is not installed on the server.", ex.what());
   }
 }
 
@@ -54,7 +54,7 @@ TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallCloseHandle_ThrowsLibraryLoad
     FAIL() << "LibraryLoadException not thrown";
   }
   catch (internal::LibraryLoadException& ex) {
-    EXPECT_EQ("The NI System Configuration API is not installed on the server.", ex.what());
+    EXPECT_STREQ("The NI System Configuration API is not installed on the server.", ex.what());
   }
 }
 
