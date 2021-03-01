@@ -14,11 +14,28 @@ static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
 SysCfgLibrary::SysCfgLibrary()
     : shared_library_(kSysCfgApiLibraryName)
 {
-  // Delay loading of nisyscfg dll and initializing function pointers will be implemented in upcoming PRs.
+  shared_library_.load();
+  memset(&function_pointers_, 0, sizeof(function_pointers_));
+  bool loaded = shared_library_.is_loaded();
+  if (!loaded) {
+    return;
+  }
+  function_pointers_.InitializeSession = reinterpret_cast<InitializeSessionPtr>(shared_library_.get_function_pointer("NISysCfgInitializeSession"));
+  function_pointers_.CloseHandle  = reinterpret_cast<CloseHandlePtr>(shared_library_.get_function_pointer("NISysCfgCloseHandle"));
 }
 
 SysCfgLibrary::~SysCfgLibrary()
 {
+}
+
+std::string SysCfgLibrary::get_library_name() const
+{
+  return shared_library_.get_library_name();
+}
+
+bool SysCfgLibrary::is_library_loaded() const
+{
+  return shared_library_.is_loaded();
 }
 
 NISysCfgStatus SysCfgLibrary::InitializeSession(
@@ -32,11 +49,11 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
   NISysCfgSessionHandle *                sessionHandle
   )
 {
-  NISysCfgSessionHandle session = NULL;
-  bool is_syscfg_api_installed = false;
-
+  if (!function_pointers_.InitializeSession) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
+  }
 #if defined(_MSC_VER)
-  NISysCfgStatus status = NISysCfgInitializeSession(
+  return NISysCfgInitializeSession(
     targetName,
     username,
     password,
@@ -44,45 +61,32 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
     forcePropertyRefresh,
     connectTimeoutMsec,
     expertEnumHandle,
-    sessionHandle);
-  is_syscfg_api_installed = status != NISysCfg_SysConfigAPINotInstalled;
+    sessionHandle
+  );
 #else
-  is_syscfg_api_installed = shared_library_.is_loaded();
+  return function_pointers_.InitializeSession(
+    targetName,
+    username,
+    password,
+    language,
+    forcePropertyRefresh,
+    connectTimeoutMsec,
+    expertEnumHandle,
+    sessionHandle
+  );
 #endif
-
-  if (!is_syscfg_api_installed) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
-  }
-
-  return status;
 }
 
 NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
 {
-  bool is_syscfg_api_installed = false;
-
-#if defined(_MSC_VER)
-  NISysCfgStatus status = NISysCfgCloseHandle(syscfg_handle);
-  is_syscfg_api_installed = status != NISysCfg_SysConfigAPINotInstalled;
-#else
-  is_syscfg_api_installed = shared_library_.is_loaded();
-#endif
-
-  if (!is_syscfg_api_installed) {
+  if (!function_pointers_.CloseHandle) {
     throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
   }
-
-  return status;
-}
-
-std::string SysCfgLibrary::get_library_name() const
-{
-  return shared_library_.get_library_name();
-}
-
-bool SysCfgLibrary::is_library_loaded() const
-{
-  return shared_library_.is_loaded();
+#if defined(_MSC_VER)
+  return NISysCfgCloseHandle(syscfg_handle);
+#else
+  return function_pointers_.CloseHandle(syscfg_handle);
+#endif
 }
 
 }  // namespace internal

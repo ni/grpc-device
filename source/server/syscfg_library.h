@@ -33,7 +33,24 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
 
  private:
+  using InitializeSessionPtr = NISysCfgStatus (*)(
+    const char *                           targetName,
+    const char *                           username,
+    const char *                           password,
+    NISysCfgLocale                         language,
+    NISysCfgBool                           forcePropertyRefresh,
+    unsigned int                           connectTimeoutMsec,
+    NISysCfgEnumExpertHandle *             expertEnumHandle,
+    NISysCfgSessionHandle *                sessionHandle
+    );
+  using CloseHandlePtr = NISysCfgStatus (*)(void* syscfg_handle);
+  typedef struct FunctionPointers {
+    InitializeSessionPtr InitializeSession;
+    CloseHandlePtr CloseHandle;
+  };
+
   SharedLibrary shared_library_;
+  FunctionPointers function_pointers_;
 };
 
 }  // namespace internal
