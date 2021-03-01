@@ -7,18 +7,12 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-#if defined(_MSC_VER)
-static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
-#else
-static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
-#endif
-
-TEST(SysCfgLibraryTests, SysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibrary)
+TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibrary)
 {
   internal::SysCfgLibrary syscfg_library;
   std::string shared_library_name = syscfg_library.get_library_name();
 
-  EXPECT_STREQ(kSysCfgApiLibraryName, shared_library_name.c_str());
+  EXPECT_STREQ(internal::kSysCfgApiLibraryName, shared_library_name.c_str());
 }
 
 
