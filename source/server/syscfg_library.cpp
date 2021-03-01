@@ -38,14 +38,14 @@ bool SysCfgLibrary::is_library_loaded() const
 }
 
 NISysCfgStatus SysCfgLibrary::InitializeSession(
-  const char *                           targetName,
-  const char *                           username,
-  const char *                           password,
+  const char*                            targetName,
+  const char*                            username,
+  const char*                            password,
   NISysCfgLocale                         language,
   NISysCfgBool                           forcePropertyRefresh,
   unsigned int                           connectTimeoutMsec,
-  NISysCfgEnumExpertHandle *             expertEnumHandle,
-  NISysCfgSessionHandle *                sessionHandle
+  NISysCfgEnumExpertHandle*              expertEnumHandle,
+  NISysCfgSessionHandle*                 sessionHandle
   )
 {
   if (!function_pointers_.InitializeSession) {

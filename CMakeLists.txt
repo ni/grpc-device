@@ -240,6 +240,7 @@ add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
+    "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
@@ -269,6 +270,12 @@ target_link_libraries(UnitTestsRunner
     ${CMAKE_DL_LIBS}
     Threads::Threads
     nlohmann_json::nlohmann_json)
+
+if(WIN32)
+  target_link_libraries(UnitTestsRunner nisyscfg)
+  set_target_properties(UnitTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nisyscfg.dll")
+  set(UnitTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nisyscfg.dll")
+endif()
 
 #----------------------------------------------------------------------
 # Copy test asset certificates to binary output certs sub-directory
