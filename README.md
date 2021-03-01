@@ -126,7 +126,58 @@ Setting | Google | Ours | Justification
 
 ## Running the gRPC Server
 
-Coming Soon
+The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support](## SSL/TLS Support) section below.
+
+There are two ways to start the server:
+
+1. Launch the server application without specifying a path to a configuration file (use the default configuration file):
+
+### Windows
+`.\core_server.exe`
+
+### Linux
+`./core_server`
+
+2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
+
+### Windows
+`.\core_server.exe C:\path\to\config\file\server_config.json`
+
+### Linux
+`./core_server \path\to\config\file\server_config.json`
+
+
+If the server starts successfully and registers on the port specified in the configuration file then it will print a message indicating that to the terminal output:
+
+```
+Server listening on port 50051. Security is configured with insecure credentials.
+```
+
+**Note:** If port `0 `is specified then the server will automatically select a port from the dynamic range. The port used will be reflected in the message above.
+
+If the server fails to start (i.e. a port is not specified in the configuration file) then an error message is printed in the terminal and the application will exit.
+
+### Common Server Startup Errors
+
+1. The datatypes of the values in the configuration file don't match the expected datatypes. For example, the port must be an integer type and not a string. The error message will provide specific details on the type requirements.
+2. The configuration file can't be found at the provided location. This error can also occur if the user lacks read permissions for the file.
+3. The server configuration file is malformed and is not in proper JSON format. Refer to JSON configuration files in this readme for example of the expected format.
+4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
+5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
+6. Security configuration errors. See [SSL/TLS Support](## SSL/TLS Support) section below.
+
+### Default Configuration File (insecure):
+
+```
+{
+   "port": 50051,
+   "security" : {
+      "server_cert": "",
+      "server_key": "",
+      "root_cert": ""
+   }
+}
+```
 
 ## Creating a gRPC Client
 
@@ -134,4 +185,89 @@ Coming Soon
 
 ## SSL/TLS Support
 
-Coming Soon
+The server supports both Server-Side TLS and Mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. To read more about SSL/TLS in gRPC refer to [this document](https://grpc.io/docs/guides/auth/).
+
+In the default case the server expects the `certs` folder to be located in the same folder as the server executable itself:
+
+```
+<installation directory>
+|
+--> core_server
+--> server_config.json
+--> certs/
+   |
+   --> certfile1.pem
+   --> certfile2.pem
+   --> certfile3.pem
+```
+
+If a path to the configuration file is specified when starting the server then the `certs` folder must be located in the same location as the specified configuration file:
+
+```
+<installation directory>
+|
+--> core_server
+
+<path specified to config file>
+|
+--> server_config.json
+--> certs/
+   |
+   --> certfile1.pem
+   --> certfile2.pem
+   --> certfile3.pem
+```
+   
+1. When none of the security-related configuration values are set then the server defaults to an insecure (no SSL/TLS) configuration. Additionally, if one of the `server_cert` or `server_key` values is set but not the other then the server will also default to an insecure configuration. Specifying one of the two is considered an incomplete configuration.
+2. To configure the server for Server-Side TLS then set both the `server_cert` and `server_key` values. In this configuration only the identity of the server is verified:
+
+```
+{
+   "port": 50051,
+   "security" : {
+      "server_cert": "server_self_signed_crt.pem",
+      "server_key": "server_privatekey.pem",
+      "root_cert": ""
+   }
+}
+```
+3. To configure the server for Mutual TLS then set the `server_cert`, `server_key` and `root_cert` values. This configuration verifies the identity of the client in addition to the identity of the server. When the `root_cert` is specified the server always requests a client certificate:
+
+```
+{
+   "port": 50051,
+   "security" : {
+      "server_cert": "server_self_signed_crt.pem",
+      "server_key": "server_privatekey.pem",
+      "root_cert": "client_self_signed_crt.pem"
+   }
+}
+```
+
+**Note: ** The server's configuration (insecure, server-side TLS or mutual TLS) will always be printed to the terminal when the server starts.
+
+### Troubleshooting Security Configuration
+
+1. If the server can't find the certificate file at the expected location then the server will fail to start and an error message will be printed to the terminal. In this case verify that the certificate file exists at the correct location and that the user has read permissions for the file.
+2. If a client fails to connect to the server the cause can be one of many reasons. To determine if the failure is related to the security configuration review the server's terminal output. SSL/TLS error messages will be printed to the terminal where the server is running. Below is an example error message on the server side when the server expects a client certificate but does not receive it:
+
+```
+E0301 12:10:55.011000000  1136 ssl_transport_security.cc:1455] Handshake failed with fatal error SSL_ERROR_SSL: error:100000c0:SSL routines:OPENSSL_internal:PEER_DID_NOT_RETURN_A_CERTIFICATE.
+```
+
+3. One common error state occurs when a client creates a channel for a configuration different from the server. For example, the server might be configured for Mutual TLS and the client configures an insecure channel (no security) or server-side TLS (no client certificate specified). In this case the client will typically see an `UNAVAILABLE` error status on the first RPC call. The gRPC conneciton utilizes lazy intialization and therefore the connection isn't established until the first RPC called is made. Below is an example call stack from a Python client:
+
+```
+<class 'grpc._channel._InactiveRpcError'>
+Traceback (most recent call last):
+  File "C:\Users\ksulliva\Desktop\Demo\client.py", line 22, in <module>
+    response = server.IsReservedByClient(serverTypes.IsReservedByClientRequest(reservation_id=reservation_id, client_id=client_id))
+  File "C:\Users\ksulliva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\grpc\_channel.py", line 923, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "C:\Users\ksulliva\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\grpc\_channel.py", line 826, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+        status = StatusCode.UNAVAILABLE
+        details = "failed to connect to all addresses"
+        debug_error_string = "{"created":"@1614621623.440000000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":5391,"referenced_errors":[{"created":"@1614621623.440000000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":398,"grpc_status":14}]}"
+```
