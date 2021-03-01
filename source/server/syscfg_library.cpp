@@ -43,7 +43,7 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
   )
 {
   if (!function_pointers_.InitializeSession) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
+    throw ni::hardware::grpc::internal::LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
 #if defined(_MSC_VER)
   return NISysCfgInitializeSession(
@@ -73,23 +73,13 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
 NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
 {
   if (!function_pointers_.CloseHandle) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("The NI System Configuration API is not installed on the server.");
+    throw ni::hardware::grpc::internal::LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
 #if defined(_MSC_VER)
   return NISysCfgCloseHandle(syscfg_handle);
 #else
   return function_pointers_.CloseHandle(syscfg_handle);
 #endif
-}
-
-NISysCfgStatus SysCfgLibrary::InitializeSession()
-{
-  // In future it will be updated to use function pointers to syscfg APIs. 
-  // Now for proving dummy implementation, throwing exception that library is not found.
-  if (!shared_library_.is_loaded()) {
-    throw ni::hardware::grpc::internal::LibraryLoadException(kSysCfgApiNotInstalledMessage);
-  }
-  return NISysCfg_OK;
 }
 
 }  // namespace internal
