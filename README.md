@@ -126,19 +126,19 @@ There are two ways to start the server:
 
 1. Launch the server application without specifying a path to a configuration file (use the default configuration file):
 
-**Windows**
-`.\core_server.exe`
+    **Windows**
+    `.\core_server.exe`
 
-**Linux**
-`./core_server`
+    **Linux**
+    `./core_server`
 
 2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
 
-**Windows**
-`.\core_server.exe C:\path\to\config\file\server_config.json`
+    **Windows**
+    `.\core_server.exe C:\path\to\config\file\server_config.json`
 
-**Linux**
-`./core_server /path/to/config/file/server_config.json`
+    **Linux**
+    `./core_server /path/to/config/file/server_config.json`
 
 
 If the server starts successfully on the port specified in the configuration file, then it will print a message to the terminal output:
@@ -164,7 +164,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 
 ```json
 {
-   "port": 50051,
+   "port": 31763,
    "security" : {
       "server_cert": "",
       "server_key": "",
@@ -212,7 +212,7 @@ config_file_folder/
 
 ```json
 {
-   "port": 50051,
+   "port": 31763,
    "security" : {
       "server_cert": "server_self_signed_crt.pem",
       "server_key": "server_privatekey.pem",
@@ -224,7 +224,7 @@ config_file_folder/
 
 ```json
 {
-   "port": 50051,
+   "port": 31763,
    "security" : {
       "server_cert": "server_self_signed_crt.pem",
       "server_key": "server_privatekey.pem",
