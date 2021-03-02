@@ -713,7 +713,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Fetch': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'parameters': [
             {
                 'direction': 'in',
@@ -761,7 +761,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchArrayMeasurement': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'parameters': [
             {
                 'direction': 'in',
@@ -813,7 +813,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchBinary16': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'parameters': [
             {
                 'direction': 'in',
@@ -909,7 +909,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchBinary8': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'parameters': [
             {
                 'direction': 'in',
@@ -957,7 +957,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchMeasurementStats': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'parameters': [
             {
                 'direction': 'in',
@@ -1361,7 +1361,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Read': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'parameters': [
             {
                 'direction': 'in',

@@ -65,3 +65,12 @@ The following functions were changed from 'private' to 'no' because they did not
 - `CalFetchDate` - not found in niScope.h
 - `CalFetchTemperature` - not found in niScope.h
 - `ConfigureRefLevels` - obsolete
+
+The following functions were changed from `public` to `custom` to indicate their service handlers won't be generated and instead
+should be implemented by hand in niscope_service.custom.cpp.
+- `Fetch`
+- `FetchArrayMeasurement`
+- `FetchBinary16`
+- `FetchBinary8`
+- `FetchMeasurementStats`
+- `Read`
