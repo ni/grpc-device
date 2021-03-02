@@ -134,6 +134,7 @@ jobs:
         endif()
 
     - name: Tar Build Files
+      if: "github.ref == 'refs/heads/main'"
       run: tar -cvf NILinuxRealTime-x86_64.tar \
         ${GITHUB_WORKSPACE}/build/certs/ \
         ${GITHUB_WORKSPACE}/build/core_server \
