@@ -42,7 +42,9 @@ def create_args(parameters):
         type_without_brackets = parameter['type'].replace('[]', '')
         result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
       else:
-        if not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
+        if parameter["type"].startswith("struct"):
+          parameter_name = parameter_name + ".data()"
+        elif not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
             result = f'{result}&'
         result = f'{result}{parameter_name}, '
     return result[:-2]
@@ -64,6 +66,8 @@ def create_params(parameters):
 def create_param(parameter):
     type = parameter['type']
     name = parameter['cppName']
+    if common_helpers.is_struct(parameter):
+      type = type.replace("struct ", "")
     if common_helpers.is_array(type):
         is_fixed = parameter['size']['mechanism'] == 'fixed'
         array_size = parameter['size']['value'] if is_fixed else ''

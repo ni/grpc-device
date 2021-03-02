@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <atomic>
+#include <vector>
 
 namespace ni {
 namespace niswitch {

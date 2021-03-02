@@ -17,14 +17,17 @@ config = {
     'custom_types': [
         {
             'name': 'CustomStruct',
+            'grpc_name': 'FakeCustomStruct',
             'fields': [
                 {
                     'type': 'ViInt32',
-                    'name': 'structInt'
+                    'name': 'structInt',
+                    'grpc_name': 'struct_int'
                 },
                 {
                     'type': 'ViReal64',
-                    'name': 'structDouble'
+                    'name': 'structDouble',
+                    'grpc_name': 'struct_double'
                 }
             ]
         }

@@ -37,7 +37,6 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAStringUsingPythonCode = reinterpret_cast<GetAStringUsingPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetAStringUsingPythonCode"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
-  function_pointers_.GetArrayForPythonCodeCustomType = reinterpret_cast<GetArrayForPythonCodeCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeCustomType"));
   function_pointers_.GetArrayForPythonCodeDouble = reinterpret_cast<GetArrayForPythonCodeDoublePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeDouble"));
   function_pointers_.GetArraySizeForPythonCode = reinterpret_cast<GetArraySizeForPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForPythonCode"));
   function_pointers_.GetArrayUsingIviDance = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("niFake_GetArrayUsingIviDance"));
@@ -48,7 +47,6 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niFake_GetAttributeViString"));
   function_pointers_.GetCalDateAndTime = reinterpret_cast<GetCalDateAndTimePtr>(shared_library_.get_function_pointer("niFake_GetCalDateAndTime"));
   function_pointers_.GetCalInterval = reinterpret_cast<GetCalIntervalPtr>(shared_library_.get_function_pointer("niFake_GetCalInterval"));
-  function_pointers_.GetCustomType = reinterpret_cast<GetCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetCustomType"));
   function_pointers_.GetCustomTypeArray = reinterpret_cast<GetCustomTypeArrayPtr>(shared_library_.get_function_pointer("niFake_GetCustomTypeArray"));
   function_pointers_.GetEnumValue = reinterpret_cast<GetEnumValuePtr>(shared_library_.get_function_pointer("niFake_GetEnumValue"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niFake_GetError"));
@@ -71,8 +69,6 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFake_SetAttributeViInt64"));
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFake_SetAttributeViReal64"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niFake_SetAttributeViString"));
-  function_pointers_.SetCustomType = reinterpret_cast<SetCustomTypePtr>(shared_library_.get_function_pointer("niFake_SetCustomType"));
-  function_pointers_.SetCustomTypeArray = reinterpret_cast<SetCustomTypeArrayPtr>(shared_library_.get_function_pointer("niFake_SetCustomTypeArray"));
   function_pointers_.StringValuedEnumInputFunctionWithDefaults = reinterpret_cast<StringValuedEnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_StringValuedEnumInputFunctionWithDefaults"));
   function_pointers_.TwoInputFunction = reinterpret_cast<TwoInputFunctionPtr>(shared_library_.get_function_pointer("niFake_TwoInputFunction"));
   function_pointers_.Use64BitNumber = reinterpret_cast<Use64BitNumberPtr>(shared_library_.get_function_pointer("niFake_Use64BitNumber"));
@@ -261,18 +257,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViSession vi, ViInt32 buff
 #endif
 }
 
-ViStatus NiFakeLibrary::GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 numberOfElements, struct CustomStruct arrayOut[])
-{
-  if (!function_pointers_.GetArrayForPythonCodeCustomType) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForPythonCodeCustomType.");
-  }
-#if defined(_MSC_VER)
-  return niFake_GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
-#else
-  return function_pointers_.GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
-#endif
-}
-
 ViStatus NiFakeLibrary::GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[])
 {
   if (!function_pointers_.GetArrayForPythonCodeDouble) {
@@ -393,19 +377,7 @@ ViStatus NiFakeLibrary::GetCalInterval(ViSession vi, ViInt32* months)
 #endif
 }
 
-ViStatus NiFakeLibrary::GetCustomType(ViSession vi, struct CustomStruct* cs)
-{
-  if (!function_pointers_.GetCustomType) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetCustomType.");
-  }
-#if defined(_MSC_VER)
-  return niFake_GetCustomType(vi, cs);
-#else
-  return function_pointers_.GetCustomType(vi, cs);
-#endif
-}
-
-ViStatus NiFakeLibrary::GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[])
+ViStatus NiFakeLibrary::GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[])
 {
   if (!function_pointers_.GetCustomTypeArray) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetCustomTypeArray.");
@@ -666,30 +638,6 @@ ViStatus NiFakeLibrary::SetAttributeViString(ViSession vi, ViConstString channel
   return niFake_SetAttributeViString(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#endif
-}
-
-ViStatus NiFakeLibrary::SetCustomType(ViSession vi, struct CustomStruct cs)
-{
-  if (!function_pointers_.SetCustomType) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_SetCustomType.");
-  }
-#if defined(_MSC_VER)
-  return niFake_SetCustomType(vi, cs);
-#else
-  return function_pointers_.SetCustomType(vi, cs);
-#endif
-}
-
-ViStatus NiFakeLibrary::SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[])
-{
-  if (!function_pointers_.SetCustomTypeArray) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_SetCustomTypeArray.");
-  }
-#if defined(_MSC_VER)
-  return niFake_SetCustomTypeArray(vi, numberOfElements, cs);
-#else
-  return function_pointers_.SetCustomTypeArray(vi, numberOfElements, cs);
 #endif
 }
 

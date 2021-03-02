@@ -754,7 +754,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self._actual_num_wfms()'
                 },
-                'type': 'struct niScope_wfmInfo[]'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -805,7 +806,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self._actual_num_wfms()'
                 },
-                'type': 'struct niScope_wfmInfo[]'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -852,7 +854,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self._actual_num_wfms()'
                 },
-                'type': 'struct niScope_wfmInfo[]'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -899,7 +902,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self._actual_num_wfms()'
                 },
-                'type': 'struct niScope_wfmInfo[]'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -946,7 +950,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self._actual_num_wfms()'
                 },
-                'type': 'struct niScope_wfmInfo[]'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -1396,7 +1401,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self._actual_num_wfms()'
                 },
-                'type': 'struct niScope_wfmInfo[]'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -1597,7 +1603,7 @@ functions = {
         'use_session_lock': False
     },
     'error_message': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'is_error_handling': True,
         'parameters': [
             {

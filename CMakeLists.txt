@@ -50,6 +50,7 @@ link_directories("./imports/lib/win64")
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
+set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
 set(nidrivers "nifake" "niscope" "niswitch")
 
 #----------------------------------------------------------------------
@@ -95,7 +96,8 @@ foreach(api ${nidrivers})
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
-      "${service_output_dir}/${api}/${api}_library.cpp")
+      "${service_output_dir}/${api}/${api}_library.cpp"
+      "${custom_dir}/${api}_service.custom.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -227,7 +229,6 @@ add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
-# Hardcode ni-fake sources in right now to get it building the unit tests.
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/session_utilities_service_tests.cpp"
@@ -247,8 +248,15 @@ add_executable(UnitTestsRunner
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${service_output_dir}/nifake/nifake_service.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc")
+
+# ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
+# This disables that requirement for just the ni_fake_service_tests.cpp file.
+if(MSVC)
+  set_source_files_properties("source/tests/unit/ni_fake_service_tests.cpp" PROPERTIES COMPILE_FLAGS /bigobj)
+endif()
 
 target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake")
@@ -268,7 +276,7 @@ add_custom_command(
   TARGET UnitTestsRunner POST_BUILD
   COMMAND  ${CMAKE_COMMAND} -E copy_directory 
            ${CMAKE_SOURCE_DIR}/source/tests/assets/
-           $<TARGET_FILE_DIR:core_server>/certs/)
+           $<TARGET_FILE_DIR:UnitTestsRunner>/)
            
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"

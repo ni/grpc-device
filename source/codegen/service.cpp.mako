@@ -5,6 +5,7 @@ import handler_helpers
 config = data['config']
 enums = data['enums']
 functions = data['functions']
+lookup = data["lookup"]
 
 service_class_prefix = config["service_class_prefix"]
 namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
@@ -12,6 +13,8 @@ module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
 windows_libary_name = config['library_info']['Windows']['64bit']['name']
+if len(config["custom_types"]) > 0:
+  custom_type = config["custom_types"][0]
 %>\
 
 //---------------------------------------------------------------------
@@ -25,11 +28,30 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 #include <fstream>
 #include <iostream>
 #include <atomic>
+#include <vector>
 
 namespace ni {
 namespace ${config["namespace_component"]} {
 namespace grpc {
 
+%if 'custom_type' in locals():
+  namespace {
+    void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
+%for field in custom_type["fields"]: 
+      output->set_${field["grpc_name"]}(input.${field["name"]});
+%endfor
+    }
+
+    void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
+      for (auto item : input) {
+        auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
+        Copy(item, message);
+        output->AddAllocated(message);
+      }
+    }
+  }
+
+%endif
   namespace internal = ni::hardware::grpc::internal;
 
   ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
@@ -247,12 +269,29 @@ ${initialize_standard_input_param(parameter)}\
 \
 \
 \
+<%def name="initialize_struct_output(parameter)">\
+<%
+parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+parameter_type = common_helpers.isolate_struct_type(parameter["type"])
+%>\
+% if common_helpers.is_array(parameter["type"]):
+std::vector<${parameter_type}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});
+% else: 
+parameter_type parameter_name = {};
+% endif
+</%def>\
+\
+\
+\
+\
 <%def name="initialize_output_variables_snippet(output_parameters)">\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
-% if common_helpers.is_array(parameter['type']):
+% if common_helpers.is_struct(parameter):
+      ${initialize_struct_output(parameter)}\
+% elif common_helpers.is_array(parameter['type']):
 <%
   type_without_brackets = parameter['type'].replace('[]', '')
   size = parameter['size']['value'] if parameter['size']['mechanism'] == 'fixed' else common_helpers.camel_to_snake(parameter['size']['value'])
@@ -297,6 +336,8 @@ ${initialize_standard_input_param(parameter)}\
 % if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
         response->set_${parameter_name}(${parameter_name});
 % endif
+%elif common_helpers.is_struct(parameter):
+        Copy(${parameter_name}, response->mutable_${parameter_name}());
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif

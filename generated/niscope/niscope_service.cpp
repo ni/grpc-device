@@ -10,10 +10,32 @@
 #include <fstream>
 #include <iostream>
 #include <atomic>
+#include <vector>
 
 namespace ni {
 namespace scope {
 namespace grpc {
+
+  namespace {
+    void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output) {
+      output->set_absolute_initial_x(input.absoluteInitialX);
+      output->set_relative_initial_x(input.relativeInitialX);
+      output->set_x_increment(input.xIncrement);
+      output->set_actual_samples(input.actualSamples);
+      output->set_offset(input.offset);
+      output->set_gain(input.gain);
+      output->set_reserved1(input.reserved1);
+      output->set_reserved2(input.reserved2);
+    }
+
+    void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output) {
+      for (auto item : input) {
+        auto message = new ni::scope::grpc::WaveformInfo();
+        Copy(item, message);
+        output->AddAllocated(message);
+      }
+    }
+  }
 
   namespace internal = ni::hardware::grpc::internal;
 
@@ -973,6 +995,27 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       session_repository_->remove_session(vi);
+      return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
+  {
+    try {
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViStatus error_code = request->error_code();
+      ViChar error_message[256];
+      auto status = library_->error_message(vi, error_code, error_message);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_error_message(error_message);
+      }
       return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
