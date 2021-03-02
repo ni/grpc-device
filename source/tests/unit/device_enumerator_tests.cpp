@@ -48,9 +48,9 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
   EXPECT_EQ(internal::kSysCfgApiFailedMessage, status.error_message());
 }
 
-NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* sessionHandle)
+NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
 {
-  *sessionHandle = (NISysCfgSessionHandle)1;
+  *session_handle = (NISysCfgSessionHandle)1;
   return NISysCfg_OK;
 }
 
