@@ -30,7 +30,7 @@ NISysCfgStatus SysCfgLibrary::InitializeSession()
   // In future it will be updated to use function pointers to syscfg APIs. 
   // Now for proving dummy implementation, throwing exception that library is not found.
   if (!shared_library_.is_loaded()) {
-    throw ni::hardware::grpc::internal::LibraryLoadException(kSysCfgApiNotInstalledMessage);
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
   return NISysCfg_OK;
 }

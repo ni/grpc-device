@@ -26,12 +26,12 @@ DeviceEnumerator::~DeviceEnumerator()
     // to use syscfg APIs properly to enumerate devices.
     syscfg_status = library_->InitializeSession(); 
   }
-  catch (ni::hardware::grpc::internal::LibraryLoadException& ex) {
+  catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   
   if (NISysCfg_Failed(syscfg_status)) {
-    return ::grpc::Status(::grpc::StatusCode::INTERNAL, "The NI System Configuration API was unable to enumerate the devices.");
+    return ::grpc::Status(::grpc::StatusCode::INTERNAL, kSysCfgApiFailedMessage);
   }
 
   return ::grpc::Status::OK;
