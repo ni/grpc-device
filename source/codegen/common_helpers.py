@@ -42,8 +42,9 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
-def isolate_struct_type(struct):
-  return struct.replace("struct ","").replace('[]', '')
+def get_underlying_type_name(parameter_type):
+  '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
+  return parameter_type.replace("struct ","").replace('[]', '')
 
 def has_unsupported_parameter(function):
   return any(is_unsupported_parameter(p) for p in function['parameters'])
@@ -112,7 +113,6 @@ def get_used_enums(functions, attributes):
   return used_enums
 
 def mark_non_grpc_param(parameter, parameters):
-  """Adds a 'determine_size_from' field for parameters that are determined by the size of another array parameter."""
   expected_name = parameter['name']
   for possible_size_from_param in parameters:
     size = possible_size_from_param.get('size', {})

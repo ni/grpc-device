@@ -269,41 +269,30 @@ ${initialize_standard_input_param(parameter)}\
 \
 \
 \
-<%def name="initialize_struct_output(parameter)">\
-<%
-parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-parameter_type = common_helpers.isolate_struct_type(parameter["type"])
-%>\
-% if common_helpers.is_array(parameter["type"]):
-std::vector<${parameter_type}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});
-% else: 
-parameter_type parameter_name = {};
-% endif
-</%def>\
-\
-\
-\
-\
 <%def name="initialize_output_variables_snippet(output_parameters)">\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
+%>\
+% if common_helpers.is_array(parameter['type']):
+<%
+  size = ''
+  if parameter['size']['mechanism'] == 'fixed':
+    size = parameter['size']['value']
+  else:
+    size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
 % if common_helpers.is_struct(parameter):
-      ${initialize_struct_output(parameter)}\
-% elif common_helpers.is_array(parameter['type']):
-<%
-  type_without_brackets = parameter['type'].replace('[]', '')
-  size = parameter['size']['value'] if parameter['size']['mechanism'] == 'fixed' else common_helpers.camel_to_snake(parameter['size']['value'])
-%>\
-% if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
+      std::vector<${underlying_param_type}> ${parameter_name}(${size});
+% elif underlying_param_type == 'ViChar' or underlying_param_type == 'ViInt8':
       std::string ${parameter_name}(${size}, '\0');
 % else:
       response->mutable_${parameter_name}()->Reserve(${size});
-      ${type_without_brackets}* ${parameter_name} = response->mutable_${parameter_name}()->AddNAlreadyReserved(${size});
+      ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->AddNAlreadyReserved(${size});
 % endif
 % else:
-      ${parameter['type']} ${parameter_name} {};
+      ${underlying_param_type} ${parameter_name} {};
 % endif
 %endfor
 </%def>\
