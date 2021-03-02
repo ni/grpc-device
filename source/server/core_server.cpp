@@ -6,7 +6,7 @@
 #include "session_utilities_service.h"
 #include "syscfg_library.h"
 
-static void RunServer(int argc, char** argv)
+static void RunServer(const std::string& config_file_path)
 {
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
@@ -14,8 +14,9 @@ static void RunServer(int argc, char** argv)
   std::string server_address, server_cert, server_key, root_cert;
 
   try {
-    //TODO: parse config file path from command line argument
-    ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser;
+    ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser = config_file_path.empty()
+        ? ni::hardware::grpc::internal::ServerConfigurationParser()
+        : ni::hardware::grpc::internal::ServerConfigurationParser(config_file_path);
     server_address = server_config_parser.parse_address();
     server_cert = server_config_parser.parse_server_cert();
     server_key = server_config_parser.parse_server_key();
@@ -69,6 +70,14 @@ static void RunServer(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-  RunServer(argc, argv);
+  if (argc > 2) {
+    std::cerr << "\nUsage: " << "core_server <config-file-path>\n\n";
+    exit(EXIT_FAILURE);
+  }
+  std::string config_file_path;
+  if (argc == 2) {
+    config_file_path = argv[1];
+  }
+  RunServer(config_file_path);
   return 0;
 }
