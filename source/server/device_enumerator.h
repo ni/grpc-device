@@ -13,6 +13,8 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
+static const char* kSysCfgApiFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
+
 class DeviceEnumerator {
  public:
   DeviceEnumerator(SysCfgLibraryInterface* library);

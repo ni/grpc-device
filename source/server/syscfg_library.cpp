@@ -43,7 +43,7 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
   )
 {
   if (!function_pointers_.InitializeSession) {
-    throw ni::hardware::grpc::internal::LibraryLoadException(kSysCfgApiNotInstalledMessage);
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
 #if defined(_MSC_VER)
   return NISysCfgInitializeSession(
@@ -73,7 +73,7 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
 NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
 {
   if (!function_pointers_.CloseHandle) {
-    throw ni::hardware::grpc::internal::LibraryLoadException(kSysCfgApiNotInstalledMessage);
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
 #if defined(_MSC_VER)
   return NISysCfgCloseHandle(syscfg_handle);
