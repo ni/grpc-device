@@ -135,15 +135,16 @@ jobs:
 
     - name: Tar Build Files
       if: "github.ref == 'refs/heads/main'"
-      run: tar -cvf NILinuxRealTime-x86_64.tar \
-        ${GITHUB_WORKSPACE}/build/certs/ \
-        ${GITHUB_WORKSPACE}/build/core_server \
-        ${GITHUB_WORKSPACE}/build/CTestTestfile.cmake \
-        ${GITHUB_WORKSPACE}/build/IntegrationTestsRunner \
-        ${GITHUB_WORKSPACE}/build/libTestApi.so \
-        ${GITHUB_WORKSPACE}/build/server_config.json \
-        ${GITHUB_WORKSPACE}/build/SystemTestsRunner \
-        ${GITHUB_WORKSPACE}/build/test_mutual_tls_config.json \
+      run: >-
+        tar -cvf NILinuxRealTime-x86_64.tar
+        ${GITHUB_WORKSPACE}/build/certs/
+        ${GITHUB_WORKSPACE}/build/core_server
+        ${GITHUB_WORKSPACE}/build/CTestTestfile.cmake
+        ${GITHUB_WORKSPACE}/build/IntegrationTestsRunner
+        ${GITHUB_WORKSPACE}/build/libTestApi.so
+        ${GITHUB_WORKSPACE}/build/server_config.json
+        ${GITHUB_WORKSPACE}/build/SystemTestsRunner
+        ${GITHUB_WORKSPACE}/build/test_mutual_tls_config.json
         ${GITHUB_WORKSPACE}/build/UnitTestsRunner
 
     - name: Upload Artifact
