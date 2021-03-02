@@ -19,6 +19,30 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
   EXPECT_EQ(address, internal::kDefaultAddressPrefix + std::string("50051"));
 }
 
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)
+{
+  std::string config_file_path = internal::ServerConfigurationParser::get_exe_path() +  "server_config.json";
+  internal::ServerConfigurationParser server_config_parser(config_file_path);
+
+  auto address = server_config_parser.parse_address();
+
+  EXPECT_FALSE(address.empty());
+}
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
+{
+  std::string config_file_path = internal::ServerConfigurationParser::get_exe_path() +  "test_mutual_tls_config.json";
+  internal::ServerConfigurationParser server_config_parser(config_file_path);
+
+  auto server_key = server_config_parser.parse_server_key();
+  auto server_cert = server_config_parser.parse_server_cert();
+  auto root_cert = server_config_parser.parse_root_cert();
+
+  EXPECT_FALSE(server_key.empty());
+  EXPECT_FALSE(server_cert.empty());
+  EXPECT_FALSE(root_cert.empty());
+}
+
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
  std::string missing_file_path = "fake.json";
