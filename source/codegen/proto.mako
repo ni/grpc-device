@@ -7,8 +7,10 @@ attributes = data["attributes"]
 enums = data["enums"]
 functions = data["functions"]
 lookup = data["lookup"]
-custom_template = "custom_proto.mako"
-
+has_custom_template = False
+if len(config["custom_types"]) > 0:
+  custom_template = "custom_proto.mako"
+  has_custom_template = True
 service_class_prefix = config["service_class_prefix"]
 attribute_value_prefix = service_class_prefix.upper()
 used_enums = common_helpers.get_used_enums(functions, attributes)
@@ -77,7 +79,9 @@ nonint_index = 1
 }
 
 % endfor
+%if has_custom_template:
 ${lookup.get_template(custom_template).render()}
+%endif
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])

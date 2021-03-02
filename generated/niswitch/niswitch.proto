@@ -244,7 +244,6 @@ enum TriggerInputPolarity {
   TRIGGER_INPUT_POLARITY_NISWITCH_VAL_FALLING_EDGE = 1;
 }
 
-
 message AbortScanRequest {
   ni.hardware.grpc.Session vi = 1;
 }

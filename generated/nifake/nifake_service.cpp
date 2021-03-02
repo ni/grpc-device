@@ -12,18 +12,21 @@
 #include <atomic>
 #include <vector>
 
-void Copy(const CustomStruct& input, ni::fake::grpc::FakeCustomStruct* output) {
- output->set_struct_int(input.structInt);
- output->set_struct_double(input.structDouble);
+namespace {
+  void Copy(const CustomStruct& input, ni::fake::grpc::FakeCustomStruct* output) {
+    output->set_struct_int(input.structInt);
+    output->set_struct_double(input.structDouble);
 }
 
-void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<ni::fake::grpc::FakeCustomStruct>* output) {
-  for (auto item : input) {
-    auto message = new ni::fake::grpc::FakeCustomStruct();
-    Copy(item, message);
-    output->AddAllocated(message);
+  void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<ni::fake::grpc::FakeCustomStruct>* output) {
+    for (auto item : input) {
+      auto message = new ni::fake::grpc::FakeCustomStruct();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
   }
 }
+
 namespace ni {
 namespace fake {
 namespace grpc {

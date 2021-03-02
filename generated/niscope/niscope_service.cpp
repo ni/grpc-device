@@ -12,24 +12,27 @@
 #include <atomic>
 #include <vector>
 
-void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output) {
- output->set_absolute_initial_x(input.absoluteInitialX);
- output->set_relative_initial_x(input.relativeInitialX);
- output->set_x_increment(input.xIncrement);
- output->set_actual_samples(input.actualSamples);
- output->set_offset(input.offset);
- output->set_gain(input.gain);
- output->set_reserved1(input.reserved1);
- output->set_reserved2(input.reserved2);
+namespace {
+  void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output) {
+    output->set_absolute_initial_x(input.absoluteInitialX);
+    output->set_relative_initial_x(input.relativeInitialX);
+    output->set_x_increment(input.xIncrement);
+    output->set_actual_samples(input.actualSamples);
+    output->set_offset(input.offset);
+    output->set_gain(input.gain);
+    output->set_reserved1(input.reserved1);
+    output->set_reserved2(input.reserved2);
 }
 
-void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output) {
-  for (auto item : input) {
-    auto message = new ni::scope::grpc::WaveformInfo();
-    Copy(item, message);
-    output->AddAllocated(message);
+  void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output) {
+    for (auto item : input) {
+      auto message = new ni::scope::grpc::WaveformInfo();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
   }
 }
+
 namespace ni {
 namespace scope {
 namespace grpc {

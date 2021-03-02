@@ -483,7 +483,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
           SetArrayArgument<1>(output_string, output_string + 256),
           Return(kDriverSuccess)));
 
-  ::grpc::ServerContext context;   
+  ::grpc::ServerContext context;
   ni::fake::grpc::GetAStringOfFixedMaximumSizeRequest request;
   request.mutable_vi()->set_id(session_id);
   ni::fake::grpc::GetAStringOfFixedMaximumSizeResponse response;
@@ -502,7 +502,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArra
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 number_of_elements = 3;
   std::vector<CustomStruct> cs(number_of_elements);
-
   EXPECT_CALL(library, GetCustomTypeArray(kTestViSession, number_of_elements, _))
     .WillOnce(DoAll(SetArgPointee<2>(*(cs.data())), Return(kDriverSuccess)));
 
@@ -515,7 +514,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArra
   
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
-
+  EXPECT_EQ(response.cs_size(), cs.size());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsImportAttributeConfigurationBuffer)
