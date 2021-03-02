@@ -44,7 +44,7 @@ enum ${service_class_prefix}Attributes {
 <%
    attribute_name = attributes[attribute]["name"]
 %>\
-  ${attribute_value_prefix}_${attribute_name} = ${attribute};
+  ${attribute_value_prefix}_ATTRIBUTE_${attribute_name} = ${attribute};
 % endfor
 }
 
