@@ -6,10 +6,6 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 ![Linux Build](https://github.com/ni/ni-driver-apis-grpc/workflows/Build%20Matrix/badge.svg)
 ![NI Linux Real-Time Build](https://github.com/ni/ni-driver-apis-grpc/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
 
-## Note: This project is not yet complete
-* Testing on Linux not yet implemented.
-* Support for specific NI driver APIs not yet added.
-
 ## Building on Windows 64-bit
 
 ### Prerequisites
@@ -130,28 +126,28 @@ There are two ways to start the server:
 
 1. Launch the server application without specifying a path to a configuration file (use the default configuration file):
 
-### Windows
+**Windows**
 `.\core_server.exe`
 
-### Linux
+**Linux**
 `./core_server`
 
 2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
 
-### Windows
+**Windows**
 `.\core_server.exe C:\path\to\config\file\server_config.json`
 
-### Linux
-`./core_server \path\to\config\file\server_config.json`
+**Linux**
+`./core_server /path/to/config/file/server_config.json`
 
 
 If the server starts successfully on the port specified in the configuration file, then it will print a message to the terminal output:
 
 ```
-Server listening on port 50051. Security is configured with insecure credentials.
+Server listening on port 12345. Security is configured with insecure credentials.
 ```
 
-**Note:** If port `0 `is specified then the server will automatically select a port from the dynamic range. The port used will be reflected in the startup message.
+**Note:** If port `0`is specified then the server will automatically select a port from the dynamic range. The port used will be reflected in the startup message.
 
 If the server fails to start (i.e. a port is not specified in the configuration file) then an error message is printed in the terminal and the application will exit.
 
@@ -166,7 +162,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 
 ### Default Configuration File (insecure):
 
-```
+```json
 {
    "port": 50051,
    "security" : {
@@ -189,7 +185,7 @@ In the default case the server expects the `certs` folder to be located in the s
 
 ```
 server_installation_folder/
-├── certs
+├── certs/
 │   ├── client_self_signed_crt.pem
 │   ├── server_privatekey.pem
 │   └── server_self_signed_crt.pem
@@ -204,7 +200,7 @@ server_installation_folder/
 └── core_server
 
 config_file_folder/
-├── certs
+├── certs/
 │   ├── client_self_signed_crt.pem
 │   ├── server_privatekey.pem
 │   └── server_self_signed_crt.pem
@@ -214,7 +210,7 @@ config_file_folder/
 1. When none of the security-related configuration values are set then the server defaults to an insecure (no SSL/TLS) configuration. Additionally, if one of the `server_cert` or `server_key` values is set but not the other then the server will also default to an insecure configuration. Specifying one of the two is considered an incomplete configuration.
 2. To configure the server for server-side TLS then set both the `server_cert` and `server_key` values. In this configuration only the identity of the server is verified:
 
-```
+```json
 {
    "port": 50051,
    "security" : {
@@ -226,7 +222,7 @@ config_file_folder/
 ```
 3. To configure the server for mutual TLS then set the `server_cert`, `server_key` and `root_cert` values. This configuration verifies the identity of the client in addition to the identity of the server. When the `root_cert` is specified the server always requests a client certificate:
 
-```
+```json
 {
    "port": 50051,
    "security" : {
@@ -264,13 +260,13 @@ The examples in this section make use of the certificates generated in the [Crea
 
 1. To establish a connection to an insecure server then call the `insecure_channel(..)` method:
 
-```
+```python
 channel = grpc.insecure_channel(serverAddress)
 ```
 
 2. To establish a connection to a server configured for server-side TLS then call the `secure_channel(..)` method and set `root_certificates` to point to the server's self-signed certificate:
 
-```
+```python
 ca_cert = open('server_self_signed_crt.pem', 'rb').read()
 creds = grpc.ssl_channel_credentials(root_certificates=ca_cert)
 channel = grpc.secure_channel(serverAddress, creds)
@@ -281,7 +277,7 @@ channel = grpc.secure_channel(serverAddress, creds)
    b. `certificate_chain` to point to the client's self-signed certificate
    c. `private_key` to point to the client's private key
    
-```
+```python
 ca_cert = open('server_self_signed_crt.pem', 'rb').read()
 client_cert = open('client_self_signed_crt.pem', 'rb').read()
 client_key = open('client_privatekey.pem', 'rb').read()
