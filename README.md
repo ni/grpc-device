@@ -127,17 +127,21 @@ There are two ways to start the server:
 1. Launch the server application without specifying a path to a configuration file (use the default configuration file):
 
     **Windows**
+    
     `.\core_server.exe`
 
     **Linux**
+    
     `./core_server`
 
 2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
 
     **Windows**
+    
     `.\core_server.exe C:\path\to\config\file\server_config.json`
 
     **Linux**
+    
     `./core_server /path/to/config/file/server_config.json`
 
 
