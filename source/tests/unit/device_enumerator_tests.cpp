@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include <server/device_enumerator.h>
+#include <server/syscfg_library.h>
 #include <tests/utilities/syscfg_mock_library.h>
+
+namespace internal = ni::hardware::grpc::internal;
 
 namespace ni {
 namespace tests {
@@ -13,24 +16,23 @@ using ::testing::Throw;
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
+  internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
-  std::string message = "The NI System Configuration API is not installed on the server.";
   EXPECT_CALL(mock_library, InitializeSession)
-      .WillOnce(Throw(ni::hardware::grpc::internal::LibraryLoadException(message)));
+      .WillOnce(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
   EXPECT_CALL(mock_library, CloseHandle)
       .Times(0);
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
-  EXPECT_EQ(message, status.error_message());
+  EXPECT_EQ(internal::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ReturnsInternalGrpcStatusCode)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
+  internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(Return(NISysCfg_InvalidLoginCredentials));
@@ -41,12 +43,13 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(internal::kSysCfgApiFailedMessage, status.error_message());
 }
 
 TEST(DeviceEnumeratorTests, ExpectInitializeSessionToSetSessionHandle_EnumerateDevices_SessionHandleIsPassedToCloseHandle)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&mock_library);
+  internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce([](
