@@ -1,6 +1,12 @@
 name: NI Linux Real-Time Build
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+  pull-request:
+    types: [opened, synchronized, reopened]
+  workflow_dispatch:
 
 env:
   CMAKE_VERSION: 3.18.3
@@ -135,3 +141,4 @@ jobs:
       with:
         name: NILinuxRealTime-x86_64
         path: NILinuxRealTime-x86_64.tar
+        retention-days: 5
