@@ -526,7 +526,6 @@ namespace grpc {
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
       response->set_status(status);
       if (status == 0) {
-        Copy(cs, response->mutable_cs());
       }
       return ::grpc::Status::OK;
     }

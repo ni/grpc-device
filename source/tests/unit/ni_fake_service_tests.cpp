@@ -750,10 +750,10 @@ TEST(NiFakeServiceTests, NiFakeService_ExportAttributeConfigurationBuffer_CallsE
   ViInt8 config_buffer[] = {'A', 'B', 'C'};
   ViInt32 expected_size = 3;
   // ivi-dance call
-  EXPECT_CALL(library_wrapper, ExportAttributeConfigurationBuffer(kViSession, 0, nullptr))
+  EXPECT_CALL(library, ExportAttributeConfigurationBuffer(kTestViSession, 0, nullptr))
       .WillOnce(Return(expected_size));
   // follow up call with size returned from ivi-dance setup.
-  EXPECT_CALL(library_wrapper, ExportAttributeConfigurationBuffer(kViSession, expected_size, _))
+  EXPECT_CALL(library, ExportAttributeConfigurationBuffer(kTestViSession, expected_size, _))
       .WillOnce(DoAll(
           SetArrayArgument<2>(config_buffer, config_buffer + expected_size),
           Return(kDriverSuccess)));
@@ -778,10 +778,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceStr
   ViChar char_array[] = {'H', 'E', 'L', 'L', 'O'};
   ViInt32 expected_size = 5;
   // ivi-dance call
-  EXPECT_CALL(library_wrapper, GetAnIviDanceString(kViSession, 0, nullptr))
+  EXPECT_CALL(library, GetAnIviDanceString(kTestViSession, 0, nullptr))
       .WillOnce(Return(expected_size));
   // follow up call with size returned from ivi-dance setup.
-  EXPECT_CALL(library_wrapper, GetAnIviDanceString(kViSession, expected_size, _))
+  EXPECT_CALL(library, GetAnIviDanceString(kTestViSession, expected_size, _))
       .WillOnce(DoAll(
           SetArrayArgument<2>(char_array, char_array + expected_size),
           Return(kDriverSuccess)));
@@ -806,10 +806,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingI
   ViReal64 doubles[] = {53.4, 42, -120.3};
   ViInt32 expected_size = 3;
   // ivi-dance call
-  EXPECT_CALL(library_wrapper, GetArrayUsingIviDance(kViSession, 0, nullptr))
+  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, 0, nullptr))
       .WillOnce(Return(expected_size));
   // follow up call with size returned from ivi-dance setup.
-  EXPECT_CALL(library_wrapper, GetArrayUsingIviDance(kViSession, expected_size, _))
+  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_size, _))
       .WillOnce(DoAll(
           SetArrayArgument<2>(doubles, doubles + expected_size),
           Return(kDriverSuccess)));
@@ -835,10 +835,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViS
   ViChar attribute_char_array[] = {'H', 'E', 'L', 'L', 'O'};
   ViInt32 expected_size = 5;
   // ivi-dance call
-  EXPECT_CALL(library_wrapper, GetAttributeViString(kViSession, Pointee(*kChannelName), attributeId, 0, nullptr))
+  EXPECT_CALL(library, GetAttributeViString(kTestViSession, Pointee(*kTestChannelName), attributeId, 0, nullptr))
       .WillOnce(Return(expected_size));
   // follow up call with size returned from ivi-dance setup.
-  EXPECT_CALL(library_wrapper, GetAttributeViString(kViSession, Pointee(*kChannelName), attributeId, expected_size, _))
+  EXPECT_CALL(library, GetAttributeViString(kTestViSession, Pointee(*kTestChannelName), attributeId, expected_size, _))
       .WillOnce(DoAll(
           SetArrayArgument<4>(attribute_char_array, attribute_char_array + expected_size),
           Return(kDriverSuccess)));
@@ -846,7 +846,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViS
   ::grpc::ServerContext context;
   ni::fake::grpc::GetAttributeViStringRequest request;
   request.mutable_vi()->set_id(session_id);
-  request.set_channel_name(kChannelName);
+  request.set_channel_name(kTestChannelName);
   request.set_attribute_id(attributeId);
   ni::fake::grpc::GetAttributeViStringResponse response;
   ::grpc::Status status = service.GetAttributeViString(&context, &request, &response);
