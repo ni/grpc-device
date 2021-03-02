@@ -217,12 +217,15 @@ ${initialize_standard_input_param(parameter)}\
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
 % if common_helpers.is_array(parameter['type']):
-% if parameter['size']['mechanism'] == 'fixed':
 <%
   type_without_brackets = parameter['type'].replace('[]', '')
 %>\
+% if parameter['size']['mechanism'] == 'fixed':
       ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
-% endif
+% elif parameter['size']['mechanism'] == 'passed-in': 
+      std::vector<${type_without_brackets}> ${parameter_name}(${common_helpers.camel_to_snake(parameter['size']['value'])}); 
+% endif 
+
 % else:
       ${parameter['type']} ${parameter_name} {};
 % endif
@@ -252,6 +255,8 @@ ${initialize_standard_input_param(parameter)}\
 %else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
+%elif common_helpers.is_array(parameter['type']) and parameter['size']['mechanism'] == 'passed-in':
+        response->set_${parameter_name}(${parameter_name}.data());
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif

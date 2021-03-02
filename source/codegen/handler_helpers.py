@@ -38,7 +38,11 @@ def create_args(parameters):
     for parameter in parameters:
         if not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
             result = result + '&'
+        if  common_helpers.is_array(parameter['type']) and parameter['size']['mechanism'] == 'passed-in':
+            result = result + common_helpers.camel_to_snake(parameter['cppName']) + '.data(), '
+            continue;
         result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
+          
     return result[:-2]
 
 def create_params(parameters):
