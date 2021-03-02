@@ -276,7 +276,7 @@ add_custom_command(
   TARGET UnitTestsRunner POST_BUILD
   COMMAND  ${CMAKE_COMMAND} -E copy_directory 
            ${CMAKE_SOURCE_DIR}/source/tests/assets/
-           $<TARGET_FILE_DIR:core_server>/certs/)
+           $<TARGET_FILE_DIR:UnitTestsRunner>/)
            
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
