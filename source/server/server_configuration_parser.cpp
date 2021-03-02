@@ -29,20 +29,26 @@ static const char* kPathDelimitter = "/";
 #endif
 
 ServerConfigurationParser::ServerConfigurationParser()
-    : config_file_(load(get_exe_path() + kDefaultFilename))
+    : config_file_(load(get_exe_path() + kDefaultFilename)), certs_directory_(get_exe_path() + kCertsFolderName)
 {
 }
 
-ServerConfigurationParser::ServerConfigurationParser(const char* config_file_path)
-    : config_file_path_(config_file_path), config_file_(load(config_file_path))
+ServerConfigurationParser::ServerConfigurationParser(const std::string& config_file_path)
+    : config_file_path_(config_file_path),
+      config_file_(load(config_file_path)),
+      certs_directory_(get_certs_directory(config_file_path))
 {
 }
 
 ServerConfigurationParser::ServerConfigurationParser(const nlohmann::json& config_file)
-    : config_file_(config_file)
+    : config_file_(config_file), certs_directory_(get_exe_path() + kCertsFolderName)
 {
 }
 
+// Returns the absolute path to the folder that contains the running executable.
+// The path includes the trailing platform-dependent delimitter (i.e. /path/to/exe/folder/
+// or C:\path\to\exe\folder\) and does not contain the executable name. This function is
+// public for test use.
 std::string ServerConfigurationParser::get_exe_path()
 {
 #if defined(_MSC_VER)
@@ -59,14 +65,21 @@ std::string ServerConfigurationParser::get_exe_path()
   return exe_filename.erase(exe_filename.find_last_of(kPathDelimitter) + 1);
 }
 
+std::string ServerConfigurationParser::get_certs_directory(const std::string& config_file_path)
+{
+  std::string directory_path(config_file_path);
+  size_t end_of_path_index = directory_path.find_last_of(kPathDelimitter);
+  return end_of_path_index != std::string::npos
+      ? directory_path.erase(end_of_path_index + 1) + kCertsFolderName
+      : kCertsFolderName;
+}
+
 nlohmann::json ServerConfigurationParser::load(const std::string& config_file_path)
 {
-  // TODO: Prefer a passed in configuration file path and then search next to
-  // the binary and finally at platform specific default config file locations.
   std::ifstream input_stream(config_file_path);
 
   if (!input_stream) {
-    throw ConfigFileNotFoundException();
+    throw ConfigFileNotFoundException(config_file_path);
   }
 
   try {
@@ -103,19 +116,19 @@ std::string ServerConfigurationParser::parse_address() const
 std::string ServerConfigurationParser::parse_server_cert() const
 {
   auto file_name = parse_key_from_security_section(kServerCertJsonKey);
-  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_server_key() const
 {
   auto file_name = parse_key_from_security_section(kServerKeyJsonKey);
-  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_root_cert() const
 {
   auto file_name = parse_key_from_security_section(kRootCertJsonKey);
-  return file_name.empty() ? "" : read_keycert(get_exe_path() + kCertsFolderName + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_key_from_security_section(const char* key) const
@@ -151,8 +164,8 @@ std::string ServerConfigurationParser::read_keycert(const std::string& filename)
   return data;
 }
 
-ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException()
-    : std::runtime_error(kConfigFileNotFoundMessage)
+ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException(const std::string& config_file_path)
+    : std::runtime_error(kConfigFileNotFoundMessage + config_file_path)
 {
 }
 
