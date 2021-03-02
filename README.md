@@ -159,7 +159,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 
 1. The datatypes of the values in the configuration file don't match the expected datatypes. For example, the port must be an integer type and not a string. The error message will provide specific details on the type requirements.
 2. The configuration file can't be found at the provided location. This error can also occur if the user lacks read permissions for the file.
-3. The server configuration file is malformed and is not in proper JSON format. Refer to JSON configuration files in this readme for example of the expected format.
+3. The server configuration file is malformed and is not in proper JSON format. Refer to the JSON configuration file in this readme for an example of the expected format.
 4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
 5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
 6. Security configuration errors. See [Server SSL TLS Support wiki page](https://github.com/ni/ni-driver-apis-grpc/wiki/Server-SSL-TLS-Support).
