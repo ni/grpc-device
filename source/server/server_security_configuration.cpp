@@ -25,7 +25,6 @@ ServerSecurityConfiguration::ServerSecurityConfiguration(const std::string& serv
   credentials_options_.client_certificate_request = root_cert.empty()
       ? GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE
       : GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY;
-      grpc_ssl_client_certificate_request_type  enum_tye = GRPC_SSL_DONT_REQUEST_CLIENT_CERTIFICATE;
   credentials_options_.pem_root_certs = root_cert;
   server_credentials_ = ::grpc::SslServerCredentials(credentials_options_);
 }
