@@ -10,8 +10,10 @@ namespace tests {
 namespace unit {
 
 using ::testing::_;
+using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::Throw;
+using ::testing::WithArg;
 
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
@@ -46,26 +48,19 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
   EXPECT_EQ(internal::kSysCfgApiFailedMessage, status.error_message());
 }
 
-TEST(DeviceEnumeratorTests, ExpectInitializeSessionToSetSessionHandle_EnumerateDevices_SessionHandleIsPassedToCloseHandle)
+NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* sessionHandle)
+{
+  *sessionHandle = (NISysCfgSessionHandle)1;
+  return NISysCfg_OK;
+}
+
+TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_SessionHandleIsPassedToCloseHandle)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   internal::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
-      .WillOnce([](
-          const char* targetName,
-          const char* username,
-          const char* password,
-          NISysCfgLocale language,
-          NISysCfgBool forcePropertyRefresh,
-          unsigned int connectTimeoutMsec,
-          NISysCfgEnumExpertHandle* expertEnumHandle,
-          NISysCfgSessionHandle* sessionHandle
-          ) {
-              *sessionHandle = (NISysCfgSessionHandle)1;
-              return NISysCfg_OK;
-          }
-      );
+      .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, CloseHandle((void*)1))
       .Times(1)
       .WillOnce(Return(NISysCfg_OK));
