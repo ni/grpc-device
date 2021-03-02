@@ -16,7 +16,7 @@ TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibra
 }
 
 
-TEST(SysCfgLibraryTests, SysCfgLibrary_SharedLibraryIsNotLoaded)
+TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryIsNotLoaded)
 {
   internal::SysCfgLibrary syscfg_library;
 
@@ -31,7 +31,7 @@ TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallInitializeSession_ThrowsLibra
     NISysCfgSessionHandle session = NULL;
     auto status = syscfg_library.InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
 
-    FAIL() << "LibraryLoadException not thrown";
+    FAIL() << "LibraryLoadException was not thrown";
   }
   catch (internal::LibraryLoadException& ex) {
     EXPECT_STREQ(internal::kSysCfgApiNotInstalledMessage, ex.what());
@@ -45,7 +45,7 @@ TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallCloseHandle_ThrowsLibraryLoad
   try {
     auto status = syscfg_library.CloseHandle(NULL);
 
-    FAIL() << "LibraryLoadException not thrown";
+    FAIL() << "LibraryLoadException was not thrown";
   }
   catch (internal::LibraryLoadException& ex) {
     EXPECT_STREQ(internal::kSysCfgApiNotInstalledMessage, ex.what());
