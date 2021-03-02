@@ -31,7 +31,6 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber, ViChar aString[]) = 0;
   virtual ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]) = 0;
   virtual ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize) = 0;
-  virtual ViStatus GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 numberOfElements, struct CustomStruct arrayOut[]) = 0;
   virtual ViStatus GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]) = 0;
   virtual ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut) = 0;
   virtual ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]) = 0;
@@ -42,8 +41,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]) = 0;
   virtual ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetCalInterval(ViSession vi, ViInt32* months) = 0;
-  virtual ViStatus GetCustomType(ViSession vi, struct CustomStruct* cs) = 0;
-  virtual ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]) = 0;
+  virtual ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]) = 0;
   virtual ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
@@ -65,8 +63,6 @@ class NiFakeLibraryInterface {
   virtual ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue) = 0;
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue) = 0;
-  virtual ViStatus SetCustomType(ViSession vi, struct CustomStruct cs) = 0;
-  virtual ViStatus SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, struct CustomStruct cs[]) = 0;
   virtual ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName) = 0;
   virtual ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString) = 0;
   virtual ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output) = 0;

@@ -26,6 +26,8 @@ class ServerConfigurationParser {
   ServerConfigurationParser(const nlohmann::json& config_file);
   virtual ~ServerConfigurationParser() {}
 
+  static std::string get_exe_path();
+
   std::string parse_address() const;
   std::string parse_server_cert() const;
   std::string parse_server_key() const;
@@ -64,13 +66,14 @@ class ServerConfigurationParser {
   };
 
  private:
-  static std::string get_exe_path();
   static nlohmann::json load(const std::string& config_file_path);
   static std::string read_keycert(const std::string& filename);
+  static std::string get_certs_directory(const std::string& config_file_path);
   std::string parse_key_from_security_section(const char* key) const;
 
   nlohmann::json config_file_;
   std::string config_file_path_;
+  std::string certs_directory_;
 };
 
 }  // namespace internal

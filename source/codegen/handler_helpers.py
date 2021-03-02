@@ -35,14 +35,13 @@ def get_include_guard_name(config, suffix):
 
 def create_args(parameters):
     result = ''
-    for parameter in parameters:
-        if not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
-            result = result + '&'
-        if  common_helpers.is_array(parameter['type']) and parameter['size']['mechanism'] == 'passed-in':
-            result = result + common_helpers.camel_to_snake(parameter['cppName']) + '.data(), '
-            continue;
-        result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
-          
+    for parameter in parameters:         
+      parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+      if parameter["type"].startswith("struct") or common_helpers.is_array(parameter['type']) and parameter['size']['mechanism'] == 'passed-in':
+        parameter_name = parameter_name + ".data()"
+      elif not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
+        result = result + '&'
+      result = result + parameter_name + ', '
     return result[:-2]
 
 def create_params(parameters):
@@ -51,6 +50,8 @@ def create_params(parameters):
 def create_param(parameter):
     type = parameter['type']
     name = parameter['cppName']
+    if common_helpers.is_struct(parameter):
+      type = type.replace("struct ", "")
     if common_helpers.is_array(type):
         is_fixed = parameter['size']['mechanism'] == 'fixed'
         array_size = parameter['size']['value'] if is_fixed else ''

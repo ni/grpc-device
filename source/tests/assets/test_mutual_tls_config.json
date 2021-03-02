@@ -1,0 +1,7 @@
+{
+  "security" : {
+      "server_cert": "test_server_self_signed_crt.pem",
+      "server_key": "test_server_privatekey.pem",
+      "root_cert": "test_client_self_signed_crt.pem"
+  }
+}
