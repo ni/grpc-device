@@ -335,9 +335,9 @@ parameter_type parameter_name = {};
 % elif is_array:
 % if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
         response->set_${parameter_name}(${parameter_name});
-% endif
 %elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
+% endif
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif
