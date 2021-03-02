@@ -1,6 +1,12 @@
 name: NI Linux Real-Time Build
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 env:
   CMAKE_VERSION: 3.18.3
@@ -128,10 +134,22 @@ jobs:
         endif()
 
     - name: Tar Build Files
-      run: tar -cvf NILinuxRealTime-x86_64.tar ${GITHUB_WORKSPACE}/build/
+      if: "github.ref == 'refs/heads/main'"
+      run: tar -cvf NILinuxRealTime-x86_64.tar \
+        ${GITHUB_WORKSPACE}/build/certs/ \
+        ${GITHUB_WORKSPACE}/build/core_server \
+        ${GITHUB_WORKSPACE}/build/CTestTestfile.cmake \
+        ${GITHUB_WORKSPACE}/build/IntegrationTestsRunner \
+        ${GITHUB_WORKSPACE}/build/libTestApi.so \
+        ${GITHUB_WORKSPACE}/build/server_config.json \
+        ${GITHUB_WORKSPACE}/build/SystemTestsRunner \
+        ${GITHUB_WORKSPACE}/build/test_mutual_tls_config.json \
+        ${GITHUB_WORKSPACE}/build/UnitTestsRunner
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
+      if: "github.ref == 'refs/heads/main'"
       with:
         name: NILinuxRealTime-x86_64
         path: NILinuxRealTime-x86_64.tar
+        retention-days: 5
