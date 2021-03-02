@@ -81,7 +81,19 @@ namespace grpc {
   ::grpc::Status NiFakeService::BoolArrayOutputFunction(::grpc::ServerContext* context, const BoolArrayOutputFunctionRequest* request, BoolArrayOutputFunctionResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 number_of_elements = request->number_of_elements();
+      std::vector<ViBoolean> an_array(number_of_elements); 
+      auto status = library_->BoolArrayOutputFunction(vi, number_of_elements, an_array.data());
+      response->set_status(status);
+      if (status == 0) {
+        for (int i = 0; i < an_array.size(); ++i)
+        {
+          response->set_an_array(i, an_array[i]);
+        }
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -100,18 +112,6 @@ namespace grpc {
       auto status = library_->DoubleAllTheNums(vi, number_count, numbers);
       response->set_status(status);
       return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::EnumArrayOutputFunction(::grpc::ServerContext* context, const EnumArrayOutputFunctionRequest* request, EnumArrayOutputFunctionResponse* response)
-  {
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -152,7 +152,21 @@ namespace grpc {
   ::grpc::Status NiFakeService::FetchWaveform(::grpc::ServerContext* context, const FetchWaveformRequest* request, FetchWaveformResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 number_of_samples = request->number_of_samples();
+      std::vector<ViReal64> waveform_data(number_of_samples); 
+      ViInt32 actual_number_of_samples {};
+      auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data.data(), &actual_number_of_samples);
+      response->set_status(status);
+      if (status == 0) {
+        for (int i = 0; i < waveform_data.size(); ++i)
+        {
+          response->set_waveform_data(i, waveform_data[i]);
+        }
+        response->set_actual_number_of_samples(actual_number_of_samples);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -544,7 +558,27 @@ namespace grpc {
   ::grpc::Status NiFakeService::MultipleArrayTypes(::grpc::ServerContext* context, const MultipleArrayTypesRequest* request, MultipleArrayTypesResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 output_array_size = request->output_array_size();
+      ViInt32 input_array_sizes = request->input_array_of_floats().size();
+      ViReal64* input_array_of_floats = (ViReal64*)request->input_array_of_floats().data();
+      ViInt16* input_array_of_integers = (ViInt16*)request->input_array_of_integers().data();
+      std::vector<ViReal64> output_array(output_array_size); 
+      ViReal64 output_array_of_fixed_length[3];
+      auto status = library_->MultipleArrayTypes(vi, output_array_size, output_array.data(), output_array_of_fixed_length, input_array_sizes, input_array_of_floats, input_array_of_integers);
+      response->set_status(status);
+      if (status == 0) {
+        for (int i = 0; i < output_array.size(); ++i)
+        {
+          response->set_output_array(i, output_array[i]);
+        }
+        for (int i = 0; i < sizeof(output_array_of_fixed_length); ++i)
+        {
+          response->set_output_array_of_fixed_length(i, output_array_of_fixed_length[i]);
+        }
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -725,7 +759,19 @@ namespace grpc {
   ::grpc::Status NiFakeService::ReturnListOfDurationsInSeconds(::grpc::ServerContext* context, const ReturnListOfDurationsInSecondsRequest* request, ReturnListOfDurationsInSecondsResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 number_of_elements = request->number_of_elements();
+      std::vector<ViReal64> timedeltas(number_of_elements); 
+      auto status = library_->ReturnListOfDurationsInSeconds(vi, number_of_elements, timedeltas.data());
+      response->set_status(status);
+      if (status == 0) {
+        for (int i = 0; i < timedeltas.size(); ++i)
+        {
+          response->set_timedeltas(i, timedeltas[i]);
+        }
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

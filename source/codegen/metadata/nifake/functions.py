@@ -132,7 +132,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'EnumArrayOutputFunction': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns an array of enums, stored as 16 bit integers under the hood.'
         },

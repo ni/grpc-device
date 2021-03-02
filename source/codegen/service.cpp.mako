@@ -264,7 +264,6 @@ parameter_type parameter_name = {};
 % elif parameter['size']['mechanism'] == 'passed-in': 
       std::vector<${type_without_brackets}> ${parameter_name}(${common_helpers.camel_to_snake(parameter['size']['value'])}); 
 % endif 
-
 % else:
       ${parameter['type']} ${parameter_name} {};
 % endif
@@ -285,7 +284,6 @@ parameter_type parameter_name = {};
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
-
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
         if(${iterator_name} == ${map_name}.end()) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
@@ -293,12 +291,19 @@ parameter_type parameter_name = {};
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
 %else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
-%endif
-%elif common_helpers.is_array(parameter['type']) and parameter['size']['mechanism'] == 'passed-in':
-        response->set_${parameter_name}(${parameter_name}.data());
+%endif 
 %elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
-
+%elif common_helpers.is_array(parameter['type']) and (parameter['size']['mechanism'] == 'passed-in'):
+        for (int i = 0; i < ${parameter_name}.size(); ++i)
+        {
+          response->set_${parameter_name}(i, ${parameter_name}[i]);
+        }
+% elif common_helpers.is_array(parameter['type']) and (parameter['size']['mechanism'] == 'fixed') and parameter['type'] != 'ViChar[]':
+        for (int i = 0; i < sizeof(${parameter_name}); ++i)
+        {
+          response->set_${parameter_name}(i, ${parameter_name}[i]);
+        }
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif

@@ -642,11 +642,13 @@ namespace grpc {
       ViConstString channel = request->channel().c_str();
       ViInt32 number_of_coefficients = request->number_of_coefficients();
       std::vector<ViReal64> coefficients(number_of_coefficients); 
-
       auto status = library_->GetEqualizationFilterCoefficients(vi, channel, number_of_coefficients, coefficients.data());
       response->set_status(status);
       if (status == 0) {
-        response->set_coefficients(coefficients.data());
+        for (int i = 0; i < coefficients.size(); ++i)
+        {
+          response->set_coefficients(i, coefficients[i]);
+        }
       }
       return ::grpc::Status::OK;
     }
@@ -988,7 +990,6 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViStatus error_code = request->error_code();
       ViChar error_message[256];
-
       auto status = library_->error_message(vi, error_code, error_message);
       response->set_status(status);
       if (status == 0) {
@@ -1026,7 +1027,6 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 self_test_result {};
       ViChar self_test_message[256];
-
       auto status = library_->self_test(vi, &self_test_result, self_test_message);
       response->set_status(status);
       if (status == 0) {
