@@ -30,7 +30,6 @@ service NiFake {
   rpc GetAStringUsingPythonCode(GetAStringUsingPythonCodeRequest) returns (GetAStringUsingPythonCodeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
-  rpc GetArrayForPythonCodeCustomType(GetArrayForPythonCodeCustomTypeRequest) returns (GetArrayForPythonCodeCustomTypeResponse);
   rpc GetArrayForPythonCodeDouble(GetArrayForPythonCodeDoubleRequest) returns (GetArrayForPythonCodeDoubleResponse);
   rpc GetArraySizeForPythonCode(GetArraySizeForPythonCodeRequest) returns (GetArraySizeForPythonCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
@@ -41,7 +40,6 @@ service NiFake {
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
   rpc GetCalInterval(GetCalIntervalRequest) returns (GetCalIntervalResponse);
-  rpc GetCustomType(GetCustomTypeRequest) returns (GetCustomTypeResponse);
   rpc GetCustomTypeArray(GetCustomTypeArrayRequest) returns (GetCustomTypeArrayResponse);
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
@@ -57,8 +55,6 @@ service NiFake {
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
   rpc ReturnListOfDurationsInSeconds(ReturnListOfDurationsInSecondsRequest) returns (ReturnListOfDurationsInSecondsResponse);
   rpc ReturnMultipleTypes(ReturnMultipleTypesRequest) returns (ReturnMultipleTypesResponse);
-  rpc SetCustomType(SetCustomTypeRequest) returns (SetCustomTypeResponse);
-  rpc SetCustomTypeArray(SetCustomTypeArrayRequest) returns (SetCustomTypeArrayResponse);
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
   rpc TwoInputFunction(TwoInputFunctionRequest) returns (TwoInputFunctionResponse);
   rpc Use64BitNumber(Use64BitNumberRequest) returns (Use64BitNumberResponse);
@@ -112,6 +108,11 @@ enum Turtle {
   TURTLE_DONATELLO = 1;
   TURTLE_RAPHAEL = 2;
   TURTLE_MICHELANGELO = 3;
+}
+
+message FakeCustomStruct {
+  sint32 struct_int = 1;
+  double struct_double = 2;
 }
 
 message AbortRequest {
@@ -248,16 +249,6 @@ message GetAnIviDanceWithATwistStringResponse {
   sint32 actual_size = 3;
 }
 
-message GetArrayForPythonCodeCustomTypeRequest {
-  ni.hardware.grpc.Session vi = 1;
-  sint32 number_of_elements = 2;
-}
-
-message GetArrayForPythonCodeCustomTypeResponse {
-  int32 status = 1;
-  repeated fixed64 array_out = 2;
-}
-
 message GetArrayForPythonCodeDoubleRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 number_of_elements = 2;
@@ -366,15 +357,6 @@ message GetCalIntervalResponse {
   sint32 months = 2;
 }
 
-message GetCustomTypeRequest {
-  ni.hardware.grpc.Session vi = 1;
-}
-
-message GetCustomTypeResponse {
-  int32 status = 1;
-  fixed64 cs = 2;
-}
-
 message GetCustomTypeArrayRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 number_of_elements = 2;
@@ -382,7 +364,7 @@ message GetCustomTypeArrayRequest {
 
 message GetCustomTypeArrayResponse {
   int32 status = 1;
-  repeated fixed64 cs = 2;
+  repeated FakeCustomStruct cs = 2;
 }
 
 message GetEnumValueRequest {
@@ -540,24 +522,6 @@ message ReturnMultipleTypesResponse {
   FloatEnum a_float_enum = 7;
   repeated double an_array = 8;
   string a_string = 9;
-}
-
-message SetCustomTypeRequest {
-  ni.hardware.grpc.Session vi = 1;
-  fixed64 cs = 2;
-}
-
-message SetCustomTypeResponse {
-  int32 status = 1;
-}
-
-message SetCustomTypeArrayRequest {
-  ni.hardware.grpc.Session vi = 1;
-  repeated fixed64 cs = 2;
-}
-
-message SetCustomTypeArrayResponse {
-  int32 status = 1;
 }
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {

@@ -518,6 +518,29 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
   EXPECT_STREQ(output_string, response.a_string().c_str());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArray)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  ViInt32 number_of_elements = 3;
+  std::vector<CustomStruct> cs(number_of_elements);
+  EXPECT_CALL(library, GetCustomTypeArray(kTestViSession, number_of_elements, _))
+    .WillOnce(DoAll(SetArgPointee<2>(*(cs.data())), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;   
+  ni::fake::grpc::GetCustomTypeArrayRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_number_of_elements(3);
+  ni::fake::grpc::GetCustomTypeArrayResponse response;
+  ::grpc::Status status = service.GetCustomTypeArray(&context, &request, &response);
+  
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(response.cs_size(), cs.size());
+}
+
 TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsImportAttributeConfigurationBuffer)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
