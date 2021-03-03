@@ -12,8 +12,6 @@ Removed the 'repeated-capabilities' as it is python specific.
 
 ## functions.py
 
-The occurrences of `'default_value'` were not removed but should be removed once enum support is complete.
-
 All occurrences of the following keys were removed along with their values:
 - `'python_api_converter_name'`
 - `'documentation'`
@@ -41,23 +39,27 @@ The following functions were changed from `private` to `public`:
 - `close`
 - `self_test`
 
-The following APIs are missing (compared to the C API documentation)(total :23)
-- Init
-- InitWithOptions
+The following APIs were newly added :
 - IsDebounced
 - Scan
 - IsScanning
 - ConfigureScanList
 - ConfigureScanTrigger
 - SetContinuousScan
-- ErrorQuery
 - ClearError
 - GetNextInterchangeWarning
 - ResetInterchangeCheck
 - ClearInterchangeWarnings
 - GetNextCoercionRecord
 - InvalidateAllAttributes
-- RevisionQuery
-- GetAttributeViSession
 - SetAttributeViSession
 - All the CheckAttribute APIs(5)
+
+Yet to be added : 
+- init
+- InitWithOptions
+- GetAttributeViSession
+
+The following APIs will not be implemented : 
+- ErrorQuery
+- RevisionQuery
