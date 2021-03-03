@@ -205,7 +205,7 @@ add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FRO
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/integration/session_utilities_service_tests.cpp"
+    "source/tests/integration/in_process_server_client_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
