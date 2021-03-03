@@ -698,6 +698,58 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnListOfDurationsInSeconds_CallsRetur
   EXPECT_THAT(response.timedeltas(), ElementsAreArray(expected_response_doubles, number_of_elements));
 }
 
+TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTypes)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  ViInt32 array_size = 3;
+  ViBoolean a_boolean = false;
+  ViInt32 an_int32 = 4;
+  ViInt64 an_int64 = 5;
+  ViInt16 an_int_enum = ni::fake::grpc::Turtle::TURTLE_MICHELANGELO;
+  ViReal64 a_float = 7.2;
+  ViReal64 a_float_enum = 6.5f;
+  ViReal64 an_array[] = {1.0, 2, -3.0};
+  ViInt32 string_size = 6;
+  char a_string[] = "Hello!"; 
+  // ivi-dance call
+  EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr))
+      .WillOnce(Return(string_size));
+  // follow up call with size returned from ivi-dance setup.
+  EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, _, _, _, _, _, _, array_size, _, string_size, _))
+      .WillOnce(DoAll(
+        SetArgPointee<1>(a_boolean),
+        SetArgPointee<2>(an_int32),
+        SetArgPointee<3>(an_int64),
+        SetArgPointee<4>(an_int_enum),
+        SetArgPointee<5>(a_float),
+        SetArgPointee<6>(a_float_enum),
+        SetArrayArgument<8>(an_array, an_array + array_size),
+        SetArrayArgument<10>(a_string, a_string + string_size), 
+        Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::ReturnMultipleTypesRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_array_size(3);
+  ni::fake::grpc::ReturnMultipleTypesResponse response;
+  ::grpc::Status status = service.ReturnMultipleTypes(&context, &request, &response);
+  
+  ViReal64 mapped_enum_value = 4;
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(a_boolean, response.a_boolean());
+  EXPECT_EQ(an_int32, response.an_int32());
+  EXPECT_EQ(an_int64, response.an_int64());
+  EXPECT_EQ(an_int_enum, response.an_int_enum());
+  EXPECT_EQ(a_float, response.a_float());
+  EXPECT_EQ(mapped_enum_value, response.a_float_enum());
+  EXPECT_THAT(response.an_array(), ElementsAreArray(an_array, array_size));
+  EXPECT_THAT(response.a_string(), ElementsAreArray(a_string, string_size));
+}
+
 TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
