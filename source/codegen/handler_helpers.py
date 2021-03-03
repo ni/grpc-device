@@ -38,7 +38,7 @@ def is_string_arg(parameter):
 
 def create_args(parameters):
     result = ''
-    for parameter in parameters:         
+    for parameter in parameters:
       parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
       is_array = common_helpers.is_array(parameter['type'])
       is_output = common_helpers.is_output_parameter(parameter)
