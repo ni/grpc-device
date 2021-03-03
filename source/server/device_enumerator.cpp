@@ -21,9 +21,17 @@ DeviceEnumerator::~DeviceEnumerator()
 {
   NISysCfgStatus syscfg_status = NISysCfg_OK;
   NISysCfgSessionHandle session = NULL;
+  NISysCfgFilterHandle filter = NULL;
   
   try {
     syscfg_status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
+    if (NISysCfg_Succeeded(syscfg_status)) {
+      syscfg_status = library_->CreateFilter(session, &filter);
+      library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
+      library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
+    }
+
+    library_->CloseHandle(filter);
     library_->CloseHandle(session);
   }
   catch (LibraryLoadException& ex) {

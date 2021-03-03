@@ -82,6 +82,42 @@ NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
 #endif
 }
 
+NISysCfgStatus SysCfgLibrary::CreateFilter(
+  NISysCfgSessionHandle                  session_handle,
+  NISysCfgFilterHandle*                  filter_handle
+  )
+{
+  if (!function_pointers_.CreateFilter) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+#if defined(_MSC_VER)
+  return NISysCfgCreateFilter(session_handle, filter_handle);
+#else
+  return function_pointers_.CreateFilter(session_handle, filter_handle);
+#endif
+}
+
+NISysCfgStatus SysCfgLibrary::SetFilterProperty(
+  NISysCfgFilterHandle                    filter_handle,
+  NISysCfgFilterProperty                  property_ID,
+  ...
+  )
+{
+  va_list args;
+  NISysCfgStatus status;
+  va_start(args, property_ID);
+  if (!function_pointers_.SetFilterProperty) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+#if defined(_MSC_VER)
+  status = NISysCfgSetFilterPropertyV(filter_handle, property_ID, args);
+#else
+  status = function_pointers_.SetFilterPropertyV(filter_handle, property_ID, args);
+#endif
+  va_end(args);
+  return status;
+}
+
 }  // namespace internal
 }  // namespace grpc
 }  // namespace hardware

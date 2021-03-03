@@ -3,6 +3,7 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nisyscfg.h>
 
 namespace ni {
 namespace tests {
@@ -21,6 +22,18 @@ class SysCfgMockLibrary : public ni::hardware::grpc::internal::SysCfgLibraryInte
     NISysCfgSessionHandle*                 session_handle
     ), (override));
   MOCK_METHOD(NISysCfgStatus, CloseHandle, (void* syscfg_handle), (override));
+  MOCK_METHOD(NISysCfgStatus, CreateFilter, (
+    NISysCfgSessionHandle                  session_handle,
+    NISysCfgFilterHandle*                  filter_handle
+    ), (override));
+  NISysCfgStatus SetFilterProperty(
+    NISysCfgFilterHandle                    filter_handle,
+    NISysCfgFilterProperty                  property_ID,
+    ...
+    ) 
+  {
+    return NISysCfg_OK;
+  }
 };
 
 }  // namespace utilities

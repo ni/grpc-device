@@ -62,8 +62,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, CloseHandle((void*)1))
-      .Times(1)
-      .WillOnce(Return(NISysCfg_OK));
+      .WillRepeatedly(Return(NISysCfg_OK));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 

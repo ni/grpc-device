@@ -38,7 +38,16 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     NISysCfgSessionHandle*                 session_handle
     );
   NISysCfgStatus CloseHandle(void* syscfg_handle);
-  // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
+  NISysCfgStatus CreateFilter(
+    NISysCfgSessionHandle                  session_handle,
+    NISysCfgFilterHandle*                  filter_handle
+    );
+  NISysCfgStatus SetFilterProperty(
+    NISysCfgFilterHandle                    filter_handle,
+    NISysCfgFilterProperty                  property_ID,
+    ...
+    );
+  // Additional methods like FindHardware, NextResource etc. will be added in upcoming PRs.
 
  private:
   using InitializeSessionPtr = NISysCfgStatus (*)(
@@ -52,10 +61,21 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     NISysCfgSessionHandle *                session_handle
     );
   using CloseHandlePtr = NISysCfgStatus (*)(void* syscfg_handle);
+  using CreateFilterPtr = NISysCfgStatus (*)(
+    NISysCfgSessionHandle                  session_handle,
+    NISysCfgFilterHandle*                  filter_handle
+    );
+  using SetFilterPropertyPtr = NISysCfgStatus (*)(
+   NISysCfgFilterHandle                    filter_handle,
+   NISysCfgFilterProperty                  property_ID,
+   ...
+   );
 
   typedef struct FunctionPointers {
     InitializeSessionPtr InitializeSession;
     CloseHandlePtr CloseHandle;
+    CreateFilterPtr CreateFilter;
+    SetFilterPropertyPtr SetFilterProperty;
   } FunctionLoadStatus;
 
   SharedLibrary shared_library_;

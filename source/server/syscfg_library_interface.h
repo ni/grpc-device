@@ -24,7 +24,16 @@ class SysCfgLibraryInterface {
     NISysCfgSessionHandle*                 session_handle
     ) = 0;
   virtual NISysCfgStatus CloseHandle(void* syscfg_handle) = 0;
-  // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
+  virtual NISysCfgStatus CreateFilter(
+    NISysCfgSessionHandle                  session_handle,
+    NISysCfgFilterHandle*                  filter_handle
+    ) = 0;
+  virtual NISysCfgStatus SetFilterProperty(
+   NISysCfgFilterHandle                    filter_handle,
+   NISysCfgFilterProperty                  property_ID,
+   ...
+   ) = 0;
+  // Additional methods like FindHardware, NextResource etc. will be added in upcoming PRs.
 };
 
 }  // namespace internal
