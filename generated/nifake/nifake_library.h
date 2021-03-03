@@ -6,9 +6,9 @@
 #ifndef NI_FAKE_GRPC_LIBRARY_H
 #define NI_FAKE_GRPC_LIBRARY_H
 
-#include "nifake_library_interface.h"
-
 #include <server/shared_library.h>
+
+#include "nifake_library_interface.h"
 
 namespace ni {
 namespace fake {
@@ -146,7 +146,6 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     GetAStringUsingPythonCodePtr GetAStringUsingPythonCode;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
-    GetArrayForPythonCodeCustomTypePtr GetArrayForPythonCodeCustomType;
     GetArrayForPythonCodeDoublePtr GetArrayForPythonCodeDouble;
     GetArraySizeForPythonCodePtr GetArraySizeForPythonCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;

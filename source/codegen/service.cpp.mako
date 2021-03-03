@@ -34,6 +34,24 @@ namespace ni {
 namespace ${config["namespace_component"]} {
 namespace grpc {
 
+%if 'custom_type' in locals():
+  namespace {
+    void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
+%for field in custom_type["fields"]: 
+      output->set_${field["grpc_name"]}(input.${field["name"]});
+%endfor
+    }
+
+    void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
+      for (auto item : input) {
+        auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
+        Copy(item, message);
+        output->AddAllocated(message);
+      }
+    }
+  }
+
+%endif
   namespace internal = ni::hardware::grpc::internal;
 
   ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
@@ -236,7 +254,7 @@ ${initialize_standard_input_param(parameter)}\
 <%def name="initialize_struct_output(parameter)">\
 <%
 parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-parameter_type = common_helpers.format_struct_type(parameter["type"])
+parameter_type = common_helpers.isolate_struct_type(parameter["type"])
 %>\
 % if common_helpers.is_array(parameter["type"]):
 std::vector<${parameter_type}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});

@@ -430,7 +430,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
   std::int32_t a_quantity = 123;
   std::int16_t a_turtle = NIFAKE_VAL_LEONARDO;
   EXPECT_CALL(library, GetEnumValue(kTestViSession, _, _))
-    .WillOnce(DoAll(SetArgPointee<1>(a_quantity), SetArgPointee<2>(a_turtle), Return(kDriverSuccess)));
+      .WillOnce(DoAll(SetArgPointee<1>(a_quantity), SetArgPointee<2>(a_turtle), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::GetEnumValueRequest request;
@@ -507,7 +507,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
           SetArrayArgument<1>(output_string, output_string + 256),
           Return(kDriverSuccess)));
 
-  ::grpc::ServerContext context;   
+  ::grpc::ServerContext context;
   ni::fake::grpc::GetAStringOfFixedMaximumSizeRequest request;
   request.mutable_vi()->set_id(session_id);
   ni::fake::grpc::GetAStringOfFixedMaximumSizeResponse response;
@@ -526,20 +526,19 @@ TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArra
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 number_of_elements = 3;
   std::vector<CustomStruct> cs(number_of_elements);
-
   EXPECT_CALL(library, GetCustomTypeArray(kTestViSession, number_of_elements, _))
-    .WillOnce(DoAll(SetArgPointee<2>(*(cs.data())), Return(kDriverSuccess)));
+      .WillOnce(DoAll(SetArgPointee<2>(*(cs.data())), Return(kDriverSuccess)));
 
-  ::grpc::ServerContext context;   
+  ::grpc::ServerContext context;
   ni::fake::grpc::GetCustomTypeArrayRequest request;
   request.mutable_vi()->set_id(session_id);
   request.set_number_of_elements(3);
   ni::fake::grpc::GetCustomTypeArrayResponse response;
   ::grpc::Status status = service.GetCustomTypeArray(&context, &request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
-
+  EXPECT_EQ(response.cs_size(), cs.size());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsImportAttributeConfigurationBuffer)
@@ -706,7 +705,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::MobileOSNames a_mobile_o_s_name = ni::fake::grpc::MOBILE_O_S_NAMES_UNSPECIFIED;
   EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults)
-    .Times(0);
+      .Times(0);
 
   ::grpc::ServerContext context;
   ni::fake::grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
@@ -728,7 +727,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   ni::fake::grpc::MobileOSNames a_mobile_o_s_name = ni::fake::grpc::MOBILE_O_S_NAMES_ANDROID;
   const char* expected_enum_value = NIFAKE_VAL_ANDROID;
   EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults(kTestViSession, Pointee(*expected_enum_value)))
-    .WillOnce(Return(kDriverSuccess));
+      .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   ni::fake::grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
