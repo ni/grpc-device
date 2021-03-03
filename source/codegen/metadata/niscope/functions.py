@@ -103,6 +103,28 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CableSenseSignalStart': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CableSenseSignalStop': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CalFetchDate': {
         'codegen_method': 'no',
         'parameters': [
@@ -424,6 +446,59 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ConfigureTriggerGlitch': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'width',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GlitchPolarity',
+                'name': 'polarity',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GlitchCondition',
+                'name': 'glitchCondition',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TriggerCoupling',
+                'name': 'triggerCoupling',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'holdoff',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'delay',
+                'type': 'ViReal64'
+            },
+        ],
+        'returns': 'ViStatus'
+    },
     'ConfigureTriggerHysteresis': {
         'parameters': [
             {
@@ -481,6 +556,53 @@ functions = {
                 'name': 'vi',
                 'type': 'ViSession'
             }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureTriggerRunt': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowThreshold',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'highThreshold',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'RuntPolarity',
+                'name': 'polarity',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TriggerCoupling',
+                'name': 'triggerCoupling',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'holdoff',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'delay',
+                'type': 'ViReal64'
+            },
         ],
         'returns': 'ViStatus'
     },
@@ -566,6 +688,64 @@ functions = {
                 'name': 'delay',
                 'type': 'ViReal64'
             }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureTriggerWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowThreshold',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'highThreshold',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WidthPolarity',
+                'name': 'polarity',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WidthCondition',
+                'name': 'condition',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TriggerCoupling',
+                'name': 'triggerCoupling',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'holdoff',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'delay',
+                'type': 'ViReal64'
+            },
         ],
         'returns': 'ViStatus'
     },
@@ -956,6 +1136,43 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'FetchMeasurement': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'default_value': 'hightime.timedelta(seconds=5.0)',
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ScalarMeasurement',
+                'name': 'scalarMeasFunction',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'result',
+                'size': {
+                    'mechanism': 'python-code',
+                    'value': 'self._actual_num_wfms()'
+                },
+                'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'FetchMeasurementStats': {
         'codegen_method': 'public',
         'parameters': [
@@ -1177,6 +1394,66 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetChannelName': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'index',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'direction': 'out',
+                'name': 'channelString',
+                'type': 'ViChar[]'
+            },
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetChannelNameFromString': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'index',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'size': {
+                    'mechanism': 'ivi_dance',
+                    'size_in': 'bufferSize'
+                },
+                'direction': 'out',
+                'name': 'name',
+                'type': 'ViChar[]'
+            },
+        ],
+        'returns': 'ViStatus'
+    },
     'GetEqualizationFilterCoefficients': {
         'codegen_method': 'public',
         'parameters': [
@@ -1238,6 +1515,43 @@ functions = {
         ],
         'returns': 'ViStatus',
         'use_session_lock': False
+    },
+    'GetScalingCoefficients': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'size': {
+                    'mechanism': 'ivi_dance_with_a_twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfCoefficientSets',
+                },
+                'direction': 'out',
+                'type': 'struct niScope_coefficientInfo[]',
+                'name': 'coefficientInfo',
+                'grpc_type': 'repeated CoefficientInfo'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfCoefficientSets',
+                'type': 'ViInt32'
+            },
+        ],
+        'returns': 'ViStatus'
     },
     'ImportAttributeConfigurationBuffer': {
         'parameters': [
@@ -1403,6 +1717,43 @@ functions = {
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ReadMeasurement': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'default_value': 'hightime.timedelta(seconds=5.0)',
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ScalarMeasurement',
+                'name': 'scalarMeasFunction',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'result',
+                'size': {
+                    'mechanism': 'python-code',
+                    'value': 'self._actual_num_wfms()'
+                },
+                'type': 'ViReal64[]'
             }
         ],
         'returns': 'ViStatus'

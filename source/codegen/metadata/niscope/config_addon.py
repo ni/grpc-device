@@ -10,6 +10,11 @@ config_additional_config = {
             'python_name': 'WaveformInfo'
         },
         {
+            'ctypes_type': 'struct_niScope_coefficientInfo',
+            'file_name': 'coefficient_info',
+            'python_name': 'CoefficientInfo'
+        },
+        {
             'ctypes_type': '',
             'file_name': 'measurement_stats',
             'python_name': 'MeasurementStats'

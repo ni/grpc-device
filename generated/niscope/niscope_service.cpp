@@ -120,6 +120,38 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::CableSenseSignalStart(::grpc::ServerContext* context, const CableSenseSignalStartRequest* request, CableSenseSignalStartResponse* response)
+  {
+    try {
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto status = library_->CableSenseSignalStart(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::CableSenseSignalStop(::grpc::ServerContext* context, const CableSenseSignalStopRequest* request, CableSenseSignalStopResponse* response)
+  {
+    try {
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto status = library_->CableSenseSignalStop(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response)
   {
     try {
@@ -290,6 +322,30 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::ConfigureTriggerGlitch(::grpc::ServerContext* context, const ConfigureTriggerGlitchRequest* request, ConfigureTriggerGlitchResponse* response)
+  {
+    try {
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString trigger_source = request->trigger_source().c_str();
+      ViReal64 level = request->level();
+      ViReal64 width = request->width();
+      ViInt32 polarity = (ViInt32)request->polarity();
+      ViInt32 glitch_condition = (ViInt32)request->glitch_condition();
+      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViReal64 holdoff = request->holdoff();
+      ViReal64 delay = request->delay();
+      auto status = library_->ConfigureTriggerGlitch(vi, trigger_source, level, width, polarity, glitch_condition, trigger_coupling, holdoff, delay);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerHysteresis(::grpc::ServerContext* context, const ConfigureTriggerHysteresisRequest* request, ConfigureTriggerHysteresisResponse* response)
   {
     try {
@@ -319,6 +375,29 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       auto status = library_->ConfigureTriggerImmediate(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::ConfigureTriggerRunt(::grpc::ServerContext* context, const ConfigureTriggerRuntRequest* request, ConfigureTriggerRuntResponse* response)
+  {
+    try {
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString trigger_source = request->trigger_source().c_str();
+      ViReal64 low_threshold = request->low_threshold();
+      ViReal64 high_threshold = request->high_threshold();
+      ViInt32 polarity = (ViInt32)request->polarity();
+      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViReal64 holdoff = request->holdoff();
+      ViReal64 delay = request->delay();
+      auto status = library_->ConfigureTriggerRunt(vi, trigger_source, low_threshold, high_threshold, polarity, trigger_coupling, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -362,6 +441,31 @@ namespace grpc {
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::ConfigureTriggerWidth(::grpc::ServerContext* context, const ConfigureTriggerWidthRequest* request, ConfigureTriggerWidthResponse* response)
+  {
+    try {
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString trigger_source = request->trigger_source().c_str();
+      ViReal64 level = request->level();
+      ViReal64 low_threshold = request->low_threshold();
+      ViReal64 high_threshold = request->high_threshold();
+      ViInt32 polarity = (ViInt32)request->polarity();
+      ViInt32 condition = (ViInt32)request->condition();
+      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViReal64 holdoff = request->holdoff();
+      ViReal64 delay = request->delay();
+      auto status = library_->ConfigureTriggerWidth(vi, trigger_source, level, low_threshold, high_threshold, polarity, condition, trigger_coupling, holdoff, delay);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -522,6 +626,18 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::FetchMeasurement(::grpc::ServerContext* context, const FetchMeasurementRequest* request, FetchMeasurementResponse* response)
+  {
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::FetchMeasurementStats(::grpc::ServerContext* context, const FetchMeasurementStatsRequest* request, FetchMeasurementStatsResponse* response)
   {
     try {
@@ -634,7 +750,43 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
+  {
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response)
+  {
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetEqualizationFilterCoefficients(::grpc::ServerContext* context, const GetEqualizationFilterCoefficientsRequest* request, GetEqualizationFilterCoefficientsResponse* response)
+  {
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response)
   {
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
@@ -780,6 +932,18 @@ namespace grpc {
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
+  {
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::ReadMeasurement(::grpc::ServerContext* context, const ReadMeasurementRequest* request, ReadMeasurementResponse* response)
   {
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");

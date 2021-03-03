@@ -20,6 +20,8 @@ service NiScope {
   rpc AcquisitionStatus(AcquisitionStatusRequest) returns (AcquisitionStatusResponse);
   rpc AddWaveformProcessing(AddWaveformProcessingRequest) returns (AddWaveformProcessingResponse);
   rpc AutoSetup(AutoSetupRequest) returns (AutoSetupResponse);
+  rpc CableSenseSignalStart(CableSenseSignalStartRequest) returns (CableSenseSignalStartResponse);
+  rpc CableSenseSignalStop(CableSenseSignalStopRequest) returns (CableSenseSignalStopResponse);
   rpc CalSelfCalibrate(CalSelfCalibrateRequest) returns (CalSelfCalibrateResponse);
   rpc ClearWaveformMeasurementStats(ClearWaveformMeasurementStatsRequest) returns (ClearWaveformMeasurementStatsResponse);
   rpc ClearWaveformProcessing(ClearWaveformProcessingRequest) returns (ClearWaveformProcessingResponse);
@@ -29,10 +31,13 @@ service NiScope {
   rpc ConfigureHorizontalTiming(ConfigureHorizontalTimingRequest) returns (ConfigureHorizontalTimingResponse);
   rpc ConfigureTriggerDigital(ConfigureTriggerDigitalRequest) returns (ConfigureTriggerDigitalResponse);
   rpc ConfigureTriggerEdge(ConfigureTriggerEdgeRequest) returns (ConfigureTriggerEdgeResponse);
+  rpc ConfigureTriggerGlitch(ConfigureTriggerGlitchRequest) returns (ConfigureTriggerGlitchResponse);
   rpc ConfigureTriggerHysteresis(ConfigureTriggerHysteresisRequest) returns (ConfigureTriggerHysteresisResponse);
   rpc ConfigureTriggerImmediate(ConfigureTriggerImmediateRequest) returns (ConfigureTriggerImmediateResponse);
+  rpc ConfigureTriggerRunt(ConfigureTriggerRuntRequest) returns (ConfigureTriggerRuntResponse);
   rpc ConfigureTriggerSoftware(ConfigureTriggerSoftwareRequest) returns (ConfigureTriggerSoftwareResponse);
   rpc ConfigureTriggerVideo(ConfigureTriggerVideoRequest) returns (ConfigureTriggerVideoResponse);
+  rpc ConfigureTriggerWidth(ConfigureTriggerWidthRequest) returns (ConfigureTriggerWidthResponse);
   rpc ConfigureTriggerWindow(ConfigureTriggerWindowRequest) returns (ConfigureTriggerWindowResponse);
   rpc ConfigureVertical(ConfigureVerticalRequest) returns (ConfigureVerticalResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
@@ -43,13 +48,17 @@ service NiScope {
   rpc FetchBinary16(FetchBinary16Request) returns (FetchBinary16Response);
   rpc FetchBinary32(FetchBinary32Request) returns (FetchBinary32Response);
   rpc FetchBinary8(FetchBinary8Request) returns (FetchBinary8Response);
+  rpc FetchMeasurement(FetchMeasurementRequest) returns (FetchMeasurementResponse);
   rpc FetchMeasurementStats(FetchMeasurementStatsRequest) returns (FetchMeasurementStatsResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
+  rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
+  rpc GetChannelNameFromString(GetChannelNameFromStringRequest) returns (GetChannelNameFromStringResponse);
   rpc GetEqualizationFilterCoefficients(GetEqualizationFilterCoefficientsRequest) returns (GetEqualizationFilterCoefficientsResponse);
+  rpc GetScalingCoefficients(GetScalingCoefficientsRequest) returns (GetScalingCoefficientsResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
@@ -58,6 +67,7 @@ service NiScope {
   rpc ProbeCompensationSignalStart(ProbeCompensationSignalStartRequest) returns (ProbeCompensationSignalStartResponse);
   rpc ProbeCompensationSignalStop(ProbeCompensationSignalStopRequest) returns (ProbeCompensationSignalStopResponse);
   rpc Read(ReadRequest) returns (ReadResponse);
+  rpc ReadMeasurement(ReadMeasurementRequest) returns (ReadMeasurementResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc SendSoftwareTriggerEdge(SendSoftwareTriggerEdgeRequest) returns (SendSoftwareTriggerEdgeResponse);
@@ -657,7 +667,14 @@ message WaveformInfo {
   double gain = 6;
   double reserved1 = 7;
   double reserved2 = 8; 
-}                
+} 
+
+message CoefficientInfo {
+  double offset = 1;
+  double gain = 2;
+  double reserved1 = 3;
+  double reserved2 = 4;
+}
 message AbortRequest {
   ni.hardware.grpc.Session vi = 1;
 }
@@ -690,6 +707,22 @@ message AutoSetupRequest {
 }
 
 message AutoSetupResponse {
+  int32 status = 1;
+}
+
+message CableSenseSignalStartRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message CableSenseSignalStartResponse {
+  int32 status = 1;
+}
+
+message CableSenseSignalStopRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message CableSenseSignalStopResponse {
   int32 status = 1;
 }
 
@@ -790,6 +823,22 @@ message ConfigureTriggerEdgeResponse {
   int32 status = 1;
 }
 
+message ConfigureTriggerGlitchRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string trigger_source = 2;
+  double level = 3;
+  double width = 4;
+  GlitchPolarity polarity = 5;
+  GlitchCondition glitch_condition = 6;
+  TriggerCoupling trigger_coupling = 7;
+  double holdoff = 8;
+  double delay = 9;
+}
+
+message ConfigureTriggerGlitchResponse {
+  int32 status = 1;
+}
+
 message ConfigureTriggerHysteresisRequest {
   ni.hardware.grpc.Session vi = 1;
   string trigger_source = 2;
@@ -810,6 +859,21 @@ message ConfigureTriggerImmediateRequest {
 }
 
 message ConfigureTriggerImmediateResponse {
+  int32 status = 1;
+}
+
+message ConfigureTriggerRuntRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string trigger_source = 2;
+  double low_threshold = 3;
+  double high_threshold = 4;
+  RuntPolarity polarity = 5;
+  TriggerCoupling trigger_coupling = 6;
+  double holdoff = 7;
+  double delay = 8;
+}
+
+message ConfigureTriggerRuntResponse {
   int32 status = 1;
 }
 
@@ -837,6 +901,23 @@ message ConfigureTriggerVideoRequest {
 }
 
 message ConfigureTriggerVideoResponse {
+  int32 status = 1;
+}
+
+message ConfigureTriggerWidthRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string trigger_source = 2;
+  double level = 3;
+  double low_threshold = 4;
+  double high_threshold = 5;
+  WidthPolarity polarity = 6;
+  WidthCondition condition = 7;
+  TriggerCoupling trigger_coupling = 8;
+  double holdoff = 9;
+  double delay = 10;
+}
+
+message ConfigureTriggerWidthResponse {
   int32 status = 1;
 }
 
@@ -962,6 +1043,18 @@ message FetchBinary8Response {
   repeated WaveformInfo wfm_info = 3;
 }
 
+message FetchMeasurementRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_list = 2;
+  double timeout = 3;
+  ScalarMeasurement scalar_meas_function = 4;
+}
+
+message FetchMeasurementResponse {
+  int32 status = 1;
+  repeated double result = 2;
+}
+
 message FetchMeasurementStatsRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
@@ -1035,6 +1128,28 @@ message GetAttributeViStringResponse {
   string value = 2;
 }
 
+message GetChannelNameRequest {
+  ni.hardware.grpc.Session vi = 1;
+  sint32 index = 2;
+  sint32 buffer_size = 3;
+}
+
+message GetChannelNameResponse {
+  int32 status = 1;
+  string channel_string = 2;
+}
+
+message GetChannelNameFromStringRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string index = 2;
+  sint32 buffer_size = 3;
+}
+
+message GetChannelNameFromStringResponse {
+  int32 status = 1;
+  string name = 2;
+}
+
 message GetEqualizationFilterCoefficientsRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel = 2;
@@ -1044,6 +1159,18 @@ message GetEqualizationFilterCoefficientsRequest {
 message GetEqualizationFilterCoefficientsResponse {
   int32 status = 1;
   repeated double coefficients = 2;
+}
+
+message GetScalingCoefficientsRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_list = 2;
+  sint32 buffer_size = 3;
+}
+
+message GetScalingCoefficientsResponse {
+  int32 status = 1;
+  repeated CoefficientInfo coefficient_info = 2;
+  sint32 number_of_coefficient_sets = 3;
 }
 
 message ImportAttributeConfigurationBufferRequest {
@@ -1121,6 +1248,18 @@ message ReadResponse {
   int32 status = 1;
   repeated double waveform = 2;
   repeated WaveformInfo wfm_info = 3;
+}
+
+message ReadMeasurementRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_list = 2;
+  double timeout = 3;
+  ScalarMeasurement scalar_meas_function = 4;
+}
+
+message ReadMeasurementResponse {
+  int32 status = 1;
+  repeated double result = 2;
 }
 
 message ResetDeviceRequest {
