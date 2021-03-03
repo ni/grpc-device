@@ -42,34 +42,26 @@ namespace internal = ni::hardware::grpc::internal;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-::grpc::Status NiScopeService::FetchArrayMeasurement(::grpc::ServerContext* context, const FetchArrayMeasurementRequest* request, FetchArrayMeasurementResponse* response)
+::grpc::Status NiScopeService::FetchBinary8(::grpc::ServerContext* context, const FetchBinary8Request* request, FetchBinary8Response* response)
 {
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 array_meas_function = request->array_meas_function();
-
-    ViInt32 measurement_waveform_size;
-    auto status = library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size);
-    if (status != 0) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
+    ViInt32 num_samples = request->num_samples();
 
     ViInt32 num_waveforms;
-    status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    auto status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
     if (status != 0) {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    num_waveforms *= measurement_waveform_size;
+    num_samples *= num_waveforms;
 
-    response->mutable_meas_wfm()->Resize(num_waveforms, 0);
-    ViReal64* meas_wfm = response->mutable_meas_wfm()->mutable_data();
-    std::vector<niScope_wfmInfo> waveform_info(measurement_waveform_size, niScope_wfmInfo());
-    status = library_->FetchArrayMeasurement(vi, channel_list, timeout, array_meas_function, measurement_waveform_size, meas_wfm, waveform_info.data());
+    response->mutable_waveform()->insert(0, (size_t)num_samples, '\0');
+    std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
+    status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, (ViInt8*)response->mutable_waveform()->data(), waveform_info.data());
     response->set_status(status);
     if (status == 0) {
       Copy(waveform_info, response->mutable_wfm_info());
@@ -151,26 +143,34 @@ namespace internal = ni::hardware::grpc::internal;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-::grpc::Status NiScopeService::FetchBinary8(::grpc::ServerContext* context, const FetchBinary8Request* request, FetchBinary8Response* response)
+::grpc::Status NiScopeService::FetchArrayMeasurement(::grpc::ServerContext* context, const FetchArrayMeasurementRequest* request, FetchArrayMeasurementResponse* response)
 {
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 num_samples = request->num_samples();
+    ViInt32 array_meas_function = request->array_meas_function();
 
-    ViInt32 num_waveforms;
-    auto status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    ViInt32 measurement_waveform_size;
+    auto status = library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size);
     if (status != 0) {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    num_samples *= num_waveforms;
 
-    response->mutable_waveform()->insert(0, (size_t)num_samples, '\0');
-    std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
-    status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, (ViInt8*)response->mutable_waveform()->data(), waveform_info.data());
+    ViInt32 num_waveforms;
+    status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    if (status != 0) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    num_waveforms *= measurement_waveform_size;
+
+    response->mutable_meas_wfm()->Resize(num_waveforms, 0);
+    ViReal64* meas_wfm = response->mutable_meas_wfm()->mutable_data();
+    std::vector<niScope_wfmInfo> waveform_info(measurement_waveform_size, niScope_wfmInfo());
+    status = library_->FetchArrayMeasurement(vi, channel_list, timeout, array_meas_function, measurement_waveform_size, meas_wfm, waveform_info.data());
     response->set_status(status);
     if (status == 0) {
       Copy(waveform_info, response->mutable_wfm_info());
