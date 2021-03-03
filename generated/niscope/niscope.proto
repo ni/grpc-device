@@ -1129,7 +1129,6 @@ message GetAttributeViStringResponse {
 message GetChannelNameRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 index = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetChannelNameResponse {
