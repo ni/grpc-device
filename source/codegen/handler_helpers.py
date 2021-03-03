@@ -33,15 +33,35 @@ def get_include_guard_name(config, suffix):
     include_guard_name = 'ni_' + config['namespace_component'] + '_grpc' + suffix
     return include_guard_name.upper()
 
+def is_string_arg(parameter):
+    return parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]'
+
 def create_args(parameters):
     result = ''
     for parameter in parameters:
       parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-      if parameter["type"].startswith("struct"):
-        parameter_name = parameter_name + ".data()"
-      elif not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
-        result = result + '&'
-      result = result + parameter_name + ', '
+      is_array = common_helpers.is_array(parameter['type'])
+      is_output = common_helpers.is_output_parameter(parameter)
+      if common_helpers.is_output_parameter(parameter) and is_string_arg(parameter):
+        type_without_brackets = parameter['type'].replace('[]', '')
+        result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
+      else:
+        if is_array and common_helpers.is_struct(parameter):
+          parameter_name = parameter_name + ".data()"
+        elif not is_array and is_output:
+          result = f'{result}&'
+        result = f'{result}{parameter_name}, '
+    return result[:-2]
+
+def create_args_for_ivi_dance(parameters):
+    result = ''
+    for parameter in parameters:
+      if parameter.get('is_size_param', False):
+        result = f'{result}0, '
+      elif common_helpers.is_output_parameter(parameter):
+        result = f'{result}nullptr, '
+      else:
+        result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
 def create_params(parameters):

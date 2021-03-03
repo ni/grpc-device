@@ -69,7 +69,7 @@ namespace grpc {
     method_name = common_helpers.snake_to_camel(function_name)
     parameters = function_data['parameters']
     handler_helpers.sanitize_names(parameters)
-    common_helpers.mark_len_params(parameters)
+    common_helpers.mark_non_grpc_params(parameters)
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -80,6 +80,8 @@ namespace grpc {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
 % elif function_name == config['init_function']:
 ${gen_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+% elif common_helpers.has_ivi_dance_param(parameters):
+${gen_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % else:
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
@@ -124,6 +126,34 @@ ${request_input_parameters(parameters)}
 \
 \
 \
+<%def name="gen_ivi_dance_method_body(function_name, function_data, parameters)">\
+<%
+  (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+%>\
+${request_input_parameters(non_ivi_params)}\
+
+      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters)});
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ${size_param['type']} ${common_helpers.camel_to_snake(size_param['cppName'])} = status;
+
+${initialize_output_variables_snippet(output_parameters)}\
+      status = library_->${function_name}(${handler_helpers.create_args(parameters)});
+      response->set_status(status);
+%if output_parameters:
+      if (status == 0) {
+${set_response_values(output_parameters)}\
+      }
+%endif
+      return ::grpc::Status::OK;\
+</%def>\
+\
+\
+\
+\
 <%def name="gen_simple_method_body(function_name, function_data, parameters)">\
 <%
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
@@ -160,9 +190,9 @@ ${initialize_input_param_snippet(parameter=parameter)}
 \
 \
 <%def name="initialize_input_param_snippet(parameter)">\
-%if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
+% if common_helpers.is_enum(parameter) and enums[parameter["enum"]].get("generate-mappings", False):
 ${initialize_enum_input_param(parameter)}
-% elif parameter.get("determine_size_from", '') != '':
+% elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
 % else:
 ${initialize_standard_input_param(parameter)}\
@@ -224,25 +254,10 @@ ${initialize_standard_input_param(parameter)}\
       auto session = ${request_snippet};
       ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
     % elif common_helpers.is_array(c_type):
-      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.data();\
+      auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
     % else:
       ${c_type} ${parameter_name} = ${request_snippet};\
     % endif
-</%def>\
-\
-\
-\
-\
-<%def name="initialize_struct_output(parameter)">\
-<%
-parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-parameter_type = common_helpers.isolate_struct_type(parameter["type"])
-%>\
-% if common_helpers.is_array(parameter["type"]):
-std::vector<${parameter_type}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});
-% else: 
-parameter_type parameter_name = {};
-% endif
 </%def>\
 \
 \
@@ -252,18 +267,26 @@ parameter_type parameter_name = {};
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
+%>\
+% if common_helpers.is_array(parameter['type']):
+<%
+  size = ''
+  if common_helpers.get_size_mechanism(parameter) == 'fixed':
+    size = parameter['size']['value']
+  else:
+    size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
 % if common_helpers.is_struct(parameter):
-      ${initialize_struct_output(parameter)}\
-% elif common_helpers.is_array(parameter['type']):
-% if parameter['size']['mechanism'] == 'fixed':
-<%
-  type_without_brackets = parameter['type'].replace('[]', '')
-%>\
-      ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
+      std::vector<${underlying_param_type}> ${parameter_name}(${size});
+% elif underlying_param_type == 'ViChar' or underlying_param_type == 'ViInt8':
+      std::string ${parameter_name}(${size}, '\0');
+% else:
+      response->mutable_${parameter_name}()->Resize(${size}, 0);
+      ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 % endif
 % else:
-      ${parameter['type']} ${parameter_name} {};
+      ${underlying_param_type} ${parameter_name} {};
 % endif
 %endfor
 </%def>\
@@ -277,7 +300,7 @@ parameter_type parameter_name = {};
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
 %if common_helpers.is_enum(parameter) == True:
-%if enums[parameter["enum"]].get("generate-mappings", False):
+%  if enums[parameter["enum"]].get("generate-mappings", False):
 <%
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
@@ -288,11 +311,15 @@ parameter_type parameter_name = {};
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
         }
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
-%else:
+%  else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
-%endif
-%elif common_helpers.is_struct(parameter):
+%  endif
+%elif common_helpers.is_array(parameter['type']):
+%  if handler_helpers.is_string_arg(parameter):
+        response->set_${parameter_name}(${parameter_name});
+%  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
+%  endif
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif

@@ -879,7 +879,6 @@ message DisableResponse {
 
 message ExportAttributeConfigurationBufferRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 size_in_bytes = 2;
 }
 
 message ExportAttributeConfigurationBufferResponse {
@@ -1027,7 +1026,6 @@ message GetAttributeViStringRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
-  sint32 buf_size = 4;
 }
 
 message GetAttributeViStringResponse {
