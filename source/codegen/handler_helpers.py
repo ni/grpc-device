@@ -46,7 +46,7 @@ def create_args(parameters):
         type_without_brackets = parameter['type'].replace('[]', '')
         result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
       else:
-        if is_array and (common_helpers.is_struct(parameter) or parameter['size']['mechanism'] == 'passed-in'):
+        if is_array and common_helpers.is_struct(parameter):
           parameter_name = parameter_name + ".data()"
         elif not is_array and is_output:
           result = f'{result}&'

@@ -159,15 +159,12 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 number_of_samples = request->number_of_samples();
-      std::vector<ViReal64> waveform_data(number_of_samples); 
+      response->mutable_waveform_data()->Resize(number_of_samples, 0);
+      ViReal64* waveform_data = response->mutable_waveform_data()->mutable_data();
       ViInt32 actual_number_of_samples {};
-      auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data.data(), &actual_number_of_samples);
+      auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data, &actual_number_of_samples);
       response->set_status(status);
       if (status == 0) {
-        for (int i = 0; i < waveform_data.size(); ++i)
-        {
-          response->add_waveform_data(waveform_data[i]);
-        }
         response->set_actual_number_of_samples(actual_number_of_samples);
       }
       return ::grpc::Status::OK;
@@ -524,7 +521,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 number_of_elements = request->number_of_elements();
-      std::vector<CustomStruct> cs(number_of_elements); 
+      std::vector<CustomStruct> cs(number_of_elements, CustomStruct());
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
       response->set_status(status);
       if (status == 0) {
@@ -796,14 +793,11 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 number_of_elements = request->number_of_elements();
-      std::vector<ViReal64> timedeltas(number_of_elements); 
-      auto status = library_->ReturnListOfDurationsInSeconds(vi, number_of_elements, timedeltas.data());
+      response->mutable_timedeltas()->Resize(number_of_elements, 0);
+      ViReal64* timedeltas = response->mutable_timedeltas()->mutable_data();
+      auto status = library_->ReturnListOfDurationsInSeconds(vi, number_of_elements, timedeltas);
       response->set_status(status);
       if (status == 0) {
-        for (int i = 0; i < timedeltas.size(); ++i)
-        {
-          response->add_timedeltas(timedeltas[i]);
-        }
       }
       return ::grpc::Status::OK;
     }
@@ -834,9 +828,10 @@ namespace grpc {
       ViInt16 an_int_enum {};
       ViReal64 a_float {};
       ViReal64 a_float_enum {};
-      std::vector<ViReal64> an_array(array_size); 
+      response->mutable_an_array()->Resize(array_size, 0);
+      ViReal64* an_array = response->mutable_an_array()->mutable_data();
       std::string a_string(string_size, '\0');
-      status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array.data(), string_size, (ViChar*)a_string.data());
+      status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
         response->set_a_boolean(a_boolean);
@@ -849,10 +844,6 @@ namespace grpc {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
         }
         response->set_a_float_enum(static_cast<ni::fake::grpc::FloatEnum>(a_float_enum_imap_it->second));
-        for (int i = 0; i < an_array.size(); ++i)
-        {
-          response->add_an_array(an_array[i]);
-        }
         response->set_a_string(a_string);
       }
       return ::grpc::Status::OK;

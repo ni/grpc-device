@@ -675,14 +675,11 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel = request->channel().c_str();
       ViInt32 number_of_coefficients = request->number_of_coefficients();
-      std::vector<ViReal64> coefficients(number_of_coefficients); 
-      auto status = library_->GetEqualizationFilterCoefficients(vi, channel, number_of_coefficients, coefficients.data());
+      response->mutable_coefficients()->Resize(number_of_coefficients, 0);
+      ViReal64* coefficients = response->mutable_coefficients()->mutable_data();
+      auto status = library_->GetEqualizationFilterCoefficients(vi, channel, number_of_coefficients, coefficients);
       response->set_status(status);
       if (status == 0) {
-        for (int i = 0; i < coefficients.size(); ++i)
-        {
-          response->add_coefficients(coefficients[i]);
-        }
       }
       return ::grpc::Status::OK;
     }

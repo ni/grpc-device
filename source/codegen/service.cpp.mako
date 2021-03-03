@@ -277,9 +277,9 @@ ${initialize_standard_input_param(parameter)}\
   else:
     size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
-% if common_helpers.is_struct(parameter) or common_helpers.get_size_mechanism(parameter) == 'passed-in':
-      std::vector<${underlying_param_type}> ${parameter_name}(${size}); 
-% elif underlying_param_type == 'ViChar' or underlying_param_type == 'ViInt8':
+% if common_helpers.is_struct(parameter):
+      std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
+% elif handler_helpers.is_string_arg (parameter):
       std::string ${parameter_name}(${size}, '\0');
 % else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -318,11 +318,6 @@ ${initialize_standard_input_param(parameter)}\
         response->set_${parameter_name}(${parameter_name});
 %  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
-% elif common_helpers.get_size_mechanism(parameter) == 'passed-in':
-        for (int i = 0; i < ${parameter_name}.size(); ++i)
-        {
-          response->add_${parameter_name}(${parameter_name}[i]);
-        }
 %  endif
 % else:
         response->set_${parameter_name}(${parameter_name});
