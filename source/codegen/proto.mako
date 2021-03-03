@@ -8,7 +8,7 @@ enums = data["enums"]
 functions = data["functions"]
 
 service_class_prefix = config["service_class_prefix"]
-attribute_value_prefix = service_class_prefix.upper()
+attribute_value_prefix = service_class_prefix.upper()+"_ATTRIBUTE"
 used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
 
@@ -44,7 +44,7 @@ enum ${service_class_prefix}Attributes {
 <%
    attribute_name = attributes[attribute]["name"]
 %>\
-  ${attribute_value_prefix}_ATTRIBUTE_${attribute_name} = ${attribute};
+  ${attribute_value_prefix}_${attribute_name} = ${attribute};
 % endfor
 }
 
