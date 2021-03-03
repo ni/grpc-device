@@ -13,7 +13,7 @@ static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
 namespace ni {
 namespace tests {
-namespace unit {
+namespace integration {
 
 TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
@@ -167,7 +167,7 @@ void wait_until_true(const std::atomic<bool>& client_started)
   wait_until_true(client_started, true_atomic);
 }
 
-TEST(CoreServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenReserves)
+TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenReserves)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
@@ -550,6 +550,6 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
   EXPECT_EQ(clientc_status.error_code(), ::grpc::ABORTED);
 }
 
-}  // namespace unit
+}  // namespace integration
 }  // namespace tests
 }  // namespace ni

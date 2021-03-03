@@ -206,6 +206,7 @@ add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FRO
 add_executable(IntegrationTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/integration/in_process_server_client_tests.cpp"
+    "source/tests/integration/session_utilities_service_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
@@ -231,7 +232,6 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
@@ -243,7 +243,6 @@ add_executable(UnitTestsRunner
     "source/server/server_configuration_parser.cpp"
     "source/server/server_security_configuration.cpp"
     "source/server/session_repository.cpp"
-    "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
     "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
