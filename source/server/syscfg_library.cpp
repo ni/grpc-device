@@ -27,7 +27,7 @@ bool SysCfgLibrary::is_library_loaded() const
 
 NISysCfgStatus SysCfgLibrary::InitializeSession()
 {
-  // In future it will be updated to use function pointers to syscfg APIs. 
+  // In future it will be updated to use function pointers to syscfg APIs.
   // Now for proving dummy implementation, throwing exception that library is not found.
   if (!shared_library_.is_loaded()) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);

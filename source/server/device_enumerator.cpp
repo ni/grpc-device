@@ -24,7 +24,7 @@ DeviceEnumerator::~DeviceEnumerator()
   try {
     // Providing dummy implementation below which will be updated in upcoming PRs
     // to use syscfg APIs properly to enumerate devices.
-    syscfg_status = library_->InitializeSession(); 
+    syscfg_status = library_->InitializeSession();
   }
   catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
