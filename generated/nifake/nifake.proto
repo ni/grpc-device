@@ -173,7 +173,6 @@ message EnumInputFunctionWithDefaultsResponse {
 
 message ExportAttributeConfigurationBufferRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 size_in_bytes = 2;
 }
 
 message ExportAttributeConfigurationBufferResponse {
@@ -231,7 +230,6 @@ message GetAStringUsingPythonCodeResponse {
 
 message GetAnIviDanceStringRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 buffer_size = 2;
 }
 
 message GetAnIviDanceStringResponse {
@@ -279,7 +277,6 @@ message GetArraySizeForPythonCodeResponse {
 
 message GetArrayUsingIviDanceRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 array_size = 2;
 }
 
 message GetArrayUsingIviDanceResponse {
@@ -335,7 +332,6 @@ message GetAttributeViStringRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiFakeAttributes attribute_id = 3;
-  sint32 buffer_size = 4;
 }
 
 message GetAttributeViStringResponse {
@@ -518,7 +514,6 @@ message ReturnListOfDurationsInSecondsResponse {
 message ReturnMultipleTypesRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 array_size = 2;
-  sint32 string_size = 3;
 }
 
 message ReturnMultipleTypesResponse {

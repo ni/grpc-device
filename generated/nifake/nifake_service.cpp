@@ -66,7 +66,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 count = request->delays().size();
-      ViReal64* delays = (ViReal64*)request->delays().data();
+      auto delays = const_cast<ViReal64*>(request->delays().data());
       auto status = library_->AcceptListOfDurationsInSeconds(vi, count, delays);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -96,7 +96,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 number_count = request->numbers().size();
-      ViReal64* numbers = (ViReal64*)request->numbers().data();
+      auto numbers = const_cast<ViReal64*>(request->numbers().data());
       auto status = library_->DoubleAllTheNums(vi, number_count, numbers);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -140,7 +140,23 @@ namespace grpc {
   ::grpc::Status NiFakeService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+
+      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 size_in_bytes = status;
+
+      std::string configuration(size_in_bytes, '\0');
+      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_configuration(configuration);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -152,7 +168,18 @@ namespace grpc {
   ::grpc::Status NiFakeService::FetchWaveform(::grpc::ServerContext* context, const FetchWaveformRequest* request, FetchWaveformResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 number_of_samples = request->number_of_samples();
+      response->mutable_waveform_data()->Resize(number_of_samples, 0);
+      ViReal64* waveform_data = response->mutable_waveform_data()->mutable_data();
+      ViInt32 actual_number_of_samples {};
+      auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data, &actual_number_of_samples);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_actual_number_of_samples(actual_number_of_samples);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -206,8 +233,8 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViChar a_string[256];
-      auto status = library_->GetAStringOfFixedMaximumSize(vi, a_string);
+      std::string a_string(256, '\0');
+      auto status = library_->GetAStringOfFixedMaximumSize(vi, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
         response->set_a_string(a_string);
@@ -224,7 +251,23 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+
+      auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string a_string(buffer_size, '\0');
+      status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_string(a_string);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -268,7 +311,23 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetArrayUsingIviDance(::grpc::ServerContext* context, const GetArrayUsingIviDanceRequest* request, GetArrayUsingIviDanceResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+
+      auto status = library_->GetArrayUsingIviDance(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 array_size = status;
+
+      response->mutable_array_out()->Resize(array_size, 0);
+      ViReal64* array_out = response->mutable_array_out()->mutable_data();
+      status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -368,7 +427,25 @@ namespace grpc {
   ::grpc::Status NiFakeService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+
+      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string attribute_value(buffer_size, '\0');
+      status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -534,11 +611,11 @@ namespace grpc {
     try {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViReal64* values1 = (ViReal64*)request->values1().data();
-      ViReal64* values2 = (ViReal64*)request->values2().data();
-      ViReal64* values3 = (ViReal64*)request->values3().data();
-      ViReal64* values4 = (ViReal64*)request->values4().data();
-      ViInt32 size = request->values1().size();
+      auto values1 = const_cast<ViReal64*>(request->values1().data());
+      auto values2 = const_cast<ViReal64*>(request->values2().data());
+      auto values3 = const_cast<ViReal64*>(request->values3().data());
+      auto values4 = const_cast<ViReal64*>(request->values4().data());
+      ViInt32 size = request->values4().size();
       auto status = library_->MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -662,8 +739,8 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 a_number {};
-      ViChar a_string[256];
-      auto status = library_->ReturnANumberAndAString(vi, &a_number, a_string);
+      std::string a_string(256, '\0');
+      auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
         response->set_a_number(a_number);
@@ -701,7 +778,16 @@ namespace grpc {
   ::grpc::Status NiFakeService::ReturnListOfDurationsInSeconds(::grpc::ServerContext* context, const ReturnListOfDurationsInSecondsRequest* request, ReturnListOfDurationsInSecondsResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 number_of_elements = request->number_of_elements();
+      response->mutable_timedeltas()->Resize(number_of_elements, 0);
+      ViReal64* timedeltas = response->mutable_timedeltas()->mutable_data();
+      auto status = library_->ReturnListOfDurationsInSeconds(vi, number_of_elements, timedeltas);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -713,7 +799,43 @@ namespace grpc {
   ::grpc::Status NiFakeService::ReturnMultipleTypes(::grpc::ServerContext* context, const ReturnMultipleTypesRequest* request, ReturnMultipleTypesResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 array_size = request->array_size();
+
+      auto status = library_->ReturnMultipleTypes(vi, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 string_size = status;
+
+      ViBoolean a_boolean {};
+      ViInt32 an_int32 {};
+      ViInt64 an_int64 {};
+      ViInt16 an_int_enum {};
+      ViReal64 a_float {};
+      ViReal64 a_float_enum {};
+      response->mutable_an_array()->Resize(array_size, 0);
+      ViReal64* an_array = response->mutable_an_array()->mutable_data();
+      std::string a_string(string_size, '\0');
+      status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_boolean(a_boolean);
+        response->set_an_int32(an_int32);
+        response->set_an_int64(an_int64);
+        response->set_an_int_enum(static_cast<ni::fake::grpc::Turtle>(an_int_enum));
+        response->set_a_float(a_float);
+
+        auto a_float_enum_imap_it = floatenum_output_map_.find(a_float_enum);
+        if(a_float_enum_imap_it == floatenum_output_map_.end()) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+        }
+        response->set_a_float_enum(static_cast<ni::fake::grpc::FloatEnum>(a_float_enum_imap_it->second));
+        response->set_a_string(a_string);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -790,7 +912,7 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt32 number_of_samples = request->waveform().size();
-      ViReal64* waveform = (ViReal64*)request->waveform().data();
+      auto waveform = const_cast<ViReal64*>(request->waveform().data());
       auto status = library_->WriteWaveform(vi, number_of_samples, waveform);
       response->set_status(status);
       return ::grpc::Status::OK;
