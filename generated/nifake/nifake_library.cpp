@@ -37,6 +37,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAStringUsingPythonCode = reinterpret_cast<GetAStringUsingPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetAStringUsingPythonCode"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
+  function_pointers_.GetArrayForPythonCodeCustomType = reinterpret_cast<GetArrayForPythonCodeCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeCustomType"));
   function_pointers_.GetArrayForPythonCodeDouble = reinterpret_cast<GetArrayForPythonCodeDoublePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeDouble"));
   function_pointers_.GetArraySizeForPythonCode = reinterpret_cast<GetArraySizeForPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForPythonCode"));
   function_pointers_.GetArrayUsingIviDance = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("niFake_GetArrayUsingIviDance"));
@@ -85,8 +86,8 @@ NiFakeLibrary::~NiFakeLibrary()
 ::grpc::Status NiFakeLibrary::check_function_exists(std::string functionName)
 {
   return shared_library_.function_exists(functionName.c_str())
-      ? ::grpc::Status::OK
-      : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+    ? ::grpc::Status::OK
+    : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
 ViStatus NiFakeLibrary::Abort(ViSession vi)
@@ -737,6 +738,6 @@ ViStatus NiFakeLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViChar 
 #endif
 }
 
-}  // namespace grpc
-}  // namespace fake
 }  // namespace ni
+}  // namespace fake
+}  // namespace grpc
