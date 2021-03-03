@@ -51,8 +51,8 @@ def has_unsupported_parameter(function):
 
 def is_unsupported_parameter(parameter):
   return is_unsupported_size_mechanism(parameter) \
-    or is_unsupported_struct(parameter) \
-    or is_unsupported_scalar_array(parameter)
+      or is_unsupported_struct(parameter) \
+      or is_unsupported_scalar_array(parameter)
 
 def is_unsupported_size_mechanism(parameter):
   return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', None}

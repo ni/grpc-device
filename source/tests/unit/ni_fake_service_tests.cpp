@@ -745,7 +745,7 @@ TEST(NiFakeServiceTests, NiFakeService_FetchWaveform_CallsFetchWaveform)
   ni::fake::grpc::FetchWaveformResponse response;
   ::grpc::Status status = service.FetchWaveform(&context, &request, &response);
 
-  double expected_response_doubles[] = {53.4, 42, -120.3, 0.0};
+  double expected_response_doubles[] = {actual_doubles[0], actual_doubles[1], actual_doubles[2], 0.0};
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(response.actual_number_of_samples(), actual_number_of_samples);
