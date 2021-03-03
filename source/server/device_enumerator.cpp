@@ -20,9 +20,9 @@ DeviceEnumerator::~DeviceEnumerator()
 ::grpc::Status DeviceEnumerator::enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
   NISysCfgStatus syscfg_status = NISysCfg_OK;
-  
+
   try {
-    // Providing dummy implementation below which will be updated in upcoming PRs 
+    // Providing dummy implementation below which will be updated in upcoming PRs
     // to use syscfg APIs properly to enumerate devices.
     syscfg_status = library_->InitializeSession(); 
   }
