@@ -10,6 +10,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiFakeService::GetAStringUsingPythonCode(::grpc::ServerContext* context, const GetAStringUsingPythonCodeRequest* request, GetAStringUsingPythonCodeResponse* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -32,6 +35,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiFakeService::GetArrayForPythonCodeDouble(::grpc::ServerContext* context, const GetArrayForPythonCodeDoubleRequest* request, GetArrayForPythonCodeDoubleResponse* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -58,6 +64,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiFakeService::GetArrayForPythonCodeCustomType(::grpc::ServerContext* context, const GetArrayForPythonCodeCustomTypeRequest* request, GetArrayForPythonCodeCustomTypeResponse* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());

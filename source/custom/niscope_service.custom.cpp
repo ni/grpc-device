@@ -10,6 +10,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::Fetch(::grpc::ServerContext* context, const FetchRequest* request, FetchResponse* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -44,6 +47,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::FetchBinary8(::grpc::ServerContext* context, const FetchBinary8Request* request, FetchBinary8Response* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -77,6 +83,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::FetchBinary16(::grpc::ServerContext* context, const FetchBinary16Request* request, FetchBinary16Response* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -111,6 +120,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::FetchBinary32(::grpc::ServerContext* context, const FetchBinary32Request* request, FetchBinary32Response* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -145,6 +157,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::FetchArrayMeasurement(::grpc::ServerContext* context, const FetchArrayMeasurementRequest* request, FetchArrayMeasurementResponse* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -186,6 +201,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::FetchMeasurementStats(::grpc::ServerContext* context, const FetchMeasurementStatsRequest* request, FetchMeasurementStatsResponse* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
@@ -228,6 +246,9 @@ namespace internal = ni::hardware::grpc::internal;
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
 {
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
     auto session = request->vi();
     ViSession vi = session_repository_->access_session(session.id(), session.name());
