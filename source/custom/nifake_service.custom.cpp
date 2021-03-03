@@ -43,8 +43,8 @@ namespace internal = ni::hardware::grpc::internal;
       return ::grpc::Status::OK;
     }
 
-    response->mutable_array_out()->Reserve(number_of_elements);
-    ViReal64* array_out = response->mutable_array_out()->AddNAlreadyReserved(number_of_elements);
+    response->mutable_array_out()->Resize(number_of_elements, 0);
+    ViReal64* array_out = response->mutable_array_out()->mutable_data();
     status = library_->GetArrayForPythonCodeDouble(vi, number_of_elements, array_out);
     response->set_status(status);
     return ::grpc::Status::OK;

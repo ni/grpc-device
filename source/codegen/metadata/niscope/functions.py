@@ -786,6 +786,7 @@ functions = {
                 'type': 'ViInt32'
             },
             {
+                'gen_proto_field': False,
                 'direction': 'in',
                 'name': 'measurementWaveformSize',
                 'type': 'ViInt32'
@@ -861,7 +862,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchBinary32': {
-        'codegen_method': 'public',
+        'codegen_method': 'custom',
         'parameters': [
             {
                 'direction': 'in',
