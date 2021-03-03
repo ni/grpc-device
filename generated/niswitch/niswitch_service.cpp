@@ -27,7 +27,6 @@ namespace grpc {
   {
   }
 
-
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response)
