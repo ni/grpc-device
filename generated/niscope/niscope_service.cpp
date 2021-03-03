@@ -681,7 +681,7 @@ namespace grpc {
       if (status == 0) {
         for (int i = 0; i < coefficients.size(); ++i)
         {
-          response->set_coefficients(i, coefficients[i]);
+          response->add_coefficients(coefficients[i]);
         }
       }
       return ::grpc::Status::OK;

@@ -166,7 +166,7 @@ namespace grpc {
       if (status == 0) {
         for (int i = 0; i < waveform_data.size(); ++i)
         {
-          response->set_waveform_data(i, waveform_data[i]);
+          response->add_waveform_data(waveform_data[i]);
         }
         response->set_actual_number_of_samples(actual_number_of_samples);
       }
@@ -802,7 +802,7 @@ namespace grpc {
       if (status == 0) {
         for (int i = 0; i < timedeltas.size(); ++i)
         {
-          response->set_timedeltas(i, timedeltas[i]);
+          response->add_timedeltas(timedeltas[i]);
         }
       }
       return ::grpc::Status::OK;
@@ -851,7 +851,7 @@ namespace grpc {
         response->set_a_float_enum(static_cast<ni::fake::grpc::FloatEnum>(a_float_enum_imap_it->second));
         for (int i = 0; i < an_array.size(); ++i)
         {
-          response->set_an_array(i, an_array[i]);
+          response->add_an_array(an_array[i]);
         }
         response->set_a_string(a_string);
       }

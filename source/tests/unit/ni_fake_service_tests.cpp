@@ -671,13 +671,40 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumbe
   EXPECT_STREQ(a_string, response.a_string().c_str());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_ReturnListOfDurationsInSeconds_CallsReturnListOfDurationsInSeconds)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  ViInt32 number_of_elements = 3;
+  ViReal64 timedeltas[] = {1.0, 2, -3.0};
+  EXPECT_CALL(library, ReturnListOfDurationsInSeconds(kTestViSession, number_of_elements, _))
+      .WillOnce(DoAll(
+        SetArrayArgument<2>(timedeltas, timedeltas + number_of_elements), 
+        Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::ReturnListOfDurationsInSecondsRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_number_of_elements(3);
+  ni::fake::grpc::ReturnListOfDurationsInSecondsResponse response;
+  ::grpc::Status status = service.ReturnListOfDurationsInSeconds(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  double expected_response_doubles[] = {1.0, 2, -3.0};
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(response.timedeltas_size(), number_of_elements);
+  EXPECT_THAT(response.timedeltas(), ElementsAreArray(expected_response_doubles, number_of_elements));
+}
+
 TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
-  double waveforms[] = {53.4, 42, -120.3};
+  ViReal64 waveforms[] = {53.4, 42, -120.3};
   std::int32_t expected_number_of_samples = 3;
   EXPECT_CALL(library, WriteWaveform(kTestViSession, expected_number_of_samples, _))
       .With(Args<2, 1>(ElementsAreArray(waveforms)))

@@ -321,7 +321,7 @@ ${initialize_standard_input_param(parameter)}\
 % elif common_helpers.get_size_mechanism(parameter) == 'passed-in':
         for (int i = 0; i < ${parameter_name}.size(); ++i)
         {
-          response->set_${parameter_name}(i, ${parameter_name}[i]);
+          response->add_${parameter_name}(${parameter_name}[i]);
         }
 %  endif
 % else:
