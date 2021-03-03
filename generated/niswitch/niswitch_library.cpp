@@ -45,6 +45,7 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViInt32"));
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViReal64"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViString"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViSession"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niSwitch_GetChannelName"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niSwitch_GetError"));
   function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niSwitch_GetNextCoercionRecord"));
@@ -53,6 +54,8 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetRelayCount = reinterpret_cast<GetRelayCountPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayCount"));
   function_pointers_.GetRelayName = reinterpret_cast<GetRelayNamePtr>(shared_library_.get_function_pointer("niSwitch_GetRelayName"));
   function_pointers_.GetRelayPosition = reinterpret_cast<GetRelayPositionPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayPosition"));
+  function_pointers_.init = reinterpret_cast<initPtr>(shared_library_.get_function_pointer("niSwitch_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niSwitch_InitWithOptions"));
   function_pointers_.InitWithTopology = reinterpret_cast<InitWithTopologyPtr>(shared_library_.get_function_pointer("niSwitch_InitWithTopology"));
   function_pointers_.InitiateScan = reinterpret_cast<InitiateScanPtr>(shared_library_.get_function_pointer("niSwitch_InitiateScan"));
   function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niSwitch_InvalidateAllAttributes"));
@@ -357,6 +360,18 @@ ViStatus NiSwitchLibrary::GetAttributeViString(ViSession vi, ViConstString chann
 #endif
 }
 
+ViStatus NiSwitchLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
+{
+  if (!function_pointers_.GetAttributeViSession) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_GetAttributeViSession.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_GetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.GetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
 ViStatus NiSwitchLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[])
 {
   if (!function_pointers_.GetChannelName) {
@@ -450,6 +465,30 @@ ViStatus NiSwitchLibrary::GetRelayPosition(ViSession vi, ViConstString relayName
   return niSwitch_GetRelayPosition(vi, relayName, relayPosition);
 #else
   return function_pointers_.GetRelayPosition(vi, relayName, relayPosition);
+#endif
+}
+
+ViStatus NiSwitchLibrary::init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
+{
+  if (!function_pointers_.init) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_init.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_init(resourceName, idQuery, resetDevice, vi);
+#else
+  return function_pointers_.init(resourceName, idQuery, resetDevice, vi);
+#endif
+}
+
+ViStatus NiSwitchLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
+{
+  if (!function_pointers_.InitWithOptions) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_InitWithOptions.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
+#else
+  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 #endif
 }
 

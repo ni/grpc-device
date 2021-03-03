@@ -253,7 +253,11 @@ ${initialize_standard_input_param(parameter)}\
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %endif
 % else:
+%if parameter['type'] == 'ViSession':
+        response->mutable_${parameter_name}()->set_id(${parameter_name});
+%else :
         response->set_${parameter_name}(${parameter_name});
+%endif
 %endif
 %endfor
 </%def>

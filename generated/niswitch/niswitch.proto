@@ -38,6 +38,7 @@ service NiSwitch {
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
+  rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
@@ -46,6 +47,8 @@ service NiSwitch {
   rpc GetRelayCount(GetRelayCountRequest) returns (GetRelayCountResponse);
   rpc GetRelayName(GetRelayNameRequest) returns (GetRelayNameResponse);
   rpc GetRelayPosition(GetRelayPositionRequest) returns (GetRelayPositionResponse);
+  rpc Init(InitRequest) returns (InitResponse);
+  rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitWithTopology(InitWithTopologyRequest) returns (InitWithTopologyResponse);
   rpc InitiateScan(InitiateScanRequest) returns (InitiateScanResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
@@ -480,6 +483,17 @@ message GetAttributeViStringResponse {
   string attribute_value = 2;
 }
 
+message GetAttributeViSessionRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+}
+
+message GetAttributeViSessionResponse {
+  int32 status = 1;
+  ni.hardware.grpc.Session attribute_value = 2;
+}
+
 message GetChannelNameRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 index = 2;
@@ -563,6 +577,29 @@ message GetRelayPositionRequest {
 message GetRelayPositionResponse {
   int32 status = 1;
   RelayPosition relay_position = 2;
+}
+
+message InitRequest {
+  string resource_name = 1;
+  bool id_query = 2;
+  bool reset_device = 3;
+}
+
+message InitResponse {
+  int32 status = 1;
+  ni.hardware.grpc.Session vi = 2;
+}
+
+message InitWithOptionsRequest {
+  string resource_name = 1;
+  bool id_query = 2;
+  bool reset_device = 3;
+  string option_string = 4;
+}
+
+message InitWithOptionsResponse {
+  int32 status = 1;
+  ni.hardware.grpc.Session vi = 2;
 }
 
 message InitWithTopologyRequest {

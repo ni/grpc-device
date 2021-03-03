@@ -40,6 +40,8 @@ The following functions were changed from `private` to `public`:
 - `self_test`
 
 The following APIs were newly added :
+- init
+- InitWithOptions
 - IsDebounced
 - Scan
 - IsScanning
@@ -52,13 +54,9 @@ The following APIs were newly added :
 - ClearInterchangeWarnings
 - GetNextCoercionRecord
 - InvalidateAllAttributes
+- GetAttributeViSession
 - SetAttributeViSession
 - All the CheckAttribute APIs(5)
-
-Yet to be added : 
-- init
-- InitWithOptions
-- GetAttributeViSession
 
 The following APIs will not be implemented : 
 - ErrorQuery

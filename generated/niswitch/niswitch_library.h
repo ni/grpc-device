@@ -42,6 +42,7 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
+  ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
   ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[]);
   ViStatus GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]);
   ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]);
@@ -50,6 +51,8 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
   ViStatus GetRelayCount(ViSession vi, ViConstString relayName, ViInt32* relayCount);
   ViStatus GetRelayName(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]);
   ViStatus GetRelayPosition(ViSession vi, ViConstString relayName, ViInt32* relayPosition);
+  ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   ViStatus InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitiateScan(ViSession vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
@@ -101,6 +104,7 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
   using GetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
+  using GetAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
   using GetChannelNamePtr = ViStatus (*)(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[]);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]);
   using GetNextCoercionRecordPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]);
@@ -109,6 +113,8 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
   using GetRelayCountPtr = ViStatus (*)(ViSession vi, ViConstString relayName, ViInt32* relayCount);
   using GetRelayNamePtr = ViStatus (*)(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]);
   using GetRelayPositionPtr = ViStatus (*)(ViSession vi, ViConstString relayName, ViInt32* relayPosition);
+  using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  using InitWithOptionsPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   using InitWithTopologyPtr = ViStatus (*)(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi);
   using InitiateScanPtr = ViStatus (*)(ViSession vi);
   using InvalidateAllAttributesPtr = ViStatus (*)(ViSession vi);
@@ -160,6 +166,7 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
     GetAttributeViInt32Ptr GetAttributeViInt32;
     GetAttributeViReal64Ptr GetAttributeViReal64;
     GetAttributeViStringPtr GetAttributeViString;
+    GetAttributeViSessionPtr GetAttributeViSession;
     GetChannelNamePtr GetChannelName;
     GetErrorPtr GetError;
     GetNextCoercionRecordPtr GetNextCoercionRecord;
@@ -168,6 +175,8 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
     GetRelayCountPtr GetRelayCount;
     GetRelayNamePtr GetRelayName;
     GetRelayPositionPtr GetRelayPosition;
+    initPtr init;
+    InitWithOptionsPtr InitWithOptions;
     InitWithTopologyPtr InitWithTopology;
     InitiateScanPtr InitiateScan;
     InvalidateAllAttributesPtr InvalidateAllAttributes;

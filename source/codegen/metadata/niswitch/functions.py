@@ -442,6 +442,31 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetChannelName': {
         'codegen_method': 'public',
         'parameters': [
@@ -659,6 +684,69 @@ functions = {
             }
         ],
         'returns': 'ViStatus'
+    },
+    'init': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'default_value': True,
+                'direction': 'in',
+                'name': 'idQuery',
+                'type': 'ViBoolean'
+            },
+            {
+                'default_value': True,
+                'direction': 'in',
+                'name': 'resetDevice',
+                'type': 'ViBoolean'
+            },
+            {
+                'default_value': '""',
+                'direction': 'out',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus',
+        'use_session_lock': False
+    },
+    'InitWithOptions': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'default_value': True,
+                'direction': 'in',
+                'name': 'idQuery',
+                'type': 'ViBoolean'
+            },
+            {
+                'default_value': True,
+                'direction': 'in',
+                'name': 'resetDevice',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'ViConstString'
+            },
+            {
+                'default_value': '""',
+                'direction': 'out',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus',
+        'use_session_lock': False
     },
     'InitWithTopology': {
         'parameters': [
