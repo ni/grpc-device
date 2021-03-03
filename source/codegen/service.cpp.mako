@@ -199,8 +199,8 @@ ${initialize_standard_input_param(parameter)}\
     % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
     % elif c_type == 'ViSession':
-      auto session = ${request_snippet};
-      ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
+      auto ${parameter_name}_grpc_session = ${request_snippet};
+      ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
     % elif common_helpers.is_array(c_type):
       ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.data();\
     % else:
