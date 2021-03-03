@@ -162,6 +162,7 @@ TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDe
 
   // Since the syscfg library will not be present in github repo, we expect a NOT_FOUND status in response.
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
+  EXPECT_EQ(ni::hardware::grpc::internal::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 }  // namespace integration
