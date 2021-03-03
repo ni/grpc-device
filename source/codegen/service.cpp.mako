@@ -128,18 +128,12 @@ ${request_input_parameters(parameters)}
 \
 <%def name="gen_ivi_dance_method_body(function_name, function_data, parameters)">\
 <%
-  ivi_params = [p for p in parameters if common_helpers.is_ivi_param(p)]
-  assert(len(ivi_params) == 2)
-  non_ivi_params = [p for p in parameters if p not in ivi_params]
+  (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
 ${request_input_parameters(non_ivi_params)}\
 
-<%
-  size_param = next(p for p in ivi_params if common_helpers.is_ivi_dance_size_param(p))
-  array_param = next(p for p in ivi_params if common_helpers.is_ivi_dance_array_param(p))
-%>\
-      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters, size_param)});
+      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters)});
       if (status < 0) {
         response->set_status(status);
         return ::grpc::Status::OK;
@@ -151,7 +145,7 @@ ${initialize_output_variables_snippet(output_parameters)}\
       response->set_status(status);
 %if output_parameters:
       if (status == 0) {
-${set_response_values(output_parameters=output_parameters)}\
+${set_response_values(output_parameters)}\
       }
 %endif
       return ::grpc::Status::OK;\
@@ -196,9 +190,9 @@ ${initialize_input_param_snippet(parameter=parameter)}
 \
 \
 <%def name="initialize_input_param_snippet(parameter)">\
-%if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
+% if common_helpers.is_enum(parameter) and enums[parameter["enum"]].get("generate-mappings", False):
 ${initialize_enum_input_param(parameter)}
-% elif parameter.get("determine_size_from", '') != '':
+% elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
 % else:
 ${initialize_standard_input_param(parameter)}\
@@ -260,7 +254,7 @@ ${initialize_standard_input_param(parameter)}\
       auto session = ${request_snippet};
       ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
     % elif common_helpers.is_array(c_type):
-      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.data();\
+      auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
     % else:
       ${c_type} ${parameter_name} = ${request_snippet};\
     % endif
@@ -278,7 +272,7 @@ ${initialize_standard_input_param(parameter)}\
 % if common_helpers.is_array(parameter['type']):
 <%
   size = ''
-  if parameter['size']['mechanism'] == 'fixed':
+  if common_helpers.get_size_mechanism(parameter) == 'fixed':
     size = parameter['size']['value']
   else:
     size = common_helpers.camel_to_snake(parameter['size']['value'])
@@ -288,8 +282,8 @@ ${initialize_standard_input_param(parameter)}\
 % elif underlying_param_type == 'ViChar' or underlying_param_type == 'ViInt8':
       std::string ${parameter_name}(${size}, '\0');
 % else:
-      response->mutable_${parameter_name}()->Reserve(${size});
-      ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->AddNAlreadyReserved(${size});
+      response->mutable_${parameter_name}()->Resize(${size}, 0);
+      ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 % endif
 % else:
       ${underlying_param_type} ${parameter_name} {};
@@ -304,10 +298,9 @@ ${initialize_standard_input_param(parameter)}\
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  is_array = common_helpers.is_array(parameter['type'])
 %>\
 %if common_helpers.is_enum(parameter) == True:
-%if enums[parameter["enum"]].get("generate-mappings", False):
+%  if enums[parameter["enum"]].get("generate-mappings", False):
 <%
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
@@ -318,15 +311,15 @@ ${initialize_standard_input_param(parameter)}\
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
         }
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
-%else:
+%  else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
-%endif
-% elif is_array:
-% if parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]':
+%  endif
+%elif common_helpers.is_array(parameter['type']):
+%  if handler_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
-%elif common_helpers.is_struct(parameter):
+%  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
-% endif
+%  endif
 % else:
         response->set_${parameter_name}(${parameter_name});
 %endif

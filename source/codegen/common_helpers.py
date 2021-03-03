@@ -50,15 +50,20 @@ def has_unsupported_parameter(function):
   return any(is_unsupported_parameter(p) for p in function['parameters'])
 
 def is_unsupported_parameter(parameter):
-  type = parameter['type']
-  supported_size_mechanisms = {'fixed', 'len', 'ivi-dance'}
-  supported_struct_size_mechanisms = {'passed-in'}
-  is_unsupported_array = is_array(type) and parameter['size']['mechanism'] not in supported_size_mechanisms
-  is_unsupported_struct_array = is_array(type) and parameter['size']['mechanism'] not in supported_struct_size_mechanisms
-  if is_struct(parameter):
-    return  is_unsupported_struct_array
-  else:
-    return is_unsupported_array
+  return is_unsupported_size_mechanism(parameter) \
+      or is_unsupported_struct(parameter) \
+      or is_unsupported_scalar_array(parameter)
+
+def is_unsupported_size_mechanism(parameter):
+  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', None}
+
+def is_unsupported_struct(parameter):
+  return is_struct(parameter) and is_input_parameter(parameter)
+
+def is_unsupported_scalar_array(parameter):
+  if not is_array(parameter['type']):
+    return False
+  return is_enum(parameter) or get_underlying_type_name(parameter['type']) in {'ViInt16', 'ViBoolean'}
 
 def camel_to_snake(camelString):
   camelString = list(camelString)
@@ -112,41 +117,30 @@ def get_used_enums(functions, attributes):
       used_enums.add(attributes[attribute]["enum"])
   return used_enums
 
-def mark_non_grpc_param(parameter, parameters):
-  expected_name = parameter['name']
-  for possible_size_from_param in parameters:
-    size = possible_size_from_param.get('size', {})
-    mechanism = size.get('mechanism', '')
-    if mechanism == 'len':
-      if size.get('value', '') == expected_name:
-        parameter['gen_proto_field'] = False
-        parameter['determine_size_from'] = possible_size_from_param['name']
-        break
-    elif mechanism == 'ivi-dance':
-      if size.get('value', '') == expected_name:
-        parameter['gen_proto_field'] = False
-        parameter['ivi_dance_array'] = possible_size_from_param['name']
-        break
-
 def mark_non_grpc_params(parameters):
-  """Adds a 'gen_proto_field' set to False for any parameter that shouldn't be included in the gRPC messages.
-     Also adds fields to these parameters with metadata about related parameters if applicable."""
-  for parameter in parameters:
-      mark_non_grpc_param(parameter, parameters)
+  named_params = { p['name'] : p for p in parameters }
+  for param in parameters:
+    mechanism = get_size_mechanism(param)
+    if mechanism in {'len', 'ivi-dance', 'passed-in'}:
+      size_param = named_params.get(param['size']['value'], None)
+      size_param['is_size_param'] = True
+      if mechanism == 'len' or mechanism == 'ivi-dance':
+        size_param['gen_proto_field'] = False
+        if mechanism == 'len':
+          size_param['determine_size_from'] = param['name']
 
-def is_ivi_dance_size_param(parameter):
-  return parameter.get('ivi_dance_array', '') != ''
+def get_size_mechanism(parameter):
+  size = parameter.get('size', {})
+  return size.get('mechanism', None)
 
 def is_ivi_dance_array_param(parameter):
-  size = parameter.get('size', {})
-  mechanism = size.get('mechanism', '')
-  return mechanism == 'ivi-dance'
-
-def is_ivi_param(parameter):
-  return is_ivi_dance_size_param(parameter) or is_ivi_dance_array_param(parameter)
+  return get_size_mechanism(parameter) == 'ivi-dance'
 
 def has_ivi_dance_param(parameters):
-  for parameter in parameters:
-    if is_ivi_param(parameter=parameter):
-      return True
-  return False
+  return any(is_ivi_dance_array_param(p) for p in parameters)
+
+def get_ivi_dance_params(parameters):
+  array_param = next((p for p in parameters if is_ivi_dance_array_param(p)), None)
+  size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
+  other_params = (p for p in parameters if p != array_param and p != size_param)
+  return (size_param, array_param, other_params)

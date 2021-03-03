@@ -215,7 +215,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 number_of_coefficients = request->coefficients().size();
-      ViReal64* coefficients = (ViReal64*)request->coefficients().data();
+      auto coefficients = const_cast<ViReal64*>(request->coefficients().data());
       auto status = library_->ConfigureEqualizationFilterCoefficients(vi, channel_list, number_of_coefficients, coefficients);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -671,7 +671,17 @@ namespace grpc {
   ::grpc::Status NiScopeService::GetEqualizationFilterCoefficients(::grpc::ServerContext* context, const GetEqualizationFilterCoefficientsRequest* request, GetEqualizationFilterCoefficientsResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString channel = request->channel().c_str();
+      ViInt32 number_of_coefficients = request->number_of_coefficients();
+      response->mutable_coefficients()->Resize(number_of_coefficients, 0);
+      ViReal64* coefficients = response->mutable_coefficients()->mutable_data();
+      auto status = library_->GetEqualizationFilterCoefficients(vi, channel, number_of_coefficients, coefficients);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

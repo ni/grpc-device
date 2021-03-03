@@ -696,6 +696,36 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_FetchWaveform_CallsFetchWaveform)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  ViInt32 request_number_of_samples = 4;
+  ViReal64 actual_doubles[] = {53.4, 42, -120.3};
+  ViInt32 actual_number_of_samples = 3;
+  EXPECT_CALL(library, FetchWaveform(kTestViSession, request_number_of_samples, _, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(actual_doubles, actual_doubles + actual_number_of_samples),
+          SetArgPointee<3>(actual_number_of_samples),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::FetchWaveformRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_number_of_samples(request_number_of_samples);
+  ni::fake::grpc::FetchWaveformResponse response;
+  ::grpc::Status status = service.FetchWaveform(&context, &request, &response);
+
+  double expected_response_doubles[] = {53.4, 42, -120.3, 0.0};
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(response.actual_number_of_samples(), actual_number_of_samples);
+  EXPECT_EQ(response.waveform_data_size(), request_number_of_samples);
+  EXPECT_THAT(response.waveform_data(), ElementsAreArray(expected_response_doubles, request_number_of_samples));
+}
+
 // Non-int enum Tests
 TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaultsWithInvalidEnumInput_ReturnsInvalidArgument)
 {
