@@ -320,12 +320,10 @@ ${initialize_standard_input_param(parameter)}\
 %  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %  endif
-% else:
-%if parameter['type'] == 'ViSession':
-        response->mutable_${parameter_name}()->set_id(${parameter_name});
+%elif parameter['type'] == 'ViSession':
+    response->mutable_${parameter_name}()->set_id(${parameter_name});
 %else :
-        response->set_${parameter_name}(${parameter_name});
-%endif
+    response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor
 </%def>

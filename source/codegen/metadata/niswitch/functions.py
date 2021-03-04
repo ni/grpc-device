@@ -163,7 +163,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'ClearError': {
-        'is_error_handling': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -408,7 +407,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViString': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -468,7 +466,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetChannelName': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -498,8 +495,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetError': {
-        'codegen_method': 'public',
-        'is_error_handling': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -527,10 +522,8 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'GetNextCoercionRecord': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -555,7 +548,6 @@ functions = {
         'returns': 'ViStatus',
     },
     'GetNextInterchangeWarning': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -580,7 +572,6 @@ functions = {
         'returns': 'ViStatus',
     },
     'GetPath': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -635,7 +626,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetRelayName': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -712,7 +702,6 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'InitWithOptions': {
         'parameters': [
@@ -746,7 +735,6 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'InitWithTopology': {
         'parameters': [
@@ -781,7 +769,6 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'InitiateScan': {
         'parameters': [
@@ -848,7 +835,6 @@ functions = {
         ],
         'render_in_session_base': True,
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'RelayControl': {
         'parameters': [
@@ -1148,7 +1134,6 @@ functions = {
         ],
         'render_in_session_base': True,
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'WaitForDebounce': {
         'parameters': [
@@ -1191,10 +1176,8 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'error_message': {
-        'is_error_handling': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1217,7 +1200,6 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'reset': {
         'parameters': [

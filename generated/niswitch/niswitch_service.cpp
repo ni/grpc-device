@@ -361,7 +361,7 @@ namespace grpc {
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-        response->set_attribute_value(attribute_value);
+    response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -383,7 +383,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-        response->set_attribute_value(attribute_value);
+    response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -405,7 +405,7 @@ namespace grpc {
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-        response->set_attribute_value(attribute_value);
+    response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -419,8 +419,8 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
@@ -457,7 +457,7 @@ namespace grpc {
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_attribute_value()->set_id(attribute_value);
+    response->mutable_attribute_value()->set_id(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -471,8 +471,8 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 index = request->index();
 
       auto status = library_->GetChannelName(vi, index, 0, nullptr);
@@ -500,8 +500,8 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
       auto status = library_->GetError(vi, nullptr, 0, nullptr);
       if (status < 0) {
@@ -515,7 +515,7 @@ namespace grpc {
       status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
       response->set_status(status);
       if (status == 0) {
-        response->set_code(code);
+    response->set_code(code);
         response->set_description(description);
       }
       return ::grpc::Status::OK;
@@ -530,7 +530,23 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->GetNextCoercionRecord(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string coercion_record(buffer_size, '\0');
+      status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_coercion_record(coercion_record);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -542,7 +558,23 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->GetNextInterchangeWarning(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string interchange_warning(buffer_size, '\0');
+      status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_interchange_warning(interchange_warning);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -554,8 +586,8 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetPath(::grpc::ServerContext* context, const GetPathRequest* request, GetPathResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel1 = request->channel1().c_str();
       ViConstString channel2 = request->channel2().c_str();
 
@@ -591,7 +623,7 @@ namespace grpc {
       auto status = library_->GetRelayCount(vi, relay_name, &relay_count);
       response->set_status(status);
       if (status == 0) {
-        response->set_relay_count(relay_count);
+    response->set_relay_count(relay_count);
       }
       return ::grpc::Status::OK;
     }
@@ -605,8 +637,8 @@ namespace grpc {
   ::grpc::Status NiSwitchService::GetRelayName(::grpc::ServerContext* context, const GetRelayNameRequest* request, GetRelayNameResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 index = request->index();
 
       auto status = library_->GetRelayName(vi, index, 0, nullptr);
@@ -662,7 +694,7 @@ namespace grpc {
       auto status = library_->init(resource_name, id_query, reset_device, &vi);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(vi);
+    response->mutable_vi()->set_id(vi);
       }
       return ::grpc::Status::OK;
     }
@@ -684,7 +716,7 @@ namespace grpc {
       auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(vi);
+    response->mutable_vi()->set_id(vi);
       }
       return ::grpc::Status::OK;
     }
@@ -766,7 +798,7 @@ namespace grpc {
       auto status = library_->IsDebounced(vi, &is_debounced);
       response->set_status(status);
       if (status == 0) {
-        response->set_is_debounced(is_debounced);
+    response->set_is_debounced(is_debounced);
       }
       return ::grpc::Status::OK;
     }
@@ -786,7 +818,7 @@ namespace grpc {
       auto status = library_->IsScanning(vi, &is_scanning);
       response->set_status(status);
       if (status == 0) {
-        response->set_is_scanning(is_scanning);
+    response->set_is_scanning(is_scanning);
       }
       return ::grpc::Status::OK;
     }
@@ -806,7 +838,7 @@ namespace grpc {
       auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
+    response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1078,7 +1110,7 @@ namespace grpc {
       auto status = library_->UnlockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
+    response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1185,7 +1217,7 @@ namespace grpc {
       auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
-        response->set_self_test_result(self_test_result);
+    response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
       }
       return ::grpc::Status::OK;

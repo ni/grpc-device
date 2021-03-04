@@ -436,8 +436,8 @@ namespace grpc {
   ::grpc::Status NiScopeService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
       auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
       if (status < 0) {
@@ -561,7 +561,7 @@ namespace grpc {
       auto status = library_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-        response->set_value(value);
+    response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -583,7 +583,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-        response->set_value(value);
+    response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -605,7 +605,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-        response->set_value(value);
+    response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -627,7 +627,7 @@ namespace grpc {
       auto status = library_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-        response->set_value(value);
+    response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -641,8 +641,8 @@ namespace grpc {
   ::grpc::Status NiScopeService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
 
@@ -671,8 +671,8 @@ namespace grpc {
   ::grpc::Status NiScopeService::GetEqualizationFilterCoefficients(::grpc::ServerContext* context, const GetEqualizationFilterCoefficientsRequest* request, GetEqualizationFilterCoefficientsResponse* response)
   {
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel = request->channel().c_str();
       ViInt32 number_of_coefficients = request->number_of_coefficients();
       response->mutable_coefficients()->Resize(number_of_coefficients, 0);
@@ -780,7 +780,7 @@ namespace grpc {
       auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
+    response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -988,7 +988,7 @@ namespace grpc {
       auto status = library_->UnlockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
+    response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1061,7 +1061,7 @@ namespace grpc {
       auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
-        response->set_self_test_result(self_test_result);
+    response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
       }
       return ::grpc::Status::OK;

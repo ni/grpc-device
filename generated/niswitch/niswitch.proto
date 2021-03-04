@@ -515,7 +515,6 @@ message GetErrorResponse {
 
 message GetNextCoercionRecordRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 buffer_size = 2;
 }
 
 message GetNextCoercionRecordResponse {
@@ -525,7 +524,6 @@ message GetNextCoercionRecordResponse {
 
 message GetNextInterchangeWarningRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 buffer_size = 2;
 }
 
 message GetNextInterchangeWarningResponse {
