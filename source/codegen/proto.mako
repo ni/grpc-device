@@ -8,7 +8,7 @@ enums = data["enums"]
 functions = data["functions"]
 
 service_class_prefix = config["service_class_prefix"]
-attribute_value_prefix = service_class_prefix.upper()+"_ATTRIBUTE"
+attribute_value_prefix = service_class_prefix.upper() + "_ATTRIBUTE"
 used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
 
