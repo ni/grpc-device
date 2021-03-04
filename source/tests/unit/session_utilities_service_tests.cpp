@@ -1,35 +1,41 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
 #include <server/device_enumerator.h>
-#include <server/syscfg_library.h>
 #include <server/semaphore.h>
 #include <server/session_repository.h>
 #include <server/session_utilities_service.h>
+#include <server/syscfg_library.h>
+#include <tests/utilities/syscfg_mock_library.h>
 
 #include <thread>
 
 // fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
 static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
+namespace internal = ni::hardware::grpc::internal;
+
 namespace ni {
 namespace tests {
 namespace unit {
 
+using ::testing::Throw;
+
 TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
-  ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
+  internal::SessionRepository session_repository;
+  ni::tests::utilities::SysCfgMockLibrary mock_library;
+  internal::DeviceEnumerator device_enumerator(&mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  EXPECT_CALL(mock_library, InitializeSession)
+      .WillOnce(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
 
   ::grpc::ServerContext context;
   ni::hardware::grpc::EnumerateDevicesRequest request;
   ni::hardware::grpc::EnumerateDevicesResponse response;
   ::grpc::Status status = service.EnumerateDevices(&context, &request, &response);
 
-  // Since the syscfg library will not be present in github repo, we expect a NOT_FOUND status in response.
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
-  EXPECT_EQ(ni::hardware::grpc::internal::kSysCfgApiNotInstalledMessage, status.error_message());
+  EXPECT_EQ(internal::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 TEST(SessionUtilitiesServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
