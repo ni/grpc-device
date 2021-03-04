@@ -247,7 +247,7 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 number_of_coefficients = request->coefficients().size();
-      ViReal64* coefficients = (ViReal64*)request->coefficients().data();
+      auto coefficients = const_cast<ViReal64*>(request->coefficients().data());
       auto status = library_->ConfigureEqualizationFilterCoefficients(vi, channel_list, number_of_coefficients, coefficients);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -540,7 +540,23 @@ namespace grpc {
   ::grpc::Status NiScopeService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+
+      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 size_in_bytes = status;
+
+      std::string configuration(size_in_bytes, '\0');
+      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_configuration(configuration);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -741,7 +757,25 @@ namespace grpc {
   ::grpc::Status NiScopeService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString channel_list = request->channel_list().c_str();
+      ViAttr attribute_id = request->attribute_id();
+
+      auto status = library_->GetAttributeViString(vi, channel_list, attribute_id, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buf_size = status;
+
+      std::string value(buf_size, '\0');
+      status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, (ViChar*)value.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -753,7 +787,24 @@ namespace grpc {
   ::grpc::Status NiScopeService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViInt32 index = request->index();
+
+      auto status = library_->GetChannelName(vi, index, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string channel_string(buffer_size, '\0');
+      status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_channel_string(channel_string);
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -777,7 +828,17 @@ namespace grpc {
   ::grpc::Status NiScopeService::GetEqualizationFilterCoefficients(::grpc::ServerContext* context, const GetEqualizationFilterCoefficientsRequest* request, GetEqualizationFilterCoefficientsResponse* response)
   {
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto session = request->vi();
+      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      ViConstString channel = request->channel().c_str();
+      ViInt32 number_of_coefficients = request->number_of_coefficients();
+      response->mutable_coefficients()->Resize(number_of_coefficients, 0);
+      ViReal64* coefficients = response->mutable_coefficients()->mutable_data();
+      auto status = library_->GetEqualizationFilterCoefficients(vi, channel, number_of_coefficients, coefficients);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1140,8 +1201,8 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViStatus error_code = request->error_code();
-      ViChar error_message[256];
-      auto status = library_->error_message(vi, error_code, error_message);
+      std::string error_message(256, '\0');
+      auto status = library_->error_message(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
@@ -1177,8 +1238,8 @@ namespace grpc {
       auto session = request->vi();
       ViSession vi = session_repository_->access_session(session.id(), session.name());
       ViInt16 self_test_result {};
-      ViChar self_test_message[256];
-      auto status = library_->self_test(vi, &self_test_result, self_test_message);
+      std::string self_test_message(256, '\0');
+      auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);
