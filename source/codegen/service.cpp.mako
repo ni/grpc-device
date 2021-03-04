@@ -75,6 +75,9 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
 % if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");

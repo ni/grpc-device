@@ -66,6 +66,18 @@ The following functions were changed from 'private' to 'no' because they did not
 - `CalFetchTemperature` - not found in niScope.h
 - `ConfigureRefLevels` - obsolete
 
+The following functions, not originally in the nimi-python metadata were added:
+ - `CableSenseSignalStart`
+ - `CableSenseSignalStop`
+ - `ConfigureTriggerGlitch`
+ - `ConfigureTriggerRunt`
+ - `ConfigureTriggerWidth`
+ - `FetchMeasurement`
+ - `GetChannelName`
+ - `GetChannelNameFromString`
+ - `GetScalingCoefficients`
+ - `ReadMeasurement`
+
 The following functions were changed from `public` to `custom` to indicate their service handlers won't be generated and instead
 should be implemented by hand in niscope_service.custom.cpp.
 - `Fetch`

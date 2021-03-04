@@ -60,7 +60,33 @@ config = {
                     'grpc_name': 'reserved2'
                 }
             ]
-        }
+        },
+        { 
+            'name': 'niScope_coefficientInfo',
+            'grpc_name': 'CoefficientInfo',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'offset',
+                    'grpc_name': 'offset'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'gain',
+                    'grpc_name': 'gain'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved1',
+                    'grpc_name': 'reserved1'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved2',
+                    'grpc_name': 'reserved2'
+                }
+            ]
+        },
     ],
     'driver_name': 'NI-SCOPE',
     'extra_errors_used': [

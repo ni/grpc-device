@@ -12,7 +12,7 @@ if len(config["custom_types"]) > 0:
   custom_template = "custom_proto.mako"
   has_custom_template = True
 service_class_prefix = config["service_class_prefix"]
-attribute_value_prefix = service_class_prefix.upper()
+attribute_value_prefix = service_class_prefix.upper() + "_ATTRIBUTE"
 used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
 
