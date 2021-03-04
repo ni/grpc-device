@@ -50,6 +50,7 @@ link_directories("./imports/lib/win64")
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
+set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
 set(nidrivers "nifake" "niscope" "niswitch")
 
 #----------------------------------------------------------------------
@@ -95,7 +96,8 @@ foreach(api ${nidrivers})
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
-      "${service_output_dir}/${api}/${api}_library.cpp")
+      "${service_output_dir}/${api}/${api}_library.cpp"
+      "${custom_dir}/${api}_service.custom.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -256,6 +258,7 @@ add_executable(UnitTestsRunner
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${service_output_dir}/nifake/nifake_service.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc")
 
