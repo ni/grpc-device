@@ -386,7 +386,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAStringUsingCustomCode': {
-        'codegen_method': 'CustomCode',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'Returns a number and a string.',
             'note': 'This function rules!'
@@ -496,7 +496,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetArrayForCustomCodeCustomType': {
-        'codegen_method': 'CustomCode',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns an array for use in custom-code size mechanism.'
         },
@@ -539,7 +539,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetArrayForCustomCodeDouble': {
-        'codegen_method': 'CustomCode',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns an array for use in custom-code size mechanism.'
         },

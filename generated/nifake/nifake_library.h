@@ -31,11 +31,8 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean);
   ViStatus GetANumber(ViSession vi, ViInt16* aNumber);
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]);
-  ViStatus GetAStringUsingCustomCode(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
-  ViStatus GetArrayForCustomCodeCustomType(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[]);
-  ViStatus GetArrayForCustomCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
   ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut);
   ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
@@ -87,11 +84,8 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   using GetABooleanPtr = ViStatus (*)(ViSession vi, ViBoolean* aBoolean);
   using GetANumberPtr = ViStatus (*)(ViSession vi, ViInt16* aNumber);
   using GetAStringOfFixedMaximumSizePtr = ViStatus (*)(ViSession vi, ViChar aString[256]);
-  using GetAStringUsingCustomCodePtr = ViStatus (*)(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   using GetAnIviDanceStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   using GetAnIviDanceWithATwistStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
-  using GetArrayForCustomCodeCustomTypePtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[]);
-  using GetArrayForCustomCodeDoublePtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
   using GetArraySizeForCustomCodePtr = ViStatus (*)(ViSession vi, ViInt32* sizeOut);
   using GetArrayUsingIviDancePtr = ViStatus (*)(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
   using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
@@ -143,11 +137,8 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     GetABooleanPtr GetABoolean;
     GetANumberPtr GetANumber;
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
-    GetAStringUsingCustomCodePtr GetAStringUsingCustomCode;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
-    GetArrayForCustomCodeCustomTypePtr GetArrayForCustomCodeCustomType;
-    GetArrayForCustomCodeDoublePtr GetArrayForCustomCodeDouble;
     GetArraySizeForCustomCodePtr GetArraySizeForCustomCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;
     GetAttributeViBooleanPtr GetAttributeViBoolean;

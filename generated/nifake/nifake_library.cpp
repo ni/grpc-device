@@ -34,11 +34,8 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetABoolean = reinterpret_cast<GetABooleanPtr>(shared_library_.get_function_pointer("niFake_GetABoolean"));
   function_pointers_.GetANumber = reinterpret_cast<GetANumberPtr>(shared_library_.get_function_pointer("niFake_GetANumber"));
   function_pointers_.GetAStringOfFixedMaximumSize = reinterpret_cast<GetAStringOfFixedMaximumSizePtr>(shared_library_.get_function_pointer("niFake_GetAStringOfFixedMaximumSize"));
-  function_pointers_.GetAStringUsingCustomCode = reinterpret_cast<GetAStringUsingCustomCodePtr>(shared_library_.get_function_pointer("niFake_GetAStringUsingCustomCode"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
-  function_pointers_.GetArrayForCustomCodeCustomType = reinterpret_cast<GetArrayForCustomCodeCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetArrayForCustomCodeCustomType"));
-  function_pointers_.GetArrayForCustomCodeDouble = reinterpret_cast<GetArrayForCustomCodeDoublePtr>(shared_library_.get_function_pointer("niFake_GetArrayForCustomCodeDouble"));
   function_pointers_.GetArraySizeForCustomCode = reinterpret_cast<GetArraySizeForCustomCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForCustomCode"));
   function_pointers_.GetArrayUsingIviDance = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("niFake_GetArrayUsingIviDance"));
   function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFake_GetAttributeViBoolean"));
@@ -222,18 +219,6 @@ ViStatus NiFakeLibrary::GetAStringOfFixedMaximumSize(ViSession vi, ViChar aStrin
 #endif
 }
 
-ViStatus NiFakeLibrary::GetAStringUsingCustomCode(ViSession vi, ViInt16 aNumber, ViChar aString[])
-{
-  if (!function_pointers_.GetAStringUsingCustomCode) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetAStringUsingCustomCode.");
-  }
-#if defined(_MSC_VER)
-  return niFake_GetAStringUsingCustomCode(vi, aNumber, aString);
-#else
-  return function_pointers_.GetAStringUsingCustomCode(vi, aNumber, aString);
-#endif
-}
-
 ViStatus NiFakeLibrary::GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[])
 {
   if (!function_pointers_.GetAnIviDanceString) {
@@ -255,30 +240,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViSession vi, ViInt32 buff
   return niFake_GetAnIviDanceWithATwistString(vi, bufferSize, aString, actualSize);
 #else
   return function_pointers_.GetAnIviDanceWithATwistString(vi, bufferSize, aString, actualSize);
-#endif
-}
-
-ViStatus NiFakeLibrary::GetArrayForCustomCodeCustomType(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[])
-{
-  if (!function_pointers_.GetArrayForCustomCodeCustomType) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForCustomCodeCustomType.");
-  }
-#if defined(_MSC_VER)
-  return niFake_GetArrayForCustomCodeCustomType(vi, numberOfElements, arrayOut);
-#else
-  return function_pointers_.GetArrayForCustomCodeCustomType(vi, numberOfElements, arrayOut);
-#endif
-}
-
-ViStatus NiFakeLibrary::GetArrayForCustomCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[])
-{
-  if (!function_pointers_.GetArrayForCustomCodeDouble) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForCustomCodeDouble.");
-  }
-#if defined(_MSC_VER)
-  return niFake_GetArrayForCustomCodeDouble(vi, numberOfElements, arrayOut);
-#else
-  return function_pointers_.GetArrayForCustomCodeDouble(vi, numberOfElements, arrayOut);
 #endif
 }
 

@@ -28,11 +28,8 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
   virtual ViStatus GetANumber(ViSession vi, ViInt16* aNumber) = 0;
   virtual ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]) = 0;
-  virtual ViStatus GetAStringUsingCustomCode(ViSession vi, ViInt16 aNumber, ViChar aString[]) = 0;
   virtual ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]) = 0;
   virtual ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize) = 0;
-  virtual ViStatus GetArrayForCustomCodeCustomType(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[]) = 0;
-  virtual ViStatus GetArrayForCustomCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]) = 0;
   virtual ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut) = 0;
   virtual ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue) = 0;

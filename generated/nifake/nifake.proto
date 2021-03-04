@@ -27,11 +27,8 @@ service NiFake {
   rpc GetABoolean(GetABooleanRequest) returns (GetABooleanResponse);
   rpc GetANumber(GetANumberRequest) returns (GetANumberResponse);
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
-  rpc GetAStringUsingCustomCode(GetAStringUsingCustomCodeRequest) returns (GetAStringUsingCustomCodeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
-  rpc GetArrayForCustomCodeCustomType(GetArrayForCustomCodeCustomTypeRequest) returns (GetArrayForCustomCodeCustomTypeResponse);
-  rpc GetArrayForCustomCodeDouble(GetArrayForCustomCodeDoubleRequest) returns (GetArrayForCustomCodeDoubleResponse);
   rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
@@ -218,16 +215,6 @@ message GetAStringOfFixedMaximumSizeResponse {
   string a_string = 2;
 }
 
-message GetAStringUsingCustomCodeRequest {
-  ni.hardware.grpc.Session vi = 1;
-  sint32 a_number = 2;
-}
-
-message GetAStringUsingCustomCodeResponse {
-  int32 status = 1;
-  string a_string = 2;
-}
-
 message GetAnIviDanceStringRequest {
   ni.hardware.grpc.Session vi = 1;
 }
@@ -246,24 +233,6 @@ message GetAnIviDanceWithATwistStringResponse {
   int32 status = 1;
   string a_string = 2;
   sint32 actual_size = 3;
-}
-
-message GetArrayForCustomCodeCustomTypeRequest {
-  ni.hardware.grpc.Session vi = 1;
-}
-
-message GetArrayForCustomCodeCustomTypeResponse {
-  int32 status = 1;
-  repeated FakeCustomStruct array_out = 2;
-}
-
-message GetArrayForCustomCodeDoubleRequest {
-  ni.hardware.grpc.Session vi = 1;
-}
-
-message GetArrayForCustomCodeDoubleResponse {
-  int32 status = 1;
-  repeated double array_out = 2;
 }
 
 message GetArraySizeForCustomCodeRequest {
