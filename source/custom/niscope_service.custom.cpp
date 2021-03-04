@@ -1,11 +1,7 @@
 #include <niscope/niscope_service.h>
 
-namespace ni {
-namespace scope {
 namespace grpc {
+namespace scope {
 
-namespace internal = ni::hardware::grpc::internal;
-
-}  // namespace grpc
 }  // namespace scope
-}  // namespace ni
+}  // namespace grpc

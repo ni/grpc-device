@@ -4,10 +4,8 @@
   #include <dlfcn.h>
 #endif
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 SharedLibrary::SharedLibrary()
     : handle_(nullptr)
@@ -102,7 +100,5 @@ std::string SharedLibrary::get_library_name() const
   return library_name_;
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni

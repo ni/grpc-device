@@ -8,10 +8,8 @@
   #include <Windows.h>
 #endif
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 #ifdef _MSC_VER
 typedef HMODULE LibraryHandle;
@@ -48,9 +46,7 @@ class SharedLibrary {
   LibraryHandle handle_;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
 #endif  // NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY

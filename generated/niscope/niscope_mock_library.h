@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryInterface for NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_MOCK_LIBRARY_H
-#define NI_SCOPE_GRPC_MOCK_LIBRARY_H
+#ifndef GRPC_NISCOPE_MOCK_LIBRARY_H
+#define GRPC_NISCOPE_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -15,7 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-class NiScopeMockLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
+class NiScopeMockLibrary : public grpc::niscope::NiScopeLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AcquisitionStatus, (ViSession vi, ViInt32* acquisitionStatus), (override));
@@ -90,4 +90,4 @@ class NiScopeMockLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // NI_SCOPE_GRPC_MOCK_LIBRARY_H
+#endif  // GRPC_NISCOPE_MOCK_LIBRARY_H

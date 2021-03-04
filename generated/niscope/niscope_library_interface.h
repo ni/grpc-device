@@ -3,15 +3,14 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_LIBRARY_WRAPPER_H
-#define NI_SCOPE_GRPC_LIBRARY_WRAPPER_H
+#ifndef GRPC_NISCOPE_LIBRARY_WRAPPER_H
+#define GRPC_NISCOPE_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niScope.h>
 
-namespace ni {
-namespace scope {
 namespace grpc {
+namespace niscope {
 
 class NiScopeLibraryInterface {
  public:
@@ -87,7 +86,6 @@ class NiScopeLibraryInterface {
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
+}  // namespace niscope
 }  // namespace grpc
-}  // namespace scope
-}  // namespace ni
-#endif  // NI_SCOPE_GRPC_LIBRARY_WRAPPER_H
+#endif  // GRPC_NISCOPE_LIBRARY_WRAPPER_H

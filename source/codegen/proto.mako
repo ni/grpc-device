@@ -28,7 +28,7 @@ option java_package = "${config["java_package"]}";
 option java_outer_classname = "${service_class_prefix}";
 option csharp_namespace = "${config["csharp_namespace"]}";
 
-package ni.${config["namespace_component"]}.grpc;
+package grpc.${config["namespace_component"]};
 
 import "session.proto";
 
@@ -69,7 +69,7 @@ nonint_index = 1
 % for value in enum["values"]:
 % if enum.get("generate-mappings", false):
   ${enum_value_prefix}_${value["name"]} = ${nonint_index};
-<% 
+<%
   nonint_index = nonint_index+1
 %>\
 % else:

@@ -8,7 +8,7 @@ functions = data['functions']
 lookup = data["lookup"]
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
+namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
@@ -30,14 +30,13 @@ if len(config["custom_types"]) > 0:
 #include <atomic>
 #include <vector>
 
-namespace ni {
-namespace ${config["namespace_component"]} {
 namespace grpc {
+namespace ${config["namespace_component"]} {
 
 %if 'custom_type' in locals():
   namespace {
     void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
-%for field in custom_type["fields"]: 
+%for field in custom_type["fields"]:
       output->set_${field["grpc_name"]}(input.${field["name"]});
 %endfor
     }
@@ -52,9 +51,7 @@ namespace grpc {
   }
 
 %endif
-  namespace internal = ni::hardware::grpc::internal;
-
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -89,15 +86,14 @@ ${gen_ivi_dance_method_body(function_name=function_name, function_data=function_
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
 % endfor
-} // namespace grpc
 } // namespace ${config["namespace_component"]}
-} // namespace ni
+} // namespace grpc
 \
 \
 \

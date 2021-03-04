@@ -3,18 +3,17 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_LIBRARY_H
-#define NI_SCOPE_GRPC_LIBRARY_H
+#ifndef GRPC_NISCOPE_LIBRARY_H
+#define GRPC_NISCOPE_LIBRARY_H
 
 #include "niscope_library_interface.h"
 
 #include <server/shared_library.h>
 
-namespace ni {
-namespace scope {
 namespace grpc {
+namespace niscope {
 
-class NiScopeLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
+class NiScopeLibrary : public grpc::niscope::NiScopeLibraryInterface {
  public:
   NiScopeLibrary();
   virtual ~NiScopeLibrary();
@@ -230,12 +229,11 @@ class NiScopeLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
     self_testPtr self_test;
   } FunctionLoadStatus;
 
-  ni::hardware::grpc::internal::SharedLibrary shared_library_;
+  grpc::nidevice::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 };
 
+}  // namespace niscope
 }  // namespace grpc
-}  // namespace scope
-}  // namespace ni
 
-#endif  // NI_SCOPE_GRPC_LIBRARY_H
+#endif  // GRPC_NISCOPE_LIBRARY_H

@@ -5,9 +5,9 @@ config = {
     'c_header': 'niScope.h',
     'c_function_prefix': 'niScope_',
     'service_class_prefix': 'NiScope',
-    'java_package': 'com.ni.scope.grpc',
-    'csharp_namespace': 'NationalInstruments.Scope.Grpc',
-    'namespace_component': 'scope',
+    'java_package': 'com.ni.grpc.scope',
+    'csharp_namespace': 'NationalInstruments.Grpc.Scope',
+    'namespace_component': 'niscope',
     'close_function': 'close',
     'context_manager_name': {
         'abort_function': 'Abort',
