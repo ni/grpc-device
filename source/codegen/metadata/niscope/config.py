@@ -16,39 +16,48 @@ config = {
     },
     'custom_types': [
         {
-            'name': 'WaveformInfo',
+            'name': 'niScope_wfmInfo',
+            'grpc_name': 'WaveformInfo',
             'fields': [
                 {
                     'type': 'ViReal64',
-                    'name': 'absoluteInitialX'
+                    'name': 'absoluteInitialX',
+                    'grpc_name': 'absolute_initial_x'
                 },
                 {
                     'type': 'ViReal64',
-                    'name': 'relativeInitialX'
+                    'name': 'relativeInitialX',
+                    'grpc_name': 'relative_initial_x'
                 },
                 {
                     'type': 'ViReal64',
-                    'name': 'xIncrement'
+                    'name': 'xIncrement',
+                    'grpc_name': 'x_increment'
                 },
                 {
                     'type': 'ViInt32',
-                    'name':  'actualSamples'
+                    'name':  'actualSamples',
+                    'grpc_name': 'actual_samples'
                 },
                 {
                     'type': 'ViReal64',
-                    'name': 'offset'
+                    'name': 'offset',
+                    'grpc_name': 'offset'
                 },
                 {
                     'type': 'ViReal64',
-                    'name': 'gain'
+                    'name': 'gain',
+                    'grpc_name': 'gain'
                 },
                 {
                     'type': 'ViReal64',
-                    'name': 'reserved1'
+                    'name': 'reserved1',
+                    'grpc_name': 'reserved1'
                 },
                 {
                     'type': 'ViReal64',
-                    'name': 'reserved2'
+                    'name': 'reserved2',
+                    'grpc_name': 'reserved2'
                 }
             ]
         }

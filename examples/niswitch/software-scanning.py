@@ -25,7 +25,7 @@ import niSwitch_pb2 as switchTypes
 import niSwitch_pb2_grpc as gRPCSwitch
 
 # This is the location (ipaddress or machine name):(port) of the niDevice server
-serverAddress = "localhost:50051"
+serverAddress = "localhost:31763"
 
 # Resource name and options for a simulated 2529 switch. Change them according to the switch model.
 resource = "Switch1"

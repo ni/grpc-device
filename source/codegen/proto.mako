@@ -6,9 +6,13 @@ config = data["config"]
 attributes = data["attributes"]
 enums = data["enums"]
 functions = data["functions"]
-
+lookup = data["lookup"]
+has_custom_template = False
+if len(config["custom_types"]) > 0:
+  custom_template = "custom_proto.mako"
+  has_custom_template = True
 service_class_prefix = config["service_class_prefix"]
-attribute_value_prefix = service_class_prefix.upper()
+attribute_value_prefix = service_class_prefix.upper() + "_ATTRIBUTE"
 used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
 
@@ -31,7 +35,7 @@ import "session.proto";
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
-  common_helpers.mark_len_params(functions[function]["parameters"])
+  common_helpers.mark_non_grpc_params(functions[function]["parameters"])
   method_name = common_helpers.snake_to_camel(function)
 %>\
   rpc ${method_name}(${method_name}Request) returns (${method_name}Response);
@@ -75,6 +79,9 @@ nonint_index = 1
 }
 
 % endfor
+%if has_custom_template:
+${lookup.get_template(custom_template).render()}
+%endif
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])
@@ -89,7 +96,10 @@ message ${common_helpers.snake_to_camel(function)}Request {
 % for parameter in input_parameters:
 <%
   index  = index + 1
-  parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
+  if 'grpc_type' in parameter:
+    parameter_type = parameter['grpc_type']
+  else:
+    parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
 % endfor
@@ -103,7 +113,10 @@ message ${common_helpers.snake_to_camel(function)}Response {
 % for parameter in output_parameters:
 <%
   index = index + 1
-  parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
+  if "grpc_type" in parameter:
+    parameter_type = parameter["grpc_type"]
+  else:
+    parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
 %endfor

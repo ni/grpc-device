@@ -79,7 +79,7 @@ service NiSwitch {
 }
 
 enum NiSwitchAttributes {
-  NISWITCH_UNSPECIFIED = 0;
+  NISWITCH_ATTRIBUTE_UNSPECIFIED = 0;
   NISWITCH_ATTRIBUTE_SIMULATE = 1050005;
   NISWITCH_ATTRIBUTE_DRIVER_SETUP = 1050007;
   NISWITCH_ATTRIBUTE_CHANNEL_COUNT = 1050203;
@@ -475,7 +475,6 @@ message GetAttributeViStringRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
-  sint32 array_size = 4;
 }
 
 message GetAttributeViStringResponse {
@@ -497,7 +496,6 @@ message GetAttributeViSessionResponse {
 message GetChannelNameRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 index = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetChannelNameResponse {
@@ -507,7 +505,6 @@ message GetChannelNameResponse {
 
 message GetErrorRequest {
   ni.hardware.grpc.Session vi = 1;
-  sint32 buffer_size = 2;
 }
 
 message GetErrorResponse {
@@ -540,7 +537,6 @@ message GetPathRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel1 = 2;
   string channel2 = 3;
-  sint32 buffer_size = 4;
 }
 
 message GetPathResponse {
@@ -561,7 +557,6 @@ message GetRelayCountResponse {
 message GetRelayNameRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 index = 2;
-  sint32 relay_name_buffer_size = 3;
 }
 
 message GetRelayNameResponse {
