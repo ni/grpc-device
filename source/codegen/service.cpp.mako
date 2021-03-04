@@ -254,8 +254,8 @@ ${initialize_standard_input_param(parameter)}\
     % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
     % elif c_type == 'ViSession':
-      auto session = ${request_snippet};
-      ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
+      auto ${parameter_name}_grpc_session = ${request_snippet};
+      ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
     % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
     % else:
@@ -323,8 +323,10 @@ ${initialize_standard_input_param(parameter)}\
 %  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %  endif
-% else:
-        response->set_${parameter_name}(${parameter_name});
+%elif parameter['type'] == 'ViSession':
+    response->mutable_${parameter_name}()->set_id(${parameter_name});
+%else :
+    response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor
 </%def>
