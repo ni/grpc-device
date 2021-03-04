@@ -191,7 +191,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'Option.SELF_CALIBRATE_ALL_CHANNELS',
                 'direction': 'in',
                 'enum': 'Option',
                 'name': 'option',
@@ -214,7 +213,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'ClearableMeasurement.ALL_MEASUREMENTS',
                 'direction': 'in',
                 'enum': 'ClearableMeasurement',
                 'name': 'clearableMeasurementFunction',
@@ -347,19 +345,16 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 10.0,
                 'direction': 'in',
                 'name': 'low',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 50.0,
                 'direction': 'in',
                 'name': 'mid',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 90.0,
                 'direction': 'in',
                 'name': 'high',
                 'type': 'ViReal64'
@@ -380,20 +375,17 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'TriggerSlope.POSITIVE',
                 'direction': 'in',
                 'enum': 'TriggerSlope',
                 'name': 'slope',
                 'type': 'ViInt32'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'holdoff',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'delay',
                 'type': 'ViReal64'
@@ -419,7 +411,6 @@ functions = {
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'TriggerSlope.POSITIVE',
                 'direction': 'in',
                 'enum': 'TriggerSlope',
                 'name': 'slope',
@@ -432,13 +423,11 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'holdoff',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'delay',
                 'type': 'ViReal64'
@@ -522,7 +511,6 @@ functions = {
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'TriggerSlope.POSITIVE',
                 'direction': 'in',
                 'enum': 'TriggerSlope',
                 'name': 'slope',
@@ -535,13 +523,11 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'holdoff',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'delay',
                 'type': 'ViReal64'
@@ -614,13 +600,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'holdoff',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'delay',
                 'type': 'ViReal64'
@@ -641,7 +625,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': False,
                 'direction': 'in',
                 'name': 'enableDcRestore',
                 'type': 'ViBoolean'
@@ -659,7 +642,6 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 1,
                 'direction': 'in',
                 'name': 'lineNumber',
                 'type': 'ViInt32'
@@ -677,13 +659,11 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'holdoff',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'delay',
                 'type': 'ViReal64'
@@ -784,13 +764,11 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'holdoff',
                 'type': 'ViReal64'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'name': 'delay',
                 'type': 'ViReal64'
@@ -816,7 +794,6 @@ functions = {
                 'type': 'ViReal64'
             },
             {
-                'default_value': 0.0,
                 'direction': 'in',
                 'name': 'offset',
                 'type': 'ViReal64'
@@ -828,13 +805,11 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 1.0,
                 'direction': 'in',
                 'name': 'probeAttenuation',
                 'type': 'ViReal64'
             },
             {
-                'default_value': True,
                 'direction': 'in',
                 'name': 'enabled',
                 'type': 'ViBoolean'
@@ -906,7 +881,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -954,7 +928,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -1006,7 +979,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -1054,7 +1026,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -1102,7 +1073,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -1150,7 +1120,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -1187,7 +1156,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -1600,19 +1568,16 @@ functions = {
                 'type': 'ViRsrc'
             },
             {
-                'default_value': False,
                 'direction': 'in',
                 'name': 'idQuery',
                 'type': 'ViBoolean'
             },
             {
-                'default_value': False,
                 'direction': 'in',
                 'name': 'resetDevice',
                 'type': 'ViBoolean'
             },
             {
-                'default_value': '""',
                 'direction': 'in',
                 'name': 'optionString',
                 'type': 'ViConstString'
@@ -1688,7 +1653,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
@@ -1735,7 +1699,6 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=5.0)',
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'ViReal64'
