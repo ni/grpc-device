@@ -14,7 +14,7 @@ SysCfgLibrary::SysCfgLibrary()
     return;
   }
   function_pointers_.InitializeSession = reinterpret_cast<InitializeSessionPtr>(shared_library_.get_function_pointer("NISysCfgInitializeSession"));
-  function_pointers_.CloseHandle  = reinterpret_cast<CloseHandlePtr>(shared_library_.get_function_pointer("NISysCfgCloseHandle"));
+  function_pointers_.CloseHandle = reinterpret_cast<CloseHandlePtr>(shared_library_.get_function_pointer("NISysCfgCloseHandle"));
 }
 
 SysCfgLibrary::~SysCfgLibrary()
