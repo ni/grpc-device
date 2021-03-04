@@ -91,9 +91,11 @@ public:
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
-  private:
+private:
   NiScopeLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
+  void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output);
+  void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output);
 };
 
 } // namespace grpc
