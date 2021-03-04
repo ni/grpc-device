@@ -45,18 +45,6 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
   if (!function_pointers_.InitializeSession) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-#if defined(_MSC_VER)
-  return NISysCfgInitializeSession(
-    target_name,
-    username,
-    password,
-    language,
-    force_property_refresh,
-    connect_timeout_msec,
-    expert_enum_handle,
-    session_handle
-  );
-#else
   return function_pointers_.InitializeSession(
     target_name,
     username,
@@ -67,7 +55,6 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
     expert_enum_handle,
     session_handle
   );
-#endif
 }
 
 NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
@@ -75,11 +62,7 @@ NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
   if (!function_pointers_.CloseHandle) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-#if defined(_MSC_VER)
-  return NISysCfgCloseHandle(syscfg_handle);
-#else
   return function_pointers_.CloseHandle(syscfg_handle);
-#endif
 }
 
 }  // namespace internal

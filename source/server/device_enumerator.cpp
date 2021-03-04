@@ -23,6 +23,8 @@ DeviceEnumerator::~DeviceEnumerator()
   NISysCfgSessionHandle session = NULL;
   
   try {
+    // TODO: This PR adds only Initialize and Close. Remaining work will be added in upcoming PR.
+    // TODO: Caching of syscfg_session will be added in a separate PR.
     syscfg_status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
     library_->CloseHandle(session);
   }
