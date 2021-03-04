@@ -280,7 +280,6 @@ add_custom_command(
            
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/system/stub_test.cpp"
     "source/tests/system/niscope_session_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/session_repository.cpp"
