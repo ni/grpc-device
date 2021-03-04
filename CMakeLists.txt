@@ -223,6 +223,7 @@ add_executable(IntegrationTestsRunner
 
 target_link_libraries(IntegrationTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
