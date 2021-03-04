@@ -939,7 +939,6 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'gen_proto_field': False,
                 'direction': 'in',
                 'name': 'measurementWaveformSize',
                 'type': 'ViInt32'

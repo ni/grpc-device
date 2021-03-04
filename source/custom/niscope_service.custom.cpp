@@ -27,7 +27,7 @@ namespace internal = ni::hardware::grpc::internal;
       return ::grpc::Status::OK;
     };
 
-    response->mutable_waveform()->Resize(num_samples * num_waveforms, 0);
+    response->mutable_waveform()->Resize(num_samples * num_waveforms, 0.0);
     ViReal64* waveform = response->mutable_waveform()->mutable_data();
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     status = library_->Fetch(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
@@ -64,8 +64,9 @@ namespace internal = ni::hardware::grpc::internal;
     }
 
     response->mutable_waveform()->insert(0, (size_t)(num_samples * num_waveforms), '\0');
+    ViInt8* waveform_data = reinterpret_cast<ViInt8*>(response->mutable_waveform()->data());
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
-    status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, (ViInt8*)response->mutable_waveform()->data(), waveform_info.data());
+    status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, waveform_data, waveform_info.data());
     response->set_status(status);
     if (status == 0) {
       Copy(waveform_info, response->mutable_wfm_info());
@@ -139,8 +140,8 @@ namespace internal = ni::hardware::grpc::internal;
     status = library_->FetchBinary32(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform_info, response->mutable_wfm_info());
       response->mutable_waveform()->Add(waveform.begin(), waveform.end());
+      Copy(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -162,16 +163,10 @@ namespace internal = ni::hardware::grpc::internal;
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 array_meas_function = request->array_meas_function();
-
-    ViInt32 measurement_waveform_size;
-    auto status = library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size);
-    if (status != 0) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
+    ViInt32 measurement_waveform_size = request->measurement_waveform_size();
 
     ViInt32 num_waveforms;
-    status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    auto status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
     if (status != 0) {
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -213,21 +208,20 @@ namespace internal = ni::hardware::grpc::internal;
       return ::grpc::Status::OK;
     }
 
-    std::vector<ViReal64> result(num_waveforms, 0.0);
-    std::vector<ViReal64> mean(num_waveforms, 0.0);
-    std::vector<ViReal64> stdev(num_waveforms, 0.0);
-    std::vector<ViReal64> min(num_waveforms, 0.0);
-    std::vector<ViReal64> max(num_waveforms, 0.0);
-    std::vector<ViInt32> num_in_stats(num_waveforms, 0);
-
-    status = library_->FetchMeasurementStats(vi, channel_list, timeout, scalar_meas_function, result.data(), mean.data(), stdev.data(), min.data(), max.data(), num_in_stats.data());
+    response->mutable_result()->Resize(num_waveforms, 0.0);
+    ViReal64* result = response->mutable_result()->mutable_data();
+    response->mutable_mean()->Resize(num_waveforms, 0.0);
+    ViReal64* mean = response->mutable_mean()->mutable_data();
+    response->mutable_stdev()->Resize(num_waveforms, 0.0);
+    ViReal64* stdev = response->mutable_stdev()->mutable_data();
+    response->mutable_min()->Resize(num_waveforms, 0.0);
+    ViReal64* min = response->mutable_min()->mutable_data();
+    response->mutable_max()->Resize(num_waveforms, 0.0);
+    ViReal64* max = response->mutable_max()->mutable_data();
+    std::vector<ViInt32> num_in_stats(num_waveforms, 0.0);
+    status = library_->FetchMeasurementStats(vi, channel_list, timeout, scalar_meas_function, result, mean, stdev, min, max, num_in_stats.data());
     response->set_status(status);
     if (status == 0) {
-      response->mutable_result()->Add(result.begin(), result.end());
-      response->mutable_mean()->Add(mean.begin(), mean.end());
-      response->mutable_stdev()->Add(stdev.begin(), stdev.end());
-      response->mutable_min()->Add(min.begin(), min.end());
-      response->mutable_max()->Add(max.begin(), max.end());
       response->mutable_num_in_stats()->Add(num_in_stats.begin(), num_in_stats.end());
     }
     return ::grpc::Status::OK;
@@ -258,7 +252,7 @@ namespace internal = ni::hardware::grpc::internal;
       return ::grpc::Status::OK;
     }
 
-    response->mutable_waveform()->Resize(num_samples * num_waveforms, 0);
+    response->mutable_waveform()->Resize(num_samples * num_waveforms, 0.0);
     ViReal64* waveform = response->mutable_waveform()->mutable_data();
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     status = library_->Read(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
