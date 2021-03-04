@@ -134,9 +134,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::CableSenseSignalStart(::grpc::ServerContext* context, const CableSenseSignalStartRequest* request, CableSenseSignalStartResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->CableSenseSignalStart(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -150,9 +153,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::CableSenseSignalStop(::grpc::ServerContext* context, const CableSenseSignalStopRequest* request, CableSenseSignalStopResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->CableSenseSignalStop(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -363,9 +369,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerGlitch(::grpc::ServerContext* context, const ConfigureTriggerGlitchRequest* request, ConfigureTriggerGlitchResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 width = request->width();
@@ -432,9 +441,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerRunt(::grpc::ServerContext* context, const ConfigureTriggerRuntRequest* request, ConfigureTriggerRuntResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
@@ -504,9 +516,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ConfigureTriggerWidth(::grpc::ServerContext* context, const ConfigureTriggerWidthRequest* request, ConfigureTriggerWidthResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 low_threshold = request->low_threshold();
@@ -725,6 +740,9 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::FetchMeasurement(::grpc::ServerContext* context, const FetchMeasurementRequest* request, FetchMeasurementResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
@@ -764,7 +782,7 @@ namespace grpc {
       auto status = library_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -789,7 +807,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -814,7 +832,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -839,7 +857,7 @@ namespace grpc {
       auto status = library_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -885,9 +903,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 index = request->index();
 
       auto status = library_->GetChannelName(vi, index, 0, nullptr);
@@ -914,6 +935,9 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
@@ -951,6 +975,9 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
@@ -1066,7 +1093,7 @@ namespace grpc {
       auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1132,6 +1159,9 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::ReadMeasurement(::grpc::ServerContext* context, const ReadMeasurementRequest* request, ReadMeasurementResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
@@ -1322,7 +1352,7 @@ namespace grpc {
       auto status = library_->UnlockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1407,7 +1437,7 @@ namespace grpc {
       auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
-    response->set_self_test_result(self_test_result);
+        response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
       }
       return ::grpc::Status::OK;
