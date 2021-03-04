@@ -66,7 +66,7 @@ namespace internal = ni::hardware::grpc::internal;
     }
 
     response->mutable_waveform()->insert(0, (size_t)(num_samples * num_waveforms), '\0');
-    ViInt8* waveform_data = reinterpret_cast<ViInt8*>(response->mutable_waveform()->data());
+    ViInt8* waveform_data = reinterpret_cast<ViInt8*>(const_cast<char*>(response->mutable_waveform()->data()));
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, waveform_data, waveform_info.data());
     response->set_status(status);
