@@ -138,8 +138,8 @@ namespace grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->CableSenseSignalStart(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -157,8 +157,8 @@ namespace grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->CableSenseSignalStop(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -373,8 +373,8 @@ namespace grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 width = request->width();
@@ -445,8 +445,8 @@ namespace grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
@@ -520,8 +520,8 @@ namespace grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 low_threshold = request->low_threshold();
@@ -817,8 +817,8 @@ namespace grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 index = request->index();
 
       auto status = library_->GetChannelName(vi, index, 0, nullptr);
