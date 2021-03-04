@@ -180,9 +180,9 @@ target_link_libraries(core_server
    )
 
 if(WIN32)
-  target_link_libraries(core_server Delayimp niScope niswitch nisyscfg)
-  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisyscfg.dll")
-  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisyscfg.dll")
+  target_link_libraries(core_server Delayimp niScope niswitch)
+  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -226,12 +226,6 @@ target_link_libraries(IntegrationTestsRunner
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
-
-if(WIN32)
-  target_link_libraries(IntegrationTestsRunner nisyscfg)
-  set_target_properties(IntegrationTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nisyscfg.dll")
-  set(IntegrationTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nisyscfg.dll")
-endif()
 
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
@@ -278,12 +272,6 @@ target_link_libraries(UnitTestsRunner
     ${CMAKE_DL_LIBS}
     Threads::Threads
     nlohmann_json::nlohmann_json)
-
-if(WIN32)
-  target_link_libraries(UnitTestsRunner nisyscfg)
-  set_target_properties(UnitTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nisyscfg.dll")
-  set(UnitTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nisyscfg.dll")
-endif()
 
 #----------------------------------------------------------------------
 # Copy test asset certificates to binary output certs sub-directory
