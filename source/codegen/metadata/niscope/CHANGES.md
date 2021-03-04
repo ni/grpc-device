@@ -9,7 +9,7 @@ The following metadata was added:
 - `'namespace_component': 'scope'`
 
 The fields of the custom waveform-info struct were added to `'custom_types'` in place of the `'ctypes_type'`,
-`'file_name'`, and `'python_name'`.
+`'file_name'`, and `'python_name'`. A  `'grpc_name'` field was also added which was the snake case version of the name field.
 
 ## functions.py
 
@@ -77,6 +77,14 @@ The following functions, not originally in the nimi-python metadata were added:
  - `GetChannelNameFromString`
  - `GetScalingCoefficients`
  - `ReadMeasurement`
+
+The following functions were given a field `grpc_type`:
+- `Fetch`
+- `FetchArrayMeasurement`
+- `FetchBinary16`
+- `FetchBinary32`
+- `FetchBinary8`
+- `Read`
 
 The following functions were changed from `public` to `CustomCode` to indicate their service handlers won't be generated and instead
 should be implemented by hand in niscope_service.custom.cpp.

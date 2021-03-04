@@ -281,8 +281,8 @@ ${initialize_standard_input_param(parameter)}\
     size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
 % if common_helpers.is_struct(parameter):
-      std::vector<${underlying_param_type}> ${parameter_name}(${size});
-% elif underlying_param_type == 'ViChar' or underlying_param_type == 'ViInt8':
+      std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
+% elif handler_helpers.is_string_arg(parameter):
       std::string ${parameter_name}(${size}, '\0');
 % else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -308,7 +308,6 @@ ${initialize_standard_input_param(parameter)}\
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
-
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
         if(${iterator_name} == ${map_name}.end()) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
@@ -324,9 +323,9 @@ ${initialize_standard_input_param(parameter)}\
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %  endif
 %elif parameter['type'] == 'ViSession':
-    response->mutable_${parameter_name}()->set_id(${parameter_name});
+        response->mutable_${parameter_name}()->set_id(${parameter_name});
 %else :
-    response->set_${parameter_name}(${parameter_name});
+        response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor
 </%def>

@@ -16,6 +16,27 @@ namespace ni {
 namespace scope {
 namespace grpc {
 
+  namespace {
+    void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output) {
+      output->set_absolute_initial_x(input.absoluteInitialX);
+      output->set_relative_initial_x(input.relativeInitialX);
+      output->set_x_increment(input.xIncrement);
+      output->set_actual_samples(input.actualSamples);
+      output->set_offset(input.offset);
+      output->set_gain(input.gain);
+      output->set_reserved1(input.reserved1);
+      output->set_reserved2(input.reserved2);
+    }
+
+    void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output) {
+      for (auto item : input) {
+        auto message = new ni::scope::grpc::WaveformInfo();
+        Copy(item, message);
+        output->AddAllocated(message);
+      }
+    }
+  }
+
   namespace internal = ni::hardware::grpc::internal;
 
   NiScopeService::NiScopeService(NiScopeLibraryInterface* library, internal::SessionRepository* session_repository)
@@ -25,27 +46,6 @@ namespace grpc {
 
   NiScopeService::~NiScopeService()
   {
-  }
-
-  void NiScopeService::Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output) 
-  {
-    output->set_absolute_initial_x(input.absoluteInitialX);
-    output->set_relative_initial_x(input.relativeInitialX);
-    output->set_x_increment(input.xIncrement);
-    output->set_actual_samples(input.actualSamples);
-    output->set_offset(input.offset);
-    output->set_gain(input.gain);
-    output->set_reserved1(input.reserved1);
-    output->set_reserved2(input.reserved2);
-  }
-
-  void NiScopeService::Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output) 
-  {
-    for (auto item : input) {
-      auto message = new ni::scope::grpc::WaveformInfo();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
   }
 
   //---------------------------------------------------------------------
@@ -663,7 +663,97 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::Fetch(::grpc::ServerContext* context, const FetchRequest* request, FetchResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::FetchArrayMeasurement(::grpc::ServerContext* context, const FetchArrayMeasurementRequest* request, FetchArrayMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::FetchBinary16(::grpc::ServerContext* context, const FetchBinary16Request* request, FetchBinary16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::FetchBinary32(::grpc::ServerContext* context, const FetchBinary32Request* request, FetchBinary32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::FetchBinary8(::grpc::ServerContext* context, const FetchBinary8Request* request, FetchBinary8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::FetchMeasurement(::grpc::ServerContext* context, const FetchMeasurementRequest* request, FetchMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::FetchMeasurementStats(::grpc::ServerContext* context, const FetchMeasurementStatsRequest* request, FetchMeasurementStatsResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -692,7 +782,7 @@ namespace grpc {
       auto status = library_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -717,7 +807,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -742,7 +832,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -767,7 +857,7 @@ namespace grpc {
       auto status = library_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -1003,7 +1093,7 @@ namespace grpc {
       auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1044,6 +1134,21 @@ namespace grpc {
       auto status = library_->ProbeCompensationSignalStop(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
+    }
+    catch (internal::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
     catch (internal::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1247,7 +1352,7 @@ namespace grpc {
       auto status = library_->UnlockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1332,7 +1437,7 @@ namespace grpc {
       auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
-    response->set_self_test_result(self_test_result);
+        response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
       }
       return ::grpc::Status::OK;
