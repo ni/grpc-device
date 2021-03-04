@@ -15,14 +15,6 @@ TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibra
   EXPECT_STREQ(internal::kSysCfgApiLibraryName, shared_library_name.c_str());
 }
 
-
-TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryIsNotLoaded)
-{
-  internal::SysCfgLibrary syscfg_library;
-
-  EXPECT_FALSE(syscfg_library.is_library_loaded());
-}
-
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
