@@ -126,7 +126,7 @@ def mark_non_grpc_params(parameters):
       size_param = named_params.get(param['size']['value'], None)
       size_param['is_size_param'] = True
       if mechanism == 'len' or mechanism == 'ivi-dance':
-        size_param['gen_proto_field'] = False
+        size_param['include_in_proto'] = False
         if mechanism == 'len':
           size_param['determine_size_from'] = param['name']
 

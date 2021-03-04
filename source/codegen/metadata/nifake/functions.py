@@ -510,7 +510,7 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'gen_proto_field': False,
+                'include_in_proto': False,
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the array.'
@@ -553,7 +553,7 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'gen_proto_field': False,
+                'include_in_proto': False,
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the array.'
