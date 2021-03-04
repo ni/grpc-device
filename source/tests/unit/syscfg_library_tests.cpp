@@ -15,43 +15,6 @@ TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryNameIsSetToSysCfgLibra
   EXPECT_STREQ(internal::kSysCfgApiLibraryName, shared_library_name.c_str());
 }
 
-
-TEST(SysCfgLibraryTests, CreateSysCfgLibrary_SharedLibraryIsNotLoaded)
-{
-  internal::SysCfgLibrary syscfg_library;
-
-  EXPECT_FALSE(syscfg_library.is_library_loaded());
-}
-
-TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallInitializeSession_ThrowsLibraryLoadException)
-{
-  internal::SysCfgLibrary syscfg_library;
-
-  try {
-    NISysCfgSessionHandle session = NULL;
-    auto status = syscfg_library.InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session);
-
-    FAIL() << "LibraryLoadException was not thrown";
-  }
-  catch (internal::LibraryLoadException& ex) {
-    EXPECT_STREQ(internal::kSysCfgApiNotInstalledMessage, ex.what());
-  }
-}
-
-TEST(SysCfgLibraryTests, SysCfgApiNotInstalled_CallCloseHandle_ThrowsLibraryLoadException)
-{
-  internal::SysCfgLibrary syscfg_library;
-
-  try {
-    auto status = syscfg_library.CloseHandle(NULL);
-
-    FAIL() << "LibraryLoadException was not thrown";
-  }
-  catch (internal::LibraryLoadException& ex) {
-    EXPECT_STREQ(internal::kSysCfgApiNotInstalledMessage, ex.what());
-  }
-}
-
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

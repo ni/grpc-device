@@ -50,6 +50,7 @@ link_directories("./imports/lib/win64")
 set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
+set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
 set(nidrivers "nifake" "niscope" "niswitch")
 
 #----------------------------------------------------------------------
@@ -95,7 +96,8 @@ foreach(api ${nidrivers})
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
-      "${service_output_dir}/${api}/${api}_library.cpp")
+      "${service_output_dir}/${api}/${api}_library.cpp"
+      "${custom_dir}/${api}_service.custom.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -178,9 +180,9 @@ target_link_libraries(core_server
    )
 
 if(WIN32)
-  target_link_libraries(core_server Delayimp niScope niswitch nisyscfg)
-  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisyscfg.dll")
-  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisyscfg.dll")
+  target_link_libraries(core_server Delayimp niScope niswitch)
+  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -221,15 +223,10 @@ add_executable(IntegrationTestsRunner
 
 target_link_libraries(IntegrationTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
-
-if(WIN32)
-  target_link_libraries(IntegrationTestsRunner nisyscfg)
-  set_target_properties(IntegrationTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nisyscfg.dll")
-  set(IntegrationTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nisyscfg.dll")
-endif()
 
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
@@ -256,6 +253,7 @@ add_executable(UnitTestsRunner
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${service_output_dir}/nifake/nifake_service.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc")
 
@@ -275,12 +273,6 @@ target_link_libraries(UnitTestsRunner
     ${CMAKE_DL_LIBS}
     Threads::Threads
     nlohmann_json::nlohmann_json)
-
-if(WIN32)
-  target_link_libraries(UnitTestsRunner nisyscfg)
-  set_target_properties(UnitTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nisyscfg.dll")
-  set(UnitTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nisyscfg.dll")
-endif()
 
 #----------------------------------------------------------------------
 # Copy test asset certificates to binary output certs sub-directory

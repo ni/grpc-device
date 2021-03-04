@@ -114,7 +114,6 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     NISysCfgResourceProperty             property_ID,
     void*                                value
     );
-  
 
   typedef struct FunctionPointers {
     InitializeSessionPtr InitializeSession;

@@ -2,12 +2,17 @@
 #include <server/semaphore.h>
 #include <server/session_utilities_service.h>
 #include <server/syscfg_library.h>
+#include <tests/utilities/syscfg_mock_library.h>
 
 #include <thread>
+
+namespace internal = ni::hardware::grpc::internal;
 
 namespace ni {
 namespace tests {
 namespace integration {
+
+using ::testing::Throw;
 
 class InProcessServerClientTest : public ::testing::Test {
  public:
@@ -16,9 +21,11 @@ class InProcessServerClientTest : public ::testing::Test {
   void SetUp() override
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    syscfg_library_ = std::make_unique<ni::hardware::grpc::internal::SysCfgLibrary>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>(syscfg_library_.get());
+    session_repository_ = std::make_unique<internal::SessionRepository>();
+    syscfg_mock_library_ = std::make_unique<ni::tests::utilities::SysCfgMockLibrary>();
+    ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
+        .WillByDefault(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
+    device_enumerator_ = std::make_unique<internal::DeviceEnumerator>(syscfg_mock_library_.get());
     service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
@@ -88,9 +95,9 @@ class InProcessServerClientTest : public ::testing::Test {
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::ni::hardware::grpc::SessionUtilities::Stub> stub_;
-  std::unique_ptr<ni::hardware::grpc::internal::SessionRepository> session_repository_;
-  std::unique_ptr<ni::hardware::grpc::internal::SysCfgLibrary> syscfg_library_;
-  std::unique_ptr<ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<internal::SessionRepository> session_repository_;
+  std::unique_ptr<ni::tests::utilities::SysCfgMockLibrary> syscfg_mock_library_;
+  std::unique_ptr<internal::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<ni::hardware::grpc::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;
 };
@@ -160,8 +167,8 @@ TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDe
 
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
-  // Since the syscfg library will not be present in github repo, we expect a NOT_FOUND status in response.
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
+  EXPECT_EQ(internal::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 }  // namespace integration
