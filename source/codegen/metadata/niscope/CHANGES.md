@@ -77,5 +77,13 @@ The following functions, not originally in the nimi-python metadata were added:
  - `GetChannelNameFromString`
  - `GetScalingCoefficients`
  - `ReadMeasurement`
+
+ The following functions were given a field `grpc_type`:
+- `Fetch`
+- `FetchArrayMeasurement`
+- `FetchBinary16`
+- `FetchBinary32`
+- `FetchBinary8`
+- `Read`
  
  
