@@ -27,6 +27,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.AcceptListOfDurationsInSeconds = reinterpret_cast<AcceptListOfDurationsInSecondsPtr>(shared_library_.get_function_pointer("niFake_AcceptListOfDurationsInSeconds"));
   function_pointers_.BoolArrayOutputFunction = reinterpret_cast<BoolArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayOutputFunction"));
   function_pointers_.DoubleAllTheNums = reinterpret_cast<DoubleAllTheNumsPtr>(shared_library_.get_function_pointer("niFake_DoubleAllTheNums"));
+  function_pointers_.EnumArrayOutputFunction = reinterpret_cast<EnumArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_EnumArrayOutputFunction"));
   function_pointers_.EnumInputFunctionWithDefaults = reinterpret_cast<EnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
   function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niFake_ExportAttributeConfigurationBuffer"));
   function_pointers_.FetchWaveform = reinterpret_cast<FetchWaveformPtr>(shared_library_.get_function_pointer("niFake_FetchWaveform"));
@@ -133,6 +134,18 @@ ViStatus NiFakeLibrary::DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViRe
   return niFake_DoubleAllTheNums(vi, numberCount, numbers);
 #else
   return function_pointers_.DoubleAllTheNums(vi, numberCount, numbers);
+#endif
+}
+
+ViStatus NiFakeLibrary::EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[])
+{
+  if (!function_pointers_.EnumArrayOutputFunction) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_EnumArrayOutputFunction.");
+  }
+#if defined(_MSC_VER)
+  return niFake_EnumArrayOutputFunction(vi, numberOfElements, anArray);
+#else
+  return function_pointers_.EnumArrayOutputFunction(vi, numberOfElements, anArray);
 #endif
 }
 

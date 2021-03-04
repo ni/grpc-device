@@ -714,10 +714,8 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   ViReal64 an_array[] = {1.0, 2, -3.0};
   ViInt32 string_size = 6;
   char a_string[] = "Hello!"; 
-  // ivi-dance call
   EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr))
       .WillOnce(Return(string_size));
-  // follow up call with size returned from ivi-dance setup.
   EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, _, _, _, _, _, _, array_size, _, string_size, _))
       .WillOnce(DoAll(
         SetArgPointee<1>(a_boolean),
@@ -737,7 +735,6 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   ni::fake::grpc::ReturnMultipleTypesResponse response;
   ::grpc::Status status = service.ReturnMultipleTypes(&context, &request, &response);
   
-  ViReal64 mapped_enum_value = 4;
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(a_boolean, response.a_boolean());
@@ -745,7 +742,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   EXPECT_EQ(an_int64, response.an_int64());
   EXPECT_EQ(an_int_enum, response.an_int_enum());
   EXPECT_EQ(a_float, response.a_float());
-  EXPECT_EQ(mapped_enum_value, response.a_float_enum());
+  EXPECT_EQ(ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE, response.a_float_enum());
   EXPECT_THAT(response.an_array(), ElementsAreArray(an_array, array_size));
   EXPECT_THAT(response.a_string(), ElementsAreArray(a_string, string_size));
 }

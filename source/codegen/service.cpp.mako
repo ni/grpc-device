@@ -279,7 +279,7 @@ ${initialize_standard_input_param(parameter)}\
 %>\
 % if common_helpers.is_struct(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
-% elif handler_helpers.is_string_arg (parameter):
+% elif handler_helpers.is_string_arg(parameter):
       std::string ${parameter_name}(${size}, '\0');
 % else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);

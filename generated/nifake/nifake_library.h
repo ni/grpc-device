@@ -24,6 +24,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   ViStatus AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[]);
   ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
+  ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]);
   ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples);
@@ -78,6 +79,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   using AcceptListOfDurationsInSecondsPtr = ViStatus (*)(ViSession vi, ViInt32 count, ViReal64 delays[]);
   using BoolArrayOutputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   using DoubleAllTheNumsPtr = ViStatus (*)(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
+  using EnumArrayOutputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]);
   using EnumInputFunctionWithDefaultsPtr = ViStatus (*)(ViSession vi, ViInt16 aTurtle);
   using ExportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   using FetchWaveformPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples);
@@ -132,6 +134,7 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     AcceptListOfDurationsInSecondsPtr AcceptListOfDurationsInSeconds;
     BoolArrayOutputFunctionPtr BoolArrayOutputFunction;
     DoubleAllTheNumsPtr DoubleAllTheNums;
+    EnumArrayOutputFunctionPtr EnumArrayOutputFunction;
     EnumInputFunctionWithDefaultsPtr EnumInputFunctionWithDefaults;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     FetchWaveformPtr FetchWaveform;
