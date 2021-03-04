@@ -33,6 +33,8 @@ The following `python-only` functions were removed:
 - `FancyRead`
 - `FetchDispatcher`
 - `fancy_self_test`
+- `FancyFetchArrayMeasurement`
+- `FancyFetchMeasurementStats`
 
 The following functions were changed from `private` to `public`:
 - `Fetch`
