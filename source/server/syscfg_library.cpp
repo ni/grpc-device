@@ -15,6 +15,12 @@ SysCfgLibrary::SysCfgLibrary()
   }
   function_pointers_.InitializeSession = reinterpret_cast<InitializeSessionPtr>(shared_library_.get_function_pointer("NISysCfgInitializeSession"));
   function_pointers_.CloseHandle  = reinterpret_cast<CloseHandlePtr>(shared_library_.get_function_pointer("NISysCfgCloseHandle"));
+  function_pointers_.CreateFilter = reinterpret_cast<CreateFilterPtr>(shared_library_.get_function_pointer("NISysCfgCreateFilter"));
+  function_pointers_.SetFilterProperty = reinterpret_cast<SetFilterPropertyPtr>(shared_library_.get_function_pointer("NISysCfgSetFilterProperty"));
+  function_pointers_.FindHardware = reinterpret_cast<FindHardwarePtr>(shared_library_.get_function_pointer("NISysCfgFindHardware"));
+  function_pointers_.NextResource = reinterpret_cast<NextResourcePtr>(shared_library_.get_function_pointer("NISysCfgNextResource"));
+  function_pointers_.GetResourceIndexedProperty = reinterpret_cast<GetResourceIndexedPropertyPtr>(shared_library_.get_function_pointer("NISysCfgGetResourceIndexedProperty"));
+  function_pointers_.GetResourceProperty = reinterpret_cast<GetResourcePropertyPtr>(shared_library_.get_function_pointer("NISysCfgGetResourceProperty"));
 }
 
 SysCfgLibrary::~SysCfgLibrary()
@@ -45,18 +51,6 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
   if (!function_pointers_.InitializeSession) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-#if defined(_MSC_VER)
-  return NISysCfgInitializeSession(
-    target_name,
-    username,
-    password,
-    language,
-    force_property_refresh,
-    connect_timeout_msec,
-    expert_enum_handle,
-    session_handle
-  );
-#else
   return function_pointers_.InitializeSession(
     target_name,
     username,
@@ -67,7 +61,6 @@ NISysCfgStatus SysCfgLibrary::InitializeSession(
     expert_enum_handle,
     session_handle
   );
-#endif
 }
 
 NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
@@ -75,14 +68,10 @@ NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
   if (!function_pointers_.CloseHandle) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-#if defined(_MSC_VER)
-  return NISysCfgCloseHandle(syscfg_handle);
-#else
   return function_pointers_.CloseHandle(syscfg_handle);
-#endif
 }
 
-NISysCfgStatus SysCfgLibrary::CreateFilter(
+NISysCfgStatus SysCfgLibrary::CreateHardwareFilter(
   NISysCfgSessionHandle                  session_handle,
   NISysCfgFilterHandle*                  filter_handle
   )
@@ -90,32 +79,63 @@ NISysCfgStatus SysCfgLibrary::CreateFilter(
   if (!function_pointers_.CreateFilter) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-#if defined(_MSC_VER)
-  return NISysCfgCreateFilter(session_handle, filter_handle);
-#else
-  return function_pointers_.CreateFilter(session_handle, filter_handle);
-#endif
+  NISysCfgStatus status;
+  if (NISysCfg_Succeeded(status = function_pointers_.CreateFilter(session_handle, filter_handle))) {
+    function_pointers_.SetFilterProperty(filter_handle, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
+    function_pointers_.SetFilterProperty(filter_handle, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
+  }
+  return status;
 }
 
-NISysCfgStatus SysCfgLibrary::SetFilterProperty(
-  NISysCfgFilterHandle                    filter_handle,
-  NISysCfgFilterProperty                  property_ID,
-  ...
+NISysCfgStatus SysCfgLibrary::FindHardware(
+  NISysCfgSessionHandle                  session_handle,
+  NISysCfgFilterMode                     filter_mode,
+  NISysCfgFilterHandle                   filter_handle,
+  const char*                            expert_names,
+  NISysCfgEnumResourceHandle*            resource_enum_handle
   )
 {
-  va_list args;
-  NISysCfgStatus status;
-  va_start(args, property_ID);
-  if (!function_pointers_.SetFilterProperty) {
+  if (!function_pointers_.FindHardware) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-#if defined(_MSC_VER)
-  status = NISysCfgSetFilterPropertyV(filter_handle, property_ID, args);
-#else
-  status = function_pointers_.SetFilterPropertyV(filter_handle, property_ID, args);
-#endif
-  va_end(args);
-  return status;
+  return function_pointers_.FindHardware(session_handle, filter_mode, filter_handle, expert_names, resource_enum_handle);
+}
+
+NISysCfgStatus SysCfgLibrary::NextResource(
+  NISysCfgSessionHandle                  session_handle,
+  NISysCfgEnumResourceHandle             resource_enum_handle,
+  NISysCfgResourceHandle*                resource_handle
+  )
+{
+  if (!function_pointers_.NextResource) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+  return function_pointers_.NextResource(session_handle, resource_enum_handle, resource_handle);
+}
+
+NISysCfgStatus SysCfgLibrary::GetResourceIndexedProperty(
+  NISysCfgResourceHandle                 resource_handle,
+  NISysCfgIndexedProperty                property_ID,
+  unsigned int                           index,
+  void*                                  value
+  )
+{
+  if (!function_pointers_.GetResourceIndexedProperty) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+  return function_pointers_.GetResourceIndexedProperty(resource_handle, property_ID, index, value);
+}
+
+NISysCfgStatus SysCfgLibrary::GetResourceProperty(
+  NISysCfgResourceHandle                 resource_handle,
+  NISysCfgResourceProperty               property_ID,
+  void*                                  value
+  )
+{
+  if (!function_pointers_.GetResourceProperty) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+  return function_pointers_.GetResourceProperty(resource_handle, property_ID, value);
 }
 
 }  // namespace internal
