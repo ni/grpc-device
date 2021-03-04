@@ -714,6 +714,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   ViReal64 an_array[] = {1.0, 2, -3.0};
   ViInt32 string_size = 6;
   char a_string[] = "Hello!"; 
+  // ivi-dance call
   EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr))
       .WillOnce(Return(string_size));
   EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, _, _, _, _, _, _, array_size, _, string_size, _))
