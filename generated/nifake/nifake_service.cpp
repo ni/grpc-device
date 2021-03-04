@@ -15,21 +15,6 @@
 namespace grpc {
 namespace nifake {
 
-  namespace {
-    void Copy(const CustomStruct& input, grpc::nifake::FakeCustomStruct* output) {
-      output->set_struct_int(input.structInt);
-      output->set_struct_double(input.structDouble);
-    }
-
-    void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<grpc::nifake::FakeCustomStruct>* output) {
-      for (auto item : input) {
-        auto message = new grpc::nifake::FakeCustomStruct();
-        Copy(item, message);
-        output->AddAllocated(message);
-      }
-    }
-  }
-
   NiFakeService::NiFakeService(NiFakeLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
@@ -37,6 +22,21 @@ namespace nifake {
 
   NiFakeService::~NiFakeService()
   {
+  }
+
+  void NiFakeService::Copy(const CustomStruct& input, grpc::nifake::FakeCustomStruct* output) 
+  {
+    output->set_struct_int(input.structInt);
+    output->set_struct_double(input.structDouble);
+  }
+
+  void NiFakeService::Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<grpc::nifake::FakeCustomStruct>* output) 
+  {
+    for (auto item : input) {
+      auto message = new grpc::nifake::FakeCustomStruct();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
   }
 
   //---------------------------------------------------------------------
@@ -198,7 +198,7 @@ namespace nifake {
       auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data, &actual_number_of_samples);
       response->set_status(status);
       if (status == 0) {
-    response->set_actual_number_of_samples(actual_number_of_samples);
+        response->set_actual_number_of_samples(actual_number_of_samples);
       }
       return ::grpc::Status::OK;
     }
@@ -221,7 +221,7 @@ namespace nifake {
       auto status = library_->GetABoolean(vi, &a_boolean);
       response->set_status(status);
       if (status == 0) {
-    response->set_a_boolean(a_boolean);
+        response->set_a_boolean(a_boolean);
       }
       return ::grpc::Status::OK;
     }
@@ -244,7 +244,7 @@ namespace nifake {
       auto status = library_->GetANumber(vi, &a_number);
       response->set_status(status);
       if (status == 0) {
-    response->set_a_number(a_number);
+        response->set_a_number(a_number);
       }
       return ::grpc::Status::OK;
     }
@@ -270,21 +270,6 @@ namespace nifake {
         response->set_a_string(a_string);
       }
       return ::grpc::Status::OK;
-    }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetAStringUsingPythonCode(::grpc::ServerContext* context, const GetAStringUsingPythonCodeRequest* request, GetAStringUsingPythonCodeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
     catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -339,22 +324,7 @@ namespace nifake {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetArrayForPythonCodeDouble(::grpc::ServerContext* context, const GetArrayForPythonCodeDoubleRequest* request, GetArrayForPythonCodeDoubleResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetArraySizeForPythonCode(::grpc::ServerContext* context, const GetArraySizeForPythonCodeRequest* request, GetArraySizeForPythonCodeResponse* response)
+  ::grpc::Status NiFakeService::GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -363,10 +333,10 @@ namespace nifake {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 size_out {};
-      auto status = library_->GetArraySizeForPythonCode(vi, &size_out);
+      auto status = library_->GetArraySizeForCustomCode(vi, &size_out);
       response->set_status(status);
       if (status == 0) {
-    response->set_size_out(size_out);
+        response->set_size_out(size_out);
       }
       return ::grpc::Status::OK;
     }
@@ -422,7 +392,7 @@ namespace nifake {
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->set_attribute_value(attribute_value);
+        response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -447,7 +417,7 @@ namespace nifake {
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->set_attribute_value(attribute_value);
+        response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -472,7 +442,7 @@ namespace nifake {
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->set_attribute_value(attribute_value);
+        response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -497,7 +467,7 @@ namespace nifake {
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->set_attribute_value(attribute_value);
+        response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -558,11 +528,11 @@ namespace nifake {
       auto status = library_->GetCalDateAndTime(vi, cal_type, &month, &day, &year, &hour, &minute);
       response->set_status(status);
       if (status == 0) {
-    response->set_month(month);
-    response->set_day(day);
-    response->set_year(year);
-    response->set_hour(hour);
-    response->set_minute(minute);
+        response->set_month(month);
+        response->set_day(day);
+        response->set_year(year);
+        response->set_hour(hour);
+        response->set_minute(minute);
       }
       return ::grpc::Status::OK;
     }
@@ -585,7 +555,7 @@ namespace nifake {
       auto status = library_->GetCalInterval(vi, &months);
       response->set_status(status);
       if (status == 0) {
-    response->set_months(months);
+        response->set_months(months);
       }
       return ::grpc::Status::OK;
     }
@@ -605,7 +575,7 @@ namespace nifake {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
-      std::vector<CustomStruct> cs(number_of_elements);
+      std::vector<CustomStruct> cs(number_of_elements, CustomStruct());
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
       response->set_status(status);
       if (status == 0) {
@@ -633,7 +603,7 @@ namespace nifake {
       auto status = library_->GetEnumValue(vi, &a_quantity, &a_turtle);
       response->set_status(status);
       if (status == 0) {
-    response->set_a_quantity(a_quantity);
+        response->set_a_quantity(a_quantity);
         response->set_a_turtle(static_cast<grpc::nifake::Turtle>(a_turtle));
       }
       return ::grpc::Status::OK;
@@ -823,7 +793,7 @@ namespace nifake {
       auto status = library_->Read(vi, maximum_time, &reading);
       response->set_status(status);
       if (status == 0) {
-    response->set_reading(reading);
+        response->set_reading(reading);
       }
       return ::grpc::Status::OK;
     }
@@ -848,7 +818,7 @@ namespace nifake {
       auto status = library_->ReadFromChannel(vi, channel_name, maximum_time, &reading);
       response->set_status(status);
       if (status == 0) {
-    response->set_reading(reading);
+        response->set_reading(reading);
       }
       return ::grpc::Status::OK;
     }
@@ -872,7 +842,7 @@ namespace nifake {
       auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
-    response->set_a_number(a_number);
+        response->set_a_number(a_number);
         response->set_a_string(a_string);
       }
       return ::grpc::Status::OK;
@@ -896,7 +866,7 @@ namespace nifake {
       auto status = library_->ReturnDurationInSeconds(vi, &timedelta);
       response->set_status(status);
       if (status == 0) {
-    response->set_timedelta(timedelta);
+        response->set_timedelta(timedelta);
       }
       return ::grpc::Status::OK;
     }
@@ -960,12 +930,11 @@ namespace nifake {
       status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
-    response->set_a_boolean(a_boolean);
-    response->set_an_int32(an_int32);
-    response->set_an_int64(an_int64);
+        response->set_a_boolean(a_boolean);
+        response->set_an_int32(an_int32);
+        response->set_an_int64(an_int64);
         response->set_an_int_enum(static_cast<grpc::nifake::Turtle>(an_int_enum));
-    response->set_a_float(a_float);
-
+        response->set_a_float(a_float);
         auto a_float_enum_imap_it = floatenum_output_map_.find(a_float_enum);
         if(a_float_enum_imap_it == floatenum_output_map_.end()) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
@@ -1042,7 +1011,7 @@ namespace nifake {
       auto status = library_->Use64BitNumber(vi, input, &output);
       response->set_status(status);
       if (status == 0) {
-    response->set_output(output);
+        response->set_output(output);
       }
       return ::grpc::Status::OK;
     }

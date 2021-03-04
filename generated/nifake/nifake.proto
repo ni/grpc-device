@@ -27,11 +27,9 @@ service NiFake {
   rpc GetABoolean(GetABooleanRequest) returns (GetABooleanResponse);
   rpc GetANumber(GetANumberRequest) returns (GetANumberResponse);
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
-  rpc GetAStringUsingPythonCode(GetAStringUsingPythonCodeRequest) returns (GetAStringUsingPythonCodeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
-  rpc GetArrayForPythonCodeDouble(GetArrayForPythonCodeDoubleRequest) returns (GetArrayForPythonCodeDoubleResponse);
-  rpc GetArraySizeForPythonCode(GetArraySizeForPythonCodeRequest) returns (GetArraySizeForPythonCodeResponse);
+  rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
@@ -217,16 +215,6 @@ message GetAStringOfFixedMaximumSizeResponse {
   string a_string = 2;
 }
 
-message GetAStringUsingPythonCodeRequest {
-  grpc.nidevice.Session vi = 1;
-  sint32 a_number = 2;
-}
-
-message GetAStringUsingPythonCodeResponse {
-  int32 status = 1;
-  string a_string = 2;
-}
-
 message GetAnIviDanceStringRequest {
   grpc.nidevice.Session vi = 1;
 }
@@ -247,21 +235,11 @@ message GetAnIviDanceWithATwistStringResponse {
   sint32 actual_size = 3;
 }
 
-message GetArrayForPythonCodeDoubleRequest {
-  grpc.nidevice.Session vi = 1;
-  sint32 number_of_elements = 2;
-}
-
-message GetArrayForPythonCodeDoubleResponse {
-  int32 status = 1;
-  repeated double array_out = 2;
-}
-
-message GetArraySizeForPythonCodeRequest {
+message GetArraySizeForCustomCodeRequest {
   grpc.nidevice.Session vi = 1;
 }
 
-message GetArraySizeForPythonCodeResponse {
+message GetArraySizeForCustomCodeResponse {
   int32 status = 1;
   sint32 size_out = 2;
 }

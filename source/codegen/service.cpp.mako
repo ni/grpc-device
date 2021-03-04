@@ -33,24 +33,6 @@ if len(config["custom_types"]) > 0:
 namespace grpc {
 namespace ${config["namespace_component"]} {
 
-%if 'custom_type' in locals():
-  namespace {
-    void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
-%for field in custom_type["fields"]:
-      output->set_${field["grpc_name"]}(input.${field["name"]});
-%endfor
-    }
-
-    void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
-      for (auto item : input) {
-        auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
-        Copy(item, message);
-        output->AddAllocated(message);
-      }
-    }
-  }
-
-%endif
   ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
@@ -60,7 +42,25 @@ namespace ${config["namespace_component"]} {
   {
   }
 
-% for function_name in common_helpers.filter_proto_rpc_functions(functions):
+  %if 'custom_type' in locals():
+  void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
+  {
+%for field in custom_type["fields"]: 
+    output->set_${field["grpc_name"]}(input.${field["name"]});
+%endfor
+  }
+
+  void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+%endif
+% for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
     method_name = common_helpers.snake_to_camel(function_name)
@@ -277,8 +277,8 @@ ${initialize_standard_input_param(parameter)}\
     size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
 % if common_helpers.is_struct(parameter):
-      std::vector<${underlying_param_type}> ${parameter_name}(${size});
-% elif underlying_param_type == 'ViChar' or underlying_param_type == 'ViInt8':
+      std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
+% elif handler_helpers.is_string_arg(parameter):
       std::string ${parameter_name}(${size}, '\0');
 % else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -304,7 +304,6 @@ ${initialize_standard_input_param(parameter)}\
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
-
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
         if(${iterator_name} == ${map_name}.end()) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
@@ -320,9 +319,9 @@ ${initialize_standard_input_param(parameter)}\
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %  endif
 %elif parameter['type'] == 'ViSession':
-    response->mutable_${parameter_name}()->set_id(${parameter_name});
+        response->mutable_${parameter_name}()->set_id(${parameter_name});
 %else :
-    response->set_${parameter_name}(${parameter_name});
+        response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor
 </%def>

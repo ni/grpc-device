@@ -415,7 +415,7 @@ namespace niswitch {
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->set_attribute_value(attribute_value);
+        response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -440,7 +440,7 @@ namespace niswitch {
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->set_attribute_value(attribute_value);
+        response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -465,7 +465,7 @@ namespace niswitch {
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->set_attribute_value(attribute_value);
+        response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -523,7 +523,7 @@ namespace niswitch {
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-    response->mutable_attribute_value()->set_id(attribute_value);
+        response->mutable_attribute_value()->set_id(attribute_value);
       }
       return ::grpc::Status::OK;
     }
@@ -587,7 +587,7 @@ namespace niswitch {
       status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
       response->set_status(status);
       if (status == 0) {
-    response->set_code(code);
+        response->set_code(code);
         response->set_description(description);
       }
       return ::grpc::Status::OK;
@@ -707,7 +707,7 @@ namespace niswitch {
       auto status = library_->GetRelayCount(vi, relay_name, &relay_count);
       response->set_status(status);
       if (status == 0) {
-    response->set_relay_count(relay_count);
+        response->set_relay_count(relay_count);
       }
       return ::grpc::Status::OK;
     }
@@ -787,7 +787,7 @@ namespace niswitch {
       auto status = library_->init(resource_name, id_query, reset_device, &vi);
       response->set_status(status);
       if (status == 0) {
-    response->mutable_vi()->set_id(vi);
+        response->mutable_vi()->set_id(vi);
       }
       return ::grpc::Status::OK;
     }
@@ -812,7 +812,7 @@ namespace niswitch {
       auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
       response->set_status(status);
       if (status == 0) {
-    response->mutable_vi()->set_id(vi);
+        response->mutable_vi()->set_id(vi);
       }
       return ::grpc::Status::OK;
     }
@@ -906,7 +906,7 @@ namespace niswitch {
       auto status = library_->IsDebounced(vi, &is_debounced);
       response->set_status(status);
       if (status == 0) {
-    response->set_is_debounced(is_debounced);
+        response->set_is_debounced(is_debounced);
       }
       return ::grpc::Status::OK;
     }
@@ -929,7 +929,7 @@ namespace niswitch {
       auto status = library_->IsScanning(vi, &is_scanning);
       response->set_status(status);
       if (status == 0) {
-    response->set_is_scanning(is_scanning);
+        response->set_is_scanning(is_scanning);
       }
       return ::grpc::Status::OK;
     }
@@ -952,7 +952,7 @@ namespace niswitch {
       auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1269,7 +1269,7 @@ namespace niswitch {
       auto status = library_->UnlockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1394,7 +1394,7 @@ namespace niswitch {
       auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
-    response->set_self_test_result(self_test_result);
+        response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
       }
       return ::grpc::Status::OK;
