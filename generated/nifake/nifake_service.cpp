@@ -327,7 +327,7 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetArraySizeForPythonCode(::grpc::ServerContext* context, const GetArraySizeForPythonCodeRequest* request, GetArraySizeForPythonCodeResponse* response)
+  ::grpc::Status NiFakeService::GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -336,7 +336,7 @@ namespace grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 size_out {};
-      auto status = library_->GetArraySizeForPythonCode(vi, &size_out);
+      auto status = library_->GetArraySizeForCustomCode(vi, &size_out);
       response->set_status(status);
       if (status == 0) {
     response->set_size_out(size_out);

@@ -34,12 +34,12 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetABoolean = reinterpret_cast<GetABooleanPtr>(shared_library_.get_function_pointer("niFake_GetABoolean"));
   function_pointers_.GetANumber = reinterpret_cast<GetANumberPtr>(shared_library_.get_function_pointer("niFake_GetANumber"));
   function_pointers_.GetAStringOfFixedMaximumSize = reinterpret_cast<GetAStringOfFixedMaximumSizePtr>(shared_library_.get_function_pointer("niFake_GetAStringOfFixedMaximumSize"));
-  function_pointers_.GetAStringUsingPythonCode = reinterpret_cast<GetAStringUsingPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetAStringUsingPythonCode"));
+  function_pointers_.GetAStringUsingCustomCode = reinterpret_cast<GetAStringUsingCustomCodePtr>(shared_library_.get_function_pointer("niFake_GetAStringUsingCustomCode"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
-  function_pointers_.GetArrayForPythonCodeCustomType = reinterpret_cast<GetArrayForPythonCodeCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeCustomType"));
-  function_pointers_.GetArrayForPythonCodeDouble = reinterpret_cast<GetArrayForPythonCodeDoublePtr>(shared_library_.get_function_pointer("niFake_GetArrayForPythonCodeDouble"));
-  function_pointers_.GetArraySizeForPythonCode = reinterpret_cast<GetArraySizeForPythonCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForPythonCode"));
+  function_pointers_.GetArrayForCustomCodeCustomType = reinterpret_cast<GetArrayForCustomCodeCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetArrayForCustomCodeCustomType"));
+  function_pointers_.GetArrayForCustomCodeDouble = reinterpret_cast<GetArrayForCustomCodeDoublePtr>(shared_library_.get_function_pointer("niFake_GetArrayForCustomCodeDouble"));
+  function_pointers_.GetArraySizeForCustomCode = reinterpret_cast<GetArraySizeForCustomCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForCustomCode"));
   function_pointers_.GetArrayUsingIviDance = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("niFake_GetArrayUsingIviDance"));
   function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFake_GetAttributeViBoolean"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViInt32"));
@@ -222,15 +222,15 @@ ViStatus NiFakeLibrary::GetAStringOfFixedMaximumSize(ViSession vi, ViChar aStrin
 #endif
 }
 
-ViStatus NiFakeLibrary::GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber, ViChar aString[])
+ViStatus NiFakeLibrary::GetAStringUsingCustomCode(ViSession vi, ViInt16 aNumber, ViChar aString[])
 {
-  if (!function_pointers_.GetAStringUsingPythonCode) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetAStringUsingPythonCode.");
+  if (!function_pointers_.GetAStringUsingCustomCode) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetAStringUsingCustomCode.");
   }
 #if defined(_MSC_VER)
-  return niFake_GetAStringUsingPythonCode(vi, aNumber, aString);
+  return niFake_GetAStringUsingCustomCode(vi, aNumber, aString);
 #else
-  return function_pointers_.GetAStringUsingPythonCode(vi, aNumber, aString);
+  return function_pointers_.GetAStringUsingCustomCode(vi, aNumber, aString);
 #endif
 }
 
@@ -258,39 +258,39 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViSession vi, ViInt32 buff
 #endif
 }
 
-ViStatus NiFakeLibrary::GetArrayForPythonCodeCustomType(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[])
+ViStatus NiFakeLibrary::GetArrayForCustomCodeCustomType(ViSession vi, ViInt32 numberOfElements, CustomStruct arrayOut[])
 {
-  if (!function_pointers_.GetArrayForPythonCodeCustomType) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForPythonCodeCustomType.");
+  if (!function_pointers_.GetArrayForCustomCodeCustomType) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForCustomCodeCustomType.");
   }
 #if defined(_MSC_VER)
-  return niFake_GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
+  return niFake_GetArrayForCustomCodeCustomType(vi, numberOfElements, arrayOut);
 #else
-  return function_pointers_.GetArrayForPythonCodeCustomType(vi, numberOfElements, arrayOut);
+  return function_pointers_.GetArrayForCustomCodeCustomType(vi, numberOfElements, arrayOut);
 #endif
 }
 
-ViStatus NiFakeLibrary::GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[])
+ViStatus NiFakeLibrary::GetArrayForCustomCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[])
 {
-  if (!function_pointers_.GetArrayForPythonCodeDouble) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForPythonCodeDouble.");
+  if (!function_pointers_.GetArrayForCustomCodeDouble) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArrayForCustomCodeDouble.");
   }
 #if defined(_MSC_VER)
-  return niFake_GetArrayForPythonCodeDouble(vi, numberOfElements, arrayOut);
+  return niFake_GetArrayForCustomCodeDouble(vi, numberOfElements, arrayOut);
 #else
-  return function_pointers_.GetArrayForPythonCodeDouble(vi, numberOfElements, arrayOut);
+  return function_pointers_.GetArrayForCustomCodeDouble(vi, numberOfElements, arrayOut);
 #endif
 }
 
-ViStatus NiFakeLibrary::GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut)
+ViStatus NiFakeLibrary::GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut)
 {
-  if (!function_pointers_.GetArraySizeForPythonCode) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArraySizeForPythonCode.");
+  if (!function_pointers_.GetArraySizeForCustomCode) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niFake_GetArraySizeForCustomCode.");
   }
 #if defined(_MSC_VER)
-  return niFake_GetArraySizeForPythonCode(vi, sizeOut);
+  return niFake_GetArraySizeForCustomCode(vi, sizeOut);
 #else
-  return function_pointers_.GetArraySizeForPythonCode(vi, sizeOut);
+  return function_pointers_.GetArraySizeForCustomCode(vi, sizeOut);
 #endif
 }
 

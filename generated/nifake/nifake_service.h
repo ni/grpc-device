@@ -37,12 +37,12 @@ public:
   ::grpc::Status GetABoolean(::grpc::ServerContext* context, const GetABooleanRequest* request, GetABooleanResponse* response) override;
   ::grpc::Status GetANumber(::grpc::ServerContext* context, const GetANumberRequest* request, GetANumberResponse* response) override;
   ::grpc::Status GetAStringOfFixedMaximumSize(::grpc::ServerContext* context, const GetAStringOfFixedMaximumSizeRequest* request, GetAStringOfFixedMaximumSizeResponse* response) override;
-  ::grpc::Status GetAStringUsingPythonCode(::grpc::ServerContext* context, const GetAStringUsingPythonCodeRequest* request, GetAStringUsingPythonCodeResponse* response) override;
+  ::grpc::Status GetAStringUsingCustomCode(::grpc::ServerContext* context, const GetAStringUsingCustomCodeRequest* request, GetAStringUsingCustomCodeResponse* response) override;
   ::grpc::Status GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response) override;
-  ::grpc::Status GetArrayForPythonCodeCustomType(::grpc::ServerContext* context, const GetArrayForPythonCodeCustomTypeRequest* request, GetArrayForPythonCodeCustomTypeResponse* response) override;
-  ::grpc::Status GetArrayForPythonCodeDouble(::grpc::ServerContext* context, const GetArrayForPythonCodeDoubleRequest* request, GetArrayForPythonCodeDoubleResponse* response) override;
-  ::grpc::Status GetArraySizeForPythonCode(::grpc::ServerContext* context, const GetArraySizeForPythonCodeRequest* request, GetArraySizeForPythonCodeResponse* response) override;
+  ::grpc::Status GetArrayForCustomCodeCustomType(::grpc::ServerContext* context, const GetArrayForCustomCodeCustomTypeRequest* request, GetArrayForCustomCodeCustomTypeResponse* response) override;
+  ::grpc::Status GetArrayForCustomCodeDouble(::grpc::ServerContext* context, const GetArrayForCustomCodeDoubleRequest* request, GetArrayForCustomCodeDoubleResponse* response) override;
+  ::grpc::Status GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response) override;
   ::grpc::Status GetArrayUsingIviDance(::grpc::ServerContext* context, const GetArrayUsingIviDanceRequest* request, GetArrayUsingIviDanceResponse* response) override;
   ::grpc::Status GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;

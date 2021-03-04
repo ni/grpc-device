@@ -249,21 +249,21 @@ TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
   EXPECT_EQ(a_number, response.a_number());
 }
 
-TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForPythonCode_CallsGetArraySizeForPythonCode)
+TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForCustomCode_CallsGetArraySizeForCustomCode)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::int32_t array_size = 1000;
-  EXPECT_CALL(library, GetArraySizeForPythonCode(kTestViSession, _))
+  EXPECT_CALL(library, GetArraySizeForCustomCode(kTestViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(array_size), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
-  ni::fake::grpc::GetArraySizeForPythonCodeRequest request;
+  ni::fake::grpc::GetArraySizeForCustomCodeRequest request;
   request.mutable_vi()->set_id(session_id);
-  ni::fake::grpc::GetArraySizeForPythonCodeResponse response;
-  ::grpc::Status status = service.GetArraySizeForPythonCode(&context, &request, &response);
+  ni::fake::grpc::GetArraySizeForCustomCodeResponse response;
+  ::grpc::Status status = service.GetArraySizeForCustomCode(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());

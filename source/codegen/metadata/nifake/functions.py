@@ -385,8 +385,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetAStringUsingPythonCode': {
-        'codegen_method': 'custom',
+    'GetAStringUsingCustomCode': {
+        'codegen_method': 'CustomCode',
         'documentation': {
             'description': 'Returns a number and a string.',
             'note': 'This function rules!'
@@ -415,7 +415,7 @@ functions = {
                 },
                 'name': 'aString',
                 'size': {
-                    'mechanism': 'python-code',
+                    'mechanism': 'custom-code',
                     'value': 'a_number'
                 },
                 'type': 'ViChar[]'
@@ -495,10 +495,10 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetArrayForPythonCodeCustomType': {
-        'codegen_method': 'custom',
+    'GetArrayForCustomCodeCustomType': {
+        'codegen_method': 'CustomCode',
         'documentation': {
-            'description': 'This function returns an array for use in python-code size mechanism.'
+            'description': 'This function returns an array for use in custom-code size mechanism.'
         },
         'parameters': [
             {
@@ -517,20 +517,20 @@ functions = {
                 },
                 'name': 'numberOfElements',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self.get_array_size_for_python_code()'
+                    'mechanism': 'custom-code',
+                    'value': None
                 },
                 'type': 'ViInt32'
             },
             {
                 'direction': 'out',
                 'documentation': {
-                    'description': 'Array of custom type using python-code size mechanism'
+                    'description': 'Array of custom type using custom-code size mechanism'
                 },
                 'name': 'arrayOut',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self.get_array_size_for_python_code()'
+                    'mechanism': 'custom-code',
+                    'value': None
                 },
                 'type': 'struct CustomStruct[]',
                 'grpc_type': 'repeated FakeCustomStruct'
@@ -538,10 +538,10 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetArrayForPythonCodeDouble': {
-        'codegen_method': 'custom',
+    'GetArrayForCustomCodeDouble': {
+        'codegen_method': 'CustomCode',
         'documentation': {
-            'description': 'This function returns an array for use in python-code size mechanism.'
+            'description': 'This function returns an array for use in custom-code size mechanism.'
         },
         'parameters': [
             {
@@ -560,30 +560,30 @@ functions = {
                 },
                 'name': 'numberOfElements',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self.get_array_size_for_python_code()'
+                    'mechanism': 'custom-code',
+                    'value': None
                 },
                 'type': 'ViInt32'
             },
             {
                 'direction': 'out',
                 'documentation': {
-                    'description': 'Array of double using python-code size mechanism'
+                    'description': 'Array of double using custom-code size mechanism'
                 },
                 'name': 'arrayOut',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self.get_array_size_for_python_code()'
+                    'mechanism': 'custom-code',
+                    'value': 'number_of_elements'
                 },
                 'type': 'ViReal64[]'
             }
         ],
         'returns': 'ViStatus'
     },
-    'GetArraySizeForPythonCode': {
+    'GetArraySizeForCustomCode': {
         'codegen_method': 'public',
         'documentation': {
-            'description': 'This function returns the size of the array for use in python-code size mechanism.'
+            'description': 'This function returns the size of the array for use in custom-code size mechanism.'
         },
         'parameters': [
             {

@@ -99,7 +99,7 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
   '''Returns function metadata only for those functions to include for generating proto rpc methods'''
-  functions_for_proto = {'public', 'custom'}
+  functions_for_proto = {'public', 'CustomCode'}
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
 
 def get_service_namespace(driver_name_caps_underscore):
