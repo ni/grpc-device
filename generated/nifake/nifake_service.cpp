@@ -16,21 +16,6 @@ namespace ni {
 namespace fake {
 namespace grpc {
 
-  namespace {
-    void Copy(const CustomStruct& input, ni::fake::grpc::FakeCustomStruct* output) {
-      output->set_struct_int(input.structInt);
-      output->set_struct_double(input.structDouble);
-    }
-
-    void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<ni::fake::grpc::FakeCustomStruct>* output) {
-      for (auto item : input) {
-        auto message = new ni::fake::grpc::FakeCustomStruct();
-        Copy(item, message);
-        output->AddAllocated(message);
-      }
-    }
-  }
-
   namespace internal = ni::hardware::grpc::internal;
 
   NiFakeService::NiFakeService(NiFakeLibraryInterface* library, internal::SessionRepository* session_repository)
@@ -40,6 +25,21 @@ namespace grpc {
 
   NiFakeService::~NiFakeService()
   {
+  }
+
+  void NiFakeService::Copy(const CustomStruct& input, ni::fake::grpc::FakeCustomStruct* output) 
+  {
+    output->set_struct_int(input.structInt);
+    output->set_struct_double(input.structDouble);
+  }
+
+  void NiFakeService::Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<ni::fake::grpc::FakeCustomStruct>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ni::fake::grpc::FakeCustomStruct();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
   }
 
   //---------------------------------------------------------------------
@@ -281,21 +281,6 @@ namespace grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetAStringUsingPythonCode(::grpc::ServerContext* context, const GetAStringUsingPythonCodeRequest* request, GetAStringUsingPythonCodeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response)
   {
     if (context->IsCancelled()) {
@@ -328,21 +313,6 @@ namespace grpc {
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetArrayForPythonCodeDouble(::grpc::ServerContext* context, const GetArrayForPythonCodeDoubleRequest* request, GetArrayForPythonCodeDoubleResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
