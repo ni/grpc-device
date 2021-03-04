@@ -80,7 +80,8 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     NISysCfgSessionHandle*               session_handle
     );
   using CloseHandlePtr = NISysCfgStatus (*)(
-    void*                                syscfg_handle);
+    void*                                syscfg_handle
+    );
   using CreateFilterPtr = NISysCfgStatus (*)(
     NISysCfgSessionHandle                session_handle,
     NISysCfgFilterHandle*                filter_handle
