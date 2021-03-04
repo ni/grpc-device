@@ -496,7 +496,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetArrayForPythonCodeCustomType': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns an array for use in python-code size mechanism.'
         },
@@ -531,7 +531,8 @@ functions = {
                     'mechanism': 'python-code',
                     'value': 'self.get_array_size_for_python_code()'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -948,7 +949,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetCustomType': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns a custom type.'
         },
@@ -967,7 +968,8 @@ functions = {
                     'description': 'Set using custom type'
                 },
                 'name': 'cs',
-                'type': 'struct CustomStruct'
+                'type': 'struct CustomStruct',
+                'grpc_type': 'FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -1004,7 +1006,8 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'numberOfElements'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2088,7 +2091,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetCustomType': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function takes a custom type.'
         },
@@ -2107,13 +2110,14 @@ functions = {
                     'description': 'Set using custom type'
                 },
                 'name': 'cs',
-                'type': 'struct CustomStruct'
+                'type': 'struct CustomStruct',
+                'grpc_type': 'FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
     },
     'SetCustomTypeArray': {
-        'codegen_method': 'public',
+        'codegen_method': 'no',
         'documentation': {
             'description': 'This function takes an array of custom types.'
         },
