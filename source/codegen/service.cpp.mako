@@ -34,24 +34,6 @@ namespace ni {
 namespace ${config["namespace_component"]} {
 namespace grpc {
 
-%if 'custom_type' in locals():
-  namespace {
-    void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
-%for field in custom_type["fields"]: 
-      output->set_${field["grpc_name"]}(input.${field["name"]});
-%endfor
-    }
-
-    void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
-      for (auto item : input) {
-        auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
-        Copy(item, message);
-        output->AddAllocated(message);
-      }
-    }
-  }
-
-%endif
   namespace internal = ni::hardware::grpc::internal;
 
   ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
@@ -63,7 +45,25 @@ namespace grpc {
   {
   }
 
-% for function_name in common_helpers.filter_proto_rpc_functions(functions):
+  %if 'custom_type' in locals():
+  void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
+  {
+%for field in custom_type["fields"]: 
+    output->set_${field["grpc_name"]}(input.${field["name"]});
+%endfor
+  }
+
+  void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+%endif
+% for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
     method_name = common_helpers.snake_to_camel(function_name)
@@ -75,6 +75,9 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
 % if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
@@ -251,8 +254,8 @@ ${initialize_standard_input_param(parameter)}\
     % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
     % elif c_type == 'ViSession':
-      auto session = ${request_snippet};
-      ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
+      auto ${parameter_name}_grpc_session = ${request_snippet};
+      ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
     % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
     % else:
@@ -278,8 +281,8 @@ ${initialize_standard_input_param(parameter)}\
     size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
 % if common_helpers.is_struct(parameter):
-      std::vector<${underlying_param_type}> ${parameter_name}(${size});
-% elif underlying_param_type == 'ViChar' or underlying_param_type == 'ViInt8':
+      std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
+% elif handler_helpers.is_string_arg(parameter):
       std::string ${parameter_name}(${size}, '\0');
 % else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -305,7 +308,6 @@ ${initialize_standard_input_param(parameter)}\
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
-
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
         if(${iterator_name} == ${map_name}.end()) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
@@ -320,7 +322,9 @@ ${initialize_standard_input_param(parameter)}\
 %  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %  endif
-% else:
+%elif parameter['type'] == 'ViSession':
+        response->mutable_${parameter_name}()->set_id(${parameter_name});
+%else :
         response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor

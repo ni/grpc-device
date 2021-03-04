@@ -27,26 +27,15 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
   function_pointers_.AcquisitionStatus = reinterpret_cast<AcquisitionStatusPtr>(shared_library_.get_function_pointer("niScope_AcquisitionStatus"));
   function_pointers_.ActualMeasWfmSize = reinterpret_cast<ActualMeasWfmSizePtr>(shared_library_.get_function_pointer("niScope_ActualMeasWfmSize"));
   function_pointers_.ActualNumWfms = reinterpret_cast<ActualNumWfmsPtr>(shared_library_.get_function_pointer("niScope_ActualNumWfms"));
-  function_pointers_.ActualRecordLength = reinterpret_cast<ActualRecordLengthPtr>(shared_library_.get_function_pointer("niScope_ActualRecordLength"));
   function_pointers_.AddWaveformProcessing = reinterpret_cast<AddWaveformProcessingPtr>(shared_library_.get_function_pointer("niScope_AddWaveformProcessing"));
-  function_pointers_.AdjustSampleClockRelativeDelay = reinterpret_cast<AdjustSampleClockRelativeDelayPtr>(shared_library_.get_function_pointer("niScope_AdjustSampleClockRelativeDelay"));
   function_pointers_.AutoSetup = reinterpret_cast<AutoSetupPtr>(shared_library_.get_function_pointer("niScope_AutoSetup"));
   function_pointers_.CableSenseSignalStart = reinterpret_cast<CableSenseSignalStartPtr>(shared_library_.get_function_pointer("niScope_CableSenseSignalStart"));
   function_pointers_.CableSenseSignalStop = reinterpret_cast<CableSenseSignalStopPtr>(shared_library_.get_function_pointer("niScope_CableSenseSignalStop"));
   function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(shared_library_.get_function_pointer("niScope_CalSelfCalibrate"));
-  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niScope_CheckAttributeViBoolean"));
-  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niScope_CheckAttributeViInt32"));
-  function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(shared_library_.get_function_pointer("niScope_CheckAttributeViInt64"));
-  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niScope_CheckAttributeViReal64"));
-  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niScope_CheckAttributeViSession"));
-  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niScope_CheckAttributeViString"));
   function_pointers_.ClearWaveformMeasurementStats = reinterpret_cast<ClearWaveformMeasurementStatsPtr>(shared_library_.get_function_pointer("niScope_ClearWaveformMeasurementStats"));
   function_pointers_.ClearWaveformProcessing = reinterpret_cast<ClearWaveformProcessingPtr>(shared_library_.get_function_pointer("niScope_ClearWaveformProcessing"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niScope_Close"));
   function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niScope_Commit"));
-  function_pointers_.ConfigureAcquisition = reinterpret_cast<ConfigureAcquisitionPtr>(shared_library_.get_function_pointer("niScope_ConfigureAcquisition"));
   function_pointers_.ConfigureChanCharacteristics = reinterpret_cast<ConfigureChanCharacteristicsPtr>(shared_library_.get_function_pointer("niScope_ConfigureChanCharacteristics"));
-  function_pointers_.ConfigureClock = reinterpret_cast<ConfigureClockPtr>(shared_library_.get_function_pointer("niScope_ConfigureClock"));
   function_pointers_.ConfigureEqualizationFilterCoefficients = reinterpret_cast<ConfigureEqualizationFilterCoefficientsPtr>(shared_library_.get_function_pointer("niScope_ConfigureEqualizationFilterCoefficients"));
   function_pointers_.ConfigureHorizontalTiming = reinterpret_cast<ConfigureHorizontalTimingPtr>(shared_library_.get_function_pointer("niScope_ConfigureHorizontalTiming"));
   function_pointers_.ConfigureTriggerDigital = reinterpret_cast<ConfigureTriggerDigitalPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerDigital"));
@@ -61,37 +50,27 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureTriggerWindow = reinterpret_cast<ConfigureTriggerWindowPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerWindow"));
   function_pointers_.ConfigureVertical = reinterpret_cast<ConfigureVerticalPtr>(shared_library_.get_function_pointer("niScope_ConfigureVertical"));
   function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niScope_Disable"));
-  function_pointers_.ErrorHandler = reinterpret_cast<ErrorHandlerPtr>(shared_library_.get_function_pointer("niScope_ErrorHandler"));
   function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niScope_ExportAttributeConfigurationBuffer"));
   function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niScope_ExportAttributeConfigurationFile"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niScope_ExportSignal"));
   function_pointers_.Fetch = reinterpret_cast<FetchPtr>(shared_library_.get_function_pointer("niScope_Fetch"));
   function_pointers_.FetchArrayMeasurement = reinterpret_cast<FetchArrayMeasurementPtr>(shared_library_.get_function_pointer("niScope_FetchArrayMeasurement"));
   function_pointers_.FetchBinary16 = reinterpret_cast<FetchBinary16Ptr>(shared_library_.get_function_pointer("niScope_FetchBinary16"));
   function_pointers_.FetchBinary32 = reinterpret_cast<FetchBinary32Ptr>(shared_library_.get_function_pointer("niScope_FetchBinary32"));
   function_pointers_.FetchBinary8 = reinterpret_cast<FetchBinary8Ptr>(shared_library_.get_function_pointer("niScope_FetchBinary8"));
-  function_pointers_.FetchComplex = reinterpret_cast<FetchComplexPtr>(shared_library_.get_function_pointer("niScope_FetchComplex"));
-  function_pointers_.FetchComplexBinary16 = reinterpret_cast<FetchComplexBinary16Ptr>(shared_library_.get_function_pointer("niScope_FetchComplexBinary16"));
   function_pointers_.FetchMeasurement = reinterpret_cast<FetchMeasurementPtr>(shared_library_.get_function_pointer("niScope_FetchMeasurement"));
   function_pointers_.FetchMeasurementStats = reinterpret_cast<FetchMeasurementStatsPtr>(shared_library_.get_function_pointer("niScope_FetchMeasurementStats"));
   function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niScope_GetAttributeViBoolean"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niScope_GetAttributeViInt32"));
   function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niScope_GetAttributeViInt64"));
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niScope_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niScope_GetAttributeViSession"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niScope_GetAttributeViString"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niScope_GetChannelName"));
   function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niScope_GetChannelNameFromString"));
   function_pointers_.GetEqualizationFilterCoefficients = reinterpret_cast<GetEqualizationFilterCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetEqualizationFilterCoefficients"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niScope_GetError"));
-  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_.get_function_pointer("niScope_GetErrorMessage"));
-  function_pointers_.GetFrequencyResponse = reinterpret_cast<GetFrequencyResponsePtr>(shared_library_.get_function_pointer("niScope_GetFrequencyResponse"));
-  function_pointers_.GetNormalizationCoefficients = reinterpret_cast<GetNormalizationCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetNormalizationCoefficients"));
   function_pointers_.GetScalingCoefficients = reinterpret_cast<GetScalingCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetScalingCoefficients"));
-  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_.get_function_pointer("niScope_GetStreamEndpointHandle"));
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niScope_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niScope_ImportAttributeConfigurationFile"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niScope_Init"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niScope_InitWithOptions"));
   function_pointers_.InitiateAcquisition = reinterpret_cast<InitiateAcquisitionPtr>(shared_library_.get_function_pointer("niScope_InitiateAcquisition"));
   function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niScope_LockSession"));
@@ -99,20 +78,19 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
   function_pointers_.ProbeCompensationSignalStop = reinterpret_cast<ProbeCompensationSignalStopPtr>(shared_library_.get_function_pointer("niScope_ProbeCompensationSignalStop"));
   function_pointers_.Read = reinterpret_cast<ReadPtr>(shared_library_.get_function_pointer("niScope_Read"));
   function_pointers_.ReadMeasurement = reinterpret_cast<ReadMeasurementPtr>(shared_library_.get_function_pointer("niScope_ReadMeasurement"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niScope_Reset"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niScope_ResetDevice"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niScope_RevisionQuery"));
-  function_pointers_.SampleMode = reinterpret_cast<SampleModePtr>(shared_library_.get_function_pointer("niScope_SampleMode"));
-  function_pointers_.SampleRate = reinterpret_cast<SampleRatePtr>(shared_library_.get_function_pointer("niScope_SampleRate"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niScope_SelfTest"));
+  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niScope_ResetWithDefaults"));
   function_pointers_.SendSoftwareTriggerEdge = reinterpret_cast<SendSoftwareTriggerEdgePtr>(shared_library_.get_function_pointer("niScope_SendSoftwareTriggerEdge"));
   function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViBoolean"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niScope_SetAttributeViInt32"));
   function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niScope_SetAttributeViInt64"));
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niScope_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViString"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niScope_UnlockSession"));
+  function_pointers_.close = reinterpret_cast<closePtr>(shared_library_.get_function_pointer("niScope_close"));
+  function_pointers_.error_message = reinterpret_cast<error_messagePtr>(shared_library_.get_function_pointer("niScope_error_message"));
+  function_pointers_.reset = reinterpret_cast<resetPtr>(shared_library_.get_function_pointer("niScope_reset"));
+  function_pointers_.self_test = reinterpret_cast<self_testPtr>(shared_library_.get_function_pointer("niScope_self_test"));
 }
 
 NiScopeLibrary::~NiScopeLibrary()
@@ -174,18 +152,6 @@ ViStatus NiScopeLibrary::ActualNumWfms(ViSession vi, ViConstString channelList, 
 #endif
 }
 
-ViStatus NiScopeLibrary::ActualRecordLength(ViSession vi, ViInt32* recordLength)
-{
-  if (!function_pointers_.ActualRecordLength) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_ActualRecordLength.");
-  }
-#if defined(_MSC_VER)
-  return niScope_ActualRecordLength(vi, recordLength);
-#else
-  return function_pointers_.ActualRecordLength(vi, recordLength);
-#endif
-}
-
 ViStatus NiScopeLibrary::AddWaveformProcessing(ViSession vi, ViConstString channelList, ViInt32 measFunction)
 {
   if (!function_pointers_.AddWaveformProcessing) {
@@ -195,18 +161,6 @@ ViStatus NiScopeLibrary::AddWaveformProcessing(ViSession vi, ViConstString chann
   return niScope_AddWaveformProcessing(vi, channelList, measFunction);
 #else
   return function_pointers_.AddWaveformProcessing(vi, channelList, measFunction);
-#endif
-}
-
-ViStatus NiScopeLibrary::AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 delay)
-{
-  if (!function_pointers_.AdjustSampleClockRelativeDelay) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_AdjustSampleClockRelativeDelay.");
-  }
-#if defined(_MSC_VER)
-  return niScope_AdjustSampleClockRelativeDelay(vi, delay);
-#else
-  return function_pointers_.AdjustSampleClockRelativeDelay(vi, delay);
 #endif
 }
 
@@ -258,78 +212,6 @@ ViStatus NiScopeLibrary::CalSelfCalibrate(ViSession vi, ViConstString channelLis
 #endif
 }
 
-ViStatus NiScopeLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean value)
-{
-  if (!function_pointers_.CheckAttributeViBoolean) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_CheckAttributeViBoolean.");
-  }
-#if defined(_MSC_VER)
-  return niScope_CheckAttributeViBoolean(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.CheckAttributeViBoolean(vi, channelList, attributeId, value);
-#endif
-}
-
-ViStatus NiScopeLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32 value)
-{
-  if (!function_pointers_.CheckAttributeViInt32) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_CheckAttributeViInt32.");
-  }
-#if defined(_MSC_VER)
-  return niScope_CheckAttributeViInt32(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.CheckAttributeViInt32(vi, channelList, attributeId, value);
-#endif
-}
-
-ViStatus NiScopeLibrary::CheckAttributeViInt64(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt64 value)
-{
-  if (!function_pointers_.CheckAttributeViInt64) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_CheckAttributeViInt64.");
-  }
-#if defined(_MSC_VER)
-  return niScope_CheckAttributeViInt64(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.CheckAttributeViInt64(vi, channelList, attributeId, value);
-#endif
-}
-
-ViStatus NiScopeLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelList, ViAttr attributeId, ViReal64 value)
-{
-  if (!function_pointers_.CheckAttributeViReal64) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_CheckAttributeViReal64.");
-  }
-#if defined(_MSC_VER)
-  return niScope_CheckAttributeViReal64(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.CheckAttributeViReal64(vi, channelList, attributeId, value);
-#endif
-}
-
-ViStatus NiScopeLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attributeId, ViSession value)
-{
-  if (!function_pointers_.CheckAttributeViSession) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_CheckAttributeViSession.");
-  }
-#if defined(_MSC_VER)
-  return niScope_CheckAttributeViSession(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.CheckAttributeViSession(vi, channelList, attributeId, value);
-#endif
-}
-
-ViStatus NiScopeLibrary::CheckAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value)
-{
-  if (!function_pointers_.CheckAttributeViString) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_CheckAttributeViString.");
-  }
-#if defined(_MSC_VER)
-  return niScope_CheckAttributeViString(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.CheckAttributeViString(vi, channelList, attributeId, value);
-#endif
-}
-
 ViStatus NiScopeLibrary::ClearWaveformMeasurementStats(ViSession vi, ViConstString channelList, ViInt32 clearableMeasurementFunction)
 {
   if (!function_pointers_.ClearWaveformMeasurementStats) {
@@ -354,18 +236,6 @@ ViStatus NiScopeLibrary::ClearWaveformProcessing(ViSession vi, ViConstString cha
 #endif
 }
 
-ViStatus NiScopeLibrary::Close(ViSession vi)
-{
-  if (!function_pointers_.Close) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_Close.");
-  }
-#if defined(_MSC_VER)
-  return niScope_Close(vi);
-#else
-  return function_pointers_.Close(vi);
-#endif
-}
-
 ViStatus NiScopeLibrary::Commit(ViSession vi)
 {
   if (!function_pointers_.Commit) {
@@ -378,18 +248,6 @@ ViStatus NiScopeLibrary::Commit(ViSession vi)
 #endif
 }
 
-ViStatus NiScopeLibrary::ConfigureAcquisition(ViSession vi, ViInt32 acquisitionType)
-{
-  if (!function_pointers_.ConfigureAcquisition) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_ConfigureAcquisition.");
-  }
-#if defined(_MSC_VER)
-  return niScope_ConfigureAcquisition(vi, acquisitionType);
-#else
-  return function_pointers_.ConfigureAcquisition(vi, acquisitionType);
-#endif
-}
-
 ViStatus NiScopeLibrary::ConfigureChanCharacteristics(ViSession vi, ViConstString channelList, ViReal64 inputImpedance, ViReal64 maxInputFrequency)
 {
   if (!function_pointers_.ConfigureChanCharacteristics) {
@@ -399,18 +257,6 @@ ViStatus NiScopeLibrary::ConfigureChanCharacteristics(ViSession vi, ViConstStrin
   return niScope_ConfigureChanCharacteristics(vi, channelList, inputImpedance, maxInputFrequency);
 #else
   return function_pointers_.ConfigureChanCharacteristics(vi, channelList, inputImpedance, maxInputFrequency);
-#endif
-}
-
-ViStatus NiScopeLibrary::ConfigureClock(ViSession vi, ViConstString inputClockSource, ViConstString outputClockSource, ViConstString clockSyncPulseSource, ViBoolean masterEnabled)
-{
-  if (!function_pointers_.ConfigureClock) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_ConfigureClock.");
-  }
-#if defined(_MSC_VER)
-  return niScope_ConfigureClock(vi, inputClockSource, outputClockSource, clockSyncPulseSource, masterEnabled);
-#else
-  return function_pointers_.ConfigureClock(vi, inputClockSource, outputClockSource, clockSyncPulseSource, masterEnabled);
 #endif
 }
 
@@ -582,18 +428,6 @@ ViStatus NiScopeLibrary::Disable(ViSession vi)
 #endif
 }
 
-ViStatus NiScopeLibrary::ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[642], ViChar errorDescription[642])
-{
-  if (!function_pointers_.ErrorHandler) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_ErrorHandler.");
-  }
-#if defined(_MSC_VER)
-  return niScope_ErrorHandler(vi, errorCode, errorSource, errorDescription);
-#else
-  return function_pointers_.ErrorHandler(vi, errorCode, errorSource, errorDescription);
-#endif
-}
-
 ViStatus NiScopeLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
   if (!function_pointers_.ExportAttributeConfigurationBuffer) {
@@ -615,18 +449,6 @@ ViStatus NiScopeLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstS
   return niScope_ExportAttributeConfigurationFile(vi, filePath);
 #else
   return function_pointers_.ExportAttributeConfigurationFile(vi, filePath);
-#endif
-}
-
-ViStatus NiScopeLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal)
-{
-  if (!function_pointers_.ExportSignal) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_ExportSignal.");
-  }
-#if defined(_MSC_VER)
-  return niScope_ExportSignal(vi, signal, signalIdentifier, outputTerminal);
-#else
-  return function_pointers_.ExportSignal(vi, signal, signalIdentifier, outputTerminal);
 #endif
 }
 
@@ -687,30 +509,6 @@ ViStatus NiScopeLibrary::FetchBinary8(ViSession vi, ViConstString channelList, V
   return niScope_FetchBinary8(vi, channelList, timeout, numSamples, waveform, wfmInfo);
 #else
   return function_pointers_.FetchBinary8(vi, channelList, timeout, numSamples, waveform, wfmInfo);
-#endif
-}
-
-ViStatus NiScopeLibrary::FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber wfm[], niScope_wfmInfo wfmInfo[])
-{
-  if (!function_pointers_.FetchComplex) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_FetchComplex.");
-  }
-#if defined(_MSC_VER)
-  return niScope_FetchComplex(vi, channelList, timeout, numSamples, wfm, wfmInfo);
-#else
-  return function_pointers_.FetchComplex(vi, channelList, timeout, numSamples, wfm, wfmInfo);
-#endif
-}
-
-ViStatus NiScopeLibrary::FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16 wfm[], niScope_wfmInfo wfmInfo[])
-{
-  if (!function_pointers_.FetchComplexBinary16) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_FetchComplexBinary16.");
-  }
-#if defined(_MSC_VER)
-  return niScope_FetchComplexBinary16(vi, channelList, timeout, numSamples, wfm, wfmInfo);
-#else
-  return function_pointers_.FetchComplexBinary16(vi, channelList, timeout, numSamples, wfm, wfmInfo);
 #endif
 }
 
@@ -786,18 +584,6 @@ ViStatus NiScopeLibrary::GetAttributeViReal64(ViSession vi, ViConstString channe
 #endif
 }
 
-ViStatus NiScopeLibrary::GetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attributeId, ViSession* value)
-{
-  if (!function_pointers_.GetAttributeViSession) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_GetAttributeViSession.");
-  }
-#if defined(_MSC_VER)
-  return niScope_GetAttributeViSession(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.GetAttributeViSession(vi, channelList, attributeId, value);
-#endif
-}
-
 ViStatus NiScopeLibrary::GetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32 bufSize, ViChar value[])
 {
   if (!function_pointers_.GetAttributeViString) {
@@ -858,42 +644,6 @@ ViStatus NiScopeLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 buf
 #endif
 }
 
-ViStatus NiScopeLibrary::GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[])
-{
-  if (!function_pointers_.GetErrorMessage) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_GetErrorMessage.");
-  }
-#if defined(_MSC_VER)
-  return niScope_GetErrorMessage(vi, errorCode, bufferSize, errorMessage);
-#else
-  return function_pointers_.GetErrorMessage(vi, errorCode, bufferSize, errorMessage);
-#endif
-}
-
-ViStatus NiScopeLibrary::GetFrequencyResponse(ViSession vi, ViConstString channel, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 amplitudes[], ViReal64 phases[], ViInt32* numberOfFrequencies)
-{
-  if (!function_pointers_.GetFrequencyResponse) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_GetFrequencyResponse.");
-  }
-#if defined(_MSC_VER)
-  return niScope_GetFrequencyResponse(vi, channel, bufferSize, frequencies, amplitudes, phases, numberOfFrequencies);
-#else
-  return function_pointers_.GetFrequencyResponse(vi, channel, bufferSize, frequencies, amplitudes, phases, numberOfFrequencies);
-#endif
-}
-
-ViStatus NiScopeLibrary::GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets)
-{
-  if (!function_pointers_.GetNormalizationCoefficients) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_GetNormalizationCoefficients.");
-  }
-#if defined(_MSC_VER)
-  return niScope_GetNormalizationCoefficients(vi, channelList, bufferSize, coefficientInfo, numberOfCoefficientSets);
-#else
-  return function_pointers_.GetNormalizationCoefficients(vi, channelList, bufferSize, coefficientInfo, numberOfCoefficientSets);
-#endif
-}
-
 ViStatus NiScopeLibrary::GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets)
 {
   if (!function_pointers_.GetScalingCoefficients) {
@@ -903,18 +653,6 @@ ViStatus NiScopeLibrary::GetScalingCoefficients(ViSession vi, ViConstString chan
   return niScope_GetScalingCoefficients(vi, channelList, bufferSize, coefficientInfo, numberOfCoefficientSets);
 #else
   return function_pointers_.GetScalingCoefficients(vi, channelList, bufferSize, coefficientInfo, numberOfCoefficientSets);
-#endif
-}
-
-ViStatus NiScopeLibrary::GetStreamEndpointHandle(ViSession vi, ViConstString streamName, ViUInt32* writerHandle)
-{
-  if (!function_pointers_.GetStreamEndpointHandle) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_GetStreamEndpointHandle.");
-  }
-#if defined(_MSC_VER)
-  return niScope_GetStreamEndpointHandle(vi, streamName, writerHandle);
-#else
-  return function_pointers_.GetStreamEndpointHandle(vi, streamName, writerHandle);
 #endif
 }
 
@@ -939,18 +677,6 @@ ViStatus NiScopeLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstS
   return niScope_ImportAttributeConfigurationFile(vi, filePath);
 #else
   return function_pointers_.ImportAttributeConfigurationFile(vi, filePath);
-#endif
-}
-
-ViStatus NiScopeLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
-{
-  if (!function_pointers_.Init) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_Init.");
-  }
-#if defined(_MSC_VER)
-  return niScope_Init(resourceName, idQuery, resetDevice, vi);
-#else
-  return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
 #endif
 }
 
@@ -1038,18 +764,6 @@ ViStatus NiScopeLibrary::ReadMeasurement(ViSession vi, ViConstString channelList
 #endif
 }
 
-ViStatus NiScopeLibrary::Reset(ViSession vi)
-{
-  if (!function_pointers_.Reset) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_Reset.");
-  }
-#if defined(_MSC_VER)
-  return niScope_Reset(vi);
-#else
-  return function_pointers_.Reset(vi);
-#endif
-}
-
 ViStatus NiScopeLibrary::ResetDevice(ViSession vi)
 {
   if (!function_pointers_.ResetDevice) {
@@ -1062,51 +776,15 @@ ViStatus NiScopeLibrary::ResetDevice(ViSession vi)
 #endif
 }
 
-ViStatus NiScopeLibrary::RevisionQuery(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256])
+ViStatus NiScopeLibrary::ResetWithDefaults(ViSession vi)
 {
-  if (!function_pointers_.RevisionQuery) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_RevisionQuery.");
+  if (!function_pointers_.ResetWithDefaults) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_ResetWithDefaults.");
   }
 #if defined(_MSC_VER)
-  return niScope_RevisionQuery(vi, driverRevision, firmwareRevision);
+  return niScope_ResetWithDefaults(vi);
 #else
-  return function_pointers_.RevisionQuery(vi, driverRevision, firmwareRevision);
-#endif
-}
-
-ViStatus NiScopeLibrary::SampleMode(ViSession vi, ViInt32* sampleMode)
-{
-  if (!function_pointers_.SampleMode) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_SampleMode.");
-  }
-#if defined(_MSC_VER)
-  return niScope_SampleMode(vi, sampleMode);
-#else
-  return function_pointers_.SampleMode(vi, sampleMode);
-#endif
-}
-
-ViStatus NiScopeLibrary::SampleRate(ViSession vi, ViReal64* sampleRate)
-{
-  if (!function_pointers_.SampleRate) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_SampleRate.");
-  }
-#if defined(_MSC_VER)
-  return niScope_SampleRate(vi, sampleRate);
-#else
-  return function_pointers_.SampleRate(vi, sampleRate);
-#endif
-}
-
-ViStatus NiScopeLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
-{
-  if (!function_pointers_.SelfTest) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_SelfTest.");
-  }
-#if defined(_MSC_VER)
-  return niScope_SelfTest(vi, selfTestResult, selfTestMessage);
-#else
-  return function_pointers_.SelfTest(vi, selfTestResult, selfTestMessage);
+  return function_pointers_.ResetWithDefaults(vi);
 #endif
 }
 
@@ -1170,18 +848,6 @@ ViStatus NiScopeLibrary::SetAttributeViReal64(ViSession vi, ViConstString channe
 #endif
 }
 
-ViStatus NiScopeLibrary::SetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attributeId, ViSession value)
-{
-  if (!function_pointers_.SetAttributeViSession) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_SetAttributeViSession.");
-  }
-#if defined(_MSC_VER)
-  return niScope_SetAttributeViSession(vi, channelList, attributeId, value);
-#else
-  return function_pointers_.SetAttributeViSession(vi, channelList, attributeId, value);
-#endif
-}
-
 ViStatus NiScopeLibrary::SetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value)
 {
   if (!function_pointers_.SetAttributeViString) {
@@ -1203,6 +869,54 @@ ViStatus NiScopeLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   return niScope_UnlockSession(vi, callerHasLock);
 #else
   return function_pointers_.UnlockSession(vi, callerHasLock);
+#endif
+}
+
+ViStatus NiScopeLibrary::close(ViSession vi)
+{
+  if (!function_pointers_.close) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_close.");
+  }
+#if defined(_MSC_VER)
+  return niScope_close(vi);
+#else
+  return function_pointers_.close(vi);
+#endif
+}
+
+ViStatus NiScopeLibrary::error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
+{
+  if (!function_pointers_.error_message) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_error_message.");
+  }
+#if defined(_MSC_VER)
+  return niScope_error_message(vi, errorCode, errorMessage);
+#else
+  return function_pointers_.error_message(vi, errorCode, errorMessage);
+#endif
+}
+
+ViStatus NiScopeLibrary::reset(ViSession vi)
+{
+  if (!function_pointers_.reset) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_reset.");
+  }
+#if defined(_MSC_VER)
+  return niScope_reset(vi);
+#else
+  return function_pointers_.reset(vi);
+#endif
+}
+
+ViStatus NiScopeLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
+{
+  if (!function_pointers_.self_test) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_self_test.");
+  }
+#if defined(_MSC_VER)
+  return niScope_self_test(vi, selfTestResult, selfTestMessage);
+#else
+  return function_pointers_.self_test(vi, selfTestResult, selfTestMessage);
 #endif
 }
 

@@ -978,18 +978,29 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'lowLevel',
+                'name': 'level',
                 'type': 'ViReal64'
             },
             {
                 'direction': 'in',
-                'name': 'highLevel',
+                'name': 'lowThreshold',
                 'type': 'ViReal64'
             },
             {
                 'direction': 'in',
-                'enum': 'TriggerWindowMode',
-                'name': 'windowMode',
+                'name': 'highThreshold',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WidthPolarity',
+                'name': 'polarity',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WidthCondition',
+                'name': 'condition',
                 'type': 'ViInt32'
             },
             {
@@ -1007,7 +1018,7 @@ functions = {
                 'direction': 'in',
                 'name': 'delay',
                 'type': 'ViReal64'
-            }
+            },
         ],
         'returns': 'ViStatus'
     },
@@ -1162,7 +1173,7 @@ functions = {
         'returns':'ViStatus'
     },
     'Fetch': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1189,8 +1200,8 @@ functions = {
                 'name': 'waveform',
                 'numpy': True,
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
+                    'mechanism': 'custom-code',
+                    'value': '(num_samples * actual_num_wfms)'
                 },
                 'type': 'ViReal64[]',
                 'use_array': True
@@ -1199,8 +1210,8 @@ functions = {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -1209,7 +1220,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchArrayMeasurement': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1241,8 +1252,8 @@ functions = {
                 'direction': 'out',
                 'name': 'measWfm',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': '(measurement_waveform_size * self._actual_num_wfms())'
+                    'mechanism': 'custom-code',
+                    'value': '(measurement_waveform_size * actual_num_wfms)'
                 },
                 'type': 'ViReal64[]'
             },
@@ -1250,8 +1261,8 @@ functions = {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -1260,7 +1271,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchBinary16': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1287,8 +1298,8 @@ functions = {
                 'name': 'waveform',
                 'numpy': True,
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
+                    'mechanism': 'custom-code',
+                    'value': '(num_samples * actual_num_wfms)'
                 },
                 'type': 'ViInt16[]',
                 'use_array': True
@@ -1297,8 +1308,8 @@ functions = {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -1307,7 +1318,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchBinary32': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1334,8 +1345,8 @@ functions = {
                 'name': 'waveform',
                 'numpy': True,
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
+                    'mechanism': 'custom-code',
+                    'value': '(num_samples * actual_num_wfms)'
                 },
                 'type': 'ViInt32[]',
                 'use_array': True
@@ -1344,8 +1355,8 @@ functions = {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -1354,7 +1365,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchBinary8': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1381,8 +1392,8 @@ functions = {
                 'name': 'waveform',
                 'numpy': True,
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
+                    'mechanism': 'custom-code',
+                    'value': '(num_samples * actual_num_wfms)'
                 },
                 'type': 'ViInt8[]',
                 'use_array': True
@@ -1391,8 +1402,8 @@ functions = {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -1526,7 +1537,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchMeasurementStats': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1553,8 +1564,8 @@ functions = {
                 'direction': 'out',
                 'name': 'result',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViReal64[]'
             },
@@ -1562,8 +1573,8 @@ functions = {
                 'direction': 'out',
                 'name': 'mean',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViReal64[]'
             },
@@ -1571,8 +1582,8 @@ functions = {
                 'direction': 'out',
                 'name': 'stdev',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViReal64[]'
             },
@@ -1580,8 +1591,8 @@ functions = {
                 'direction': 'out',
                 'name': 'min',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViReal64[]'
             },
@@ -1589,8 +1600,8 @@ functions = {
                 'direction': 'out',
                 'name': 'max',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViReal64[]'
             },
@@ -1598,8 +1609,8 @@ functions = {
                 'direction': 'out',
                 'name': 'numInStats',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViInt32[]'
             }
@@ -2213,7 +2224,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Read': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -2239,8 +2250,8 @@ functions = {
                 'direction': 'out',
                 'name': 'waveform',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
+                    'mechanism': 'custom-code',
+                    'value': '(num_samples * actual_num_wfms)'
                 },
                 'type': 'ViReal64[]',
                 'use_array': True
@@ -2249,8 +2260,8 @@ functions = {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -2286,8 +2297,8 @@ functions = {
                 'direction': 'out',
                 'name': 'result',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViReal64[]'
             }

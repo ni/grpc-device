@@ -27,11 +27,9 @@ service NiFake {
   rpc GetABoolean(GetABooleanRequest) returns (GetABooleanResponse);
   rpc GetANumber(GetANumberRequest) returns (GetANumberResponse);
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
-  rpc GetAStringUsingPythonCode(GetAStringUsingPythonCodeRequest) returns (GetAStringUsingPythonCodeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
-  rpc GetArrayForPythonCodeDouble(GetArrayForPythonCodeDoubleRequest) returns (GetArrayForPythonCodeDoubleResponse);
-  rpc GetArraySizeForPythonCode(GetArraySizeForPythonCodeRequest) returns (GetArraySizeForPythonCodeResponse);
+  rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
@@ -63,18 +61,18 @@ service NiFake {
 }
 
 enum NiFakeAttributes {
-  NIFAKE_UNSPECIFIED = 0;
-  NIFAKE_READ_WRITE_BOOL = 1000000;
-  NIFAKE_READ_WRITE_DOUBLE = 1000001;
-  NIFAKE_READ_WRITE_STRING = 1000002;
-  NIFAKE_READ_WRITE_COLOR = 1000003;
-  NIFAKE_READ_WRITE_INTEGER = 1000004;
-  NIFAKE_FLOAT_ENUM = 1000005;
-  NIFAKE_READ_WRITE_INT64 = 1000006;
-  NIFAKE_READ_WRITE_DOUBLE_WITH_CONVERTER = 1000007;
-  NIFAKE_READ_WRITE_INTEGER_WITH_CONVERTER = 1000008;
-  NIFAKE_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009;
-  NIFAKE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010;
+  NIFAKE_ATTRIBUTE_UNSPECIFIED = 0;
+  NIFAKE_ATTRIBUTE_READ_WRITE_BOOL = 1000000;
+  NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE = 1000001;
+  NIFAKE_ATTRIBUTE_READ_WRITE_STRING = 1000002;
+  NIFAKE_ATTRIBUTE_READ_WRITE_COLOR = 1000003;
+  NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER = 1000004;
+  NIFAKE_ATTRIBUTE_FLOAT_ENUM = 1000005;
+  NIFAKE_ATTRIBUTE_READ_WRITE_INT64 = 1000006;
+  NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE_WITH_CONVERTER = 1000007;
+  NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER_WITH_CONVERTER = 1000008;
+  NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009;
+  NIFAKE_ATTRIBUTE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010;
 }
 
 enum Color {
@@ -217,16 +215,6 @@ message GetAStringOfFixedMaximumSizeResponse {
   string a_string = 2;
 }
 
-message GetAStringUsingPythonCodeRequest {
-  ni.hardware.grpc.Session vi = 1;
-  sint32 a_number = 2;
-}
-
-message GetAStringUsingPythonCodeResponse {
-  int32 status = 1;
-  string a_string = 2;
-}
-
 message GetAnIviDanceStringRequest {
   ni.hardware.grpc.Session vi = 1;
 }
@@ -247,21 +235,11 @@ message GetAnIviDanceWithATwistStringResponse {
   sint32 actual_size = 3;
 }
 
-message GetArrayForPythonCodeDoubleRequest {
-  ni.hardware.grpc.Session vi = 1;
-  sint32 number_of_elements = 2;
-}
-
-message GetArrayForPythonCodeDoubleResponse {
-  int32 status = 1;
-  repeated double array_out = 2;
-}
-
-message GetArraySizeForPythonCodeRequest {
+message GetArraySizeForCustomCodeRequest {
   ni.hardware.grpc.Session vi = 1;
 }
 
-message GetArraySizeForPythonCodeResponse {
+message GetArraySizeForCustomCodeResponse {
   int32 status = 1;
   sint32 size_out = 2;
 }

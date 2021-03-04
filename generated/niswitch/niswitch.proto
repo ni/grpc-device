@@ -18,7 +18,16 @@ import "session.proto";
 service NiSwitch {
   rpc AbortScan(AbortScanRequest) returns (AbortScanResponse);
   rpc CanConnect(CanConnectRequest) returns (CanConnectResponse);
+  rpc CheckAttributeViBoolean(CheckAttributeViBooleanRequest) returns (CheckAttributeViBooleanResponse);
+  rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
+  rpc CheckAttributeViReal64(CheckAttributeViReal64Request) returns (CheckAttributeViReal64Response);
+  rpc CheckAttributeViString(CheckAttributeViStringRequest) returns (CheckAttributeViStringResponse);
+  rpc CheckAttributeViSession(CheckAttributeViSessionRequest) returns (CheckAttributeViSessionResponse);
+  rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
+  rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc ConfigureScanList(ConfigureScanListRequest) returns (ConfigureScanListResponse);
+  rpc ConfigureScanTrigger(ConfigureScanTriggerRequest) returns (ConfigureScanTriggerResponse);
   rpc Connect(ConnectRequest) returns (ConnectResponse);
   rpc ConnectMultiple(ConnectMultipleRequest) returns (ConnectMultipleResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
@@ -29,24 +38,36 @@ service NiSwitch {
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
+  rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
+  rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetPath(GetPathRequest) returns (GetPathResponse);
   rpc GetRelayCount(GetRelayCountRequest) returns (GetRelayCountResponse);
   rpc GetRelayName(GetRelayNameRequest) returns (GetRelayNameResponse);
   rpc GetRelayPosition(GetRelayPositionRequest) returns (GetRelayPositionResponse);
+  rpc Init(InitRequest) returns (InitResponse);
+  rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitWithTopology(InitWithTopologyRequest) returns (InitWithTopologyResponse);
   rpc InitiateScan(InitiateScanRequest) returns (InitiateScanResponse);
+  rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
+  rpc IsDebounced(IsDebouncedRequest) returns (IsDebouncedResponse);
+  rpc IsScanning(IsScanningRequest) returns (IsScanningResponse);
   rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc RelayControl(RelayControlRequest) returns (RelayControlResponse);
+  rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc RouteScanAdvancedOutput(RouteScanAdvancedOutputRequest) returns (RouteScanAdvancedOutputResponse);
   rpc RouteTriggerInput(RouteTriggerInputRequest) returns (RouteTriggerInputResponse);
+  rpc Scan(ScanRequest) returns (ScanResponse);
   rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
   rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
   rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
+  rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
+  rpc SetContinuousScan(SetContinuousScanRequest) returns (SetContinuousScanResponse);
   rpc SetPath(SetPathRequest) returns (SetPathResponse);
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitForDebounce(WaitForDebounceRequest) returns (WaitForDebounceResponse);
@@ -58,55 +79,55 @@ service NiSwitch {
 }
 
 enum NiSwitchAttributes {
-  NISWITCH_UNSPECIFIED = 0;
-  NISWITCH_SIMULATE = 1050005;
-  NISWITCH_DRIVER_SETUP = 1050007;
-  NISWITCH_CHANNEL_COUNT = 1050203;
-  NISWITCH_IO_RESOURCE_DESCRIPTOR = 1050304;
-  NISWITCH_LOGICAL_NAME = 1050305;
-  NISWITCH_SUPPORTED_INSTRUMENT_MODELS = 1050327;
-  NISWITCH_INSTRUMENT_FIRMWARE_REVISION = 1050510;
-  NISWITCH_INSTRUMENT_MANUFACTURER = 1050511;
-  NISWITCH_INSTRUMENT_MODEL = 1050512;
-  NISWITCH_SPECIFIC_DRIVER_VENDOR = 1050513;
-  NISWITCH_SPECIFIC_DRIVER_DESCRIPTION = 1050514;
-  NISWITCH_SPECIFIC_DRIVER_REVISION = 1050551;
-  NISWITCH_IS_WAITING_FOR_TRIG = 1150004;
-  NISWITCH_TRIGGER_INPUT_POLARITY = 1150010;
-  NISWITCH_SCAN_ADVANCED_POLARITY = 1150011;
-  NISWITCH_HANDSHAKING_INITIATION = 1150013;
-  NISWITCH_NUMBER_OF_RELAYS = 1150014;
-  NISWITCH_SERIAL_NUMBER = 1150015;
-  NISWITCH_DIGITAL_FILTER_ENABLE = 1150016;
-  NISWITCH_POWER_DOWN_LATCHING_RELAYS_AFTER_DEBOUNCE = 1150017;
-  NISWITCH_ANALOG_BUS_SHARING_ENABLE = 1150018;
-  NISWITCH_TEMPERATURE = 1150019;
-  NISWITCH_IS_SOURCE_CHANNEL = 1250001;
-  NISWITCH_IS_DEBOUNCED = 1250002;
-  NISWITCH_IS_CONFIGURATION_CHANNEL = 1250003;
-  NISWITCH_SETTLING_TIME = 1250004;
-  NISWITCH_BANDWIDTH = 1250005;
-  NISWITCH_MAX_DC_VOLTAGE = 1250006;
-  NISWITCH_MAX_AC_VOLTAGE = 1250007;
-  NISWITCH_MAX_SWITCHING_DC_CURRENT = 1250008;
-  NISWITCH_MAX_SWITCHING_AC_CURRENT = 1250009;
-  NISWITCH_MAX_CARRY_DC_CURRENT = 1250010;
-  NISWITCH_MAX_CARRY_AC_CURRENT = 1250011;
-  NISWITCH_MAX_SWITCHING_DC_POWER = 1250012;
-  NISWITCH_MAX_SWITCHING_AC_POWER = 1250013;
-  NISWITCH_MAX_CARRY_DC_POWER = 1250014;
-  NISWITCH_MAX_CARRY_AC_POWER = 1250015;
-  NISWITCH_CHARACTERISTIC_IMPEDANCE = 1250016;
-  NISWITCH_WIRE_MODE = 1250017;
-  NISWITCH_NUM_OF_ROWS = 1250018;
-  NISWITCH_NUM_OF_COLUMNS = 1250019;
-  NISWITCH_SCAN_LIST = 1250020;
-  NISWITCH_SCAN_MODE = 1250021;
-  NISWITCH_TRIGGER_INPUT = 1250022;
-  NISWITCH_SCAN_ADVANCED_OUTPUT = 1250023;
-  NISWITCH_IS_SCANNING = 1250024;
-  NISWITCH_SCAN_DELAY = 1250025;
-  NISWITCH_CONTINUOUS_SCAN = 1250026;
+  NISWITCH_ATTRIBUTE_UNSPECIFIED = 0;
+  NISWITCH_ATTRIBUTE_SIMULATE = 1050005;
+  NISWITCH_ATTRIBUTE_DRIVER_SETUP = 1050007;
+  NISWITCH_ATTRIBUTE_CHANNEL_COUNT = 1050203;
+  NISWITCH_ATTRIBUTE_IO_RESOURCE_DESCRIPTOR = 1050304;
+  NISWITCH_ATTRIBUTE_LOGICAL_NAME = 1050305;
+  NISWITCH_ATTRIBUTE_SUPPORTED_INSTRUMENT_MODELS = 1050327;
+  NISWITCH_ATTRIBUTE_INSTRUMENT_FIRMWARE_REVISION = 1050510;
+  NISWITCH_ATTRIBUTE_INSTRUMENT_MANUFACTURER = 1050511;
+  NISWITCH_ATTRIBUTE_INSTRUMENT_MODEL = 1050512;
+  NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_VENDOR = 1050513;
+  NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_DESCRIPTION = 1050514;
+  NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_REVISION = 1050551;
+  NISWITCH_ATTRIBUTE_IS_WAITING_FOR_TRIG = 1150004;
+  NISWITCH_ATTRIBUTE_TRIGGER_INPUT_POLARITY = 1150010;
+  NISWITCH_ATTRIBUTE_SCAN_ADVANCED_POLARITY = 1150011;
+  NISWITCH_ATTRIBUTE_HANDSHAKING_INITIATION = 1150013;
+  NISWITCH_ATTRIBUTE_NUMBER_OF_RELAYS = 1150014;
+  NISWITCH_ATTRIBUTE_SERIAL_NUMBER = 1150015;
+  NISWITCH_ATTRIBUTE_DIGITAL_FILTER_ENABLE = 1150016;
+  NISWITCH_ATTRIBUTE_POWER_DOWN_LATCHING_RELAYS_AFTER_DEBOUNCE = 1150017;
+  NISWITCH_ATTRIBUTE_ANALOG_BUS_SHARING_ENABLE = 1150018;
+  NISWITCH_ATTRIBUTE_TEMPERATURE = 1150019;
+  NISWITCH_ATTRIBUTE_IS_SOURCE_CHANNEL = 1250001;
+  NISWITCH_ATTRIBUTE_IS_DEBOUNCED = 1250002;
+  NISWITCH_ATTRIBUTE_IS_CONFIGURATION_CHANNEL = 1250003;
+  NISWITCH_ATTRIBUTE_SETTLING_TIME = 1250004;
+  NISWITCH_ATTRIBUTE_BANDWIDTH = 1250005;
+  NISWITCH_ATTRIBUTE_MAX_DC_VOLTAGE = 1250006;
+  NISWITCH_ATTRIBUTE_MAX_AC_VOLTAGE = 1250007;
+  NISWITCH_ATTRIBUTE_MAX_SWITCHING_DC_CURRENT = 1250008;
+  NISWITCH_ATTRIBUTE_MAX_SWITCHING_AC_CURRENT = 1250009;
+  NISWITCH_ATTRIBUTE_MAX_CARRY_DC_CURRENT = 1250010;
+  NISWITCH_ATTRIBUTE_MAX_CARRY_AC_CURRENT = 1250011;
+  NISWITCH_ATTRIBUTE_MAX_SWITCHING_DC_POWER = 1250012;
+  NISWITCH_ATTRIBUTE_MAX_SWITCHING_AC_POWER = 1250013;
+  NISWITCH_ATTRIBUTE_MAX_CARRY_DC_POWER = 1250014;
+  NISWITCH_ATTRIBUTE_MAX_CARRY_AC_POWER = 1250015;
+  NISWITCH_ATTRIBUTE_CHARACTERISTIC_IMPEDANCE = 1250016;
+  NISWITCH_ATTRIBUTE_WIRE_MODE = 1250017;
+  NISWITCH_ATTRIBUTE_NUM_OF_ROWS = 1250018;
+  NISWITCH_ATTRIBUTE_NUM_OF_COLUMNS = 1250019;
+  NISWITCH_ATTRIBUTE_SCAN_LIST = 1250020;
+  NISWITCH_ATTRIBUTE_SCAN_MODE = 1250021;
+  NISWITCH_ATTRIBUTE_TRIGGER_INPUT = 1250022;
+  NISWITCH_ATTRIBUTE_SCAN_ADVANCED_OUTPUT = 1250023;
+  NISWITCH_ATTRIBUTE_IS_SCANNING = 1250024;
+  NISWITCH_ATTRIBUTE_SCAN_DELAY = 1250025;
+  NISWITCH_ATTRIBUTE_CONTINUOUS_SCAN = 1250026;
 }
 
 enum HandshakingInitiation {
@@ -263,11 +284,103 @@ message CanConnectResponse {
   PathCapability path_capability = 2;
 }
 
+message CheckAttributeViBooleanRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+  bool attribute_value = 4;
+}
+
+message CheckAttributeViBooleanResponse {
+  int32 status = 1;
+}
+
+message CheckAttributeViInt32Request {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+  sint32 attribute_value = 4;
+}
+
+message CheckAttributeViInt32Response {
+  int32 status = 1;
+}
+
+message CheckAttributeViReal64Request {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+  double attribute_value = 4;
+}
+
+message CheckAttributeViReal64Response {
+  int32 status = 1;
+}
+
+message CheckAttributeViStringRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+  string attribute_value = 4;
+}
+
+message CheckAttributeViStringResponse {
+  int32 status = 1;
+}
+
+message CheckAttributeViSessionRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+  ni.hardware.grpc.Session attribute_value = 4;
+}
+
+message CheckAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message ClearErrorRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message ClearErrorResponse {
+  int32 status = 1;
+}
+
+message ClearInterchangeWarningsRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message ClearInterchangeWarningsResponse {
+  int32 status = 1;
+}
+
 message CommitRequest {
   ni.hardware.grpc.Session vi = 1;
 }
 
 message CommitResponse {
+  int32 status = 1;
+}
+
+message ConfigureScanListRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string scanlist = 2;
+  ScanMode scan_mode = 3;
+}
+
+message ConfigureScanListResponse {
+  int32 status = 1;
+}
+
+message ConfigureScanTriggerRequest {
+  ni.hardware.grpc.Session vi = 1;
+  double scan_delay = 2;
+  TriggerInput trigger_input = 3;
+  ScanAdvancedOutput scan_advanced_output = 4;
+}
+
+message ConfigureScanTriggerResponse {
   int32 status = 1;
 }
 
@@ -369,6 +482,17 @@ message GetAttributeViStringResponse {
   string attribute_value = 2;
 }
 
+message GetAttributeViSessionRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+}
+
+message GetAttributeViSessionResponse {
+  int32 status = 1;
+  ni.hardware.grpc.Session attribute_value = 2;
+}
+
 message GetChannelNameRequest {
   ni.hardware.grpc.Session vi = 1;
   sint32 index = 2;
@@ -387,6 +511,24 @@ message GetErrorResponse {
   int32 status = 1;
   sint32 code = 2;
   string description = 3;
+}
+
+message GetNextCoercionRecordRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message GetNextCoercionRecordResponse {
+  int32 status = 1;
+  string coercion_record = 2;
+}
+
+message GetNextInterchangeWarningRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message GetNextInterchangeWarningResponse {
+  int32 status = 1;
+  string interchange_warning = 2;
 }
 
 message GetPathRequest {
@@ -430,6 +572,29 @@ message GetRelayPositionResponse {
   RelayPosition relay_position = 2;
 }
 
+message InitRequest {
+  string resource_name = 1;
+  bool id_query = 2;
+  bool reset_device = 3;
+}
+
+message InitResponse {
+  int32 status = 1;
+  ni.hardware.grpc.Session vi = 2;
+}
+
+message InitWithOptionsRequest {
+  string resource_name = 1;
+  bool id_query = 2;
+  bool reset_device = 3;
+  string option_string = 4;
+}
+
+message InitWithOptionsResponse {
+  int32 status = 1;
+  ni.hardware.grpc.Session vi = 2;
+}
+
 message InitWithTopologyRequest {
   string session_name = 1;
   string resource_name = 2;
@@ -451,6 +616,32 @@ message InitiateScanResponse {
   int32 status = 1;
 }
 
+message InvalidateAllAttributesRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message InvalidateAllAttributesResponse {
+  int32 status = 1;
+}
+
+message IsDebouncedRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message IsDebouncedResponse {
+  int32 status = 1;
+  bool is_debounced = 2;
+}
+
+message IsScanningRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message IsScanningResponse {
+  int32 status = 1;
+  bool is_scanning = 2;
+}
+
 message LockSessionRequest {
   ni.hardware.grpc.Session vi = 1;
 }
@@ -467,6 +658,14 @@ message RelayControlRequest {
 }
 
 message RelayControlResponse {
+  int32 status = 1;
+}
+
+message ResetInterchangeCheckRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message ResetInterchangeCheckResponse {
   int32 status = 1;
 }
 
@@ -497,6 +696,16 @@ message RouteTriggerInputRequest {
 }
 
 message RouteTriggerInputResponse {
+  int32 status = 1;
+}
+
+message ScanRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string scanlist = 2;
+  HandshakingInitiation initiation = 3;
+}
+
+message ScanResponse {
   int32 status = 1;
 }
 
@@ -549,6 +758,26 @@ message SetAttributeViStringRequest {
 }
 
 message SetAttributeViStringResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViSessionRequest {
+  ni.hardware.grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttributes attribute_id = 3;
+  ni.hardware.grpc.Session attribute_value = 4;
+}
+
+message SetAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message SetContinuousScanRequest {
+  ni.hardware.grpc.Session vi = 1;
+  bool continuous_scan = 2;
+}
+
+message SetContinuousScanResponse {
   int32 status = 1;
 }
 

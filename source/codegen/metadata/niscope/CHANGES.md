@@ -9,13 +9,11 @@ The following metadata was added:
 - `'namespace_component': 'scope'`
 
 The fields of the custom waveform-info struct were added to `'custom_types'` in place of the `'ctypes_type'`,
-`'file_name'`, and `'python_name'`.
+`'file_name'`, and `'python_name'`. A  `'grpc_name'` field was also added which was the snake case version of the name field.
 
 ## functions.py
 
 The occurrences of `'default_value'` were not removed but should be removed once enum support is complete.
-
-The occurrences of `'mechanism': 'python-code'` were not removed but should be removed once custom struct support is complete.
 
 All occurrences of the following keys were removed along with their values:
 - `'python_api_converter_name'`
@@ -35,6 +33,8 @@ The following `python-only` functions were removed:
 - `FancyRead`
 - `FetchDispatcher`
 - `fancy_self_test`
+- `FancyFetchArrayMeasurement`
+- `FancyFetchMeasurementStats`
 
 The following functions were changed from `private` to `public`:
 - `Fetch`
@@ -77,5 +77,23 @@ The following functions, not originally in the nimi-python metadata were added:
  - `GetChannelNameFromString`
  - `GetScalingCoefficients`
  - `ReadMeasurement`
- 
- 
+
+The following functions were given a field `grpc_type`:
+- `Fetch`
+- `FetchArrayMeasurement`
+- `FetchBinary16`
+- `FetchBinary32`
+- `FetchBinary8`
+- `Read`
+
+The following functions were changed from `public` to `CustomCode` to indicate their service handlers won't be generated and instead
+should be implemented by hand in niscope_service.custom.cpp.
+- `Fetch`
+- `FetchArrayMeasurement`
+- `FetchBinary16`
+- `FetchBinary8`
+- `FetchMeasurementStats`
+- `Read`
+
+Instances of `python-code` used for the `size` mechanism were updated to `custom-code` to reflect their implementations will be handled
+in the custom service handler implementations.
