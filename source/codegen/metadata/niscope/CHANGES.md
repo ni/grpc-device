@@ -9,7 +9,7 @@ The following metadata was added:
 - `'namespace_component': 'scope'`
 
 The fields of the custom waveform-info struct were added to `'custom_types'` in place of the `'ctypes_type'`,
-`'file_name'`, and `'python_name'`.
+`'file_name'`, and `'python_name'`. A  `'grpc_name'` field was also added which was the snake case version of the name field.
 
 ## functions.py
 
