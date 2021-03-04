@@ -81,8 +81,8 @@ NISysCfgStatus SysCfgLibrary::CreateHardwareFilter(
   }
   NISysCfgStatus status;
   if (NISysCfg_Succeeded(status = function_pointers_.CreateFilter(session_handle, filter_handle))) {
-    function_pointers_.SetFilterProperty(filter_handle, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
-    function_pointers_.SetFilterProperty(filter_handle, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
+    function_pointers_.SetFilterProperty(*filter_handle, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
+    function_pointers_.SetFilterProperty(*filter_handle, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
   }
   return status;
 }
