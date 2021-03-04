@@ -19,6 +19,9 @@ All occurrences of the following keys were removed along with their values:
 - `'method_templates'`
 - `'python_name'`
 - `'type_in_documentation'`
+- `'codegen_method'`
+- `'is_error_handling'`
+- `'use_session_lock'`
 
 The following `python-only` functions were removed:
 - `fancy_self_test`
