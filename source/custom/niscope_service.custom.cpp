@@ -18,6 +18,8 @@ namespace internal = ni::hardware::grpc::internal;
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
+    // TODO: Re-evaluate this when we get ActualRecordLength method in metadata. At that point
+    // num_samples can come from a call to library_->ActualRecordLength and be removed from proto fields on request.
     ViInt32 num_samples = request->num_samples();
 
     ViInt32 num_waveforms;
