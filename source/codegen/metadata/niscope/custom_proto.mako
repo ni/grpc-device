@@ -7,4 +7,11 @@ message WaveformInfo {
   double gain = 6;
   double reserved1 = 7;
   double reserved2 = 8; 
-}                
+} 
+
+message CoefficientInfo {
+  double offset = 1;
+  double gain = 2;
+  double reserved1 = 3;
+  double reserved2 = 4;
+}

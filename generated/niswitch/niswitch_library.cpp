@@ -25,7 +25,16 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.AbortScan = reinterpret_cast<AbortScanPtr>(shared_library_.get_function_pointer("niSwitch_AbortScan"));
   function_pointers_.CanConnect = reinterpret_cast<CanConnectPtr>(shared_library_.get_function_pointer("niSwitch_CanConnect"));
+  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViBoolean"));
+  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViInt32"));
+  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViReal64"));
+  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViString"));
+  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViSession"));
+  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niSwitch_ClearError"));
+  function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niSwitch_ClearInterchangeWarnings"));
   function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niSwitch_Commit"));
+  function_pointers_.ConfigureScanList = reinterpret_cast<ConfigureScanListPtr>(shared_library_.get_function_pointer("niSwitch_ConfigureScanList"));
+  function_pointers_.ConfigureScanTrigger = reinterpret_cast<ConfigureScanTriggerPtr>(shared_library_.get_function_pointer("niSwitch_ConfigureScanTrigger"));
   function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("niSwitch_Connect"));
   function_pointers_.ConnectMultiple = reinterpret_cast<ConnectMultiplePtr>(shared_library_.get_function_pointer("niSwitch_ConnectMultiple"));
   function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niSwitch_Disable"));
@@ -36,24 +45,36 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViInt32"));
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViReal64"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViString"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViSession"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niSwitch_GetChannelName"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niSwitch_GetError"));
+  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niSwitch_GetNextCoercionRecord"));
+  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_.get_function_pointer("niSwitch_GetNextInterchangeWarning"));
   function_pointers_.GetPath = reinterpret_cast<GetPathPtr>(shared_library_.get_function_pointer("niSwitch_GetPath"));
   function_pointers_.GetRelayCount = reinterpret_cast<GetRelayCountPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayCount"));
   function_pointers_.GetRelayName = reinterpret_cast<GetRelayNamePtr>(shared_library_.get_function_pointer("niSwitch_GetRelayName"));
   function_pointers_.GetRelayPosition = reinterpret_cast<GetRelayPositionPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayPosition"));
+  function_pointers_.init = reinterpret_cast<initPtr>(shared_library_.get_function_pointer("niSwitch_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niSwitch_InitWithOptions"));
   function_pointers_.InitWithTopology = reinterpret_cast<InitWithTopologyPtr>(shared_library_.get_function_pointer("niSwitch_InitWithTopology"));
   function_pointers_.InitiateScan = reinterpret_cast<InitiateScanPtr>(shared_library_.get_function_pointer("niSwitch_InitiateScan"));
+  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niSwitch_InvalidateAllAttributes"));
+  function_pointers_.IsDebounced = reinterpret_cast<IsDebouncedPtr>(shared_library_.get_function_pointer("niSwitch_IsDebounced"));
+  function_pointers_.IsScanning = reinterpret_cast<IsScanningPtr>(shared_library_.get_function_pointer("niSwitch_IsScanning"));
   function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niSwitch_LockSession"));
   function_pointers_.RelayControl = reinterpret_cast<RelayControlPtr>(shared_library_.get_function_pointer("niSwitch_RelayControl"));
+  function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_.get_function_pointer("niSwitch_ResetInterchangeCheck"));
   function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niSwitch_ResetWithDefaults"));
   function_pointers_.RouteScanAdvancedOutput = reinterpret_cast<RouteScanAdvancedOutputPtr>(shared_library_.get_function_pointer("niSwitch_RouteScanAdvancedOutput"));
   function_pointers_.RouteTriggerInput = reinterpret_cast<RouteTriggerInputPtr>(shared_library_.get_function_pointer("niSwitch_RouteTriggerInput"));
+  function_pointers_.Scan = reinterpret_cast<ScanPtr>(shared_library_.get_function_pointer("niSwitch_Scan"));
   function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_.get_function_pointer("niSwitch_SendSoftwareTrigger"));
   function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViBoolean"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViInt32"));
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViReal64"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViString"));
+  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViSession"));
+  function_pointers_.SetContinuousScan = reinterpret_cast<SetContinuousScanPtr>(shared_library_.get_function_pointer("niSwitch_SetContinuousScan"));
   function_pointers_.SetPath = reinterpret_cast<SetPathPtr>(shared_library_.get_function_pointer("niSwitch_SetPath"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niSwitch_UnlockSession"));
   function_pointers_.WaitForDebounce = reinterpret_cast<WaitForDebouncePtr>(shared_library_.get_function_pointer("niSwitch_WaitForDebounce"));
@@ -99,6 +120,90 @@ ViStatus NiSwitchLibrary::CanConnect(ViSession vi, ViConstString channel1, ViCon
 #endif
 }
 
+ViStatus NiSwitchLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
+{
+  if (!function_pointers_.CheckAttributeViBoolean) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_CheckAttributeViBoolean.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_CheckAttributeViBoolean(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.CheckAttributeViBoolean(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
+{
+  if (!function_pointers_.CheckAttributeViInt32) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_CheckAttributeViInt32.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_CheckAttributeViInt32(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.CheckAttributeViInt32(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
+{
+  if (!function_pointers_.CheckAttributeViReal64) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_CheckAttributeViReal64.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_CheckAttributeViReal64(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.CheckAttributeViReal64(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
+{
+  if (!function_pointers_.CheckAttributeViString) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_CheckAttributeViString.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_CheckAttributeViString(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.CheckAttributeViString(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
+{
+  if (!function_pointers_.CheckAttributeViSession) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_CheckAttributeViSession.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_CheckAttributeViSession(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.CheckAttributeViSession(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::ClearError(ViSession vi)
+{
+  if (!function_pointers_.ClearError) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_ClearError.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_ClearError(vi);
+#else
+  return function_pointers_.ClearError(vi);
+#endif
+}
+
+ViStatus NiSwitchLibrary::ClearInterchangeWarnings(ViSession vi)
+{
+  if (!function_pointers_.ClearInterchangeWarnings) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_ClearInterchangeWarnings.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_ClearInterchangeWarnings(vi);
+#else
+  return function_pointers_.ClearInterchangeWarnings(vi);
+#endif
+}
+
 ViStatus NiSwitchLibrary::Commit(ViSession vi)
 {
   if (!function_pointers_.Commit) {
@@ -108,6 +213,30 @@ ViStatus NiSwitchLibrary::Commit(ViSession vi)
   return niSwitch_Commit(vi);
 #else
   return function_pointers_.Commit(vi);
+#endif
+}
+
+ViStatus NiSwitchLibrary::ConfigureScanList(ViSession vi, ViConstString scanlist, ViInt32 scanMode)
+{
+  if (!function_pointers_.ConfigureScanList) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_ConfigureScanList.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_ConfigureScanList(vi, scanlist, scanMode);
+#else
+  return function_pointers_.ConfigureScanList(vi, scanlist, scanMode);
+#endif
+}
+
+ViStatus NiSwitchLibrary::ConfigureScanTrigger(ViSession vi, ViReal64 scanDelay, ViInt32 triggerInput, ViInt32 scanAdvancedOutput)
+{
+  if (!function_pointers_.ConfigureScanTrigger) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_ConfigureScanTrigger.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_ConfigureScanTrigger(vi, scanDelay, triggerInput, scanAdvancedOutput);
+#else
+  return function_pointers_.ConfigureScanTrigger(vi, scanDelay, triggerInput, scanAdvancedOutput);
 #endif
 }
 
@@ -231,6 +360,18 @@ ViStatus NiSwitchLibrary::GetAttributeViString(ViSession vi, ViConstString chann
 #endif
 }
 
+ViStatus NiSwitchLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
+{
+  if (!function_pointers_.GetAttributeViSession) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_GetAttributeViSession.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_GetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.GetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
 ViStatus NiSwitchLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[])
 {
   if (!function_pointers_.GetChannelName) {
@@ -252,6 +393,30 @@ ViStatus NiSwitchLibrary::GetError(ViSession vi, ViStatus* code, ViInt32 bufferS
   return niSwitch_GetError(vi, code, bufferSize, description);
 #else
   return function_pointers_.GetError(vi, code, bufferSize, description);
+#endif
+}
+
+ViStatus NiSwitchLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
+{
+  if (!function_pointers_.GetNextCoercionRecord) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_GetNextCoercionRecord.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_GetNextCoercionRecord(vi, bufferSize, coercionRecord);
+#else
+  return function_pointers_.GetNextCoercionRecord(vi, bufferSize, coercionRecord);
+#endif
+}
+
+ViStatus NiSwitchLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
+{
+  if (!function_pointers_.GetNextInterchangeWarning) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_GetNextInterchangeWarning.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
+#else
+  return function_pointers_.GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
 #endif
 }
 
@@ -303,6 +468,30 @@ ViStatus NiSwitchLibrary::GetRelayPosition(ViSession vi, ViConstString relayName
 #endif
 }
 
+ViStatus NiSwitchLibrary::init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
+{
+  if (!function_pointers_.init) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_init.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_init(resourceName, idQuery, resetDevice, vi);
+#else
+  return function_pointers_.init(resourceName, idQuery, resetDevice, vi);
+#endif
+}
+
+ViStatus NiSwitchLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
+{
+  if (!function_pointers_.InitWithOptions) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_InitWithOptions.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
+#else
+  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
+#endif
+}
+
 ViStatus NiSwitchLibrary::InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi)
 {
   if (!function_pointers_.InitWithTopology) {
@@ -327,6 +516,42 @@ ViStatus NiSwitchLibrary::InitiateScan(ViSession vi)
 #endif
 }
 
+ViStatus NiSwitchLibrary::InvalidateAllAttributes(ViSession vi)
+{
+  if (!function_pointers_.InvalidateAllAttributes) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_InvalidateAllAttributes.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_InvalidateAllAttributes(vi);
+#else
+  return function_pointers_.InvalidateAllAttributes(vi);
+#endif
+}
+
+ViStatus NiSwitchLibrary::IsDebounced(ViSession vi, ViBoolean* isDebounced)
+{
+  if (!function_pointers_.IsDebounced) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_IsDebounced.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_IsDebounced(vi, isDebounced);
+#else
+  return function_pointers_.IsDebounced(vi, isDebounced);
+#endif
+}
+
+ViStatus NiSwitchLibrary::IsScanning(ViSession vi, ViBoolean* isScanning)
+{
+  if (!function_pointers_.IsScanning) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_IsScanning.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_IsScanning(vi, isScanning);
+#else
+  return function_pointers_.IsScanning(vi, isScanning);
+#endif
+}
+
 ViStatus NiSwitchLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 {
   if (!function_pointers_.LockSession) {
@@ -348,6 +573,18 @@ ViStatus NiSwitchLibrary::RelayControl(ViSession vi, ViConstString relayName, Vi
   return niSwitch_RelayControl(vi, relayName, relayAction);
 #else
   return function_pointers_.RelayControl(vi, relayName, relayAction);
+#endif
+}
+
+ViStatus NiSwitchLibrary::ResetInterchangeCheck(ViSession vi)
+{
+  if (!function_pointers_.ResetInterchangeCheck) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_ResetInterchangeCheck.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_ResetInterchangeCheck(vi);
+#else
+  return function_pointers_.ResetInterchangeCheck(vi);
 #endif
 }
 
@@ -384,6 +621,18 @@ ViStatus NiSwitchLibrary::RouteTriggerInput(ViSession vi, ViInt32 triggerInputCo
   return niSwitch_RouteTriggerInput(vi, triggerInputConnector, triggerInputBusLine, invert);
 #else
   return function_pointers_.RouteTriggerInput(vi, triggerInputConnector, triggerInputBusLine, invert);
+#endif
+}
+
+ViStatus NiSwitchLibrary::Scan(ViSession vi, ViConstString scanlist, ViInt16 initiation)
+{
+  if (!function_pointers_.Scan) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_Scan.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_Scan(vi, scanlist, initiation);
+#else
+  return function_pointers_.Scan(vi, scanlist, initiation);
 #endif
 }
 
@@ -444,6 +693,30 @@ ViStatus NiSwitchLibrary::SetAttributeViString(ViSession vi, ViConstString chann
   return niSwitch_SetAttributeViString(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
+{
+  if (!function_pointers_.SetAttributeViSession) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_SetAttributeViSession.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_SetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.SetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::SetContinuousScan(ViSession vi, ViBoolean continuousScan)
+{
+  if (!function_pointers_.SetContinuousScan) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_SetContinuousScan.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_SetContinuousScan(vi, continuousScan);
+#else
+  return function_pointers_.SetContinuousScan(vi, continuousScan);
 #endif
 }
 
