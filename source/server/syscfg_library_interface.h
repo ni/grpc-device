@@ -53,7 +53,6 @@ class SysCfgLibraryInterface {
     NISysCfgResourceProperty               property_ID,
     void *                                 value
     ) = 0;
-  virtual NISysCfgStatus CloseHandle(void* syscfg_handle) = 0;
 };
 
 }  // namespace internal

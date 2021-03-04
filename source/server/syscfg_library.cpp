@@ -14,7 +14,7 @@ SysCfgLibrary::SysCfgLibrary()
     return;
   }
   function_pointers_.InitializeSession = reinterpret_cast<InitializeSessionPtr>(shared_library_.get_function_pointer("NISysCfgInitializeSession"));
-  function_pointers_.CloseHandle  = reinterpret_cast<CloseHandlePtr>(shared_library_.get_function_pointer("NISysCfgCloseHandle"));
+  function_pointers_.CloseHandle = reinterpret_cast<CloseHandlePtr>(shared_library_.get_function_pointer("NISysCfgCloseHandle"));
   function_pointers_.CreateFilter = reinterpret_cast<CreateFilterPtr>(shared_library_.get_function_pointer("NISysCfgCreateFilter"));
   function_pointers_.SetFilterProperty = reinterpret_cast<SetFilterPropertyPtr>(shared_library_.get_function_pointer("NISysCfgSetFilterProperty"));
   function_pointers_.FindHardware = reinterpret_cast<FindHardwarePtr>(shared_library_.get_function_pointer("NISysCfgFindHardware"));
