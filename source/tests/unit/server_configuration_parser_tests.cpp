@@ -16,7 +16,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
   auto address = server_config_parser.parse_address();
 
-  EXPECT_EQ(address, internal::kDefaultAddressPrefix + std::string("50051"));
+  EXPECT_EQ(address, internal::kDefaultAddressPrefix + std::string("31763"));
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)

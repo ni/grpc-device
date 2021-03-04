@@ -5,6 +5,7 @@ import importlib
 import importlib.util
 import mako.template
 import pathlib
+from mako.lookup import TemplateLookup
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
   current_dir = os.path.dirname(__file__)
@@ -28,6 +29,8 @@ def generate_all(metadata_dir, gen_dir):
   spec.loader.exec_module(module)
 
   metadata = module.metadata;
+  lookup = TemplateLookup(directories=metadata_dir)
+  metadata["lookup"] = lookup
   generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
   generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
   generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)

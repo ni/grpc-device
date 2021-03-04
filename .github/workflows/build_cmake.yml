@@ -1,6 +1,12 @@
 name: Desktop OS Builds
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 env:
   CMAKE_VERSION: 3.18.3
@@ -94,7 +100,7 @@ jobs:
         ProcessorCount(N)
 
         execute_process(
-          COMMAND ctest -j ${N} -C $ENV{BUILD_TYPE} --output-on-failure
+          COMMAND ctest -j ${N} -C $ENV{BUILD_TYPE} -E System --output-on-failure
           WORKING_DIRECTORY build
           RESULT_VARIABLE result
         )

@@ -382,7 +382,7 @@ ViStatus NiScopeLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstS
 #endif
 }
 
-ViStatus NiScopeLibrary::Fetch(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], struct niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::Fetch(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.Fetch) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_Fetch.");
@@ -394,7 +394,7 @@ ViStatus NiScopeLibrary::Fetch(ViSession vi, ViConstString channelList, ViReal64
 #endif
 }
 
-ViStatus NiScopeLibrary::FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], struct niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.FetchArrayMeasurement) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_FetchArrayMeasurement.");
@@ -406,7 +406,7 @@ ViStatus NiScopeLibrary::FetchArrayMeasurement(ViSession vi, ViConstString chann
 #endif
 }
 
-ViStatus NiScopeLibrary::FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], struct niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.FetchBinary16) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_FetchBinary16.");
@@ -418,7 +418,7 @@ ViStatus NiScopeLibrary::FetchBinary16(ViSession vi, ViConstString channelList, 
 #endif
 }
 
-ViStatus NiScopeLibrary::FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], struct niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.FetchBinary32) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_FetchBinary32.");
@@ -430,7 +430,7 @@ ViStatus NiScopeLibrary::FetchBinary32(ViSession vi, ViConstString channelList, 
 #endif
 }
 
-ViStatus NiScopeLibrary::FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], struct niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.FetchBinary8) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_FetchBinary8.");
@@ -622,7 +622,7 @@ ViStatus NiScopeLibrary::ProbeCompensationSignalStop(ViSession vi)
 #endif
 }
 
-ViStatus NiScopeLibrary::Read(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], struct niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::Read(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.Read) {
     throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niScope_Read.");

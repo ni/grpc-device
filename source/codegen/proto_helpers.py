@@ -48,8 +48,8 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     type = 'fixed64'
   if 'int' == type:
     type = 'sint32'
-  if type.startswith('struct'):
-    type = 'fixed64'
+  if "[]" in type:
+    type = type.replace("[]","")
 
   return "repeated " + type if add_repeated else type
 
@@ -74,4 +74,4 @@ def determine_allow_alias(enums):
 def filter_parameters_for_grpc_fields(parameters):
   """Filter out the parameters that shouldn't be represented by a field on a grpc message.
      For example, get rid of any parameters whose values should be deteremined from another parameter."""
-  return [p for p in parameters if p.get('determine_size_from', '') == '']
+  return [p for p in parameters if p.get('gen_proto_field', True)]
