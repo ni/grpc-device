@@ -1146,6 +1146,7 @@ functions = {
     },
     'InitWithOptions': {
         'codegen_method': 'public',
+        'init_method': True,
         'documentation': {
             'description': 'Creates a new IVI instrument driver session.'
         },

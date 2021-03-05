@@ -2137,6 +2137,7 @@ functions = {
         'returns':'ViStatus'
     },
     'InitWithOptions': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',

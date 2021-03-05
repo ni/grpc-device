@@ -81,7 +81,7 @@ namespace grpc {
     try {
 % if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-% elif function_name == config['init_function']:
+% elif common_helpers.is_init_method(function_data):
 ${gen_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % elif common_helpers.has_ivi_dance_param(parameters):
 ${gen_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
