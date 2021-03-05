@@ -418,6 +418,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Close':{
+        'cname' : 'niScope_close',
         'parameters':[
             {
                 'name':'vi',
@@ -1063,6 +1064,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ErrorHandler':{
+        'cname' : 'niScope_errorHandler',
         'parameters':[
             {
                 'name':'vi',
@@ -2109,6 +2111,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Init':{
+        'cname' : 'niScope_init',
         'parameters':[
             {
                 'direction': 'in',
@@ -2295,6 +2298,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Reset':{
+        'cname' : 'niScope_reset',
         'parameters':[
             {
                 'name':'vi',
@@ -2326,6 +2330,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'RevisionQuery':{
+        'cname' : 'niScope_revision_query',
         'parameters':[
             {
                 'name':'vi',
@@ -2384,6 +2389,7 @@ functions = {
         'returns':'ViStatus'
     },
     'SelfTest':{
+        'cname' : 'niScope_self_test',
         'parameters':[
             {
                 'name':'vi',
