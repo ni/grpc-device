@@ -1528,8 +1528,8 @@ functions = {
                 'direction': 'out',
                 'name': 'result',
                 'size': {
-                    'mechanism': 'python-code',
-                    'value': 'self._actual_num_wfms()'
+                    'mechanism': 'custom-code',
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'ViReal64[]'
             }
