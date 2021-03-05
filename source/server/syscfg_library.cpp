@@ -16,11 +16,11 @@ SysCfgLibrary::SysCfgLibrary()
   GET_POINTER(function_pointers_, shared_library_, InitializeSession);
   GET_POINTER(function_pointers_, shared_library_, CloseHandle);
   GET_POINTER(function_pointers_, shared_library_, CreateFilter);
-  SetFilterProperty = GET_POINTER(function_pointers_, shared_library_, SetFilterProperty);
-  FindHardware = GET_POINTER(function_pointers_, shared_library_, FindHardware);
-  NextResource = GET_POINTER(function_pointers_, shared_library_, NextResource);
-  GetResourceIndexedProperty = GET_POINTER(function_pointers_, shared_library_, GetResourceIndexedProperty);
-  GetResourceProperty = GET_POINTER(function_pointers_, shared_library_, GetResourceProperty);
+  GET_POINTER(function_pointers_, shared_library_, SetFilterProperty);
+  GET_POINTER(function_pointers_, shared_library_, FindHardware);
+  GET_POINTER(function_pointers_, shared_library_, NextResource);
+  GET_POINTER(function_pointers_, shared_library_, GetResourceIndexedProperty);
+  GET_POINTER(function_pointers_, shared_library_, GetResourceProperty);
 }
 
 SysCfgLibrary::~SysCfgLibrary()
