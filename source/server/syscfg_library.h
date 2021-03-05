@@ -47,17 +47,17 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
 
  private:
   using InitializeSessionPtr = NISysCfgStatus (*)(
-    const char*                          target_name,
-    const char*                          username,
-    const char*                          password,
-    NISysCfgLocale                       language,
-    NISysCfgBool                         force_property_refresh,
-    unsigned int                         connect_timeout_msec,
-    NISysCfgEnumExpertHandle*            expert_enum_handle,
-    NISysCfgSessionHandle*               session_handle
+    const char* target_name,
+    const char* username,
+    const char* password,
+    NISysCfgLocale language,
+    NISysCfgBool force_property_refresh,
+    unsigned int connect_timeout_msec,
+    NISysCfgEnumExpertHandle* expert_enum_handle,
+    NISysCfgSessionHandle* session_handle
     );
   using CloseHandlePtr = NISysCfgStatus (*)(
-    void*                                syscfg_handle
+    void* syscfg_handle
     );
 
   typedef struct FunctionPointers {
