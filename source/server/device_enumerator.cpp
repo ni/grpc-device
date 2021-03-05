@@ -33,12 +33,12 @@ DeviceEnumerator::~DeviceEnumerator()
   try {
     // TODO: Caching of syscfg_session will be added in a separate PR.
     // All parameters of InitializeSession other than the first are System Configuration default values.
-    if (NISysCfg_Succeeded(status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
+    if (NISysCfg_Succeeded(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
       if (NISysCfg_Succeeded(status = library_->CreateHardwareFilter(session, &filter))) {
         if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeAny, filter, NULL, &resources_handle))) {
           while (NISysCfg_Succeeded(status) && (status = library_->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
             library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
-            if (strcmp(expert_name, "network") != 0) {
+            if (strcmp(expert_name, kNetworkExpertName) != 0) {
               DeviceProperties* properties = devices->Add();
               library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
               library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, model);
