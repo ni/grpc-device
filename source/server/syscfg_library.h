@@ -31,17 +31,17 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   std::string get_library_name() const;
   bool is_library_loaded() const;
   NISysCfgStatus InitializeSession(
-    const char*                          target_name,
-    const char*                          username,
-    const char*                          password,
-    NISysCfgLocale                       language,
-    NISysCfgBool                         force_property_refresh,
-    unsigned int                         connect_timeout_msec,
-    NISysCfgEnumExpertHandle*            expert_enum_handle,
-    NISysCfgSessionHandle*               session_handle
+    const char* target_name,
+    const char* username,
+    const char* password,
+    NISysCfgLocale language,
+    NISysCfgBool force_property_refresh,
+    unsigned int connect_timeout_msec,
+    NISysCfgEnumExpertHandle* expert_enum_handle,
+    NISysCfgSessionHandle* session_handle
     );
   NISysCfgStatus CloseHandle(
-    void*                                syscfg_handle
+    void* syscfg_handle
     );
   NISysCfgStatus CreateHardwareFilter(
     NISysCfgSessionHandle                session_handle,
@@ -73,17 +73,17 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
 
  private:
   using InitializeSessionPtr = NISysCfgStatus (*)(
-    const char*                          target_name,
-    const char*                          username,
-    const char*                          password,
-    NISysCfgLocale                       language,
-    NISysCfgBool                         force_property_refresh,
-    unsigned int                         connect_timeout_msec,
-    NISysCfgEnumExpertHandle*            expert_enum_handle,
-    NISysCfgSessionHandle*               session_handle
+    const char* target_name,
+    const char* username,
+    const char* password,
+    NISysCfgLocale language,
+    NISysCfgBool force_property_refresh,
+    unsigned int connect_timeout_msec,
+    NISysCfgEnumExpertHandle* expert_enum_handle,
+    NISysCfgSessionHandle* session_handle
     );
   using CloseHandlePtr = NISysCfgStatus (*)(
-    void*                                syscfg_handle
+    void* syscfg_handle
     );
   using CreateFilterPtr = NISysCfgStatus (*)(
     NISysCfgSessionHandle                session_handle,
