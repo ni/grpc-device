@@ -65,6 +65,36 @@ namespace grpc {
     }
   }
 
+  void NiScopeService::Copy(const NIComplexNumber_struct& input, ni::scope::grpc::NIComplexNumber* output) 
+  {
+    output->set_real(input.real);
+    output->set_imaginary(input.imaginary);
+  }
+
+  void NiScopeService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::NIComplexNumber>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ni::scope::grpc::NIComplexNumber();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+  void NiScopeService::Copy(const NIComplexI16_struct& input, ni::scope::grpc::NIComplexInt32* output) 
+  {
+    output->set_real(input.real);
+    output->set_imaginary(input.imaginary);
+  }
+
+  void NiScopeService::Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::NIComplexInt32>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ni::scope::grpc::NIComplexInt32();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)

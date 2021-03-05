@@ -123,6 +123,10 @@ private:
   void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output);
   void Copy(const niScope_coefficientInfo& input, ni::scope::grpc::CoefficientInfo* output);
   void Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::CoefficientInfo>* output);
+  void Copy(const NIComplexNumber_struct& input, ni::scope::grpc::NIComplexNumber* output);
+  void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::NIComplexNumber>* output);
+  void Copy(const NIComplexI16_struct& input, ni::scope::grpc::NIComplexInt32* output);
+  void Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::NIComplexInt32>* output);
 };
 
 } // namespace grpc
