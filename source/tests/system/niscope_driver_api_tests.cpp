@@ -108,7 +108,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(NiScopeDriverApiTest, NiScopeSelfTestRPC_SendRequest_SelfTestCompletesSuccessfully)
+TEST_F(NiScopeDriverApiTest, NiScopeSelfTest_SendRequest_SelfTestCompletesSuccessfully)
 {
   ::grpc::ClientContext context;
   scope::SelfTestRequest request;
@@ -121,6 +121,19 @@ TEST_F(NiScopeDriverApiTest, NiScopeSelfTestRPC_SendRequest_SelfTestCompletesSuc
   EXPECT_EQ(kScopeDriverApiSuccess, response.status());
   EXPECT_EQ(0, response.self_test_result());
   EXPECT_LT(0, strlen(response.self_test_message().c_str()));
+}
+
+TEST_F(NiScopeDriverApiTest, NiScopeReset_SendRequest_ResetCompletesSuccessfully)
+{
+  ::grpc::ClientContext context;
+  scope::ResetRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  scope::ResetResponse response;
+
+  ::grpc::Status status = GetStub()->Reset(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
 }
 
 }  // namespace system
