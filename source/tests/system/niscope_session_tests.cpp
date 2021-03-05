@@ -28,6 +28,7 @@ class NiScopeSessionTest : public ::testing::Test {
     ni::hardware::grpc::ResetServerRequest request;
     ni::hardware::grpc::ResetServerResponse response;
     session_utilities_stub_->ResetServer(&context, request, &response);
+    EXPECT_TRUE(response.is_server_reset());
   }
 
   void ResetStubs()
@@ -83,7 +84,7 @@ class NiScopeSessionTest : public ::testing::Test {
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(NiScopeSessionTest, NiScopeClient_InitializeSessionWithDevice_CreatesDriverSession)
+TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
   scope::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kTestResourceName, kSimulatedOptionsString, kTestSessionName, &response);
@@ -93,7 +94,17 @@ TEST_F(NiScopeSessionTest, NiScopeClient_InitializeSessionWithDevice_CreatesDriv
   EXPECT_NE(0, response.vi().id());
 }
 
-TEST_F(NiScopeSessionTest, NiScopeClient_InitializeSessionWithoutDevice_ReturnsDriverError)
+TEST_F(NiScopeSessionTest, InitializeSessionDeviceAndNoSessionName_CreatesDriverSession)
+{
+  scope::InitWithOptionsResponse response;
+  ::grpc::Status status = call_init_with_options(kTestResourceName, kSimulatedOptionsString, "", &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(0, response.status());
+  EXPECT_NE(0, response.vi().id());
+}
+
+TEST_F(NiScopeSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
   scope::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kInvalidResourceName, "", "", &response);
