@@ -2111,6 +2111,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Init':{
+        'init_method': True,
         'cname' : 'niScope_init',
         'parameters':[
             {

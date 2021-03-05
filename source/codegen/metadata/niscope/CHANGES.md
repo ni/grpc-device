@@ -132,4 +132,5 @@ in the custom service handler implementations.
 
 The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
 with the session_repository.
+- `Init`
 - `InitWithOptions`

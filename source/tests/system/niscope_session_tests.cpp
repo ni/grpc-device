@@ -156,7 +156,7 @@ TEST_F(NiScopeSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessa
   scope::GetErrorMessageRequest error_request;
   error_request.mutable_vi()->set_id(session.id());
   error_request.set_error_code(kViErrorRsrcNFound);
-  scope::GetErrorMessageRequest error_response;
+  scope::GetErrorMessageResponse error_response;
   ::grpc::Status status = GetStub()->GetErrorMessage(&context, error_request, &error_response);
 
   EXPECT_TRUE(status.ok());
