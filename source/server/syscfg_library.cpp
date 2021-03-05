@@ -13,8 +13,8 @@ SysCfgLibrary::SysCfgLibrary()
   if (!shared_library_.is_loaded()) {
     return;
   }
-  function_pointers_.InitializeSession = GET_POINTER(function_pointers_, shared_library_, InitializeSession);
-  function_pointers_.CloseHandle = GET_POINTER(function_pointers_, shared_library_, CloseHandle);
+  GET_POINTER(function_pointers_, shared_library_, InitializeSession);
+  GET_POINTER(function_pointers_, shared_library_, CloseHandle);
 }
 
 SysCfgLibrary::~SysCfgLibrary()
