@@ -13,8 +13,8 @@ SysCfgLibrary::SysCfgLibrary()
   if (!shared_library_.is_loaded()) {
     return;
   }
-  function_pointers_.InitializeSession = reinterpret_cast<InitializeSessionPtr>(shared_library_.get_function_pointer("NISysCfgInitializeSession"));
-  function_pointers_.CloseHandle = reinterpret_cast<CloseHandlePtr>(shared_library_.get_function_pointer("NISysCfgCloseHandle"));
+  function_pointers_.InitializeSession = GET_POINTER(function_pointers_, shared_library_, InitializeSession);
+  function_pointers_.CloseHandle = GET_POINTER(function_pointers_, shared_library_, CloseHandle);
 }
 
 SysCfgLibrary::~SysCfgLibrary()
@@ -32,14 +32,14 @@ bool SysCfgLibrary::is_library_loaded() const
 }
 
 NISysCfgStatus SysCfgLibrary::InitializeSession(
-  const char*                          target_name,
-  const char*                          username,
-  const char*                          password,
-  NISysCfgLocale                       language,
-  NISysCfgBool                         force_property_refresh,
-  unsigned int                         connect_timeout_msec,
-  NISysCfgEnumExpertHandle*            expert_enum_handle,
-  NISysCfgSessionHandle*               session_handle
+  const char* target_name,
+  const char* username,
+  const char* password,
+  NISysCfgLocale language,
+  NISysCfgBool force_property_refresh,
+  unsigned int connect_timeout_msec,
+  NISysCfgEnumExpertHandle* expert_enum_handle,
+  NISysCfgSessionHandle* session_handle
   )
 {
   if (!function_pointers_.InitializeSession) {
