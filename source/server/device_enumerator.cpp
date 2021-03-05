@@ -32,6 +32,7 @@ DeviceEnumerator::~DeviceEnumerator()
   
   try {
     // TODO: Caching of syscfg_session will be added in a separate PR.
+    // All parameters of InitializeSession other than the first are System Configuration default values.
     if (NISysCfg_Succeeded(status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
       if (NISysCfg_Succeeded(status = library_->CreateHardwareFilter(session, &filter))) {
         if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeAny, filter, NULL, &resources_handle))) {

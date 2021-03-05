@@ -32,6 +32,19 @@ TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFou
   EXPECT_EQ(internal::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
+TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsEmptyListOfDevicesInResponse)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  internal::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, InitializeSession)
+      .WillOnce(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_EQ(0, devices.size);
+}
+
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ReturnsInternalGrpcStatusCode)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
@@ -46,6 +59,19 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
   EXPECT_EQ(internal::kSysCfgApiFailedMessage, status.error_message());
+}
+
+TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ReturnsEmptyListOfDevicesInResponse)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  internal::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, InitializeSession)
+      .WillOnce(Return(NISysCfg_InvalidLoginCredentials));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_EQ(0, devices.size);
 }
 
 NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)

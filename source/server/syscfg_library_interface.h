@@ -14,44 +14,44 @@ class SysCfgLibraryInterface {
   virtual ~SysCfgLibraryInterface() {}
 
   virtual NISysCfgStatus InitializeSession(
-    const char*                          target_name,
-    const char*                          username,
-    const char*                          password,
-    NISysCfgLocale                       language,
-    NISysCfgBool                         force_property_refresh,
-    unsigned int                         connect_timeout_msec,
-    NISysCfgEnumExpertHandle*            expert_enum_handle,
-    NISysCfgSessionHandle*               session_handle
+    const char* target_name,
+    const char* username,
+    const char* password,
+    NISysCfgLocale language,
+    NISysCfgBool force_property_refresh,
+    unsigned int connect_timeout_msec,
+    NISysCfgEnumExpertHandle* expert_enum_handle,
+    NISysCfgSessionHandle* session_handle
     ) = 0;
   virtual NISysCfgStatus CloseHandle(
-    void*                                syscfg_handle
+    void* syscfg_handle
     ) = 0;
   virtual NISysCfgStatus CreateHardwareFilter(
-    NISysCfgSessionHandle                  session_handle,
-    NISysCfgFilterHandle*                  filter_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterHandle* filter_handle
     ) = 0;
   virtual NISysCfgStatus FindHardware(
-    NISysCfgSessionHandle                  session_handle,
-    NISysCfgFilterMode                     filter_mode,
-    NISysCfgFilterHandle                   filter_handle,
-    const char*                            expert_names,
-    NISysCfgEnumResourceHandle*            resource_enum_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterMode filter_mode,
+    NISysCfgFilterHandle filter_handle,
+    const char* expert_names,
+    NISysCfgEnumResourceHandle* resource_enum_handle
     ) = 0;
   virtual NISysCfgStatus NextResource(
-    NISysCfgSessionHandle                  session_handle,
-    NISysCfgEnumResourceHandle             resource_enum_handle,
-    NISysCfgResourceHandle*                resource_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgEnumResourceHandle resource_enum_handle,
+    NISysCfgResourceHandle* resource_handle
     ) = 0;
   virtual NISysCfgStatus GetResourceIndexedProperty(
-    NISysCfgResourceHandle                 resource_handle,
-    NISysCfgIndexedProperty                property_ID,
-    unsigned int                           index,
-    void*                                  value
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgIndexedProperty property_ID,
+    unsigned int index,
+    void* value
     ) = 0;
   virtual NISysCfgStatus GetResourceProperty(
-    NISysCfgResourceHandle                 resource_handle,
-    NISysCfgResourceProperty               property_ID,
-    void*                                  value
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgResourceProperty property_ID,
+    void* value
     ) = 0;
 };
 
