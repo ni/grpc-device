@@ -41,7 +41,7 @@ TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsEmptyL
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(0, devices.size);
+  EXPECT_EQ(0, devices.size());
 }
 
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ReturnsInternalGrpcStatusCode)
@@ -70,7 +70,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(0, devices.size);
+  EXPECT_EQ(0, devices.size());
 }
 
 NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
