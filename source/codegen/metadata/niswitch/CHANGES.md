@@ -60,7 +60,5 @@ The following APIs were newly added :
 - GetAttributeViSession
 - SetAttributeViSession
 - All the CheckAttribute APIs(5)
-
-The following APIs will not be implemented : 
 - ErrorQuery
 - RevisionQuery
