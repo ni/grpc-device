@@ -1403,6 +1403,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchComplex':{
+        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -1430,7 +1431,7 @@ functions = {
                 'type':'NIComplexNumber[]',
                 'size':{
                     'mechanism': 'custom-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
+                    'value': '(num_samples * actual_num_wfms)'
                 }
             },
             {
@@ -1447,6 +1448,7 @@ functions = {
         'returns':'ViStatus'
     },
     'FetchComplexBinary16':{
+        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -1475,7 +1477,7 @@ functions = {
                 'grpc_type': 'repeated NIComplexInt32',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
+                    'value': '(num_samples * actual_num_wfms)'
                 },
             },
             {
@@ -1483,7 +1485,7 @@ functions = {
                 'name': 'wfmInfo',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': 'self._actual_num_wfms()'
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -1492,7 +1494,7 @@ functions = {
         'returns':'ViStatus'
     },
     'FetchMeasurement': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1822,8 +1824,8 @@ functions = {
             },
             {
                 'size': {
-                    'mechanism': 'ivi_dance',
-                    'size_in': 'bufferSize'
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
                 },
                 'direction': 'out',
                 'name': 'name',
@@ -1979,6 +1981,7 @@ functions = {
         'returns':'ViStatus'
     },
     'GetNormalizationCoefficients':{
+        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -2015,7 +2018,7 @@ functions = {
         'returns':'ViStatus'
     },
     'GetScalingCoefficients': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -2264,7 +2267,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadMeasurement': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',

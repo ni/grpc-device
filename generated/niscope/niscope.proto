@@ -1381,7 +1381,6 @@ message GetChannelNameResponse {
 message GetChannelNameFromStringRequest {
   ni.hardware.grpc.Session vi = 1;
   string index = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetChannelNameFromStringResponse {
