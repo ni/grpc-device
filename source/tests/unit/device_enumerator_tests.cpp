@@ -31,7 +31,7 @@ TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFou
   EXPECT_EQ(internal::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
-TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsEmptyListOfDevicesInResponse)
+TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ListOfDevicesIsEmpty)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   internal::DeviceEnumerator device_enumerator(&mock_library);
@@ -60,7 +60,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
   EXPECT_EQ(internal::kSysCfgApiFailedMessage, status.error_message());
 }
 
-TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ReturnsEmptyListOfDevicesInResponse)
+TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListOfDevicesIsEmpty)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   internal::DeviceEnumerator device_enumerator(&mock_library);
