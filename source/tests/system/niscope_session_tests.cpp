@@ -85,7 +85,6 @@ class NiScopeSessionTest : public ::testing::Test {
 
 TEST_F(NiScopeSessionTest, NiScopeClient_InitializeSessionWithDevice_CreatesDriverSession)
 {
-  ::grpc::ClientContext context;
   scope::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kTestResourceName, kSimulatedOptionsString, kTestSessionName, &response);
 
