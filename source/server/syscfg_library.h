@@ -7,6 +7,9 @@
 #include "syscfg_library_interface.h"
 #include "shared_library.h"
 
+#define GET_POINTER(ptrs, lib, name) \
+  ptrs.name = reinterpret_cast<name##Ptr>(lib.get_function_pointer("NISysCfg"#name));
+
 namespace ni {
 namespace hardware {
 namespace grpc {
@@ -27,12 +30,43 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
 
   std::string get_library_name() const;
   bool is_library_loaded() const;
-  // Adding a dummy InitializeSession here which will be updated in future.
+  NISysCfgStatus InitializeSession(
+    const char* target_name,
+    const char* username,
+    const char* password,
+    NISysCfgLocale language,
+    NISysCfgBool force_property_refresh,
+    unsigned int connect_timeout_msec,
+    NISysCfgEnumExpertHandle* expert_enum_handle,
+    NISysCfgSessionHandle* session_handle
+    );
+  NISysCfgStatus CloseHandle(
+    void* syscfg_handle
+    );
   // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
-  NISysCfgStatus InitializeSession();
 
  private:
+  using InitializeSessionPtr = NISysCfgStatus (*)(
+    const char* target_name,
+    const char* username,
+    const char* password,
+    NISysCfgLocale language,
+    NISysCfgBool force_property_refresh,
+    unsigned int connect_timeout_msec,
+    NISysCfgEnumExpertHandle* expert_enum_handle,
+    NISysCfgSessionHandle* session_handle
+    );
+  using CloseHandlePtr = NISysCfgStatus (*)(
+    void* syscfg_handle
+    );
+
+  typedef struct FunctionPointers {
+    InitializeSessionPtr InitializeSession;
+    CloseHandlePtr CloseHandle;
+  } FunctionLoadStatus;
+
   SharedLibrary shared_library_;
+  FunctionPointers function_pointers_;
 };
 
 }  // namespace internal

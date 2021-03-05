@@ -223,6 +223,7 @@ add_executable(IntegrationTestsRunner
 
 target_link_libraries(IntegrationTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
@@ -235,6 +236,7 @@ add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
+    "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"

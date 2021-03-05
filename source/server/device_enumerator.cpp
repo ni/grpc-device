@@ -19,18 +19,22 @@ DeviceEnumerator::~DeviceEnumerator()
 // https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
 ::grpc::Status DeviceEnumerator::enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices)
 {
-  NISysCfgStatus syscfg_status = NISysCfg_OK;
-
+  NISysCfgStatus status = NISysCfg_OK;
+  NISysCfgSessionHandle session = NULL;
+  
   try {
-    // Providing dummy implementation below which will be updated in upcoming PRs
-    // to use syscfg APIs properly to enumerate devices.
-    syscfg_status = library_->InitializeSession();
+    // TODO: This PR adds only Initialize and Close. Remaining work will be added in upcoming PR.
+    // TODO: Caching of syscfg_session will be added in a separate PR.
+    // All parameters of InitializeSession other than the first are System Configuration default values.
+    if (NISysCfg_Succeeded(status = library_->InitializeSession("localhost", NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
+      library_->CloseHandle(session);
+    }
   }
   catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   
-  if (NISysCfg_Failed(syscfg_status)) {
+  if (NISysCfg_Failed(status)) {
     return ::grpc::Status(::grpc::StatusCode::INTERNAL, kSysCfgApiFailedMessage);
   }
 
