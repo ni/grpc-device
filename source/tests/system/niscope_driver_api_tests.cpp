@@ -64,7 +64,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     scope::InitWithOptionsRequest request;
     request.set_resource_name("FakeDevice");
     request.set_option_string("Simulate=1, DriverSetup=Model:5164; BoardType:PXIe");
-    request.set_resource_name("");
+    request.set_session_name("");
     request.set_reset_device(false);
     request.set_id_query(false);
     scope::InitWithOptionsResponse response;
