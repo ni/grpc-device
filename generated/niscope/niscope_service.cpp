@@ -48,6 +48,23 @@ namespace grpc {
     }
   }
 
+  void NiScopeService::Copy(const niScope_coefficientInfo& input, ni::scope::grpc::CoefficientInfo* output) 
+  {
+    output->set_offset(input.offset);
+    output->set_gain(input.gain);
+    output->set_reserved1(input.reserved1);
+    output->set_reserved2(input.reserved2);
+  }
+
+  void NiScopeService::Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::CoefficientInfo>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ni::scope::grpc::CoefficientInfo();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)

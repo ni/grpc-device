@@ -121,6 +121,8 @@ private:
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
   void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output);
   void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output);
+  void Copy(const niScope_coefficientInfo& input, ni::scope::grpc::CoefficientInfo* output);
+  void Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::CoefficientInfo>* output);
 };
 
 } // namespace grpc

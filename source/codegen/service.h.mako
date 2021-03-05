@@ -10,7 +10,7 @@ service_class_prefix = config["service_class_prefix"]
 include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
 if len(config["custom_types"]) > 0:
-  custom_type = config["custom_types"][0]
+  custom_types = config["custom_types"]
 %>\
 
 //---------------------------------------------------------------------
@@ -52,9 +52,11 @@ public:
 private:
   ${service_class_prefix}LibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
-%if 'custom_type' in locals():
+%if 'custom_types' in locals():
+%for custom_type in custom_types:
   void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
   void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
+%endfor
 %endif
 <%
   used_enums = common_helpers.get_used_enums(functions, attributes)

@@ -14,7 +14,7 @@ c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
 windows_libary_name = config['library_info']['Windows']['64bit']['name']
 if len(config["custom_types"]) > 0:
-  custom_type = config["custom_types"][0]
+  custom_types = config["custom_types"]
 %>\
 
 //---------------------------------------------------------------------
@@ -45,7 +45,8 @@ namespace grpc {
   {
   }
 
-  %if 'custom_type' in locals():
+  %if 'custom_types' in locals():
+  %for custom_type in custom_types:
   void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
   {
 %for field in custom_type["fields"]: 
@@ -62,6 +63,7 @@ namespace grpc {
     }
   }
 
+%endfor
 %endif
 % for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
