@@ -692,7 +692,7 @@ namespace grpc {
       auto status = library_->GetAttributeViBoolean(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -717,7 +717,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt32(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -742,7 +742,7 @@ namespace grpc {
       auto status = library_->GetAttributeViInt64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -767,7 +767,7 @@ namespace grpc {
       auto status = library_->GetAttributeViReal64(vi, channel_list, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-    response->set_value(value);
+        response->set_value(value);
       }
       return ::grpc::Status::OK;
     }
@@ -1003,7 +1003,7 @@ namespace grpc {
       auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1247,7 +1247,7 @@ namespace grpc {
       auto status = library_->UnlockSession(vi, &caller_has_lock);
       response->set_status(status);
       if (status == 0) {
-    response->set_caller_has_lock(caller_has_lock);
+        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
@@ -1332,7 +1332,7 @@ namespace grpc {
       auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
-    response->set_self_test_result(self_test_result);
+        response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
       }
       return ::grpc::Status::OK;
@@ -1345,4 +1345,3 @@ namespace grpc {
 } // namespace grpc
 } // namespace scope
 } // namespace ni
-
