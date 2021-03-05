@@ -99,7 +99,8 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
   '''Returns function metadata only for those functions to include for generating proto rpc methods'''
-  return [name for name, function in functions.items() if function.get('codegen_method', 'public') == 'public']
+  functions_for_proto = {'public', 'CustomCode'}
+  return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
 
 def get_service_namespace(driver_name_caps_underscore):
   driver_full_namespace = driver_name_caps_underscore + "_" + "grpc"
@@ -125,7 +126,7 @@ def mark_non_grpc_params(parameters):
       size_param = named_params.get(param['size']['value'], None)
       size_param['is_size_param'] = True
       if mechanism == 'len' or mechanism == 'ivi-dance':
-        size_param['gen_proto_field'] = False
+        size_param['include_in_proto'] = False
         if mechanism == 'len':
           size_param['determine_size_from'] = param['name']
 

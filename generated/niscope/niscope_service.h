@@ -30,6 +30,8 @@ public:
   ::grpc::Status AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response) override;
   ::grpc::Status AddWaveformProcessing(::grpc::ServerContext* context, const AddWaveformProcessingRequest* request, AddWaveformProcessingResponse* response) override;
   ::grpc::Status AutoSetup(::grpc::ServerContext* context, const AutoSetupRequest* request, AutoSetupResponse* response) override;
+  ::grpc::Status CableSenseSignalStart(::grpc::ServerContext* context, const CableSenseSignalStartRequest* request, CableSenseSignalStartResponse* response) override;
+  ::grpc::Status CableSenseSignalStop(::grpc::ServerContext* context, const CableSenseSignalStopRequest* request, CableSenseSignalStopResponse* response) override;
   ::grpc::Status CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response) override;
   ::grpc::Status ClearWaveformMeasurementStats(::grpc::ServerContext* context, const ClearWaveformMeasurementStatsRequest* request, ClearWaveformMeasurementStatsResponse* response) override;
   ::grpc::Status ClearWaveformProcessing(::grpc::ServerContext* context, const ClearWaveformProcessingRequest* request, ClearWaveformProcessingResponse* response) override;
@@ -39,10 +41,13 @@ public:
   ::grpc::Status ConfigureHorizontalTiming(::grpc::ServerContext* context, const ConfigureHorizontalTimingRequest* request, ConfigureHorizontalTimingResponse* response) override;
   ::grpc::Status ConfigureTriggerDigital(::grpc::ServerContext* context, const ConfigureTriggerDigitalRequest* request, ConfigureTriggerDigitalResponse* response) override;
   ::grpc::Status ConfigureTriggerEdge(::grpc::ServerContext* context, const ConfigureTriggerEdgeRequest* request, ConfigureTriggerEdgeResponse* response) override;
+  ::grpc::Status ConfigureTriggerGlitch(::grpc::ServerContext* context, const ConfigureTriggerGlitchRequest* request, ConfigureTriggerGlitchResponse* response) override;
   ::grpc::Status ConfigureTriggerHysteresis(::grpc::ServerContext* context, const ConfigureTriggerHysteresisRequest* request, ConfigureTriggerHysteresisResponse* response) override;
   ::grpc::Status ConfigureTriggerImmediate(::grpc::ServerContext* context, const ConfigureTriggerImmediateRequest* request, ConfigureTriggerImmediateResponse* response) override;
+  ::grpc::Status ConfigureTriggerRunt(::grpc::ServerContext* context, const ConfigureTriggerRuntRequest* request, ConfigureTriggerRuntResponse* response) override;
   ::grpc::Status ConfigureTriggerSoftware(::grpc::ServerContext* context, const ConfigureTriggerSoftwareRequest* request, ConfigureTriggerSoftwareResponse* response) override;
   ::grpc::Status ConfigureTriggerVideo(::grpc::ServerContext* context, const ConfigureTriggerVideoRequest* request, ConfigureTriggerVideoResponse* response) override;
+  ::grpc::Status ConfigureTriggerWidth(::grpc::ServerContext* context, const ConfigureTriggerWidthRequest* request, ConfigureTriggerWidthResponse* response) override;
   ::grpc::Status ConfigureTriggerWindow(::grpc::ServerContext* context, const ConfigureTriggerWindowRequest* request, ConfigureTriggerWindowResponse* response) override;
   ::grpc::Status ConfigureVertical(::grpc::ServerContext* context, const ConfigureVerticalRequest* request, ConfigureVerticalResponse* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
@@ -53,13 +58,17 @@ public:
   ::grpc::Status FetchBinary16(::grpc::ServerContext* context, const FetchBinary16Request* request, FetchBinary16Response* response) override;
   ::grpc::Status FetchBinary32(::grpc::ServerContext* context, const FetchBinary32Request* request, FetchBinary32Response* response) override;
   ::grpc::Status FetchBinary8(::grpc::ServerContext* context, const FetchBinary8Request* request, FetchBinary8Response* response) override;
+  ::grpc::Status FetchMeasurement(::grpc::ServerContext* context, const FetchMeasurementRequest* request, FetchMeasurementResponse* response) override;
   ::grpc::Status FetchMeasurementStats(::grpc::ServerContext* context, const FetchMeasurementStatsRequest* request, FetchMeasurementStatsResponse* response) override;
   ::grpc::Status GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response) override;
   ::grpc::Status GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response) override;
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;
+  ::grpc::Status GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response) override;
+  ::grpc::Status GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response) override;
   ::grpc::Status GetEqualizationFilterCoefficients(::grpc::ServerContext* context, const GetEqualizationFilterCoefficientsRequest* request, GetEqualizationFilterCoefficientsResponse* response) override;
+  ::grpc::Status GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
@@ -68,6 +77,7 @@ public:
   ::grpc::Status ProbeCompensationSignalStart(::grpc::ServerContext* context, const ProbeCompensationSignalStartRequest* request, ProbeCompensationSignalStartResponse* response) override;
   ::grpc::Status ProbeCompensationSignalStop(::grpc::ServerContext* context, const ProbeCompensationSignalStopRequest* request, ProbeCompensationSignalStopResponse* response) override;
   ::grpc::Status Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response) override;
+  ::grpc::Status ReadMeasurement(::grpc::ServerContext* context, const ReadMeasurementRequest* request, ReadMeasurementResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
   ::grpc::Status ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response) override;
   ::grpc::Status SendSoftwareTriggerEdge(::grpc::ServerContext* context, const SendSoftwareTriggerEdgeRequest* request, SendSoftwareTriggerEdgeResponse* response) override;
@@ -81,9 +91,11 @@ public:
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
-  private:
+private:
   NiScopeLibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
+  void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output);
+  void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output);
 };
 
 } // namespace grpc
