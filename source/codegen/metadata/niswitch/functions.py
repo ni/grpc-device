@@ -676,6 +676,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'init': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -704,6 +705,7 @@ functions = {
         'returns': 'ViStatus',
     },
     'InitWithOptions': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -737,6 +739,7 @@ functions = {
         'returns': 'ViStatus',
     },
     'InitWithTopology': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
