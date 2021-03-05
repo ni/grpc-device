@@ -964,63 +964,52 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ConfigureTriggerWindow': {
-        'parameters': [
+    'ConfigureTriggerWindow':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'triggerSource',
-                'type': 'ViConstString'
+                'name':'triggerSource',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'level',
-                'type': 'ViReal64'
+                'name':'lowLevel',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'lowThreshold',
-                'type': 'ViReal64'
+                'name':'highLevel',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'highThreshold',
-                'type': 'ViReal64'
+                'name':'windowMode',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'TriggerWindowMode'
             },
             {
-                'direction': 'in',
-                'enum': 'WidthPolarity',
-                'name': 'polarity',
-                'type': 'ViInt32'
+                'name':'triggerCoupling',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'TriggerCoupling'
             },
             {
-                'direction': 'in',
-                'enum': 'WidthCondition',
-                'name': 'condition',
-                'type': 'ViInt32'
+                'name':'holdoff',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'enum': 'TriggerCoupling',
-                'name': 'triggerCoupling',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'holdoff',
-                'type': 'ViReal64'
-            },
-            {
-                'direction': 'in',
-                'name': 'delay',
-                'type': 'ViReal64'
-            },
+                'name':'delay',
+                'direction':'in',
+                'type':'ViReal64'
+            }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
     'ConfigureVertical': {
         'parameters': [
