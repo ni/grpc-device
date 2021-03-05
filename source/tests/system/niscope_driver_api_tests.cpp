@@ -1,0 +1,128 @@
+#include <gtest/gtest.h>
+#include <server/session_utilities_service.h>
+
+#include "niscope/niscope_library.h"
+#include "niscope/niscope_service.h"
+
+namespace ni {
+namespace tests {
+namespace system {
+
+namespace scope = ni::scope::grpc;
+
+const int kScopeDriverApiSuccess = 0;
+
+class NiScopeDriverApiTest : public ::testing::Test {
+ public:
+  virtual ~NiScopeDriverApiTest() {}
+
+  void SetUp() override
+  {
+    ResetStubs();
+    ::grpc::ClientContext context;
+    ni::hardware::grpc::ResetServerRequest request;
+    ni::hardware::grpc::ResetServerResponse response;
+    session_utilities_stub_->ResetServer(&context, request, &response);
+    EXPECT_TRUE(response.is_server_reset());
+    initialize_driver_session();
+  }
+
+  void TearDown() override
+  {
+    close_driver_session();
+  }
+
+  void ResetStubs()
+  {
+    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
+    niscope_stub_ = scope::NiScope::NewStub(channel_);
+    session_utilities_stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
+  }
+
+  std::unique_ptr<scope::NiScope::Stub>& GetStub()
+  {
+    return niscope_stub_;
+  }
+
+  int GetSessionId()
+  {
+    return driver_session_->id();
+  }
+
+ protected:
+  NiScopeDriverApiTest()
+  {
+    ::grpc::ServerBuilder builder;
+    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
+    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
+    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
+    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
+    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
+    builder.RegisterService(session_utilities_service_.get());
+    builder.RegisterService(niscope_service_.get());
+
+    server_ = builder.BuildAndStart();
+  }
+
+  void initialize_driver_session()
+  {
+    ::grpc::ClientContext context;
+    scope::InitWithOptionsRequest request;
+    request.set_resource_name("FakeDevice");
+    request.set_option_string("Simulate=1, DriverSetup=Model:5164; BoardType:PXIe");
+    request.set_resource_name("");
+    request.set_reset_device(false);
+    request.set_id_query(false);
+    scope::InitWithOptionsResponse response;
+
+    ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
+    driver_session_ = std::make_unique<ni::hardware::grpc::Session>(response.vi());
+
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  }
+
+  void close_driver_session()
+  {
+    ::grpc::ClientContext context;
+    scope::CloseRequest request;
+    request.mutable_vi()->set_id(driver_session_->id());
+    scope::CloseResponse response;
+
+    ::grpc::Status status = GetStub()->Close(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  }
+
+ private:
+  std::shared_ptr<::grpc::Channel> channel_;
+  std::unique_ptr<::ni::hardware::grpc::Session> driver_session_;
+  std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
+  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub> session_utilities_stub_;
+  std::unique_ptr<::ni::hardware::grpc::internal::SessionRepository> session_repository_;
+  std::unique_ptr<::ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<::ni::hardware::grpc::SessionUtilitiesService> session_utilities_service_;
+  std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
+  std::unique_ptr<scope::NiScopeService> niscope_service_;
+  std::unique_ptr<::grpc::Server> server_;
+};
+
+TEST_F(NiScopeDriverApiTest, NiScopeSelfTestRPC_SendRequest_SelfTestCompletesSuccessfully)
+{
+  ::grpc::ClientContext context;
+  scope::SelfTestRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  scope::SelfTestResponse response;
+
+  ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  EXPECT_EQ(0, response.self_test_result());
+  EXPECT_LT(0, strlen(response.self_test_message().c_str()));
+}
+
+}  // namespace system
+}  // namespace tests
+}  // namespace ni

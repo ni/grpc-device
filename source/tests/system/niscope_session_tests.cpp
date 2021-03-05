@@ -94,7 +94,7 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriv
   EXPECT_NE(0, response.vi().id());
 }
 
-TEST_F(NiScopeSessionTest, InitializeSessionDeviceAndNoSessionName_CreatesDriverSession)
+TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
 {
   scope::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kTestResourceName, kSimulatedOptionsString, "", &response);
