@@ -13,17 +13,26 @@ namespace scope = ni::scope::grpc;
 const int kScopeDriverApiSuccess = 0;
 
 class NiScopeDriverApiTest : public ::testing::Test {
- public:
+ protected:
+  NiScopeDriverApiTest()
+  {
+    ::grpc::ServerBuilder builder;
+    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
+    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
+    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
+    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
+    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
+    builder.RegisterService(session_utilities_service_.get());
+    builder.RegisterService(niscope_service_.get());
+
+    server_ = builder.BuildAndStart();
+    ResetStubs();
+  }
+
   virtual ~NiScopeDriverApiTest() {}
 
   void SetUp() override
   {
-    ResetStubs();
-    ::grpc::ClientContext context;
-    ni::hardware::grpc::ResetServerRequest request;
-    ni::hardware::grpc::ResetServerResponse response;
-    session_utilities_stub_->ResetServer(&context, request, &response);
-    EXPECT_TRUE(response.is_server_reset());
     initialize_driver_session();
   }
 
@@ -49,21 +58,6 @@ class NiScopeDriverApiTest : public ::testing::Test {
     return driver_session_->id();
   }
 
- protected:
-  NiScopeDriverApiTest()
-  {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
-    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
-    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
-    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
-    builder.RegisterService(session_utilities_service_.get());
-    builder.RegisterService(niscope_service_.get());
-
-    server_ = builder.BuildAndStart();
-  }
-
   void initialize_driver_session()
   {
     ::grpc::ClientContext context;
@@ -78,8 +72,8 @@ class NiScopeDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
     driver_session_ = std::make_unique<ni::hardware::grpc::Session>(response.vi());
 
-    EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    ASSERT_TRUE(status.ok());
+    ASSERT_EQ(kScopeDriverApiSuccess, response.status());
   }
 
   void close_driver_session()
