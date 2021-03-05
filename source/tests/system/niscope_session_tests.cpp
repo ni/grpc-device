@@ -153,11 +153,11 @@ TEST_F(NiScopeSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessa
 
   ni::hardware::grpc::Session session = init_response.vi();
   ::grpc::ClientContext context;
-  scope::ErrorMessageRequest error_request;
+  scope::GetErrorMessageRequest error_request;
   error_request.mutable_vi()->set_id(session.id());
   error_request.set_error_code(kViErrorRsrcNFound);
-  scope::ErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
+  scope::GetErrorMessageRequest error_response;
+  ::grpc::Status status = GetStub()->GetErrorMessage(&context, error_request, &error_response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_STREQ(kViErrorRsrcNFoundMessage, error_response.error_message().c_str());
