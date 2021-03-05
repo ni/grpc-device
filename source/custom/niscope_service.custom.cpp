@@ -220,7 +220,7 @@ namespace internal = ni::hardware::grpc::internal;
     ViReal64* min = response->mutable_min()->mutable_data();
     response->mutable_max()->Resize(num_waveforms, 0.0);
     ViReal64* max = response->mutable_max()->mutable_data();
-    std::vector<ViInt32> num_in_stats(num_waveforms, 0.0);
+    std::vector<ViInt32> num_in_stats(num_waveforms, 0);
     status = library_->FetchMeasurementStats(vi, channel_list, timeout, scalar_meas_function, result, mean, stdev, min, max, num_in_stats.data());
     response->set_status(status);
     if (status == 0) {
@@ -279,7 +279,27 @@ namespace internal = ni::hardware::grpc::internal;
     return ::grpc::Status::CANCELLED;
   }
   try {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViConstString channel_list = request->channel_list().c_str();
+    ViReal64 timeout = request->timeout();
+    ViInt32 num_samples = request->num_samples();
+
+    ViInt32 num_waveforms;
+    auto status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    if (status != 0) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    std::vector<NIComplexNumber_struct> waveform(num_samples * num_waveforms, NIComplexNumber_struct());
+    std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
+    status = library_->FetchComplex(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
+    response->set_status(status);
+    if (status == 0) {
+      Copy(waveform, response->mutable_wfm());
+      Copy(waveform_info, response->mutable_wfm_info());
+    }
+    return ::grpc::Status::OK;
   }
   catch (internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -294,7 +314,27 @@ namespace internal = ni::hardware::grpc::internal;
     return ::grpc::Status::CANCELLED;
   }
   try {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViConstString channel_list = request->channel_list().c_str();
+    ViReal64 timeout = request->timeout();
+    ViInt32 num_samples = request->num_samples();
+
+    ViInt32 num_waveforms;
+    auto status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    if (status != 0) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    std::vector<NIComplexI16_struct> waveform(num_samples * num_waveforms, NIComplexI16_struct());
+    std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
+    status = library_->FetchComplexBinary16(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
+    response->set_status(status);
+    if (status == 0) {
+      Copy(waveform, response->mutable_wfm());
+      Copy(waveform_info, response->mutable_wfm_info());
+    }
+    return ::grpc::Status::OK;
   }
   catch (internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -309,7 +349,24 @@ namespace internal = ni::hardware::grpc::internal;
     return ::grpc::Status::CANCELLED;
   }
   try {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViConstString channel_list = request->channel_list().c_str();
+    ViReal64 timeout = request->timeout();
+    ViInt32 scalar_meas_function = request->scalar_meas_function();
+
+    ViInt32 num_waveforms;
+    auto status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    if (status != 0) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+
+    response->mutable_result()->Resize(num_waveforms, 0.0);
+    ViReal64* result = response->mutable_result()->mutable_data();
+    status = library_->FetchMeasurement(vi, channel_list, timeout, scalar_meas_function, result);
+    response->set_status(status);
+    return ::grpc::Status::OK;
   }
   catch (internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -324,7 +381,28 @@ namespace internal = ni::hardware::grpc::internal;
     return ::grpc::Status::CANCELLED;
   }
   try {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViConstString channel_list = request->channel_list().c_str();
+    ViInt32 buffer_size = request->buffer_size();
+
+    // TODO: Figure out exactly how the ivi with a twist is supposed to work.
+    ViInt32 num_waveforms;
+    auto status = library_->GetNormalizationCoefficients(vi, channel_list, buffer_size, nullptr, &num_waveforms);
+    if (status != 0) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+
+    ViInt32 number_of_coefficient_sets = 0;
+    std::vector<niScope_coefficientInfo> coefficient_info(buffer_size, niScope_coefficientInfo());
+    status = library_->GetNormalizationCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
+    response->set_status(status);
+    if (status != 0) {
+      response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+      Copy(coefficient_info, response->mutable_coefficient_info());
+    }
+    return ::grpc::Status::OK;
   }
   catch (internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -339,7 +417,28 @@ namespace internal = ni::hardware::grpc::internal;
     return ::grpc::Status::CANCELLED;
   }
   try {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViConstString channel_list = request->channel_list().c_str();
+    ViInt32 buffer_size = request->buffer_size();
+
+    // TODO: Figure out exactly how the ivi with a twist is supposed to work.
+    ViInt32 num_waveforms;
+    auto status = library_->GetScalingCoefficients(vi, channel_list, buffer_size, nullptr, &num_waveforms);
+    if (status != 0) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+
+    ViInt32 number_of_coefficient_sets = 0;
+    std::vector<niScope_coefficientInfo> coefficient_info(buffer_size, niScope_coefficientInfo());
+    status = library_->GetScalingCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
+    response->set_status(status);
+    if (status != 0) {
+      response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+      Copy(coefficient_info, response->mutable_coefficient_info());
+    }
+    return ::grpc::Status::OK;
   }
   catch (internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -354,7 +453,24 @@ namespace internal = ni::hardware::grpc::internal;
     return ::grpc::Status::CANCELLED;
   }
   try {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    auto session = request->vi();
+    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    ViConstString channel_list = request->channel_list().c_str();
+    ViReal64 timeout = request->timeout();
+    ViInt32 scalar_meas_function = request->scalar_meas_function();
+
+    ViInt32 num_waveforms;
+    auto status = library_->ActualNumWfms(vi, channel_list, &num_waveforms);
+    if (status != 0) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+
+    response->mutable_result()->Resize(num_waveforms, 0.0);
+    ViReal64* result = response->mutable_result()->mutable_data();
+    status = library_->ReadMeasurement(vi, channel_list, timeout, scalar_meas_function, result);
+    response->set_status(status);
+    return ::grpc::Status::OK;
   }
   catch (internal::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
