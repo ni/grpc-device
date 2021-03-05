@@ -1429,7 +1429,7 @@ functions = {
                 'direction':'out',
                 'type':'NIComplexNumber[]',
                 'size':{
-                    'mechanism': 'python-code',
+                    'mechanism': 'custom-code',
                     'value': '(num_samples * self._actual_num_wfms())'
                 }
             },
@@ -1437,7 +1437,7 @@ functions = {
                 'name':'wfmInfo',
                 'direction':'out',
                 'size': {
-                    'mechanism': 'python-code',
+                    'mechanism': 'custom-code',
                     'value': 'self._actual_num_wfms()'
                 },
                 'type': 'struct niScope_wfmInfo[]',
@@ -1474,7 +1474,7 @@ functions = {
                 'type':'NIComplexI16[]',
                 'grpc_type': 'repeated NIComplexInt32',
                 'size': {
-                    'mechanism': 'python-code',
+                    'mechanism': 'custom-code',
                     'value': '(num_samples * self._actual_num_wfms())'
                 },
             },
@@ -1482,7 +1482,7 @@ functions = {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
-                    'mechanism': 'python-code',
+                    'mechanism': 'custom-code',
                     'value': 'self._actual_num_wfms()'
                 },
                 'type': 'struct niScope_wfmInfo[]',
