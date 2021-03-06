@@ -8,7 +8,7 @@
 
 namespace ni {
 namespace tests {
-namespace unit {
+namespace integration {
 
 using ::testing::_;
 using ::testing::AllOf;
@@ -886,6 +886,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViS
   EXPECT_THAT(response.attribute_value(), ElementsAreArray(attribute_char_array, expected_size));
 }
 
-}  // namespace unit
+}  // namespace integration
 }  // namespace tests
 }  // namespace ni

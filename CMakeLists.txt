@@ -207,7 +207,9 @@ add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FRO
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/integration/in_process_server_client_tests.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
+    "source/tests/integration/ni_fake_service_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
@@ -220,6 +222,15 @@ add_executable(IntegrationTestsRunner
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
     find_package(Threads REQUIRED)
+
+# ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
+# This disables that requirement for just the ni_fake_service_tests.cpp file.
+if(MSVC)
+  set_source_files_properties("source/tests/integration/ni_fake_service_tests.cpp" PROPERTIES COMPILE_FLAGS /bigobj)
+endif()
+
+target_include_directories(IntegrationTestsRunner
+    PRIVATE "${service_output_dir}/nifake")
 
 target_link_libraries(IntegrationTestsRunner
     gtest
@@ -234,12 +245,10 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/unit/session_utilities_service_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
-    "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
     "source/server/device_enumerator.cpp"
@@ -247,24 +256,10 @@ add_executable(UnitTestsRunner
     "source/server/server_configuration_parser.cpp"
     "source/server/server_security_configuration.cpp"
     "source/server/session_repository.cpp"
-    "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
     "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
-    ${session_grpc_srcs}
-    "${service_output_dir}/nifake/nifake_service.cpp"
-    "${custom_dir}/nifake_service.custom.cpp"
-    "${proto_srcs_dir}/nifake.pb.cc"
-    "${proto_srcs_dir}/nifake.grpc.pb.cc")
-
-# ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
-# This disables that requirement for just the ni_fake_service_tests.cpp file.
-if(MSVC)
-  set_source_files_properties("source/tests/unit/ni_fake_service_tests.cpp" PROPERTIES COMPILE_FLAGS /bigobj)
-endif()
-
-target_include_directories(UnitTestsRunner
-    PRIVATE "${service_output_dir}/nifake")
+    ${session_grpc_srcs})
 
 target_link_libraries(UnitTestsRunner
     gtest

@@ -13,7 +13,7 @@
 
 namespace ni {
 namespace tests {
-namespace unit {
+namespace integration {
 
 class NiSwitchMockLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
  public:
@@ -58,7 +58,7 @@ class NiSwitchMockLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface 
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
 };
 
-}  // namespace unit
+}  // namespace integration
 }  // namespace tests
 }  // namespace ni
 #endif  // NI_NISWITCH_GRPC_MOCK_LIBRARY_H

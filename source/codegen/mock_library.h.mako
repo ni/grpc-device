@@ -26,7 +26,7 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_MOCK_LIBRA
 
 namespace ni {
 namespace tests {
-namespace unit {
+namespace integration {
 
 class ${service_class_prefix}MockLibrary : public ${namespace_prefix}::${service_class_prefix}LibraryInterface {
  public:
@@ -41,7 +41,7 @@ class ${service_class_prefix}MockLibrary : public ${namespace_prefix}::${service
 %endfor
 };
 
-}  // namespace unit
+}  // namespace integration
 }  // namespace tests
 }  // namespace ni
 #endif  // ${include_guard_name}
