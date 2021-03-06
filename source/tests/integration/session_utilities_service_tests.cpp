@@ -6,12 +6,13 @@
 
 #include <thread>
 
-namespace internal = ni::hardware::grpc::internal;
-
 namespace ni {
 namespace tests {
 namespace integration {
 
+namespace internal = ni::hardware::grpc::internal;
+
+using ::testing::NiceMock;
 using ::testing::Throw;
 
 class InProcessServerClientTest : public ::testing::Test {
@@ -22,7 +23,7 @@ class InProcessServerClientTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<internal::SessionRepository>();
-    syscfg_mock_library_ = std::make_unique<ni::tests::utilities::SysCfgMockLibrary>();
+    syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
     ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
         .WillByDefault(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
     device_enumerator_ = std::make_unique<internal::DeviceEnumerator>(syscfg_mock_library_.get());
@@ -96,7 +97,7 @@ class InProcessServerClientTest : public ::testing::Test {
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::ni::hardware::grpc::SessionUtilities::Stub> stub_;
   std::unique_ptr<internal::SessionRepository> session_repository_;
-  std::unique_ptr<ni::tests::utilities::SysCfgMockLibrary> syscfg_mock_library_;
+  std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
   std::unique_ptr<internal::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<ni::hardware::grpc::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;

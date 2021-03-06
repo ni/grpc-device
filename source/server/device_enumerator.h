@@ -13,7 +13,7 @@ namespace hardware {
 namespace grpc {
 namespace internal {
 
-static const char* kSysCfgApiFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
+static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
 static const char* kLocalHostTargetName = "localhost";
 static const char* kNetworkExpertName = "network";
 
