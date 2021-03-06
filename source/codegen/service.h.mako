@@ -8,6 +8,9 @@ functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
 include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
+namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
+if len(config["custom_types"]) > 0:
+  custom_type = config["custom_types"][0]
 %>\
 
 //---------------------------------------------------------------------
@@ -46,9 +49,13 @@ public:
 %>\
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
 % endfor
-  private:
+private:
   ${service_class_prefix}LibraryInterface* library_;
   ni::hardware::grpc::internal::SessionRepository* session_repository_;
+%if 'custom_type' in locals():
+  void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
+  void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
+%endif
 <%
   used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
@@ -57,8 +64,8 @@ public:
 <%
   enum_value = handler_helpers.python_to_c(enums[enum])
 %>\
-    std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${handler_helpers.get_input_lookup_values(enums[enum])} };
-    std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${handler_helpers.get_output_lookup_values(enums[enum])} };
+  std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${handler_helpers.get_input_lookup_values(enums[enum])} };
+  std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${handler_helpers.get_output_lookup_values(enums[enum])} };
 %endif
 %endfor
 };
