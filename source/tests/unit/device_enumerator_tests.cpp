@@ -57,7 +57,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
-  EXPECT_EQ(internal::kSysCfgApiFailedMessage, status.error_message());
+  EXPECT_EQ(internal::kDeviceEnumerationFailedMessage, status.error_message());
 }
 
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListOfDevicesIsEmpty)
