@@ -6,11 +6,11 @@
 
 #include <thread>
 
-namespace internal = ni::hardware::grpc::internal;
-
 namespace ni {
 namespace tests {
 namespace integration {
+
+namespace internal = ni::hardware::grpc::internal;
 
 using ::testing::NiceMock;
 using ::testing::Throw;

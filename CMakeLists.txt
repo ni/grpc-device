@@ -297,6 +297,7 @@ add_executable(SystemTestsRunner
 
 target_link_libraries(SystemTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS})
 
