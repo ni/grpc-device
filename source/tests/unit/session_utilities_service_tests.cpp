@@ -12,11 +12,11 @@
 // fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
 static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
-namespace internal = ni::hardware::grpc::internal;
-
 namespace ni {
 namespace tests {
 namespace unit {
+    
+namespace internal = ni::hardware::grpc::internal;
 
 using ::testing::Throw;
 
