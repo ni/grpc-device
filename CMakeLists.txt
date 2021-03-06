@@ -217,7 +217,11 @@ add_executable(IntegrationTestsRunner
     "source/server/shared_library.cpp"
     "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
-    ${session_grpc_srcs})
+    ${session_grpc_srcs}
+    "${service_output_dir}/nifake/nifake_service.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
+    "${proto_srcs_dir}/nifake.pb.cc"
+    "${proto_srcs_dir}/nifake.grpc.pb.cc")
 
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)

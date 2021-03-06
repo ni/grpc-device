@@ -13,7 +13,7 @@
 
 namespace ni {
 namespace tests {
-namespace integration {
+namespace utilities {
 
 class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
  public:
@@ -70,7 +70,7 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
 };
 
-}  // namespace integration
+}  // namespace utilities
 }  // namespace tests
 }  // namespace ni
 #endif  // NI_FAKE_GRPC_MOCK_LIBRARY_H

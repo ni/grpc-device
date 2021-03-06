@@ -40,7 +40,7 @@ std::uint32_t create_session(ni::hardware::grpc::internal::SessionRepository& se
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresSession)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const char* resource_name = "Dev0";
   const char* option_string = "Simulate = 1";
@@ -69,7 +69,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresS
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const char* message = "Exception!";
   EXPECT_CALL(library, InitWithOptions)
@@ -90,7 +90,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsAndResetServer_SessionIsClosed)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const char* session_name = "sessionName";
   EXPECT_CALL(library, InitWithOptions)
@@ -117,7 +117,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsAndResetServer_SessionIsCl
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::string session_name = "sessionName";
   EXPECT_CALL(library, InitWithOptions)
@@ -150,7 +150,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const char* message = "Exception!";
   EXPECT_CALL(library, GetABoolean)
@@ -170,7 +170,7 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseValuesNotSet)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   bool a_boolean = true;
   EXPECT_CALL(library, GetABoolean(kTestViSession, _))
@@ -191,7 +191,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   bool a_boolean = true;
   EXPECT_CALL(library, GetABoolean(kTestViSession, _))
@@ -213,7 +213,7 @@ TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   EXPECT_CALL(library, Abort(kTestViSession))
       .WillOnce(Return(kDriverSuccess));
@@ -232,7 +232,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::int16_t a_number = 15;
   EXPECT_CALL(library, GetANumber(kTestViSession, _))
@@ -253,7 +253,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForCustomCode_CallsGetArraySi
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::int32_t array_size = 1000;
   EXPECT_CALL(library, GetArraySizeForCustomCode(kTestViSession, _))
@@ -274,7 +274,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeVi
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attribute_id = ni::fake::grpc::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL;
   bool attribute_value = true;
@@ -298,7 +298,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViIn
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attribute_id = ni::fake::grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER;
   std::int32_t attribute_value = 12345;
@@ -322,7 +322,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViIn
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attribute_id = ni::fake::grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INT64;
   std::int64_t attribute_value = -12345;
@@ -346,7 +346,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attribute_id = ni::fake::grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
   double attribute_value = 12.345;
@@ -370,7 +370,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::int32_t cal_type = 0;
   std::int32_t month = 1, day = 17, year = 2021, hour = 0, minute = 0;
@@ -403,7 +403,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attribute_id = ni::fake::grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
   std::int32_t months = 24;
@@ -425,7 +425,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::int32_t a_quantity = 123;
   std::int16_t a_turtle = NIFAKE_VAL_LEONARDO;
@@ -449,7 +449,7 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const double delays[] = {1, 2, 3, 4, 5};
   std::int32_t expected_size = 5;
@@ -474,7 +474,7 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const double numbers[] = {1, 2, 3, 4, 5};
   std::int32_t expected_size = 5;
@@ -499,7 +499,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   char output_string[256] = "Hello World!";
   EXPECT_CALL(library, GetAStringOfFixedMaximumSize(kTestViSession, _))
@@ -522,7 +522,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArra
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 number_of_elements = 3;
   std::vector<CustomStruct> cs(number_of_elements);
@@ -545,7 +545,7 @@ TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsI
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const std::int8_t char_array[] = {'a', 'b', 'c'};
   std::int32_t expected_size = 3;
@@ -570,7 +570,7 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   const double doubles[] = {0.2, -2.3, 4.5};
   std::int32_t expected_size = 3;
@@ -602,7 +602,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   bool a_boolean = true;
   std::int32_t an_int_32 = 35;
@@ -649,7 +649,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumbe
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   std::int16_t a_number = 42;
   char a_string[256] = "Hello World!";
@@ -675,7 +675,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnListOfDurationsInSeconds_CallsRetur
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 number_of_elements = 3;
   ViReal64 timedeltas[] = {1.0, 2, -3.0};
@@ -702,7 +702,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 array_size = 3;
   ViBoolean a_boolean = false;
@@ -752,7 +752,7 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViReal64 waveforms[] = {53.4, 42, -120.3};
   std::int32_t expected_number_of_samples = 3;
@@ -777,7 +777,7 @@ TEST(NiFakeServiceTests, NiFakeService_FetchWaveform_CallsFetchWaveform)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt32 request_number_of_samples = 4;
   ViReal64 actual_doubles[] = {53.4, 42, -120.3};
@@ -808,7 +808,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::MobileOSNames a_mobile_o_s_name = ni::fake::grpc::MOBILE_O_S_NAMES_UNSPECIFIED;
   EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults)
@@ -829,7 +829,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::MobileOSNames a_mobile_o_s_name = ni::fake::grpc::MOBILE_O_S_NAMES_ANDROID;
   const char* expected_enum_value = NIFAKE_VAL_ANDROID;
@@ -852,7 +852,7 @@ TEST(NiFakeServiceTests, NiFakeService_ExportAttributeConfigurationBuffer_CallsE
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViInt8 config_buffer[] = {'A', 'B', 'C'};
   ViInt32 expected_size = 3;
@@ -880,7 +880,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceStr
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViChar char_array[] = {'H', 'E', 'L', 'L', 'O'};
   ViInt32 expected_size = 5;
@@ -908,7 +908,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingI
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ViReal64 doubles[] = {53.4, 42, -120.3};
   ViInt32 expected_size = 3;
@@ -936,7 +936,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViS
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
+  ni::tests::utilities::NiFakeMockLibrary library;
   ni::fake::grpc::NiFakeService service(&library, &session_repository);
   ni::fake::grpc::NiFakeAttributes attributeId = ni::fake::grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
   ViChar attribute_char_array[] = {'H', 'E', 'L', 'L', 'O'};
