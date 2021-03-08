@@ -145,3 +145,6 @@ def get_ivi_dance_params(parameters):
   size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
   other_params = (p for p in parameters if p != array_param and p != size_param)
   return (size_param, array_param, other_params)
+
+def is_init_method(function_data):
+  return function_data.get('init_method', False)
