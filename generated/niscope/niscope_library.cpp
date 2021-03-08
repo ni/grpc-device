@@ -122,8 +122,8 @@ NiScopeLibrary::~NiScopeLibrary()
 ::grpc::Status NiScopeLibrary::check_function_exists(std::string functionName)
 {
   return shared_library_.function_exists(functionName.c_str())
-      ? ::grpc::Status::OK
-      : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+    ? ::grpc::Status::OK
+    : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
 ViStatus NiScopeLibrary::Abort(ViSession vi)
@@ -1206,6 +1206,6 @@ ViStatus NiScopeLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 #endif
 }
 
-}  // namespace grpc
-}  // namespace scope
 }  // namespace ni
+}  // namespace scope
+}  // namespace grpc
