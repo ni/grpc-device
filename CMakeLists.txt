@@ -213,7 +213,6 @@ add_executable(IntegrationTestsRunner
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
-    "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs})
 
@@ -285,12 +284,14 @@ add_custom_command(
            
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/system/session_utilities_service_tests.cpp"
     "source/tests/system/niscope_session_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/session_repository.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs}
     ${nidriver_service_srcs})
