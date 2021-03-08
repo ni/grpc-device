@@ -1,5 +1,5 @@
 #
-# This example lists out devices/chassis in a hierarchical manner 
+# This example lists out devices/chassis 
 # by estabilishing communication with the server over gRPC
 #
 # Copyright 2021 National Instruments
