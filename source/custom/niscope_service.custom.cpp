@@ -269,8 +269,6 @@ namespace internal = ni::hardware::grpc::internal;
   }
 }
 
-// TODO: Actually implement all the below functions
-
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 ::grpc::Status NiScopeService::FetchComplex(::grpc::ServerContext* context, const FetchComplexRequest* request, FetchComplexResponse* response)
@@ -386,17 +384,10 @@ namespace internal = ni::hardware::grpc::internal;
     ViConstString channel_list = request->channel_list().c_str();
     ViInt32 buffer_size = request->buffer_size();
 
-    // TODO: Figure out exactly how the ivi with a twist is supposed to work.
-    ViInt32 num_waveforms;
-    auto status = library_->GetNormalizationCoefficients(vi, channel_list, buffer_size, nullptr, &num_waveforms);
-    if (status != 0) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-
-    ViInt32 number_of_coefficient_sets = 0;
+    buffer_size = std::max(buffer_size, (ViInt32)1);
     std::vector<niScope_coefficientInfo> coefficient_info(buffer_size, niScope_coefficientInfo());
-    status = library_->GetNormalizationCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
+    ViInt32 number_of_coefficient_sets = 0;
+    auto status = library_->GetNormalizationCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
     response->set_status(status);
     if (status != 0) {
       response->set_number_of_coefficient_sets(number_of_coefficient_sets);
@@ -422,17 +413,10 @@ namespace internal = ni::hardware::grpc::internal;
     ViConstString channel_list = request->channel_list().c_str();
     ViInt32 buffer_size = request->buffer_size();
 
-    // TODO: Figure out exactly how the ivi with a twist is supposed to work.
-    ViInt32 num_waveforms;
-    auto status = library_->GetScalingCoefficients(vi, channel_list, buffer_size, nullptr, &num_waveforms);
-    if (status != 0) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-
-    ViInt32 number_of_coefficient_sets = 0;
+    buffer_size = std::max(buffer_size, (ViInt32)1);
     std::vector<niScope_coefficientInfo> coefficient_info(buffer_size, niScope_coefficientInfo());
-    status = library_->GetScalingCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
+    ViInt32 number_of_coefficient_sets = 0;
+    auto status = library_->GetScalingCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
     response->set_status(status);
     if (status != 0) {
       response->set_number_of_coefficient_sets(number_of_coefficient_sets);
