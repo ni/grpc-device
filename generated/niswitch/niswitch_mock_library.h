@@ -77,6 +77,8 @@ class NiSwitchMockLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface 
   MOCK_METHOD(ViStatus, error_message, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, reset, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
+  MOCK_METHOD(ViStatus, error_query, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]), (override));
+  MOCK_METHOD(ViStatus, revision_query, (ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]), (override));
 };
 
 }  // namespace unit
