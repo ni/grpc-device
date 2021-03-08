@@ -213,7 +213,6 @@ add_executable(IntegrationTestsRunner
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
-    "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs})
 
