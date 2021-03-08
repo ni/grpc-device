@@ -18,18 +18,23 @@ const char* kTestSessionName = "SessionName";
 const char* kInvalidResourceName = "";
 
 class NiScopeSessionTest : public ::testing::Test {
- public:
-  virtual ~NiScopeSessionTest() {}
-
-  void SetUp() override
+ protected:
+  NiScopeSessionTest()
   {
+    ::grpc::ServerBuilder builder;
+    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
+    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
+    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
+    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
+    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
+    builder.RegisterService(session_utilities_service_.get());
+    builder.RegisterService(niscope_service_.get());
+
+    server_ = builder.BuildAndStart();
     ResetStubs();
-    ::grpc::ClientContext context;
-    ni::hardware::grpc::ResetServerRequest request;
-    ni::hardware::grpc::ResetServerResponse response;
-    session_utilities_stub_->ResetServer(&context, request, &response);
-    EXPECT_TRUE(response.is_server_reset());
   }
+
+  virtual ~NiScopeSessionTest() {}
 
   void ResetStubs()
   {
@@ -57,21 +62,6 @@ class NiScopeSessionTest : public ::testing::Test {
     return status;
   }
 
- protected:
-  NiScopeSessionTest()
-  {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
-    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
-    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
-    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
-    builder.RegisterService(session_utilities_service_.get());
-    builder.RegisterService(niscope_service_.get());
-
-    server_ = builder.BuildAndStart();
-  }
-
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
@@ -94,7 +84,7 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriv
   EXPECT_NE(0, response.vi().id());
 }
 
-TEST_F(NiScopeSessionTest, InitializeSessionDeviceAndNoSessionName_CreatesDriverSession)
+TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
 {
   scope::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kTestResourceName, kSimulatedOptionsString, "", &response);
