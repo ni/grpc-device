@@ -44,8 +44,8 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     void* syscfg_handle
     );
   NISysCfgStatus CreateFilter(
-    NISysCfgSessionHandle                session_handle,
-    NISysCfgFilterHandle*                filter_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterHandle* filter_handle
     );
   NISysCfgStatus SetFilterProperty(
     NISysCfgFilterHandle filter_handle,
@@ -53,27 +53,27 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     ...
     );
   NISysCfgStatus FindHardware(
-    NISysCfgSessionHandle                session_handle,
-    NISysCfgFilterMode                   filter_mode,
-    NISysCfgFilterHandle                 filter_handle,
-    const char*                          expert_names,
-    NISysCfgEnumResourceHandle*          resource_enum_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterMode filter_mode,
+    NISysCfgFilterHandle filter_handle,
+    const char* expert_names,
+    NISysCfgEnumResourceHandle* resource_enum_handle
     );
   NISysCfgStatus NextResource(
-    NISysCfgSessionHandle                session_handle,
-    NISysCfgEnumResourceHandle           resource_enum_handle,
-    NISysCfgResourceHandle*              resource_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgEnumResourceHandle resource_enum_handle,
+    NISysCfgResourceHandle* resource_handle
     );
   NISysCfgStatus GetResourceIndexedProperty(
-    NISysCfgResourceHandle               resource_handle,
-    NISysCfgIndexedProperty              property_ID,
-    unsigned int                         index,
-    void*                                value
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgIndexedProperty property_ID,
+    unsigned int index,
+    void* value
     );
   NISysCfgStatus GetResourceProperty(
-    NISysCfgResourceHandle               resource_handle,
-    NISysCfgResourceProperty             property_ID,
-    void*                                value
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgResourceProperty property_ID,
+    void* value
     );
 
  private:
@@ -91,36 +91,36 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     void* syscfg_handle
     );
   using CreateFilterPtr = NISysCfgStatus (*)(
-    NISysCfgSessionHandle                session_handle,
-    NISysCfgFilterHandle*                filter_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterHandle* filter_handle
     );
   using SetFilterPropertyPtr = NISysCfgStatus (*)(
-    NISysCfgFilterHandle                 filter_handle,
-    NISysCfgFilterProperty               property_ID,
+    NISysCfgFilterHandle filter_handle,
+    NISysCfgFilterProperty property_ID,
     ...
     );
   using FindHardwarePtr = NISysCfgStatus (*)(
-    NISysCfgSessionHandle                session_handle,
-    NISysCfgFilterMode                   filter_mode,
-    NISysCfgFilterHandle                 filter_handle,
-    const char*                          expert_names,
-    NISysCfgEnumResourceHandle*          resource_enum_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterMode filter_mode,
+    NISysCfgFilterHandle filter_handle,
+    const char* expert_names,
+    NISysCfgEnumResourceHandle* resource_enum_handle
     );
   using NextResourcePtr = NISysCfgStatus (*)(
-    NISysCfgSessionHandle                session_handle,
-    NISysCfgEnumResourceHandle           resource_enum_handle,
-    NISysCfgResourceHandle*              resource_handle
+    NISysCfgSessionHandle session_handle,
+    NISysCfgEnumResourceHandle resource_enum_handle,
+    NISysCfgResourceHandle* resource_handle
     );
   using GetResourceIndexedPropertyPtr = NISysCfgStatus (*)(
-    NISysCfgResourceHandle               resource_handle,
-    NISysCfgIndexedProperty              property_ID,
-    unsigned int                         index,
-    void*                                value
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgIndexedProperty property_ID,
+    unsigned int index,
+    void* value
     );
   using GetResourcePropertyPtr = NISysCfgStatus (*)(
-    NISysCfgResourceHandle               resource_handle,
-    NISysCfgResourceProperty             property_ID,
-    void*                                value
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgResourceProperty property_ID,
+    void* value
     );
 
   typedef struct FunctionPointers {
