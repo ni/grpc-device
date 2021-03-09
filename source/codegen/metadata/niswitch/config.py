@@ -8,7 +8,7 @@ config = {
     'java_package': 'com.ni.niswitch.grpc',
     'csharp_namespace': 'NationalInstruments.NISwitch.Grpc',
     'namespace_component': 'niswitch',
-    'close_function': 'close',
+    'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'AbortScan',
         'initiate_function': 'InitiateScan',
