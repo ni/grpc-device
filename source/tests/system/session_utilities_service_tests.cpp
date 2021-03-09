@@ -11,35 +11,6 @@ namespace system {
 namespace internal = ni::hardware::grpc::internal;
 
 class SessionUtilitiesServiceTests : public ::testing::Test {
- public:
-  virtual ~SessionUtilitiesServiceTests() {}
-
-  void SetUp() override
-  {
-    ResetStub();
-    ::grpc::ClientContext context;
-    ni::hardware::grpc::ResetServerRequest request;
-    ni::hardware::grpc::ResetServerResponse response;
-    stub_->ResetServer(&context, request, &response);
-    EXPECT_TRUE(response.is_server_reset());
-  }
-
-  void TearDown() override
-  {
-    server_->Shutdown();
-  }
-
-  void ResetStub()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
-  }
-
-  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub>& GetStub()
-  {
-    return stub_;
-  }
-
  protected:
   SessionUtilitiesServiceTests()
   {
@@ -51,6 +22,20 @@ class SessionUtilitiesServiceTests : public ::testing::Test {
     builder.RegisterService(service_.get());
 
     server_ = builder.BuildAndStart();
+    ResetStub();
+  }
+
+  virtual ~SessionUtilitiesServiceTests() {}
+
+  void ResetStub()
+  {
+      channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
+      stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
+  }
+
+  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub>& GetStub()
+  {
+      return stub_;
   }
 
  private:
