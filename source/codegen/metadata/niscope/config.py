@@ -8,7 +8,7 @@ config = {
     'java_package': 'com.ni.scope.grpc',
     'csharp_namespace': 'NationalInstruments.Scope.Grpc',
     'namespace_component': 'scope',
-    'close_function': 'close',
+    'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'Abort',
         'initiate_function': 'InitiateAcquisition',
