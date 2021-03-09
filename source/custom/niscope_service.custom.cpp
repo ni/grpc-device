@@ -32,9 +32,10 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
-    // TODO: Re-evaluate this when we get ActualRecordLength method in metadata. At that point
-    // num_samples can come from a call to library_->ActualRecordLength and be removed from proto fields on request.
     ViInt32 num_samples = request->num_samples();
+    if (num_samples < 0) {
+      CheckStatus(library_->ActualRecordLength(vi, &num_samples));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -71,6 +72,9 @@ void CheckStatus(int status)
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
+    if (num_samples < 0) {
+      CheckStatus(library_->ActualRecordLength(vi, &num_samples));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -107,6 +111,9 @@ void CheckStatus(int status)
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
+    if (num_samples < 0) {
+      CheckStatus(library_->ActualRecordLength(vi, &num_samples));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -143,6 +150,9 @@ void CheckStatus(int status)
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
+    if (num_samples < 0) {
+      CheckStatus(library_->ActualRecordLength(vi, &num_samples));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -260,6 +270,9 @@ void CheckStatus(int status)
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
+    if (num_samples < 0) {
+      CheckStatus(library_->ActualRecordLength(vi, &num_samples));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -296,6 +309,9 @@ void CheckStatus(int status)
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
+    if (num_samples < 0) {
+      CheckStatus(library_->ActualRecordLength(vi, &num_samples));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -332,6 +348,9 @@ void CheckStatus(int status)
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
+    if (num_samples < 0) {
+      CheckStatus(library_->ActualRecordLength(vi, &num_samples));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -399,7 +418,7 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
 
-    ViInt32 number_of_coefficient_sets = 0;
+    ViInt32 number_of_coefficient_sets;
     CheckStatus(library_->GetNormalizationCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets));
 
     std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
@@ -432,7 +451,7 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
 
-    ViInt32 number_of_coefficient_sets = 0;
+    ViInt32 number_of_coefficient_sets;
     CheckStatus(library_->GetScalingCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets));
 
     std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
