@@ -131,3 +131,9 @@ def filter_proto_rpc_functions_to_generate(functions):
   functions_for_code_gen = {'public'}
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_code_gen]
 
+def get_cname(functions, method_name, c_function_prefix):
+  if ('cname' in functions[method_name]):
+    return functions[method_name]['cname']
+  else:
+    return c_function_prefix + method_name
+

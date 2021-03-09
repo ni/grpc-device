@@ -80,6 +80,8 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
   ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus reset(ViSession vi);
   ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  ViStatus error_query(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
+  ViStatus revision_query(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
 
  private:
   using AbortScanPtr = ViStatus (*)(ViSession vi);
@@ -142,6 +144,8 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
   using error_messagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   using resetPtr = ViStatus (*)(ViSession vi);
   using self_testPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  using error_queryPtr = ViStatus (*)(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
+  using revision_queryPtr = ViStatus (*)(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
 
   typedef struct FunctionPointers {
     AbortScanPtr AbortScan;
@@ -204,6 +208,8 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
     error_messagePtr error_message;
     resetPtr reset;
     self_testPtr self_test;
+    error_queryPtr error_query;
+    revision_queryPtr revision_query;
   } FunctionLoadStatus;
 
   ni::hardware::grpc::internal::SharedLibrary shared_library_;
