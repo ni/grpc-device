@@ -1436,7 +1436,6 @@ message GetFrequencyResponseResponse {
 message GetNormalizationCoefficientsRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetNormalizationCoefficientsResponse {
@@ -1448,7 +1447,6 @@ message GetNormalizationCoefficientsResponse {
 message GetScalingCoefficientsRequest {
   ni.hardware.grpc.Session vi = 1;
   string channel_list = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetScalingCoefficientsResponse {

@@ -1995,6 +1995,7 @@ functions = {
                 'type':'ViConstString'
             },
             {
+                'include_in_proto': False,
                 'name':'bufferSize',
                 'direction':'in',
                 'type':'ViInt32'
@@ -2032,6 +2033,7 @@ functions = {
                 'type': 'ViConstString'
             },
             {
+                'include_in_proto': False,
                 'direction': 'in',
                 'name': 'bufferSize',
                 'type': 'ViInt32'
