@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <server/session_utilities_service.h>
+#include <server/syscfg_library.h>
+#include <tests/utilities/syscfg_mock_library.h>
 
 #include "niscope/niscope_library.h"
 #include "niscope/niscope_service.h"
@@ -9,6 +11,10 @@ namespace tests {
 namespace system {
 
 namespace scope = ni::scope::grpc;
+namespace internal = ni::hardware::grpc::internal;
+
+using ::testing::NiceMock;
+using ::testing::Throw;
 
 const int kScopeDriverApiSuccess = 0;
 
@@ -17,8 +23,11 @@ class NiScopeDriverApiTest : public ::testing::Test {
   NiScopeDriverApiTest()
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
+    session_repository_ = std::make_unique<internal::SessionRepository>();
+    syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
+    ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
+        .WillByDefault(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
+    device_enumerator_ = std::make_unique<internal::DeviceEnumerator>(syscfg_mock_library_.get());
     session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
@@ -94,8 +103,9 @@ class NiScopeDriverApiTest : public ::testing::Test {
   std::unique_ptr<::ni::hardware::grpc::Session> driver_session_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
   std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub> session_utilities_stub_;
-  std::unique_ptr<::ni::hardware::grpc::internal::SessionRepository> session_repository_;
-  std::unique_ptr<::ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<internal::SessionRepository> session_repository_;
+  std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
+  std::unique_ptr<internal::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<::ni::hardware::grpc::SessionUtilitiesService> session_utilities_service_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;
