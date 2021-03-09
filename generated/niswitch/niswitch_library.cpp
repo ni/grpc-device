@@ -83,6 +83,8 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.error_message = reinterpret_cast<error_messagePtr>(shared_library_.get_function_pointer("niSwitch_error_message"));
   function_pointers_.reset = reinterpret_cast<resetPtr>(shared_library_.get_function_pointer("niSwitch_reset"));
   function_pointers_.self_test = reinterpret_cast<self_testPtr>(shared_library_.get_function_pointer("niSwitch_self_test"));
+  function_pointers_.error_query = reinterpret_cast<error_queryPtr>(shared_library_.get_function_pointer("niSwitch_error_query"));
+  function_pointers_.revision_query = reinterpret_cast<revision_queryPtr>(shared_library_.get_function_pointer("niSwitch_revision_query"));
 }
 
 NiSwitchLibrary::~NiSwitchLibrary()
@@ -813,6 +815,30 @@ ViStatus NiSwitchLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViCha
   return niSwitch_self_test(vi, selfTestResult, selfTestMessage);
 #else
   return function_pointers_.self_test(vi, selfTestResult, selfTestMessage);
+#endif
+}
+
+ViStatus NiSwitchLibrary::error_query(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256])
+{
+  if (!function_pointers_.error_query) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_error_query.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_error_query(vi, errorCode, errorMessage);
+#else
+  return function_pointers_.error_query(vi, errorCode, errorMessage);
+#endif
+}
+
+ViStatus NiSwitchLibrary::revision_query(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256])
+{
+  if (!function_pointers_.revision_query) {
+    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find niSwitch_revision_query.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_revision_query(vi, instrumentDriverRevision, firmwareRevision);
+#else
+  return function_pointers_.revision_query(vi, instrumentDriverRevision, firmwareRevision);
 #endif
 }
 

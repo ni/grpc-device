@@ -76,6 +76,8 @@ service NiSwitch {
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
+  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
+  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
 }
 
 enum NiSwitchAttributes {
@@ -853,5 +855,25 @@ message SelfTestResponse {
   int32 status = 1;
   sint32 self_test_result = 2;
   string self_test_message = 3;
+}
+
+message ErrorQueryRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message ErrorQueryResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string error_message = 3;
+}
+
+message RevisionQueryRequest {
+  ni.hardware.grpc.Session vi = 1;
+}
+
+message RevisionQueryResponse {
+  int32 status = 1;
+  string instrument_driver_revision = 2;
+  string firmware_revision = 3;
 }
 
