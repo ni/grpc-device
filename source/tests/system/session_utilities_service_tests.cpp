@@ -48,7 +48,7 @@ class SessionUtilitiesServiceTests : public ::testing::Test {
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_ClientCallsEnumerateDevices_ResponseContainsAtLeastOneDevice)
+TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_ResponseContainsAtLeastOneDevice)
 {
   ni::hardware::grpc::EnumerateDevicesRequest request;
   ni::hardware::grpc::EnumerateDevicesResponse response;
@@ -60,7 +60,7 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_ClientCallsEnumerateDe
   EXPECT_GE(response.devices_size(), 1);
 }
 
-TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_ClientCallsEnumerateDevices_DevicePropertiesIncludesNameModelVendorSerialNumber)
+TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_DevicePropertiesIncludesNameModelVendorSerialNumber)
 {
   ni::hardware::grpc::EnumerateDevicesRequest request;
   ni::hardware::grpc::EnumerateDevicesResponse response;
