@@ -94,10 +94,10 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     NISysCfgSessionHandle session_handle,
     NISysCfgFilterHandle* filter_handle
     );
-  using SetFilterPropertyPtr = NISysCfgStatus (*)(
+  using SetFilterPropertyVPtr = NISysCfgStatus (*)(
     NISysCfgFilterHandle filter_handle,
     NISysCfgFilterProperty property_ID,
-    ...
+    va_list args
     );
   using FindHardwarePtr = NISysCfgStatus (*)(
     NISysCfgSessionHandle session_handle,
@@ -127,7 +127,7 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     InitializeSessionPtr InitializeSession;
     CloseHandlePtr CloseHandle;
     CreateFilterPtr CreateFilter;
-    SetFilterPropertyPtr SetFilterProperty;
+    SetFilterPropertyVPtr SetFilterPropertyV;
     FindHardwarePtr FindHardware;
     NextResourcePtr NextResource;
     GetResourceIndexedPropertyPtr GetResourceIndexedProperty;

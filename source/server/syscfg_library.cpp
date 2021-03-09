@@ -16,7 +16,7 @@ SysCfgLibrary::SysCfgLibrary()
   GET_POINTER(function_pointers_, shared_library_, InitializeSession);
   GET_POINTER(function_pointers_, shared_library_, CloseHandle);
   GET_POINTER(function_pointers_, shared_library_, CreateFilter);
-  GET_POINTER(function_pointers_, shared_library_, SetFilterProperty);
+  GET_POINTER(function_pointers_, shared_library_, SetFilterPropertyV);
   GET_POINTER(function_pointers_, shared_library_, FindHardware);
   GET_POINTER(function_pointers_, shared_library_, NextResource);
   GET_POINTER(function_pointers_, shared_library_, GetResourceIndexedProperty);
@@ -88,13 +88,13 @@ NISysCfgStatus SysCfgLibrary::SetFilterProperty(
   ...
   )
 {
-  if (!function_pointers_.SetFilterProperty) {
+  if (!function_pointers_.SetFilterPropertyV) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
   va_list args;
   NISysCfgStatus status;
   va_start(args, property_ID);
-  status = function_pointers_.SetFilterProperty(filter_handle, property_ID, args);
+  status = function_pointers_.SetFilterPropertyV(filter_handle, property_ID, args);
   va_end(args);
   return status;
 }
