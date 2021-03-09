@@ -79,7 +79,6 @@ NISysCfgStatus SysCfgLibrary::CreateFilter(
   if (!function_pointers_.CreateFilter) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-  NISysCfgStatus status;
   return function_pointers_.CreateFilter(session_handle, filter_handle);
 }
 
