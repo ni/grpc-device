@@ -113,7 +113,7 @@ void CheckStatus(int status)
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
       CheckStatus(library_->ActualRecordLength(vi, &num_samples));
-    };
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
