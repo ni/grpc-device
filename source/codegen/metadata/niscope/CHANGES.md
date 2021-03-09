@@ -139,7 +139,11 @@ should be implemented by hand in niscope_service.custom.cpp.
 Instances of `python-code` used for the `size` mechanism were updated to `custom-code` to reflect their implementations will be handled
 in the custom service handler implementations.
 
-The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
+The following functions were tagged with `'init_method': True` to ensure their generated service handlers register the new session
 with the session_repository.
 - `Init`
 - `InitWithOptions`
+
+The following parameters were marked as `'include_in_proto': False` because they are calculated in the service handler and shouldn't be passed in.
+- `bufferSize` in `GetNormalizationCoefficients`
+- `bufferSize` in `GetScalingCoefficients`
