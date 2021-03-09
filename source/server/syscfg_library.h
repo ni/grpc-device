@@ -43,9 +43,14 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   NISysCfgStatus CloseHandle(
     void* syscfg_handle
     );
-  NISysCfgStatus CreateHardwareFilter(
+  NISysCfgStatus CreateFilter(
     NISysCfgSessionHandle                session_handle,
     NISysCfgFilterHandle*                filter_handle
+    );
+  NISysCfgStatus SetFilterProperty(
+    NISysCfgFilterHandle filter_handle,
+    NISysCfgFilterProperty property_ID,
+    ...
     );
   NISysCfgStatus FindHardware(
     NISysCfgSessionHandle                session_handle,

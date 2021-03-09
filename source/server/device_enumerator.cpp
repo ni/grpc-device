@@ -34,7 +34,10 @@ DeviceEnumerator::~DeviceEnumerator()
     // TODO: Caching of syscfg_session will be added in a separate PR.
     // All parameters of InitializeSession other than the first are System Configuration default values.
     if (NISysCfg_Succeeded(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
-      if (NISysCfg_Succeeded(status = library_->CreateHardwareFilter(session, &filter))) {
+      if (NISysCfg_Succeeded(status = library_->CreateFilter(session, &filter))) {
+        NISysCfgSetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
+        NISysCfgSetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
+        NISysCfgSetFilterProperty(filter, NISysCfgFilterPropertyServiceType, NISysCfgServiceTypeLocalSystem);
         if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeMatchValuesAny, filter, NULL, &resources_handle))) {
           while (NISysCfg_Succeeded(status) && (status = library_->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
             library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
