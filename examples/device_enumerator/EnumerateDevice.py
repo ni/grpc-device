@@ -40,5 +40,4 @@ server = gRPCServer.ServerUtilitiesStub(channel)
 enumerateDeviceResponse = server.EnumerateDevices(serverType.EnumerateDevicesRequest())
 
 # Display devices/chassis connected to the server machine
-print("Connecting: ")
 printDevices()     
