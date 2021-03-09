@@ -35,11 +35,13 @@ DeviceEnumerator::~DeviceEnumerator()
     // All parameters of InitializeSession other than the first are System Configuration default values.
     if (NISysCfg_Succeeded(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
       if (NISysCfg_Succeeded(status = library_->CreateHardwareFilter(session, &filter))) {
-        if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeAny, filter, NULL, &resources_handle))) {
+        if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeMatchValuesAny, filter, NULL, &resources_handle))) {
           while (NISysCfg_Succeeded(status) && (status = library_->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
             library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
             if (strcmp(expert_name, kNetworkExpertName) != 0) {
               DeviceProperties* properties = devices->Add();
+              // Note that we don't check for status of GetResourceIndexedProperty and GetResourceProperty APIs because
+              // we want to return empty string when any of the property does not exist for any resource.
               library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
               library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, model);
               library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, vendor);
