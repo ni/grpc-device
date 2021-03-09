@@ -71,7 +71,7 @@ NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
   return function_pointers_.CloseHandle(syscfg_handle);
 }
 
-NISysCfgStatus SysCfgLibrary::CreateHardwareFilter(
+NISysCfgStatus SysCfgLibrary::CreateFilter(
   NISysCfgSessionHandle session_handle,
   NISysCfgFilterHandle* filter_handle
   )
@@ -79,11 +79,23 @@ NISysCfgStatus SysCfgLibrary::CreateHardwareFilter(
   if (!function_pointers_.CreateFilter) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
-  NISysCfgStatus status;
-  if (NISysCfg_Succeeded(status = function_pointers_.CreateFilter(session_handle, filter_handle))) {
-    function_pointers_.SetFilterProperty(*filter_handle, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
-    function_pointers_.SetFilterProperty(*filter_handle, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
+  return function_pointers_.CreateFilter(session_handle, filter_handle);
+}
+
+NISysCfgStatus SysCfgLibrary::SetFilterProperty(
+  NISysCfgFilterHandle filter_handle,
+  NISysCfgFilterProperty property_ID,
+  ...
+  )
+{
+  if (!function_pointers_.SetFilterProperty) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
+  va_list args;
+  NISysCfgStatus status;
+  va_start(args, property_ID);
+  status = function_pointers_.SetFilterProperty(filter_handle, property_ID, args);
+  va_end(args);
   return status;
 }
 

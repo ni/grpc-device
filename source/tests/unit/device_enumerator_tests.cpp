@@ -118,7 +118,7 @@ NISysCfgStatus SetExpertNameToNetwork(void* value)
   return NISysCfg_OK; 
 }
 
-TEST(DeviceEnumerationTests, SysCfgApiInstalled_EnumerateDevices_ListOfDevicesDoesNotContainRemoteDevices)
+TEST(DeviceEnumerationTests, SysCfgApiInstalled_EnumerateDevices_ListOfDevicesDoesNotContainNetworkDevices)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   internal::DeviceEnumerator device_enumerator(&mock_library);
