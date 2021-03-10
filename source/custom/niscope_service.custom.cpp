@@ -1,10 +1,7 @@
 #include <niscope/niscope_service.h>
 
-namespace ni {
-namespace scope {
 namespace grpc {
-
-namespace internal = ni::hardware::grpc::internal;
+namespace niscope {
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -39,7 +36,7 @@ namespace internal = ni::hardware::grpc::internal;
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
@@ -75,7 +72,7 @@ namespace internal = ni::hardware::grpc::internal;
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
@@ -111,7 +108,7 @@ namespace internal = ni::hardware::grpc::internal;
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
@@ -147,7 +144,7 @@ namespace internal = ni::hardware::grpc::internal;
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
@@ -184,7 +181,7 @@ namespace internal = ni::hardware::grpc::internal;
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
@@ -228,7 +225,7 @@ namespace internal = ni::hardware::grpc::internal;
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
@@ -264,11 +261,10 @@ namespace internal = ni::hardware::grpc::internal;
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
 
+}  // namespace niscope
 }  // namespace grpc
-}  // namespace scope
-}  // namespace ni

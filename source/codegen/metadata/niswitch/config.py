@@ -5,8 +5,8 @@ config = {
     'c_header': 'niswitch.h',
     'c_function_prefix': 'niSwitch_',
     'service_class_prefix': 'NiSwitch',
-    'java_package': 'com.ni.niswitch.grpc',
-    'csharp_namespace': 'NationalInstruments.NISwitch.Grpc',
+    'java_package': 'com.ni.grpc.niswitch',
+    'csharp_namespace': 'NationalInstruments.Grpc.Switch',
     'namespace_component': 'niswitch',
     'close_function': 'close',
     'context_manager_name': {

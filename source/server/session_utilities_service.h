@@ -6,13 +6,12 @@
 #include "device_enumerator.h"
 #include "session_repository.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
+namespace nidevice {
 
 class SessionUtilitiesService final : public SessionUtilities::Service {
  public:
-  SessionUtilitiesService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator);
+  SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator);
 
   ::grpc::Status EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response) override;
   ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
@@ -21,10 +20,9 @@ class SessionUtilitiesService final : public SessionUtilities::Service {
   ::grpc::Status ResetServer(::grpc::ServerContext* context, const ResetServerRequest* request, ResetServerResponse* response) override;
 
  private:
-  internal::SessionRepository* session_repository_;
-  internal::DeviceEnumerator* device_enumerator_;
+  SessionRepository* session_repository_;
+  DeviceEnumerator* device_enumerator_;
 };
 
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
