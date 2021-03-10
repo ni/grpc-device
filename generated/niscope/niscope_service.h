@@ -4,8 +4,8 @@
 //---------------------------------------------------------------------
 // Service header for the NI-SCOPE Metadata
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_SERVICE_H
-#define NI_SCOPE_GRPC_SERVICE_H
+#ifndef GRPC_NISCOPE_SERVICE_H
+#define GRPC_NISCOPE_SERVICE_H
 
 #include <niscope.grpc.pb.h>
 #include <condition_variable>
@@ -18,13 +18,12 @@
 
 #include "niscope_library_interface.h"
 
-namespace ni {
-namespace scope {
 namespace grpc {
+namespace niscope {
 
 class NiScopeService final : public NiScope::Service {
 public:
-  NiScopeService(NiScopeLibraryInterface* library, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiScopeService(NiScopeLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository);
   virtual ~NiScopeService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response) override;
@@ -118,18 +117,11 @@ public:
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
 private:
   NiScopeLibraryInterface* library_;
-  ni::hardware::grpc::internal::SessionRepository* session_repository_;
-  void Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output);
-  void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output);
-  void Copy(const niScope_coefficientInfo& input, ni::scope::grpc::CoefficientInfo* output);
-  void Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::CoefficientInfo>* output);
-  void Copy(const NIComplexNumber_struct& input, ni::scope::grpc::NIComplexNumber* output);
-  void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::NIComplexNumber>* output);
-  void Copy(const NIComplexI16_struct& input, ni::scope::grpc::NIComplexInt32* output);
-  void Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::NIComplexInt32>* output);
+  grpc::nidevice::SessionRepository* session_repository_;
+  void Copy(const niScope_wfmInfo& input, grpc::niscope::WaveformInfo* output);
+  void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<grpc::niscope::WaveformInfo>* output);
 };
 
+} // namespace niscope
 } // namespace grpc
-} // namespace scope
-} // namespace ni
-#endif  // NI_SCOPE_GRPC_SERVICE_H
+#endif  // GRPC_NISCOPE_SERVICE_H

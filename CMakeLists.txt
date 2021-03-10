@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12.0)
 
-project(core_server C CXX)
+project(ni_grpc_device_server C CXX)
 
 #----------------------------------------------------------------------
 # Include the gRPC's cmake build
@@ -157,7 +157,7 @@ foreach(api ${nidrivers})
   endif()
 endforeach()
 
-add_executable(core_server
+add_executable(ni_grpc_device_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
    "source/server/semaphore.cpp"
@@ -170,7 +170,7 @@ add_executable(core_server
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
 
-target_link_libraries(core_server
+target_link_libraries(ni_grpc_device_server
    ${_REFLECTION}
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
@@ -179,19 +179,19 @@ target_link_libraries(core_server
    )
 
 if(WIN32)
-  target_link_libraries(core_server Delayimp niScope niswitch)
-  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
-  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp niScope niswitch)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
 endif()
 
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory
 #----------------------------------------------------------------------
 add_custom_command(
-   TARGET core_server POST_BUILD
+   TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_SOURCE_DIR}/source/config/insecure_config.json
-            $<TARGET_FILE_DIR:core_server>/server_config.json)
+            $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
 # Add JSON parser

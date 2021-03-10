@@ -2,11 +2,8 @@
 
 #include <stdexcept>
 
-namespace ni {
-namespace scope {
 namespace grpc {
-
-namespace internal = ni::hardware::grpc::internal;
+namespace niscope {
 
 struct DriverErrorException : std::runtime_error {
   DriverErrorException(int status) : std::runtime_error("") { status_ = status; }
@@ -50,7 +47,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -89,7 +86,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -128,7 +125,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -167,7 +164,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -204,7 +201,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -248,7 +245,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -365,7 +362,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -504,6 +501,5 @@ void CheckStatus(int status)
   }
 }
 
+}  // namespace niscope
 }  // namespace grpc
-}  // namespace scope
-}  // namespace ni
