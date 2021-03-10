@@ -1,7 +1,4 @@
 #include <gtest/gtest.h>
-#include <server/session_utilities_service.h>
-#include <server/syscfg_library.h>
-#include <tests/utilities/syscfg_mock_library.h>
 
 #include "niscope/niscope_library.h"
 #include "niscope/niscope_service.h"
@@ -13,9 +10,6 @@ namespace system {
 namespace scope = ni::scope::grpc;
 namespace internal = ni::hardware::grpc::internal;
 
-using ::testing::NiceMock;
-using ::testing::Throw;
-
 const int kScopeDriverApiSuccess = 0;
 
 class NiScopeDriverApiTest : public ::testing::Test {
@@ -24,18 +18,12 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<internal::SessionRepository>();
-    syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
-    ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
-        .WillByDefault(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
-    device_enumerator_ = std::make_unique<internal::DeviceEnumerator>(syscfg_mock_library_.get());
-    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
-    builder.RegisterService(session_utilities_service_.get());
     builder.RegisterService(niscope_service_.get());
 
     server_ = builder.BuildAndStart();
-    ResetStubs();
+    ResetStub();
   }
 
   virtual ~NiScopeDriverApiTest() {}
@@ -50,11 +38,10 @@ class NiScopeDriverApiTest : public ::testing::Test {
     close_driver_session();
   }
 
-  void ResetStubs()
+  void ResetStub()
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
     niscope_stub_ = scope::NiScope::NewStub(channel_);
-    session_utilities_stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
   }
 
   std::unique_ptr<scope::NiScope::Stub>& GetStub()
@@ -102,11 +89,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::ni::hardware::grpc::Session> driver_session_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub> session_utilities_stub_;
   std::unique_ptr<internal::SessionRepository> session_repository_;
-  std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
-  std::unique_ptr<internal::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<::ni::hardware::grpc::SessionUtilitiesService> session_utilities_service_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;
   std::unique_ptr<::grpc::Server> server_;
