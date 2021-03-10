@@ -84,6 +84,20 @@ class NiScopeDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kScopeDriverApiSuccess, response.status());
   }
 
+  int get_actual_num_wfms(const char* channel_list)
+  {
+    ::grpc::ClientContext context;
+    scope::ActualNumWfmsRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_list(channel_list);
+    scope::ActualNumWfmsResponse response;
+    auto status = GetStub()->ActualNumWfms(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    EXPECT_EQ(1, response.num_wfms());
+    return response.num_wfms();
+  }
+
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::grpc::nidevice::Session> driver_session_;
@@ -122,28 +136,25 @@ TEST_F(NiScopeDriverApiTest, NiScopeReset_SendRequest_ResetCompletesSuccessfully
   EXPECT_EQ(kScopeDriverApiSuccess, response.status());
 }
 
-TEST_F(NiScopeDriverApiTest, NiScopeFetch_SendRequest_FetchCompletesSuccessfully)
+TEST_F(NiScopeDriverApiTest, NiScopeRead_SendRequest_ReadCompletesWithCorrectSizes)
 {
+  const ViInt32 expected_num_samples = 100000;
+  const char* channel_list = "0";
+  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   ::grpc::ClientContext context;
-  scope::FetchRequest request;
+  scope::ReadRequest request;
   request.mutable_vi()->set_id(GetSessionId());
-  request.set_channel_list("0");
+  request.set_channel_list(channel_list);
   request.set_timeout(10000);
-  request.set_num_samples(100000);
+  request.set_num_samples(expected_num_samples);
+  scope::ReadResponse response;
 
-  scope::FetchResponse response;
+  ::grpc::Status status = GetStub()->Read(&context, request, &response);
 
-  // ::grpc::Status status = GetStub()->Fetch(&context, request, &response);
-
-  scope::GetErrorMessageRequest errorRequest;
-  errorRequest.mutable_vi()->set_id(GetSessionId());
-  errorRequest.set_error_code(-1074126847);
-  scope::GetErrorMessageResponse errorResponse;
-  ::grpc::Status status = GetStub()->GetErrorMessage(&context, errorRequest, &errorResponse);
-
-  EXPECT_STREQ("Hello", errorResponse.error_message().c_str());
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  EXPECT_EQ(expected_num_samples * expected_num_waveforms, response.waveform_size());
+  EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
 
 }  // namespace system
