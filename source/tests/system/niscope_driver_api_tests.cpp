@@ -98,6 +98,56 @@ class NiScopeDriverApiTest : public ::testing::Test {
     return response.num_wfms();
   }
 
+  int get_actual_measurement_waveform_size(grpc::niscope::ArrayMeasurement array_measurement)
+  {
+    ::grpc::ClientContext context;
+    scope::ActualMeasWfmSizeRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_array_meas_function(array_measurement);
+    scope::ActualMeasWfmSizeResponse response;
+    auto status = GetStub()->ActualMeasWfmSize(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    return response.meas_waveform_size();
+  }
+
+  void initiate_acquisition()
+  {
+    ::grpc::ClientContext context;
+    scope::InitiateAcquisitionRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    scope::InitiateAcquisitionResponse response;
+    auto status = GetStub()->InitiateAcquisition(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  }
+
+  void check_error_message(int error_status)
+  {
+    ::grpc::ClientContext context;
+    scope::GetErrorMessageRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_error_code(error_status);
+    scope::GetErrorMessageResponse response;
+
+    ::grpc::Status status = GetStub()->GetErrorMessage(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    EXPECT_STREQ("", response.error_message().c_str());
+  }
+
+  void auto_setup()
+  {
+    ::grpc::ClientContext context;
+    scope::AutoSetupRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    scope::AutoSetupResponse response;
+
+    ::grpc::Status status = GetStub()->AutoSetup(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  }
+
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::grpc::nidevice::Session> driver_session_;
@@ -153,8 +203,35 @@ TEST_F(NiScopeDriverApiTest, NiScopeRead_SendRequest_ReadCompletesWithCorrectSiz
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  check_error_message(response.status());
   EXPECT_EQ(expected_num_samples * expected_num_waveforms, response.waveform_size());
   EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
+}
+
+TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompletesWithCorrectSizes)
+{
+  auto_setup();
+  initiate_acquisition();
+  const ViInt32 expected_num_samples = 100000;
+  const char* channel_list = "0";
+  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
+  const grpc::niscope::ArrayMeasurement measurement_func = grpc::niscope::ArrayMeasurement::ARRAY_MEASUREMENT_NISCOPE_VAL_INVERSE;
+  const ViInt32 expected_waveform_size = get_actual_measurement_waveform_size(measurement_func);
+  ::grpc::ClientContext context;
+  scope::FetchArrayMeasurementRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list(channel_list);
+  request.set_timeout(10000);
+  request.set_array_meas_function(measurement_func);
+  scope::FetchArrayMeasurementResponse response;
+
+  ::grpc::Status status = GetStub()->FetchArrayMeasurement(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  check_error_message(response.status());
+  EXPECT_EQ(expected_num_waveforms * expected_waveform_size, response.meas_wfm_size());
+  EXPECT_EQ(expected_waveform_size, response.wfm_info_size());
 }
 
 }  // namespace system
