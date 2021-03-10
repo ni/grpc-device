@@ -23,6 +23,10 @@ The following attributes were added :
 - GROUP_CAPABILITIES
 - SPECIFIC_DRIVER_PREFIX
 
+## enums.py
+
+Added an enum for the defined values of wire mode attribute.
+
 ## functions.py
 
 All occurrences of the following keys were removed along with their values:

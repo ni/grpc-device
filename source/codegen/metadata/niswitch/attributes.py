@@ -524,6 +524,7 @@ attributes = {
         'documentation': {
             'description': '\nThis attribute returns the wire mode of the switch device.\nThis attribute affects the values of the NISWITCH_ATTR_NUM_OF_ROWS and  NISWITCH_ATTR_NUM_OF_COLUMNS attributes.   The actual number of input and  output lines on the switch device is fixed, but the number of channels  depends on how many lines constitute each channel.\n'
         },
+        'enum': 'WireMode',
         'lv_property': 'Module Characteristics:Wire mode',
         'name': 'WIRE_MODE',
         'resettable': False,

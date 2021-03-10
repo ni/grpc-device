@@ -276,6 +276,13 @@ enum TriggerInputPolarity {
   TRIGGER_INPUT_POLARITY_NISWITCH_VAL_FALLING_EDGE = 1;
 }
 
+enum WireMode {
+  WIRE_MODE_UNSPECIFIED = 0;
+  WIRE_MODE_NISWITCH_VAL_1_WIRE = 1;
+  WIRE_MODE_NISWITCH_VAL_2_WIRE = 2;
+  WIRE_MODE_NISWITCH_VAL_4_WIRE = 4;
+}
+
 message AbortScanRequest {
   ni.hardware.grpc.Session vi = 1;
 }
