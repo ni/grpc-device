@@ -15,9 +15,9 @@ namespace internal = ni::hardware::grpc::internal;
 using ::testing::NiceMock;
 using ::testing::Throw;
 
-class InProcessServerClientTest : public ::testing::Test {
+class InProcessServerClientTests : public ::testing::Test {
  public:
-  virtual ~InProcessServerClientTest() {}
+  virtual ~InProcessServerClientTests() {}
 
   void SetUp() override
   {
@@ -91,7 +91,7 @@ class InProcessServerClientTest : public ::testing::Test {
   }
 
  protected:
-  InProcessServerClientTest() {}
+  InProcessServerClientTests() {}
 
  private:
   std::shared_ptr<::grpc::Channel> channel_;
@@ -103,7 +103,7 @@ class InProcessServerClientTest : public ::testing::Test {
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(InProcessServerClientTest, SessionUtilitiesServiceClient_RequestIsServerRunning_ResponseIsTrue)
+TEST_F(InProcessServerClientTests, SessionUtilitiesServiceClient_RequestIsServerRunning_ResponseIsTrue)
 {
   ni::hardware::grpc::IsReservedByClientRequest request;
   ni::hardware::grpc::IsReservedByClientResponse response;
@@ -115,7 +115,7 @@ TEST_F(InProcessServerClientTest, SessionUtilitiesServiceClient_RequestIsServerR
   EXPECT_TRUE(s.ok());
 }
 
-TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservation_FreeReservation_DoesNotReserve)
+TEST_F(InProcessServerClientTests, ClientTimesOutWaitingForReservation_FreeReservation_DoesNotReserve)
 {
   auto status_a = call_reserve("foo", "a");
   auto status_b = call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
@@ -128,7 +128,7 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservation_FreeReserv
   EXPECT_EQ(status_b.error_code(), ::grpc::DEADLINE_EXCEEDED);
 }
 
-TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_FreeReservation_DoNotReserve)
+TEST_F(InProcessServerClientTests, MultipleClientsTimeOutWaitingForReservation_FreeReservation_DoNotReserve)
 {
   call_reserve("foo", "a");
   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
@@ -140,7 +140,7 @@ TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_Fr
   EXPECT_FALSE(call_is_reserved("foo", "c"));
 }
 
-TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
+TEST_F(InProcessServerClientTests, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
 {
   call_reserve("foo", "a");
   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
@@ -160,7 +160,7 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
   EXPECT_TRUE(call_is_reserved("foo", "c"));
 }
 
-TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDevices_ReturnsNotFoundGrpcStatusError)
+TEST_F(InProcessServerClientTests, SysCfgLibraryNotPresent_ClientCallsEnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
   ni::hardware::grpc::EnumerateDevicesRequest request;
   ni::hardware::grpc::EnumerateDevicesResponse response;
