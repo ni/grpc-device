@@ -147,3 +147,4 @@ with the session_repository.
 The following parameters were marked as `'include_in_proto': False` because they are calculated in the service handler and shouldn't be passed in.
 - `bufferSize` in `GetNormalizationCoefficients`
 - `bufferSize` in `GetScalingCoefficients`
+- `measurementWaveformSize` in `FetchArrayMeasurement`

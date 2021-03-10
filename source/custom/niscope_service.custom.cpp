@@ -186,7 +186,8 @@ void CheckStatus(int status)
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 array_meas_function = request->array_meas_function();
-    ViInt32 measurement_waveform_size = request->measurement_waveform_size();
+    ViInt32 measurement_waveform_size;
+    CheckStatus(library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size));
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));

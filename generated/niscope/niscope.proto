@@ -1199,7 +1199,6 @@ message FetchArrayMeasurementRequest {
   string channel_list = 2;
   double timeout = 3;
   ArrayMeasurement array_meas_function = 4;
-  sint32 measurement_waveform_size = 5;
 }
 
 message FetchArrayMeasurementResponse {

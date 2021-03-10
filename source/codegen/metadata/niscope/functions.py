@@ -1235,6 +1235,7 @@ functions = {
                 'type': 'ViInt32'
             },
             {
+                'include_in_proto': False,
                 'direction': 'in',
                 'name': 'measurementWaveformSize',
                 'type': 'ViInt32'
