@@ -118,7 +118,7 @@ NISysCfgStatus SetExpertNameToNetwork(void* value)
   return NISysCfg_OK; 
 }
 
-TEST(DeviceEnumerationTests, SysCfgApiInstalled_EnumerateDevices_ListOfDevicesDoesNotContainNetworkDevices)
+TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_ListOfDevicesReturnedDoesNotContainNetworkDevices)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   internal::DeviceEnumerator device_enumerator(&mock_library);
@@ -154,12 +154,10 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
 
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
   EXPECT_EQ(1, devices.size());
-  for (auto it : devices) {
-    EXPECT_EQ("", it.name());
-    EXPECT_EQ("", it.model());
-    EXPECT_EQ("", it.vendor());
-    EXPECT_EQ("", it.serial_number());
-  }
+  EXPECT_EQ("", devices.Get(0).name());
+  EXPECT_EQ("", devices.Get(0).model());
+  EXPECT_EQ("", devices.Get(0).vendor());
+  EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
 }  // namespace unit
