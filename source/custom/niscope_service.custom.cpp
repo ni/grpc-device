@@ -284,7 +284,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -323,7 +323,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -394,7 +394,7 @@ void CheckStatus(int status)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -427,7 +427,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -460,7 +460,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -492,7 +492,7 @@ void CheckStatus(int status)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (internal::LibraryLoadException& ex) {
+  catch (grpc::nidevice::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
