@@ -86,7 +86,7 @@ ${lookup.get_template(custom_template).render()}
 <%
   parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
-  if function == config['init_function']:
+  if common_helpers.is_init_method(functions[function]):
     session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
     input_parameters.insert(0, session_name_param)
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]

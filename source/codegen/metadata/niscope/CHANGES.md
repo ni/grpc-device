@@ -37,6 +37,8 @@ The following `python-only` functions were removed:
 - `FancyFetchMeasurementStats`
 
 The following functions were changed from `private` to `public`:
+- `ActualMeasWfmSize`
+- `ActualNumWfms`
 - `Fetch`
 - `FetchArrayMeasurement`
 - `FetchBinary16`
@@ -67,16 +69,46 @@ The following functions were changed from 'private' to 'no' because they did not
 - `ConfigureRefLevels` - obsolete
 
 The following functions, not originally in the nimi-python metadata were added:
+ - `ActualRecordLength`
+ - `AdjustSampleClockRelativeDelay`
  - `CableSenseSignalStart`
  - `CableSenseSignalStop`
+ - `CheckAttributeViBoolean`
+ - `CheckAttributeViInt32`
+ - `CheckAttributeViInt64`
+ - `CheckAttributeViReal64`
+ - `CheckAttributeViSession`
+ - `CheckAttributeViString`
+ - `ConfigureAcquisition`
+ - `ConfigureClock`
  - `ConfigureTriggerGlitch`
  - `ConfigureTriggerRunt`
  - `ConfigureTriggerWidth`
+ - `ErrorHandler`
+ - `ExportSignal`
+ - `FetchComplex`
+ - `FetchComplexBinary16`
  - `FetchMeasurement`
+ - `GetAttributeViSession`
  - `GetChannelName`
  - `GetChannelNameFromString`
+ - `GetErrorMessage`
+ - `GetFrequencyResponse`
+ - `GetNormalizationCoefficients`
  - `GetScalingCoefficients`
+ - `GetStreamEndpointHandle`
+ - `Init`
  - `ReadMeasurement`
+ - `RevisionQuery`
+ - `SampleMode`
+ - `SampleRate`
+ - `SetAttributeViSession`
+
+The following functions names were made Pascal and moved to their alphabetic position:
+ - `close`
+ - `error_message`
+ - `reset`
+ - `self_test`
 
 The following functions were given a field `grpc_type`:
 - `Fetch`
@@ -97,3 +129,8 @@ should be implemented by hand in niscope_service.custom.cpp.
 
 Instances of `python-code` used for the `size` mechanism were updated to `custom-code` to reflect their implementations will be handled
 in the custom service handler implementations.
+
+The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
+with the session_repository.
+- `Init`
+- `InitWithOptions`

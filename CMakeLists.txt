@@ -280,13 +280,27 @@ add_custom_command(
            
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/system/stub_test.cpp")
+    "source/tests/system/niscope_driver_api_tests.cpp"
+    "source/tests/system/niscope_session_tests.cpp"
+    "source/server/device_enumerator.cpp"
+    "source/server/session_repository.cpp"
+    "source/server/semaphore.cpp"
+    "source/server/session_utilities_service.cpp"
+    "source/server/shared_library.cpp"
+    ${session_proto_srcs}
+    ${session_grpc_srcs}
+    ${nidriver_service_srcs})
 
 target_link_libraries(SystemTestsRunner
     gtest
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS})
 
+if(WIN32)
+    target_link_libraries(SystemTestsRunner Delayimp niScope niswitch)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+endif()
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )

@@ -59,8 +59,12 @@ The following APIs were newly added :
 - InvalidateAllAttributes
 - GetAttributeViSession
 - SetAttributeViSession
-- All the CheckAttribute APIs(5)
-
-The following APIs will not be implemented : 
+- All the CheckAttribute APIs(5) 
 - ErrorQuery
 - RevisionQuery
+
+The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
+with the session_repository.
+- `init`
+- `InitWithOptions`
+- `InitWithTopology`

@@ -76,6 +76,8 @@ class NiSwitchLibraryInterface {
   virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus reset(ViSession vi) = 0;
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
+  virtual ViStatus error_query(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus revision_query(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]) = 0;
 };
 
 }  // namespace niswitch

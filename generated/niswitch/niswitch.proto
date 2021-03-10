@@ -76,6 +76,8 @@ service NiSwitch {
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
+  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
+  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
 }
 
 enum NiSwitchAttributes {
@@ -573,9 +575,10 @@ message GetRelayPositionResponse {
 }
 
 message InitRequest {
-  string resource_name = 1;
-  bool id_query = 2;
-  bool reset_device = 3;
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
 }
 
 message InitResponse {
@@ -584,10 +587,11 @@ message InitResponse {
 }
 
 message InitWithOptionsRequest {
-  string resource_name = 1;
-  bool id_query = 2;
-  bool reset_device = 3;
-  string option_string = 4;
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
+  string option_string = 5;
 }
 
 message InitWithOptionsResponse {
@@ -851,5 +855,25 @@ message SelfTestResponse {
   int32 status = 1;
   sint32 self_test_result = 2;
   string self_test_message = 3;
+}
+
+message ErrorQueryRequest {
+  grpc.nidevice.Session vi = 1;
+}
+
+message ErrorQueryResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string error_message = 3;
+}
+
+message RevisionQueryRequest {
+  grpc.nidevice.Session vi = 1;
+}
+
+message RevisionQueryResponse {
+  int32 status = 1;
+  string instrument_driver_revision = 2;
+  string firmware_revision = 3;
 }
 

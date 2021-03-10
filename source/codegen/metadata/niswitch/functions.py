@@ -676,6 +676,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'init': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -704,6 +705,7 @@ functions = {
         'returns': 'ViStatus',
     },
     'InitWithOptions': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -737,6 +739,7 @@ functions = {
         'returns': 'ViStatus',
     },
     'InitWithTopology': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1226,6 +1229,58 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'selfTestMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'error_query': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorCode',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'revision_query': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'instrumentDriverRevision',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'firmwareRevision',
                 'size': {
                     'mechanism': 'fixed',
                     'value': 256
