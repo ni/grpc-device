@@ -82,6 +82,7 @@ namespace grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_acquisition_status(static_cast<ni::scope::grpc::AcquisitionStatus>(acquisition_status));
+        response->set_acquisition_status_raw(acquisition_status);
       }
       return ::grpc::Status::OK;
     }
@@ -100,7 +101,14 @@ namespace grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 array_meas_function = (ViInt32)request->array_meas_function();
+      ViInt32 array_meas_function;
+      if (request->array_meas_function() != NULL) {
+        array_meas_function = (ViInt32)request->array_meas_function();
+      }
+      else {
+        array_meas_function = (ViInt32)request->array_meas_function_raw();
+      }
+
       ViInt32 meas_waveform_size {};
       auto status = library_->ActualMeasWfmSize(vi, array_meas_function, &meas_waveform_size);
       response->set_status(status);
@@ -172,7 +180,14 @@ namespace grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
-      ViInt32 meas_function = (ViInt32)request->meas_function();
+      ViInt32 meas_function;
+      if (request->meas_function() != NULL) {
+        meas_function = (ViInt32)request->meas_function();
+      }
+      else {
+        meas_function = (ViInt32)request->meas_function_raw();
+      }
+
       auto status = library_->AddWaveformProcessing(vi, channel_list, meas_function);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -270,7 +285,14 @@ namespace grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
-      ViInt32 option = (ViInt32)request->option();
+      ViInt32 option;
+      if (request->option() != NULL) {
+        option = (ViInt32)request->option();
+      }
+      else {
+        option = (ViInt32)request->option_raw();
+      }
+
       auto status = library_->CalSelfCalibrate(vi, channel_list, option);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -424,7 +446,14 @@ namespace grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
-      ViInt32 clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
+      ViInt32 clearable_measurement_function;
+      if (request->clearable_measurement_function() != NULL) {
+        clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
+      }
+      else {
+        clearable_measurement_function = (ViInt32)request->clearable_measurement_function_raw();
+      }
+
       auto status = library_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -613,7 +642,14 @@ namespace grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
-      ViInt32 slope = (ViInt32)request->slope();
+      ViInt32 slope;
+      if (request->slope() != NULL) {
+        slope = (ViInt32)request->slope();
+      }
+      else {
+        slope = (ViInt32)request->slope_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerDigital(vi, trigger_source, slope, holdoff, delay);
@@ -637,8 +673,22 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
-      ViInt32 slope = (ViInt32)request->slope();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 slope;
+      if (request->slope() != NULL) {
+        slope = (ViInt32)request->slope();
+      }
+      else {
+        slope = (ViInt32)request->slope_raw();
+      }
+
+      ViInt32 trigger_coupling;
+      if (request->trigger_coupling() != NULL) {
+        trigger_coupling = (ViInt32)request->trigger_coupling();
+      }
+      else {
+        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerEdge(vi, trigger_source, level, slope, trigger_coupling, holdoff, delay);
@@ -663,9 +713,30 @@ namespace grpc {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 width = request->width();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 glitch_condition = (ViInt32)request->glitch_condition();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      if (request->polarity() != NULL) {
+        polarity = (ViInt32)request->polarity();
+      }
+      else {
+        polarity = (ViInt32)request->polarity_raw();
+      }
+
+      ViInt32 glitch_condition;
+      if (request->glitch_condition() != NULL) {
+        glitch_condition = (ViInt32)request->glitch_condition();
+      }
+      else {
+        glitch_condition = (ViInt32)request->glitch_condition_raw();
+      }
+
+      ViInt32 trigger_coupling;
+      if (request->trigger_coupling() != NULL) {
+        trigger_coupling = (ViInt32)request->trigger_coupling();
+      }
+      else {
+        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerGlitch(vi, trigger_source, level, width, polarity, glitch_condition, trigger_coupling, holdoff, delay);
@@ -690,8 +761,22 @@ namespace grpc {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 hysteresis = request->hysteresis();
-      ViInt32 slope = (ViInt32)request->slope();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 slope;
+      if (request->slope() != NULL) {
+        slope = (ViInt32)request->slope();
+      }
+      else {
+        slope = (ViInt32)request->slope_raw();
+      }
+
+      ViInt32 trigger_coupling;
+      if (request->trigger_coupling() != NULL) {
+        trigger_coupling = (ViInt32)request->trigger_coupling();
+      }
+      else {
+        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerHysteresis(vi, trigger_source, level, hysteresis, slope, trigger_coupling, holdoff, delay);
@@ -735,8 +820,22 @@ namespace grpc {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      if (request->polarity() != NULL) {
+        polarity = (ViInt32)request->polarity();
+      }
+      else {
+        polarity = (ViInt32)request->polarity_raw();
+      }
+
+      ViInt32 trigger_coupling;
+      if (request->trigger_coupling() != NULL) {
+        trigger_coupling = (ViInt32)request->trigger_coupling();
+      }
+      else {
+        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerRunt(vi, trigger_source, low_threshold, high_threshold, polarity, trigger_coupling, holdoff, delay);
@@ -781,11 +880,39 @@ namespace grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViBoolean enable_dc_restore = request->enable_dc_restore();
-      ViInt32 signal_format = (ViInt32)request->signal_format();
-      ViInt32 event_parameter = (ViInt32)request->event();
+      ViInt32 signal_format;
+      if (request->signal_format() != NULL) {
+        signal_format = (ViInt32)request->signal_format();
+      }
+      else {
+        signal_format = (ViInt32)request->signal_format_raw();
+      }
+
+      ViInt32 event_parameter;
+      if (request->event() != NULL) {
+        event_parameter = (ViInt32)request->event();
+      }
+      else {
+        event_parameter = (ViInt32)request->event_raw();
+      }
+
       ViInt32 line_number = request->line_number();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      if (request->polarity() != NULL) {
+        polarity = (ViInt32)request->polarity();
+      }
+      else {
+        polarity = (ViInt32)request->polarity_raw();
+      }
+
+      ViInt32 trigger_coupling;
+      if (request->trigger_coupling() != NULL) {
+        trigger_coupling = (ViInt32)request->trigger_coupling();
+      }
+      else {
+        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
@@ -811,9 +938,30 @@ namespace grpc {
       ViReal64 level = request->level();
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 condition = (ViInt32)request->condition();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      if (request->polarity() != NULL) {
+        polarity = (ViInt32)request->polarity();
+      }
+      else {
+        polarity = (ViInt32)request->polarity_raw();
+      }
+
+      ViInt32 condition;
+      if (request->condition() != NULL) {
+        condition = (ViInt32)request->condition();
+      }
+      else {
+        condition = (ViInt32)request->condition_raw();
+      }
+
+      ViInt32 trigger_coupling;
+      if (request->trigger_coupling() != NULL) {
+        trigger_coupling = (ViInt32)request->trigger_coupling();
+      }
+      else {
+        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerWidth(vi, trigger_source, level, low_threshold, high_threshold, polarity, condition, trigger_coupling, holdoff, delay);
@@ -838,8 +986,22 @@ namespace grpc {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 low_level = request->low_level();
       ViReal64 high_level = request->high_level();
-      ViInt32 window_mode = (ViInt32)request->window_mode();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 window_mode;
+      if (request->window_mode() != NULL) {
+        window_mode = (ViInt32)request->window_mode();
+      }
+      else {
+        window_mode = (ViInt32)request->window_mode_raw();
+      }
+
+      ViInt32 trigger_coupling;
+      if (request->trigger_coupling() != NULL) {
+        trigger_coupling = (ViInt32)request->trigger_coupling();
+      }
+      else {
+        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerWindow(vi, trigger_source, low_level, high_level, window_mode, trigger_coupling, holdoff, delay);
@@ -864,7 +1026,14 @@ namespace grpc {
       ViConstString channel_list = request->channel_list().c_str();
       ViReal64 range = request->range();
       ViReal64 offset = request->offset();
-      ViInt32 coupling = (ViInt32)request->coupling();
+      ViInt32 coupling;
+      if (request->coupling() != NULL) {
+        coupling = (ViInt32)request->coupling();
+      }
+      else {
+        coupling = (ViInt32)request->coupling_raw();
+      }
+
       ViReal64 probe_attenuation = request->probe_attenuation();
       ViBoolean enabled = request->enabled();
       auto status = library_->ConfigureVertical(vi, channel_list, range, offset, coupling, probe_attenuation, enabled);
@@ -981,7 +1150,14 @@ namespace grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 signal = (ViInt32)request->signal();
+      ViInt32 signal;
+      if (request->signal() != NULL) {
+        signal = (ViInt32)request->signal();
+      }
+      else {
+        signal = (ViInt32)request->signal_raw();
+      }
+
       ViConstString signal_identifier = request->signal_identifier().c_str();
       ViConstString output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
@@ -1763,7 +1939,14 @@ namespace grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 which_trigger = (ViInt32)request->which_trigger();
+      ViInt32 which_trigger;
+      if (request->which_trigger() != NULL) {
+        which_trigger = (ViInt32)request->which_trigger();
+      }
+      else {
+        which_trigger = (ViInt32)request->which_trigger_raw();
+      }
+
       auto status = library_->SendSoftwareTriggerEdge(vi, which_trigger);
       response->set_status(status);
       return ::grpc::Status::OK;

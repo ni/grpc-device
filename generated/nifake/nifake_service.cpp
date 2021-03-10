@@ -143,7 +143,14 @@ namespace grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt16 a_turtle = (ViInt16)request->a_turtle();
+      ViInt16 a_turtle;
+      if (request->a_turtle() != NULL) {
+        a_turtle = (ViInt16)request->a_turtle();
+      }
+      else {
+        a_turtle = (ViInt16)request->a_turtle_raw();
+      }
+
       auto status = library_->EnumInputFunctionWithDefaults(vi, a_turtle);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -608,6 +615,7 @@ namespace grpc {
       if (status == 0) {
         response->set_a_quantity(a_quantity);
         response->set_a_turtle(static_cast<ni::fake::grpc::Turtle>(a_turtle));
+        response->set_a_turtle_raw(a_turtle);
       }
       return ::grpc::Status::OK;
     }
@@ -742,14 +750,31 @@ namespace grpc {
       ViBoolean a_boolean = request->a_boolean();
       ViInt32 an_int32 = request->an_int32();
       ViInt64 an_int64 = request->an_int64();
-      ViInt16 an_int_enum = (ViInt16)request->an_int_enum();
-      ViReal64 a_float = request->a_float();
-      auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
-
-      if (a_float_enum_imap_it == floatenum_input_map_.end()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+      ViInt16 an_int_enum;
+      if (request->an_int_enum() != NULL) {
+        an_int_enum = (ViInt16)request->an_int_enum();
       }
-      auto a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
+      else {
+        an_int_enum = (ViInt16)request->an_int_enum_raw();
+      }
+
+      ViReal64 a_float = request->a_float();
+      ViReal64 a_float_enum;
+      if (request->a_float_enum() != NULL) {
+        auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
+
+        if (a_float_enum_imap_it == floatenum_input_map_.end()) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+        }
+        a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
+      }
+      else if (request->a_float_enum_raw() != NULL) {
+        a_float_enum = static_cast<ViReal64>(request->a_float_enum_raw());
+      }
+      else {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified");
+      }
+
 
       ViInt32 string_size = request->a_string().size();
       ViConstString a_string = request->a_string().c_str();
@@ -937,12 +962,14 @@ namespace grpc {
         response->set_an_int32(an_int32);
         response->set_an_int64(an_int64);
         response->set_an_int_enum(static_cast<ni::fake::grpc::Turtle>(an_int_enum));
+        response->set_an_int_enum_raw(an_int_enum);
         response->set_a_float(a_float);
         auto a_float_enum_imap_it = floatenum_output_map_.find(a_float_enum);
         if(a_float_enum_imap_it == floatenum_output_map_.end()) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
         }
         response->set_a_float_enum(static_cast<ni::fake::grpc::FloatEnum>(a_float_enum_imap_it->second));
+        response->set_a_float_enum_raw(a_float_enum_imap_it->first);
         response->set_a_string(a_string);
       }
       return ::grpc::Status::OK;
@@ -962,12 +989,22 @@ namespace grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
+      ViConstString a_mobile_o_s_name;
+      if (request->a_mobile_o_s_name() != NULL) {
+        auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
 
-      if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
+        if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
+        }
+        a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+      }
+      else if (request->a_mobile_o_s_name_raw() != nullptr) {
+        a_mobile_o_s_name = static_cast<ViConstString>((request->a_mobile_o_s_name_raw()).c_str());
+      }
+      else {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
       }
-      auto a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+
 
       auto status = library_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_o_s_name);
       response->set_status(status);

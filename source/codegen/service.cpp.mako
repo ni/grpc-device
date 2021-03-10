@@ -211,16 +211,29 @@ ${initialize_standard_input_param(parameter)}\
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = parameter_name + "_imap_it"
 %>\
-      auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+      ${parameter['type']} ${parameter_name};
+      if (request->${parameter_name}() != NULL) {
+        auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
 
-      if (${iterator_name} == ${map_name}.end()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
-      }
+        if (${iterator_name} == ${map_name}.end()) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+        }
 %if parameter['type'] == "ViConstString":
-      auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());\
+        ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
 %else:
-      auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
+        ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
 %endif
+      }
+      else if (request->${parameter_name}_raw() != NULL) {
+%if parameter['type'] == "ViConstString":
+        ${parameter_name} = static_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
+%else:
+        ${parameter_name} = static_cast<${parameter['type']}>(request->${parameter_name}_raw());
+%endif
+      }
+      else {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified");
+      }
 </%def>\
 \
 \
@@ -251,7 +264,15 @@ ${initialize_standard_input_param(parameter)}\
       ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
     % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
       ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
-    % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
+    % elif 'enum' in parameter:
+      ${c_type} ${parameter_name};
+      if (${request_snippet} != NULL) {
+        ${parameter_name} = (${c_type})${request_snippet};
+      }
+      else {
+        ${parameter_name} = (${c_type})request->${field_name}_raw();
+      }
+    % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8':
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
     % elif c_type == 'ViSession':
       auto ${parameter_name}_grpc_session = ${request_snippet};
@@ -313,8 +334,10 @@ ${initialize_standard_input_param(parameter)}\
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
         }
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
+        response->set_${parameter_name}_raw(${iterator_name}->first);
 %  else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+        response->set_${parameter_name}_raw(${parameter_name});
 %  endif
 %elif common_helpers.is_array(parameter['type']):
 %  if handler_helpers.is_string_arg(parameter):

@@ -5,6 +5,7 @@
 #include <server/session_repository.h>
 
 #include <thread>
+#include <iostream>
 
 namespace ni {
 namespace tests {
@@ -442,6 +443,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(a_quantity, response.a_quantity());
   EXPECT_EQ(a_turtle, response.a_turtle());
+  EXPECT_EQ(a_turtle, response.a_turtle_raw());
 }
 
 // Array input and output tests
@@ -645,6 +647,53 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_CallsParametersAreMultipleTypes2)
+{
+  ni::hardware::grpc::internal::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  bool a_boolean = true;
+  std::int32_t an_int_32 = 35;
+  std::int64_t an_int_64 = 42;
+  ni::fake::grpc::Turtle an_int_enum = ni::fake::grpc::Turtle::TURTLE_MICHELANGELO;
+  double a_float = 4.2;
+  ni::fake::grpc::FloatEnum a_float_enum = ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE;
+  float expected_float_enum_value = 6.5;
+  std::int32_t expected_string_size = 12;
+  char a_string[] = "Hello There!";
+  EXPECT_CALL(
+      library,
+      ParametersAreMultipleTypes(
+          kTestViSession,
+          a_boolean,
+          an_int_32,
+          an_int_64,
+          an_int_enum,
+          a_float,
+          expected_float_enum_value,
+          expected_string_size,
+          _))
+      .With(Args<8, 7>(ElementsAreArray(a_string, expected_string_size)))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  ni::fake::grpc::ParametersAreMultipleTypesRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_a_boolean(a_boolean);
+  request.set_an_int32(an_int_32);
+  request.set_an_int64(an_int_64);
+  request.set_an_int_enum_raw(an_int_enum);
+  request.set_a_float(a_float);
+  request.set_a_float_enum(a_float_enum);
+  request.set_a_string(a_string);
+  ni::fake::grpc::ParametersAreMultipleTypesResponse response;
+  ::grpc::Status status = service.ParametersAreMultipleTypes(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
 TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumberAndAString)
 {
   ni::hardware::grpc::internal::SessionRepository session_repository;
@@ -742,8 +791,10 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   EXPECT_EQ(an_int32, response.an_int32());
   EXPECT_EQ(an_int64, response.an_int64());
   EXPECT_EQ(an_int_enum, response.an_int_enum());
+  EXPECT_EQ(an_int_enum, response.an_int_enum_raw());
   EXPECT_EQ(a_float, response.a_float());
   EXPECT_EQ(ni::fake::grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE, response.a_float_enum());
+  EXPECT_EQ(a_float_enum, response.a_float_enum_raw());
   EXPECT_THAT(response.an_array(), ElementsAreArray(an_array, array_size));
   EXPECT_THAT(response.a_string(), ElementsAreArray(a_string, string_size));
 }

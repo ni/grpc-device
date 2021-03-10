@@ -101,7 +101,20 @@ message ${common_helpers.snake_to_camel(function)}Request {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
+%if 'enum' in parameter:
+<%
+  index = index + 1
+  is_array = common_helpers.is_array(parameter["type"])
+  non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
+  parameter_name = common_helpers.camel_to_snake(parameter["name"])
+%>\
+  oneof ${parameter_name}_oneof {
+    ${parameter_type} ${parameter_name} = ${index-1};
+    ${non_enum_type} ${parameter_name}_raw = ${index};
+  }
+%else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
+%endif
 % endfor
 }
 
@@ -118,7 +131,17 @@ message ${common_helpers.snake_to_camel(function)}Response {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
+%if 'enum' in parameter:
+<%
+  index = index + 1
+  is_array = common_helpers.is_array(parameter["type"])
+  non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
+%>\
+  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index-1};
+  ${non_enum_type} ${common_helpers.camel_to_snake(parameter["name"])}_raw = ${index};
+%else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
+%endif
 %endfor
 }
 
