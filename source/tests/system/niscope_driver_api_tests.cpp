@@ -122,6 +122,30 @@ TEST_F(NiScopeDriverApiTest, NiScopeReset_SendRequest_ResetCompletesSuccessfully
   EXPECT_EQ(kScopeDriverApiSuccess, response.status());
 }
 
+TEST_F(NiScopeDriverApiTest, NiScopeFetch_SendRequest_FetchCompletesSuccessfully)
+{
+  ::grpc::ClientContext context;
+  scope::FetchRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list("0");
+  request.set_timeout(10000);
+  request.set_num_samples(100000);
+
+  scope::FetchResponse response;
+
+  // ::grpc::Status status = GetStub()->Fetch(&context, request, &response);
+
+  scope::GetErrorMessageRequest errorRequest;
+  errorRequest.mutable_vi()->set_id(GetSessionId());
+  errorRequest.set_error_code(-1074126847);
+  scope::GetErrorMessageResponse errorResponse;
+  ::grpc::Status status = GetStub()->GetErrorMessage(&context, errorRequest, &errorResponse);
+
+  EXPECT_STREQ("Hello", errorResponse.error_message().c_str());
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
