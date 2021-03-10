@@ -2,8 +2,6 @@
 #include <server/session_utilities_service.h>
 #include <server/syscfg_library.h>
 
-#include <thread>
-
 namespace ni {
 namespace tests {
 namespace system {
