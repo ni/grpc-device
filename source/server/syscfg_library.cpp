@@ -1,5 +1,8 @@
 #include "syscfg_library.h"
 
+#define GET_POINTER(ptrs, lib, name) \
+  ptrs.name = reinterpret_cast<name##Ptr>(lib.get_function_pointer("NISysCfg"#name));
+
 namespace ni {
 namespace hardware {
 namespace grpc {
