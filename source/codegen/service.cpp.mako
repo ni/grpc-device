@@ -183,7 +183,7 @@ ${set_response_values(output_parameters=output_parameters)}\
     input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
-${initialize_input_param_snippet(function_name, parameter=parameter)}
+${initialize_input_param_snippet(function_name, parameter)}
 % endfor
 </%def>\
 \
@@ -206,9 +206,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
 <%def name="initialize_enum_input_param(function_name, parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  pascal_parameter_name = list(parameter['cppName'])
-  pascal_parameter_name[0] = pascal_parameter_name[0].upper()
-  pascal_parameter_name = "".join(pascal_parameter_name)
+  pascal_parameter_name = common_helpers.snake_to_pascal(parameter_name)
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = parameter_name + "_imap_it"
   enum_type_prefix = function_name + "Request::" + pascal_parameter_name + "OneofCase::"
