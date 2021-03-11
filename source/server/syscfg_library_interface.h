@@ -1,13 +1,11 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
-#define NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
+#ifndef GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H
+#define GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 class SysCfgLibraryInterface {
  public:
@@ -29,9 +27,7 @@ class SysCfgLibraryInterface {
   // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
 };
 
-}  // namespace internal
-}  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
+} // namespace nidevice
+} // namespace grpc
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
+#endif  // GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H

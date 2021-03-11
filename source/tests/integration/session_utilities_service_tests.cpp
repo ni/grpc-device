@@ -10,8 +10,6 @@ namespace ni {
 namespace tests {
 namespace integration {
 
-namespace internal = ni::hardware::grpc::internal;
-
 using ::testing::NiceMock;
 using ::testing::Throw;
 
@@ -25,8 +23,8 @@ class InProcessServerClientTest : public ::testing::Test {
     session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
     syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
     ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
-        .WillByDefault(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
-    device_enumerator_ = std::make_unique<internal::DeviceEnumerator>(syscfg_mock_library_.get());
+        .WillByDefault(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
+    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>(syscfg_mock_library_.get());
     service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
@@ -169,7 +167,7 @@ TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDe
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
-  EXPECT_EQ(internal::kSysCfgApiNotInstalledMessage, status.error_message());
+  EXPECT_EQ(grpc::nidevice::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 }  // namespace integration

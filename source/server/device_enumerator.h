@@ -1,5 +1,5 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATOR
-#define NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATOR
+#ifndef GRPC_NIDEVICE_DEVICEENUMERATOR
+#define GRPC_NIDEVICE_DEVICEENUMERATOR
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
@@ -27,4 +27,4 @@ class DeviceEnumerator {
 } // namespace nidevice
 } // namespace grpc
 
-#endif // NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATOR
+#endif // GRPC_NIDEVICE_DEVICEENUMERATOR

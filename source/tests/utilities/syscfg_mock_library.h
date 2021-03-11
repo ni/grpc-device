@@ -9,7 +9,7 @@ namespace ni {
 namespace tests {
 namespace utilities {
 
-class SysCfgMockLibrary : public ni::hardware::grpc::internal::SysCfgLibraryInterface {
+class SysCfgMockLibrary : public grpc::nidevice::SysCfgLibraryInterface {
  public:
   MOCK_METHOD(NISysCfgStatus, InitializeSession, (
     const char* target_name,

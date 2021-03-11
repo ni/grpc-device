@@ -19,7 +19,7 @@ DeviceEnumerator::~DeviceEnumerator()
 {
   NISysCfgStatus status = NISysCfg_OK;
   NISysCfgSessionHandle session = NULL;
-  
+
   try {
     // TODO: This PR adds only Initialize and Close. Remaining work will be added in upcoming PR.
     // TODO: Caching of syscfg_session will be added in a separate PR.
@@ -31,7 +31,7 @@ DeviceEnumerator::~DeviceEnumerator()
   catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  
+
   if (NISysCfg_Failed(status)) {
     return ::grpc::Status(::grpc::StatusCode::INTERNAL, kDeviceEnumerationFailedMessage);
   }
@@ -39,5 +39,5 @@ DeviceEnumerator::~DeviceEnumerator()
   return ::grpc::Status::OK;
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
