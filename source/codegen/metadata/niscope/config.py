@@ -5,9 +5,9 @@ config = {
     'c_header': 'niScope.h',
     'c_function_prefix': 'niScope_',
     'service_class_prefix': 'NiScope',
-    'java_package': 'com.ni.scope.grpc',
-    'csharp_namespace': 'NationalInstruments.Scope.Grpc',
-    'namespace_component': 'scope',
+    'java_package': 'com.ni.grpc.scope',
+    'csharp_namespace': 'NationalInstruments.Grpc.Scope',
+    'namespace_component': 'niscope',
     'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'Abort',
@@ -87,6 +87,38 @@ config = {
                 }
             ]
         },
+        { 
+            'name': 'NIComplexNumber_struct',
+            'grpc_name': 'NIComplexNumber',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'real',
+                    'grpc_name': 'real'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'imaginary',
+                    'grpc_name': 'imaginary'
+                }
+            ]
+        },
+        { 
+            'name': 'NIComplexI16_struct',
+            'grpc_name': 'NIComplexInt32',
+            'fields': [
+                {
+                    'type': 'ViInt16',
+                    'name': 'real',
+                    'grpc_name': 'real'
+                },
+                {
+                    'type': 'ViInt16',
+                    'name': 'imaginary',
+                    'grpc_name': 'imaginary'
+                }
+            ]
+        }
     ],
     'driver_name': 'NI-SCOPE',
     'extra_errors_used': [

@@ -8,13 +8,13 @@ functions = data['functions']
 lookup = data["lookup"]
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
+namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
 windows_libary_name = config['library_info']['Windows']['64bit']['name']
 if len(config["custom_types"]) > 0:
-  custom_type = config["custom_types"][0]
+  custom_types = config["custom_types"]
 %>\
 
 //---------------------------------------------------------------------
@@ -30,13 +30,10 @@ if len(config["custom_types"]) > 0:
 #include <atomic>
 #include <vector>
 
-namespace ni {
-namespace ${config["namespace_component"]} {
 namespace grpc {
+namespace ${config["namespace_component"]} {
 
-  namespace internal = ni::hardware::grpc::internal;
-
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -45,7 +42,8 @@ namespace grpc {
   {
   }
 
-  %if 'custom_type' in locals():
+  %if 'custom_types' in locals():
+  %for custom_type in custom_types:
   void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
   {
 %for field in custom_type["fields"]: 
@@ -62,6 +60,7 @@ namespace grpc {
     }
   }
 
+%endfor
 %endif
 % for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
@@ -89,15 +88,14 @@ ${gen_ivi_dance_method_body(function_name=function_name, function_data=function_
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
 % endfor
-} // namespace grpc
 } // namespace ${config["namespace_component"]}
-} // namespace ni
+} // namespace grpc
 \
 \
 \

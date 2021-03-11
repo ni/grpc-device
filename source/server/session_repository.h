@@ -3,14 +3,13 @@
 
 #include <grpcpp/grpcpp.h>
 #include <session.grpc.pb.h>
+
 #include <shared_mutex>
 
 #include "semaphore.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 class SessionRepository {
  public:
@@ -35,7 +34,7 @@ class SessionRepository {
  private:
   struct ReservationInfo {
     std::string client_id;
-    std::unique_ptr<internal::Semaphore> lock;
+    std::unique_ptr<Semaphore> lock;
     std::chrono::steady_clock::time_point creation_time;
     // The number of clients that have asked to reserve this reservation, but have not yet acquired the lock.
     int client_count;
@@ -66,9 +65,7 @@ class SessionRepository {
   ReservationMap reservations_;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
 #endif  // NI_HARDWARE_GRPC_INTERNAL_SESSIONREPOSITORY

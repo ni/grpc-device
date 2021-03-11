@@ -12,13 +12,10 @@
 #include <atomic>
 #include <vector>
 
-namespace ni {
-namespace scope {
 namespace grpc {
+namespace niscope {
 
-  namespace internal = ni::hardware::grpc::internal;
-
-  NiScopeService::NiScopeService(NiScopeLibraryInterface* library, internal::SessionRepository* session_repository)
+  NiScopeService::NiScopeService(NiScopeLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -27,7 +24,7 @@ namespace grpc {
   {
   }
 
-  void NiScopeService::Copy(const niScope_wfmInfo& input, ni::scope::grpc::WaveformInfo* output) 
+  void NiScopeService::Copy(const niScope_wfmInfo& input, grpc::niscope::WaveformInfo* output) 
   {
     output->set_absolute_initial_x(input.absoluteInitialX);
     output->set_relative_initial_x(input.relativeInitialX);
@@ -39,10 +36,57 @@ namespace grpc {
     output->set_reserved2(input.reserved2);
   }
 
-  void NiScopeService::Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<ni::scope::grpc::WaveformInfo>* output) 
+  void NiScopeService::Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<grpc::niscope::WaveformInfo>* output) 
   {
     for (auto item : input) {
-      auto message = new ni::scope::grpc::WaveformInfo();
+      auto message = new grpc::niscope::WaveformInfo();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+  void NiScopeService::Copy(const niScope_coefficientInfo& input, grpc::niscope::CoefficientInfo* output) 
+  {
+    output->set_offset(input.offset);
+    output->set_gain(input.gain);
+    output->set_reserved1(input.reserved1);
+    output->set_reserved2(input.reserved2);
+  }
+
+  void NiScopeService::Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<grpc::niscope::CoefficientInfo>* output) 
+  {
+    for (auto item : input) {
+      auto message = new grpc::niscope::CoefficientInfo();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+  void NiScopeService::Copy(const NIComplexNumber_struct& input, grpc::niscope::NIComplexNumber* output) 
+  {
+    output->set_real(input.real);
+    output->set_imaginary(input.imaginary);
+  }
+
+  void NiScopeService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<grpc::niscope::NIComplexNumber>* output) 
+  {
+    for (auto item : input) {
+      auto message = new grpc::niscope::NIComplexNumber();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+  void NiScopeService::Copy(const NIComplexI16_struct& input, grpc::niscope::NIComplexInt32* output) 
+  {
+    output->set_real(input.real);
+    output->set_imaginary(input.imaginary);
+  }
+
+  void NiScopeService::Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<grpc::niscope::NIComplexInt32>* output) 
+  {
+    for (auto item : input) {
+      auto message = new grpc::niscope::NIComplexInt32();
       Copy(item, message);
       output->AddAllocated(message);
     }
@@ -62,7 +106,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -81,11 +125,11 @@ namespace grpc {
       auto status = library_->AcquisitionStatus(vi, &acquisition_status);
       response->set_status(status);
       if (status == 0) {
-        response->set_acquisition_status(static_cast<ni::scope::grpc::AcquisitionStatus>(acquisition_status));
+        response->set_acquisition_status(static_cast<grpc::niscope::AcquisitionStatus>(acquisition_status));
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -109,7 +153,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -133,7 +177,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -156,7 +200,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -177,7 +221,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -197,7 +241,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -216,7 +260,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -235,7 +279,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -254,7 +298,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -275,7 +319,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -297,7 +341,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -319,7 +363,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -341,7 +385,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -363,7 +407,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -386,7 +430,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -408,7 +452,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -429,7 +473,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -449,7 +493,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -467,7 +511,7 @@ namespace grpc {
       session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -486,7 +530,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -506,7 +550,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -528,7 +572,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -551,7 +595,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -573,7 +617,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -597,7 +641,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -620,7 +664,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -645,7 +689,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -672,7 +716,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -698,7 +742,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -717,7 +761,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -743,7 +787,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -764,7 +808,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -792,7 +836,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -820,7 +864,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -846,7 +890,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -871,7 +915,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -890,7 +934,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -915,7 +959,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -946,7 +990,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -966,7 +1010,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -988,52 +1032,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::FetchComplex(::grpc::ServerContext* context, const FetchComplexRequest* request, FetchComplexResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::FetchComplexBinary16(::grpc::ServerContext* context, const FetchComplexBinary16Request* request, FetchComplexBinary16Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::FetchMeasurement(::grpc::ServerContext* context, const FetchMeasurementRequest* request, FetchMeasurementResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1058,7 +1057,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1083,7 +1082,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1108,7 +1107,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1133,7 +1132,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1158,7 +1157,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1191,7 +1190,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1223,7 +1222,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1236,9 +1235,26 @@ namespace grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString index = request->index().c_str();
+
+      auto status = library_->GetChannelNameFromString(vi, index, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string name(buffer_size, '\0');
+      status = library_->GetChannelNameFromString(vi, index, buffer_size, (ViChar*)name.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_name(name);
+      }
+      return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1263,7 +1279,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1296,7 +1312,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1328,7 +1344,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1359,37 +1375,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1413,7 +1399,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1434,7 +1420,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1454,7 +1440,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1486,7 +1472,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1519,7 +1505,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1538,7 +1524,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1561,7 +1547,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1580,7 +1566,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1599,22 +1585,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiScopeService::ReadMeasurement(::grpc::ServerContext* context, const ReadMeasurementRequest* request, ReadMeasurementResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1633,7 +1604,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1652,7 +1623,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1677,7 +1648,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1700,7 +1671,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1723,7 +1694,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1748,7 +1719,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1768,7 +1739,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1790,7 +1761,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1812,7 +1783,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1834,7 +1805,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1856,7 +1827,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1879,7 +1850,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1901,7 +1872,7 @@ namespace grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1924,12 +1895,11 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
+} // namespace niscope
 } // namespace grpc
-} // namespace scope
-} // namespace ni
 

@@ -3,18 +3,17 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_LIBRARY_H
-#define NI_SCOPE_GRPC_LIBRARY_H
+#ifndef GRPC_NISCOPE_LIBRARY_H
+#define GRPC_NISCOPE_LIBRARY_H
 
 #include "niscope_library_interface.h"
 
 #include <server/shared_library.h>
 
-namespace ni {
-namespace scope {
 namespace grpc {
+namespace niscope {
 
-class NiScopeLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
+class NiScopeLibrary : public grpc::niscope::NiScopeLibraryInterface {
  public:
   NiScopeLibrary();
   virtual ~NiScopeLibrary();
@@ -67,8 +66,8 @@ class NiScopeLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
   ViStatus FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber wfm[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16 wfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber_struct wfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16_struct wfm[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[]);
   ViStatus FetchMeasurementStats(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[], ViReal64 mean[], ViReal64 stdev[], ViReal64 min[], ViReal64 max[], ViInt32 numInStats[]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean* value);
@@ -159,8 +158,8 @@ class NiScopeLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
   using FetchBinary16Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[]);
   using FetchBinary32Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[]);
   using FetchBinary8Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[]);
-  using FetchComplexPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber wfm[], niScope_wfmInfo wfmInfo[]);
-  using FetchComplexBinary16Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16 wfm[], niScope_wfmInfo wfmInfo[]);
+  using FetchComplexPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber_struct wfm[], niScope_wfmInfo wfmInfo[]);
+  using FetchComplexBinary16Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16_struct wfm[], niScope_wfmInfo wfmInfo[]);
   using FetchMeasurementPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[]);
   using FetchMeasurementStatsPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[], ViReal64 mean[], ViReal64 stdev[], ViReal64 min[], ViReal64 max[], ViInt32 numInStats[]);
   using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean* value);
@@ -296,12 +295,11 @@ class NiScopeLibrary : public ni::scope::grpc::NiScopeLibraryInterface {
     UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
-  ni::hardware::grpc::internal::SharedLibrary shared_library_;
+  grpc::nidevice::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 };
 
+}  // namespace niscope
 }  // namespace grpc
-}  // namespace scope
-}  // namespace ni
 
-#endif  // NI_SCOPE_GRPC_LIBRARY_H
+#endif  // GRPC_NISCOPE_LIBRARY_H

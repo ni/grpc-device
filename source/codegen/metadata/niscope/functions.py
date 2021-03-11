@@ -1235,6 +1235,7 @@ functions = {
                 'type': 'ViInt32'
             },
             {
+                'include_in_proto': False,
                 'direction': 'in',
                 'name': 'measurementWaveformSize',
                 'type': 'ViInt32'
@@ -1403,6 +1404,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchComplex':{
+        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -1427,11 +1429,12 @@ functions = {
             {
                 'name':'wfm',
                 'direction':'out',
-                'type':'NIComplexNumber[]',
                 'size':{
                     'mechanism': 'custom-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
-                }
+                    'value': '(num_samples * actual_num_wfms)'
+                },
+                'type':'struct NIComplexNumber_struct[]',
+                'grpc_type': 'repeated NIComplexNumber'
             },
             {
                 'name':'wfmInfo',
@@ -1447,6 +1450,7 @@ functions = {
         'returns':'ViStatus'
     },
     'FetchComplexBinary16':{
+        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -1471,19 +1475,19 @@ functions = {
             {
                 'name':'wfm',
                 'direction':'out',              
-                'type':'NIComplexI16[]',
+                'type': 'struct NIComplexI16_struct[]',
                 'grpc_type': 'repeated NIComplexInt32',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': '(num_samples * self._actual_num_wfms())'
-                },
+                    'value': '(num_samples * actual_num_wfms)'
+                }
             },
             {
                 'direction': 'out',
                 'name': 'wfmInfo',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': 'self._actual_num_wfms()'
+                    'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]',
                 'grpc_type': 'repeated WaveformInfo'
@@ -1492,7 +1496,7 @@ functions = {
         'returns':'ViStatus'
     },
     'FetchMeasurement': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1822,8 +1826,8 @@ functions = {
             },
             {
                 'size': {
-                    'mechanism': 'ivi_dance',
-                    'size_in': 'bufferSize'
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
                 },
                 'direction': 'out',
                 'name': 'name',
@@ -1979,6 +1983,7 @@ functions = {
         'returns':'ViStatus'
     },
     'GetNormalizationCoefficients':{
+        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -1991,6 +1996,7 @@ functions = {
                 'type':'ViConstString'
             },
             {
+                'include_in_proto': False,
                 'name':'bufferSize',
                 'direction':'in',
                 'type':'ViInt32'
@@ -2015,7 +2021,7 @@ functions = {
         'returns':'ViStatus'
     },
     'GetScalingCoefficients': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -2028,6 +2034,7 @@ functions = {
                 'type': 'ViConstString'
             },
             {
+                'include_in_proto': False,
                 'direction': 'in',
                 'name': 'bufferSize',
                 'type': 'ViInt32'
@@ -2264,7 +2271,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadMeasurement': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',

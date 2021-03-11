@@ -1,5 +1,5 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATOR
-#define NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATOR
+#ifndef GRPC_NIDEVICE_DEVICEENUMERATOR
+#define GRPC_NIDEVICE_DEVICEENUMERATOR
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
@@ -8,12 +8,12 @@
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
+static const char* kLocalHostTargetName = "localhost";
+static const char* kNetworkExpertName = "network";
 
 class DeviceEnumerator {
  public:
@@ -26,9 +26,7 @@ class DeviceEnumerator {
   SysCfgLibraryInterface* library_;
 };
 
-} // namespace internal
-} // namespace grpc
-} // namespace hardware
-} // namespace ni
+}  // namespace nidevice
+}  // namespace grpc
 
-#endif // NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATOR
+#endif  // GRPC_NIDEVICE_DEVICEENUMERATOR

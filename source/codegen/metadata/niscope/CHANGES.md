@@ -4,12 +4,16 @@
 
 The following metadata was added:
 - `'service_class_prefix': 'NiScope'`
-- `'java_package': 'com.ni.scope.grpc'`
-- `'csharp_namespace': 'NationalInstruments.Scope.Grpc'`
-- `'namespace_component': 'scope'`
+- `'java_package': 'com.ni.grpc.scope'`
+- `'csharp_namespace': 'NationalInstruments.Grpc.Scope'`
+- `'namespace_component': 'niscope'`
 
 The fields of the custom waveform-info struct were added to `'custom_types'` in place of the `'ctypes_type'`,
 `'file_name'`, and `'python_name'`. A  `'grpc_name'` field was also added which was the snake case version of the name field.
+
+Two structs were added
+- `'NIComplexNumber_struct'`
+- `'NIComplexI16_struct'`
 
 ## functions.py
 
@@ -126,11 +130,21 @@ should be implemented by hand in niscope_service.custom.cpp.
 - `FetchBinary8`
 - `FetchMeasurementStats`
 - `Read`
+- `FetchComplex`
+- `FetchComplexBinary16`
+- `FetchMeasurement`
+- `GetScalingCoefficients`
+- `ReadMeasurement`
 
 Instances of `python-code` used for the `size` mechanism were updated to `custom-code` to reflect their implementations will be handled
 in the custom service handler implementations.
 
-The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
+The following functions were tagged with `'init_method': True` to ensure their generated service handlers register the new session
 with the session_repository.
 - `Init`
 - `InitWithOptions`
+
+The following parameters were marked as `'include_in_proto': False` because they are calculated in the service handler and shouldn't be passed in.
+- `bufferSize` in `GetNormalizationCoefficients`
+- `bufferSize` in `GetScalingCoefficients`
+- `measurementWaveformSize` in `FetchArrayMeasurement`

@@ -1,9 +1,7 @@
 #include "semaphore.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 Semaphore::Semaphore(int count)
     : count_(count), is_canceled_(false)
@@ -36,7 +34,5 @@ void Semaphore::wait()
   }
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni

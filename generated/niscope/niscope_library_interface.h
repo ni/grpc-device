@@ -3,15 +3,14 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef NI_SCOPE_GRPC_LIBRARY_WRAPPER_H
-#define NI_SCOPE_GRPC_LIBRARY_WRAPPER_H
+#ifndef GRPC_NISCOPE_LIBRARY_WRAPPER_H
+#define GRPC_NISCOPE_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niScope.h>
 
-namespace ni {
-namespace scope {
 namespace grpc {
+namespace niscope {
 
 class NiScopeLibraryInterface {
  public:
@@ -64,8 +63,8 @@ class NiScopeLibraryInterface {
   virtual ViStatus FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[]) = 0;
   virtual ViStatus FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[]) = 0;
   virtual ViStatus FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[]) = 0;
-  virtual ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber wfm[], niScope_wfmInfo wfmInfo[]) = 0;
-  virtual ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16 wfm[], niScope_wfmInfo wfmInfo[]) = 0;
+  virtual ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber_struct wfm[], niScope_wfmInfo wfmInfo[]) = 0;
+  virtual ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16_struct wfm[], niScope_wfmInfo wfmInfo[]) = 0;
   virtual ViStatus FetchMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[]) = 0;
   virtual ViStatus FetchMeasurementStats(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[], ViReal64 mean[], ViReal64 stdev[], ViReal64 min[], ViReal64 max[], ViInt32 numInStats[]) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean* value) = 0;
@@ -109,7 +108,6 @@ class NiScopeLibraryInterface {
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
 };
 
+}  // namespace niscope
 }  // namespace grpc
-}  // namespace scope
-}  // namespace ni
-#endif  // NI_SCOPE_GRPC_LIBRARY_WRAPPER_H
+#endif  // GRPC_NISCOPE_LIBRARY_WRAPPER_H
