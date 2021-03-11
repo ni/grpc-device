@@ -1,15 +1,16 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.ni.hardware.grpc";
-option java_outer_classname = "Utilities";
-option csharp_namespace = "NationalInstruments.Hardware.Grpc";
+option java_package = "com.ni.grpc.device";
+option java_outer_classname = "NiDevice";
+option csharp_namespace = "NationalInstruments.Grpc.Device";
 
-package ni.hardware.grpc;
+package grpc.nidevice;
 
 service SessionUtilities {
   // Provides a list of devices or chassis connected to server under localhost
-  rpc EnumerateDevices (EnumerateDevicesRequest) returns (EnumerateDevicesResponse);
+  rpc EnumerateDevices(EnumerateDevicesRequest)
+      returns (EnumerateDevicesResponse);
 
   // Reserve a set of client defined resources for exclusive use
   rpc Reserve(ReserveRequest) returns (ReserveResponse);
@@ -40,8 +41,7 @@ message DeviceProperties {
   string serial_number = 4;
 }
 
-message EnumerateDevicesRequest {
-}
+message EnumerateDevicesRequest {}
 
 message EnumerateDevicesResponse {
   repeated DeviceProperties devices = 1;

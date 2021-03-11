@@ -1,9 +1,7 @@
 #include "device_enumerator.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
     : library_(library)
@@ -29,7 +27,7 @@ DeviceEnumerator::~DeviceEnumerator()
   char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  
+
   try {
     // TODO: Caching of syscfg_session will be added in a separate PR.
     // All parameters of InitializeSession other than the first are System Configuration default values.
@@ -66,7 +64,7 @@ DeviceEnumerator::~DeviceEnumerator()
   catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  
+
   if (NISysCfg_Failed(status)) {
     return ::grpc::Status(::grpc::StatusCode::INTERNAL, kDeviceEnumerationFailedMessage);
   }
@@ -74,7 +72,5 @@ DeviceEnumerator::~DeviceEnumerator()
   return ::grpc::Status::OK;
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni

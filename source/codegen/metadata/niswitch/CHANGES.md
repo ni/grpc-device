@@ -10,6 +10,23 @@ The following metadata was added :
 
 Removed the 'repeated-capabilities' as it is python specific.
 
+## attributes.py
+
+The following attributes were added : 
+- CLASS_SPEC_MAJOR_VERSION
+- CLASS_SPEC_MINOR_VERSION
+- RANGE_CHECK
+- QUERY_INSTRUMENT_STATUS
+- CACHE 
+- RECORD_COERCIONS
+- INTERCHANGE_CHECK 
+- GROUP_CAPABILITIES
+- SPECIFIC_DRIVER_PREFIX
+
+## enums.py
+
+Added an enum for the defined values of wire mode attribute.
+
 ## functions.py
 
 All occurrences of the following keys were removed along with their values:
@@ -22,6 +39,7 @@ All occurrences of the following keys were removed along with their values:
 - `'codegen_method'`
 - `'is_error_handling'`
 - `'use_session_lock'`
+- `'default-value'`
 
 The following `python-only` functions were removed:
 - `fancy_self_test`
@@ -63,6 +81,14 @@ The following APIs were newly added :
 - ErrorQuery
 - RevisionQuery
 
+The following functions names were made Pascal and moved to their alphabetic position:
+ - `close`
+ - `error_message`
+ - `reset`
+ - `self_test`
+ - `error_query`
+ - `revision_query`
+ 
 The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
 with the session_repository.
 - `init`

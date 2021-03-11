@@ -8,10 +8,8 @@
   #include <Windows.h>
 #endif
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 #ifdef _MSC_VER
 typedef HMODULE LibraryHandle;
@@ -19,11 +17,10 @@ typedef HMODULE LibraryHandle;
 typedef void* LibraryHandle;
 #endif
 
-struct LibraryLoadException : std::runtime_error
-{
-  LibraryLoadException(const std::string& message) : std::runtime_error(message) { }
-  LibraryLoadException(const char* message) : std::runtime_error(message) { }
-  LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) { }
+struct LibraryLoadException : std::runtime_error {
+  LibraryLoadException(const std::string& message) : std::runtime_error(message) {}
+  LibraryLoadException(const char* message) : std::runtime_error(message) {}
+  LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) {}
 };
 
 class SharedLibrary {
@@ -48,9 +45,7 @@ class SharedLibrary {
   LibraryHandle handle_;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
 #endif  // NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY

@@ -1,11 +1,8 @@
 #include <nifake/nifake_service.h>
 
-namespace ni {
-namespace fake {
 namespace grpc {
+namespace nifake {
 
-namespace internal = ni::hardware::grpc::internal;
 
+}  // namespace nifake
 }  // namespace grpc
-}  // namespace fake
-}  // namespace ni
