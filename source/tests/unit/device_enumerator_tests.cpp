@@ -113,7 +113,7 @@ NISysCfgStatus SetExpertNameToNetwork(void* value)
 {
   char* expert_name = (char*)value;
   strcpy(expert_name, grpc::nidevice::kNetworkExpertName);
-  return NISysCfg_OK; 
+  return NISysCfg_OK;
 }
 
 TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_ListOfDevicesReturnedDoesNotContainNetworkDevices)

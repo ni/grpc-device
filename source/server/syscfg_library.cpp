@@ -71,9 +71,8 @@ NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
 }
 
 NISysCfgStatus SysCfgLibrary::CreateFilter(
-  NISysCfgSessionHandle session_handle,
-  NISysCfgFilterHandle* filter_handle
-  )
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterHandle* filter_handle)
 {
   if (!function_pointers_.CreateFilter) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
@@ -82,10 +81,9 @@ NISysCfgStatus SysCfgLibrary::CreateFilter(
 }
 
 NISysCfgStatus SysCfgLibrary::SetFilterProperty(
-  NISysCfgFilterHandle filter_handle,
-  NISysCfgFilterProperty property_ID,
-  ...
-  )
+    NISysCfgFilterHandle filter_handle,
+    NISysCfgFilterProperty property_ID,
+    ...)
 {
   if (!function_pointers_.SetFilterPropertyV) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
@@ -99,12 +97,11 @@ NISysCfgStatus SysCfgLibrary::SetFilterProperty(
 }
 
 NISysCfgStatus SysCfgLibrary::FindHardware(
-  NISysCfgSessionHandle session_handle,
-  NISysCfgFilterMode filter_mode,
-  NISysCfgFilterHandle filter_handle,
-  const char* expert_names,
-  NISysCfgEnumResourceHandle* resource_enum_handle
-  )
+    NISysCfgSessionHandle session_handle,
+    NISysCfgFilterMode filter_mode,
+    NISysCfgFilterHandle filter_handle,
+    const char* expert_names,
+    NISysCfgEnumResourceHandle* resource_enum_handle)
 {
   if (!function_pointers_.FindHardware) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
@@ -113,10 +110,9 @@ NISysCfgStatus SysCfgLibrary::FindHardware(
 }
 
 NISysCfgStatus SysCfgLibrary::NextResource(
-  NISysCfgSessionHandle session_handle,
-  NISysCfgEnumResourceHandle resource_enum_handle,
-  NISysCfgResourceHandle* resource_handle
-  )
+    NISysCfgSessionHandle session_handle,
+    NISysCfgEnumResourceHandle resource_enum_handle,
+    NISysCfgResourceHandle* resource_handle)
 {
   if (!function_pointers_.NextResource) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
@@ -125,11 +121,10 @@ NISysCfgStatus SysCfgLibrary::NextResource(
 }
 
 NISysCfgStatus SysCfgLibrary::GetResourceIndexedProperty(
-  NISysCfgResourceHandle resource_handle,
-  NISysCfgIndexedProperty property_ID,
-  unsigned int index,
-  void* value
-  )
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgIndexedProperty property_ID,
+    unsigned int index,
+    void* value)
 {
   if (!function_pointers_.GetResourceIndexedProperty) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
@@ -138,10 +133,9 @@ NISysCfgStatus SysCfgLibrary::GetResourceIndexedProperty(
 }
 
 NISysCfgStatus SysCfgLibrary::GetResourceProperty(
-  NISysCfgResourceHandle resource_handle,
-  NISysCfgResourceProperty property_ID,
-  void* value
-  )
+    NISysCfgResourceHandle resource_handle,
+    NISysCfgResourceProperty property_ID,
+    void* value)
 {
   if (!function_pointers_.GetResourceProperty) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);

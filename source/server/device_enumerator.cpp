@@ -27,7 +27,7 @@ DeviceEnumerator::~DeviceEnumerator()
   char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  
+
   try {
     // TODO: Caching of syscfg_session will be added in a separate PR.
     // All parameters of InitializeSession other than the first are System Configuration default values.
