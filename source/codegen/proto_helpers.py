@@ -3,7 +3,7 @@ import common_helpers
 def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
   add_repeated = is_array
   if 'ViSession' in type:
-    type = 'ni.hardware.grpc.Session'
+    type = 'grpc.nidevice.Session'
   if 'ViBoolean' in type:
     type = 'bool'
   if 'ViReal64' in type:

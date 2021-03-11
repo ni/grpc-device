@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <server/server_security_configuration.h>
-#include <typeinfo>
 
-namespace internal = ni::hardware::grpc::internal;
+#include <typeinfo>
 
 namespace ni {
 namespace tests {
@@ -25,7 +24,7 @@ std::shared_ptr<::grpc::ServerCredentials> get_insecure_credentials_comparison()
 
 TEST(ServerSecurityConfigurationTests, DefaultServerSecurityConfiguration_GetCredentials_InsecureServerCredentials)
 {
-  ::internal::ServerSecurityConfiguration server_security_config;
+  grpc::nidevice::ServerSecurityConfiguration server_security_config;
 
   auto credentials = server_security_config.get_credentials();
 
@@ -35,7 +34,7 @@ TEST(ServerSecurityConfigurationTests, DefaultServerSecurityConfiguration_GetCre
 
 TEST(ServerSecurityConfigurationTests, ServerCertEmptyAndServerKeyNotEmpty_GetCredentials_InsecureServerCredentials)
 {
-  ::internal::ServerSecurityConfiguration server_security_config(kEmptyServerCertData, "server key data", kEmptyRootCertData);
+  grpc::nidevice::ServerSecurityConfiguration server_security_config(kEmptyServerCertData, "server key data", kEmptyRootCertData);
 
   auto credentials = server_security_config.get_credentials();
 
@@ -45,7 +44,7 @@ TEST(ServerSecurityConfigurationTests, ServerCertEmptyAndServerKeyNotEmpty_GetCr
 
 TEST(ServerSecurityConfigurationTests, ServerCertNotEmptyAndServerKeyEmpty_GetCredentials_InsecureServerCredentials)
 {
-  ::internal::ServerSecurityConfiguration server_security_config("server cert data", kEmptyServerKeyData, kEmptyRootCertData);
+  grpc::nidevice::ServerSecurityConfiguration server_security_config("server cert data", kEmptyServerKeyData, kEmptyRootCertData);
 
   auto credentials = server_security_config.get_credentials();
 
@@ -55,7 +54,7 @@ TEST(ServerSecurityConfigurationTests, ServerCertNotEmptyAndServerKeyEmpty_GetCr
 
 TEST(ServerSecurityConfigurationTests, ServerCertAndKeyEmptyAndRootCertNotEmpty_GetCredentials_InsecureServerCredentials)
 {
-  ::internal::ServerSecurityConfiguration server_security_config(kEmptyServerCertData, kEmptyServerKeyData, "root cert data");
+  grpc::nidevice::ServerSecurityConfiguration server_security_config(kEmptyServerCertData, kEmptyServerKeyData, "root cert data");
 
   auto credentials = server_security_config.get_credentials();
 
@@ -65,7 +64,7 @@ TEST(ServerSecurityConfigurationTests, ServerCertAndKeyEmptyAndRootCertNotEmpty_
 
 TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmpty_GetCredentials_SslServerCredentials)
 {
-  ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", kEmptyRootCertData);
+  grpc::nidevice::ServerSecurityConfiguration server_security_config("server cert data", "server key data", kEmptyRootCertData);
 
   auto credentials = server_security_config.get_credentials();
 
@@ -75,7 +74,7 @@ TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmpty_GetCredentials_S
 
 TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_GetCredentials_SslServerCredentials)
 {
-  ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
+  grpc::nidevice::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
 
   auto credentials = server_security_config.get_credentials();
 
@@ -85,7 +84,7 @@ TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_Ge
 
 TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertEmpty_TryGetOptions_Unsuccessful)
 {
-  ::internal::ServerSecurityConfiguration server_security_config(kEmptyServerCertData, kEmptyServerKeyData, kEmptyRootCertData);
+  grpc::nidevice::ServerSecurityConfiguration server_security_config(kEmptyServerCertData, kEmptyServerKeyData, kEmptyRootCertData);
 
   auto credentials_options = server_security_config.try_get_options();
 
@@ -94,18 +93,19 @@ TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertEmpty_TryGe
 
 TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_TryGetOptions_RequestsAndVerifiesClientCertificate)
 {
-  ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
+  grpc::nidevice::ServerSecurityConfiguration server_security_config("server cert data", "server key data", "root cert data");
 
   auto credentials_options = server_security_config.try_get_options();
 
   EXPECT_NE(nullptr, credentials_options);
   EXPECT_EQ(GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY, credentials_options->client_certificate_request);
   EXPECT_FALSE(credentials_options->pem_key_cert_pairs.empty());
-  EXPECT_FALSE(credentials_options->pem_root_certs.empty());}
+  EXPECT_FALSE(credentials_options->pem_root_certs.empty());
+}
 
 TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_DoesNotRequestClientCertificate)
 {
-  ::internal::ServerSecurityConfiguration server_security_config("server cert data", "server key data", kEmptyRootCertData);
+  grpc::nidevice::ServerSecurityConfiguration server_security_config("server cert data", "server key data", kEmptyRootCertData);
 
   auto credentials_options = server_security_config.try_get_options();
 

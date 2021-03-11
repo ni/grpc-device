@@ -1,16 +1,14 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SYSCFG_LIBRARY_H
-#define NI_HARDWARE_GRPC_INTERNAL_SYSCFG_LIBRARY_H
+#ifndef GRPC_NIDEVICE_SYSCFG_LIBRARY_H
+#define GRPC_NIDEVICE_SYSCFG_LIBRARY_H
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 
-#include "syscfg_library_interface.h"
 #include "shared_library.h"
+#include "syscfg_library_interface.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 #if defined(_MSC_VER)
 static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
@@ -28,34 +26,30 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   std::string get_library_name() const;
   bool is_library_loaded() const;
   NISysCfgStatus InitializeSession(
-    const char* target_name,
-    const char* username,
-    const char* password,
-    NISysCfgLocale language,
-    NISysCfgBool force_property_refresh,
-    unsigned int connect_timeout_msec,
-    NISysCfgEnumExpertHandle* expert_enum_handle,
-    NISysCfgSessionHandle* session_handle
-    );
+      const char* target_name,
+      const char* username,
+      const char* password,
+      NISysCfgLocale language,
+      NISysCfgBool force_property_refresh,
+      unsigned int connect_timeout_msec,
+      NISysCfgEnumExpertHandle* expert_enum_handle,
+      NISysCfgSessionHandle* session_handle);
   NISysCfgStatus CloseHandle(
-    void* syscfg_handle
-    );
+      void* syscfg_handle);
   // Additional methods like CreateFilter, FindHardware etc. will be added in upcoming PRs.
 
  private:
   using InitializeSessionPtr = NISysCfgStatus (*)(
-    const char* target_name,
-    const char* username,
-    const char* password,
-    NISysCfgLocale language,
-    NISysCfgBool force_property_refresh,
-    unsigned int connect_timeout_msec,
-    NISysCfgEnumExpertHandle* expert_enum_handle,
-    NISysCfgSessionHandle* session_handle
-    );
+      const char* target_name,
+      const char* username,
+      const char* password,
+      NISysCfgLocale language,
+      NISysCfgBool force_property_refresh,
+      unsigned int connect_timeout_msec,
+      NISysCfgEnumExpertHandle* expert_enum_handle,
+      NISysCfgSessionHandle* session_handle);
   using CloseHandlePtr = NISysCfgStatus (*)(
-    void* syscfg_handle
-    );
+      void* syscfg_handle);
 
   typedef struct FunctionPointers {
     InitializeSessionPtr InitializeSession;
@@ -66,9 +60,7 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   FunctionPointers function_pointers_;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SYSCFG_LIBRARY_H
+#endif  // GRPC_NIDEVICE_SYSCFG_LIBRARY_H

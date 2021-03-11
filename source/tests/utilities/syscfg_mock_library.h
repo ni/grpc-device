@@ -9,21 +9,10 @@ namespace ni {
 namespace tests {
 namespace utilities {
 
-class SysCfgMockLibrary : public ni::hardware::grpc::internal::SysCfgLibraryInterface {
+class SysCfgMockLibrary : public grpc::nidevice::SysCfgLibraryInterface {
  public:
-  MOCK_METHOD(NISysCfgStatus, InitializeSession, (
-    const char* target_name,
-    const char* username,
-    const char* password,
-    NISysCfgLocale language,
-    NISysCfgBool force_property_refresh,
-    unsigned int connect_timeout_msec,
-    NISysCfgEnumExpertHandle* expert_enum_handle,
-    NISysCfgSessionHandle* session_handle
-    ), (override));
-  MOCK_METHOD(NISysCfgStatus, CloseHandle, (
-    void* syscfg_handle
-    ), (override));
+  MOCK_METHOD(NISysCfgStatus, InitializeSession, (const char* target_name, const char* username, const char* password, NISysCfgLocale language, NISysCfgBool force_property_refresh, unsigned int connect_timeout_msec, NISysCfgEnumExpertHandle* expert_enum_handle, NISysCfgSessionHandle* session_handle), (override));
+  MOCK_METHOD(NISysCfgStatus, CloseHandle, (void* syscfg_handle), (override));
 };
 
 }  // namespace utilities

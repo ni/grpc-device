@@ -1,10 +1,9 @@
 #include "session_utilities_service.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
+namespace nidevice {
 
-SessionUtilitiesService::SessionUtilitiesService(internal::SessionRepository* session_repository, internal::DeviceEnumerator* device_enumerator)
+SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator)
     : session_repository_(session_repository), device_enumerator_(device_enumerator)
 {
 }
@@ -55,6 +54,5 @@ SessionUtilitiesService::SessionUtilitiesService(internal::SessionRepository* se
   return ::grpc::Status::OK;
 }
 
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
