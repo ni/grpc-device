@@ -18,10 +18,10 @@ using ::testing::WithArg;
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
-  internal::DeviceEnumerator device_enumerator(&mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<ni::hardware::grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
-      .WillOnce(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
+      .WillOnce(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
   EXPECT_CALL(mock_library, CloseHandle)
       .Times(0);
 

@@ -3,15 +3,14 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-SWITCH
 //---------------------------------------------------------------------
-#ifndef NI_NISWITCH_GRPC_LIBRARY_WRAPPER_H
-#define NI_NISWITCH_GRPC_LIBRARY_WRAPPER_H
+#ifndef GRPC_NISWITCH_LIBRARY_WRAPPER_H
+#define GRPC_NISWITCH_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niswitch.h>
 
-namespace ni {
-namespace niswitch {
 namespace grpc {
+namespace niswitch {
 
 class NiSwitchLibraryInterface {
  public:
@@ -81,7 +80,6 @@ class NiSwitchLibraryInterface {
   virtual ViStatus revision_query(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]) = 0;
 };
 
-}  // namespace grpc
 }  // namespace niswitch
-}  // namespace ni
-#endif  // NI_NISWITCH_GRPC_LIBRARY_WRAPPER_H
+}  // namespace grpc
+#endif  // GRPC_NISWITCH_LIBRARY_WRAPPER_H

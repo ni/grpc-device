@@ -8,10 +8,8 @@
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
 
@@ -26,9 +24,7 @@ class DeviceEnumerator {
   SysCfgLibraryInterface* library_;
 };
 
-} // namespace internal
+} // namespace nidevice
 } // namespace grpc
-} // namespace hardware
-} // namespace ni
 
 #endif // NI_HARDWARE_GRPC_INTERNAL_DEVICEENUMERATOR

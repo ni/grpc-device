@@ -1,9 +1,7 @@
 #include "device_enumerator.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
     : library_(library)
@@ -43,5 +41,3 @@ DeviceEnumerator::~DeviceEnumerator()
 
 }  // namespace internal
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni

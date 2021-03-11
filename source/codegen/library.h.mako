@@ -6,7 +6,7 @@ config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "ni::" + config["namespace_component"] + "::grpc"
+namespace_prefix = "grpc::" + config["namespace_component"]
 include_guard_name = handler_helpers.get_include_guard_name(config, "_LIBRARY_H")
 %>\
 //---------------------------------------------------------------------
@@ -21,9 +21,8 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_LIBRARY_H"
 
 #include <server/shared_library.h>
 
-namespace ni {
-namespace ${config["namespace_component"]} {
 namespace grpc {
+namespace ${config["namespace_component"]} {
 
 class ${service_class_prefix}Library : public ${namespace_prefix}::${service_class_prefix}LibraryInterface {
  public:
@@ -57,12 +56,11 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
 %endfor
   } FunctionLoadStatus;
 
-  ni::hardware::grpc::internal::SharedLibrary shared_library_;
+  grpc::nidevice::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 };
 
-}  // namespace grpc
 }  // namespace ${config["namespace_component"]}
-}  // namespace ni
+}  // namespace grpc
 
 #endif  // ${include_guard_name}

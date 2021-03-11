@@ -22,16 +22,16 @@ using ::testing::Throw;
 
 TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
-  internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
-  internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   EXPECT_CALL(syscfg_mock_library, InitializeSession)
-      .WillOnce(Throw(internal::LibraryLoadException(internal::kSysCfgApiNotInstalledMessage)));
+      .WillOnce(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::EnumerateDevicesRequest request;
-  ni::hardware::grpc::EnumerateDevicesResponse response;
+  grpc::nidevice::EnumerateDevicesRequest request;
+  grpc::nidevice::EnumerateDevicesResponse response;
   ::grpc::Status status = service.EnumerateDevices(&context, &request, &response);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
@@ -40,14 +40,14 @@ TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_Retu
 
 TEST(SessionUtilitiesServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
 {
-  internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
-  internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ReserveResponse response;
+  grpc::nidevice::ReserveResponse response;
   ::grpc::Status status = service.Reserve(&context, &request, &response);
 
   EXPECT_FALSE(response.is_reserved());
@@ -56,15 +56,15 @@ TEST(SessionUtilitiesServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
 
 TEST(SessionUtilitiesServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
 {
-  internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
-  internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ReserveResponse response;
+  grpc::nidevice::ReserveResponse response;
   ::grpc::Status status = service.Reserve(&context, &request, &response);
 
   EXPECT_FALSE(response.is_reserved());
@@ -73,16 +73,16 @@ TEST(SessionUtilitiesServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
 
 TEST(SessionUtilitiesServiceTests, NewReserveIdAndClientId_Reserve_ReservesSession)
 {
-  internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
-  internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
   request.set_client_id("a");
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ReserveResponse response;
+  grpc::nidevice::ReserveResponse response;
   auto status = service.Reserve(&context, &request, &response);
 
   EXPECT_TRUE(response.is_reserved());
@@ -90,9 +90,9 @@ TEST(SessionUtilitiesServiceTests, NewReserveIdAndClientId_Reserve_ReservesSessi
 }
 
 void call_reserve_task(
-    ni::hardware::grpc::SessionUtilitiesService* service,
-    ni::hardware::grpc::ReserveRequest* request,
-    ni::hardware::grpc::ReserveResponse* response,
+    grpc::nidevice::SessionUtilitiesService* service,
+    grpc::nidevice::ReserveRequest* request,
+    grpc::nidevice::ReserveResponse* response,
     ::grpc::Status* status,
     std::atomic<bool>* is_thread_started)
 {
@@ -101,58 +101,58 @@ void call_reserve_task(
   *status = service->Reserve(&context, request, response);
 }
 
-bool call_unreserve(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
+bool call_unreserve(grpc::nidevice::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
 {
-  ni::hardware::grpc::UnreserveRequest unreserve_request;
+  grpc::nidevice::UnreserveRequest unreserve_request;
   unreserve_request.set_reservation_id(reservation_id);
   unreserve_request.set_client_id(client_id);
-  ni::hardware::grpc::UnreserveResponse unreserve_response;
+  grpc::nidevice::UnreserveResponse unreserve_response;
   ::grpc::ServerContext context;
   status = service->Unreserve(&context, &unreserve_request, &unreserve_response);
   return unreserve_response.is_unreserved();
 }
 
-bool call_unreserve(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
+bool call_unreserve(grpc::nidevice::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
 {
   ::grpc::Status status;
   return call_unreserve(service, reservation_id, client_id, status);
 }
 
-bool call_is_reserved(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
+bool call_is_reserved(grpc::nidevice::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
 {
-  ni::hardware::grpc::IsReservedByClientRequest is_reserved_request;
+  grpc::nidevice::IsReservedByClientRequest is_reserved_request;
   is_reserved_request.set_reservation_id(reservation_id);
   is_reserved_request.set_client_id(client_id);
-  ni::hardware::grpc::IsReservedByClientResponse is_reserved_response;
+  grpc::nidevice::IsReservedByClientResponse is_reserved_response;
   ::grpc::ServerContext context;
   status = service->IsReservedByClient(&context, &is_reserved_request, &is_reserved_response);
   return is_reserved_response.is_reserved();
 }
 
-bool call_is_reserved(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
+bool call_is_reserved(grpc::nidevice::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
 {
   ::grpc::Status status;
   return call_is_reserved(service, reservation_id, client_id, status);
 }
 
-bool call_reserve(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
+bool call_reserve(grpc::nidevice::SessionUtilitiesService* service, std::string reservation_id, std::string client_id, ::grpc::Status& status)
 {
-  ni::hardware::grpc::ReserveRequest reserve_request;
+  grpc::nidevice::ReserveRequest reserve_request;
   reserve_request.set_reservation_id("foo");
   reserve_request.set_client_id("a");
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ReserveResponse reserve_response;
+  grpc::nidevice::ReserveResponse reserve_response;
   status = service->Reserve(&context, &reserve_request, &reserve_response);
   return reserve_response.is_reserved();
 }
 
-bool call_reserve(ni::hardware::grpc::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
+bool call_reserve(grpc::nidevice::SessionUtilitiesService* service, std::string reservation_id, std::string client_id)
 {
   ::grpc::Status status;
   return call_reserve(service, reservation_id, client_id, status);
 }
 
-void set_reserve_request(ni::hardware::grpc::ReserveRequest& request, const char* reservation_id, const char* client_id)
+void set_reserve_request(grpc::nidevice::ReserveRequest& request, const char* reservation_id, const char* client_id)
 {
   request.set_reservation_id(reservation_id);
   request.set_client_id(client_id);
@@ -176,14 +176,14 @@ void wait_until_true(const std::atomic<bool>& client_started)
 
 TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnreserveThenReserves)
 {
-  internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
-  internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
 
-  ni::hardware::grpc::ReserveRequest clientb_request;
-  ni::hardware::grpc::ReserveResponse clientb_response;
+  grpc::nidevice::ReserveRequest clientb_request;
+  grpc::nidevice::ReserveResponse clientb_response;
   ::grpc::Status clientb_status;
   std::atomic<bool> clientb_started(false);
   set_reserve_request(clientb_request, "foo", "b");
@@ -202,15 +202,15 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnr
 
 TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsForTwoUnreservesThenReservesLastClient)
 {
-  internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
-  internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   call_reserve(&service, "foo", "a");
 
-  ni::hardware::grpc::ReserveRequest clientb_request, clientc_request;
-  ni::hardware::grpc::ReserveResponse clientb_response, clientc_response;
+  grpc::nidevice::ReserveRequest clientb_request, clientc_request;
+  grpc::nidevice::ReserveResponse clientb_response, clientc_response;
   ::grpc::Status clientb_status, clientc_status;
   std::atomic<bool> clientb_started(false), clientc_started(false);
   set_reserve_request(clientb_request, "foo", "b");
@@ -232,15 +232,15 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsF
 
 TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithSameClientId_ReturnsReserved)
 {
-  internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
-  internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   ni::hardware::grpc::ReserveRequest request;
   request.set_reservation_id("foo");
   request.set_client_id("a");
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ReserveResponse response;
+  grpc::nidevice::ReserveResponse response;
   service.Reserve(&context, &request, &response);
 
   response.set_is_reserved(false);
@@ -385,7 +385,7 @@ TEST(SessionUtilitiesServiceTests, Reservation_ResetServer_Unreserves)
   call_reserve(&service, "foo", "a");
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ResetServerResponse reset_response;
+  grpc::nidevice::ResetServerResponse reset_response;
   auto status = service.ResetServer(&context, NULL, &reset_response);
 
   EXPECT_TRUE(reset_response.is_server_reset());
@@ -410,7 +410,7 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
   call_reserve(&service, session_name, "a");
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ResetServerResponse reset_response;
+  grpc::nidevice::ResetServerResponse reset_response;
   service.ResetServer(&context, NULL, &reset_response);
 
   EXPECT_TRUE(reset_response.is_server_reset());
@@ -430,7 +430,7 @@ TEST(SessionUtilitiesServiceTests, TwoReservations_ResetServer_Unreserves)
   call_reserve(&service, "bar", "b");
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ResetServerResponse reset_response;
+  grpc::nidevice::ResetServerResponse reset_response;
   service.ResetServer(&context, NULL, &reset_response);
 
   EXPECT_TRUE(reset_response.is_server_reset());
@@ -447,8 +447,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Clie
   internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
-  ni::hardware::grpc::ReserveRequest clientb_request;
-  ni::hardware::grpc::ReserveResponse clientb_response;
+  grpc::nidevice::ReserveRequest clientb_request;
+  grpc::nidevice::ReserveResponse clientb_response;
   ::grpc::Status clientb_status;
   std::atomic<bool> clientb_started(false);
   set_reserve_request(clientb_request, "foo", "b");
@@ -457,7 +457,7 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Clie
   wait_until_true(clientb_started);
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ResetServerResponse reset_response;
+  grpc::nidevice::ResetServerResponse reset_response;
   service.ResetServer(&context, NULL, &reset_response);
 
   EXPECT_TRUE(reset_response.is_server_reset());
@@ -487,7 +487,7 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
   wait_until_true(clientb_started, clientc_started);
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ResetServerResponse reset_response;
+  grpc::nidevice::ResetServerResponse reset_response;
   service.ResetServer(&context, NULL, &reset_response);
 
   EXPECT_TRUE(reset_response.is_server_reset());
@@ -508,8 +508,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Wait
   internal::DeviceEnumerator device_enumerator(&syscfg_mock_library);
   ni::hardware::grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
   call_reserve(&service, "foo", "a");
-  ni::hardware::grpc::ReserveRequest clientb_request;
-  ni::hardware::grpc::ReserveResponse clientb_response;
+  grpc::nidevice::ReserveRequest clientb_request;
+  grpc::nidevice::ReserveResponse clientb_response;
   ::grpc::Status clientb_status;
   std::atomic<bool> clientb_started(false);
   set_reserve_request(clientb_request, "foo", "b");
@@ -518,7 +518,7 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Wait
   wait_until_true(clientb_started);
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ResetServerResponse reset_response;
+  grpc::nidevice::ResetServerResponse reset_response;
   service.ResetServer(&context, NULL, &reset_response);
 
   reserve_b.join();
@@ -546,7 +546,7 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
   wait_until_true(clientb_started, clientc_started);
 
   ::grpc::ServerContext context;
-  ni::hardware::grpc::ResetServerResponse reset_response;
+  grpc::nidevice::ResetServerResponse reset_response;
   service.ResetServer(&context, NULL, &reset_response);
 
   reserve_b.join();

@@ -4,10 +4,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 static const char* kConfigFileNotFoundMessage = "The server configuration file was not found at: ";
 static const char* kInvalidPortMessage = "The specified port number must between 0 and 65535.";
@@ -76,9 +74,7 @@ class ServerConfigurationParser {
   std::string certs_directory_;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
 #endif  // NI_HARDWARE_GRPC_INTERNAL_SERVER_CONFIGURATION_PARSER_H_
