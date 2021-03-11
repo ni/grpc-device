@@ -81,7 +81,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
   int get_actual_num_wfms(const char* channel_list)
@@ -93,7 +93,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     scope::ActualNumWfmsResponse response;
     auto status = GetStub()->ActualNumWfms(&context, request, &response);
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     EXPECT_EQ(1, response.num_wfms());
     return response.num_wfms();
   }
@@ -107,7 +107,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     scope::ActualMeasWfmSizeResponse response;
     auto status = GetStub()->ActualMeasWfmSize(&context, request, &response);
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response.meas_waveform_size();
   }
 
@@ -119,11 +119,15 @@ class NiScopeDriverApiTest : public ::testing::Test {
     scope::InitiateAcquisitionResponse response;
     auto status = GetStub()->InitiateAcquisition(&context, request, &response);
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
-  void check_error_message(int error_status)
+  void expect_api_success(int error_status)
   {
+    EXPECT_EQ(kScopeDriverApiSuccess, error_status);
+    if (kScopeDriverApiSuccess == error_status) {
+      return;
+    }
     ::grpc::ClientContext context;
     scope::GetErrorMessageRequest request;
     request.mutable_vi()->set_id(GetSessionId());
@@ -145,7 +149,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->AutoSetup(&context, request, &response);
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
  private:
@@ -168,7 +172,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSelfTest_SendRequest_SelfTestCompletesSucces
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  expect_api_success(response.status());
   EXPECT_EQ(0, response.self_test_result());
   EXPECT_LT(0, strlen(response.self_test_message().c_str()));
 }
@@ -183,7 +187,8 @@ TEST_F(NiScopeDriverApiTest, NiScopeReset_SendRequest_ResetCompletesSuccessfully
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  expect_api_success(response.status());
+  ;
 }
 
 TEST_F(NiScopeDriverApiTest, NiScopeRead_SendRequest_ReadCompletesWithCorrectSizes)
@@ -202,8 +207,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeRead_SendRequest_ReadCompletesWithCorrectSiz
   ::grpc::Status status = GetStub()->Read(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
-  check_error_message(response.status());
+  expect_api_success(response.status());
   EXPECT_EQ(expected_num_samples * expected_num_waveforms, response.waveform_size());
   EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
@@ -228,8 +232,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompl
   ::grpc::Status status = GetStub()->FetchArrayMeasurement(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
-  check_error_message(response.status());
+  expect_api_success(response.status());
   EXPECT_EQ(expected_num_waveforms * expected_waveform_size, response.meas_wfm_size());
   EXPECT_EQ(expected_waveform_size, response.wfm_info_size());
 }
@@ -252,8 +255,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary16_SendRequest_FetchCompletesWith
   ::grpc::Status status = GetStub()->FetchBinary16(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
-  check_error_message(response.status());
+  expect_api_success(response.status());
   EXPECT_EQ(expected_num_waveforms * expected_num_samples, response.waveform_size());
   EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
@@ -276,8 +278,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary8_SendRequest_FetchCompletesWithC
   ::grpc::Status status = GetStub()->FetchBinary8(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
-  check_error_message(response.status());
+  expect_api_success(response.status());
   EXPECT_EQ(expected_num_waveforms * expected_num_samples, response.waveform().size());
   EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
