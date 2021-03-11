@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <server/server_security_configuration.h>
+
 #include <typeinfo>
 
 namespace ni {
@@ -99,7 +100,8 @@ TEST(ServerSecurityConfigurationTests, ServerCertServerKeyAndRootCertNotEmpty_Tr
   EXPECT_NE(nullptr, credentials_options);
   EXPECT_EQ(GRPC_SSL_REQUEST_AND_REQUIRE_CLIENT_CERTIFICATE_AND_VERIFY, credentials_options->client_certificate_request);
   EXPECT_FALSE(credentials_options->pem_key_cert_pairs.empty());
-  EXPECT_FALSE(credentials_options->pem_root_certs.empty());}
+  EXPECT_FALSE(credentials_options->pem_root_certs.empty());
+}
 
 TEST(ServerSecurityConfigurationTests, ServerCertAndKeyNotEmptyAndRootCertEmpty_TryGetOptions_DoesNotRequestClientCertificate)
 {

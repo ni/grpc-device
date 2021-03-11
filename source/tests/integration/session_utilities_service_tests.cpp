@@ -1,12 +1,17 @@
 #include <gtest/gtest.h>
 #include <server/semaphore.h>
 #include <server/session_utilities_service.h>
+#include <server/syscfg_library.h>
+#include <tests/utilities/syscfg_mock_library.h>
 
 #include <thread>
 
 namespace ni {
 namespace tests {
 namespace integration {
+
+using ::testing::NiceMock;
+using ::testing::Throw;
 
 class InProcessServerClientTest : public ::testing::Test {
  public:
@@ -16,7 +21,10 @@ class InProcessServerClientTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
-    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>();
+    syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
+    ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
+        .WillByDefault(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
+    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>(syscfg_mock_library_.get());
     service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
@@ -87,6 +95,7 @@ class InProcessServerClientTest : public ::testing::Test {
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::grpc::nidevice::SessionUtilities::Stub> stub_;
   std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
   std::unique_ptr<grpc::nidevice::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<grpc::nidevice::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;
@@ -143,7 +152,7 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
   std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
   call_unreserve("foo", "a");
-  
+
   reserve_c.join();
   EXPECT_FALSE(call_is_reserved("foo", "b"));
   EXPECT_TRUE(call_is_reserved("foo", "c"));
@@ -157,8 +166,8 @@ TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDe
 
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
-  // Since the syscfg library will not be present in github repo, we expect a NOT_FOUND status in response.
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
+  EXPECT_EQ(grpc::nidevice::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 }  // namespace integration

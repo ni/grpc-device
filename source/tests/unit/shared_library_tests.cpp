@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-
 #include <server/shared_library.h>
 
 #if defined(__GNUC__)

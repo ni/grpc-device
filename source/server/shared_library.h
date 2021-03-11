@@ -17,11 +17,10 @@ typedef HMODULE LibraryHandle;
 typedef void* LibraryHandle;
 #endif
 
-struct LibraryLoadException : std::runtime_error
-{
-  LibraryLoadException(const std::string& message) : std::runtime_error(message) { }
-  LibraryLoadException(const char* message) : std::runtime_error(message) { }
-  LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) { }
+struct LibraryLoadException : std::runtime_error {
+  LibraryLoadException(const std::string& message) : std::runtime_error(message) {}
+  LibraryLoadException(const char* message) : std::runtime_error(message) {}
+  LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) {}
 };
 
 class SharedLibrary {
