@@ -1,5 +1,5 @@
 #
-# This example lists out devices/chassis connected to the server machine (in this case localhost)
+# This example lists out devices connected to the server machine (in this case localhost)
 # by estabilishing communication with it over gRPC
 #
 # Copyright 2021 National Instruments
@@ -22,7 +22,7 @@ import grpc
 import server_utilities_pb2 as serverType
 import server_utilities_pb2_grpc as gRPCServer
 
-# Helper to print the devices/chassis 
+# Helper to print the devices 
 def printDevices() :
     print("Devices: " + "\n") 
     for it in enumerateDevicesResponse.devices :
@@ -36,8 +36,8 @@ serverAddress = "localhost:31763"
 channel = grpc.insecure_channel(serverAddress)
 server = gRPCServer.ServerUtilitiesStub(channel)
 
-# EnumerateDevices API gives a list of devices/chassis connected to the server machine.
+# EnumerateDevices API gives a list of devices connected to the server machine.
 enumerateDevicesResponse = server.EnumerateDevices(serverType.EnumerateDevicesRequest())
 
-# Display devices/chassis connected to the server machine
+# Display devices connected to the server machine
 printDevices()     
