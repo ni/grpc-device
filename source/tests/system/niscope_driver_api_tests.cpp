@@ -234,6 +234,54 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompl
   EXPECT_EQ(expected_waveform_size, response.wfm_info_size());
 }
 
+TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary16_SendRequest_FetchCompletesWithCorrectSizes)
+{
+  auto_setup();
+  initiate_acquisition();
+  const ViInt32 expected_num_samples = 100000;
+  const char* channel_list = "0";
+  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
+  ::grpc::ClientContext context;
+  scope::FetchBinary16Request request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list(channel_list);
+  request.set_timeout(10000);
+  request.set_num_samples(expected_num_samples);
+  scope::FetchBinary16Response response;
+
+  ::grpc::Status status = GetStub()->FetchBinary16(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  check_error_message(response.status());
+  EXPECT_EQ(expected_num_waveforms * expected_num_samples, response.waveform_size());
+  EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
+}
+
+TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary8_SendRequest_FetchCompletesWithCorrectSizes)
+{
+  auto_setup();
+  initiate_acquisition();
+  const ViInt32 expected_num_samples = 100000;
+  const char* channel_list = "0";
+  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
+  ::grpc::ClientContext context;
+  scope::FetchBinary8Request request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list(channel_list);
+  request.set_timeout(10000);
+  request.set_num_samples(expected_num_samples);
+  scope::FetchBinary8Response response;
+
+  ::grpc::Status status = GetStub()->FetchBinary8(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  check_error_message(response.status());
+  EXPECT_EQ(expected_num_waveforms * expected_num_samples, response.waveform().size());
+  EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
