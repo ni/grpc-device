@@ -446,6 +446,30 @@ TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
   EXPECT_EQ(a_turtle, response.a_turtle_raw());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetEnumValueNotInEnum_CallsGetEnumValue)
+{
+  grpc::nidevice::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  grpc::nifake::NiFakeService service(&library, &session_repository);
+  std::int32_t a_quantity = 123;
+  std::int16_t a_turtle = 5;
+  EXPECT_CALL(library, GetEnumValue(kTestViSession, _, _))
+      .WillOnce(DoAll(SetArgPointee<1>(a_quantity), SetArgPointee<2>(a_turtle), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  grpc::nifake::GetEnumValueRequest request;
+  request.mutable_vi()->set_id(session_id);
+  grpc::nifake::GetEnumValueResponse response;
+  ::grpc::Status status = service.GetEnumValue(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(a_quantity, response.a_quantity());
+  EXPECT_EQ(a_turtle, response.a_turtle());
+  EXPECT_EQ(a_turtle, response.a_turtle_raw());
+}
+
 // Array input and output tests
 TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAcceptListOfDurationsInSeconds)
 {
@@ -649,14 +673,14 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
 
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_CallsParametersAreMultipleTypes)
 {
-  ni::hardware::grpc::internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library;
-  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  grpc::nifake::NiFakeService service(&library, &session_repository);
   bool a_boolean = true;
   std::int32_t an_int_32 = 35;
   std::int64_t an_int_64 = 42;
-  ni::fake::grpc::Turtle an_int_enum = ni::fake::grpc::Turtle::TURTLE_MICHELANGELO;
+  grpc::nifake::Turtle an_int_enum = grpc::nifake::Turtle::TURTLE_MICHELANGELO;
   double a_float = 4.2;
   float expected_float_enum_value = 6.5;
   std::int32_t expected_string_size = 12;
@@ -677,7 +701,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_C
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
-  ni::fake::grpc::ParametersAreMultipleTypesRequest request;
+  grpc::nifake::ParametersAreMultipleTypesRequest request;
   request.mutable_vi()->set_id(session_id);
   request.set_a_boolean(a_boolean);
   request.set_an_int32(an_int_32);
@@ -686,7 +710,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_C
   request.set_a_float(a_float);
   request.set_a_float_enum_raw(expected_float_enum_value);
   request.set_a_string(a_string);
-  ni::fake::grpc::ParametersAreMultipleTypesResponse response;
+  grpc::nifake::ParametersAreMultipleTypesResponse response;
   ::grpc::Status status = service.ParametersAreMultipleTypes(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
@@ -695,10 +719,10 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_C
 
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNotInEnum_CallsParametersAreMultipleTypes)
 {
-  ni::hardware::grpc::internal::SessionRepository session_repository;
+  grpc::nidevice::SessionRepository session_repository;
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library;
-  ni::fake::grpc::NiFakeService service(&library, &session_repository);
+  grpc::nifake::NiFakeService service(&library, &session_repository);
   bool a_boolean = true;
   std::int32_t an_int_32 = 35;
   std::int64_t an_int_64 = 42;
@@ -723,7 +747,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNo
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
-  ni::fake::grpc::ParametersAreMultipleTypesRequest request;
+  grpc::nifake::ParametersAreMultipleTypesRequest request;
   request.mutable_vi()->set_id(session_id);
   request.set_a_boolean(a_boolean);
   request.set_an_int32(an_int_32);
@@ -732,7 +756,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNo
   request.set_a_float(a_float);
   request.set_a_float_enum_raw(expected_float_enum_value);
   request.set_a_string(a_string);
-  ni::fake::grpc::ParametersAreMultipleTypesResponse response;
+  grpc::nifake::ParametersAreMultipleTypesResponse response;
   ::grpc::Status status = service.ParametersAreMultipleTypes(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
