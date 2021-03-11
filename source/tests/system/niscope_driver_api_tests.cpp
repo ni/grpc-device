@@ -188,7 +188,6 @@ TEST_F(NiScopeDriverApiTest, NiScopeReset_SendRequest_ResetCompletesSuccessfully
 
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
-  ;
 }
 
 TEST_F(NiScopeDriverApiTest, NiScopeRead_SendRequest_ReadCompletesWithCorrectSizes)
