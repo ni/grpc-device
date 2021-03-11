@@ -76,7 +76,7 @@ def camel_to_snake(camelString):
       index = index + 1
   return ("".join(camelString))
 
-def snake_to_camel(snake_string):
+def snake_to_pascal(snake_string):
   snake_string = list(snake_string)
   index = 0
   snake_string[index] = snake_string[index].upper()

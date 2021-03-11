@@ -65,7 +65,7 @@ namespace ${config["namespace_component"]} {
 % for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
-    method_name = common_helpers.snake_to_camel(function_name)
+    method_name = common_helpers.snake_to_pascal(function_name)
     parameters = function_data['parameters']
     handler_helpers.sanitize_names(parameters)
     common_helpers.mark_non_grpc_params(parameters)
@@ -196,7 +196,7 @@ ${initialize_enum_input_param(function_name, parameter)}\
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
 % else:
-${initialize_standard_input_param(parameter)}\
+${initialize_standard_input_param(function_name, parameter)}\
 % endif
 </%def>\
 \
@@ -257,10 +257,11 @@ ${initialize_standard_input_param(parameter)}\
 \
 \
 \
-<%def name="initialize_standard_input_param(parameter)">\
+<%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
+  PascalFieldName = common_helpers.snake_to_pascal(field_name)
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
   c_type_pointer = c_type.replace('[]','*')
@@ -273,11 +274,13 @@ ${initialize_standard_input_param(parameter)}\
       ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
     % elif 'enum' in parameter:
       ${c_type} ${parameter_name};
-      if (${request_snippet} != NULL) {
-        ${parameter_name} = (${c_type})${request_snippet};
-      }
-      else {
-        ${parameter_name} = (${c_type})request->${field_name}_raw();
+      switch (request->${field_name}_oneof_case()) {
+        case grpc::${config["namespace_component"]}::${function_name}Request::${PascalFieldName}OneofCase::k${PascalFieldName}:
+          ${parameter_name} = (${c_type})${request_snippet};
+          break;
+        default:
+          ${parameter_name} = (${c_type})request->${field_name}_raw();
+          break;
       }
     % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8':
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\

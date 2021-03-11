@@ -146,11 +146,13 @@ namespace niscope {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 array_meas_function;
-      if (request->array_meas_function() != NULL) {
-        array_meas_function = (ViInt32)request->array_meas_function();
-      }
-      else {
-        array_meas_function = (ViInt32)request->array_meas_function_raw();
+      switch (request->array_meas_function_oneof_case()) {
+        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionOneofCase::kArrayMeasFunction:
+          array_meas_function = (ViInt32)request->array_meas_function();
+          break;
+        default:
+          array_meas_function = (ViInt32)request->array_meas_function_raw();
+          break;
       }
 
       ViInt32 meas_waveform_size {};
@@ -225,11 +227,13 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 meas_function;
-      if (request->meas_function() != NULL) {
-        meas_function = (ViInt32)request->meas_function();
-      }
-      else {
-        meas_function = (ViInt32)request->meas_function_raw();
+      switch (request->meas_function_oneof_case()) {
+        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionOneofCase::kMeasFunction:
+          meas_function = (ViInt32)request->meas_function();
+          break;
+        default:
+          meas_function = (ViInt32)request->meas_function_raw();
+          break;
       }
 
       auto status = library_->AddWaveformProcessing(vi, channel_list, meas_function);
@@ -330,11 +334,13 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 option;
-      if (request->option() != NULL) {
-        option = (ViInt32)request->option();
-      }
-      else {
-        option = (ViInt32)request->option_raw();
+      switch (request->option_oneof_case()) {
+        case grpc::niscope::CalSelfCalibrateRequest::OptionOneofCase::kOption:
+          option = (ViInt32)request->option();
+          break;
+        default:
+          option = (ViInt32)request->option_raw();
+          break;
       }
 
       auto status = library_->CalSelfCalibrate(vi, channel_list, option);
@@ -491,11 +497,13 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 clearable_measurement_function;
-      if (request->clearable_measurement_function() != NULL) {
-        clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
-      }
-      else {
-        clearable_measurement_function = (ViInt32)request->clearable_measurement_function_raw();
+      switch (request->clearable_measurement_function_oneof_case()) {
+        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionOneofCase::kClearableMeasurementFunction:
+          clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
+          break;
+        default:
+          clearable_measurement_function = (ViInt32)request->clearable_measurement_function_raw();
+          break;
       }
 
       auto status = library_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
@@ -687,11 +695,13 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViInt32 slope;
-      if (request->slope() != NULL) {
-        slope = (ViInt32)request->slope();
-      }
-      else {
-        slope = (ViInt32)request->slope_raw();
+      switch (request->slope_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeOneofCase::kSlope:
+          slope = (ViInt32)request->slope();
+          break;
+        default:
+          slope = (ViInt32)request->slope_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -718,19 +728,23 @@ namespace niscope {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViInt32 slope;
-      if (request->slope() != NULL) {
-        slope = (ViInt32)request->slope();
-      }
-      else {
-        slope = (ViInt32)request->slope_raw();
+      switch (request->slope_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeOneofCase::kSlope:
+          slope = (ViInt32)request->slope();
+          break;
+        default:
+          slope = (ViInt32)request->slope_raw();
+          break;
       }
 
       ViInt32 trigger_coupling;
-      if (request->trigger_coupling() != NULL) {
-        trigger_coupling = (ViInt32)request->trigger_coupling();
-      }
-      else {
-        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      switch (request->trigger_coupling_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingOneofCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        default:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -758,27 +772,33 @@ namespace niscope {
       ViReal64 level = request->level();
       ViReal64 width = request->width();
       ViInt32 polarity;
-      if (request->polarity() != NULL) {
-        polarity = (ViInt32)request->polarity();
-      }
-      else {
-        polarity = (ViInt32)request->polarity_raw();
+      switch (request->polarity_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityOneofCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        default:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
       }
 
       ViInt32 glitch_condition;
-      if (request->glitch_condition() != NULL) {
-        glitch_condition = (ViInt32)request->glitch_condition();
-      }
-      else {
-        glitch_condition = (ViInt32)request->glitch_condition_raw();
+      switch (request->glitch_condition_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionOneofCase::kGlitchCondition:
+          glitch_condition = (ViInt32)request->glitch_condition();
+          break;
+        default:
+          glitch_condition = (ViInt32)request->glitch_condition_raw();
+          break;
       }
 
       ViInt32 trigger_coupling;
-      if (request->trigger_coupling() != NULL) {
-        trigger_coupling = (ViInt32)request->trigger_coupling();
-      }
-      else {
-        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      switch (request->trigger_coupling_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingOneofCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        default:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -806,19 +826,23 @@ namespace niscope {
       ViReal64 level = request->level();
       ViReal64 hysteresis = request->hysteresis();
       ViInt32 slope;
-      if (request->slope() != NULL) {
-        slope = (ViInt32)request->slope();
-      }
-      else {
-        slope = (ViInt32)request->slope_raw();
+      switch (request->slope_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeOneofCase::kSlope:
+          slope = (ViInt32)request->slope();
+          break;
+        default:
+          slope = (ViInt32)request->slope_raw();
+          break;
       }
 
       ViInt32 trigger_coupling;
-      if (request->trigger_coupling() != NULL) {
-        trigger_coupling = (ViInt32)request->trigger_coupling();
-      }
-      else {
-        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      switch (request->trigger_coupling_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingOneofCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        default:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -865,19 +889,23 @@ namespace niscope {
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
       ViInt32 polarity;
-      if (request->polarity() != NULL) {
-        polarity = (ViInt32)request->polarity();
-      }
-      else {
-        polarity = (ViInt32)request->polarity_raw();
+      switch (request->polarity_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityOneofCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        default:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
       }
 
       ViInt32 trigger_coupling;
-      if (request->trigger_coupling() != NULL) {
-        trigger_coupling = (ViInt32)request->trigger_coupling();
-      }
-      else {
-        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      switch (request->trigger_coupling_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingOneofCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        default:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -925,36 +953,44 @@ namespace niscope {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViBoolean enable_dc_restore = request->enable_dc_restore();
       ViInt32 signal_format;
-      if (request->signal_format() != NULL) {
-        signal_format = (ViInt32)request->signal_format();
-      }
-      else {
-        signal_format = (ViInt32)request->signal_format_raw();
+      switch (request->signal_format_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatOneofCase::kSignalFormat:
+          signal_format = (ViInt32)request->signal_format();
+          break;
+        default:
+          signal_format = (ViInt32)request->signal_format_raw();
+          break;
       }
 
       ViInt32 event_parameter;
-      if (request->event() != NULL) {
-        event_parameter = (ViInt32)request->event();
-      }
-      else {
-        event_parameter = (ViInt32)request->event_raw();
+      switch (request->event_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::EventOneofCase::kEvent:
+          event_parameter = (ViInt32)request->event();
+          break;
+        default:
+          event_parameter = (ViInt32)request->event_raw();
+          break;
       }
 
       ViInt32 line_number = request->line_number();
       ViInt32 polarity;
-      if (request->polarity() != NULL) {
-        polarity = (ViInt32)request->polarity();
-      }
-      else {
-        polarity = (ViInt32)request->polarity_raw();
+      switch (request->polarity_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityOneofCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        default:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
       }
 
       ViInt32 trigger_coupling;
-      if (request->trigger_coupling() != NULL) {
-        trigger_coupling = (ViInt32)request->trigger_coupling();
-      }
-      else {
-        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      switch (request->trigger_coupling_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingOneofCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        default:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -983,27 +1019,33 @@ namespace niscope {
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
       ViInt32 polarity;
-      if (request->polarity() != NULL) {
-        polarity = (ViInt32)request->polarity();
-      }
-      else {
-        polarity = (ViInt32)request->polarity_raw();
+      switch (request->polarity_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityOneofCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        default:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
       }
 
       ViInt32 condition;
-      if (request->condition() != NULL) {
-        condition = (ViInt32)request->condition();
-      }
-      else {
-        condition = (ViInt32)request->condition_raw();
+      switch (request->condition_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionOneofCase::kCondition:
+          condition = (ViInt32)request->condition();
+          break;
+        default:
+          condition = (ViInt32)request->condition_raw();
+          break;
       }
 
       ViInt32 trigger_coupling;
-      if (request->trigger_coupling() != NULL) {
-        trigger_coupling = (ViInt32)request->trigger_coupling();
-      }
-      else {
-        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      switch (request->trigger_coupling_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingOneofCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        default:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -1031,19 +1073,23 @@ namespace niscope {
       ViReal64 low_level = request->low_level();
       ViReal64 high_level = request->high_level();
       ViInt32 window_mode;
-      if (request->window_mode() != NULL) {
-        window_mode = (ViInt32)request->window_mode();
-      }
-      else {
-        window_mode = (ViInt32)request->window_mode_raw();
+      switch (request->window_mode_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeOneofCase::kWindowMode:
+          window_mode = (ViInt32)request->window_mode();
+          break;
+        default:
+          window_mode = (ViInt32)request->window_mode_raw();
+          break;
       }
 
       ViInt32 trigger_coupling;
-      if (request->trigger_coupling() != NULL) {
-        trigger_coupling = (ViInt32)request->trigger_coupling();
-      }
-      else {
-        trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+      switch (request->trigger_coupling_oneof_case()) {
+        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingOneofCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        default:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
       }
 
       ViReal64 holdoff = request->holdoff();
@@ -1071,11 +1117,13 @@ namespace niscope {
       ViReal64 range = request->range();
       ViReal64 offset = request->offset();
       ViInt32 coupling;
-      if (request->coupling() != NULL) {
-        coupling = (ViInt32)request->coupling();
-      }
-      else {
-        coupling = (ViInt32)request->coupling_raw();
+      switch (request->coupling_oneof_case()) {
+        case grpc::niscope::ConfigureVerticalRequest::CouplingOneofCase::kCoupling:
+          coupling = (ViInt32)request->coupling();
+          break;
+        default:
+          coupling = (ViInt32)request->coupling_raw();
+          break;
       }
 
       ViReal64 probe_attenuation = request->probe_attenuation();
@@ -1195,11 +1243,13 @@ namespace niscope {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 signal;
-      if (request->signal() != NULL) {
-        signal = (ViInt32)request->signal();
-      }
-      else {
-        signal = (ViInt32)request->signal_raw();
+      switch (request->signal_oneof_case()) {
+        case grpc::niscope::ExportSignalRequest::SignalOneofCase::kSignal:
+          signal = (ViInt32)request->signal();
+          break;
+        default:
+          signal = (ViInt32)request->signal_raw();
+          break;
       }
 
       ViConstString signal_identifier = request->signal_identifier().c_str();
@@ -1911,11 +1961,13 @@ namespace niscope {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 which_trigger;
-      if (request->which_trigger() != NULL) {
-        which_trigger = (ViInt32)request->which_trigger();
-      }
-      else {
-        which_trigger = (ViInt32)request->which_trigger_raw();
+      switch (request->which_trigger_oneof_case()) {
+        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerOneofCase::kWhichTrigger:
+          which_trigger = (ViInt32)request->which_trigger();
+          break;
+        default:
+          which_trigger = (ViInt32)request->which_trigger_raw();
+          break;
       }
 
       auto status = library_->SendSoftwareTriggerEdge(vi, which_trigger);

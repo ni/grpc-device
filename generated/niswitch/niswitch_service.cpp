@@ -267,11 +267,13 @@ namespace niswitch {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString scanlist = request->scanlist().c_str();
       ViInt32 scan_mode;
-      if (request->scan_mode() != NULL) {
-        scan_mode = (ViInt32)request->scan_mode();
-      }
-      else {
-        scan_mode = (ViInt32)request->scan_mode_raw();
+      switch (request->scan_mode_oneof_case()) {
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeOneofCase::kScanMode:
+          scan_mode = (ViInt32)request->scan_mode();
+          break;
+        default:
+          scan_mode = (ViInt32)request->scan_mode_raw();
+          break;
       }
 
       auto status = library_->ConfigureScanList(vi, scanlist, scan_mode);
@@ -295,19 +297,23 @@ namespace niswitch {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViReal64 scan_delay = request->scan_delay();
       ViInt32 trigger_input;
-      if (request->trigger_input() != NULL) {
-        trigger_input = (ViInt32)request->trigger_input();
-      }
-      else {
-        trigger_input = (ViInt32)request->trigger_input_raw();
+      switch (request->trigger_input_oneof_case()) {
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputOneofCase::kTriggerInput:
+          trigger_input = (ViInt32)request->trigger_input();
+          break;
+        default:
+          trigger_input = (ViInt32)request->trigger_input_raw();
+          break;
       }
 
       ViInt32 scan_advanced_output;
-      if (request->scan_advanced_output() != NULL) {
-        scan_advanced_output = (ViInt32)request->scan_advanced_output();
-      }
-      else {
-        scan_advanced_output = (ViInt32)request->scan_advanced_output_raw();
+      switch (request->scan_advanced_output_oneof_case()) {
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputOneofCase::kScanAdvancedOutput:
+          scan_advanced_output = (ViInt32)request->scan_advanced_output();
+          break;
+        default:
+          scan_advanced_output = (ViInt32)request->scan_advanced_output_raw();
+          break;
       }
 
       auto status = library_->ConfigureScanTrigger(vi, scan_delay, trigger_input, scan_advanced_output);
@@ -1079,11 +1085,13 @@ namespace niswitch {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString relay_name = request->relay_name().c_str();
       ViInt32 relay_action;
-      if (request->relay_action() != NULL) {
-        relay_action = (ViInt32)request->relay_action();
-      }
-      else {
-        relay_action = (ViInt32)request->relay_action_raw();
+      switch (request->relay_action_oneof_case()) {
+        case grpc::niswitch::RelayControlRequest::RelayActionOneofCase::kRelayAction:
+          relay_action = (ViInt32)request->relay_action();
+          break;
+        default:
+          relay_action = (ViInt32)request->relay_action_raw();
+          break;
       }
 
       auto status = library_->RelayControl(vi, relay_name, relay_action);
@@ -1188,19 +1196,23 @@ namespace niswitch {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 scan_advanced_output_connector;
-      if (request->scan_advanced_output_connector() != NULL) {
-        scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
-      }
-      else {
-        scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector_raw();
+      switch (request->scan_advanced_output_connector_oneof_case()) {
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorOneofCase::kScanAdvancedOutputConnector:
+          scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
+          break;
+        default:
+          scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector_raw();
+          break;
       }
 
       ViInt32 scan_advanced_output_bus_line;
-      if (request->scan_advanced_output_bus_line() != NULL) {
-        scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
-      }
-      else {
-        scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line_raw();
+      switch (request->scan_advanced_output_bus_line_oneof_case()) {
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineOneofCase::kScanAdvancedOutputBusLine:
+          scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
+          break;
+        default:
+          scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line_raw();
+          break;
       }
 
       ViBoolean invert = request->invert();
@@ -1224,19 +1236,23 @@ namespace niswitch {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 trigger_input_connector;
-      if (request->trigger_input_connector() != NULL) {
-        trigger_input_connector = (ViInt32)request->trigger_input_connector();
-      }
-      else {
-        trigger_input_connector = (ViInt32)request->trigger_input_connector_raw();
+      switch (request->trigger_input_connector_oneof_case()) {
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorOneofCase::kTriggerInputConnector:
+          trigger_input_connector = (ViInt32)request->trigger_input_connector();
+          break;
+        default:
+          trigger_input_connector = (ViInt32)request->trigger_input_connector_raw();
+          break;
       }
 
       ViInt32 trigger_input_bus_line;
-      if (request->trigger_input_bus_line() != NULL) {
-        trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
-      }
-      else {
-        trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line_raw();
+      switch (request->trigger_input_bus_line_oneof_case()) {
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineOneofCase::kTriggerInputBusLine:
+          trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
+          break;
+        default:
+          trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line_raw();
+          break;
       }
 
       ViBoolean invert = request->invert();
@@ -1261,11 +1277,13 @@ namespace niswitch {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString scanlist = request->scanlist().c_str();
       ViInt16 initiation;
-      if (request->initiation() != NULL) {
-        initiation = (ViInt16)request->initiation();
-      }
-      else {
-        initiation = (ViInt16)request->initiation_raw();
+      switch (request->initiation_oneof_case()) {
+        case grpc::niswitch::ScanRequest::InitiationOneofCase::kInitiation:
+          initiation = (ViInt16)request->initiation();
+          break;
+        default:
+          initiation = (ViInt16)request->initiation_raw();
+          break;
       }
 
       auto status = library_->Scan(vi, scanlist, initiation);

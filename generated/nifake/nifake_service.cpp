@@ -141,11 +141,13 @@ namespace nifake {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 a_turtle;
-      if (request->a_turtle() != NULL) {
-        a_turtle = (ViInt16)request->a_turtle();
-      }
-      else {
-        a_turtle = (ViInt16)request->a_turtle_raw();
+      switch (request->a_turtle_oneof_case()) {
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleOneofCase::kATurtle:
+          a_turtle = (ViInt16)request->a_turtle();
+          break;
+        default:
+          a_turtle = (ViInt16)request->a_turtle_raw();
+          break;
       }
 
       auto status = library_->EnumInputFunctionWithDefaults(vi, a_turtle);
@@ -748,11 +750,13 @@ namespace nifake {
       ViInt32 an_int32 = request->an_int32();
       ViInt64 an_int64 = request->an_int64();
       ViInt16 an_int_enum;
-      if (request->an_int_enum() != NULL) {
-        an_int_enum = (ViInt16)request->an_int_enum();
-      }
-      else {
-        an_int_enum = (ViInt16)request->an_int_enum_raw();
+      switch (request->an_int_enum_oneof_case()) {
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumOneofCase::kAnIntEnum:
+          an_int_enum = (ViInt16)request->an_int_enum();
+          break;
+        default:
+          an_int_enum = (ViInt16)request->an_int_enum_raw();
+          break;
       }
 
       ViReal64 a_float = request->a_float();
