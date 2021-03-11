@@ -5,10 +5,8 @@
 
 #include <string>
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 class ServerSecurityConfiguration {
  public:
@@ -25,9 +23,7 @@ class ServerSecurityConfiguration {
   std::shared_ptr<::grpc::ServerCredentials> server_credentials_;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
 #endif  // NI_HARDWARE_GRPC_INTERNAL_SERVER_SECURITY_CONFIGURATION_H_

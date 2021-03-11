@@ -7,10 +7,8 @@
 #include "session_repository.h"
 #include "shared_library.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 class DeviceEnumerator
 {
@@ -25,12 +23,10 @@ class DeviceEnumerator
  private:
   NISysCfgStatus get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
 
-  internal::SharedLibrary syscfg_library_;
+  SharedLibrary syscfg_library_;
 };
 
-} // namespace internal
+} // namespace nidevice
 } // namespace grpc
-} // namespace hardware
-} // namespace ni
 
 #endif // NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT

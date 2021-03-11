@@ -3,18 +3,17 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-SWITCH
 //---------------------------------------------------------------------
-#ifndef NI_NISWITCH_GRPC_LIBRARY_H
-#define NI_NISWITCH_GRPC_LIBRARY_H
+#ifndef GRPC_NISWITCH_LIBRARY_H
+#define GRPC_NISWITCH_LIBRARY_H
 
 #include "niswitch_library_interface.h"
 
 #include <server/shared_library.h>
 
-namespace ni {
-namespace niswitch {
 namespace grpc {
+namespace niswitch {
 
-class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
+class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
  public:
   NiSwitchLibrary();
   virtual ~NiSwitchLibrary();
@@ -212,12 +211,11 @@ class NiSwitchLibrary : public ni::niswitch::grpc::NiSwitchLibraryInterface {
     WaitForScanCompletePtr WaitForScanComplete;
   } FunctionLoadStatus;
 
-  ni::hardware::grpc::internal::SharedLibrary shared_library_;
+  grpc::nidevice::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 };
 
-}  // namespace grpc
 }  // namespace niswitch
-}  // namespace ni
+}  // namespace grpc
 
-#endif  // NI_NISWITCH_GRPC_LIBRARY_H
+#endif  // GRPC_NISWITCH_LIBRARY_H
