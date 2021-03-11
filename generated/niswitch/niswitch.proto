@@ -284,6 +284,7 @@ message CanConnectRequest {
 message CanConnectResponse {
   int32 status = 1;
   PathCapability path_capability = 2;
+  sint32 path_capability_raw = 3;
 }
 
 message CheckAttributeViBooleanRequest {
@@ -368,7 +369,10 @@ message CommitResponse {
 message ConfigureScanListRequest {
   grpc.nidevice.Session vi = 1;
   string scanlist = 2;
-  ScanMode scan_mode = 3;
+  oneof scan_mode_oneof {
+    ScanMode scan_mode = 3;
+    sint32 scan_mode_raw = 4;
+  }
 }
 
 message ConfigureScanListResponse {
@@ -378,8 +382,14 @@ message ConfigureScanListResponse {
 message ConfigureScanTriggerRequest {
   grpc.nidevice.Session vi = 1;
   double scan_delay = 2;
-  TriggerInput trigger_input = 3;
-  ScanAdvancedOutput scan_advanced_output = 4;
+  oneof trigger_input_oneof {
+    TriggerInput trigger_input = 3;
+    sint32 trigger_input_raw = 4;
+  }
+  oneof scan_advanced_output_oneof {
+    ScanAdvancedOutput scan_advanced_output = 5;
+    sint32 scan_advanced_output_raw = 6;
+  }
 }
 
 message ConfigureScanTriggerResponse {
@@ -572,6 +582,7 @@ message GetRelayPositionRequest {
 message GetRelayPositionResponse {
   int32 status = 1;
   RelayPosition relay_position = 2;
+  sint32 relay_position_raw = 3;
 }
 
 message InitRequest {
@@ -658,7 +669,10 @@ message LockSessionResponse {
 message RelayControlRequest {
   grpc.nidevice.Session vi = 1;
   string relay_name = 2;
-  RelayAction relay_action = 3;
+  oneof relay_action_oneof {
+    RelayAction relay_action = 3;
+    sint32 relay_action_raw = 4;
+  }
 }
 
 message RelayControlResponse {
@@ -683,9 +697,15 @@ message ResetWithDefaultsResponse {
 
 message RouteScanAdvancedOutputRequest {
   grpc.nidevice.Session vi = 1;
-  ScanAdvancedOutput scan_advanced_output_connector = 2;
-  ScanAdvancedOutput scan_advanced_output_bus_line = 3;
-  bool invert = 4;
+  oneof scan_advanced_output_connector_oneof {
+    ScanAdvancedOutput scan_advanced_output_connector = 2;
+    sint32 scan_advanced_output_connector_raw = 3;
+  }
+  oneof scan_advanced_output_bus_line_oneof {
+    ScanAdvancedOutput scan_advanced_output_bus_line = 4;
+    sint32 scan_advanced_output_bus_line_raw = 5;
+  }
+  bool invert = 6;
 }
 
 message RouteScanAdvancedOutputResponse {
@@ -694,9 +714,15 @@ message RouteScanAdvancedOutputResponse {
 
 message RouteTriggerInputRequest {
   grpc.nidevice.Session vi = 1;
-  TriggerInput trigger_input_connector = 2;
-  TriggerInput trigger_input_bus_line = 3;
-  bool invert = 4;
+  oneof trigger_input_connector_oneof {
+    TriggerInput trigger_input_connector = 2;
+    sint32 trigger_input_connector_raw = 3;
+  }
+  oneof trigger_input_bus_line_oneof {
+    TriggerInput trigger_input_bus_line = 4;
+    sint32 trigger_input_bus_line_raw = 5;
+  }
+  bool invert = 6;
 }
 
 message RouteTriggerInputResponse {
@@ -706,7 +732,10 @@ message RouteTriggerInputResponse {
 message ScanRequest {
   grpc.nidevice.Session vi = 1;
   string scanlist = 2;
-  HandshakingInitiation initiation = 3;
+  oneof initiation_oneof {
+    HandshakingInitiation initiation = 3;
+    sint32 initiation_raw = 4;
+  }
 }
 
 message ScanResponse {
