@@ -271,8 +271,11 @@ namespace niswitch {
         case grpc::niswitch::ConfigureScanListRequest::ScanModeOneofCase::kScanMode:
           scan_mode = (ViInt32)request->scan_mode();
           break;
-        default:
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeOneofCase::kScanModeRaw:
           scan_mode = (ViInt32)request->scan_mode_raw();
+          break;
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeOneofCase::SCAN_MODE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_mode was not specified or out of range");
           break;
       }
 
@@ -301,8 +304,11 @@ namespace niswitch {
         case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputOneofCase::kTriggerInput:
           trigger_input = (ViInt32)request->trigger_input();
           break;
-        default:
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputOneofCase::kTriggerInputRaw:
           trigger_input = (ViInt32)request->trigger_input_raw();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputOneofCase::TRIGGER_INPUT_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input was not specified or out of range");
           break;
       }
 
@@ -311,8 +317,11 @@ namespace niswitch {
         case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputOneofCase::kScanAdvancedOutput:
           scan_advanced_output = (ViInt32)request->scan_advanced_output();
           break;
-        default:
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputOneofCase::kScanAdvancedOutputRaw:
           scan_advanced_output = (ViInt32)request->scan_advanced_output_raw();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputOneofCase::SCAN_ADVANCED_OUTPUT_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output was not specified or out of range");
           break;
       }
 
@@ -1089,8 +1098,11 @@ namespace niswitch {
         case grpc::niswitch::RelayControlRequest::RelayActionOneofCase::kRelayAction:
           relay_action = (ViInt32)request->relay_action();
           break;
-        default:
+        case grpc::niswitch::RelayControlRequest::RelayActionOneofCase::kRelayActionRaw:
           relay_action = (ViInt32)request->relay_action_raw();
+          break;
+        case grpc::niswitch::RelayControlRequest::RelayActionOneofCase::RELAY_ACTION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for relay_action was not specified or out of range");
           break;
       }
 
@@ -1200,8 +1212,11 @@ namespace niswitch {
         case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorOneofCase::kScanAdvancedOutputConnector:
           scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
           break;
-        default:
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorOneofCase::kScanAdvancedOutputConnectorRaw:
           scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector_raw();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorOneofCase::SCAN_ADVANCED_OUTPUT_CONNECTOR_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_connector was not specified or out of range");
           break;
       }
 
@@ -1210,8 +1225,11 @@ namespace niswitch {
         case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineOneofCase::kScanAdvancedOutputBusLine:
           scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
           break;
-        default:
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineOneofCase::kScanAdvancedOutputBusLineRaw:
           scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line_raw();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineOneofCase::SCAN_ADVANCED_OUTPUT_BUS_LINE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_bus_line was not specified or out of range");
           break;
       }
 
@@ -1240,8 +1258,11 @@ namespace niswitch {
         case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorOneofCase::kTriggerInputConnector:
           trigger_input_connector = (ViInt32)request->trigger_input_connector();
           break;
-        default:
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorOneofCase::kTriggerInputConnectorRaw:
           trigger_input_connector = (ViInt32)request->trigger_input_connector_raw();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorOneofCase::TRIGGER_INPUT_CONNECTOR_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_connector was not specified or out of range");
           break;
       }
 
@@ -1250,8 +1271,11 @@ namespace niswitch {
         case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineOneofCase::kTriggerInputBusLine:
           trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
           break;
-        default:
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineOneofCase::kTriggerInputBusLineRaw:
           trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line_raw();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineOneofCase::TRIGGER_INPUT_BUS_LINE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_bus_line was not specified or out of range");
           break;
       }
 
@@ -1281,8 +1305,11 @@ namespace niswitch {
         case grpc::niswitch::ScanRequest::InitiationOneofCase::kInitiation:
           initiation = (ViInt16)request->initiation();
           break;
-        default:
+        case grpc::niswitch::ScanRequest::InitiationOneofCase::kInitiationRaw:
           initiation = (ViInt16)request->initiation_raw();
+          break;
+        case grpc::niswitch::ScanRequest::InitiationOneofCase::INITIATION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for initiation was not specified or out of range");
           break;
       }
 

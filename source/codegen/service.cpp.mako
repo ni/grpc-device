@@ -259,7 +259,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
-  PascalFieldName = common_helpers.snake_to_pascal(field_name)
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
   c_type_pointer = c_type.replace('[]','*')
@@ -271,13 +270,20 @@ ${initialize_standard_input_param(function_name, parameter)}\
     % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
       ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
     % elif 'enum' in parameter:
+<%
+PascalFieldName = common_helpers.snake_to_pascal(field_name)
+one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Request::{PascalFieldName}OneofCase'
+%>\
       ${c_type} ${parameter_name};
       switch (request->${field_name}_oneof_case()) {
-        case grpc::${config["namespace_component"]}::${function_name}Request::${PascalFieldName}OneofCase::k${PascalFieldName}:
+        case ${one_of_case_prefix}::k${PascalFieldName}:
           ${parameter_name} = (${c_type})${request_snippet};
           break;
-        default:
+        case ${one_of_case_prefix}::k${PascalFieldName}Raw:
           ${parameter_name} = (${c_type})request->${field_name}_raw();
+          break;
+        case ${one_of_case_prefix}::${field_name.upper()}_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${field_name} was not specified or out of range");
           break;
       }
     % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8':

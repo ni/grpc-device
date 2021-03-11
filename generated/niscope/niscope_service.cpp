@@ -150,8 +150,11 @@ namespace niscope {
         case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionOneofCase::kArrayMeasFunction:
           array_meas_function = (ViInt32)request->array_meas_function();
           break;
-        default:
+        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionOneofCase::kArrayMeasFunctionRaw:
           array_meas_function = (ViInt32)request->array_meas_function_raw();
+          break;
+        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionOneofCase::ARRAY_MEAS_FUNCTION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for array_meas_function was not specified or out of range");
           break;
       }
 
@@ -231,8 +234,11 @@ namespace niscope {
         case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionOneofCase::kMeasFunction:
           meas_function = (ViInt32)request->meas_function();
           break;
-        default:
+        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionOneofCase::kMeasFunctionRaw:
           meas_function = (ViInt32)request->meas_function_raw();
+          break;
+        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionOneofCase::MEAS_FUNCTION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for meas_function was not specified or out of range");
           break;
       }
 
@@ -338,8 +344,11 @@ namespace niscope {
         case grpc::niscope::CalSelfCalibrateRequest::OptionOneofCase::kOption:
           option = (ViInt32)request->option();
           break;
-        default:
+        case grpc::niscope::CalSelfCalibrateRequest::OptionOneofCase::kOptionRaw:
           option = (ViInt32)request->option_raw();
+          break;
+        case grpc::niscope::CalSelfCalibrateRequest::OptionOneofCase::OPTION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for option was not specified or out of range");
           break;
       }
 
@@ -501,8 +510,11 @@ namespace niscope {
         case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionOneofCase::kClearableMeasurementFunction:
           clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
           break;
-        default:
+        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionOneofCase::kClearableMeasurementFunctionRaw:
           clearable_measurement_function = (ViInt32)request->clearable_measurement_function_raw();
+          break;
+        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionOneofCase::CLEARABLE_MEASUREMENT_FUNCTION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clearable_measurement_function was not specified or out of range");
           break;
       }
 
@@ -699,8 +711,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeOneofCase::kSlope:
           slope = (ViInt32)request->slope();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeOneofCase::kSlopeRaw:
           slope = (ViInt32)request->slope_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeOneofCase::SLOPE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
           break;
       }
 
@@ -732,8 +747,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeOneofCase::kSlope:
           slope = (ViInt32)request->slope();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeOneofCase::kSlopeRaw:
           slope = (ViInt32)request->slope_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeOneofCase::SLOPE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
           break;
       }
 
@@ -742,8 +760,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingOneofCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingOneofCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingOneofCase::TRIGGER_COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
 
@@ -776,8 +797,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityOneofCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityOneofCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityOneofCase::POLARITY_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
@@ -786,8 +810,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionOneofCase::kGlitchCondition:
           glitch_condition = (ViInt32)request->glitch_condition();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionOneofCase::kGlitchConditionRaw:
           glitch_condition = (ViInt32)request->glitch_condition_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionOneofCase::GLITCH_CONDITION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for glitch_condition was not specified or out of range");
           break;
       }
 
@@ -796,8 +823,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingOneofCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingOneofCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingOneofCase::TRIGGER_COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
 
@@ -830,8 +860,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeOneofCase::kSlope:
           slope = (ViInt32)request->slope();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeOneofCase::kSlopeRaw:
           slope = (ViInt32)request->slope_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeOneofCase::SLOPE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
           break;
       }
 
@@ -840,8 +873,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingOneofCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingOneofCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingOneofCase::TRIGGER_COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
 
@@ -893,8 +929,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerRuntRequest::PolarityOneofCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityOneofCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityOneofCase::POLARITY_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
@@ -903,8 +942,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingOneofCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingOneofCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingOneofCase::TRIGGER_COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
 
@@ -957,8 +999,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatOneofCase::kSignalFormat:
           signal_format = (ViInt32)request->signal_format();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatOneofCase::kSignalFormatRaw:
           signal_format = (ViInt32)request->signal_format_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatOneofCase::SIGNAL_FORMAT_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_format was not specified or out of range");
           break;
       }
 
@@ -967,8 +1012,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerVideoRequest::EventOneofCase::kEvent:
           event_parameter = (ViInt32)request->event();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerVideoRequest::EventOneofCase::kEventRaw:
           event_parameter = (ViInt32)request->event_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::EventOneofCase::EVENT_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event was not specified or out of range");
           break;
       }
 
@@ -978,8 +1026,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerVideoRequest::PolarityOneofCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityOneofCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityOneofCase::POLARITY_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
@@ -988,8 +1039,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingOneofCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingOneofCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingOneofCase::TRIGGER_COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
 
@@ -1023,8 +1077,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerWidthRequest::PolarityOneofCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityOneofCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityOneofCase::POLARITY_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
@@ -1033,8 +1090,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerWidthRequest::ConditionOneofCase::kCondition:
           condition = (ViInt32)request->condition();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionOneofCase::kConditionRaw:
           condition = (ViInt32)request->condition_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionOneofCase::CONDITION_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for condition was not specified or out of range");
           break;
       }
 
@@ -1043,8 +1103,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingOneofCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingOneofCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingOneofCase::TRIGGER_COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
 
@@ -1077,8 +1140,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeOneofCase::kWindowMode:
           window_mode = (ViInt32)request->window_mode();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeOneofCase::kWindowModeRaw:
           window_mode = (ViInt32)request->window_mode_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeOneofCase::WINDOW_MODE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for window_mode was not specified or out of range");
           break;
       }
 
@@ -1087,8 +1153,11 @@ namespace niscope {
         case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingOneofCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingOneofCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingOneofCase::TRIGGER_COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
 
@@ -1121,8 +1190,11 @@ namespace niscope {
         case grpc::niscope::ConfigureVerticalRequest::CouplingOneofCase::kCoupling:
           coupling = (ViInt32)request->coupling();
           break;
-        default:
+        case grpc::niscope::ConfigureVerticalRequest::CouplingOneofCase::kCouplingRaw:
           coupling = (ViInt32)request->coupling_raw();
+          break;
+        case grpc::niscope::ConfigureVerticalRequest::CouplingOneofCase::COUPLING_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for coupling was not specified or out of range");
           break;
       }
 
@@ -1247,8 +1319,11 @@ namespace niscope {
         case grpc::niscope::ExportSignalRequest::SignalOneofCase::kSignal:
           signal = (ViInt32)request->signal();
           break;
-        default:
+        case grpc::niscope::ExportSignalRequest::SignalOneofCase::kSignalRaw:
           signal = (ViInt32)request->signal_raw();
+          break;
+        case grpc::niscope::ExportSignalRequest::SignalOneofCase::SIGNAL_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
           break;
       }
 
@@ -1965,8 +2040,11 @@ namespace niscope {
         case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerOneofCase::kWhichTrigger:
           which_trigger = (ViInt32)request->which_trigger();
           break;
-        default:
+        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerOneofCase::kWhichTriggerRaw:
           which_trigger = (ViInt32)request->which_trigger_raw();
+          break;
+        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerOneofCase::WHICH_TRIGGER_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for which_trigger was not specified or out of range");
           break;
       }
 

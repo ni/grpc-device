@@ -145,8 +145,11 @@ namespace nifake {
         case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleOneofCase::kATurtle:
           a_turtle = (ViInt16)request->a_turtle();
           break;
-        default:
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleOneofCase::kATurtleRaw:
           a_turtle = (ViInt16)request->a_turtle_raw();
+          break;
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleOneofCase::A_TURTLE_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_turtle was not specified or out of range");
           break;
       }
 
@@ -754,8 +757,11 @@ namespace nifake {
         case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumOneofCase::kAnIntEnum:
           an_int_enum = (ViInt16)request->an_int_enum();
           break;
-        default:
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumOneofCase::kAnIntEnumRaw:
           an_int_enum = (ViInt16)request->an_int_enum_raw();
+          break;
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumOneofCase::AN_INT_ENUM_ONEOF_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for an_int_enum was not specified or out of range");
           break;
       }
 
