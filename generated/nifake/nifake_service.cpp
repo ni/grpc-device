@@ -760,21 +760,24 @@ namespace grpc {
 
       ViReal64 a_float = request->a_float();
       ViReal64 a_float_enum;
-      if (request->a_float_enum() != NULL) {
-        auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
-
-        if (a_float_enum_imap_it == floatenum_input_map_.end()) {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+      switch (request->a_float_enum_oneof_case()) {
+        case ParametersAreMultipleTypesRequest::AFloatEnumOneofCase::kAFloatEnum: {
+          auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
+          if (a_float_enum_imap_it == floatenum_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+          }
+          a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
+          break;
         }
-        a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
+        case ParametersAreMultipleTypesRequest::AFloatEnumOneofCase::kAFloatEnumRaw: {
+          a_float_enum = static_cast<ViReal64>(request->a_float_enum_raw());
+          break;
+        } 
+        case ParametersAreMultipleTypesRequest::AFloatEnumOneofCase::A_FLOAT_ENUM_ONEOF_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range");
+          break;
+        }
       }
-      else if (request->a_float_enum_raw() != NULL) {
-        a_float_enum = static_cast<ViReal64>(request->a_float_enum_raw());
-      }
-      else {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified");
-      }
-
 
       ViInt32 string_size = request->a_string().size();
       ViConstString a_string = request->a_string().c_str();
@@ -990,21 +993,24 @@ namespace grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString a_mobile_o_s_name;
-      if (request->a_mobile_o_s_name() != NULL) {
-        auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
-
-        if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
+      switch (request->a_mobile_o_s_name_oneof_case()) {
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameOneofCase::kAMobileOSName: {
+          auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
+          if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
+          }
+          a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+          break;
         }
-        a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameOneofCase::kAMobileOSNameRaw: {
+          a_mobile_o_s_name = static_cast<ViConstString>((request->a_mobile_o_s_name_raw()).c_str());
+          break;
+        } 
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameOneofCase::A_MOBILE_O_S_NAME_ONEOF_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range");
+          break;
+        }
       }
-      else if (request->a_mobile_o_s_name_raw() != nullptr) {
-        a_mobile_o_s_name = static_cast<ViConstString>((request->a_mobile_o_s_name_raw()).c_str());
-      }
-      else {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
-      }
-
 
       auto status = library_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_o_s_name);
       response->set_status(status);

@@ -109,7 +109,7 @@ ${gen_simple_method_body(function_name=function_name, function_data=function_dat
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
   session_output_var_name = session_output_param['cppName']
 %>\
-${request_input_parameters(parameters)}
+${request_input_parameters(function_name, parameters)}
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession ${session_output_var_name};
         int status = library_->${function_name}(${handler_helpers.create_args(parameters)});
@@ -134,7 +134,7 @@ ${request_input_parameters(parameters)}
   (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${request_input_parameters(non_ivi_params)}\
+${request_input_parameters(function_name, non_ivi_params)}\
 
       auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters)});
       if (status < 0) {
@@ -161,7 +161,7 @@ ${set_response_values(output_parameters)}\
 <%
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${request_input_parameters(parameters)}\
+${request_input_parameters(function_name, parameters)}\
 ${initialize_output_variables_snippet(output_parameters)}\
 %if function_name == config['close_function']:
       session_repository_->remove_session(${handler_helpers.create_args(parameters)});
@@ -180,21 +180,21 @@ ${set_response_values(output_parameters=output_parameters)}\
 \
 \
 \
-<%def name="request_input_parameters(parameters)">\
+<%def name="request_input_parameters(function_name, parameters)">\
 <%
     input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
-${initialize_input_param_snippet(parameter=parameter)}
+${initialize_input_param_snippet(function_name, parameter=parameter)}
 % endfor
 </%def>\
 \
 \
 \
 \
-<%def name="initialize_input_param_snippet(parameter)">\
+<%def name="initialize_input_param_snippet(function_name, parameter)">\
 % if common_helpers.is_enum(parameter) and enums[parameter["enum"]].get("generate-mappings", False):
-${initialize_enum_input_param(parameter)}
+${initialize_enum_input_param(function_name, parameter)}\
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
 % else:
@@ -205,34 +205,43 @@ ${initialize_standard_input_param(parameter)}\
 \
 \
 \
-<%def name="initialize_enum_input_param(parameter)">\
+<%def name="initialize_enum_input_param(function_name, parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  pascal_parameter_name = list(parameter['cppName'])
+  pascal_parameter_name[0] = pascal_parameter_name[0].upper()
+  pascal_parameter_name = "".join(pascal_parameter_name)
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = parameter_name + "_imap_it"
+  enum_type_prefix = function_name + "Request::" + pascal_parameter_name + "OneofCase::"
+  param_all_caps_snake = common_helpers.snake_to_all_caps_snake(parameter_name)
 %>\
       ${parameter['type']} ${parameter_name};
-      if (request->${parameter_name}() != NULL) {
-        auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
-
-        if (${iterator_name} == ${map_name}.end()) {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+      switch (request->${parameter_name}_oneof_case()) {
+        case ${enum_type_prefix}k${pascal_parameter_name}: {
+          auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+          if (${iterator_name} == ${map_name}.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+          }
+%if parameter['type'] == "ViConstString":
+          ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
+%else:
+          ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
+%endif
+          break;
         }
+        case ${enum_type_prefix}k${pascal_parameter_name}Raw: {
 %if parameter['type'] == "ViConstString":
-        ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
+          ${parameter_name} = static_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
 %else:
-        ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
+          ${parameter_name} = static_cast<${parameter['type']}>(request->${parameter_name}_raw());
 %endif
-      }
-      else if (request->${parameter_name}_raw() != NULL) {
-%if parameter['type'] == "ViConstString":
-        ${parameter_name} = static_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
-%else:
-        ${parameter_name} = static_cast<${parameter['type']}>(request->${parameter_name}_raw());
-%endif
-      }
-      else {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified");
+          break;
+        } 
+        case ${enum_type_prefix}${param_all_caps_snake}_ONEOF_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range");
+          break;
+        }
       }
 </%def>\
 \

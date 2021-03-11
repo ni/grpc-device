@@ -685,7 +685,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_C
   request.set_an_int64(an_int_64);
   request.set_an_int_enum_raw(an_int_enum);
   request.set_a_float(a_float);
-  request.set_a_float_enum(a_float_enum);
+  request.set_a_float_enum_raw(expected_float_enum_value);
   request.set_a_string(a_string);
   ni::fake::grpc::ParametersAreMultipleTypesResponse response;
   ::grpc::Status status = service.ParametersAreMultipleTypes(&context, &request, &response);
