@@ -15,9 +15,9 @@ class InProcessServerClientTest : public ::testing::Test {
   void SetUp() override
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
-    service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
+    session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
+    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>();
+    service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
     ResetStub();
@@ -31,10 +31,10 @@ class InProcessServerClientTest : public ::testing::Test {
   void ResetStub()
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
+    stub_ = grpc::nidevice::SessionUtilities::NewStub(channel_);
   }
 
-  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub>& GetStub()
+  std::unique_ptr<grpc::nidevice::SessionUtilities::Stub>& GetStub()
   {
     return stub_;
   }
@@ -46,8 +46,8 @@ class InProcessServerClientTest : public ::testing::Test {
           std::chrono::system_clock::now() + std::chrono::seconds(1),
       std::atomic<bool>* is_thread_started = nullptr)
   {
-    ni::hardware::grpc::ReserveRequest request;
-    ni::hardware::grpc::ReserveResponse response;
+    grpc::nidevice::ReserveRequest request;
+    grpc::nidevice::ReserveResponse response;
     request.set_reservation_id(reservation_id);
     request.set_client_id(client_id);
     ::grpc::ClientContext context;
@@ -60,8 +60,8 @@ class InProcessServerClientTest : public ::testing::Test {
 
   bool call_is_reserved(std::string reservation_id, std::string client_id)
   {
-    ni::hardware::grpc::IsReservedByClientRequest request;
-    ni::hardware::grpc::IsReservedByClientResponse response;
+    grpc::nidevice::IsReservedByClientRequest request;
+    grpc::nidevice::IsReservedByClientResponse response;
     request.set_reservation_id(reservation_id);
     request.set_client_id(client_id);
     ::grpc::ClientContext context;
@@ -71,8 +71,8 @@ class InProcessServerClientTest : public ::testing::Test {
 
   bool call_unreserve(std::string reservation_id, std::string client_id)
   {
-    ni::hardware::grpc::UnreserveRequest request;
-    ni::hardware::grpc::UnreserveResponse response;
+    grpc::nidevice::UnreserveRequest request;
+    grpc::nidevice::UnreserveResponse response;
     request.set_reservation_id(reservation_id);
     request.set_client_id(client_id);
     ::grpc::ClientContext context;
@@ -85,17 +85,17 @@ class InProcessServerClientTest : public ::testing::Test {
 
  private:
   std::shared_ptr<::grpc::Channel> channel_;
-  std::unique_ptr<::ni::hardware::grpc::SessionUtilities::Stub> stub_;
-  std::unique_ptr<ni::hardware::grpc::internal::SessionRepository> session_repository_;
-  std::unique_ptr<ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<ni::hardware::grpc::SessionUtilitiesService> service_;
+  std::unique_ptr<::grpc::nidevice::SessionUtilities::Stub> stub_;
+  std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<grpc::nidevice::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<grpc::nidevice::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(InProcessServerClientTest, SessionUtilitiesServiceClient_RequestIsServerRunning_ResponseIsTrue)
 {
-  ni::hardware::grpc::IsReservedByClientRequest request;
-  ni::hardware::grpc::IsReservedByClientResponse response;
+  grpc::nidevice::IsReservedByClientRequest request;
+  grpc::nidevice::IsReservedByClientResponse response;
 
   ::grpc::ClientContext context;
   ::grpc::Status s = GetStub()->IsReservedByClient(&context, request, &response);
@@ -151,8 +151,8 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
 
 TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
-  ni::hardware::grpc::EnumerateDevicesRequest request;
-  ni::hardware::grpc::EnumerateDevicesResponse response;
+  grpc::nidevice::EnumerateDevicesRequest request;
+  grpc::nidevice::EnumerateDevicesResponse response;
   ::grpc::ClientContext context;
 
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);

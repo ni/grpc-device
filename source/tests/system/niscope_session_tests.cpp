@@ -8,7 +8,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-namespace scope = ni::scope::grpc;
+namespace scope = grpc::niscope;
 
 const int kViErrorRsrcNFound = -1073807343;
 const char* kViErrorRsrcNFoundMessage = "VISA:  (Hex 0xBFFF0011) Insufficient location information or the device or resource is not present in the system.";
@@ -22,9 +22,9 @@ class NiScopeSessionTest : public ::testing::Test {
   NiScopeSessionTest()
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
-    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
+    session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
+    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>();
+    session_utilities_service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
     builder.RegisterService(session_utilities_service_.get());
@@ -40,7 +40,7 @@ class NiScopeSessionTest : public ::testing::Test {
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
     niscope_stub_ = scope::NiScope::NewStub(channel_);
-    session_utilities_stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
+    session_utilities_stub_ = grpc::nidevice::SessionUtilities::NewStub(channel_);
   }
 
   std::unique_ptr<scope::NiScope::Stub>& GetStub()
@@ -65,10 +65,10 @@ class NiScopeSessionTest : public ::testing::Test {
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub> session_utilities_stub_;
-  std::unique_ptr<::ni::hardware::grpc::internal::SessionRepository> session_repository_;
-  std::unique_ptr<::ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<::ni::hardware::grpc::SessionUtilitiesService> session_utilities_service_;
+  std::unique_ptr<grpc::nidevice::SessionUtilities::Stub> session_utilities_stub_;
+  std::unique_ptr<::grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<::grpc::nidevice::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<::grpc::nidevice::SessionUtilitiesService> session_utilities_service_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;
   std::unique_ptr<::grpc::Server> server_;
@@ -108,7 +108,7 @@ TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   scope::InitWithOptionsResponse init_response;
   call_init_with_options(kTestResourceName, kSimulatedOptionsString, kTestSessionName, &init_response);
-  ni::hardware::grpc::Session session = init_response.vi();
+  grpc::nidevice::Session session = init_response.vi();
 
   ::grpc::ClientContext context;
   scope::CloseRequest close_request;
@@ -122,7 +122,7 @@ TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
 TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_NoErrorReported)
 {
-  ni::hardware::grpc::Session session;
+  grpc::nidevice::Session session;
   session.set_id(NULL);
 
   ::grpc::ClientContext context;
@@ -141,7 +141,7 @@ TEST_F(NiScopeSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessa
   call_init_with_options(kInvalidResourceName, "", "", &init_response);
   EXPECT_EQ(kViErrorRsrcNFound, init_response.status());
 
-  ni::hardware::grpc::Session session = init_response.vi();
+  grpc::nidevice::Session session = init_response.vi();
   ::grpc::ClientContext context;
   scope::GetErrorMessageRequest error_request;
   error_request.mutable_vi()->set_id(session.id());

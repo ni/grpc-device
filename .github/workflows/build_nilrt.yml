@@ -138,7 +138,7 @@ jobs:
       run: >-
         tar -cvf NILinuxRealTime-x86_64.tar
         ${GITHUB_WORKSPACE}/build/certs/
-        ${GITHUB_WORKSPACE}/build/core_server
+        ${GITHUB_WORKSPACE}/build/ni_grpc_device_server
         ${GITHUB_WORKSPACE}/build/CTestTestfile.cmake
         ${GITHUB_WORKSPACE}/build/IntegrationTestsRunner
         ${GITHUB_WORKSPACE}/build/libTestApi.so

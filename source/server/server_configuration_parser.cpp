@@ -10,10 +10,8 @@
   #include <unistd.h>
 #endif
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 static const char* kDefaultFilename = "server_config.json";
 static const char* kPortJsonKey = "port";
@@ -204,7 +202,5 @@ ServerConfigurationParser::InvalidExePathException::InvalidExePathException()
 {
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
