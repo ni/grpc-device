@@ -15,7 +15,7 @@ static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 namespace ni {
 namespace tests {
 namespace unit {
-    
+
 using ::testing::Throw;
 
 TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)
@@ -187,7 +187,7 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnr
   set_reserve_request(clientb_request, "foo", "b");
   std::thread reserve_b(call_reserve_task, &service, &clientb_request, &clientb_response, &clientb_status, &clientb_started);
   wait_until_true(clientb_started);
-  
+
   bool is_reserved = call_is_reserved(&service, "foo", "b");
   EXPECT_FALSE(clientb_response.is_reserved());
   EXPECT_FALSE(is_reserved);

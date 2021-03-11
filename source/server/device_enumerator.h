@@ -24,7 +24,7 @@ class DeviceEnumerator {
   SysCfgLibraryInterface* library_;
 };
 
-} // namespace nidevice
-} // namespace grpc
+}  // namespace nidevice
+}  // namespace grpc
 
-#endif // GRPC_NIDEVICE_DEVICEENUMERATOR
+#endif  // GRPC_NIDEVICE_DEVICEENUMERATOR

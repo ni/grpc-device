@@ -152,7 +152,7 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
   std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
   call_unreserve("foo", "a");
-  
+
   reserve_c.join();
   EXPECT_FALSE(call_is_reserved("foo", "b"));
   EXPECT_TRUE(call_is_reserved("foo", "c"));
