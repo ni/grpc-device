@@ -128,21 +128,21 @@ There are two ways to start the server:
 
     **Windows**
     
-    `.\core_server.exe`
+    `.\ni_grpc_device_server.exe`
 
     **Linux**
     
-    `./core_server`
+    `./ni_grpc_device_server`
 
 2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
 
     **Windows**
     
-    `.\core_server.exe C:\path\to\config\file\server_config.json`
+    `.\ni_grpc_device_server.exe C:\path\to\config\file\server_config.json`
 
     **Linux**
     
-    `./core_server /path/to/config/file/server_config.json`
+    `./ni_grpc_device_server /path/to/config/file/server_config.json`
 
 
 If the server starts successfully on the port specified in the configuration file, then it will print a message to the terminal output:

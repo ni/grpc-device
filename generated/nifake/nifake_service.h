@@ -4,8 +4,8 @@
 //---------------------------------------------------------------------
 // Service header for the NI-FAKE Metadata
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_SERVICE_H
-#define NI_FAKE_GRPC_SERVICE_H
+#ifndef GRPC_NIFAKE_SERVICE_H
+#define GRPC_NIFAKE_SERVICE_H
 
 #include <nifake.grpc.pb.h>
 #include <condition_variable>
@@ -18,13 +18,12 @@
 
 #include "nifake_library_interface.h"
 
-namespace ni {
-namespace fake {
 namespace grpc {
+namespace nifake {
 
 class NiFakeService final : public NiFake::Service {
 public:
-  NiFakeService(NiFakeLibraryInterface* library, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  NiFakeService(NiFakeLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository);
   virtual ~NiFakeService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
@@ -70,16 +69,15 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
 private:
   NiFakeLibraryInterface* library_;
-  ni::hardware::grpc::internal::SessionRepository* session_repository_;
-  void Copy(const CustomStruct& input, ni::fake::grpc::FakeCustomStruct* output);
-  void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<ni::fake::grpc::FakeCustomStruct>* output);
+  grpc::nidevice::SessionRepository* session_repository_;
+  void Copy(const CustomStruct& input, grpc::nifake::FakeCustomStruct* output);
+  void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<grpc::nifake::FakeCustomStruct>* output);
   std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
   std::map<float, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
   std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
   std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
 };
 
+} // namespace nifake
 } // namespace grpc
-} // namespace fake
-} // namespace ni
-#endif  // NI_FAKE_GRPC_SERVICE_H
+#endif  // GRPC_NIFAKE_SERVICE_H

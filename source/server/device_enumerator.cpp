@@ -1,9 +1,7 @@
 #include "device_enumerator.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 #if defined(_MSC_VER)
 static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
@@ -60,7 +58,5 @@ NISysCfgStatus DeviceEnumerator::get_list_of_devices(google::protobuf::RepeatedP
   return status;
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni

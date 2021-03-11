@@ -8,7 +8,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-namespace scope = ni::scope::grpc;
+namespace scope = grpc::niscope;
 
 const int kScopeDriverApiSuccess = 0;
 
@@ -17,9 +17,9 @@ class NiScopeDriverApiTest : public ::testing::Test {
   NiScopeDriverApiTest()
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<ni::hardware::grpc::internal::SessionRepository>();
-    device_enumerator_ = std::make_unique<ni::hardware::grpc::internal::DeviceEnumerator>();
-    session_utilities_service_ = std::make_unique<ni::hardware::grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
+    session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
+    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>();
+    session_utilities_service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
     builder.RegisterService(session_utilities_service_.get());
@@ -45,7 +45,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
     niscope_stub_ = scope::NiScope::NewStub(channel_);
-    session_utilities_stub_ = ni::hardware::grpc::SessionUtilities::NewStub(channel_);
+    session_utilities_stub_ = grpc::nidevice::SessionUtilities::NewStub(channel_);
   }
 
   std::unique_ptr<scope::NiScope::Stub>& GetStub()
@@ -70,7 +70,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     scope::InitWithOptionsResponse response;
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
-    driver_session_ = std::make_unique<ni::hardware::grpc::Session>(response.vi());
+    driver_session_ = std::make_unique<grpc::nidevice::Session>(response.vi());
 
     ASSERT_TRUE(status.ok());
     ASSERT_EQ(kScopeDriverApiSuccess, response.status());
@@ -91,12 +91,12 @@ class NiScopeDriverApiTest : public ::testing::Test {
 
  private:
   std::shared_ptr<::grpc::Channel> channel_;
-  std::unique_ptr<::ni::hardware::grpc::Session> driver_session_;
+  std::unique_ptr<::grpc::nidevice::Session> driver_session_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<ni::hardware::grpc::SessionUtilities::Stub> session_utilities_stub_;
-  std::unique_ptr<::ni::hardware::grpc::internal::SessionRepository> session_repository_;
-  std::unique_ptr<::ni::hardware::grpc::internal::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<::ni::hardware::grpc::SessionUtilitiesService> session_utilities_service_;
+  std::unique_ptr<grpc::nidevice::SessionUtilities::Stub> session_utilities_stub_;
+  std::unique_ptr<::grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<::grpc::nidevice::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<::grpc::nidevice::SessionUtilitiesService> session_utilities_service_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;
   std::unique_ptr<::grpc::Server> server_;

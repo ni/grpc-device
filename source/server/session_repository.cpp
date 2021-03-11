@@ -1,9 +1,7 @@
 #include "session_repository.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 SessionRepository::SessionRepository()
 {
@@ -106,7 +104,7 @@ std::shared_ptr<SessionRepository::ReservationInfo> SessionRepository::find_or_c
     info = std::make_shared<SessionRepository::ReservationInfo>();
     info->creation_time = std::chrono::steady_clock::now();
     info->client_id = client_id;
-    info->lock = std::make_unique<internal::Semaphore>();
+    info->lock = std::make_unique<Semaphore>();
     info->client_count = 1;
     reservations_.emplace(reservation_id, info);
   }
@@ -236,7 +234,5 @@ void SessionRepository::cleanup_session(const std::shared_ptr<SessionInfo>& sess
   }
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
