@@ -7,11 +7,11 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.ni.fake.grpc";
+option java_package = "com.ni.grpc.fake";
 option java_outer_classname = "NiFake";
-option csharp_namespace = "NationalInstruments.Fake.Grpc";
+option csharp_namespace = "NationalInstruments.Grpc.Fake";
 
-package ni.fake.grpc;
+package grpc.nifake;
 
 import "session.proto";
 
@@ -114,7 +114,7 @@ message FakeCustomStruct {
 }
 
 message AbortRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message AbortResponse {
@@ -122,7 +122,7 @@ message AbortResponse {
 }
 
 message AcceptListOfDurationsInSecondsRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   repeated double delays = 2;
 }
 
@@ -131,7 +131,7 @@ message AcceptListOfDurationsInSecondsResponse {
 }
 
 message BoolArrayOutputFunctionRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 number_of_elements = 2;
 }
 
@@ -141,7 +141,7 @@ message BoolArrayOutputFunctionResponse {
 }
 
 message DoubleAllTheNumsRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   repeated double numbers = 2;
 }
 
@@ -150,7 +150,7 @@ message DoubleAllTheNumsResponse {
 }
 
 message EnumArrayOutputFunctionRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 number_of_elements = 2;
 }
 
@@ -160,7 +160,7 @@ message EnumArrayOutputFunctionResponse {
 }
 
 message EnumInputFunctionWithDefaultsRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   Turtle a_turtle = 2;
 }
 
@@ -169,7 +169,7 @@ message EnumInputFunctionWithDefaultsResponse {
 }
 
 message ExportAttributeConfigurationBufferRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message ExportAttributeConfigurationBufferResponse {
@@ -178,7 +178,7 @@ message ExportAttributeConfigurationBufferResponse {
 }
 
 message FetchWaveformRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 number_of_samples = 2;
 }
 
@@ -189,7 +189,7 @@ message FetchWaveformResponse {
 }
 
 message GetABooleanRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetABooleanResponse {
@@ -198,7 +198,7 @@ message GetABooleanResponse {
 }
 
 message GetANumberRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetANumberResponse {
@@ -207,7 +207,7 @@ message GetANumberResponse {
 }
 
 message GetAStringOfFixedMaximumSizeRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetAStringOfFixedMaximumSizeResponse {
@@ -216,7 +216,7 @@ message GetAStringOfFixedMaximumSizeResponse {
 }
 
 message GetAnIviDanceStringRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetAnIviDanceStringResponse {
@@ -225,7 +225,7 @@ message GetAnIviDanceStringResponse {
 }
 
 message GetAnIviDanceWithATwistStringRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 buffer_size = 2;
 }
 
@@ -236,7 +236,7 @@ message GetAnIviDanceWithATwistStringResponse {
 }
 
 message GetArraySizeForCustomCodeRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetArraySizeForCustomCodeResponse {
@@ -245,7 +245,7 @@ message GetArraySizeForCustomCodeResponse {
 }
 
 message GetArrayUsingIviDanceRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetArrayUsingIviDanceResponse {
@@ -254,7 +254,7 @@ message GetArrayUsingIviDanceResponse {
 }
 
 message GetAttributeViBooleanRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   string channel_name = 2;
   NiFakeAttributes attribute_id = 3;
 }
@@ -265,7 +265,7 @@ message GetAttributeViBooleanResponse {
 }
 
 message GetAttributeViInt32Request {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   string channel_name = 2;
   NiFakeAttributes attribute_id = 3;
 }
@@ -276,7 +276,7 @@ message GetAttributeViInt32Response {
 }
 
 message GetAttributeViInt64Request {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   string channel_name = 2;
   NiFakeAttributes attribute_id = 3;
 }
@@ -287,7 +287,7 @@ message GetAttributeViInt64Response {
 }
 
 message GetAttributeViReal64Request {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   string channel_name = 2;
   NiFakeAttributes attribute_id = 3;
 }
@@ -298,7 +298,7 @@ message GetAttributeViReal64Response {
 }
 
 message GetAttributeViStringRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   string channel_name = 2;
   NiFakeAttributes attribute_id = 3;
 }
@@ -309,7 +309,7 @@ message GetAttributeViStringResponse {
 }
 
 message GetCalDateAndTimeRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 cal_type = 2;
 }
 
@@ -323,7 +323,7 @@ message GetCalDateAndTimeResponse {
 }
 
 message GetCalIntervalRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetCalIntervalResponse {
@@ -332,7 +332,7 @@ message GetCalIntervalResponse {
 }
 
 message GetCustomTypeArrayRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 number_of_elements = 2;
 }
 
@@ -342,7 +342,7 @@ message GetCustomTypeArrayResponse {
 }
 
 message GetEnumValueRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message GetEnumValueResponse {
@@ -352,7 +352,7 @@ message GetEnumValueResponse {
 }
 
 message ImportAttributeConfigurationBufferRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   bytes configuration = 2;
 }
 
@@ -370,11 +370,11 @@ message InitWithOptionsRequest {
 
 message InitWithOptionsResponse {
   int32 status = 1;
-  ni.hardware.grpc.Session vi = 2;
+  grpc.nidevice.Session vi = 2;
 }
 
 message MultipleArrayTypesRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 output_array_size = 2;
   repeated double input_array_of_floats = 3;
   repeated sint32 input_array_of_integers = 4;
@@ -387,7 +387,7 @@ message MultipleArrayTypesResponse {
 }
 
 message MultipleArraysSameSizeRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   repeated double values1 = 2;
   repeated double values2 = 3;
   repeated double values3 = 4;
@@ -399,7 +399,7 @@ message MultipleArraysSameSizeResponse {
 }
 
 message OneInputFunctionRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 a_number = 2;
 }
 
@@ -408,7 +408,7 @@ message OneInputFunctionResponse {
 }
 
 message ParametersAreMultipleTypesRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   bool a_boolean = 2;
   sint32 an_int32 = 3;
   int64 an_int64 = 4;
@@ -423,7 +423,7 @@ message ParametersAreMultipleTypesResponse {
 }
 
 message PoorlyNamedSimpleFunctionRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message PoorlyNamedSimpleFunctionResponse {
@@ -431,7 +431,7 @@ message PoorlyNamedSimpleFunctionResponse {
 }
 
 message ReadRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   double maximum_time = 2;
 }
 
@@ -441,7 +441,7 @@ message ReadResponse {
 }
 
 message ReadFromChannelRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   string channel_name = 2;
   sint32 maximum_time = 3;
 }
@@ -452,7 +452,7 @@ message ReadFromChannelResponse {
 }
 
 message ReturnANumberAndAStringRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message ReturnANumberAndAStringResponse {
@@ -462,7 +462,7 @@ message ReturnANumberAndAStringResponse {
 }
 
 message ReturnDurationInSecondsRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message ReturnDurationInSecondsResponse {
@@ -471,7 +471,7 @@ message ReturnDurationInSecondsResponse {
 }
 
 message ReturnListOfDurationsInSecondsRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 number_of_elements = 2;
 }
 
@@ -481,7 +481,7 @@ message ReturnListOfDurationsInSecondsResponse {
 }
 
 message ReturnMultipleTypesRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   sint32 array_size = 2;
 }
 
@@ -498,7 +498,7 @@ message ReturnMultipleTypesResponse {
 }
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   MobileOSNames a_mobile_o_s_name = 2;
 }
 
@@ -507,7 +507,7 @@ message StringValuedEnumInputFunctionWithDefaultsResponse {
 }
 
 message TwoInputFunctionRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   double a_number = 2;
   string a_string = 3;
 }
@@ -517,7 +517,7 @@ message TwoInputFunctionResponse {
 }
 
 message Use64BitNumberRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   int64 input = 2;
 }
 
@@ -527,7 +527,7 @@ message Use64BitNumberResponse {
 }
 
 message WriteWaveformRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
   repeated double waveform = 2;
 }
 
@@ -536,7 +536,7 @@ message WriteWaveformResponse {
 }
 
 message CloseRequest {
-  ni.hardware.grpc.Session vi = 1;
+  grpc.nidevice.Session vi = 1;
 }
 
 message CloseResponse {

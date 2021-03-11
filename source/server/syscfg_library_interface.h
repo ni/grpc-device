@@ -1,28 +1,25 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
-#define NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
+#ifndef GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H
+#define GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 class SysCfgLibraryInterface {
  public:
   virtual ~SysCfgLibraryInterface() {}
 
   virtual NISysCfgStatus InitializeSession(
-    const char* target_name,
-    const char* username,
-    const char* password,
-    NISysCfgLocale language,
-    NISysCfgBool force_property_refresh,
-    unsigned int connect_timeout_msec,
-    NISysCfgEnumExpertHandle* expert_enum_handle,
-    NISysCfgSessionHandle* session_handle
-    ) = 0;
+      const char* target_name,
+      const char* username,
+      const char* password,
+      NISysCfgLocale language,
+      NISysCfgBool force_property_refresh,
+      unsigned int connect_timeout_msec,
+      NISysCfgEnumExpertHandle* expert_enum_handle,
+      NISysCfgSessionHandle* session_handle) = 0;
   virtual NISysCfgStatus CloseHandle(
     void* syscfg_handle
     ) = 0;
@@ -60,9 +57,7 @@ class SysCfgLibraryInterface {
     ) = 0;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SYSCFGLIBRARYINTERFACE_H
+#endif  // GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H

@@ -1,12 +1,10 @@
 #include "syscfg_library.h"
 
 #define GET_POINTER(ptrs, lib, name) \
-  ptrs.name = reinterpret_cast<name##Ptr>(lib.get_function_pointer("NISysCfg"#name));
+  ptrs.name = reinterpret_cast<name##Ptr>(lib.get_function_pointer("NISysCfg" #name));
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 SysCfgLibrary::SysCfgLibrary()
     : shared_library_(kSysCfgApiLibraryName)
@@ -41,29 +39,27 @@ bool SysCfgLibrary::is_library_loaded() const
 }
 
 NISysCfgStatus SysCfgLibrary::InitializeSession(
-  const char* target_name,
-  const char* username,
-  const char* password,
-  NISysCfgLocale language,
-  NISysCfgBool force_property_refresh,
-  unsigned int connect_timeout_msec,
-  NISysCfgEnumExpertHandle* expert_enum_handle,
-  NISysCfgSessionHandle* session_handle
-  )
+    const char* target_name,
+    const char* username,
+    const char* password,
+    NISysCfgLocale language,
+    NISysCfgBool force_property_refresh,
+    unsigned int connect_timeout_msec,
+    NISysCfgEnumExpertHandle* expert_enum_handle,
+    NISysCfgSessionHandle* session_handle)
 {
   if (!function_pointers_.InitializeSession) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
   return function_pointers_.InitializeSession(
-    target_name,
-    username,
-    password,
-    language,
-    force_property_refresh,
-    connect_timeout_msec,
-    expert_enum_handle,
-    session_handle
-  );
+      target_name,
+      username,
+      password,
+      language,
+      force_property_refresh,
+      connect_timeout_msec,
+      expert_enum_handle,
+      session_handle);
 }
 
 NISysCfgStatus SysCfgLibrary::CloseHandle(void* syscfg_handle)
@@ -153,7 +149,5 @@ NISysCfgStatus SysCfgLibrary::GetResourceProperty(
   return function_pointers_.GetResourceProperty(resource_handle, property_ID, value);
 }
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni

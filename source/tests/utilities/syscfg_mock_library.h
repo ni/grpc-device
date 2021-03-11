@@ -9,9 +9,9 @@ namespace ni {
 namespace tests {
 namespace utilities {
 
-using ::testing::Return;
+using::testing::Return;
 
-class SysCfgMockLibrary : public ni::hardware::grpc::internal::SysCfgLibraryInterface {
+class SysCfgMockLibrary : public grpc::nidevice::SysCfgLibraryInterface {
  public:
   SysCfgMockLibrary()
   {

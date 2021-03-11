@@ -16,9 +16,9 @@ static void RunServer(const std::string& config_file_path)
   std::string server_address, server_cert, server_key, root_cert;
 
   try {
-    ni::hardware::grpc::internal::ServerConfigurationParser server_config_parser = config_file_path.empty()
-        ? ni::hardware::grpc::internal::ServerConfigurationParser()
-        : ni::hardware::grpc::internal::ServerConfigurationParser(config_file_path);
+    grpc::nidevice::ServerConfigurationParser server_config_parser = config_file_path.empty()
+        ? grpc::nidevice::ServerConfigurationParser()
+        : grpc::nidevice::ServerConfigurationParser(config_file_path);
     server_address = server_config_parser.parse_address();
     server_cert = server_config_parser.parse_server_cert();
     server_key = server_config_parser.parse_server_key();
@@ -32,21 +32,21 @@ static void RunServer(const std::string& config_file_path)
 
   grpc::ServerBuilder builder;
   int listeningPort = 0;
-  ni::hardware::grpc::internal::ServerSecurityConfiguration server_security_config(server_cert, server_key, root_cert);
+  grpc::nidevice::ServerSecurityConfiguration server_security_config(server_cert, server_key, root_cert);
   builder.AddListeningPort(server_address, server_security_config.get_credentials(), &listeningPort);
   // Register services available on the server.
-  ni::hardware::grpc::internal::SessionRepository session_repository;
-  ni::hardware::grpc::internal::SysCfgLibrary syscfg_library;
-  ni::hardware::grpc::internal::DeviceEnumerator device_enumerator(&syscfg_library);
-  ni::hardware::grpc::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
+  grpc::nidevice::SessionRepository session_repository;
+  grpc::nidevice::SysCfgLibrary syscfg_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_library);
+  grpc::nidevice::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
   builder.RegisterService(&core_service);
 
-  ni::scope::grpc::NiScopeLibrary niscope_library;
-  ni::scope::grpc::NiScopeService niscope_service(&niscope_library, &session_repository);
+  grpc::niscope::NiScopeLibrary niscope_library;
+  grpc::niscope::NiScopeService niscope_service(&niscope_library, &session_repository);
   builder.RegisterService(&niscope_service);
 
-  ni::niswitch::grpc::NiSwitchLibrary niswitch_library;
-  ni::niswitch::grpc::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
+  grpc::niswitch::NiSwitchLibrary niswitch_library;
+  grpc::niswitch::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
   builder.RegisterService(&niswitch_service);
 
   // Assemble the server.
@@ -77,7 +77,8 @@ static void RunServer(const std::string& config_file_path)
 int main(int argc, char** argv)
 {
   if (argc > 2) {
-    std::cerr << "\nUsage: " << "core_server <config-file-path>\n\n";
+    std::cerr << "\nUsage: "
+              << "ni_grpc_device_server <config-file-path>\n\n";
     exit(EXIT_FAILURE);
   }
   std::string config_file_path;
