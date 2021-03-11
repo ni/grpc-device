@@ -689,7 +689,7 @@ ViStatus NiScopeLibrary::FetchBinary8(ViSession vi, ViConstString channelList, V
 #endif
 }
 
-ViStatus NiScopeLibrary::FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber wfm[], niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber_struct wfm[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.FetchComplex) {
     throw grpc::nidevice::LibraryLoadException("Could not find niScope_FetchComplex.");
@@ -701,7 +701,7 @@ ViStatus NiScopeLibrary::FetchComplex(ViSession vi, ViConstString channelList, V
 #endif
 }
 
-ViStatus NiScopeLibrary::FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16 wfm[], niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16_struct wfm[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.FetchComplexBinary16) {
     throw grpc::nidevice::LibraryLoadException("Could not find niScope_FetchComplexBinary16.");

@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <server/semaphore.h>
 #include <server/session_utilities_service.h>
+#include <server/syscfg_library.h>
+#include <tests/utilities/syscfg_mock_library.h>
 
 #include <thread>
 
@@ -8,15 +10,21 @@ namespace ni {
 namespace tests {
 namespace integration {
 
-class InProcessServerClientTest : public ::testing::Test {
+using ::testing::NiceMock;
+using ::testing::Throw;
+
+class SessionUtilitiesServiceTests_EndToEnd : public ::testing::Test {
  public:
-  virtual ~InProcessServerClientTest() {}
+  virtual ~SessionUtilitiesServiceTests_EndToEnd() {}
 
   void SetUp() override
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
-    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>();
+    syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
+    ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
+        .WillByDefault(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
+    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>(syscfg_mock_library_.get());
     service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
@@ -81,18 +89,19 @@ class InProcessServerClientTest : public ::testing::Test {
   }
 
  protected:
-  InProcessServerClientTest() {}
+  SessionUtilitiesServiceTests_EndToEnd() {}
 
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::grpc::nidevice::SessionUtilities::Stub> stub_;
   std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
   std::unique_ptr<grpc::nidevice::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<grpc::nidevice::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(InProcessServerClientTest, SessionUtilitiesServiceClient_RequestIsServerRunning_ResponseIsTrue)
+TEST_F(SessionUtilitiesServiceTests_EndToEnd, SessionUtilitiesServiceClient_RequestIsServerRunning_ResponseIsTrue)
 {
   grpc::nidevice::IsReservedByClientRequest request;
   grpc::nidevice::IsReservedByClientResponse response;
@@ -104,7 +113,7 @@ TEST_F(InProcessServerClientTest, SessionUtilitiesServiceClient_RequestIsServerR
   EXPECT_TRUE(s.ok());
 }
 
-TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservation_FreeReservation_DoesNotReserve)
+TEST_F(SessionUtilitiesServiceTests_EndToEnd, ClientTimesOutWaitingForReservation_FreeReservation_DoesNotReserve)
 {
   auto status_a = call_reserve("foo", "a");
   auto status_b = call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
@@ -117,7 +126,7 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservation_FreeReserv
   EXPECT_EQ(status_b.error_code(), ::grpc::DEADLINE_EXCEEDED);
 }
 
-TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_FreeReservation_DoNotReserve)
+TEST_F(SessionUtilitiesServiceTests_EndToEnd, MultipleClientsTimeOutWaitingForReservation_FreeReservation_DoNotReserve)
 {
   call_reserve("foo", "a");
   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
@@ -129,7 +138,7 @@ TEST_F(InProcessServerClientTest, MultipleClientsTimeOutWaitingForReservation_Fr
   EXPECT_FALSE(call_is_reserved("foo", "c"));
 }
 
-TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
+TEST_F(SessionUtilitiesServiceTests_EndToEnd, ClientTimesOutWaitingForReservationWithOtherClientWaitingBehind_FreeReservation_ReservesLastClient)
 {
   call_reserve("foo", "a");
   call_reserve("foo", "b", std::chrono::system_clock::now() + std::chrono::milliseconds(5));
@@ -143,13 +152,13 @@ TEST_F(InProcessServerClientTest, ClientTimesOutWaitingForReservationWithOtherCl
   std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
   call_unreserve("foo", "a");
-  
+
   reserve_c.join();
   EXPECT_FALSE(call_is_reserved("foo", "b"));
   EXPECT_TRUE(call_is_reserved("foo", "c"));
 }
 
-TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDevices_ReturnsNotFoundGrpcStatusError)
+TEST_F(SessionUtilitiesServiceTests_EndToEnd, SysCfgLibraryNotPresent_ClientCallsEnumerateDevices_ReturnsNotFoundGrpcStatusError)
 {
   grpc::nidevice::EnumerateDevicesRequest request;
   grpc::nidevice::EnumerateDevicesResponse response;
@@ -157,8 +166,8 @@ TEST_F(InProcessServerClientTest, SysCfgLibraryNotPresent_ClientCallsEnumerateDe
 
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
-  // Since the syscfg library will not be present in github repo, we expect a NOT_FOUND status in response.
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
+  EXPECT_EQ(grpc::nidevice::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 }  // namespace integration

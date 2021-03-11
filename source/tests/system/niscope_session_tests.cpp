@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <server/session_utilities_service.h>
+#include <server/syscfg_library.h>
+#include <tests/utilities/syscfg_mock_library.h>
 
 #include "niscope/niscope_library.h"
 #include "niscope/niscope_service.h"
@@ -9,6 +11,9 @@ namespace tests {
 namespace system {
 
 namespace scope = grpc::niscope;
+
+using ::testing::NiceMock;
+using ::testing::Throw;
 
 const int kViErrorRsrcNFound = -1073807343;
 const char* kViErrorRsrcNFoundMessage = "VISA:  (Hex 0xBFFF0011) Insufficient location information or the device or resource is not present in the system.";
@@ -23,7 +28,10 @@ class NiScopeSessionTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
-    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>();
+    syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
+    ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
+        .WillByDefault(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
+    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>(syscfg_mock_library_.get());
     session_utilities_service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
@@ -66,8 +74,9 @@ class NiScopeSessionTest : public ::testing::Test {
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
   std::unique_ptr<grpc::nidevice::SessionUtilities::Stub> session_utilities_stub_;
-  std::unique_ptr<::grpc::nidevice::SessionRepository> session_repository_;
-  std::unique_ptr<::grpc::nidevice::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
+  std::unique_ptr<grpc::nidevice::DeviceEnumerator> device_enumerator_;
   std::unique_ptr<::grpc::nidevice::SessionUtilitiesService> session_utilities_service_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;

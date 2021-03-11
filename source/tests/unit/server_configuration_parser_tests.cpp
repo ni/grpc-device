@@ -19,7 +19,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)
 {
-  std::string config_file_path = grpc::nidevice::ServerConfigurationParser::get_exe_path() +  "server_config.json";
+  std::string config_file_path = grpc::nidevice::ServerConfigurationParser::get_exe_path() + "server_config.json";
   grpc::nidevice::ServerConfigurationParser server_config_parser(config_file_path);
 
   auto address = server_config_parser.parse_address();
@@ -29,7 +29,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultC
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
 {
-  std::string config_file_path = grpc::nidevice::ServerConfigurationParser::get_exe_path() +  "test_mutual_tls_config.json";
+  std::string config_file_path = grpc::nidevice::ServerConfigurationParser::get_exe_path() + "test_mutual_tls_config.json";
   grpc::nidevice::ServerConfigurationParser server_config_parser(config_file_path);
 
   auto server_key = server_config_parser.parse_server_key();
@@ -43,7 +43,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTl
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigFile_ThrowsConfigFileNotFoundException)
 {
- std::string missing_file_path = "fake.json";
+  std::string missing_file_path = "fake.json";
   try {
     grpc::nidevice::ServerConfigurationParser server_config_parser(missing_file_path);
 

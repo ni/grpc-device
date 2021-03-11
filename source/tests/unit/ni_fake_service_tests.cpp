@@ -799,8 +799,8 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnListOfDurationsInSeconds_CallsRetur
   ViReal64 timedeltas[] = {1.0, 2, -3.0};
   EXPECT_CALL(library, ReturnListOfDurationsInSeconds(kTestViSession, number_of_elements, _))
       .WillOnce(DoAll(
-        SetArrayArgument<2>(timedeltas, timedeltas + number_of_elements), 
-        Return(kDriverSuccess)));
+          SetArrayArgument<2>(timedeltas, timedeltas + number_of_elements),
+          Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   grpc::nifake::ReturnListOfDurationsInSecondsRequest request;
@@ -831,21 +831,21 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   ViReal64 a_float_enum = 6.5f;
   ViReal64 an_array[] = {1.0, 2, -3.0};
   ViInt32 string_size = 6;
-  char a_string[] = "Hello!"; 
+  char a_string[] = "Hello!";
   // ivi-dance call
   EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr))
       .WillOnce(Return(string_size));
   EXPECT_CALL(library, ReturnMultipleTypes(kTestViSession, _, _, _, _, _, _, array_size, _, string_size, _))
       .WillOnce(DoAll(
-        SetArgPointee<1>(a_boolean),
-        SetArgPointee<2>(an_int32),
-        SetArgPointee<3>(an_int64),
-        SetArgPointee<4>(an_int_enum),
-        SetArgPointee<5>(a_float),
-        SetArgPointee<6>(a_float_enum),
-        SetArrayArgument<8>(an_array, an_array + array_size),
-        SetArrayArgument<10>(a_string, a_string + string_size), 
-        Return(kDriverSuccess)));
+          SetArgPointee<1>(a_boolean),
+          SetArgPointee<2>(an_int32),
+          SetArgPointee<3>(an_int64),
+          SetArgPointee<4>(an_int_enum),
+          SetArgPointee<5>(a_float),
+          SetArgPointee<6>(a_float_enum),
+          SetArrayArgument<8>(an_array, an_array + array_size),
+          SetArrayArgument<10>(a_string, a_string + string_size),
+          Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   grpc::nifake::ReturnMultipleTypesRequest request;
@@ -853,7 +853,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   request.set_array_size(3);
   grpc::nifake::ReturnMultipleTypesResponse response;
   ::grpc::Status status = service.ReturnMultipleTypes(&context, &request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(a_boolean, response.a_boolean());
