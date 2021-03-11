@@ -212,7 +212,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = parameter_name + "_imap_it"
   enum_type_prefix = function_name + "Request::" + pascal_parameter_name + "OneofCase::"
-  param_all_caps_snake = common_helpers.snake_to_all_caps_snake(parameter_name)
+  param_all_caps_snake = parameter_name.upper()
 %>\
       ${parameter['type']} ${parameter_name};
       switch (request->${parameter_name}_oneof_case()) {

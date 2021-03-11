@@ -97,12 +97,6 @@ def pascal_to_snake(pascal_string):
   snake_string = camel_to_snake(camel_string)
   return ("".join(snake_string))
 
-def snake_to_all_caps_snake(snake_string):
-  snake_list = list(snake_string)
-  for index in range(0, len(snake_list)):
-    snake_list[index] = snake_list[index].upper()
-  return ("".join(snake_list))
-
 def filter_proto_rpc_functions(functions):
   '''Returns function metadata only for those functions to include for generating proto rpc methods'''
   functions_for_proto = {'public', 'CustomCode'}
