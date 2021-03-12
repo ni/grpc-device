@@ -374,7 +374,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt32Attribute_SendRequest_GetViInt32At
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
-TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt32AttributeMatches)
+TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt64AttributeMatches)
 {
   const char* channel_list = "";
   // TODO: ViInt64 attributes in niScope.h missing in niscope.proto. Do we want to add them?
@@ -398,7 +398,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt32At
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
-TEST_F(NiScopeDriverApiTest, NiScopeSetViReal64Attribute_SendRequest_GetViInt32AttributeMatches)
+TEST_F(NiScopeDriverApiTest, NiScopeSetViReal64Attribute_SendRequest_GetViReal64AttributeMatches)
 {
   const char* channel_list = "";
   const scope::NiScopeAttributes attribute_to_set = scope::NiScopeAttributes::NISCOPE_ATTRIBUTE_REF_CLK_RATE;
