@@ -461,6 +461,43 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetBoolAttribute_SendRequest_GetBoolAttribut
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
+TEST_F(NiScopeDriverApiTest, NiScopeConfigureHorizontalTiming_SendRequest_ConfigureCompletesSuccessfully)
+{
+  ::grpc::ClientContext context;
+  scope::ConfigureHorizontalTimingRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_min_sample_rate(1000000);
+  request.set_min_num_pts(100000);
+  request.set_ref_position(50);
+  request.set_num_records(1);
+  request.set_enforce_realtime(true);
+  scope::ConfigureHorizontalTimingResponse response;
+
+  ::grpc::Status status = GetStub()->ConfigureHorizontalTiming(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+}
+
+TEST_F(NiScopeDriverApiTest, NiScopeConfigureVertical_SendRequest_ConfigureCompletesSuccessfully)
+{
+  ::grpc::ClientContext context;
+  scope::ConfigureVerticalRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list("0");
+  request.set_range(30.0);
+  request.set_offset(0);
+  request.set_coupling(scope::VerticalCoupling::VERTICAL_COUPLING_NISCOPE_VAL_DC);
+  request.set_enabled(true);
+  request.set_probe_attenuation(1);
+  scope::ConfigureVerticalResponse response;
+
+  ::grpc::Status status = GetStub()->ConfigureVertical(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
