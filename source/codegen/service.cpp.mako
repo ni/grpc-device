@@ -347,11 +347,10 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
         if(${iterator_name} != ${map_name}.end()) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
         }
-        response->set_${parameter_name}_raw(${iterator_name}->first);
 %  else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
-        response->set_${parameter_name}_raw(${parameter_name});
 %  endif
+        response->set_${parameter_name}_raw(${parameter_name});
 %elif common_helpers.is_array(parameter['type']):
 %  if handler_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});

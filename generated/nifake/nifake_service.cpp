@@ -978,7 +978,7 @@ namespace nifake {
         if(a_float_enum_imap_it != floatenum_output_map_.end()) {
           response->set_a_float_enum(static_cast<grpc::nifake::FloatEnum>(a_float_enum_imap_it->second));
         }
-        response->set_a_float_enum_raw(a_float_enum_imap_it->first);
+        response->set_a_float_enum_raw(a_float_enum);
         response->set_a_string(a_string);
       }
       return ::grpc::Status::OK;
