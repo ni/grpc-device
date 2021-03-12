@@ -124,10 +124,11 @@ class NiScopeDriverApiTest : public ::testing::Test {
 
   void expect_api_success(int error_status)
   {
-    EXPECT_EQ(kScopeDriverApiSuccess, error_status);
-    if (kScopeDriverApiSuccess == error_status) {
-      return;
-    }
+    EXPECT_EQ(kScopeDriverApiSuccess, error_status) << get_error_message(error_status);
+  }
+
+  std::string get_error_message(int error_status)
+  {
     ::grpc::ClientContext context;
     scope::GetErrorMessageRequest request;
     request.mutable_vi()->set_id(GetSessionId());
@@ -137,7 +138,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->GetErrorMessage(&context, request, &response);
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kScopeDriverApiSuccess, response.status());
-    EXPECT_STREQ("", response.error_message().c_str());
+    return response.error_message();
   }
 
   void auto_setup()
