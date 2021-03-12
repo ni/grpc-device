@@ -3,8 +3,8 @@
 This repo contains necessary C++ code and .proto files needed to build a gRPC server for NI hardware driver APIs.
 
 ## Build Status
-![Linux Build](https://github.com/ni/ni-driver-apis-grpc/workflows/Build%20Matrix/badge.svg)
-![NI Linux Real-Time Build](https://github.com/ni/ni-driver-apis-grpc/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
+![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
+![NI Linux Real-Time Build](https://github.com/ni/grpc-device/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
 
 ## Building on Windows 64-bit
 
@@ -23,8 +23,8 @@ Launch "x64 Native Tools Command Prompt for Visual Studio"
 Clone the repo and update submodules, this will pull the gRPC components and all dependencies
 
 ```
-> git clone https://github.com/ni/ni-driver-apis-grpc.git
-> cd ni-driver-apis-grpc
+> git clone https://github.com/ni/grpc-device.git
+> cd grpc-device
 > git submodule update --init --recursive
 ```
 
@@ -80,8 +80,8 @@ If this is required, make sure to install openssl-dev as well.
 Clone the repo and update submodules, this will pull the gRPC components and all dependencies
 
 ```
-> git clone https://github.com/ni/ni-driver-apis-grpc.git ni-driver-apis-grpc
-> cd ni-driver-apis-grpc
+> git clone https://github.com/ni/grpc-device.git grpc-device
+> cd grpc-device
 > git submodule update --init --recursive
 ```
 
@@ -162,7 +162,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 3. The server configuration file is malformed and is not in proper JSON format. Refer to the JSON configuration file in this readme for an example of the expected format.
 4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
 5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
-6. Security configuration errors. See [Server SSL TLS Support wiki page](https://github.com/ni/ni-driver-apis-grpc/wiki/Server-SSL-TLS-Support).
+6. Security configuration errors. See [Server SSL TLS Support wiki page](https://github.com/ni/grpc-device/wiki/Server-SSL-TLS-Support).
 
 ### Default Configuration File (insecure):
 
@@ -183,4 +183,4 @@ Coming Soon
 
 ## SSL/TLS Support
 
-The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server SSL TLS Support wiki page](https://github.com/ni/ni-driver-apis-grpc/wiki/Server-SSL-TLS-Support).
+The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server SSL TLS Support wiki page](https://github.com/ni/grpc-device/wiki/Server-SSL-TLS-Support).
