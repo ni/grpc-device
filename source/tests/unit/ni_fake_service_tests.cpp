@@ -4,7 +4,6 @@
 #include <nifake/nifake_service.h>
 #include <server/session_repository.h>
 
-#include <thread>
 #include <iostream>
 
 namespace ni {
@@ -726,9 +725,9 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNo
   bool a_boolean = true;
   std::int32_t an_int_32 = 35;
   std::int64_t an_int_64 = 42;
-  std::int32_t expected_int_enum_value = 5; // value not in enum
+  std::int32_t expected_int_enum_value = 5;  // value not in enum
   double a_float = 4.2;
-  float expected_float_enum_value = 8.5; // value not in enum
+  float expected_float_enum_value = 8.5;  // value not in enum
   std::int32_t expected_string_size = 12;
   char a_string[] = "Hello There!";
   EXPECT_CALL(
