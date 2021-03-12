@@ -2,9 +2,6 @@
 # This example lists out devices connected to the server machine (in this case localhost)
 # by estabilishing communication with it over gRPC
 #
-# Copyright 2021 National Instruments
-# Licensed under the MIT license
-#
 # Getting Started:
 #
 # To run this example, install "NI System Configuration API" on the server machine.
@@ -16,11 +13,11 @@
 #     > conda install grpcio-tools
 #
 # Generate the python API from the gRPC definition (.proto) files
-#   > python -m grpc_tools.protoc -I../../source --python_out=. --grpc_python_out=. server_utilities.proto
+#   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
 #
 import grpc
-import server_utilities_pb2 as serverType
-import server_utilities_pb2_grpc as gRPCServer
+import session_pb2 as sessionType
+import session_pb2_grpc as gRPCSession
 
 # Helper to print the devices 
 def printDevices() :
@@ -34,10 +31,17 @@ def printDevices() :
 # Create communication with the server using gRPC APIs
 serverAddress = "localhost:31763"
 channel = grpc.insecure_channel(serverAddress)
-server = gRPCServer.ServerUtilitiesStub(channel)
+server = gRPCSession.SessionUtilitiesStub(channel)
 
-# EnumerateDevices API gives a list of devices connected to the server machine.
-enumerateDevicesResponse = server.EnumerateDevices(serverType.EnumerateDevicesRequest())
+try :
+    # EnumerateDevices API gives a list of devices (simulated and physical) connected to the server machine.
+    enumerateDevicesResponse = server.EnumerateDevices(sessionType.EnumerateDevicesRequest())
 
-# Display devices connected to the server machine
-printDevices()     
+    # Display devices connected to the server machine
+    printDevices()     
+
+# If EnumerateDevices API throws an exception, print the error message
+except grpc.RpcError as e:
+    errorMessage = e.details()
+    print(errorMessage)
+ 
