@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 #include <server/session_utilities_service.h>
 #include <server/syscfg_library.h>
 
