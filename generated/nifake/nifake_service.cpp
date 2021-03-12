@@ -974,9 +974,9 @@ namespace nifake {
         response->set_an_int_enum(static_cast<grpc::nifake::Turtle>(an_int_enum));
         response->set_an_int_enum_raw(an_int_enum);
         response->set_a_float(a_float);
-        auto a_float_enum_imap_it = floatenum_output_map_.find(a_float_enum);
-        if(a_float_enum_imap_it != floatenum_output_map_.end()) {
-          response->set_a_float_enum(static_cast<grpc::nifake::FloatEnum>(a_float_enum_imap_it->second));
+        auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
+        if(a_float_enum_omap_it != floatenum_output_map_.end()) {
+          response->set_a_float_enum(static_cast<grpc::nifake::FloatEnum>(a_float_enum_omap_it->second));
         }
         response->set_a_float_enum_raw(a_float_enum);
         response->set_a_string(a_string);

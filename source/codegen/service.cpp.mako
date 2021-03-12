@@ -341,7 +341,7 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 %  if enums[parameter["enum"]].get("generate-mappings", False):
 <%
   map_name = parameter["enum"].lower() + "_output_map_"
-  iterator_name = parameter_name + "_imap_it"
+  iterator_name = parameter_name + "_omap_it"
 %>\
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
         if(${iterator_name} != ${map_name}.end()) {
