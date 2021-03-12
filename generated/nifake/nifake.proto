@@ -162,7 +162,7 @@ message EnumArrayOutputFunctionResponse {
 
 message EnumInputFunctionWithDefaultsRequest {
   grpc.nidevice.Session vi = 1;
-  oneof a_turtle_oneof {
+  oneof a_turtle_enum {
     Turtle a_turtle = 2;
     sint32 a_turtle_raw = 3;
   }
@@ -417,12 +417,12 @@ message ParametersAreMultipleTypesRequest {
   bool a_boolean = 2;
   sint32 an_int32 = 3;
   int64 an_int64 = 4;
-  oneof an_int_enum_oneof {
+  oneof an_int_enum_enum {
     Turtle an_int_enum = 5;
     sint32 an_int_enum_raw = 6;
   }
   double a_float = 7;
-  oneof a_float_enum_oneof {
+  oneof a_float_enum_enum {
     FloatEnum a_float_enum = 8;
     double a_float_enum_raw = 9;
   }
@@ -512,7 +512,7 @@ message ReturnMultipleTypesResponse {
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {
   grpc.nidevice.Session vi = 1;
-  oneof a_mobile_o_s_name_oneof {
+  oneof a_mobile_o_s_name_enum {
     MobileOSNames a_mobile_o_s_name = 2;
     string a_mobile_o_s_name_raw = 3;
   }

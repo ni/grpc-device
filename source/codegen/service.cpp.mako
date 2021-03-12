@@ -209,11 +209,11 @@ ${initialize_standard_input_param(function_name, parameter)}\
   pascal_parameter_name = common_helpers.snake_to_pascal(parameter_name)
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = parameter_name + "_imap_it"
-  enum_type_prefix = function_name + "Request::" + pascal_parameter_name + "OneofCase::"
+  enum_type_prefix = function_name + "Request::" + pascal_parameter_name + "EnumCase::"
   param_all_caps_snake = parameter_name.upper()
 %>\
       ${parameter['type']} ${parameter_name};
-      switch (request->${parameter_name}_oneof_case()) {
+      switch (request->${parameter_name}_enum_case()) {
         case ${enum_type_prefix}k${pascal_parameter_name}: {
           auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
           if (${iterator_name} == ${map_name}.end()) {
@@ -234,7 +234,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
 %endif
           break;
         } 
-        case ${enum_type_prefix}${param_all_caps_snake}_ONEOF_NOT_SET: {
+        case ${enum_type_prefix}${param_all_caps_snake}_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range");
           break;
         }
@@ -272,17 +272,17 @@ ${initialize_standard_input_param(function_name, parameter)}\
     % elif 'enum' in parameter:
 <%
 PascalFieldName = common_helpers.snake_to_pascal(field_name)
-one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Request::{PascalFieldName}OneofCase'
+one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Request::{PascalFieldName}EnumCase'
 %>\
       ${c_type} ${parameter_name};
-      switch (request->${field_name}_oneof_case()) {
+      switch (request->${field_name}_enum_case()) {
         case ${one_of_case_prefix}::k${PascalFieldName}:
           ${parameter_name} = (${c_type})${request_snippet};
           break;
         case ${one_of_case_prefix}::k${PascalFieldName}Raw:
           ${parameter_name} = (${c_type})request->${field_name}_raw();
           break;
-        case ${one_of_case_prefix}::${field_name.upper()}_ONEOF_NOT_SET:
+        case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${field_name} was not specified or out of range");
           break;
       }

@@ -141,14 +141,14 @@ namespace nifake {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 a_turtle;
-      switch (request->a_turtle_oneof_case()) {
-        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleOneofCase::kATurtle:
+      switch (request->a_turtle_enum_case()) {
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtle:
           a_turtle = (ViInt16)request->a_turtle();
           break;
-        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleOneofCase::kATurtleRaw:
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtleRaw:
           a_turtle = (ViInt16)request->a_turtle_raw();
           break;
-        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleOneofCase::A_TURTLE_ONEOF_NOT_SET:
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::A_TURTLE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_turtle was not specified or out of range");
           break;
       }
@@ -753,22 +753,22 @@ namespace nifake {
       ViInt32 an_int32 = request->an_int32();
       ViInt64 an_int64 = request->an_int64();
       ViInt16 an_int_enum;
-      switch (request->an_int_enum_oneof_case()) {
-        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumOneofCase::kAnIntEnum:
+      switch (request->an_int_enum_enum_case()) {
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnum:
           an_int_enum = (ViInt16)request->an_int_enum();
           break;
-        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumOneofCase::kAnIntEnumRaw:
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnumRaw:
           an_int_enum = (ViInt16)request->an_int_enum_raw();
           break;
-        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumOneofCase::AN_INT_ENUM_ONEOF_NOT_SET:
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::AN_INT_ENUM_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for an_int_enum was not specified or out of range");
           break;
       }
 
       ViReal64 a_float = request->a_float();
       ViReal64 a_float_enum;
-      switch (request->a_float_enum_oneof_case()) {
-        case ParametersAreMultipleTypesRequest::AFloatEnumOneofCase::kAFloatEnum: {
+      switch (request->a_float_enum_enum_case()) {
+        case ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::kAFloatEnum: {
           auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
           if (a_float_enum_imap_it == floatenum_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
@@ -776,11 +776,11 @@ namespace nifake {
           a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
           break;
         }
-        case ParametersAreMultipleTypesRequest::AFloatEnumOneofCase::kAFloatEnumRaw: {
+        case ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::kAFloatEnumRaw: {
           a_float_enum = static_cast<ViReal64>(request->a_float_enum_raw());
           break;
         } 
-        case ParametersAreMultipleTypesRequest::AFloatEnumOneofCase::A_FLOAT_ENUM_ONEOF_NOT_SET: {
+        case ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::A_FLOAT_ENUM_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range");
           break;
         }
@@ -999,8 +999,8 @@ namespace nifake {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString a_mobile_o_s_name;
-      switch (request->a_mobile_o_s_name_oneof_case()) {
-        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameOneofCase::kAMobileOSName: {
+      switch (request->a_mobile_o_s_name_enum_case()) {
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::kAMobileOSName: {
           auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
           if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
@@ -1008,11 +1008,11 @@ namespace nifake {
           a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
           break;
         }
-        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameOneofCase::kAMobileOSNameRaw: {
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::kAMobileOSNameRaw: {
           a_mobile_o_s_name = static_cast<ViConstString>((request->a_mobile_o_s_name_raw()).c_str());
           break;
         } 
-        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameOneofCase::A_MOBILE_O_S_NAME_ONEOF_NOT_SET: {
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::A_MOBILE_O_S_NAME_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range");
           break;
         }

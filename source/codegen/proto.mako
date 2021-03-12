@@ -108,7 +108,7 @@ message ${common_helpers.snake_to_pascal(function)}Request {
   non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
   parameter_name = common_helpers.camel_to_snake(parameter["name"])
 %>\
-  oneof ${parameter_name}_oneof {
+  oneof ${parameter_name}_enum {
     ${parameter_type} ${parameter_name} = ${index-1};
     ${non_enum_type} ${parameter_name}_raw = ${index};
   }

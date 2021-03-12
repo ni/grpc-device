@@ -745,7 +745,7 @@ message AcquisitionStatusResponse {
 
 message ActualMeasWfmSizeRequest {
   grpc.nidevice.Session vi = 1;
-  oneof array_meas_function_oneof {
+  oneof array_meas_function_enum {
     ArrayMeasurement array_meas_function = 2;
     sint32 array_meas_function_raw = 3;
   }
@@ -778,7 +778,7 @@ message ActualRecordLengthResponse {
 message AddWaveformProcessingRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  oneof meas_function_oneof {
+  oneof meas_function_enum {
     ArrayMeasurement meas_function = 3;
     sint32 meas_function_raw = 4;
   }
@@ -824,7 +824,7 @@ message CableSenseSignalStopResponse {
 message CalSelfCalibrateRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  oneof option_oneof {
+  oneof option_enum {
     Option option = 3;
     sint32 option_raw = 4;
   }
@@ -903,7 +903,7 @@ message CheckAttributeViStringResponse {
 message ClearWaveformMeasurementStatsRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  oneof clearable_measurement_function_oneof {
+  oneof clearable_measurement_function_enum {
     ClearableMeasurement clearable_measurement_function = 3;
     sint32 clearable_measurement_function_raw = 4;
   }
@@ -996,7 +996,7 @@ message ConfigureHorizontalTimingResponse {
 message ConfigureTriggerDigitalRequest {
   grpc.nidevice.Session vi = 1;
   string trigger_source = 2;
-  oneof slope_oneof {
+  oneof slope_enum {
     TriggerSlope slope = 3;
     sint32 slope_raw = 4;
   }
@@ -1012,11 +1012,11 @@ message ConfigureTriggerEdgeRequest {
   grpc.nidevice.Session vi = 1;
   string trigger_source = 2;
   double level = 3;
-  oneof slope_oneof {
+  oneof slope_enum {
     TriggerSlope slope = 4;
     sint32 slope_raw = 5;
   }
-  oneof trigger_coupling_oneof {
+  oneof trigger_coupling_enum {
     TriggerCoupling trigger_coupling = 6;
     sint32 trigger_coupling_raw = 7;
   }
@@ -1033,15 +1033,15 @@ message ConfigureTriggerGlitchRequest {
   string trigger_source = 2;
   double level = 3;
   double width = 4;
-  oneof polarity_oneof {
+  oneof polarity_enum {
     GlitchPolarity polarity = 5;
     sint32 polarity_raw = 6;
   }
-  oneof glitch_condition_oneof {
+  oneof glitch_condition_enum {
     GlitchCondition glitch_condition = 7;
     sint32 glitch_condition_raw = 8;
   }
-  oneof trigger_coupling_oneof {
+  oneof trigger_coupling_enum {
     TriggerCoupling trigger_coupling = 9;
     sint32 trigger_coupling_raw = 10;
   }
@@ -1058,11 +1058,11 @@ message ConfigureTriggerHysteresisRequest {
   string trigger_source = 2;
   double level = 3;
   double hysteresis = 4;
-  oneof slope_oneof {
+  oneof slope_enum {
     TriggerSlope slope = 5;
     sint32 slope_raw = 6;
   }
-  oneof trigger_coupling_oneof {
+  oneof trigger_coupling_enum {
     TriggerCoupling trigger_coupling = 7;
     sint32 trigger_coupling_raw = 8;
   }
@@ -1087,11 +1087,11 @@ message ConfigureTriggerRuntRequest {
   string trigger_source = 2;
   double low_threshold = 3;
   double high_threshold = 4;
-  oneof polarity_oneof {
+  oneof polarity_enum {
     RuntPolarity polarity = 5;
     sint32 polarity_raw = 6;
   }
-  oneof trigger_coupling_oneof {
+  oneof trigger_coupling_enum {
     TriggerCoupling trigger_coupling = 7;
     sint32 trigger_coupling_raw = 8;
   }
@@ -1117,20 +1117,20 @@ message ConfigureTriggerVideoRequest {
   grpc.nidevice.Session vi = 1;
   string trigger_source = 2;
   bool enable_dc_restore = 3;
-  oneof signal_format_oneof {
+  oneof signal_format_enum {
     VideoSignalFormat signal_format = 4;
     sint32 signal_format_raw = 5;
   }
-  oneof event_oneof {
+  oneof event_enum {
     VideoTriggerEvent event = 6;
     sint32 event_raw = 7;
   }
   sint32 line_number = 8;
-  oneof polarity_oneof {
+  oneof polarity_enum {
     VideoPolarity polarity = 9;
     sint32 polarity_raw = 10;
   }
-  oneof trigger_coupling_oneof {
+  oneof trigger_coupling_enum {
     TriggerCoupling trigger_coupling = 11;
     sint32 trigger_coupling_raw = 12;
   }
@@ -1148,15 +1148,15 @@ message ConfigureTriggerWidthRequest {
   double level = 3;
   double low_threshold = 4;
   double high_threshold = 5;
-  oneof polarity_oneof {
+  oneof polarity_enum {
     WidthPolarity polarity = 6;
     sint32 polarity_raw = 7;
   }
-  oneof condition_oneof {
+  oneof condition_enum {
     WidthCondition condition = 8;
     sint32 condition_raw = 9;
   }
-  oneof trigger_coupling_oneof {
+  oneof trigger_coupling_enum {
     TriggerCoupling trigger_coupling = 10;
     sint32 trigger_coupling_raw = 11;
   }
@@ -1173,11 +1173,11 @@ message ConfigureTriggerWindowRequest {
   string trigger_source = 2;
   double low_level = 3;
   double high_level = 4;
-  oneof window_mode_oneof {
+  oneof window_mode_enum {
     TriggerWindowMode window_mode = 5;
     sint32 window_mode_raw = 6;
   }
-  oneof trigger_coupling_oneof {
+  oneof trigger_coupling_enum {
     TriggerCoupling trigger_coupling = 7;
     sint32 trigger_coupling_raw = 8;
   }
@@ -1194,7 +1194,7 @@ message ConfigureVerticalRequest {
   string channel_list = 2;
   double range = 3;
   double offset = 4;
-  oneof coupling_oneof {
+  oneof coupling_enum {
     VerticalCoupling coupling = 5;
     sint32 coupling_raw = 6;
   }
@@ -1245,7 +1245,7 @@ message ExportAttributeConfigurationFileResponse {
 
 message ExportSignalRequest {
   grpc.nidevice.Session vi = 1;
-  oneof signal_oneof {
+  oneof signal_enum {
     ExportableSignals signal = 2;
     sint32 signal_raw = 3;
   }
@@ -1274,7 +1274,7 @@ message FetchArrayMeasurementRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  oneof array_meas_function_oneof {
+  oneof array_meas_function_enum {
     ArrayMeasurement array_meas_function = 4;
     sint32 array_meas_function_raw = 5;
   }
@@ -1355,7 +1355,7 @@ message FetchMeasurementRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  oneof scalar_meas_function_oneof {
+  oneof scalar_meas_function_enum {
     ScalarMeasurement scalar_meas_function = 4;
     sint32 scalar_meas_function_raw = 5;
   }
@@ -1370,7 +1370,7 @@ message FetchMeasurementStatsRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  oneof scalar_meas_function_oneof {
+  oneof scalar_meas_function_enum {
     ScalarMeasurement scalar_meas_function = 4;
     sint32 scalar_meas_function_raw = 5;
   }
@@ -1642,7 +1642,7 @@ message ReadMeasurementRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  oneof scalar_meas_function_oneof {
+  oneof scalar_meas_function_enum {
     ScalarMeasurement scalar_meas_function = 4;
     sint32 scalar_meas_function_raw = 5;
   }
@@ -1709,7 +1709,7 @@ message SelfTestResponse {
 
 message SendSoftwareTriggerEdgeRequest {
   grpc.nidevice.Session vi = 1;
-  oneof which_trigger_oneof {
+  oneof which_trigger_enum {
     WhichTrigger which_trigger = 2;
     sint32 which_trigger_raw = 3;
   }

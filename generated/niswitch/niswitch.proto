@@ -393,7 +393,7 @@ message CommitResponse {
 message ConfigureScanListRequest {
   grpc.nidevice.Session vi = 1;
   string scanlist = 2;
-  oneof scan_mode_oneof {
+  oneof scan_mode_enum {
     ScanMode scan_mode = 3;
     sint32 scan_mode_raw = 4;
   }
@@ -406,11 +406,11 @@ message ConfigureScanListResponse {
 message ConfigureScanTriggerRequest {
   grpc.nidevice.Session vi = 1;
   double scan_delay = 2;
-  oneof trigger_input_oneof {
+  oneof trigger_input_enum {
     TriggerInput trigger_input = 3;
     sint32 trigger_input_raw = 4;
   }
-  oneof scan_advanced_output_oneof {
+  oneof scan_advanced_output_enum {
     ScanAdvancedOutput scan_advanced_output = 5;
     sint32 scan_advanced_output_raw = 6;
   }
@@ -713,7 +713,7 @@ message LockSessionResponse {
 message RelayControlRequest {
   grpc.nidevice.Session vi = 1;
   string relay_name = 2;
-  oneof relay_action_oneof {
+  oneof relay_action_enum {
     RelayAction relay_action = 3;
     sint32 relay_action_raw = 4;
   }
@@ -759,11 +759,11 @@ message RevisionQueryResponse {
 
 message RouteScanAdvancedOutputRequest {
   grpc.nidevice.Session vi = 1;
-  oneof scan_advanced_output_connector_oneof {
+  oneof scan_advanced_output_connector_enum {
     ScanAdvancedOutput scan_advanced_output_connector = 2;
     sint32 scan_advanced_output_connector_raw = 3;
   }
-  oneof scan_advanced_output_bus_line_oneof {
+  oneof scan_advanced_output_bus_line_enum {
     ScanAdvancedOutput scan_advanced_output_bus_line = 4;
     sint32 scan_advanced_output_bus_line_raw = 5;
   }
@@ -776,11 +776,11 @@ message RouteScanAdvancedOutputResponse {
 
 message RouteTriggerInputRequest {
   grpc.nidevice.Session vi = 1;
-  oneof trigger_input_connector_oneof {
+  oneof trigger_input_connector_enum {
     TriggerInput trigger_input_connector = 2;
     sint32 trigger_input_connector_raw = 3;
   }
-  oneof trigger_input_bus_line_oneof {
+  oneof trigger_input_bus_line_enum {
     TriggerInput trigger_input_bus_line = 4;
     sint32 trigger_input_bus_line_raw = 5;
   }
@@ -794,7 +794,7 @@ message RouteTriggerInputResponse {
 message ScanRequest {
   grpc.nidevice.Session vi = 1;
   string scanlist = 2;
-  oneof initiation_oneof {
+  oneof initiation_enum {
     HandshakingInitiation initiation = 3;
     sint32 initiation_raw = 4;
   }
