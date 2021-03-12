@@ -1,10 +1,14 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include <server/session_utilities_service.h>
 #include <server/syscfg_library.h>
 
 namespace ni {
 namespace tests {
 namespace system {
+
+using ::testing::IsEmpty;
+using ::testing::Not;
 
 class SessionUtilitiesServiceTests : public ::testing::Test {
  protected:
@@ -65,7 +69,7 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
   for (auto it : response.devices()) {
-    EXPECT_NE(it.name(), "");
+    EXPECT_THAT(it.name(), Not(IsEmpty()));
     EXPECT_NE(it.model().c_str(), nullptr);
     EXPECT_NE(it.vendor().c_str(), nullptr);
     EXPECT_NE(it.serial_number().c_str(), nullptr);
