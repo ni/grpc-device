@@ -57,7 +57,7 @@ jobs:
         cache-name: hostgrpccache
       with:
         path: third_party/grpc/build/
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
+        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
 
     - name: Configure Host OS gRPC Support
       if: steps.hostgrpccache.outputs.cache-hit != 'true'
