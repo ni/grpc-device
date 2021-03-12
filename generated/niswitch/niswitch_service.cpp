@@ -60,6 +60,7 @@ namespace niswitch {
       response->set_status(status);
       if (status == 0) {
         response->set_path_capability(static_cast<grpc::niswitch::PathCapability>(path_capability));
+        response->set_path_capability_raw(path_capability);
       }
       return ::grpc::Status::OK;
     }
@@ -265,7 +266,19 @@ namespace niswitch {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString scanlist = request->scanlist().c_str();
-      ViInt32 scan_mode = (ViInt32)request->scan_mode();
+      ViInt32 scan_mode;
+      switch (request->scan_mode_enum_case()) {
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::kScanMode:
+          scan_mode = (ViInt32)request->scan_mode();
+          break;
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::kScanModeRaw:
+          scan_mode = (ViInt32)request->scan_mode_raw();
+          break;
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::SCAN_MODE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_mode was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureScanList(vi, scanlist, scan_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -286,8 +299,32 @@ namespace niswitch {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViReal64 scan_delay = request->scan_delay();
-      ViInt32 trigger_input = (ViInt32)request->trigger_input();
-      ViInt32 scan_advanced_output = (ViInt32)request->scan_advanced_output();
+      ViInt32 trigger_input;
+      switch (request->trigger_input_enum_case()) {
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInput:
+          trigger_input = (ViInt32)request->trigger_input();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInputRaw:
+          trigger_input = (ViInt32)request->trigger_input_raw();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::TRIGGER_INPUT_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input was not specified or out of range");
+          break;
+      }
+
+      ViInt32 scan_advanced_output;
+      switch (request->scan_advanced_output_enum_case()) {
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutput:
+          scan_advanced_output = (ViInt32)request->scan_advanced_output();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutputRaw:
+          scan_advanced_output = (ViInt32)request->scan_advanced_output_raw();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::SCAN_ADVANCED_OUTPUT_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureScanTrigger(vi, scan_delay, trigger_input, scan_advanced_output);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -831,6 +868,7 @@ namespace niswitch {
       response->set_status(status);
       if (status == 0) {
         response->set_relay_position(static_cast<grpc::niswitch::RelayPosition>(relay_position));
+        response->set_relay_position_raw(relay_position);
       }
       return ::grpc::Status::OK;
     }
@@ -1055,7 +1093,19 @@ namespace niswitch {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString relay_name = request->relay_name().c_str();
-      ViInt32 relay_action = (ViInt32)request->relay_action();
+      ViInt32 relay_action;
+      switch (request->relay_action_enum_case()) {
+        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::kRelayAction:
+          relay_action = (ViInt32)request->relay_action();
+          break;
+        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::kRelayActionRaw:
+          relay_action = (ViInt32)request->relay_action_raw();
+          break;
+        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::RELAY_ACTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for relay_action was not specified or out of range");
+          break;
+      }
+
       auto status = library_->RelayControl(vi, relay_name, relay_action);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1157,8 +1207,32 @@ namespace niswitch {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
-      ViInt32 scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
+      ViInt32 scan_advanced_output_connector;
+      switch (request->scan_advanced_output_connector_enum_case()) {
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnector:
+          scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnectorRaw:
+          scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector_raw();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::SCAN_ADVANCED_OUTPUT_CONNECTOR_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_connector was not specified or out of range");
+          break;
+      }
+
+      ViInt32 scan_advanced_output_bus_line;
+      switch (request->scan_advanced_output_bus_line_enum_case()) {
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLine:
+          scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLineRaw:
+          scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line_raw();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::SCAN_ADVANCED_OUTPUT_BUS_LINE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_bus_line was not specified or out of range");
+          break;
+      }
+
       ViBoolean invert = request->invert();
       auto status = library_->RouteScanAdvancedOutput(vi, scan_advanced_output_connector, scan_advanced_output_bus_line, invert);
       response->set_status(status);
@@ -1179,8 +1253,32 @@ namespace niswitch {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 trigger_input_connector = (ViInt32)request->trigger_input_connector();
-      ViInt32 trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
+      ViInt32 trigger_input_connector;
+      switch (request->trigger_input_connector_enum_case()) {
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnector:
+          trigger_input_connector = (ViInt32)request->trigger_input_connector();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnectorRaw:
+          trigger_input_connector = (ViInt32)request->trigger_input_connector_raw();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::TRIGGER_INPUT_CONNECTOR_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_connector was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_input_bus_line;
+      switch (request->trigger_input_bus_line_enum_case()) {
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLine:
+          trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLineRaw:
+          trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line_raw();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::TRIGGER_INPUT_BUS_LINE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_bus_line was not specified or out of range");
+          break;
+      }
+
       ViBoolean invert = request->invert();
       auto status = library_->RouteTriggerInput(vi, trigger_input_connector, trigger_input_bus_line, invert);
       response->set_status(status);
@@ -1202,7 +1300,19 @@ namespace niswitch {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString scanlist = request->scanlist().c_str();
-      ViInt16 initiation = (ViInt16)request->initiation();
+      ViInt16 initiation;
+      switch (request->initiation_enum_case()) {
+        case grpc::niswitch::ScanRequest::InitiationEnumCase::kInitiation:
+          initiation = (ViInt16)request->initiation();
+          break;
+        case grpc::niswitch::ScanRequest::InitiationEnumCase::kInitiationRaw:
+          initiation = (ViInt16)request->initiation_raw();
+          break;
+        case grpc::niswitch::ScanRequest::InitiationEnumCase::INITIATION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for initiation was not specified or out of range");
+          break;
+      }
+
       auto status = library_->Scan(vi, scanlist, initiation);
       response->set_status(status);
       return ::grpc::Status::OK;

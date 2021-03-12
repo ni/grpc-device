@@ -44,7 +44,7 @@ public:
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
-  method_name = common_helpers.snake_to_camel(function)
+  method_name = common_helpers.snake_to_pascal(function)
 %>\
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
 % endfor

@@ -126,6 +126,7 @@ namespace niscope {
       response->set_status(status);
       if (status == 0) {
         response->set_acquisition_status(static_cast<grpc::niscope::AcquisitionStatus>(acquisition_status));
+        response->set_acquisition_status_raw(acquisition_status);
       }
       return ::grpc::Status::OK;
     }
@@ -144,7 +145,19 @@ namespace niscope {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 array_meas_function = (ViInt32)request->array_meas_function();
+      ViInt32 array_meas_function;
+      switch (request->array_meas_function_enum_case()) {
+        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunction:
+          array_meas_function = (ViInt32)request->array_meas_function();
+          break;
+        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunctionRaw:
+          array_meas_function = (ViInt32)request->array_meas_function_raw();
+          break;
+        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::ARRAY_MEAS_FUNCTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for array_meas_function was not specified or out of range");
+          break;
+      }
+
       ViInt32 meas_waveform_size {};
       auto status = library_->ActualMeasWfmSize(vi, array_meas_function, &meas_waveform_size);
       response->set_status(status);
@@ -216,7 +229,19 @@ namespace niscope {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
-      ViInt32 meas_function = (ViInt32)request->meas_function();
+      ViInt32 meas_function;
+      switch (request->meas_function_enum_case()) {
+        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionEnumCase::kMeasFunction:
+          meas_function = (ViInt32)request->meas_function();
+          break;
+        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionEnumCase::kMeasFunctionRaw:
+          meas_function = (ViInt32)request->meas_function_raw();
+          break;
+        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionEnumCase::MEAS_FUNCTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for meas_function was not specified or out of range");
+          break;
+      }
+
       auto status = library_->AddWaveformProcessing(vi, channel_list, meas_function);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -314,7 +339,19 @@ namespace niscope {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
-      ViInt32 option = (ViInt32)request->option();
+      ViInt32 option;
+      switch (request->option_enum_case()) {
+        case grpc::niscope::CalSelfCalibrateRequest::OptionEnumCase::kOption:
+          option = (ViInt32)request->option();
+          break;
+        case grpc::niscope::CalSelfCalibrateRequest::OptionEnumCase::kOptionRaw:
+          option = (ViInt32)request->option_raw();
+          break;
+        case grpc::niscope::CalSelfCalibrateRequest::OptionEnumCase::OPTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for option was not specified or out of range");
+          break;
+      }
+
       auto status = library_->CalSelfCalibrate(vi, channel_list, option);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -468,7 +505,19 @@ namespace niscope {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
-      ViInt32 clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
+      ViInt32 clearable_measurement_function;
+      switch (request->clearable_measurement_function_enum_case()) {
+        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::kClearableMeasurementFunction:
+          clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
+          break;
+        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::kClearableMeasurementFunctionRaw:
+          clearable_measurement_function = (ViInt32)request->clearable_measurement_function_raw();
+          break;
+        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::CLEARABLE_MEASUREMENT_FUNCTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clearable_measurement_function was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ClearWaveformMeasurementStats(vi, channel_list, clearable_measurement_function);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -657,7 +706,19 @@ namespace niscope {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
-      ViInt32 slope = (ViInt32)request->slope();
+      ViInt32 slope;
+      switch (request->slope_enum_case()) {
+        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeEnumCase::kSlope:
+          slope = (ViInt32)request->slope();
+          break;
+        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeEnumCase::kSlopeRaw:
+          slope = (ViInt32)request->slope_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerDigital(vi, trigger_source, slope, holdoff, delay);
@@ -681,8 +742,32 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
-      ViInt32 slope = (ViInt32)request->slope();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 slope;
+      switch (request->slope_enum_case()) {
+        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeEnumCase::kSlope:
+          slope = (ViInt32)request->slope();
+          break;
+        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeEnumCase::kSlopeRaw:
+          slope = (ViInt32)request->slope_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_coupling;
+      switch (request->trigger_coupling_enum_case()) {
+        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerEdge(vi, trigger_source, level, slope, trigger_coupling, holdoff, delay);
@@ -707,9 +792,45 @@ namespace niscope {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 width = request->width();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 glitch_condition = (ViInt32)request->glitch_condition();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      switch (request->polarity_enum_case()) {
+        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityEnumCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityEnumCase::kPolarityRaw:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
+          break;
+      }
+
+      ViInt32 glitch_condition;
+      switch (request->glitch_condition_enum_case()) {
+        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::kGlitchCondition:
+          glitch_condition = (ViInt32)request->glitch_condition();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::kGlitchConditionRaw:
+          glitch_condition = (ViInt32)request->glitch_condition_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::GLITCH_CONDITION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for glitch_condition was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_coupling;
+      switch (request->trigger_coupling_enum_case()) {
+        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerGlitch(vi, trigger_source, level, width, polarity, glitch_condition, trigger_coupling, holdoff, delay);
@@ -734,8 +855,32 @@ namespace niscope {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 level = request->level();
       ViReal64 hysteresis = request->hysteresis();
-      ViInt32 slope = (ViInt32)request->slope();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 slope;
+      switch (request->slope_enum_case()) {
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeEnumCase::kSlope:
+          slope = (ViInt32)request->slope();
+          break;
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeEnumCase::kSlopeRaw:
+          slope = (ViInt32)request->slope_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_coupling;
+      switch (request->trigger_coupling_enum_case()) {
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerHysteresis(vi, trigger_source, level, hysteresis, slope, trigger_coupling, holdoff, delay);
@@ -779,8 +924,32 @@ namespace niscope {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      switch (request->polarity_enum_case()) {
+        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityEnumCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityEnumCase::kPolarityRaw:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_coupling;
+      switch (request->trigger_coupling_enum_case()) {
+        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerRunt(vi, trigger_source, low_threshold, high_threshold, polarity, trigger_coupling, holdoff, delay);
@@ -825,11 +994,59 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString trigger_source = request->trigger_source().c_str();
       ViBoolean enable_dc_restore = request->enable_dc_restore();
-      ViInt32 signal_format = (ViInt32)request->signal_format();
-      ViInt32 event_parameter = (ViInt32)request->event();
+      ViInt32 signal_format;
+      switch (request->signal_format_enum_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatEnumCase::kSignalFormat:
+          signal_format = (ViInt32)request->signal_format();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatEnumCase::kSignalFormatRaw:
+          signal_format = (ViInt32)request->signal_format_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatEnumCase::SIGNAL_FORMAT_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_format was not specified or out of range");
+          break;
+      }
+
+      ViInt32 event_parameter;
+      switch (request->event_enum_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::EventEnumCase::kEvent:
+          event_parameter = (ViInt32)request->event();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::EventEnumCase::kEventRaw:
+          event_parameter = (ViInt32)request->event_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::EventEnumCase::EVENT_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event was not specified or out of range");
+          break;
+      }
+
       ViInt32 line_number = request->line_number();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      switch (request->polarity_enum_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityEnumCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityEnumCase::kPolarityRaw:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_coupling;
+      switch (request->trigger_coupling_enum_case()) {
+        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerVideo(vi, trigger_source, enable_dc_restore, signal_format, event_parameter, line_number, polarity, trigger_coupling, holdoff, delay);
@@ -855,9 +1072,45 @@ namespace niscope {
       ViReal64 level = request->level();
       ViReal64 low_threshold = request->low_threshold();
       ViReal64 high_threshold = request->high_threshold();
-      ViInt32 polarity = (ViInt32)request->polarity();
-      ViInt32 condition = (ViInt32)request->condition();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 polarity;
+      switch (request->polarity_enum_case()) {
+        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityEnumCase::kPolarity:
+          polarity = (ViInt32)request->polarity();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityEnumCase::kPolarityRaw:
+          polarity = (ViInt32)request->polarity_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
+          break;
+      }
+
+      ViInt32 condition;
+      switch (request->condition_enum_case()) {
+        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionEnumCase::kCondition:
+          condition = (ViInt32)request->condition();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionEnumCase::kConditionRaw:
+          condition = (ViInt32)request->condition_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionEnumCase::CONDITION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for condition was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_coupling;
+      switch (request->trigger_coupling_enum_case()) {
+        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerWidth(vi, trigger_source, level, low_threshold, high_threshold, polarity, condition, trigger_coupling, holdoff, delay);
@@ -882,8 +1135,32 @@ namespace niscope {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViReal64 low_level = request->low_level();
       ViReal64 high_level = request->high_level();
-      ViInt32 window_mode = (ViInt32)request->window_mode();
-      ViInt32 trigger_coupling = (ViInt32)request->trigger_coupling();
+      ViInt32 window_mode;
+      switch (request->window_mode_enum_case()) {
+        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeEnumCase::kWindowMode:
+          window_mode = (ViInt32)request->window_mode();
+          break;
+        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeEnumCase::kWindowModeRaw:
+          window_mode = (ViInt32)request->window_mode_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeEnumCase::WINDOW_MODE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for window_mode was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_coupling;
+      switch (request->trigger_coupling_enum_case()) {
+        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+          trigger_coupling = (ViInt32)request->trigger_coupling();
+          break;
+        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+          trigger_coupling = (ViInt32)request->trigger_coupling_raw();
+          break;
+        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 holdoff = request->holdoff();
       ViReal64 delay = request->delay();
       auto status = library_->ConfigureTriggerWindow(vi, trigger_source, low_level, high_level, window_mode, trigger_coupling, holdoff, delay);
@@ -908,7 +1185,19 @@ namespace niscope {
       ViConstString channel_list = request->channel_list().c_str();
       ViReal64 range = request->range();
       ViReal64 offset = request->offset();
-      ViInt32 coupling = (ViInt32)request->coupling();
+      ViInt32 coupling;
+      switch (request->coupling_enum_case()) {
+        case grpc::niscope::ConfigureVerticalRequest::CouplingEnumCase::kCoupling:
+          coupling = (ViInt32)request->coupling();
+          break;
+        case grpc::niscope::ConfigureVerticalRequest::CouplingEnumCase::kCouplingRaw:
+          coupling = (ViInt32)request->coupling_raw();
+          break;
+        case grpc::niscope::ConfigureVerticalRequest::CouplingEnumCase::COUPLING_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for coupling was not specified or out of range");
+          break;
+      }
+
       ViReal64 probe_attenuation = request->probe_attenuation();
       ViBoolean enabled = request->enabled();
       auto status = library_->ConfigureVertical(vi, channel_list, range, offset, coupling, probe_attenuation, enabled);
@@ -1025,7 +1314,19 @@ namespace niscope {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 signal = (ViInt32)request->signal();
+      ViInt32 signal;
+      switch (request->signal_enum_case()) {
+        case grpc::niscope::ExportSignalRequest::SignalEnumCase::kSignal:
+          signal = (ViInt32)request->signal();
+          break;
+        case grpc::niscope::ExportSignalRequest::SignalEnumCase::kSignalRaw:
+          signal = (ViInt32)request->signal_raw();
+          break;
+        case grpc::niscope::ExportSignalRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
+          break;
+      }
+
       ViConstString signal_identifier = request->signal_identifier().c_str();
       ViConstString output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
@@ -1734,7 +2035,19 @@ namespace niscope {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 which_trigger = (ViInt32)request->which_trigger();
+      ViInt32 which_trigger;
+      switch (request->which_trigger_enum_case()) {
+        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::kWhichTrigger:
+          which_trigger = (ViInt32)request->which_trigger();
+          break;
+        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::kWhichTriggerRaw:
+          which_trigger = (ViInt32)request->which_trigger_raw();
+          break;
+        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::WHICH_TRIGGER_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for which_trigger was not specified or out of range");
+          break;
+      }
+
       auto status = library_->SendSoftwareTriggerEdge(vi, which_trigger);
       response->set_status(status);
       return ::grpc::Status::OK;

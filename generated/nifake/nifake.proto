@@ -157,11 +157,15 @@ message EnumArrayOutputFunctionRequest {
 message EnumArrayOutputFunctionResponse {
   int32 status = 1;
   repeated Turtle an_array = 2;
+  repeated sint32 an_array_raw = 3;
 }
 
 message EnumInputFunctionWithDefaultsRequest {
   grpc.nidevice.Session vi = 1;
-  Turtle a_turtle = 2;
+  oneof a_turtle_enum {
+    Turtle a_turtle = 2;
+    sint32 a_turtle_raw = 3;
+  }
 }
 
 message EnumInputFunctionWithDefaultsResponse {
@@ -349,6 +353,7 @@ message GetEnumValueResponse {
   int32 status = 1;
   sint32 a_quantity = 2;
   Turtle a_turtle = 3;
+  sint32 a_turtle_raw = 4;
 }
 
 message ImportAttributeConfigurationBufferRequest {
@@ -412,10 +417,16 @@ message ParametersAreMultipleTypesRequest {
   bool a_boolean = 2;
   sint32 an_int32 = 3;
   int64 an_int64 = 4;
-  Turtle an_int_enum = 5;
-  double a_float = 6;
-  FloatEnum a_float_enum = 7;
-  string a_string = 8;
+  oneof an_int_enum_enum {
+    Turtle an_int_enum = 5;
+    sint32 an_int_enum_raw = 6;
+  }
+  double a_float = 7;
+  oneof a_float_enum_enum {
+    FloatEnum a_float_enum = 8;
+    double a_float_enum_raw = 9;
+  }
+  string a_string = 10;
 }
 
 message ParametersAreMultipleTypesResponse {
@@ -491,15 +502,20 @@ message ReturnMultipleTypesResponse {
   sint32 an_int32 = 3;
   int64 an_int64 = 4;
   Turtle an_int_enum = 5;
-  double a_float = 6;
-  FloatEnum a_float_enum = 7;
-  repeated double an_array = 8;
-  string a_string = 9;
+  sint32 an_int_enum_raw = 6;
+  double a_float = 7;
+  FloatEnum a_float_enum = 8;
+  double a_float_enum_raw = 9;
+  repeated double an_array = 10;
+  string a_string = 11;
 }
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {
   grpc.nidevice.Session vi = 1;
-  MobileOSNames a_mobile_o_s_name = 2;
+  oneof a_mobile_o_s_name_enum {
+    MobileOSNames a_mobile_o_s_name = 2;
+    string a_mobile_o_s_name_raw = 3;
+  }
 }
 
 message StringValuedEnumInputFunctionWithDefaultsResponse {
