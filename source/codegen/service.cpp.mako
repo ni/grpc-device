@@ -344,10 +344,9 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
   iterator_name = parameter_name + "_imap_it"
 %>\
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
-        if(${iterator_name} == ${map_name}.end()) {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+        if(${iterator_name} != ${map_name}.end()) {
+          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
         }
-        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
         response->set_${parameter_name}_raw(${iterator_name}->first);
 %  else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));

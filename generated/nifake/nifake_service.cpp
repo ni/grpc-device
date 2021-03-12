@@ -975,10 +975,9 @@ namespace nifake {
         response->set_an_int_enum_raw(an_int_enum);
         response->set_a_float(a_float);
         auto a_float_enum_imap_it = floatenum_output_map_.find(a_float_enum);
-        if(a_float_enum_imap_it == floatenum_output_map_.end()) {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+        if(a_float_enum_imap_it != floatenum_output_map_.end()) {
+          response->set_a_float_enum(static_cast<grpc::nifake::FloatEnum>(a_float_enum_imap_it->second));
         }
-        response->set_a_float_enum(static_cast<grpc::nifake::FloatEnum>(a_float_enum_imap_it->second));
         response->set_a_float_enum_raw(a_float_enum_imap_it->first);
         response->set_a_string(a_string);
       }
