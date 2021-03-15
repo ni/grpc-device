@@ -1980,6 +1980,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'enum': 'DataProcessingMode',
         'name': 'DDC_DATA_PROCESSING_MODE',
         'resettable': True,
         'type': 'ViInt32'
@@ -2116,6 +2117,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'enum': 'OverflowErrorReporting',
         'name': 'OVERFLOW_ERROR_REPORTING',
         'resettable': True,
         'type': 'ViInt32'
@@ -2140,6 +2142,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'enum': 'AddressType',
         'name': 'P2P_DATA_TRANS_PERMISSION_ADDR_TYPE',
         'resettable': True,
         'type': 'ViInt32'
@@ -2156,6 +2159,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'enum': 'AddressType',
         'name': 'P2P_DESTINATION_WINDOW_ADDR_TYPE',
         'resettable': True,
         'type': 'ViInt32'
@@ -2220,6 +2224,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'enum': 'AddressType',
         'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR',
         'resettable': True,
         'type': 'ViInt64'
@@ -2244,6 +2249,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'enum': 'NotificationType',
         'name': 'P2P_NOTIFY_PUSH_MESSAGE_ON',
         'resettable': True,
         'type': 'ViInt32'
