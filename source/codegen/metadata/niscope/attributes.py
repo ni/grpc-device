@@ -1,6 +1,39 @@
 # -*- coding: utf-8 -*-
 # This file is generated from NI-SCOPE API metadata version 20.5.0d7
 attributes = {
+    1050002: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:User Options:Range Check',
+        'name': 'RANGE_CHECK',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1050003: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies whether the instrument driver queries the instrument status after each operation.  Querying the instrument status is very useful for debugging.  After you validate your program, you can set this attribute to VI_FALSE to disable status checking and maximize performance\nThe instrument driver can choose to ignore status checking for particular attributes regardless of the setting of this attribute.\nThe default value is VI_TRUE.  Use the niScope_InitWithOptions function to override this value.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:User Options:Query Instrument Status',
+        'name': 'QUERY_INSTRUMENT_STATUS',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1050004: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies whether to cache the value of attributes.  When caching is enabled, the instrument driver keeps track of the current instrument settings and avoids sending redundant commands to the instrument.  Thus,  you can significantly increase execution speed.\nThe instrument driver can choose to always cache or to never cache particular attributes regardless of the setting of this attribute.\nThe default value is VI_TRUE.  Use niScope_InitWithOptions to override this value.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:User Options:Cache',
+        'name': 'CACHE',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
     1050005: {
         'access': 'read-write',
         'channel_based': False,
@@ -9,6 +42,41 @@ attributes = {
         },
         'lv_property': 'Inherent IVI Attributes:User Options:Simulate',
         'name': 'SIMULATE',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1050006: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies whether to validate attribute values and function parameters.  If enabled, the instrument driver validates the parameters values that you pass to driver functions.  Range checking parameters is very useful for debugging.  After you validate your program, you can set this attribute to VI_FALSE to disable range checking and maximize performance.\nThe default value is VI_TRUE.  Use the niScope_InitWithOptions function to override this value.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:User Options:Record Value Coercions',
+        'name': 'RECORD_COERCIONS',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1050007: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nThis attribute indicates the Driver Setup string that the user specified when initializing the driver.\nSome cases exist where the end-user must specify instrument driver options at initialization.  An example of this is specifying a particular instrument model from among a family of instruments that the driver supports.  This is useful when using simulation.  The end-user can specify driver-specific options through the DriverSetup keyword in the optionsString parameter in niScope_InitWithOptions, or through the IVI Configuration Utility.\nIf the user does not specify a Driver Setup string, this attribute returns an empty string.\n'
+        },
+        'name': 'DRIVER_SETUP',
+        'resettable': False,
+        'type': 'ViString'
+    },
+    1050021: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nNI-SCOPE does not generate interchange warnings and therefore ignores this attribute.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:User Options:Interchange Check',
+        'name': 'INTERCHANGE_CHECK',
         'resettable': True,
         'type': 'ViBoolean'
     },
@@ -22,6 +90,18 @@ attributes = {
         'name': 'CHANNEL_COUNT',
         'resettable': False,
         'type': 'ViInt32'
+    },
+    1050302: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nA string that contains the prefix for the instrument driver. The name of each user-callable function in this driver starts with this prefix.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:Driver Identification:Driver Prefix',
+        'name': 'SPECIFIC_DRIVER_PREFIX',
+        'resettable': False,
+        'type': 'ViString'
     },
     1050304: {
         'access': 'read only',
@@ -53,6 +133,18 @@ attributes = {
         },
         'lv_property': 'Inherent IVI Attributes:Driver Capabilities:Supported Instrument Models',
         'name': 'SUPPORTED_INSTRUMENT_MODELS',
+        'resettable': False,
+        'type': 'ViString'
+    },
+    1050401: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nA string that contains a comma-separated list of class extension groups that this driver implements.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:Driver Capabilities:Class Group Capabilities',
+        'name': 'GROUP_CAPABILITIES',
         'resettable': False,
         'type': 'ViString'
     },
@@ -110,6 +202,30 @@ attributes = {
         'name': 'SPECIFIC_DRIVER_DESCRIPTION',
         'resettable': False,
         'type': 'ViString'
+    },
+    1050515: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nThe major version number of the class specification with which this driver is compliant.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:Driver Identification:Class Specification Major Version',
+        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1050516: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nThe minor version number of the class specification with which this driver is compliant.\n'
+        },
+        'lv_property': 'Inherent IVI Attributes:Driver Identification:Class Specification Minor Version',
+        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'
     },
     1050551: {
         'access': 'read only',
@@ -187,6 +303,18 @@ attributes = {
         'name': 'TRIGGER_HYSTERESIS',
         'resettable': True,
         'type': 'ViReal64'
+    },
+    1150007: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nFor the NI 5102, specifies the line on which the sample clock is sent or received. For the NI 5112/5620/5621/5911,  specifies the line on which the one-time sync pulse is sent or received. This line should be the same for all devices to be synchronized.\n'
+        },
+        'lv_property': 'Clocking:Clock Sync Pulse Source',
+        'name': 'CLOCK_SYNC_PULSE_SOURCE',
+        'resettable': True,
+        'type': 'ViString'
     },
     1150008: {
         'access': 'read-write',
@@ -683,6 +811,18 @@ attributes = {
         'resettable': True,
         'type': 'ViInt32'
     },
+    1150072: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSet to VI_TRUE to retrieve one array with alternating values on the NI 5620/5621.  For example, this attribute can be used to retrieve a single array with I and Q interleaved instead of two separate arrays. If set to VI_TRUE, the resulting array will be twice the size of the actual record length.\n'
+        },
+        'lv_property': 'Device Specific:IF Digitizer (5620 and 5621):Advanced:Fetch Interleaved Data',
+        'name': 'FETCH_INTERLEAVED_DATA',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
     1150073: {
         'access': 'read only',
         'channel_based': False,
@@ -715,6 +855,18 @@ attributes = {
         'name': 'TRIGGER_IMPEDANCE',
         'resettable': True,
         'type': 'ViReal64'
+    },
+    1150076: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'Indicates the device number associated with the current session.'
+        },
+        'lv_property': 'Device Specific:IF Digitizer (5620 and 5621):Advanced:Device Number',
+        'name': 'DEVICE_NUMBER',
+        'resettable': False,
+        'type': 'ViInt32'
     },
     1150077: {
         'access': 'read-write',
@@ -865,6 +1017,18 @@ attributes = {
         'resettable': True,
         'type': 'ViReal64'
     },
+    1150091: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'Exports the sample clock to a specified terminal.'
+        },
+        'lv_property': 'Clocking:Exported Sample Clock Output Terminal',
+        'name': 'EXPORTED_SAMPLE_CLOCK_OUTPUT_TERMINAL',
+        'resettable': True,
+        'type': 'ViString'
+    },
     1150093: {
         'access': 'read-write',
         'channel_based': False,
@@ -999,6 +1163,19 @@ attributes = {
         'resettable': False,
         'type': 'ViString'
     },
+    1150105: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'Gets or sets the binary phase DAC value that controls the delay added to the Phase Locked Loop (PLL) of the sample clock.',
+            'note': 'if this value is set, sample clock adjust and TClk will not be able to do any sub-sample adjustment of the timebase sample clock.'
+        },
+        'lv_property': 'Clocking:Advanced:Oscillator Phase DAC Value',
+        'name': 'OSCILLATOR_PHASE_DAC_VALUE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
     1150106: {
         'access': 'read-write',
         'channel_based': False,
@@ -1076,6 +1253,18 @@ attributes = {
         'name': 'ENABLE_TIME_INTERLEAVED_SAMPLING',
         'resettable': True,
         'type': 'ViBoolean'
+    },
+    1150129: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the destination for the 5 Volt signal.\nConsult your device documentation for a specific list of valid destinations.\n'
+        },
+        'lv_property': 'Synchronization:5 Volt Power:Output Terminal',
+        'name': '5V_OUT_OUTPUT_TERMINAL',
+        'resettable': True,
+        'type': 'ViString'
     },
     1150132: {
         'access': 'read-write',
@@ -1325,6 +1514,128 @@ attributes = {
         'resettable': False,
         'type': 'ViReal64'
     },
+    1150300: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nEnables/disables the Digital Down Converter (DDC) block of the digitizer.  When the DDC block is disabled, all DDC-related properties are disabled and have no effect on the acquired signal.\nDefault Value: VI_FALSE\n'
+        },
+        'lv_property': 'Onboard Signal Processing:DDC:DDC Enabled',
+        'name': 'DDC_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1150302: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nEnables/disables frequency translating the data around the user-selected center frequency down to baseband.\nDefault Value: VI_TRUE\n'
+        },
+        'lv_property': 'Onboard Signal Processing:DDC:Frequency Translation Enabled',
+        'name': 'DDC_FREQUENCY_TRANSLATION_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1150303: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nThe frequency at which the DDC block frequency translates the input data.\nDefault Value: 10 MHz\n'
+        },
+        'lv_property': 'Onboard Signal Processing:DDC:Center Frequency',
+        'name': 'DDC_CENTER_FREQUENCY',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1150304: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nThe way in which data is processed by the DDC block.\nValid Values:\nReal (0)\nComplex (1)\nDefault Value: Complex\n'
+        },
+        'enum': 'DataProcessingMode',
+        'lv_property': 'Onboard Signal Processing:DDC:Data Processing Mode',
+        'name': 'DDC_DATA_PROCESSING_MODE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150305: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nThe I center frequency phase in degrees at the first point of the acquisition.\nDefault Value: 0\n'
+        },
+        'lv_property': 'Onboard Signal Processing:DDC:Signal Adjustments:Frequency Translation:Frequency Translation Phase I',
+        'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_I',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1150306: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nThe Q center frequency phase in degrees at the first point of the acquisition.  Use this attribute only when NISCOPE_ATTR_DDC_DATA_PROCESSING_MODE is set to Complex.\nDefault Value: 90\n'
+        },
+        'lv_property': 'Onboard Signal Processing:DDC:Signal Adjustments:Frequency Translation:Frequency Translation Phase Q',
+        'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_Q',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1150307: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nApplies gain to the specified channel in hardware before any onboard processing.\nValid Values:\n-1.5 to 1.5\n'
+        },
+        'lv_property': 'Vertical:Advanced:Digital Gain',
+        'name': 'DIGITAL_GAIN',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1150309: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nConfigures error reporting when the DDC block detects an overflow in any of its stages. Overflows lead to clipping of the waveform.\nValid Values:\nWarning (0)\nError (1)\nDisabled (2)\nDefault Value: Warning\n'
+        },
+        'enum': 'OverflowErrorReporting',
+        'lv_property': 'Onboard Signal Processing:OSP Overflow Error Reporting',
+        'name': 'OVERFLOW_ERROR_REPORTING',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150310: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nIndicates the channel that is the input of the Q path of the DDC.\nDefault Value: The channel that the attribute is configured off of.\n'
+        },
+        'lv_property': 'Onboard Signal Processing:DDC:Q Source',
+        'name': 'DDC_Q_SOURCE',
+        'resettable': True,
+        'type': 'ViString'
+    },
+    1150311: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nEnables/disables interleaving of the I and Q data.  When disabled, the traditional niScope_Fetch() functions will return the I waveform for each acquisition followed by the Q waveform.  When enabled, the I and Q data are interleaved into a single waveform.  In the interleaving case, you must allocate twice as many elements in the array as number of samples being fetched (since each sample contains an I and a Q component).\nDefault Value: VI_TRUE\n'
+        },
+        'lv_property': 'Onboard Signal Processing:DDC:Fetch Interleaved IQ Data',
+        'name': 'FETCH_INTERLEAVED_IQ_DATA',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
     1150312: {
         'access': 'read only',
         'channel_based': True,
@@ -1394,6 +1705,30 @@ attributes = {
         'resettable': True,
         'type': 'ViBoolean'
     },
+    1150319: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nEnables or Disables the analog dither on the device.  The default value is FALSE.\nUsing dither can improve the spectral performance of the device by reducing the effects of quantization.  However, adding dither increases the power level to the ADC, so you may need to either decrease the signal level or increase your vertical range.\n'
+        },
+        'lv_property': 'Vertical:Advanced:Dither Enabled',
+        'name': 'DITHER_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1150320: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'Enables the onboard signal processing block that resamples the input waveform to the user desired sample rate.  The default value is FALSE.'
+        },
+        'lv_property': 'Onboard Signal Processing:Fractional Resample:Fractional Resample Enabled',
+        'name': 'FRACTIONAL_RESAMPLE_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
     1150321: {
         'access': 'read-write',
         'channel_based': False,
@@ -1416,6 +1751,258 @@ attributes = {
         'resettable': True,
         'type': 'ViInt32'
     },
+    1150328: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nReturns the current number of samples available to stream from a peer-to-peer endpoint.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Samples Available In Endpoint',
+        'name': 'P2P_SAMPLES_AVAIL_IN_ENDPOINT',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1150329: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nReturns the address of a hardware register used to grant permisison for the peer-to-peer endpoint to write data to another peer.. The type of this address is determined by the NISCOPE_ATTR_P2P_DATA_TRANS_PERMISSION_ADDR_TYPE attribute. Permission is granted in bytes and the register is additive.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Data Transfer Permission Address',
+        'name': 'P2P_DATA_TRANS_PERMISSION_ADDR',
+        'resettable': False,
+        'type': 'ViInt64'
+    },
+    1150330: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the type of address returned from the NISCOPE_ATTR_P2P_DATA_TRANS_PERMISSION_ADDR attribute.\nValid Values:\nPhysical (0)\nVirtual (1)\nDefault Value: Virtual\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'enum': 'AddressType',
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Data Transfer Permission Address Type',
+        'name': 'P2P_DATA_TRANS_PERMISSION_ADDR_TYPE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150331: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the destination for data written by the peer-to-peer endpoint. The type of this address is specified by the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDR_TYPE attribute.\nValid Values: A valid, non-NULL physical or virtual address.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Address',
+        'name': 'P2P_DESTINATION_WINDOW_ADDR',
+        'resettable': True,
+        'type': 'ViInt64'
+    },
+    1150332: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the type of the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDR attribute.\nValid Values:\nPhysical (0)\nVirtual (1)\nDefault Value: Virtual\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'enum': 'AddressType',
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Address Type',
+        'name': 'P2P_DESTINATION_WINDOW_ADDR_TYPE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150333: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the size, in bytes, of the destination window determined by the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDRESS and the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDRESS_TYPE attributes.\nValid Values: Any non-NULL value.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Size',
+        'name': 'P2P_DESTINATION_WINDOW_SIZE',
+        'resettable': True,
+        'type': 'ViInt64'
+    },
+    1150334: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the event to push the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_VALUE attribute to the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_ADDR attribute. Setting this attribute to NISCOPE_VAL_NOTIFY_DONE pushes the message when the acquisition has completed.\nValid Values:\nNever (0)\nDone (1)\nDefault Value: Done\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'enum': 'NotificationType',
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Push Message On',
+        'name': 'P2P_NOTIFY_PUSH_MESSAGE_ON',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150335: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the address to Push Message push Value to on the event specified by the NISCOPE_ATTR_P2P_NOTIFY_PUSH_MESSAGE_ON attribute.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'enum': 'AddressType',
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Address',
+        'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR',
+        'resettable': True,
+        'type': 'ViInt64'
+    },
+    1150336: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies the type of the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_ADDR attribute.\nValid Values:\nPhysical (0)\nVirtual (1)\nDefault Value: Virtual\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Address Type',
+        'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR_TYPE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150337: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'Specifies the value to be pushed to the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_ADDR attribute on the event specified by the NISCOPE_ATTR_MESSAGE_PUSH_ON attribute.',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Value',
+        'name': 'P2P_NOTIFY_MESSAGE_PUSH_VALUE',
+        'resettable': True,
+        'type': 'ViInt64'
+    },
+    1150338: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies whether the digitizer writes data to the peer-to-peer endpoint.\nDefault Value: VI_FALSE\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:P2P Enabled',
+        'name': 'P2P_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1150339: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies which channels are written to a peer-to-peer endpoint. If multiple channels are specified,  the channels are interleaved by sample.\nDefault Value: 0\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Channels to Stream',
+        'name': 'P2P_CHANNELS_TO_STREAM',
+        'resettable': True,
+        'type': 'ViString'
+    },
+    1150340: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nReturns the number of samples transferred through the peer-to-peer endpoint since it was last reset.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Samples Transferred',
+        'name': 'P2P_SAMPLES_TRANSFERRED',
+        'resettable': False,
+        'type': 'ViInt64'
+    },
+    1150341: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nReturns the most number of samples available to stream from a peer-to-peer endpoint since the last time this attribute was read.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Most Samples Available in Endpoint',
+        'name': 'P2P_MOST_SAMPLES_AVAIL_IN_ENDPOINT',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1150342: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nReturns the size in samples of the peer-to-peer endpoint.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Endpoint Size',
+        'name': 'P2P_ENDPOINT_SIZE',
+        'resettable': False,
+        'type': 'ViInt32'
+
+    },
+    1150343: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nEnables/disables the advanced attributes for a peer-to-peer endpoint. These attributes cannot be used if an endpoint is being configured by NI-P2P, or a resource reservation error will occur.\nDefault Value: VI_FALSE\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Manual:Manual Configuration Enabled',
+        'name': 'P2P_MANUAL_CONFIGURATION_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1150344: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nReturns TRUE if the endpoint FIFO has overflowed. Reset the endpoint to clear the overflow condition.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Endpoint Overflow',
+        'name': 'P2P_ENDPOINT_OVERFLOW',
+        'resettable': False,
+        'type': 'ViBoolean'
+    },
+    1150345: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nReturns the number of FIFO-based peer-to-peer endpoints this device supports.\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:FIFO Endpoint Count',
+        'name': 'P2P_FIFO_ENDPOINT_COUNT',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1150354: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nSpecifies whether the digitizer writes data to onboard memory when a peer-to-peer endpoint is enabled.\nDefault Value: VI_FALSE\n',
+            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
+        },
+        'lv_property': 'Peer-to-Peer:Onboard Memory Enabled',
+        'name': 'P2P_ONBOARD_MEMORY_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
     1150366: {
         'access': 'read-write',
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
@@ -1437,6 +2024,14 @@ attributes = {
         },
         'name': 'SAMP_CLK_TIMEBASE_MULT',
         'python_name': 'sample_clock_timebase_multiplier',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150373: {
+        'access': 'read-write',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'name': 'P2P_STREAM_RELATIVE_TO',
         'resettable': True,
         'type': 'ViInt32'
     },
@@ -1488,6 +2083,14 @@ attributes = {
         'name': 'HIGH_PASS_FILTER_FREQUENCY',
         'resettable': True,
         'type': 'ViReal64'
+    },
+    1150380: {
+        'access': 'read only',
+        'channel_based': False,
+        'codegen_method': 'public',
+        'name': 'P2P_SAMPLES_TRANSFERRED_PER_RECORD',
+        'resettable': False,
+        'type': 'ViInt32'
     },
     1151303: {
         'access': 'read only',
@@ -1943,607 +2546,5 @@ attributes = {
         'name': 'MEAS_MID_REF',
         'resettable': True,
         'type': 'ViReal64'
-    },
-    1150129: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the destination for the 5 Volt signal.\nConsult your device documentation for a specific list of valid destinations.\n'
-        },
-        'lv_property': 'Synchronization:5 Volt Power:Output Terminal',
-        'name': '5V_OUT_OUTPUT_TERMINAL',
-        'resettable': True,
-        'type': 'ViString'
-    },
-    1050004: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies whether to cache the value of attributes.  When caching is enabled, the instrument driver keeps track of the current instrument settings and avoids sending redundant commands to the instrument.  Thus,  you can significantly increase execution speed.\nThe instrument driver can choose to always cache or to never cache particular attributes regardless of the setting of this attribute.\nThe default value is VI_TRUE.  Use niScope_InitWithOptions to override this value.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:User Options:Cache',
-        'name': 'CACHE',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150007: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nFor the NI 5102, specifies the line on which the sample clock is sent or received. For the NI 5112/5620/5621/5911,  specifies the line on which the one-time sync pulse is sent or received. This line should be the same for all devices to be synchronized.\n'
-        },
-        'lv_property': 'Clocking:Clock Sync Pulse Source',
-        'name': 'CLOCK_SYNC_PULSE_SOURCE',
-        'resettable': True,
-        'type': 'ViString'
-    },
-    1150303: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nThe frequency at which the DDC block frequency translates the input data.\nDefault Value: 10 MHz\n'
-        },
-        'lv_property': 'Onboard Signal Processing:DDC:Center Frequency',
-        'name': 'DDC_CENTER_FREQUENCY',
-        'resettable': True,
-        'type': 'ViReal64'
-    },
-    1150304: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nThe way in which data is processed by the DDC block.\nValid Values:\nReal (0)\nComplex (1)\nDefault Value: Complex\n'
-        },
-        'enum': 'DataProcessingMode',
-        'lv_property': 'Onboard Signal Processing:DDC:Data Processing Mode',
-        'name': 'DDC_DATA_PROCESSING_MODE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150300: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nEnables/disables the Digital Down Converter (DDC) block of the digitizer.  When the DDC block is disabled, all DDC-related properties are disabled and have no effect on the acquired signal.\nDefault Value: VI_FALSE\n'
-        },
-        'lv_property': 'Onboard Signal Processing:DDC:DDC Enabled',
-        'name': 'DDC_ENABLED',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150302: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nEnables/disables frequency translating the data around the user-selected center frequency down to baseband.\nDefault Value: VI_TRUE\n'
-        },
-        'lv_property': 'Onboard Signal Processing:DDC:Frequency Translation Enabled',
-        'name': 'DDC_FREQUENCY_TRANSLATION_ENABLED',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150305: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nThe I center frequency phase in degrees at the first point of the acquisition.\nDefault Value: 0\n'
-        },
-        'lv_property': 'Onboard Signal Processing:DDC:Signal Adjustments:Frequency Translation:Frequency Translation Phase I',
-        'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_I',
-        'resettable': True,
-        'type': 'ViReal64'
-    },
-    1150306: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nThe Q center frequency phase in degrees at the first point of the acquisition.  Use this attribute only when NISCOPE_ATTR_DDC_DATA_PROCESSING_MODE is set to Complex.\nDefault Value: 90\n'
-        },
-        'lv_property': 'Onboard Signal Processing:DDC:Signal Adjustments:Frequency Translation:Frequency Translation Phase Q',
-        'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_Q',
-        'resettable': True,
-        'type': 'ViReal64'
-    },
-    1150310: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nIndicates the channel that is the input of the Q path of the DDC.\nDefault Value: The channel that the attribute is configured off of.\n'
-        },
-        'lv_property': 'Onboard Signal Processing:DDC:Q Source',
-        'name': 'DDC_Q_SOURCE',
-        'resettable': True,
-        'type': 'ViString'
-    },
-    1150076: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'Indicates the device number associated with the current session.'
-        },
-        'lv_property': 'Device Specific:IF Digitizer (5620 and 5621):Advanced:Device Number',
-        'name': 'DEVICE_NUMBER',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1150307: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nApplies gain to the specified channel in hardware before any onboard processing.\nValid Values:\n-1.5 to 1.5\n'
-        },
-        'lv_property': 'Vertical:Advanced:Digital Gain',
-        'name': 'DIGITAL_GAIN',
-        'resettable': True,
-        'type': 'ViReal64'
-    },
-    1150319: {
-        'access': 'read-write',
-        'channel_based': True,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nEnables or Disables the analog dither on the device.  The default value is FALSE.\nUsing dither can improve the spectral performance of the device by reducing the effects of quantization.  However, adding dither increases the power level to the ADC, so you may need to either decrease the signal level or increase your vertical range.\n'
-        },
-        'lv_property': 'Vertical:Advanced:Dither Enabled',
-        'name': 'DITHER_ENABLED',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1050007: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nThis attribute indicates the Driver Setup string that the user specified when initializing the driver.\nSome cases exist where the end-user must specify instrument driver options at initialization.  An example of this is specifying a particular instrument model from among a family of instruments that the driver supports.  This is useful when using simulation.  The end-user can specify driver-specific options through the DriverSetup keyword in the optionsString parameter in niScope_InitWithOptions, or through the IVI Configuration Utility.\nIf the user does not specify a Driver Setup string, this attribute returns an empty string.\n'
-        },
-        'name': 'DRIVER_SETUP',
-        'resettable': False,
-        'type': 'ViString'
-    },
-    1150091: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'Exports the sample clock to a specified terminal.'
-        },
-        'lv_property': 'Clocking:Exported Sample Clock Output Terminal',
-        'name': 'EXPORTED_SAMPLE_CLOCK_OUTPUT_TERMINAL',
-        'resettable': True,
-        'type': 'ViString'
-    },
-    1150072: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSet to VI_TRUE to retrieve one array with alternating values on the NI 5620/5621.  For example, this attribute can be used to retrieve a single array with I and Q interleaved instead of two separate arrays. If set to VI_TRUE, the resulting array will be twice the size of the actual record length.\n'
-        },
-        'lv_property': 'Device Specific:IF Digitizer (5620 and 5621):Advanced:Fetch Interleaved Data',
-        'name': 'FETCH_INTERLEAVED_DATA',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150311: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nEnables/disables interleaving of the I and Q data.  When disabled, the traditional niScope_Fetch() functions will return the I waveform for each acquisition followed by the Q waveform.  When enabled, the I and Q data are interleaved into a single waveform.  In the interleaving case, you must allocate twice as many elements in the array as number of samples being fetched (since each sample contains an I and a Q component).\nDefault Value: VI_TRUE\n'
-        },
-        'lv_property': 'Onboard Signal Processing:DDC:Fetch Interleaved IQ Data',
-        'name': 'FETCH_INTERLEAVED_IQ_DATA',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150320: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'Enables the onboard signal processing block that resamples the input waveform to the user desired sample rate.  The default value is FALSE.'
-        },
-        'lv_property': 'Onboard Signal Processing:Fractional Resample:Fractional Resample Enabled',
-        'name': 'FRACTIONAL_RESAMPLE_ENABLED',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1050401: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nA string that contains a comma-separated list of class extension groups that this driver implements.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:Driver Capabilities:Class Group Capabilities',
-        'name': 'GROUP_CAPABILITIES',
-        'resettable': False,
-        'type': 'ViString'
-    },
-    1050021: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nNI-SCOPE does not generate interchange warnings and therefore ignores this attribute.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:User Options:Interchange Check',
-        'name': 'INTERCHANGE_CHECK',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150105: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'Gets or sets the binary phase DAC value that controls the delay added to the Phase Locked Loop (PLL) of the sample clock.',
-            'note': 'if this value is set, sample clock adjust and TClk will not be able to do any sub-sample adjustment of the timebase sample clock.'
-        },
-        'lv_property': 'Clocking:Advanced:Oscillator Phase DAC Value',
-        'name': 'OSCILLATOR_PHASE_DAC_VALUE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150309: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nConfigures error reporting when the DDC block detects an overflow in any of its stages. Overflows lead to clipping of the waveform.\nValid Values:\nWarning (0)\nError (1)\nDisabled (2)\nDefault Value: Warning\n'
-        },
-        'enum': 'OverflowErrorReporting',
-        'lv_property': 'Onboard Signal Processing:OSP Overflow Error Reporting',
-        'name': 'OVERFLOW_ERROR_REPORTING',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150339: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies which channels are written to a peer-to-peer endpoint. If multiple channels are specified,  the channels are interleaved by sample.\nDefault Value: 0\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Channels to Stream',
-        'name': 'P2P_CHANNELS_TO_STREAM',
-        'resettable': True,
-        'type': 'ViString'
-    },
-    1150329: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nReturns the address of a hardware register used to grant permisison for the peer-to-peer endpoint to write data to another peer.. The type of this address is determined by the NISCOPE_ATTR_P2P_DATA_TRANS_PERMISSION_ADDR_TYPE attribute. Permission is granted in bytes and the register is additive.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Manual:Configuration:Data Transfer Permission Address',
-        'name': 'P2P_DATA_TRANS_PERMISSION_ADDR',
-        'resettable': False,
-        'type': 'ViInt64'
-    },
-    1150330: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the type of address returned from the NISCOPE_ATTR_P2P_DATA_TRANS_PERMISSION_ADDR attribute.\nValid Values:\nPhysical (0)\nVirtual (1)\nDefault Value: Virtual\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'enum': 'AddressType',
-        'lv_property': 'Peer-to-Peer:Manual:Configuration:Data Transfer Permission Address Type',
-        'name': 'P2P_DATA_TRANS_PERMISSION_ADDR_TYPE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150331: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the destination for data written by the peer-to-peer endpoint. The type of this address is specified by the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDR_TYPE attribute.\nValid Values: A valid, non-NULL physical or virtual address.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Address',
-        'name': 'P2P_DESTINATION_WINDOW_ADDR',
-        'resettable': True,
-        'type': 'ViInt64'
-    },
-    1150332: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the type of the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDR attribute.\nValid Values:\nPhysical (0)\nVirtual (1)\nDefault Value: Virtual\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'enum': 'AddressType',
-        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Address Type',
-        'name': 'P2P_DESTINATION_WINDOW_ADDR_TYPE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150333: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the size, in bytes, of the destination window determined by the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDRESS and the NISCOPE_ATTR_P2P_DESTINATION_WINDOW_ADDRESS_TYPE attributes.\nValid Values: Any non-NULL value.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Size',
-        'name': 'P2P_DESTINATION_WINDOW_SIZE',
-        'resettable': True,
-        'type': 'ViInt64'
-    },
-    1150338: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies whether the digitizer writes data to the peer-to-peer endpoint.\nDefault Value: VI_FALSE\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:P2P Enabled',
-        'name': 'P2P_ENABLED',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150344: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nReturns TRUE if the endpoint FIFO has overflowed. Reset the endpoint to clear the overflow condition.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Endpoint Overflow',
-        'name': 'P2P_ENDPOINT_OVERFLOW',
-        'resettable': False,
-        'type': 'ViBoolean'
-    },
-    1150342: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nReturns the size in samples of the peer-to-peer endpoint.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Endpoint Size',
-        'name': 'P2P_ENDPOINT_SIZE',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1150345: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nReturns the number of FIFO-based peer-to-peer endpoints this device supports.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:FIFO Endpoint Count',
-        'name': 'P2P_FIFO_ENDPOINT_COUNT',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1150343: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nEnables/disables the advanced attributes for a peer-to-peer endpoint. These attributes cannot be used if an endpoint is being configured by NI-P2P, or a resource reservation error will occur.\nDefault Value: VI_FALSE\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Manual:Manual Configuration Enabled',
-        'name': 'P2P_MANUAL_CONFIGURATION_ENABLED',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150341: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nReturns the most number of samples available to stream from a peer-to-peer endpoint since the last time this attribute was read.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Most Samples Available in Endpoint',
-        'name': 'P2P_MOST_SAMPLES_AVAIL_IN_ENDPOINT',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1150335: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the address to Push Message push Value to on the event specified by the NISCOPE_ATTR_P2P_NOTIFY_PUSH_MESSAGE_ON attribute.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'enum': 'AddressType',
-        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Address',
-        'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR',
-        'resettable': True,
-        'type': 'ViInt64'
-    },
-    1150336: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the type of the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_ADDR attribute.\nValid Values:\nPhysical (0)\nVirtual (1)\nDefault Value: Virtual\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Address Type',
-        'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR_TYPE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150337: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'Specifies the value to be pushed to the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_ADDR attribute on the event specified by the NISCOPE_ATTR_MESSAGE_PUSH_ON attribute.',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Value',
-        'name': 'P2P_NOTIFY_MESSAGE_PUSH_VALUE',
-        'resettable': True,
-        'type': 'ViInt64'
-    },
-    1150334: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies the event to push the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_VALUE attribute to the NISCOPE_ATTR_P2P_NOTIFY_MESSAGE_PUSH_ADDR attribute. Setting this attribute to NISCOPE_VAL_NOTIFY_DONE pushes the message when the acquisition has completed.\nValid Values:\nNever (0)\nDone (1)\nDefault Value: Done\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'enum': 'NotificationType',
-        'lv_property': 'Peer-to-Peer:Manual:Notification:Push Message On',
-        'name': 'P2P_NOTIFY_PUSH_MESSAGE_ON',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150354: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies whether the digitizer writes data to onboard memory when a peer-to-peer endpoint is enabled.\nDefault Value: VI_FALSE\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Onboard Memory Enabled',
-        'name': 'P2P_ONBOARD_MEMORY_ENABLED',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1150328: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nReturns the current number of samples available to stream from a peer-to-peer endpoint.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Samples Available In Endpoint',
-        'name': 'P2P_SAMPLES_AVAIL_IN_ENDPOINT',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1150340: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nReturns the number of samples transferred through the peer-to-peer endpoint since it was last reset.\n',
-            'note': 'This attribute can be used only with high-speed digitizers that support peer-to-peer streaming.'
-        },
-        'lv_property': 'Peer-to-Peer:Samples Transferred',
-        'name': 'P2P_SAMPLES_TRANSFERRED',
-        'resettable': False,
-        'type': 'ViInt64'
-    },
-    1150380: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'name': 'P2P_SAMPLES_TRANSFERRED_PER_RECORD',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1150373: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'name': 'P2P_STREAM_RELATIVE_TO',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1050003: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies whether the instrument driver queries the instrument status after each operation.  Querying the instrument status is very useful for debugging.  After you validate your program, you can set this attribute to VI_FALSE to disable status checking and maximize performance\nThe instrument driver can choose to ignore status checking for particular attributes regardless of the setting of this attribute.\nThe default value is VI_TRUE.  Use the niScope_InitWithOptions function to override this value.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:User Options:Query Instrument Status',
-        'name': 'QUERY_INSTRUMENT_STATUS',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1050002: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'lv_property': 'Inherent IVI Attributes:User Options:Range Check',
-        'name': 'RANGE_CHECK',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1050006: {
-        'access': 'read-write',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nSpecifies whether to validate attribute values and function parameters.  If enabled, the instrument driver validates the parameters values that you pass to driver functions.  Range checking parameters is very useful for debugging.  After you validate your program, you can set this attribute to VI_FALSE to disable range checking and maximize performance.\nThe default value is VI_TRUE.  Use the niScope_InitWithOptions function to override this value.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:User Options:Record Value Coercions',
-        'name': 'RECORD_COERCIONS',
-        'resettable': True,
-        'type': 'ViBoolean'
-    },
-    1050515: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nThe major version number of the class specification with which this driver is compliant.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:Driver Identification:Class Specification Major Version',
-        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1050516: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nThe minor version number of the class specification with which this driver is compliant.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:Driver Identification:Class Specification Minor Version',
-        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1050302: {
-        'access': 'read only',
-        'channel_based': False,
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nA string that contains the prefix for the instrument driver. The name of each user-callable function in this driver starts with this prefix.\n'
-        },
-        'lv_property': 'Inherent IVI Attributes:Driver Identification:Driver Prefix',
-        'name': 'SPECIFIC_DRIVER_PREFIX',
-        'resettable': False,
-        'type': 'ViString'
-    },
+    }
 }
