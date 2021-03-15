@@ -158,6 +158,14 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
   EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
+TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_DeviceEnumeration_InitializeSysCfgSessionWithTrueReturnsValidSession)
+{
+    NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+    grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+
+    EXPECT_NE(nullptr, device_enumerator.get_syscfg_session(true));
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

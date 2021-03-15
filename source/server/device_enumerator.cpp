@@ -29,9 +29,9 @@ DeviceEnumerator::~DeviceEnumerator()
   char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
 
   try {
-    // TODO: Caching of syscfg_session will be added in a separate PR.
+      session = get_syscfg_session(false);
     // All parameters of InitializeSession other than the first are System Configuration default values.
-    if (NISysCfg_Succeeded(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
+    if (session != nullptr) {
       if (NISysCfg_Succeeded(status = library_->CreateFilter(session, &filter))) {
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
@@ -60,6 +60,9 @@ DeviceEnumerator::~DeviceEnumerator()
       }
       library_->CloseHandle(session);
     }
+    else {
+        return ::grpc::Status(::grpc::NOT_FOUND, kSysCfgLibraryLoadFailedMessage);
+    }
   }
   catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -70,6 +73,43 @@ DeviceEnumerator::~DeviceEnumerator()
   }
 
   return ::grpc::Status::OK;
+}
+
+// This method caches the NISysCfgSession into cached_syscfg_session field.
+// This takes an optional reinitialize boolean as input which can be used to enforce initialization when needed.
+// This method takes a unique lock to access cached_syscfg_session and returns if its not null.
+// If cached_syscfg_session is null or reinitialize is true then it creates a new session closing the previous session.
+// This method returns null session after failed initialization.
+NISysCfgSessionHandle DeviceEnumerator::get_syscfg_session(bool reinitialize)
+{
+    std::unique_lock<std::shared_mutex> lock(session_mutex);
+    NISysCfgStatus status = NISysCfg_OK;
+    if (!reinitialize && cached_syscfg_session != nullptr) {
+        return cached_syscfg_session;
+    }
+    else {
+        if (cached_syscfg_session != nullptr) {
+            library_->CloseHandle(cached_syscfg_session);
+        }
+        
+        try {
+            if (NISysCfg_Succeeded(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session)))
+                return cached_syscfg_session;
+        }
+        catch (LibraryLoadException& ex) {
+            ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+            return nullptr;
+        }
+        // if InitializeSession doesn't throw an exception but status is not OK.
+        return nullptr;
+    }
+}
+
+//Calls Closehandle to clear sysconfig session.
+void DeviceEnumerator::clear_sysconfig_session()
+{
+    std::unique_lock<std::shared_mutex> lock(session_mutex);
+    library_->CloseHandle(cached_syscfg_session);
 }
 
 }  // namespace nidevice
