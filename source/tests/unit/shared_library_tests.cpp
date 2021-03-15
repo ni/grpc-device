@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
-
-#include "core_server/hardware/grpc/internal/shared_library.h"
+#include <server/shared_library.h>
 
 #if defined(__GNUC__)
   #include <dlfcn.h>
@@ -9,9 +8,6 @@
 namespace ni {
 namespace tests {
 namespace unit {
-namespace hardware {
-namespace grpc {
-namespace internal {
 
 using TestSession = void*;
 using TestApiCreateSessionPtr = int (*)(TestSession* session);
@@ -30,7 +26,7 @@ static const char* wrong_library_name = "./libWrongTestApi.so";
 
 TEST(SharedLibraryTests, ValidNameForLibrary_Load_IsLoadedReturnsTrue)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
 
   library.load();
 
@@ -39,7 +35,7 @@ TEST(SharedLibraryTests, ValidNameForLibrary_Load_IsLoadedReturnsTrue)
 
 TEST(SharedLibraryTests, ValidNameForLibrary_Load_GetHandleReturnsValue)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
 
   library.load();
 
@@ -48,7 +44,7 @@ TEST(SharedLibraryTests, ValidNameForLibrary_Load_GetHandleReturnsValue)
 
 TEST(SharedLibraryTests, LibraryLoaded_Unload_UnloadsLibrary)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
   library.load();
 
   library.unload();
@@ -59,7 +55,7 @@ TEST(SharedLibraryTests, LibraryLoaded_Unload_UnloadsLibrary)
 
 TEST(SharedLibraryTests, InvalidNameForLibrary_Load_IsLoadedReturnsFalse)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(wrong_library_name);
+  grpc::nidevice::SharedLibrary library(wrong_library_name);
 
   library.load();
 
@@ -68,7 +64,7 @@ TEST(SharedLibraryTests, InvalidNameForLibrary_Load_IsLoadedReturnsFalse)
 
 TEST(SharedLibraryTests, InvalidNameForLibrary_Load_GetHandleReturnsNull)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(wrong_library_name);
+  grpc::nidevice::SharedLibrary library(wrong_library_name);
 
   library.load();
 
@@ -77,7 +73,7 @@ TEST(SharedLibraryTests, InvalidNameForLibrary_Load_GetHandleReturnsNull)
 
 TEST(SharedLibraryTests, LibraryNotLoaded_GetFunctionPointerWithExistingFunctionName_ReturnsNull)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
 
   auto createSession = library.get_function_pointer("niTestApiCreateSession");
 
@@ -86,7 +82,7 @@ TEST(SharedLibraryTests, LibraryNotLoaded_GetFunctionPointerWithExistingFunction
 
 TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointersWithExistingFunctionName_ReturnsValidFunctionPointers)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
   library.load();
 
   auto createSession = reinterpret_cast<TestApiCreateSessionPtr>(library.get_function_pointer("niTestApiCreateSession"));
@@ -102,7 +98,7 @@ TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointersWithExistingFunctionNa
 
 TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointerWithNonExistentFunctionName_ReturnsNull)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
 
   auto createSession = library.get_function_pointer("niTestApiNonExistentFunctionName");
 
@@ -111,7 +107,7 @@ TEST(SharedLibraryTests, LibraryLoaded_GetFunctionPointerWithNonExistentFunction
 
 TEST(SharedLibraryTests, LibraryAndFunctionsLoaded_FunctionCallsSucceed)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
   library.load();
   ASSERT_TRUE(library.is_loaded());
   auto createSession = reinterpret_cast<TestApiCreateSessionPtr>(library.get_function_pointer("niTestApiCreateSession"));
@@ -137,7 +133,7 @@ TEST(SharedLibraryTests, LibraryAndFunctionsLoaded_FunctionCallsSucceed)
 
 TEST(SharedLibraryTests, LoadedLibrary_SetLibraryName_DoesNotUpdateLibraryName)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
   library.load();
   std::string initial_library_name = library.get_library_name();
   ASSERT_STREQ(test_library_name, initial_library_name.c_str());
@@ -152,7 +148,7 @@ TEST(SharedLibraryTests, LoadedLibrary_SetLibraryName_DoesNotUpdateLibraryName)
 
 TEST(SharedLibraryTests, UnloadedLibrary_SetLibraryName_UpdatesLibraryName)
 {
-  ni::hardware::grpc::internal::SharedLibrary library(test_library_name);
+  grpc::nidevice::SharedLibrary library(test_library_name);
 
   ASSERT_FALSE(library.is_loaded());
   const char* new_library_name = "hello";
@@ -162,9 +158,6 @@ TEST(SharedLibraryTests, UnloadedLibrary_SetLibraryName_UpdatesLibraryName)
   EXPECT_STREQ(new_library_name, name_after_attempted_rename.c_str());
 }
 
-}  // namespace internal
-}  // namespace grpc
-}  // namespace hardware
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

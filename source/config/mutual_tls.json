@@ -1,0 +1,8 @@
+{
+   "port": 31763,
+   "security" : {
+      "server_cert": "server_self_signed_crt.pem",
+      "server_key": "server_privatekey.pem",
+      "root_cert": "client_self_signed_crt.pem"
+   }
+}

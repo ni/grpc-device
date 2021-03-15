@@ -10,15 +10,13 @@
 #include <fstream>
 #include <iostream>
 #include <atomic>
+#include <vector>
 
-namespace ni {
-namespace fake {
 namespace grpc {
+namespace nifake {
 
-  namespace internal = ni::hardware::grpc::internal;
-
-  NiFakeService::NiFakeService(NiFakeLibraryWrapper* library_wrapper, internal::SessionRepository* session_repository)
-      : library_wrapper_(library_wrapper), session_repository_(session_repository)
+  NiFakeService::NiFakeService(NiFakeLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
+      : library_(library), session_repository_(session_repository)
   {
   }
 
@@ -26,633 +24,1093 @@ namespace grpc {
   {
   }
 
+  void NiFakeService::Copy(const CustomStruct& input, grpc::nifake::FakeCustomStruct* output) 
+  {
+    output->set_struct_int(input.structInt);
+    output->set_struct_double(input.structDouble);
+  }
+
+  void NiFakeService::Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<grpc::nifake::FakeCustomStruct>* output) 
+  {
+    for (auto item : input) {
+      auto message = new grpc::nifake::FakeCustomStruct();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_Abort");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    auto status = library_wrapper_->Abort(vi);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 count = request->delays().size();
+      auto delays = const_cast<ViReal64*>(request->delays().data());
+      auto status = library_->AcceptListOfDurationsInSeconds(vi, count, delays);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::BoolArrayOutputFunction(::grpc::ServerContext* context, const BoolArrayOutputFunctionRequest* request, BoolArrayOutputFunctionResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::DoubleAllTheNums(::grpc::ServerContext* context, const DoubleAllTheNumsRequest* request, DoubleAllTheNumsResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_count = request->numbers().size();
+      auto numbers = const_cast<ViReal64*>(request->numbers().data());
+      auto status = library_->DoubleAllTheNums(vi, number_count, numbers);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::EnumArrayOutputFunction(::grpc::ServerContext* context, const EnumArrayOutputFunctionRequest* request, EnumArrayOutputFunctionResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::EnumInputFunctionWithDefaults(::grpc::ServerContext* context, const EnumInputFunctionWithDefaultsRequest* request, EnumInputFunctionWithDefaultsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_EnumInputFunctionWithDefaults");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt16 a_turtle;
+      switch (request->a_turtle_enum_case()) {
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtle:
+          a_turtle = (ViInt16)request->a_turtle();
+          break;
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtleRaw:
+          a_turtle = (ViInt16)request->a_turtle_raw();
+          break;
+        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::A_TURTLE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_turtle was not specified or out of range");
+          break;
+      }
 
-    ViSession vi = request->vi();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_turtle = static_cast<ViInt16>((ViInt16)request->a_turtle());
-    ViInt16 a_turtle;
-    auto status = library_wrapper_->EnumInputFunctionWithDefaults(vi, a_turtle);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+      auto status = library_->EnumInputFunctionWithDefaults(vi, a_turtle);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 size_in_bytes = status;
+
+      std::string configuration(size_in_bytes, '\0');
+      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_configuration(configuration);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::FetchWaveform(::grpc::ServerContext* context, const FetchWaveformRequest* request, FetchWaveformResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_samples = request->number_of_samples();
+      response->mutable_waveform_data()->Resize(number_of_samples, 0);
+      ViReal64* waveform_data = response->mutable_waveform_data()->mutable_data();
+      ViInt32 actual_number_of_samples {};
+      auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data, &actual_number_of_samples);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_actual_number_of_samples(actual_number_of_samples);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetABoolean(::grpc::ServerContext* context, const GetABooleanRequest* request, GetABooleanResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetABoolean");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViBoolean a_boolean;
-    auto status = library_wrapper_->GetABoolean(vi, &a_boolean);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_a_boolean(a_boolean);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean a_boolean {};
+      auto status = library_->GetABoolean(vi, &a_boolean);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_boolean(a_boolean);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetANumber(::grpc::ServerContext* context, const GetANumberRequest* request, GetANumberResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetANumber");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViInt16 a_number;
-    auto status = library_wrapper_->GetANumber(vi, &a_number);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_a_number(a_number);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt16 a_number {};
+      auto status = library_->GetANumber(vi, &a_number);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_number(a_number);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAStringOfFixedMaximumSize(::grpc::ServerContext* context, const GetAStringOfFixedMaximumSizeRequest* request, GetAStringOfFixedMaximumSizeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetAStringUsingPythonCode(::grpc::ServerContext* context, const GetAStringUsingPythonCodeRequest* request, GetAStringUsingPythonCodeResponse* response)
-  {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      std::string a_string(256, '\0');
+      auto status = library_->GetAStringOfFixedMaximumSize(vi, (ViChar*)a_string.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_string(a_string);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string a_string(buffer_size, '\0');
+      status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_string(a_string);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetArrayForPythonCodeCustomType(::grpc::ServerContext* context, const GetArrayForPythonCodeCustomTypeRequest* request, GetArrayForPythonCodeCustomTypeResponse* response)
-  {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetArrayForPythonCodeDouble(::grpc::ServerContext* context, const GetArrayForPythonCodeDoubleRequest* request, GetArrayForPythonCodeDoubleResponse* response)
-  {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetArraySizeForPythonCode(::grpc::ServerContext* context, const GetArraySizeForPythonCodeRequest* request, GetArraySizeForPythonCodeResponse* response)
-  {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetArraySizeForPythonCode");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViInt32 size_out;
-    auto status = library_wrapper_->GetArraySizeForPythonCode(vi, &size_out);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_size_out(size_out);
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 size_out {};
+      auto status = library_->GetArraySizeForCustomCode(vi, &size_out);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_size_out(size_out);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetArrayUsingIviDance(::grpc::ServerContext* context, const GetArrayUsingIviDanceRequest* request, GetArrayUsingIviDanceResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->GetArrayUsingIviDance(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 array_size = status;
+
+      response->mutable_array_out()->Resize(array_size, 0);
+      ViReal64* array_out = response->mutable_array_out()->mutable_data();
+      status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetAttributeViBoolean");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViConstString channel_name = request->channel_name().c_str();
-    ViAttr attribute_id = request->attribute_id();
-    ViBoolean attribute_value;
-    auto status = library_wrapper_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_attribute_value(attribute_value);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViBoolean attribute_value {};
+      auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetAttributeViInt32");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViConstString channel_name = request->channel_name().c_str();
-    ViAttr attribute_id = request->attribute_id();
-    ViInt32 attribute_value;
-    auto status = library_wrapper_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_attribute_value(attribute_value);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViInt32 attribute_value {};
+      auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetAttributeViInt64");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViConstString channel_name = request->channel_name().c_str();
-    ViAttr attribute_id = request->attribute_id();
-    ViInt64 attribute_value;
-    auto status = library_wrapper_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_attribute_value(attribute_value);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViInt64 attribute_value {};
+      auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetAttributeViReal64");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViConstString channel_name = request->channel_name().c_str();
-    ViAttr attribute_id = request->attribute_id();
-    ViReal64 attribute_value;
-    auto status = library_wrapper_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_attribute_value(attribute_value);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViReal64 attribute_value {};
+      auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+
+      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string attribute_value(buffer_size, '\0');
+      status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCalDateAndTime(::grpc::ServerContext* context, const GetCalDateAndTimeRequest* request, GetCalDateAndTimeResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetCalDateAndTime");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViInt32 cal_type = request->cal_type();
-    ViInt32 month;
-    ViInt32 day;
-    ViInt32 year;
-    ViInt32 hour;
-    ViInt32 minute;
-    auto status = library_wrapper_->GetCalDateAndTime(vi, cal_type, &month, &day, &year, &hour, &minute);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_month(month);
-      response->set_day(day);
-      response->set_year(year);
-      response->set_hour(hour);
-      response->set_minute(minute);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 cal_type = request->cal_type();
+      ViInt32 month {};
+      ViInt32 day {};
+      ViInt32 year {};
+      ViInt32 hour {};
+      ViInt32 minute {};
+      auto status = library_->GetCalDateAndTime(vi, cal_type, &month, &day, &year, &hour, &minute);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_month(month);
+        response->set_day(day);
+        response->set_year(year);
+        response->set_hour(hour);
+        response->set_minute(minute);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCalInterval(::grpc::ServerContext* context, const GetCalIntervalRequest* request, GetCalIntervalResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetCalInterval");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViInt32 months;
-    auto status = library_wrapper_->GetCalInterval(vi, &months);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_months(months);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 months {};
+      auto status = library_->GetCalInterval(vi, &months);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_months(months);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetCustomType(::grpc::ServerContext* context, const GetCustomTypeRequest* request, GetCustomTypeResponse* response)
-  {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCustomTypeArray(::grpc::ServerContext* context, const GetCustomTypeArrayRequest* request, GetCustomTypeArrayResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_elements = request->number_of_elements();
+      std::vector<CustomStruct> cs(number_of_elements, CustomStruct());
+      auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
+      response->set_status(status);
+      if (status == 0) {
+        Copy(cs, response->mutable_cs());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetEnumValue(::grpc::ServerContext* context, const GetEnumValueRequest* request, GetEnumValueResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_GetEnumValue");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViInt32 a_quantity;
-    ViInt16 a_turtle_ctype;
-    auto status = library_wrapper_->GetEnumValue(vi, &a_quantity, &a_turtle_ctype);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_a_quantity(a_quantity);
-      response->set_a_turtle(static_cast<ni::fake::grpc::Turtle>(a_turtle_ctype));
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 a_quantity {};
+      ViInt16 a_turtle {};
+      auto status = library_->GetEnumValue(vi, &a_quantity, &a_turtle);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_quantity(a_quantity);
+        response->set_a_turtle(static_cast<grpc::nifake::Turtle>(a_turtle));
+        response->set_a_turtle_raw(a_turtle);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 size_in_bytes = request->configuration().size();
+      ViInt8* configuration = (ViInt8*)request->configuration().c_str();
+      auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_InitWithOptions");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
+    try {
+      ViString resource_name = (ViString)request->resource_name().c_str();
+      ViBoolean id_query = request->id_query();
+      ViBoolean reset_device = request->reset_device();
+      ViConstString option_string = request->option_string().c_str();
 
-    ViString resource_name = (ViString)request->resource_name().c_str();
-    ViBoolean id_query = request->id_query();
-    ViBoolean reset_device = request->reset_device();
-    ViConstString option_string = request->option_string().c_str();
-    ViSession vi;
-    auto status = library_wrapper_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_vi(vi);
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_vi()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::MultipleArrayTypes(::grpc::ServerContext* context, const MultipleArrayTypesRequest* request, MultipleArrayTypesResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::MultipleArraysSameSize(::grpc::ServerContext* context, const MultipleArraysSameSizeRequest* request, MultipleArraysSameSizeResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto values1 = const_cast<ViReal64*>(request->values1().data());
+      auto values2 = const_cast<ViReal64*>(request->values2().data());
+      auto values3 = const_cast<ViReal64*>(request->values3().data());
+      auto values4 = const_cast<ViReal64*>(request->values4().data());
+      ViInt32 size = request->values4().size();
+      auto status = library_->MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::OneInputFunction(::grpc::ServerContext* context, const OneInputFunctionRequest* request, OneInputFunctionResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_OneInputFunction");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViInt32 a_number = request->a_number();
-    auto status = library_wrapper_->OneInputFunction(vi, a_number);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 a_number = request->a_number();
+      auto status = library_->OneInputFunction(vi, a_number);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ParametersAreMultipleTypes(::grpc::ServerContext* context, const ParametersAreMultipleTypesRequest* request, ParametersAreMultipleTypesResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_ParametersAreMultipleTypes");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean a_boolean = request->a_boolean();
+      ViInt32 an_int32 = request->an_int32();
+      ViInt64 an_int64 = request->an_int64();
+      ViInt16 an_int_enum;
+      switch (request->an_int_enum_enum_case()) {
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnum:
+          an_int_enum = (ViInt16)request->an_int_enum();
+          break;
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnumRaw:
+          an_int_enum = (ViInt16)request->an_int_enum_raw();
+          break;
+        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::AN_INT_ENUM_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for an_int_enum was not specified or out of range");
+          break;
+      }
 
-    ViSession vi = request->vi();
-    ViBoolean a_boolean = request->a_boolean();
-    ViInt32 an_int32 = request->an_int32();
-    ViInt64 an_int64 = request->an_int64();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto an_int_enum = static_cast<ViInt16>((ViInt16)request->an_int_enum());
-    ViInt16 an_int_enum;
-    ViReal64 a_float = request->a_float();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_float_enum = static_cast<ViReal64>((ViReal64)request->a_float_enum());
-    ViReal64 a_float_enum;
-    ViInt32 string_size = request->string_size();
-    ViConstString a_string = request->a_string().c_str();
-    auto status = library_wrapper_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+      ViReal64 a_float = request->a_float();
+      ViReal64 a_float_enum;
+      switch (request->a_float_enum_enum_case()) {
+        case ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::kAFloatEnum: {
+          auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
+          if (a_float_enum_imap_it == floatenum_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+          }
+          a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
+          break;
+        }
+        case ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::kAFloatEnumRaw: {
+          a_float_enum = static_cast<ViReal64>(request->a_float_enum_raw());
+          break;
+        } 
+        case ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::A_FLOAT_ENUM_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 string_size = request->a_string().size();
+      ViConstString a_string = request->a_string().c_str();
+      auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::PoorlyNamedSimpleFunction(::grpc::ServerContext* context, const PoorlyNamedSimpleFunctionRequest* request, PoorlyNamedSimpleFunctionResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_PoorlyNamedSimpleFunction");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    auto status = library_wrapper_->PoorlyNamedSimpleFunction(vi);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->PoorlyNamedSimpleFunction(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_Read");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViReal64 maximum_time = request->maximum_time();
-    ViReal64 reading;
-    auto status = library_wrapper_->Read(vi, maximum_time, &reading);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_reading(reading);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 maximum_time = request->maximum_time();
+      ViReal64 reading {};
+      auto status = library_->Read(vi, maximum_time, &reading);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_reading(reading);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReadFromChannel(::grpc::ServerContext* context, const ReadFromChannelRequest* request, ReadFromChannelResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_ReadFromChannel");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViConstString channel_name = request->channel_name().c_str();
-    ViInt32 maximum_time = request->maximum_time();
-    ViReal64 reading;
-    auto status = library_wrapper_->ReadFromChannel(vi, channel_name, maximum_time, &reading);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_reading(reading);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViInt32 maximum_time = request->maximum_time();
+      ViReal64 reading {};
+      auto status = library_->ReadFromChannel(vi, channel_name, maximum_time, &reading);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_reading(reading);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReturnANumberAndAString(::grpc::ServerContext* context, const ReturnANumberAndAStringRequest* request, ReturnANumberAndAStringResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt16 a_number {};
+      std::string a_string(256, '\0');
+      auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_number(a_number);
+        response->set_a_string(a_string);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReturnDurationInSeconds(::grpc::ServerContext* context, const ReturnDurationInSecondsRequest* request, ReturnDurationInSecondsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_ReturnDurationInSeconds");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViReal64 timedelta;
-    auto status = library_wrapper_->ReturnDurationInSeconds(vi, &timedelta);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_timedelta(timedelta);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 timedelta {};
+      auto status = library_->ReturnDurationInSeconds(vi, &timedelta);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_timedelta(timedelta);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReturnListOfDurationsInSeconds(::grpc::ServerContext* context, const ReturnListOfDurationsInSecondsRequest* request, ReturnListOfDurationsInSecondsResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_elements = request->number_of_elements();
+      response->mutable_timedeltas()->Resize(number_of_elements, 0);
+      ViReal64* timedeltas = response->mutable_timedeltas()->mutable_data();
+      auto status = library_->ReturnListOfDurationsInSeconds(vi, number_of_elements, timedeltas);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReturnMultipleTypes(::grpc::ServerContext* context, const ReturnMultipleTypesRequest* request, ReturnMultipleTypesResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-  }
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 array_size = request->array_size();
 
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::SetCustomType(::grpc::ServerContext* context, const SetCustomTypeRequest* request, SetCustomTypeResponse* response)
-  {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-  }
+      auto status = library_->ReturnMultipleTypes(vi, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 string_size = status;
 
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::SetCustomTypeArray(::grpc::ServerContext* context, const SetCustomTypeArrayRequest* request, SetCustomTypeArrayResponse* response)
-  {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      ViBoolean a_boolean {};
+      ViInt32 an_int32 {};
+      ViInt64 an_int64 {};
+      ViInt16 an_int_enum {};
+      ViReal64 a_float {};
+      ViReal64 a_float_enum {};
+      response->mutable_an_array()->Resize(array_size, 0);
+      ViReal64* an_array = response->mutable_an_array()->mutable_data();
+      std::string a_string(string_size, '\0');
+      status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_a_boolean(a_boolean);
+        response->set_an_int32(an_int32);
+        response->set_an_int64(an_int64);
+        response->set_an_int_enum(static_cast<grpc::nifake::Turtle>(an_int_enum));
+        response->set_an_int_enum_raw(an_int_enum);
+        response->set_a_float(a_float);
+        auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
+        if(a_float_enum_omap_it != floatenum_output_map_.end()) {
+          response->set_a_float_enum(static_cast<grpc::nifake::FloatEnum>(a_float_enum_omap_it->second));
+        }
+        response->set_a_float_enum_raw(a_float_enum);
+        response->set_a_string(a_string);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::StringValuedEnumInputFunctionWithDefaults(::grpc::ServerContext* context, const StringValuedEnumInputFunctionWithDefaultsRequest* request, StringValuedEnumInputFunctionWithDefaultsResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_StringValuedEnumInputFunctionWithDefaults");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString a_mobile_o_s_name;
+      switch (request->a_mobile_o_s_name_enum_case()) {
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::kAMobileOSName: {
+          auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
+          if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
+          }
+          a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+          break;
+        }
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::kAMobileOSNameRaw: {
+          a_mobile_o_s_name = static_cast<ViConstString>((request->a_mobile_o_s_name_raw()).c_str());
+          break;
+        } 
+        case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::A_MOBILE_O_S_NAME_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range");
+          break;
+        }
+      }
 
-    ViSession vi = request->vi();
-    // TODO: The below would work with integer enums but we need to properly convert non-integer enums to their corresponding values of the correct type.
-    // auto a_mobile_o_s_name = static_cast<ViConstString>(request->a_mobile_o_s_name().c_str());
-    ViConstString a_mobile_o_s_name;
-    auto status = library_wrapper_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_o_s_name);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+      auto status = library_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_o_s_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::TwoInputFunction(::grpc::ServerContext* context, const TwoInputFunctionRequest* request, TwoInputFunctionResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_TwoInputFunction");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViReal64 a_number = request->a_number();
-    ViString a_string = (ViString)request->a_string().c_str();
-    auto status = library_wrapper_->TwoInputFunction(vi, a_number, a_string);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 a_number = request->a_number();
+      ViString a_string = (ViString)request->a_string().c_str();
+      auto status = library_->TwoInputFunction(vi, a_number, a_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Use64BitNumber(::grpc::ServerContext* context, const Use64BitNumberRequest* request, Use64BitNumberResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_Use64BitNumber");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    ViInt64 input = request->input();
-    ViInt64 output;
-    auto status = library_wrapper_->Use64BitNumber(vi, input, &output);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_output(output);
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt64 input = request->input();
+      ViInt64 output {};
+      auto status = library_->Use64BitNumber(vi, input, &output);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_output(output);
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response)
   {
-    return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_samples = request->waveform().size();
+      auto waveform = const_cast<ViReal64*>(request->waveform().data());
+      auto status = library_->WriteWaveform(vi, number_of_samples, waveform);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
-    ::grpc::Status libraryStatus = library_wrapper_->check_function_exists("niFake_close");
-    if (!libraryStatus.ok()) {
-      return libraryStatus;
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    ViSession vi = request->vi();
-    auto status = library_wrapper_->close(vi);
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      session_repository_->remove_session(vi);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
+} // namespace nifake
 } // namespace grpc
-} // namespace fake
-} // namespace ni
+

@@ -3,14 +3,8 @@
 This repo contains necessary C++ code and .proto files needed to build a gRPC server for NI hardware driver APIs.
 
 ## Build Status
-![Linux Build](https://github.com/ni/ni-driver-apis-grpc/workflows/Build%20Matrix/badge.svg)
-![NI Linux Real-Time Build](https://github.com/ni/ni-driver-apis-grpc/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
-
-## Note: This project is not yet complete
-* The gRPC server is not yet complete.
-* Testing on Linux not yet implemented.
-* SSL/TLS support not yet implemented.
-* Support for specific NI driver APIs not yet added.
+![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
+![NI Linux Real-Time Build](https://github.com/ni/grpc-device/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
 
 ## Building on Windows 64-bit
 
@@ -29,8 +23,8 @@ Launch "x64 Native Tools Command Prompt for Visual Studio"
 Clone the repo and update submodules, this will pull the gRPC components and all dependencies
 
 ```
-> git clone https://github.com/ni/ni-driver-apis-grpc.git
-> cd ni-driver-apis-grpc
+> git clone https://github.com/ni/grpc-device.git
+> cd grpc-device
 > git submodule update --init --recursive
 ```
 
@@ -38,7 +32,7 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 > mkdir build
 > cd build
-> cmake ..
+> cmake .. -A x64
 > cmake --build .
 ```
 
@@ -46,7 +40,7 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 > mkdir build
 > cd build
-> cmake ..
+> cmake .. -A x64
 > cmake --build . --config Release
 ```
 
@@ -86,8 +80,8 @@ If this is required, make sure to install openssl-dev as well.
 Clone the repo and update submodules, this will pull the gRPC components and all dependencies
 
 ```
-> git clone https://github.com/ni/ni-driver-apis-grpc.git ni-driver-apis-grpc
-> cd ni-driver-apis-grpc
+> git clone https://github.com/ni/grpc-device.git grpc-device
+> cd grpc-device
 > git submodule update --init --recursive
 ```
 
@@ -126,7 +120,62 @@ Setting | Google | Ours | Justification
 
 ## Running the gRPC Server
 
-Coming Soon
+The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support).
+
+There are two ways to start the server:
+
+1. Launch the server application without specifying a path to a configuration file (use the default configuration file):
+
+    **Windows**
+    
+    `.\ni_grpc_device_server.exe`
+
+    **Linux**
+    
+    `./ni_grpc_device_server`
+
+2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
+
+    **Windows**
+    
+    `.\ni_grpc_device_server.exe C:\path\to\config\file\server_config.json`
+
+    **Linux**
+    
+    `./ni_grpc_device_server /path/to/config/file/server_config.json`
+
+
+If the server starts successfully on the port specified in the configuration file, then it will print a message to the terminal output:
+
+```
+Server listening on port 12345. Security is configured with insecure credentials.
+```
+
+**Note:** If port `0` is specified then the server will automatically select a port from the dynamic range. The port used will be reflected in the startup message.
+
+If the server fails to start (i.e. a port is not specified in the configuration file) then an error message is printed in the terminal and the application will exit.
+
+### Common Server Startup Errors
+
+1. The datatypes of the values in the configuration file don't match the expected datatypes. For example, the port must be an integer type and not a string. The error message will provide specific details on the type requirements.
+2. The configuration file can't be found at the provided location. This error can also occur if the user lacks read permissions for the file.
+3. The server configuration file is malformed and is not in proper JSON format. Refer to the JSON configuration file in this readme for an example of the expected format.
+4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
+5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
+6. Security configuration errors. See [Server SSL TLS Support wiki page](https://github.com/ni/grpc-device/wiki/Server-SSL-TLS-Support).
+
+### Default Configuration File (insecure):
+
+```json
+{
+   "port": 31763,
+   "security" : {
+      "server_cert": "",
+      "server_key": "",
+      "root_cert": ""
+   }
+}
+```
 
 ## Creating a gRPC Client
 
@@ -134,4 +183,4 @@ Coming Soon
 
 ## SSL/TLS Support
 
-Coming Soon
+The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server SSL TLS Support wiki page](https://github.com/ni/grpc-device/wiki/Server-SSL-TLS-Support).

@@ -1,9 +1,9 @@
 import common_helpers
 
 def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
-  add_repeated = is_array;
+  add_repeated = is_array
   if 'ViSession' in type:
-    type = 'fixed32'
+    type = 'grpc.nidevice.Session'
   if 'ViBoolean' in type:
     type = 'bool'
   if 'ViReal64' in type:
@@ -48,8 +48,8 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     type = 'fixed64'
   if 'int' == type:
     type = 'sint32'
-  if type.startswith('struct'):
-    type = 'fixed64'
+  if "[]" in type:
+    type = type.replace("[]","")
 
   return "repeated " + type if add_repeated else type
 
@@ -64,8 +64,14 @@ def determine_function_parameter_type(parameter, driver_name_pascal):
   return parameter_type
 
 def determine_allow_alias(enums):
-  for values in enums:
-    for value in enums[values]:
-      if value["value"] == 0:
-        return True
+  if enums.get("generate-mappings", False):
+    return False
+  for value in enums["values"]:
+    if value["value"] == 0:
+      return True
   return False
+
+def filter_parameters_for_grpc_fields(parameters):
+  """Filter out the parameters that shouldn't be represented by a field on a grpc message.
+     For example, get rid of any parameters whose values should be deteremined from another parameter."""
+  return [p for p in parameters if p.get('include_in_proto', True)]

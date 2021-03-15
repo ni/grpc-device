@@ -1,13 +1,16 @@
 <%
 import common_helpers
 import handler_helpers
-
+attributes = data['attributes']
+enums = data['enums']
 config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-driver_namespaces = handler_helpers.get_namespace_segments(config)
 include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
+namespace_prefix = "grpc::" + config["namespace_component"] + "::"
+if len(config["custom_types"]) > 0:
+  custom_types = config["custom_types"]
 %>\
 
 //---------------------------------------------------------------------
@@ -21,36 +24,53 @@ include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H"
 
 ## Include section
 #include <${config["module_name"]}.grpc.pb.h>
+#include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
-#include <condition_variable>
-#include "${config["module_name"]}_library_wrapper.h"
-#include "core_server/hardware/grpc/internal/shared_library.h"
-#include "core_server/hardware/grpc/internal/session_repository.h"
+#include <map>
+#include <server/session_repository.h>
+#include <server/shared_library.h>
 
-% for namespace in driver_namespaces:
-namespace ${namespace} {
-% endfor
+#include "${config["module_name"]}_library_interface.h"
+
+namespace grpc {
+namespace ${config["namespace_component"]} {
 
 class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
 public:
-  ${service_class_prefix}Service(${service_class_prefix}LibraryWrapper* library_wrapper, ni::hardware::grpc::internal::SessionRepository* session_repository);
+  ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository);
   virtual ~${service_class_prefix}Service();
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
-  method_name = common_helpers.snake_to_camel(function)
+  method_name = common_helpers.snake_to_pascal(function)
 %>\
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
 % endfor
-
 private:
-  ${service_class_prefix}LibraryWrapper* library_wrapper_;
-  ni::hardware::grpc::internal::SessionRepository* session_repository_;
+  ${service_class_prefix}LibraryInterface* library_;
+  grpc::nidevice::SessionRepository* session_repository_;
+%if 'custom_types' in locals():
+%for custom_type in custom_types:
+  void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
+  void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
+%endfor
+%endif
+<%
+  used_enums = common_helpers.get_used_enums(functions, attributes)
+%>\
+% for enum in enums:
+% if enum in used_enums and "generate-mappings" in enums[enum] and enums[enum]["generate-mappings"] == True:
+<%
+  enum_value = handler_helpers.python_to_c(enums[enum])
+%>\
+  std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${handler_helpers.get_input_lookup_values(enums[enum])} };
+  std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${handler_helpers.get_output_lookup_values(enums[enum])} };
+%endif
+%endfor
 };
 
-% for namespace in reversed(driver_namespaces):
-} // namespace ${namespace}
-% endfor
+} // namespace ${config["namespace_component"]}
+} // namespace grpc
 #endif  // ${include_guard_name}
