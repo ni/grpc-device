@@ -44,4 +44,3 @@ try :
 except grpc.RpcError as e:
     errorMessage = e.details()
     print(errorMessage)
- 
