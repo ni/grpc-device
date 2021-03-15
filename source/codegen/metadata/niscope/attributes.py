@@ -1599,6 +1599,18 @@ attributes = {
         'resettable': True,
         'type': 'ViReal64'
     },
+    1150308: {
+        'access': 'read-write',
+        'channel_based': True,
+        'codegen_method': 'public',
+        'documentation': {
+            'description': '\nApplies offset to the specified channel in hardware before any onboard processing.\nValid Values:\n-1.5 to 1.5 V\n'
+        },
+        'lv_property': 'Vertical:Advanced:Digital Offset',
+        'name': 'DIGITAL_OFFSET',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
     1150309: {
         'access': 'read-write',
         'channel_based': False,
