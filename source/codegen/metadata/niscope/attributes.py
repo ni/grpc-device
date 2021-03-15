@@ -1948,6 +1948,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Synchronization:5 Volt Power:Output Terminal',
         'name': '5V_OUT_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
@@ -1956,6 +1957,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:User Options:Cache',
         'name': 'CACHE',
         'resettable': True,
         'type': 'ViBoolean'
@@ -1964,6 +1966,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Clocking:Clock Sync Pulse Source',
         'name': 'CLOCK_SYNC_PULSE_SOURCE',
         'resettable': True,
         'type': 'ViString'
@@ -1972,6 +1975,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:DDC:Center Frequency',
         'name': 'DDC_CENTER_FREQUENCY',
         'resettable': True,
         'type': 'ViReal64'
@@ -1981,6 +1985,7 @@ attributes = {
         'channel_based': False,
         'codegen_method': 'public',
         'enum': 'DataProcessingMode',
+        'lv_property': 'Onboard Signal Processing:DDC:Data Processing Mode',
         'name': 'DDC_DATA_PROCESSING_MODE',
         'resettable': True,
         'type': 'ViInt32'
@@ -1989,6 +1994,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:DDC:DDC Enabled',
         'name': 'DDC_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
@@ -1997,6 +2003,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:DDC:Frequency Translation Enabled',
         'name': 'DDC_FREQUENCY_TRANSLATION_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2005,6 +2012,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:DDC:Signal Adjustments:Frequency Translation:Frequency Translation Phase I',
         'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_I',
         'resettable': True,
         'type': 'ViReal64'
@@ -2013,6 +2021,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:DDC:Signal Adjustments:Frequency Translation:Frequency Translation Phase Q',
         'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_Q',
         'resettable': True,
         'type': 'ViReal64'
@@ -2021,6 +2030,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:DDC:Q Source',
         'name': 'DDC_Q_SOURCE',
         'resettable': True,
         'type': 'ViString'
@@ -2029,6 +2039,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Device Specific:IF Digitizer (5620 and 5621):Advanced:Device Number',
         'name': 'DEVICE_NUMBER',
         'resettable': False,
         'type': 'ViInt32'
@@ -2037,6 +2048,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Vertical:Advanced:Digital Gain',
         'name': 'DIGITAL_GAIN',
         'resettable': True,
         'type': 'ViReal64'
@@ -2045,6 +2057,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': True,
         'codegen_method': 'public',
+        'lv_property': 'Vertical:Advanced:Dither Enabled',
         'name': 'DITHER_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2061,6 +2074,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Clocking:Exported Sample Clock Output Terminal',
         'name': 'EXPORTED_SAMPLE_CLOCK_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
@@ -2069,6 +2083,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Device Specific:IF Digitizer (5620 and 5621):Advanced:Fetch Interleaved Data',
         'name': 'FETCH_INTERLEAVED_DATA',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2077,6 +2092,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:DDC:Fetch Interleaved IQ Data',
         'name': 'FETCH_INTERLEAVED_IQ_DATA',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2085,6 +2101,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Onboard Signal Processing:Fractional Resample:Fractional Resample Enabled',
         'name': 'FRACTIONAL_RESAMPLE_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2093,6 +2110,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:Driver Capabilities:Class Group Capabilities',
         'name': 'GROUP_CAPABILITIES',
         'resettable': False,
         'type': 'ViString'
@@ -2101,6 +2119,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:User Options:Interchange Check',
         'name': 'INTERCHANGE_CHECK',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2109,6 +2128,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Clocking:Advanced:Oscillator Phase DAC Value',
         'name': 'OSCILLATOR_PHASE_DAC_VALUE',
         'resettable': True,
         'type': 'ViInt32'
@@ -2118,6 +2138,7 @@ attributes = {
         'channel_based': False,
         'codegen_method': 'public',
         'enum': 'OverflowErrorReporting',
+        'lv_property': 'Onboard Signal Processing:OSP Overflow Error Reporting',
         'name': 'OVERFLOW_ERROR_REPORTING',
         'resettable': True,
         'type': 'ViInt32'
@@ -2126,6 +2147,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Channels to Stream',
         'name': 'P2P_CHANNELS_TO_STREAM',
         'resettable': True,
         'type': 'ViString'
@@ -2134,6 +2156,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Data Transfer Permission Address',
         'name': 'P2P_DATA_TRANS_PERMISSION_ADDR',
         'resettable': False,
         'type': 'ViInt64'
@@ -2143,6 +2166,7 @@ attributes = {
         'channel_based': False,
         'codegen_method': 'public',
         'enum': 'AddressType',
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Data Transfer Permission Address Type',
         'name': 'P2P_DATA_TRANS_PERMISSION_ADDR_TYPE',
         'resettable': True,
         'type': 'ViInt32'
@@ -2151,6 +2175,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Address',
         'name': 'P2P_DESTINATION_WINDOW_ADDR',
         'resettable': True,
         'type': 'ViInt64'
@@ -2160,6 +2185,7 @@ attributes = {
         'channel_based': False,
         'codegen_method': 'public',
         'enum': 'AddressType',
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Address Type',
         'name': 'P2P_DESTINATION_WINDOW_ADDR_TYPE',
         'resettable': True,
         'type': 'ViInt32'
@@ -2168,6 +2194,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Manual:Configuration:Destination Window Size',
         'name': 'P2P_DESTINATION_WINDOW_SIZE',
         'resettable': True,
         'type': 'ViInt64'
@@ -2176,6 +2203,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:P2P Enabled',
         'name': 'P2P_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2184,6 +2212,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Endpoint Overflow',
         'name': 'P2P_ENDPOINT_OVERFLOW',
         'resettable': False,
         'type': 'ViBoolean'
@@ -2192,6 +2221,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Endpoint Size',
         'name': 'P2P_ENDPOINT_SIZE',
         'resettable': False,
         'type': 'ViInt32'
@@ -2200,6 +2230,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:FIFO Endpoint Count',
         'name': 'P2P_FIFO_ENDPOINT_COUNT',
         'resettable': False,
         'type': 'ViInt32'
@@ -2208,6 +2239,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Manual:Manual Configuration Enabled',
         'name': 'P2P_MANUAL_CONFIGURATION_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2216,6 +2248,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Most Samples Available in Endpoint',
         'name': 'P2P_MOST_SAMPLES_AVAIL_IN_ENDPOINT',
         'resettable': False,
         'type': 'ViInt32'
@@ -2225,6 +2258,7 @@ attributes = {
         'channel_based': False,
         'codegen_method': 'public',
         'enum': 'AddressType',
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Address',
         'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR',
         'resettable': True,
         'type': 'ViInt64'
@@ -2233,6 +2267,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Address Type',
         'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR_TYPE',
         'resettable': True,
         'type': 'ViInt32'
@@ -2241,6 +2276,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Message Push Value',
         'name': 'P2P_NOTIFY_MESSAGE_PUSH_VALUE',
         'resettable': True,
         'type': 'ViInt64'
@@ -2250,6 +2286,7 @@ attributes = {
         'channel_based': False,
         'codegen_method': 'public',
         'enum': 'NotificationType',
+        'lv_property': 'Peer-to-Peer:Manual:Notification:Push Message On',
         'name': 'P2P_NOTIFY_PUSH_MESSAGE_ON',
         'resettable': True,
         'type': 'ViInt32'
@@ -2258,6 +2295,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Onboard Memory Enabled',
         'name': 'P2P_ONBOARD_MEMORY_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2266,6 +2304,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Samples Available In Endpoint',
         'name': 'P2P_SAMPLES_AVAIL_IN_ENDPOINT',
         'resettable': False,
         'type': 'ViInt32'
@@ -2274,6 +2313,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Peer-to-Peer:Samples Transferred',
         'name': 'P2P_SAMPLES_TRANSFERRED',
         'resettable': False,
         'type': 'ViInt64'
@@ -2298,6 +2338,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:User Options:Query Instrument Status',
         'name': 'QUERY_INSTRUMENT_STATUS',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2306,6 +2347,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:User Options:Range Check',
         'name': 'RANGE_CHECK',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2314,6 +2356,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:User Options:Record Value Coercions',
         'name': 'RECORD_COERCIONS',
         'resettable': True,
         'type': 'ViBoolean'
@@ -2322,6 +2365,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:Driver Identification:Class Specification Major Version',
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION',
         'resettable': False,
         'type': 'ViInt32'
@@ -2330,6 +2374,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:Driver Identification:Class Specification Minor Version',
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
         'resettable': False,
         'type': 'ViInt32'
@@ -2338,6 +2383,7 @@ attributes = {
         'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
+        'lv_property': 'Inherent IVI Attributes:Driver Identification:Driver Prefix',
         'name': 'SPECIFIC_DRIVER_PREFIX',
         'resettable': False,
         'type': 'ViString'
