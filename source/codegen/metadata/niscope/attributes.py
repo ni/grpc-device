@@ -1944,396 +1944,396 @@ attributes = {
         'resettable': True,
         'type': 'ViReal64'
     },
-    1: {
+    1150129: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': '5V_OUT_OUTPUT_TERMINAL',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViString'
     },
-    2: {
+    1050004: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'CACHE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    3: {
+    1150007: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'CLOCK_SYNC_PULSE_SOURCE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViString'
     },
-    1: {
+    1150303: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DDC_CENTER_FREQUENCY',
         'resettable': True,
         'type': 'ViReal64'
     },
-    1: {
+    1150304: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'DDC_DATA_PROCESSING_MODE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1150300: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DDC_ENABLED',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
+    1150302: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DDC_FREQUENCY_TRANSLATION_ENABLED',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
+    1150305: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_I',
         'resettable': True,
         'type': 'ViReal64'
     },
-    1: {
+    1150306: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DDC_FREQUENCY_TRANSLATION_PHASE_Q',
         'resettable': True,
         'type': 'ViReal64'
     },
-    1: {
+    1150310: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DDC_Q_SOURCE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViString'
     },
-    1: {
-        'access': 'read-write',
+    1150076: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'DEVICE_NUMBER',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
+    1150307: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DIGITAL_GAIN',
         'resettable': True,
         'type': 'ViReal64'
     },
-    1: {
+    1150319: {
         'access': 'read-write',
-        'channel_based': False,
+        'channel_based': True,
         'codegen_method': 'public',
         'name': 'DITHER_ENABLED',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
-        'access': 'read-write',
+    1050007: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'DRIVER_SETUP',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViString'
     },
-    1: {
+    1150091: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'EXPORTED_SAMPLE_CLOCK_OUTPUT_TERMINAL',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViString'
     },
-    1: {
+    1150072: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'FETCH_INTERLEAVED_DATA',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
+    1150311: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'FETCH_INTERLEAVED_IQ_DATA',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
+    1150320: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'FRACTIONAL_RESAMPLE_ENABLED',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
-        'access': 'read-write',
+    1050401: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'GROUP_CAPABILITIES',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViString'
     },
-    1: {
+    1050021: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'INTERCHANGE_CHECK',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
+    1150105: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'OSCILLATOR_PHASE_DAC_VALUE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1150309: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'OVERFLOW_ERROR_REPORTING',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1150339: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_CHANNELS_TO_STREAM',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViString'
     },
-    1: {
-        'access': 'read-write',
+    1150329: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_DATA_TRANS_PERMISSION_ADDR',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt64'
     },
-    1: {
+    1150330: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_DATA_TRANS_PERMISSION_ADDR_TYPE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1150331: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_DESTINATION_WINDOW_ADDR',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt64'
     },
-    1: {
+    1150332: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_DESTINATION_WINDOW_ADDR_TYPE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1150333: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_DESTINATION_WINDOW_SIZE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt64'
     },
-    1: {
+    1150338: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_ENABLED',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
-        'access': 'read-write',
+    1150344: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_ENDPOINT_OVERFLOW',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViBoolean'
     },
-    1: {
-        'access': 'read-write',
+    1150342: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_ENDPOINT_SIZE',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
-        'access': 'read-write',
+    1150345: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_FIFO_ENDPOINT_COUNT',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
+    1150343: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_MANUAL_CONFIGURATION_ENABLED',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
-        'access': 'read-write',
+    1150341: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_MOST_SAMPLES_AVAIL_IN_ENDPOINT',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
+    1150335: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt64'
     },
-    1: {
+    1150336: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_NOTIFY_MESSAGE_PUSH_ADDR_TYPE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1150337: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_NOTIFY_MESSAGE_PUSH_VALUE',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt64'
     },
-    1: {
+    1150334: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_NOTIFY_PUSH_MESSAGE_ON',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1150354: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_ONBOARD_MEMORY_ENABLED',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
-        'access': 'read-write',
+    1150328: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_SAMPLES_AVAIL_IN_ENDPOINT',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
-        'access': 'read-write',
+    1150340: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_SAMPLES_TRANSFERRED',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt64'
     },
-    1: {
-        'access': 'read-write',
+    1150380: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_SAMPLES_TRANSFERRED_PER_RECORD',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
+    1150373: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'P2P_STREAM_RELATIVE_TO',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
-    1: {
+    1050003: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'QUERY_INSTRUMENT_STATUS',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
+    1050002: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'RANGE_CHECK',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
+    1050006: {
         'access': 'read-write',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'RECORD_COERCIONS',
         'resettable': True,
-        'type': 'ViReal64'
+        'type': 'ViBoolean'
     },
-    1: {
-        'access': 'read-write',
+    1050515: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
-        'access': 'read-write',
+    1050516: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViInt32'
     },
-    1: {
-        'access': 'read-write',
+    1050302: {
+        'access': 'read only',
         'channel_based': False,
         'codegen_method': 'public',
         'name': 'SPECIFIC_DRIVER_PREFIX',
-        'resettable': True,
-        'type': 'ViReal64'
+        'resettable': False,
+        'type': 'ViString'
     },
 }
