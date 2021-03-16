@@ -86,7 +86,7 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Respo
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
   for (auto it : response.devices()) {
-    EXPECT_THAT((std::array{grpc::nidevice::kNiVendorName, grpc::nidevice::kNationalInstrumentsVendorName}), Contains(it.vendor()));
+    EXPECT_TRUE(strcmp(it.vendor().c_str(), grpc::nidevice::kNiVendorName) == 0 || strcmp(it.vendor().c_str(), grpc::nidevice::kNationalInstrumentsVendorName));
   }
 }
 
