@@ -193,7 +193,6 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
   EXPECT_EQ(1, devices.size());
   EXPECT_EQ("", devices.Get(0).name());
   EXPECT_EQ("", devices.Get(0).model());
-  EXPECT_EQ("", devices.Get(0).vendor());
   EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
