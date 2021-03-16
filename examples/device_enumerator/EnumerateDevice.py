@@ -16,7 +16,7 @@
 #   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
 #
 import grpc
-import session_pb2 as session_type
+import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
 
 # Helper to print the devices 
