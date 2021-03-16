@@ -79,15 +79,15 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
 
 TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_ResponseOnlyContainsNIDevices)
 {
-    grpc::nidevice::EnumerateDevicesRequest request;
-    grpc::nidevice::EnumerateDevicesResponse response;
-    ::grpc::ClientContext context;
+  grpc::nidevice::EnumerateDevicesRequest request;
+  grpc::nidevice::EnumerateDevicesResponse response;
+  ::grpc::ClientContext context;
 
-    ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
+  ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
-    for (auto it : response.devices()) {
-        EXPECT_THAT((std::array{ grpc::nidevice::kNiVendorName, grpc::nidevice::kNationalInstrumentsVendorName }), Contains(it.vendor()));
-    }
+  for (auto it : response.devices()) {
+    EXPECT_THAT((std::array{grpc::nidevice::kNiVendorName, grpc::nidevice::kNationalInstrumentsVendorName}), Contains(it.vendor()));
+  }
 }
 
 }  // namespace system
