@@ -35,17 +35,17 @@ DeviceEnumerator::~DeviceEnumerator()
       if (NISysCfg_Succeeded(status = library_->CreateFilter(session, &filter))) {
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
-        library_->SetFilterProperty(filter, NISysCfgFilterPropertyServiceType, NISysCfgServiceTypeLocalSystem);
         if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeMatchValuesAny, filter, NULL, &resources_handle))) {
           while (NISysCfg_Succeeded(status) && (status = library_->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
             library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
-            if (strcmp(expert_name, kNetworkExpertName) != 0) {
+            library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, vendor);
+            bool is_provided_by_ni = strcmp(vendor, kNiVendorName) == 0 || strcmp(vendor, kNationalInstrumentsVendorName) == 0;
+            if (is_provided_by_ni && strcmp(expert_name, kNetworkExpertName) != 0) {
               DeviceProperties* properties = devices->Add();
               // Note that we don't check for status of GetResourceIndexedProperty and GetResourceProperty APIs because
               // we want to return empty string when any of the property does not exist for any resource.
               library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertUserAlias, 0, name);
               library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, model);
-              library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, vendor);
               library_->GetResourceProperty(resource, NISysCfgResourcePropertySerialNumber, serial_number);
               properties->set_name(name);
               properties->set_model(model);
