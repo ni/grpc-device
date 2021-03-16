@@ -16,13 +16,13 @@
 #   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
 #
 import grpc
-import session_pb2 as sessionType
-import session_pb2_grpc as gRPCSession
+import session_pb2 as session_type
+import session_pb2_grpc as grpc_session
 
 # Helper to print the devices 
-def print_devices() :
-    print("Devices: \n") 
-    for device in enumerate_devices_response.devices :
+def print_devices(devices) :
+    print(f"Devices: \n") 
+    for device in devices :
         print(f"{device.name}")
         print(f"    Model: {device.model}")
         print(f"    Vendor: {device.vendor}")
@@ -31,14 +31,14 @@ def print_devices() :
 # Create communication with the server using gRPC APIs
 server_address = "localhost:31763"
 channel = grpc.insecure_channel(server_address)
-server = gRPCSession.SessionUtilitiesStub(channel)
+server = grpc_session.SessionUtilitiesStub(channel)
 
 try :
     # EnumerateDevices API gives a list of devices (simulated and physical) connected to the server machine.
-    enumerate_devices_response = server.EnumerateDevices(sessionType.EnumerateDevicesRequest())
+    enumerate_devices_response = server.EnumerateDevices(session_type.EnumerateDevicesRequest())
 
     # Display devices connected to the server machine
-    print_devices()     
+    print_devices(enumerate_devices_response.devices)     
 
 # If EnumerateDevices API throws an exception, print the error message
 except grpc.RpcError as e:
