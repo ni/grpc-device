@@ -35,11 +35,6 @@ options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
 total_acquisition_time_in_seconds = 10
 sample_rate_in_hz = 1000
 
-# Or you can use real hardware
-# resource = "2529"
-# channelName="0"
-# options = ""
-
 # Create the communcation channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the niScope service
 serverAddress = "localhost:31763"
