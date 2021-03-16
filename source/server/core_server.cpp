@@ -6,6 +6,7 @@
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
 #include "session_utilities_service.h"
+#include "syscfg_library.h"
 
 static void RunServer(const std::string& config_file_path)
 {
@@ -35,7 +36,8 @@ static void RunServer(const std::string& config_file_path)
   builder.AddListeningPort(server_address, server_security_config.get_credentials(), &listeningPort);
   // Register services available on the server.
   grpc::nidevice::SessionRepository session_repository;
-  grpc::nidevice::DeviceEnumerator device_enumerator;
+  grpc::nidevice::SysCfgLibrary syscfg_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_library);
   grpc::nidevice::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
   builder.RegisterService(&core_service);
 
@@ -75,7 +77,8 @@ static void RunServer(const std::string& config_file_path)
 int main(int argc, char** argv)
 {
   if (argc > 2) {
-    std::cerr << "\nUsage: " << "ni_grpc_device_server <config-file-path>\n\n";
+    std::cerr << "\nUsage: "
+              << "ni_grpc_device_server <config-file-path>\n\n";
     exit(EXIT_FAILURE);
   }
   std::string config_file_path;

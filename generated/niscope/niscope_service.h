@@ -120,6 +120,12 @@ private:
   grpc::nidevice::SessionRepository* session_repository_;
   void Copy(const niScope_wfmInfo& input, grpc::niscope::WaveformInfo* output);
   void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<grpc::niscope::WaveformInfo>* output);
+  void Copy(const niScope_coefficientInfo& input, grpc::niscope::CoefficientInfo* output);
+  void Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<grpc::niscope::CoefficientInfo>* output);
+  void Copy(const NIComplexNumber_struct& input, grpc::niscope::NIComplexNumber* output);
+  void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<grpc::niscope::NIComplexNumber>* output);
+  void Copy(const NIComplexI16_struct& input, grpc::niscope::NIComplexInt32* output);
+  void Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<grpc::niscope::NIComplexInt32>* output);
 };
 
 } // namespace niscope

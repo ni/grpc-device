@@ -10,7 +10,7 @@ service_class_prefix = config["service_class_prefix"]
 include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 if len(config["custom_types"]) > 0:
-  custom_type = config["custom_types"][0]
+  custom_types = config["custom_types"]
 %>\
 
 //---------------------------------------------------------------------
@@ -44,16 +44,18 @@ public:
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
-  method_name = common_helpers.snake_to_camel(function)
+  method_name = common_helpers.snake_to_pascal(function)
 %>\
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
 % endfor
 private:
   ${service_class_prefix}LibraryInterface* library_;
   grpc::nidevice::SessionRepository* session_repository_;
-%if 'custom_type' in locals():
+%if 'custom_types' in locals():
+%for custom_type in custom_types:
   void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
   void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
+%endfor
 %endif
 <%
   used_enums = common_helpers.get_used_enums(functions, attributes)

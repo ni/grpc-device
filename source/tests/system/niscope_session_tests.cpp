@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <server/session_utilities_service.h>
 
 #include "niscope/niscope_library.h"
 #include "niscope/niscope_service.h"
@@ -23,11 +22,8 @@ class NiScopeSessionTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
-    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>();
-    session_utilities_service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
-    builder.RegisterService(session_utilities_service_.get());
     builder.RegisterService(niscope_service_.get());
 
     server_ = builder.BuildAndStart();
@@ -40,7 +36,6 @@ class NiScopeSessionTest : public ::testing::Test {
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
     niscope_stub_ = scope::NiScope::NewStub(channel_);
-    session_utilities_stub_ = grpc::nidevice::SessionUtilities::NewStub(channel_);
   }
 
   std::unique_ptr<scope::NiScope::Stub>& GetStub()
@@ -65,10 +60,7 @@ class NiScopeSessionTest : public ::testing::Test {
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<grpc::nidevice::SessionUtilities::Stub> session_utilities_stub_;
-  std::unique_ptr<::grpc::nidevice::SessionRepository> session_repository_;
-  std::unique_ptr<::grpc::nidevice::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<::grpc::nidevice::SessionUtilitiesService> session_utilities_service_;
+  std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;
   std::unique_ptr<::grpc::Server> server_;

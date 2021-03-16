@@ -25,6 +25,7 @@ service NiSwitch {
   rpc CheckAttributeViSession(CheckAttributeViSessionRequest) returns (CheckAttributeViSessionResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc ConfigureScanList(ConfigureScanListRequest) returns (ConfigureScanListResponse);
   rpc ConfigureScanTrigger(ConfigureScanTriggerRequest) returns (ConfigureScanTriggerResponse);
@@ -34,6 +35,8 @@ service NiSwitch {
   rpc Disconnect(DisconnectRequest) returns (DisconnectResponse);
   rpc DisconnectAll(DisconnectAllRequest) returns (DisconnectAllResponse);
   rpc DisconnectMultiple(DisconnectMultipleRequest) returns (DisconnectMultipleResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
+  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
@@ -56,11 +59,14 @@ service NiSwitch {
   rpc IsScanning(IsScanningRequest) returns (IsScanningResponse);
   rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc RelayControl(RelayControlRequest) returns (RelayControlResponse);
+  rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
+  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
   rpc RouteScanAdvancedOutput(RouteScanAdvancedOutputRequest) returns (RouteScanAdvancedOutputResponse);
   rpc RouteTriggerInput(RouteTriggerInputRequest) returns (RouteTriggerInputResponse);
   rpc Scan(ScanRequest) returns (ScanResponse);
+  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
   rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
   rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
   rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
@@ -72,27 +78,30 @@ service NiSwitch {
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitForDebounce(WaitForDebounceRequest) returns (WaitForDebounceResponse);
   rpc WaitForScanComplete(WaitForScanCompleteRequest) returns (WaitForScanCompleteResponse);
-  rpc Close(CloseRequest) returns (CloseResponse);
-  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
-  rpc Reset(ResetRequest) returns (ResetResponse);
-  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
-  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
-  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
 }
 
 enum NiSwitchAttributes {
   NISWITCH_ATTRIBUTE_UNSPECIFIED = 0;
+  NISWITCH_ATTRIBUTE_RANGE_CHECK = 1050002;
+  NISWITCH_ATTRIBUTE_QUERY_INSTRUMENT_STATUS = 1050003;
+  NISWITCH_ATTRIBUTE_CACHE = 1050004;
   NISWITCH_ATTRIBUTE_SIMULATE = 1050005;
+  NISWITCH_ATTRIBUTE_RECORD_COERCIONS = 1050006;
   NISWITCH_ATTRIBUTE_DRIVER_SETUP = 1050007;
+  NISWITCH_ATTRIBUTE_INTERCHANGE_CHECK = 1050021;
   NISWITCH_ATTRIBUTE_CHANNEL_COUNT = 1050203;
+  NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_PREFIX = 1050302;
   NISWITCH_ATTRIBUTE_IO_RESOURCE_DESCRIPTOR = 1050304;
   NISWITCH_ATTRIBUTE_LOGICAL_NAME = 1050305;
   NISWITCH_ATTRIBUTE_SUPPORTED_INSTRUMENT_MODELS = 1050327;
+  NISWITCH_ATTRIBUTE_GROUP_CAPABILITIES = 1050401;
   NISWITCH_ATTRIBUTE_INSTRUMENT_FIRMWARE_REVISION = 1050510;
   NISWITCH_ATTRIBUTE_INSTRUMENT_MANUFACTURER = 1050511;
   NISWITCH_ATTRIBUTE_INSTRUMENT_MODEL = 1050512;
   NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_VENDOR = 1050513;
   NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_DESCRIPTION = 1050514;
+  NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION = 1050515;
+  NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION = 1050516;
   NISWITCH_ATTRIBUTE_SPECIFIC_DRIVER_REVISION = 1050551;
   NISWITCH_ATTRIBUTE_IS_WAITING_FOR_TRIG = 1150004;
   NISWITCH_ATTRIBUTE_TRIGGER_INPUT_POLARITY = 1150010;
@@ -267,6 +276,13 @@ enum TriggerInputPolarity {
   TRIGGER_INPUT_POLARITY_NISWITCH_VAL_FALLING_EDGE = 1;
 }
 
+enum WireMode {
+  WIRE_MODE_UNSPECIFIED = 0;
+  WIRE_MODE_NISWITCH_VAL_1_WIRE = 1;
+  WIRE_MODE_NISWITCH_VAL_2_WIRE = 2;
+  WIRE_MODE_NISWITCH_VAL_4_WIRE = 4;
+}
+
 message AbortScanRequest {
   grpc.nidevice.Session vi = 1;
 }
@@ -284,6 +300,7 @@ message CanConnectRequest {
 message CanConnectResponse {
   int32 status = 1;
   PathCapability path_capability = 2;
+  sint32 path_capability_raw = 3;
 }
 
 message CheckAttributeViBooleanRequest {
@@ -357,6 +374,14 @@ message ClearInterchangeWarningsResponse {
   int32 status = 1;
 }
 
+message CloseRequest {
+  grpc.nidevice.Session vi = 1;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
 message CommitRequest {
   grpc.nidevice.Session vi = 1;
 }
@@ -368,7 +393,10 @@ message CommitResponse {
 message ConfigureScanListRequest {
   grpc.nidevice.Session vi = 1;
   string scanlist = 2;
-  ScanMode scan_mode = 3;
+  oneof scan_mode_enum {
+    ScanMode scan_mode = 3;
+    sint32 scan_mode_raw = 4;
+  }
 }
 
 message ConfigureScanListResponse {
@@ -378,8 +406,14 @@ message ConfigureScanListResponse {
 message ConfigureScanTriggerRequest {
   grpc.nidevice.Session vi = 1;
   double scan_delay = 2;
-  TriggerInput trigger_input = 3;
-  ScanAdvancedOutput scan_advanced_output = 4;
+  oneof trigger_input_enum {
+    TriggerInput trigger_input = 3;
+    sint32 trigger_input_raw = 4;
+  }
+  oneof scan_advanced_output_enum {
+    ScanAdvancedOutput scan_advanced_output = 5;
+    sint32 scan_advanced_output_raw = 6;
+  }
 }
 
 message ConfigureScanTriggerResponse {
@@ -438,6 +472,26 @@ message DisconnectMultipleRequest {
 
 message DisconnectMultipleResponse {
   int32 status = 1;
+}
+
+message ErrorMessageRequest {
+  grpc.nidevice.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
+message ErrorQueryRequest {
+  grpc.nidevice.Session vi = 1;
+}
+
+message ErrorQueryResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string error_message = 3;
 }
 
 message GetAttributeViBooleanRequest {
@@ -572,6 +626,7 @@ message GetRelayPositionRequest {
 message GetRelayPositionResponse {
   int32 status = 1;
   RelayPosition relay_position = 2;
+  sint32 relay_position_raw = 3;
 }
 
 message InitRequest {
@@ -658,10 +713,21 @@ message LockSessionResponse {
 message RelayControlRequest {
   grpc.nidevice.Session vi = 1;
   string relay_name = 2;
-  RelayAction relay_action = 3;
+  oneof relay_action_enum {
+    RelayAction relay_action = 3;
+    sint32 relay_action_raw = 4;
+  }
 }
 
 message RelayControlResponse {
+  int32 status = 1;
+}
+
+message ResetRequest {
+  grpc.nidevice.Session vi = 1;
+}
+
+message ResetResponse {
   int32 status = 1;
 }
 
@@ -681,11 +747,27 @@ message ResetWithDefaultsResponse {
   int32 status = 1;
 }
 
+message RevisionQueryRequest {
+  grpc.nidevice.Session vi = 1;
+}
+
+message RevisionQueryResponse {
+  int32 status = 1;
+  string instrument_driver_revision = 2;
+  string firmware_revision = 3;
+}
+
 message RouteScanAdvancedOutputRequest {
   grpc.nidevice.Session vi = 1;
-  ScanAdvancedOutput scan_advanced_output_connector = 2;
-  ScanAdvancedOutput scan_advanced_output_bus_line = 3;
-  bool invert = 4;
+  oneof scan_advanced_output_connector_enum {
+    ScanAdvancedOutput scan_advanced_output_connector = 2;
+    sint32 scan_advanced_output_connector_raw = 3;
+  }
+  oneof scan_advanced_output_bus_line_enum {
+    ScanAdvancedOutput scan_advanced_output_bus_line = 4;
+    sint32 scan_advanced_output_bus_line_raw = 5;
+  }
+  bool invert = 6;
 }
 
 message RouteScanAdvancedOutputResponse {
@@ -694,9 +776,15 @@ message RouteScanAdvancedOutputResponse {
 
 message RouteTriggerInputRequest {
   grpc.nidevice.Session vi = 1;
-  TriggerInput trigger_input_connector = 2;
-  TriggerInput trigger_input_bus_line = 3;
-  bool invert = 4;
+  oneof trigger_input_connector_enum {
+    TriggerInput trigger_input_connector = 2;
+    sint32 trigger_input_connector_raw = 3;
+  }
+  oneof trigger_input_bus_line_enum {
+    TriggerInput trigger_input_bus_line = 4;
+    sint32 trigger_input_bus_line_raw = 5;
+  }
+  bool invert = 6;
 }
 
 message RouteTriggerInputResponse {
@@ -706,11 +794,24 @@ message RouteTriggerInputResponse {
 message ScanRequest {
   grpc.nidevice.Session vi = 1;
   string scanlist = 2;
-  HandshakingInitiation initiation = 3;
+  oneof initiation_enum {
+    HandshakingInitiation initiation = 3;
+    sint32 initiation_raw = 4;
+  }
 }
 
 message ScanResponse {
   int32 status = 1;
+}
+
+message SelfTestRequest {
+  grpc.nidevice.Session vi = 1;
+}
+
+message SelfTestResponse {
+  int32 status = 1;
+  sint32 self_test_result = 2;
+  string self_test_message = 3;
 }
 
 message SendSoftwareTriggerRequest {
@@ -819,61 +920,5 @@ message WaitForScanCompleteRequest {
 
 message WaitForScanCompleteResponse {
   int32 status = 1;
-}
-
-message CloseRequest {
-  grpc.nidevice.Session vi = 1;
-}
-
-message CloseResponse {
-  int32 status = 1;
-}
-
-message ErrorMessageRequest {
-  grpc.nidevice.Session vi = 1;
-  sint32 error_code = 2;
-}
-
-message ErrorMessageResponse {
-  int32 status = 1;
-  string error_message = 2;
-}
-
-message ResetRequest {
-  grpc.nidevice.Session vi = 1;
-}
-
-message ResetResponse {
-  int32 status = 1;
-}
-
-message SelfTestRequest {
-  grpc.nidevice.Session vi = 1;
-}
-
-message SelfTestResponse {
-  int32 status = 1;
-  sint32 self_test_result = 2;
-  string self_test_message = 3;
-}
-
-message ErrorQueryRequest {
-  grpc.nidevice.Session vi = 1;
-}
-
-message ErrorQueryResponse {
-  int32 status = 1;
-  sint32 error_code = 2;
-  string error_message = 3;
-}
-
-message RevisionQueryRequest {
-  grpc.nidevice.Session vi = 1;
-}
-
-message RevisionQueryResponse {
-  int32 status = 1;
-  string instrument_driver_revision = 2;
-  string firmware_revision = 3;
 }
 

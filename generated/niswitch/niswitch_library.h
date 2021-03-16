@@ -28,6 +28,7 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   ViStatus ClearError(ViSession vi);
   ViStatus ClearInterchangeWarnings(ViSession vi);
+  ViStatus Close(ViSession vi);
   ViStatus Commit(ViSession vi);
   ViStatus ConfigureScanList(ViSession vi, ViConstString scanlist, ViInt32 scanMode);
   ViStatus ConfigureScanTrigger(ViSession vi, ViReal64 scanDelay, ViInt32 triggerInput, ViInt32 scanAdvancedOutput);
@@ -37,6 +38,8 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   ViStatus Disconnect(ViSession vi, ViConstString channel1, ViConstString channel2);
   ViStatus DisconnectAll(ViSession vi);
   ViStatus DisconnectMultiple(ViSession vi, ViConstString disconnectionList);
+  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
@@ -50,7 +53,7 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   ViStatus GetRelayCount(ViSession vi, ViConstString relayName, ViInt32* relayCount);
   ViStatus GetRelayName(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]);
   ViStatus GetRelayPosition(ViSession vi, ViConstString relayName, ViInt32* relayPosition);
-  ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   ViStatus InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitiateScan(ViSession vi);
@@ -59,11 +62,14 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   ViStatus IsScanning(ViSession vi, ViBoolean* isScanning);
   ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus RelayControl(ViSession vi, ViConstString relayName, ViInt32 relayAction);
+  ViStatus Reset(ViSession vi);
   ViStatus ResetInterchangeCheck(ViSession vi);
   ViStatus ResetWithDefaults(ViSession vi);
+  ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
   ViStatus RouteScanAdvancedOutput(ViSession vi, ViInt32 scanAdvancedOutputConnector, ViInt32 scanAdvancedOutputBusLine, ViBoolean invert);
   ViStatus RouteTriggerInput(ViSession vi, ViInt32 triggerInputConnector, ViInt32 triggerInputBusLine, ViBoolean invert);
   ViStatus Scan(ViSession vi, ViConstString scanlist, ViInt16 initiation);
+  ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
   ViStatus SendSoftwareTrigger(ViSession vi);
   ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
@@ -75,12 +81,6 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs);
   ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs);
-  ViStatus close(ViSession vi);
-  ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
-  ViStatus reset(ViSession vi);
-  ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
-  ViStatus error_query(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
-  ViStatus revision_query(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
 
  private:
   using AbortScanPtr = ViStatus (*)(ViSession vi);
@@ -92,6 +92,7 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   using CheckAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   using ClearErrorPtr = ViStatus (*)(ViSession vi);
   using ClearInterchangeWarningsPtr = ViStatus (*)(ViSession vi);
+  using ClosePtr = ViStatus (*)(ViSession vi);
   using CommitPtr = ViStatus (*)(ViSession vi);
   using ConfigureScanListPtr = ViStatus (*)(ViSession vi, ViConstString scanlist, ViInt32 scanMode);
   using ConfigureScanTriggerPtr = ViStatus (*)(ViSession vi, ViReal64 scanDelay, ViInt32 triggerInput, ViInt32 scanAdvancedOutput);
@@ -101,6 +102,8 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   using DisconnectPtr = ViStatus (*)(ViSession vi, ViConstString channel1, ViConstString channel2);
   using DisconnectAllPtr = ViStatus (*)(ViSession vi);
   using DisconnectMultiplePtr = ViStatus (*)(ViSession vi, ViConstString disconnectionList);
+  using ErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  using ErrorQueryPtr = ViStatus (*)(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
   using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
   using GetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
@@ -114,7 +117,7 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   using GetRelayCountPtr = ViStatus (*)(ViSession vi, ViConstString relayName, ViInt32* relayCount);
   using GetRelayNamePtr = ViStatus (*)(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]);
   using GetRelayPositionPtr = ViStatus (*)(ViSession vi, ViConstString relayName, ViInt32* relayPosition);
-  using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  using InitPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using InitWithOptionsPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   using InitWithTopologyPtr = ViStatus (*)(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi);
   using InitiateScanPtr = ViStatus (*)(ViSession vi);
@@ -123,11 +126,14 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   using IsScanningPtr = ViStatus (*)(ViSession vi, ViBoolean* isScanning);
   using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using RelayControlPtr = ViStatus (*)(ViSession vi, ViConstString relayName, ViInt32 relayAction);
+  using ResetPtr = ViStatus (*)(ViSession vi);
   using ResetInterchangeCheckPtr = ViStatus (*)(ViSession vi);
   using ResetWithDefaultsPtr = ViStatus (*)(ViSession vi);
+  using RevisionQueryPtr = ViStatus (*)(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
   using RouteScanAdvancedOutputPtr = ViStatus (*)(ViSession vi, ViInt32 scanAdvancedOutputConnector, ViInt32 scanAdvancedOutputBusLine, ViBoolean invert);
   using RouteTriggerInputPtr = ViStatus (*)(ViSession vi, ViInt32 triggerInputConnector, ViInt32 triggerInputBusLine, ViBoolean invert);
   using ScanPtr = ViStatus (*)(ViSession vi, ViConstString scanlist, ViInt16 initiation);
+  using SelfTestPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
   using SendSoftwareTriggerPtr = ViStatus (*)(ViSession vi);
   using SetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
@@ -139,12 +145,6 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForDebouncePtr = ViStatus (*)(ViSession vi, ViInt32 maximumTimeMs);
   using WaitForScanCompletePtr = ViStatus (*)(ViSession vi, ViInt32 maximumTimeMs);
-  using closePtr = ViStatus (*)(ViSession vi);
-  using error_messagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
-  using resetPtr = ViStatus (*)(ViSession vi);
-  using self_testPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
-  using error_queryPtr = ViStatus (*)(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
-  using revision_queryPtr = ViStatus (*)(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
 
   typedef struct FunctionPointers {
     AbortScanPtr AbortScan;
@@ -156,6 +156,7 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
     CheckAttributeViSessionPtr CheckAttributeViSession;
     ClearErrorPtr ClearError;
     ClearInterchangeWarningsPtr ClearInterchangeWarnings;
+    ClosePtr Close;
     CommitPtr Commit;
     ConfigureScanListPtr ConfigureScanList;
     ConfigureScanTriggerPtr ConfigureScanTrigger;
@@ -165,6 +166,8 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
     DisconnectPtr Disconnect;
     DisconnectAllPtr DisconnectAll;
     DisconnectMultiplePtr DisconnectMultiple;
+    ErrorMessagePtr ErrorMessage;
+    ErrorQueryPtr ErrorQuery;
     GetAttributeViBooleanPtr GetAttributeViBoolean;
     GetAttributeViInt32Ptr GetAttributeViInt32;
     GetAttributeViReal64Ptr GetAttributeViReal64;
@@ -178,7 +181,7 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
     GetRelayCountPtr GetRelayCount;
     GetRelayNamePtr GetRelayName;
     GetRelayPositionPtr GetRelayPosition;
-    initPtr init;
+    InitPtr Init;
     InitWithOptionsPtr InitWithOptions;
     InitWithTopologyPtr InitWithTopology;
     InitiateScanPtr InitiateScan;
@@ -187,11 +190,14 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
     IsScanningPtr IsScanning;
     LockSessionPtr LockSession;
     RelayControlPtr RelayControl;
+    ResetPtr Reset;
     ResetInterchangeCheckPtr ResetInterchangeCheck;
     ResetWithDefaultsPtr ResetWithDefaults;
+    RevisionQueryPtr RevisionQuery;
     RouteScanAdvancedOutputPtr RouteScanAdvancedOutput;
     RouteTriggerInputPtr RouteTriggerInput;
     ScanPtr Scan;
+    SelfTestPtr SelfTest;
     SendSoftwareTriggerPtr SendSoftwareTrigger;
     SetAttributeViBooleanPtr SetAttributeViBoolean;
     SetAttributeViInt32Ptr SetAttributeViInt32;
@@ -203,12 +209,6 @@ class NiSwitchLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
     UnlockSessionPtr UnlockSession;
     WaitForDebouncePtr WaitForDebounce;
     WaitForScanCompletePtr WaitForScanComplete;
-    closePtr close;
-    error_messagePtr error_message;
-    resetPtr reset;
-    self_testPtr self_test;
-    error_queryPtr error_query;
-    revision_queryPtr revision_query;
   } FunctionLoadStatus;
 
   grpc::nidevice::SharedLibrary shared_library_;

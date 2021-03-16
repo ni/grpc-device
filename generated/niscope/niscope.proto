@@ -110,16 +110,26 @@ service NiScope {
 
 enum NiScopeAttributes {
   NISCOPE_ATTRIBUTE_UNSPECIFIED = 0;
+  NISCOPE_ATTRIBUTE_RANGE_CHECK = 1050002;
+  NISCOPE_ATTRIBUTE_QUERY_INSTRUMENT_STATUS = 1050003;
+  NISCOPE_ATTRIBUTE_CACHE = 1050004;
   NISCOPE_ATTRIBUTE_SIMULATE = 1050005;
+  NISCOPE_ATTRIBUTE_RECORD_COERCIONS = 1050006;
+  NISCOPE_ATTRIBUTE_DRIVER_SETUP = 1050007;
+  NISCOPE_ATTRIBUTE_INTERCHANGE_CHECK = 1050021;
   NISCOPE_ATTRIBUTE_CHANNEL_COUNT = 1050203;
+  NISCOPE_ATTRIBUTE_SPECIFIC_DRIVER_PREFIX = 1050302;
   NISCOPE_ATTRIBUTE_IO_RESOURCE_DESCRIPTOR = 1050304;
   NISCOPE_ATTRIBUTE_LOGICAL_NAME = 1050305;
   NISCOPE_ATTRIBUTE_SUPPORTED_INSTRUMENT_MODELS = 1050327;
+  NISCOPE_ATTRIBUTE_GROUP_CAPABILITIES = 1050401;
   NISCOPE_ATTRIBUTE_INSTRUMENT_FIRMWARE_REVISION = 1050510;
   NISCOPE_ATTRIBUTE_INSTRUMENT_MANUFACTURER = 1050511;
   NISCOPE_ATTRIBUTE_INSTRUMENT_MODEL = 1050512;
   NISCOPE_ATTRIBUTE_SPECIFIC_DRIVER_VENDOR = 1050513;
   NISCOPE_ATTRIBUTE_SPECIFIC_DRIVER_DESCRIPTION = 1050514;
+  NISCOPE_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION = 1050515;
+  NISCOPE_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION = 1050516;
   NISCOPE_ATTRIBUTE_SPECIFIC_DRIVER_REVISION = 1050551;
   NISCOPE_ATTRIBUTE_HORZ_NUM_RECORDS = 1150001;
   NISCOPE_ATTRIBUTE_INPUT_CLOCK_SOURCE = 1150002;
@@ -127,6 +137,7 @@ enum NiScopeAttributes {
   NISCOPE_ATTRIBUTE_HORZ_ENFORCE_REALTIME = 1150004;
   NISCOPE_ATTRIBUTE_BINARY_SAMPLE_WIDTH = 1150005;
   NISCOPE_ATTRIBUTE_TRIGGER_HYSTERESIS = 1150006;
+  NISCOPE_ATTRIBUTE_CLOCK_SYNC_PULSE_SOURCE = 1150007;
   NISCOPE_ATTRIBUTE_MASTER_ENABLE = 1150008;
   NISCOPE_ATTRIBUTE_MIN_SAMPLE_RATE = 1150009;
   NISCOPE_ATTRIBUTE_TRIGGER_WINDOW_MODE = 1150012;
@@ -162,16 +173,17 @@ enum NiScopeAttributes {
   NISCOPE_ATTRIBUTE_MEAS_ARRAY_OFFSET = 1150044;
   NISCOPE_ATTRIBUTE_MEAS_PERCENTAGE_METHOD = 1150045;
   NISCOPE_ATTRIBUTE_ACQ_ARM_SOURCE = 1150053;
-  NISCOPE_ATTRIBUTE_RECORD_ARM_SOURCE = 1150065;
   NISCOPE_ATTRIBUTE_IS_PROBE_COMP_ON = 1150066;
   NISCOPE_ATTRIBUTE_USE_SPEC_INITIAL_X = 1150067;
   NISCOPE_ATTRIBUTE_ALLOW_MORE_RECORDS_THAN_MEMORY = 1150068;
   NISCOPE_ATTRIBUTE_ONBOARD_MEMORY_SIZE = 1150069;
   NISCOPE_ATTRIBUTE_RIS_NUM_AVERAGES = 1150070;
   NISCOPE_ATTRIBUTE_RIS_METHOD = 1150071;
+  NISCOPE_ATTRIBUTE_FETCH_INTERLEAVED_DATA = 1150072;
   NISCOPE_ATTRIBUTE_MAX_REAL_TIME_SAMPLING_RATE = 1150073;
   NISCOPE_ATTRIBUTE_MAX_RIS_RATE = 1150074;
   NISCOPE_ATTRIBUTE_TRIGGER_IMPEDANCE = 1150075;
+  NISCOPE_ATTRIBUTE_DEVICE_NUMBER = 1150076;
   NISCOPE_ATTRIBUTE_FETCH_RELATIVE_TO = 1150077;
   NISCOPE_ATTRIBUTE_FETCH_OFFSET = 1150078;
   NISCOPE_ATTRIBUTE_FETCH_RECORD_NUMBER = 1150079;
@@ -185,6 +197,7 @@ enum NiScopeAttributes {
   NISCOPE_ATTRIBUTE_SAMP_CLK_TIMEBASE_RATE = 1150088;
   NISCOPE_ATTRIBUTE_SAMP_CLK_TIMEBASE_DIV = 1150089;
   NISCOPE_ATTRIBUTE_REF_CLK_RATE = 1150090;
+  NISCOPE_ATTRIBUTE_EXPORTED_SAMPLE_CLOCK_OUTPUT_TERMINAL = 1150091;
   NISCOPE_ATTRIBUTE_ENABLE_DC_RESTORE = 1150093;
   NISCOPE_ATTRIBUTE_ADV_TRIG_SRC = 1150094;
   NISCOPE_ATTRIBUTE_ARM_REF_TRIG_SRC = 1150095;
@@ -197,6 +210,7 @@ enum NiScopeAttributes {
   NISCOPE_ATTRIBUTE_RESOLUTION = 1150102;
   NISCOPE_ATTRIBUTE_START_TO_REF_TRIGGER_HOLDOFF = 1150103;
   NISCOPE_ATTRIBUTE_SERIAL_NUMBER = 1150104;
+  NISCOPE_ATTRIBUTE_OSCILLATOR_PHASE_DAC_VALUE = 1150105;
   NISCOPE_ATTRIBUTE_RIS_IN_AUTO_SETUP_ENABLE = 1150106;
   NISCOPE_ATTRIBUTE_CHANNEL_TERMINAL_CONFIGURATION = 1150107;
   NISCOPE_ATTRIBUTE_EXPORTED_ADVANCE_TRIGGER_OUTPUT_TERMINAL = 1150109;
@@ -204,6 +218,7 @@ enum NiScopeAttributes {
   NISCOPE_ATTRIBUTE_READY_FOR_REF_EVENT_OUTPUT_TERMINAL = 1150111;
   NISCOPE_ATTRIBUTE_READY_FOR_ADVANCE_EVENT_OUTPUT_TERMINAL = 1150112;
   NISCOPE_ATTRIBUTE_ENABLE_TIME_INTERLEAVED_SAMPLING = 1150128;
+  NISCOPE_ATTRIBUTE_5V_OUT_OUTPUT_TERMINAL = 1150129;
   NISCOPE_ATTRIBUTE_RUNT_TIME_CONDITION = 1150132;
   NISCOPE_ATTRIBUTE_RUNT_TIME_LOW_LIMIT = 1150133;
   NISCOPE_ATTRIBUTE_RUNT_TIME_HIGH_LIMIT = 1150134;
@@ -223,20 +238,54 @@ enum NiScopeAttributes {
   NISCOPE_ATTRIBUTE_TRIGGER_AUTO_TRIGGERED = 1150278;
   NISCOPE_ATTRIBUTE_SIGNAL_COND_GAIN = 1150279;
   NISCOPE_ATTRIBUTE_SIGNAL_COND_OFFSET = 1150280;
+  NISCOPE_ATTRIBUTE_DDC_ENABLED = 1150300;
+  NISCOPE_ATTRIBUTE_DDC_FREQUENCY_TRANSLATION_ENABLED = 1150302;
+  NISCOPE_ATTRIBUTE_DDC_CENTER_FREQUENCY = 1150303;
+  NISCOPE_ATTRIBUTE_DDC_DATA_PROCESSING_MODE = 1150304;
+  NISCOPE_ATTRIBUTE_DDC_FREQUENCY_TRANSLATION_PHASE_I = 1150305;
+  NISCOPE_ATTRIBUTE_DDC_FREQUENCY_TRANSLATION_PHASE_Q = 1150306;
+  NISCOPE_ATTRIBUTE_DIGITAL_GAIN = 1150307;
+  NISCOPE_ATTRIBUTE_DIGITAL_OFFSET = 1150308;
+  NISCOPE_ATTRIBUTE_OVERFLOW_ERROR_REPORTING = 1150309;
+  NISCOPE_ATTRIBUTE_DDC_Q_SOURCE = 1150310;
+  NISCOPE_ATTRIBUTE_FETCH_INTERLEAVED_IQ_DATA = 1150311;
   NISCOPE_ATTRIBUTE_EQUALIZATION_NUM_COEFFICIENTS = 1150312;
   NISCOPE_ATTRIBUTE_EQUALIZATION_FILTER_ENABLED = 1150313;
   NISCOPE_ATTRIBUTE_REF_TRIGGER_DETECTOR_LOCATION = 1150314;
   NISCOPE_ATTRIBUTE_REF_TRIGGER_MINIMUM_QUIET_TIME = 1150315;
   NISCOPE_ATTRIBUTE_DATA_TRANSFER_BLOCK_SIZE = 1150316;
   NISCOPE_ATTRIBUTE_BANDPASS_FILTER_ENABLED = 1150318;
+  NISCOPE_ATTRIBUTE_DITHER_ENABLED = 1150319;
+  NISCOPE_ATTRIBUTE_FRACTIONAL_RESAMPLE_ENABLED = 1150320;
   NISCOPE_ATTRIBUTE_DATA_TRANSFER_MAXIMUM_BANDWIDTH = 1150321;
   NISCOPE_ATTRIBUTE_DATA_TRANSFER_PREFERRED_PACKET_SIZE = 1150322;
+  NISCOPE_ATTRIBUTE_P2P_SAMPLES_AVAIL_IN_ENDPOINT = 1150328;
+  NISCOPE_ATTRIBUTE_P2P_DATA_TRANS_PERMISSION_ADDR = 1150329;
+  NISCOPE_ATTRIBUTE_P2P_DATA_TRANS_PERMISSION_ADDR_TYPE = 1150330;
+  NISCOPE_ATTRIBUTE_P2P_DESTINATION_WINDOW_ADDR = 1150331;
+  NISCOPE_ATTRIBUTE_P2P_DESTINATION_WINDOW_ADDR_TYPE = 1150332;
+  NISCOPE_ATTRIBUTE_P2P_DESTINATION_WINDOW_SIZE = 1150333;
+  NISCOPE_ATTRIBUTE_P2P_NOTIFY_PUSH_MESSAGE_ON = 1150334;
+  NISCOPE_ATTRIBUTE_P2P_NOTIFY_MESSAGE_PUSH_ADDR = 1150335;
+  NISCOPE_ATTRIBUTE_P2P_NOTIFY_MESSAGE_PUSH_ADDR_TYPE = 1150336;
+  NISCOPE_ATTRIBUTE_P2P_NOTIFY_MESSAGE_PUSH_VALUE = 1150337;
+  NISCOPE_ATTRIBUTE_P2P_ENABLED = 1150338;
+  NISCOPE_ATTRIBUTE_P2P_CHANNELS_TO_STREAM = 1150339;
+  NISCOPE_ATTRIBUTE_P2P_SAMPLES_TRANSFERRED = 1150340;
+  NISCOPE_ATTRIBUTE_P2P_MOST_SAMPLES_AVAIL_IN_ENDPOINT = 1150341;
+  NISCOPE_ATTRIBUTE_P2P_ENDPOINT_SIZE = 1150342;
+  NISCOPE_ATTRIBUTE_P2P_MANUAL_CONFIGURATION_ENABLED = 1150343;
+  NISCOPE_ATTRIBUTE_P2P_ENDPOINT_OVERFLOW = 1150344;
+  NISCOPE_ATTRIBUTE_P2P_FIFO_ENDPOINT_COUNT = 1150345;
+  NISCOPE_ATTRIBUTE_P2P_ONBOARD_MEMORY_ENABLED = 1150354;
   NISCOPE_ATTRIBUTE_END_OF_RECORD_TO_ADVANCE_TRIGGER_HOLDOFF = 1150366;
   NISCOPE_ATTRIBUTE_SAMP_CLK_TIMEBASE_MULT = 1150367;
+  NISCOPE_ATTRIBUTE_P2P_STREAM_RELATIVE_TO = 1150373;
   NISCOPE_ATTRIBUTE_ABSOLUTE_SAMPLE_CLOCK_OFFSET = 1150374;
   NISCOPE_ATTRIBUTE_FPGA_BITFILE_PATH = 1150375;
   NISCOPE_ATTRIBUTE_INTERLEAVING_OFFSET_CORRECTION_ENABLED = 1150376;
   NISCOPE_ATTRIBUTE_HIGH_PASS_FILTER_FREQUENCY = 1150377;
+  NISCOPE_ATTRIBUTE_P2P_SAMPLES_TRANSFERRED_PER_RECORD = 1150380;
   NISCOPE_ATTRIBUTE_PLL_LOCK_STATUS = 1151303;
   NISCOPE_ATTRIBUTE_VERTICAL_RANGE = 1250001;
   NISCOPE_ATTRIBUTE_VERTICAL_OFFSET = 1250002;
@@ -294,6 +343,13 @@ enum AcquisitionType {
   ACQUISITION_TYPE_NISCOPE_VAL_NORMAL = 0;
   ACQUISITION_TYPE_NISCOPE_VAL_FLEXRES = 1001;
   ACQUISITION_TYPE_NISCOPE_VAL_DDC = 1002;
+}
+
+enum AddressType {
+  option allow_alias = true;
+  ADDRESS_TYPE_UNSPECIFIED = 0;
+  ADDRESS_TYPE_NISCOPE_VAL_ADDR_PHYSICAL = 0;
+  ADDRESS_TYPE_NISCOPE_VAL_ADDR_VIRTUAL = 1;
 }
 
 enum ArrayMeasurement {
@@ -414,6 +470,13 @@ enum ClearableMeasurement {
   CLEARABLE_MEASUREMENT_NISCOPE_VAL_TIME_HISTOGRAM_NEW_HITS = 3011;
 }
 
+enum DataProcessingMode {
+  option allow_alias = true;
+  DATA_PROCESSING_MODE_UNSPECIFIED = 0;
+  DATA_PROCESSING_MODE_NISCOPE_VAL_REAL = 0;
+  DATA_PROCESSING_MODE_NISCOPE_VAL_COMPLEX = 1;
+}
+
 enum ExportableSignals {
   EXPORTABLE_SIGNALS_UNSPECIFIED = 0;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_TRIGGER = 1;
@@ -480,11 +543,26 @@ enum GlitchPolarity {
   GLITCH_POLARITY_NISCOPE_VAL_GLITCH_EITHER = 3;
 }
 
+enum NotificationType {
+  option allow_alias = true;
+  NOTIFICATION_TYPE_UNSPECIFIED = 0;
+  NOTIFICATION_TYPE_NISCOPE_VAL_NOTIFY_NEVER = 0;
+  NOTIFICATION_TYPE_NISCOPE_VAL_NOTIFY_DONE = 1;
+}
+
 enum Option {
   option allow_alias = true;
   OPTION_UNSPECIFIED = 0;
   OPTION_NISCOPE_VAL_SELF_CALIBRATE_ALL_CHANNELS = 0;
   OPTION_NISCOPE_VAL_RESTORE_EXTERNAL_CALIBRATION = 1;
+}
+
+enum OverflowErrorReporting {
+  option allow_alias = true;
+  OVERFLOW_ERROR_REPORTING_UNSPECIFIED = 0;
+  OVERFLOW_ERROR_REPORTING_NISCOPE_VAL_ERROR_REPORTING_ERROR = 0;
+  OVERFLOW_ERROR_REPORTING_NISCOPE_VAL_ERROR_REPORTING_WARNING = 1;
+  OVERFLOW_ERROR_REPORTING_NISCOPE_VAL_ERROR_REPORTING_DISABLED = 2;
 }
 
 enum PercentageMethod {
@@ -740,11 +818,15 @@ message AcquisitionStatusRequest {
 message AcquisitionStatusResponse {
   int32 status = 1;
   AcquisitionStatus acquisition_status = 2;
+  sint32 acquisition_status_raw = 3;
 }
 
 message ActualMeasWfmSizeRequest {
   grpc.nidevice.Session vi = 1;
-  ArrayMeasurement array_meas_function = 2;
+  oneof array_meas_function_enum {
+    ArrayMeasurement array_meas_function = 2;
+    sint32 array_meas_function_raw = 3;
+  }
 }
 
 message ActualMeasWfmSizeResponse {
@@ -774,7 +856,10 @@ message ActualRecordLengthResponse {
 message AddWaveformProcessingRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  ArrayMeasurement meas_function = 3;
+  oneof meas_function_enum {
+    ArrayMeasurement meas_function = 3;
+    sint32 meas_function_raw = 4;
+  }
 }
 
 message AddWaveformProcessingResponse {
@@ -817,7 +902,10 @@ message CableSenseSignalStopResponse {
 message CalSelfCalibrateRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  Option option = 3;
+  oneof option_enum {
+    Option option = 3;
+    sint32 option_raw = 4;
+  }
 }
 
 message CalSelfCalibrateResponse {
@@ -893,7 +981,10 @@ message CheckAttributeViStringResponse {
 message ClearWaveformMeasurementStatsRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  ClearableMeasurement clearable_measurement_function = 3;
+  oneof clearable_measurement_function_enum {
+    ClearableMeasurement clearable_measurement_function = 3;
+    sint32 clearable_measurement_function_raw = 4;
+  }
 }
 
 message ClearWaveformMeasurementStatsResponse {
@@ -983,9 +1074,12 @@ message ConfigureHorizontalTimingResponse {
 message ConfigureTriggerDigitalRequest {
   grpc.nidevice.Session vi = 1;
   string trigger_source = 2;
-  TriggerSlope slope = 3;
-  double holdoff = 4;
-  double delay = 5;
+  oneof slope_enum {
+    TriggerSlope slope = 3;
+    sint32 slope_raw = 4;
+  }
+  double holdoff = 5;
+  double delay = 6;
 }
 
 message ConfigureTriggerDigitalResponse {
@@ -996,10 +1090,16 @@ message ConfigureTriggerEdgeRequest {
   grpc.nidevice.Session vi = 1;
   string trigger_source = 2;
   double level = 3;
-  TriggerSlope slope = 4;
-  TriggerCoupling trigger_coupling = 5;
-  double holdoff = 6;
-  double delay = 7;
+  oneof slope_enum {
+    TriggerSlope slope = 4;
+    sint32 slope_raw = 5;
+  }
+  oneof trigger_coupling_enum {
+    TriggerCoupling trigger_coupling = 6;
+    sint32 trigger_coupling_raw = 7;
+  }
+  double holdoff = 8;
+  double delay = 9;
 }
 
 message ConfigureTriggerEdgeResponse {
@@ -1011,11 +1111,20 @@ message ConfigureTriggerGlitchRequest {
   string trigger_source = 2;
   double level = 3;
   double width = 4;
-  GlitchPolarity polarity = 5;
-  GlitchCondition glitch_condition = 6;
-  TriggerCoupling trigger_coupling = 7;
-  double holdoff = 8;
-  double delay = 9;
+  oneof polarity_enum {
+    GlitchPolarity polarity = 5;
+    sint32 polarity_raw = 6;
+  }
+  oneof glitch_condition_enum {
+    GlitchCondition glitch_condition = 7;
+    sint32 glitch_condition_raw = 8;
+  }
+  oneof trigger_coupling_enum {
+    TriggerCoupling trigger_coupling = 9;
+    sint32 trigger_coupling_raw = 10;
+  }
+  double holdoff = 11;
+  double delay = 12;
 }
 
 message ConfigureTriggerGlitchResponse {
@@ -1027,10 +1136,16 @@ message ConfigureTriggerHysteresisRequest {
   string trigger_source = 2;
   double level = 3;
   double hysteresis = 4;
-  TriggerSlope slope = 5;
-  TriggerCoupling trigger_coupling = 6;
-  double holdoff = 7;
-  double delay = 8;
+  oneof slope_enum {
+    TriggerSlope slope = 5;
+    sint32 slope_raw = 6;
+  }
+  oneof trigger_coupling_enum {
+    TriggerCoupling trigger_coupling = 7;
+    sint32 trigger_coupling_raw = 8;
+  }
+  double holdoff = 9;
+  double delay = 10;
 }
 
 message ConfigureTriggerHysteresisResponse {
@@ -1050,10 +1165,16 @@ message ConfigureTriggerRuntRequest {
   string trigger_source = 2;
   double low_threshold = 3;
   double high_threshold = 4;
-  RuntPolarity polarity = 5;
-  TriggerCoupling trigger_coupling = 6;
-  double holdoff = 7;
-  double delay = 8;
+  oneof polarity_enum {
+    RuntPolarity polarity = 5;
+    sint32 polarity_raw = 6;
+  }
+  oneof trigger_coupling_enum {
+    TriggerCoupling trigger_coupling = 7;
+    sint32 trigger_coupling_raw = 8;
+  }
+  double holdoff = 9;
+  double delay = 10;
 }
 
 message ConfigureTriggerRuntResponse {
@@ -1074,13 +1195,25 @@ message ConfigureTriggerVideoRequest {
   grpc.nidevice.Session vi = 1;
   string trigger_source = 2;
   bool enable_dc_restore = 3;
-  VideoSignalFormat signal_format = 4;
-  VideoTriggerEvent event = 5;
-  sint32 line_number = 6;
-  VideoPolarity polarity = 7;
-  TriggerCoupling trigger_coupling = 8;
-  double holdoff = 9;
-  double delay = 10;
+  oneof signal_format_enum {
+    VideoSignalFormat signal_format = 4;
+    sint32 signal_format_raw = 5;
+  }
+  oneof event_enum {
+    VideoTriggerEvent event = 6;
+    sint32 event_raw = 7;
+  }
+  sint32 line_number = 8;
+  oneof polarity_enum {
+    VideoPolarity polarity = 9;
+    sint32 polarity_raw = 10;
+  }
+  oneof trigger_coupling_enum {
+    TriggerCoupling trigger_coupling = 11;
+    sint32 trigger_coupling_raw = 12;
+  }
+  double holdoff = 13;
+  double delay = 14;
 }
 
 message ConfigureTriggerVideoResponse {
@@ -1093,11 +1226,20 @@ message ConfigureTriggerWidthRequest {
   double level = 3;
   double low_threshold = 4;
   double high_threshold = 5;
-  WidthPolarity polarity = 6;
-  WidthCondition condition = 7;
-  TriggerCoupling trigger_coupling = 8;
-  double holdoff = 9;
-  double delay = 10;
+  oneof polarity_enum {
+    WidthPolarity polarity = 6;
+    sint32 polarity_raw = 7;
+  }
+  oneof condition_enum {
+    WidthCondition condition = 8;
+    sint32 condition_raw = 9;
+  }
+  oneof trigger_coupling_enum {
+    TriggerCoupling trigger_coupling = 10;
+    sint32 trigger_coupling_raw = 11;
+  }
+  double holdoff = 12;
+  double delay = 13;
 }
 
 message ConfigureTriggerWidthResponse {
@@ -1109,10 +1251,16 @@ message ConfigureTriggerWindowRequest {
   string trigger_source = 2;
   double low_level = 3;
   double high_level = 4;
-  TriggerWindowMode window_mode = 5;
-  TriggerCoupling trigger_coupling = 6;
-  double holdoff = 7;
-  double delay = 8;
+  oneof window_mode_enum {
+    TriggerWindowMode window_mode = 5;
+    sint32 window_mode_raw = 6;
+  }
+  oneof trigger_coupling_enum {
+    TriggerCoupling trigger_coupling = 7;
+    sint32 trigger_coupling_raw = 8;
+  }
+  double holdoff = 9;
+  double delay = 10;
 }
 
 message ConfigureTriggerWindowResponse {
@@ -1124,9 +1272,12 @@ message ConfigureVerticalRequest {
   string channel_list = 2;
   double range = 3;
   double offset = 4;
-  VerticalCoupling coupling = 5;
-  double probe_attenuation = 6;
-  bool enabled = 7;
+  oneof coupling_enum {
+    VerticalCoupling coupling = 5;
+    sint32 coupling_raw = 6;
+  }
+  double probe_attenuation = 7;
+  bool enabled = 8;
 }
 
 message ConfigureVerticalResponse {
@@ -1172,9 +1323,12 @@ message ExportAttributeConfigurationFileResponse {
 
 message ExportSignalRequest {
   grpc.nidevice.Session vi = 1;
-  ExportableSignals signal = 2;
-  string signal_identifier = 3;
-  string output_terminal = 4;
+  oneof signal_enum {
+    ExportableSignals signal = 2;
+    sint32 signal_raw = 3;
+  }
+  string signal_identifier = 4;
+  string output_terminal = 5;
 }
 
 message ExportSignalResponse {
@@ -1198,8 +1352,10 @@ message FetchArrayMeasurementRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  ArrayMeasurement array_meas_function = 4;
-  sint32 measurement_waveform_size = 5;
+  oneof array_meas_function_enum {
+    ArrayMeasurement array_meas_function = 4;
+    sint32 array_meas_function_raw = 5;
+  }
 }
 
 message FetchArrayMeasurementResponse {
@@ -1277,7 +1433,10 @@ message FetchMeasurementRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  ScalarMeasurement scalar_meas_function = 4;
+  oneof scalar_meas_function_enum {
+    ScalarMeasurement scalar_meas_function = 4;
+    sint32 scalar_meas_function_raw = 5;
+  }
 }
 
 message FetchMeasurementResponse {
@@ -1289,7 +1448,10 @@ message FetchMeasurementStatsRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  ScalarMeasurement scalar_meas_function = 4;
+  oneof scalar_meas_function_enum {
+    ScalarMeasurement scalar_meas_function = 4;
+    sint32 scalar_meas_function_raw = 5;
+  }
 }
 
 message FetchMeasurementStatsResponse {
@@ -1381,7 +1543,6 @@ message GetChannelNameResponse {
 message GetChannelNameFromStringRequest {
   grpc.nidevice.Session vi = 1;
   string index = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetChannelNameFromStringResponse {
@@ -1437,7 +1598,6 @@ message GetFrequencyResponseResponse {
 message GetNormalizationCoefficientsRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetNormalizationCoefficientsResponse {
@@ -1449,7 +1609,6 @@ message GetNormalizationCoefficientsResponse {
 message GetScalingCoefficientsRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
-  sint32 buffer_size = 3;
 }
 
 message GetScalingCoefficientsResponse {
@@ -1561,7 +1720,10 @@ message ReadMeasurementRequest {
   grpc.nidevice.Session vi = 1;
   string channel_list = 2;
   double timeout = 3;
-  ScalarMeasurement scalar_meas_function = 4;
+  oneof scalar_meas_function_enum {
+    ScalarMeasurement scalar_meas_function = 4;
+    sint32 scalar_meas_function_raw = 5;
+  }
 }
 
 message ReadMeasurementResponse {
@@ -1625,7 +1787,10 @@ message SelfTestResponse {
 
 message SendSoftwareTriggerEdgeRequest {
   grpc.nidevice.Session vi = 1;
-  WhichTrigger which_trigger = 2;
+  oneof which_trigger_enum {
+    WhichTrigger which_trigger = 2;
+    sint32 which_trigger_raw = 3;
+  }
 }
 
 message SendSoftwareTriggerEdgeResponse {
