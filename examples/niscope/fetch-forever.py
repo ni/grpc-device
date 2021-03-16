@@ -25,7 +25,7 @@
 import grpc
 import time
 import numpy as np
-import niscope_pb2 as scope_types
+import niscope_pb2 as niscope_types
 import niscope_pb2_grpc as grpc_niscope
 
 # Resource name and options for a simulated 5164 client. Change them according to the scope model.
@@ -51,7 +51,7 @@ def CheckForError (vi, status) :
 
 # Converts an error code returned by NI-Scope into a user-readable string
 def ThrowOnError (vi, errorCode):
-    errorMessageRequest = scope_types.GetErrorMessageRequest(
+    errorMessageRequest = niscope_types.GetErrorMessageRequest(
         vi = vi,
         error_code = errorCode
         )
@@ -59,7 +59,7 @@ def ThrowOnError (vi, errorCode):
     raise Exception (errorMessageResponse)
 
 # Open session to Scope module with options
-initWithOptionsResponse = client.InitWithOptions(scope_types.InitWithOptionsRequest(
+initWithOptionsResponse = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
     resource_name=resource,
     id_query = False,
     option_string=options
@@ -69,18 +69,18 @@ CheckForError(vi, initWithOptionsResponse.status)
 
 # Configure vertical
 voltage = 1.0
-CheckForError(vi, (client.ConfigureVertical(scope_types.ConfigureVerticalRequest(
+CheckForError(vi, (client.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
     vi = vi,
     channel_list = channels,
     range = voltage,
     offset = 0.0,
-    coupling = scope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+    coupling = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
     probe_attenuation = 1.0,
     enabled = True
     ))).status)
 
 # Configure horizontal timing
-CheckForError(vi, (client.ConfigureHorizontalTiming(scope_types.ConfigureHorizontalTimingRequest(
+CheckForError(vi, (client.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
     vi = vi,
     min_sample_rate = sample_rate_in_hz,
     min_num_pts = 1,
@@ -91,14 +91,14 @@ CheckForError(vi, (client.ConfigureHorizontalTiming(scope_types.ConfigureHorizon
 
 # Configure software trigger, but never send the trigger.
 # This starts an infinite acquisition, until you call Abort or Close
-CheckForError(vi, (client.ConfigureTriggerSoftware(scope_types.ConfigureTriggerSoftwareRequest(
+CheckForError(vi, (client.ConfigureTriggerSoftware(niscope_types.ConfigureTriggerSoftwareRequest(
     vi = vi,
     holdoff = 0.0,
     delay = 0.0
     ))).status)
 
 # Initiate acquisition
-CheckForError(vi, (client.InitiateAcquisition(scope_types.InitiateAcquisitionRequest(
+CheckForError(vi, (client.InitiateAcquisition(niscope_types.InitiateAcquisitionRequest(
     vi = vi
     ))).status)
 
@@ -111,11 +111,11 @@ waveforms = [np.ndarray(total_samples, dtype=np.float64) for c in channel_list]
 totalPointsFetched = 0
 
 # Set fetch relative to attribute
-CheckForError(vi, (client.SetAttributeViInt32(scope_types.SetAttributeViInt32Request(
+CheckForError(vi, (client.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
   vi = vi,
   channel_list = "",
-  attribute_id = scope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_FETCH_RELATIVE_TO,
-  value = scope_types.FetchRelativeTo.FETCH_RELATIVE_TO_NISCOPE_VAL_READ_POINTER
+  attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_FETCH_RELATIVE_TO,
+  value = niscope_types.FetchRelativeTo.FETCH_RELATIVE_TO_NISCOPE_VAL_READ_POINTER
   ))).status)
 
 # Fetch forever
@@ -126,19 +126,19 @@ while current_pos < total_samples:
   # We fetch each channel at a time so we don't have to de-interleave afterwards
   # We do not keep the wfm_info returned from fetch
   for channel, waveform in zip(channel_list, waveforms):
-    FetchResponse = client.Fetch(scope_types.FetchRequest(
+    FetchResponse = client.Fetch(niscope_types.FetchRequest(
         vi = vi,
         channel_list = channel,
         timeout = 500000,
         num_samples = samples_per_fetch
         ))
     CheckForError(vi, FetchResponse.status)
-    waveforms[current_pos:current_pos + samples_per_fetch] = FetchResponse.waveform
-    print(f'Filling indexes {current_pos} to {current_pos + samples_per_fetch} of waveform for channel {channel}')
+    waveform[current_pos:current_pos + samples_per_fetch] = FetchResponse.waveform
+    print(f'Fetching channel {channel}\'s waveform for indices {current_pos} to {current_pos + samples_per_fetch - 1}')
   print()
   current_pos += samples_per_fetch
 
 # Close session to Scope module.
-CheckForError(vi, (client.Close(scope_types.CloseRequest(
+CheckForError(vi, (client.Close(niscope_types.CloseRequest(
     vi = vi
     ))).status)

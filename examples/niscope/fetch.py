@@ -19,7 +19,7 @@
 
 import grpc
 import time
-import niscope_pb2 as scope_types
+import niscope_pb2 as niscope_types
 import niscope_pb2_grpc as grpc_niscope
 
 # Resource name and options for a simulated 5164 client. Change them according to the scope model.
@@ -43,7 +43,7 @@ def CheckForError (vi, status) :
 
 # Converts an error code returned by NI-Scope into a user-readable string
 def ThrowOnError (vi, errorCode):
-    errorMessageRequest = scope_types.GetErrorMessageRequest(
+    errorMessageRequest = niscope_types.GetErrorMessageRequest(
         vi = vi,
         error_code = errorCode
         )
@@ -51,7 +51,7 @@ def ThrowOnError (vi, errorCode):
     raise Exception (errorMessageResponse)
 
 # Open session to Scope module with options
-initWithOptionsResponse = client.InitWithOptions(scope_types.InitWithOptionsRequest(
+initWithOptionsResponse = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
     resource_name=resource,
     id_query = False,
     option_string=options
@@ -61,19 +61,19 @@ CheckForError(vi, initWithOptionsResponse.status)
 
 # Configure vertical
 voltage = 1.0
-CheckForError(vi, (client.ConfigureVertical(scope_types.ConfigureVerticalRequest(
+CheckForError(vi, (client.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
     vi = vi,
     channel_list = channels,
     range = voltage,
     offset = 0.0,
-    coupling = scope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_AC,
+    coupling = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_AC,
     probe_attenuation = 1.0,
     enabled = True
     ))).status)
 
 # Configure horizontal timing
 samples = 1000
-CheckForError(vi, (client.ConfigureHorizontalTiming(scope_types.ConfigureHorizontalTimingRequest(
+CheckForError(vi, (client.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
     vi = vi,
     min_sample_rate = 50000000,
     min_num_pts = samples,
@@ -83,12 +83,12 @@ CheckForError(vi, (client.ConfigureHorizontalTiming(scope_types.ConfigureHorizon
     ))).status)
 
 # Initiate acquisition
-CheckForError(vi, (client.InitiateAcquisition(scope_types.InitiateAcquisitionRequest(
+CheckForError(vi, (client.InitiateAcquisition(niscope_types.InitiateAcquisitionRequest(
     vi = vi
     ))).status)
 
 # Fetch waveforms
-FetchResponse = client.Fetch(scope_types.FetchRequest(
+FetchResponse = client.Fetch(niscope_types.FetchRequest(
     vi = vi,
     channel_list = channels,
     timeout = 10000,
@@ -103,6 +103,6 @@ for i in range(len(waveforms)):
   print(f'{waveforms[i]}\n')
 
 # Close session to Scope module.
-CheckForError(vi, (client.Close(scope_types.CloseRequest(
+CheckForError(vi, (client.Close(niscope_types.CloseRequest(
     vi = vi
     ))).status)
