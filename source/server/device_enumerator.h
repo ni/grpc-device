@@ -14,8 +14,6 @@ namespace nidevice {
 static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
 static const char* kLocalHostTargetName = "localhost";
 static const char* kNetworkExpertName = "network";
-static const char* kNiVendorName = "NI";
-static const char* kNationalInstrumentsVendorName = "National Instruments";
 
 class DeviceEnumerator {
  public:

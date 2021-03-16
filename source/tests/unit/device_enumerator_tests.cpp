@@ -8,13 +8,13 @@ namespace tests {
 namespace unit {
 
 using ::testing::_;
+using ::testing::DoAll;
 using ::testing::Invoke;
 using ::testing::NiceMock;
 using ::testing::Return;
+using ::testing::SetArgPointee;
 using ::testing::Throw;
 using ::testing::WithArg;
-
-static const char* kNonNiVendorName = "Lenova";
 
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
@@ -111,24 +111,17 @@ TEST(DeviceEnumerationTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevi
   EXPECT_EQ(0, devices.size());
 }
 
-NISysCfgStatus SetVendorNameToNi(void* value)
+NISysCfgStatus SetIsNIProductToTrue(void* value)
 {
-  char* vendor_name = (char*)value;
-  strcpy(vendor_name, grpc::nidevice::kNiVendorName);
+  NISysCfgBool* is_ni_product = (NISysCfgBool*)value;
+  *is_ni_product = NISysCfgBoolTrue;
   return NISysCfg_OK;
 }
 
-NISysCfgStatus SetVendorNameToNationalInstruments(void* value)
+NISysCfgStatus SetIsNIProductToFalse(void* value)
 {
-  char* vendor_name = (char*)value;
-  strcpy(vendor_name, grpc::nidevice::kNationalInstrumentsVendorName);
-  return NISysCfg_OK;
-}
-
-NISysCfgStatus SetVendorNameToNonNiVendor(void* value)
-{
-  char* vendor_name = (char*)value;
-  strcpy(vendor_name, kNonNiVendorName);
+  NISysCfgBool* is_ni_product = (NISysCfgBool*)value;
+  *is_ni_product = NISysCfgBoolFalse;
   return NISysCfg_OK;
 }
 
@@ -140,21 +133,17 @@ TEST(DeviceEnumerationTests, LocalHostContainsNonNiDevices_EnumerateDevices_List
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_OK))
-      .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
   EXPECT_CALL(mock_library, GetResourceProperty)
       .WillRepeatedly(Return(NISysCfg_OK));
-  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyVendorName, _))
-      .WillOnce(WithArg<2>(Invoke(SetVendorNameToNi)))
-      .WillOnce(WithArg<2>(Invoke(SetVendorNameToNationalInstruments)))
-      .WillOnce(WithArg<2>(Invoke(SetVendorNameToNonNiVendor)));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToFalse)));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
-  EXPECT_EQ(2, devices.size());
-  EXPECT_EQ(grpc::nidevice::kNiVendorName, devices.Get(0).vendor());
-  EXPECT_EQ(grpc::nidevice::kNationalInstrumentsVendorName, devices.Get(1).vendor());
+  EXPECT_EQ(1, devices.size());
 }
 
 NISysCfgStatus SetExpertNameToNetwork(void* value)
@@ -172,8 +161,8 @@ TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_Lis
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
-  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyVendorName, _))
-      .WillOnce(WithArg<2>(Invoke(SetVendorNameToNi)));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty)
       .WillOnce(WithArg<3>(Invoke(SetExpertNameToNetwork)));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyExpertUserAlias, _, _))
@@ -185,7 +174,7 @@ TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_Lis
   EXPECT_EQ(0, devices.size());
 }
 
-TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnErrorForPropertiesOtherThanVendor_EnumerateDevices_NameModelSerialNumberAreSetToEmptyString)
+TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices_DevicePropertiesAreSetToEmptyString)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -197,8 +186,8 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnErrorForPropertiesOthe
       .WillRepeatedly(Return(NISysCfg_PropDoesNotExist));
   EXPECT_CALL(mock_library, GetResourceProperty)
       .WillRepeatedly(Return(NISysCfg_PropDoesNotExist));
-  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyVendorName, _))
-      .WillOnce(WithArg<2>(Invoke(SetVendorNameToNi)));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
