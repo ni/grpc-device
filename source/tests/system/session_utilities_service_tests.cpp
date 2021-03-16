@@ -7,7 +7,6 @@ namespace ni {
 namespace tests {
 namespace system {
 
-using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
