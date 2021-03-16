@@ -35,7 +35,7 @@ server = grpc_session.SessionUtilitiesStub(channel)
 
 try :
     # EnumerateDevices API gives a list of devices (simulated and physical) connected to the server machine.
-    enumerate_devices_response = server.EnumerateDevices(session_type.EnumerateDevicesRequest())
+    enumerate_devices_response = server.EnumerateDevices(session_types.EnumerateDevicesRequest())
 
     # Display devices connected to the server machine
     print_devices(enumerate_devices_response.devices)     
