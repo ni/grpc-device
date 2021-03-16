@@ -54,6 +54,9 @@ The following attributes were added :
 - P2P_STREAM_RELATIVE_TO
 - P2P_SAMPLES_TRANSFERRED_PER_RECORD
 
+The following attributes were removed :
+- RECORD_ARM_SOURCE
+
 ## config.py
 
 The following metadata was added:

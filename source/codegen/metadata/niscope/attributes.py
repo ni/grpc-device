@@ -741,17 +741,6 @@ attributes = {
         'resettable': True,
         'type': 'ViString'
     },
-    1150065: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': '\nSpecifies the record arm source.\n'
-        },
-        'lv_property': 'Synchronization:Record Arm Source',
-        'name': 'RECORD_ARM_SOURCE',
-        'resettable': False,
-        'type': 'ViString'
-    },
     1150066: {
         'access': 'read only',
         'channel_based': True,
