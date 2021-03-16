@@ -7,6 +7,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -74,6 +75,19 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
     EXPECT_NE(it.vendor().c_str(), nullptr);
     EXPECT_NE(it.serial_number().c_str(), nullptr);
   }
+}
+
+TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_ResponseOnlyContainsNIDevices)
+{
+    grpc::nidevice::EnumerateDevicesRequest request;
+    grpc::nidevice::EnumerateDevicesResponse response;
+    ::grpc::ClientContext context;
+
+    ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
+
+    for (auto it : response.devices()) {
+        EXPECT_THAT((std::array{ grpc::nidevice::kNiVendorName, grpc::nidevice::kNationalInstrumentsVendorName }), Contains(it.vendor()));
+    }
 }
 
 }  // namespace system
