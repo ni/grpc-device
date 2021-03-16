@@ -8,11 +8,9 @@ namespace tests {
 namespace unit {
 
 using ::testing::_;
-using ::testing::DoAll;
 using ::testing::Invoke;
 using ::testing::NiceMock;
 using ::testing::Return;
-using ::testing::SetArgPointee;
 using ::testing::Throw;
 using ::testing::WithArg;
 
