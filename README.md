@@ -1,6 +1,6 @@
 # NI Device gRPC Server and Client APIs
 
-This repo contains the C++ code and `.proto` files needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples demonstrating how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
+This repo contains the C++ code and `.proto` files needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples wirtten in Python that demonstrate how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
 
 The server and the corresponding client API allows NI's instrumentation to be accessed and controlled through a remote interface via pre-defined APIs in a holistic and OS agnostic way using a client/server architecture. The API is not a driver but instead a layer on top of the existing driver C APIs that provides remote capabilities.
 
@@ -183,7 +183,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 
 ## Creating a gRPC Client
 
-Each supported driver API has a corresponding `.proto` file that defines the interface used by clients to interact with the NI devices connected to the server. Creating a client requires compiling the `.proto` into supporting files in the client's language of choice. For more detailed information refer to the [Creating a gRPC Client wiki page](https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client).
+Each supported driver API has a corresponding `.proto` file that defines the interface used by clients to interact with the NI devices connected to the server. Creating a client requires compiling the `.proto` into supporting files in the client's language of choice using the protocol buffer compiler `protoc`. For more detailed information refer to the [Creating a gRPC Client wiki page](https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client).
 
 ## SSL/TLS Support
 
