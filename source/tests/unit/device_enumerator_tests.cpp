@@ -185,7 +185,7 @@ TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_Lis
   EXPECT_EQ(0, devices.size());
 }
 
-TEST(DeviceEnumerationTests, GetResourcePropertyApiReturnsErrorForSerialNumber_EnumerateDevices_SerialNumberIsSetToEmptyString)
+TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnErrorForPropertiesOtherThanVendor_EnumerateDevices_NameModelSerialNumberAreSetToEmptyString)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -193,17 +193,19 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApiReturnsErrorForSerialNumber_E
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceIndexedProperty)
+      .WillRepeatedly(Return(NISysCfg_PropDoesNotExist));
   EXPECT_CALL(mock_library, GetResourceProperty)
-      .WillRepeatedly(Return(NISysCfg_OK));
+      .WillRepeatedly(Return(NISysCfg_PropDoesNotExist));
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyVendorName, _))
       .WillOnce(WithArg<2>(Invoke(SetVendorNameToNi)));
-  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertySerialNumber, _))
-      .WillOnce(Return(NISysCfg_PropDoesNotExist));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
   EXPECT_EQ(1, devices.size());
+  EXPECT_EQ("", devices.Get(0).name());
+  EXPECT_EQ("", devices.Get(0).model());
   EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
