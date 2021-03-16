@@ -18,7 +18,7 @@
 #
 # Generate the python API from the gRPC definition (.proto) files
 #   > py -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
-#   > py -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niclient.proto 
+#   > py -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
 #
 # Refer to the NI Scope Help to determine the valid channel and resource names for your Scope module.
 
