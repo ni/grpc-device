@@ -71,7 +71,7 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
   for (auto device : response.devices()) {
     EXPECT_THAT(device.name(), Not(IsEmpty()));
     EXPECT_NE(device.model().c_str(), nullptr);
-    EXPECT_NE(device.vendor().c_str(), nullptr);
+    EXPECT_THAT(device.vendor(), Not(IsEmpty()));
     EXPECT_NE(device.serial_number().c_str(), nullptr);
   }
 }
