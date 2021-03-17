@@ -27,7 +27,7 @@ DeviceEnumerator::~DeviceEnumerator()
   char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  NISysCfgBool is_provided_by_ni = NISysCfgBoolFalse;
+  NISysCfgBool is_ni_product = NISysCfgBoolFalse;
 
   try {
     // TODO: Caching of syscfg_session will be added in a separate PR.
@@ -38,9 +38,9 @@ DeviceEnumerator::~DeviceEnumerator()
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
         if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeMatchValuesAny, filter, NULL, &resources_handle))) {
           while (NISysCfg_Succeeded(status) && (status = library_->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
-            library_->GetResourceProperty(resource, NISysCfgResourcePropertyIsNIProduct, &is_provided_by_ni);
+            library_->GetResourceProperty(resource, NISysCfgResourcePropertyIsNIProduct, &is_ni_product);
             library_->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyExpertName, 0, expert_name);
-            if (is_provided_by_ni && strcmp(expert_name, kNetworkExpertName) != 0) {
+            if (is_ni_product && strcmp(expert_name, kNetworkExpertName) != 0) {
               DeviceProperties* properties = devices->Add();
               // Note that we don't check for status of GetResourceIndexedProperty and GetResourceProperty APIs because
               // we want to return empty string when any of the property does not exist for any resource.
