@@ -46,7 +46,7 @@ def ThrowOnError (vi, error_code):
     raise Exception (error_message_response)
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python fetch.py localhost 31763
+#   > python session-reservation.py localhost 31763
 # If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
