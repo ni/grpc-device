@@ -25,7 +25,7 @@
 #   > py -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
 #   > py -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
 #
-# Refer to the NI Scope Help to determine the valid channel and resource names for your Scope module.
+# Refer to the NI-SCOPE Help to determine the valid channel and resource names for your NI-SCOPE module.
 
 import grpc
 import sys
@@ -42,7 +42,7 @@ def CheckForError (vi, status) :
         any_error = True
         ThrowOnError (vi, status)
 
-# Converts an error code returned by NI-Scope into a user-readable string
+# Converts an error code returned by NI-SCOPE into a user-readable string
 def ThrowOnError (vi, error_code):
     error_message_request = niscope_types.GetErrorMessageRequest(
         vi = vi,
@@ -59,19 +59,19 @@ if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
 # Create the communication channel for the remote host (in this case we are connecting to a local server)
-# and create a connection to the niScope service
+# and create a connection to the NI-SCOPE service
 channel = grpc.insecure_channel(server_address)
 client = grpc_niscope.NiScopeStub(channel)
 
 try :
-    # Resource name and options for a simulated 5164 client. Change them according to the scope model.
+    # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
     resource = "PXI1Slot2"
     channels = "0,1"
     options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
     total_acquisition_time_in_seconds = 10
     sample_rate_in_hz = 1000
 
-    # Open session to Scope module with options
+    # Open session to NI-SCOPE module with options
     init_with_options_response = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
         resource_name=resource,
         id_query = False,
@@ -149,12 +149,12 @@ try :
         print()
         current_pos += samples_per_fetch
 
-    # Close session to Scope module.
+    # Close session to NI-SCOPE module.
     CheckForError(vi, (client.Close(niscope_types.CloseRequest(
         vi = vi
         ))).status)
 
-# If NiScope API throws an exception, print the error message  
+# If NI-SCOPE API throws an exception, print the error message  
 except grpc.RpcError as e:
     error_message = e.details()
     print(error_message)
