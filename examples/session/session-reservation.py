@@ -132,9 +132,8 @@ try :
     # Reset server
     print(f'Resetting the server...')
     reset_server_response = session_client.ResetServer(session_types.ResetServerRequest())
-    is_server_reset = reset_server_response.is_server_reset
-    assert(is_server_reset)
-    print(f'Server has been reset.\n')    
+    assert(reset_server_response.is_server_reset)
+    print(f'Server has been reset.\n')
 
 # If NiScope API or Session API throws an exception, print the error message  
 except grpc.RpcError as e:
