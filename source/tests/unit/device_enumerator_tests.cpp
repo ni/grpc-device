@@ -224,7 +224,7 @@ NISysCfgStatus SetVendorName(void* value)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumerationTests, GetResourceIndexedPropertySetsModelName_EnumerateDevices_ResponseContainsThatModelName)
+TEST(DeviceEnumerationTests, GetResourceIndexedPropertySetsVendorName_EnumerateDevices_ResponseContainsThatVendorName)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
