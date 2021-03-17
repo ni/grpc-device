@@ -68,6 +68,10 @@ try :
     client_1_id = "Client1"
     client_2_id = "Client2"
 
+    # Reset server to start in a fresh state.
+    reset_server_response = session_client.ResetServer(session_types.ResetServerRequest())
+    assert(reset_server_response.is_server_reset)
+
     # Open session to Scope module with options
     session_name = "Ni-Scope-Session-1"
     print('\nInitializing session...')
