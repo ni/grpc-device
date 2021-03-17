@@ -6,6 +6,9 @@
 #
 # Getting Started:
 #
+# To run this example, install "NI-SCOPE Driver" on the server machine.
+# Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-scope.html
+#
 # Install the gRPC tools for Python
 #     > pip install grpcio-tools
 #   if you are using anaconda
