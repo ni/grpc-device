@@ -10,6 +10,8 @@ namespace system {
 namespace niswitch = grpc::niswitch;
 
 const int kSwitchDriverApiSuccess = 0;
+const int kWaitForDebounceMaxTime = 5000;
+const char* kRelayName = "b0r0c0";
 
 class NiSwitchDriverApiTest : public ::testing::Test {
  protected:
@@ -101,6 +103,32 @@ void initialize_driver_session()
 
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
+  }
+
+  void wait_for_debounce()
+  {
+      ::grpc::ClientContext context;
+      niswitch::WaitForDebounceRequest request;
+      request.mutable_vi()->set_id(GetSessionId());
+      request.set_maximum_time_ms(kWaitForDebounceMaxTime);
+      niswitch::WaitForDebounceResponse response;
+      ::grpc::Status status = GetStub()->WaitForDebounce(&context, request, &response);
+      EXPECT_TRUE(status.ok());
+      expect_api_success(response.status());
+  }
+
+  int get_relay_position(const char* relay_name)
+  {
+    ::grpc::ClientContext context;
+    niswitch::GetRelayPositionRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_relay_name(relay_name);
+
+    niswitch::GetRelayPositionResponse response;
+    ::grpc::Status status = GetStub()->GetRelayPosition(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+    return response.relay_position();
   }
 
   ViReal64 get_real64_attribute(const char* channel_name, niswitch::NiSwitchAttributes attribute_id)
@@ -209,6 +237,26 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStri
 
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
   EXPECT_STREQ(expected_value, get_attribute_value.c_str());
+}
+
+TEST_F(NiSwitchDriverApiTest, NiSwitchRelayControl_SendRequest_RelayPositionMatches)
+{
+  const niswitch::RelayAction relay_action = niswitch::RelayAction::RELAY_ACTION_NISWITCH_VAL_CLOSE_RELAY;
+  const niswitch::RelayPosition expected_value = niswitch::RelayPosition::RELAY_POSITION_NISWITCH_VAL_CLOSED;
+  ::grpc::ClientContext context;
+  niswitch::RelayControlRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_relay_name(kRelayName);
+  request.set_relay_action(relay_action);
+  niswitch::RelayControlResponse response;
+
+  ::grpc::Status status = GetStub()->RelayControl(&context, request, &response);
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+  wait_for_debounce();
+
+  int get_relay_pos = get_relay_position(kRelayName);
+  EXPECT_EQ(expected_value, get_relay_pos);
 }
 }  // namespace system
 }  // namespace tests
