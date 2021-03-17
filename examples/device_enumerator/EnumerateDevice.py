@@ -16,6 +16,7 @@
 #   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
 #
 import grpc
+import sys
 import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
 
@@ -28,8 +29,13 @@ def print_devices(devices) :
         print(f"    Vendor: {device.vendor}")
         print(f"    Serial Number: {device.serial_number} \n")
 
-# Create communication with the server using gRPC APIs
+# Server machine's IP address and port number have to be passed as two separate command line arguments.
+# If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost:31763"
+if len(sys.argv) == 3 :
+    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+
+# Create communication with the server using gRPC APIs
 channel = grpc.insecure_channel(server_address)
 server = grpc_session.SessionUtilitiesStub(channel)
 
