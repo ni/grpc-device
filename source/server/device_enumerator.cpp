@@ -71,7 +71,6 @@ namespace grpc {
             if (NISysCfg_Failed(status)) {
                 return ::grpc::Status(::grpc::StatusCode::INTERNAL, kDeviceEnumerationFailedMessage);
             }
-
             return ::grpc::Status::OK;
         }
 
