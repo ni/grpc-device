@@ -241,7 +241,7 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
   EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
-NISysCfgStatus SetNameToMyScope(void* value)
+NISysCfgStatus SetAliasName(void* value)
 {
   char* name = (char*)value;
   strcpy(name, kScopeName);
@@ -263,7 +263,7 @@ TEST(DeviceEnumerationTests, GetResourceIndexedPropertySetsName_EnumerateDevices
   EXPECT_CALL(mock_library, GetResourceIndexedProperty)
       .WillRepeatedly(Return(NISysCfg_OK));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyExpertUserAlias, _, _))
-      .WillOnce(WithArg<3>(Invoke(SetNameToMyScope)));
+      .WillOnce(WithArg<3>(Invoke(SetAliasName)));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
