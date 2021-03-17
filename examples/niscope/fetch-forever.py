@@ -134,7 +134,7 @@ try :
                 num_samples = samples_per_fetch
                 ))
             CheckForError(vi, fetch_response.status)
-            waveform[current_pos:current_pos + samples_per_fetch] = fetch_response.waveform
+            waveform[current_pos : current_pos + samples_per_fetch] = fetch_response.waveform
             print(f'Fetching channel {channel}\'s waveform for indices {current_pos} to {current_pos + samples_per_fetch - 1}')
         print()
         current_pos += samples_per_fetch
