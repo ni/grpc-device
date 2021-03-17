@@ -41,6 +41,8 @@ try :
     print_devices(enumerate_devices_response.devices)     
 
 # If EnumerateDevices API throws an exception, print the error message
-except grpc.RpcError as e:
-    error_message = e.details()
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
+        error_message = f"Failed to connect to server on {server_address}"
     print(f"{error_message}")
