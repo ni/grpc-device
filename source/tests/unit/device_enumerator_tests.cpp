@@ -95,7 +95,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
 }
 
-TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ReturnsInternalGrpcStatusCode)
+TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ListOfDevicesIsEmptyAndReturnsInternalError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -109,18 +109,6 @@ TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ReturnsInt
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
   EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
-}
-
-TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ListOfDevicesIsEmpty)
-{
-  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
-  EXPECT_CALL(mock_library, CreateFilter)
-      .WillOnce(Return(NISysCfg_InvalidArg));
-
-  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
-
   EXPECT_EQ(0, devices.size());
 }
 
@@ -144,7 +132,7 @@ TEST(DeviceEnumeratorTests, CreateFilterSetsFilterHandle_EnumerateDevices_Filter
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
+  EXPECT_TRUE(status.ok());
 }
 
 TEST(DeviceEnumerationTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevices_ListOfDevicesIsEmpty)
