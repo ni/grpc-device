@@ -103,6 +103,34 @@ void initialize_driver_session()
     expect_api_success(response.status());
   }
 
+  ViReal64 get_real64_attribute(const char* channel_name, niswitch::NiSwitchAttributes attribute_id)
+  {
+    ::grpc::ClientContext context;
+    niswitch::GetAttributeViReal64Request request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_name(channel_name);
+    request.set_attribute_id(attribute_id);
+    niswitch::GetAttributeViReal64Response response;
+    ::grpc::Status status = GetStub()->GetAttributeViReal64(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+    return response.attribute_value();
+  }
+
+  std::string get_string_attribute(const char* channel_name, niswitch::NiSwitchAttributes attribute_id)
+  {
+    ::grpc::ClientContext context;
+    niswitch::GetAttributeViStringRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_name(channel_name);
+    request.set_attribute_id(attribute_id);
+    niswitch::GetAttributeViStringResponse response;
+    ::grpc::Status status = GetStub()->GetAttributeViString(&context, request, &response);
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+    return response.attribute_value();
+  }
+
   private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::grpc::nidevice::Session> driver_session_;
@@ -139,6 +167,48 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchReset_SendRequest_ResetCompletesSuccessful
 
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
+}
+
+TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal64AttributeMatches)
+{
+  const char* channel_name = "";
+  const niswitch::NiSwitchAttributes attribute_to_set = niswitch::NiSwitchAttributes::NISWITCH_ATTRIBUTE_SCAN_DELAY;
+  const ViReal64 expected_value = 402.24;
+  ::grpc::ClientContext context;
+  niswitch::SetAttributeViReal64Request request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_to_set);
+  request.set_attribute_value(expected_value);
+  niswitch::SetAttributeViReal64Response response;
+
+  ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+
+  ViReal64 get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
+  EXPECT_EQ(expected_value, get_attribute_value);
+}
+
+TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStringAttributeMatches)
+{
+  const char* channel_name = "";
+  const niswitch::NiSwitchAttributes attribute_to_set = niswitch::NiSwitchAttributes::NISWITCH_ATTRIBUTE_SCAN_LIST;
+  const ViString expected_value = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3";
+  ::grpc::ClientContext context;
+  niswitch::SetAttributeViStringRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_to_set);
+  request.set_attribute_value(expected_value);
+  niswitch::SetAttributeViStringResponse response;
+
+  ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+
+  std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
+  EXPECT_STREQ(expected_value, get_attribute_value.c_str());
 }
 }  // namespace system
 }  // namespace tests
