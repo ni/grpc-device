@@ -16,6 +16,8 @@
 #     > conda install grpcio-tools
 #
 # Generate the python API from the gRPC definition (.proto) files
+# Note: The snippets below assume you are executing from the examples/session folder in the repo directory. 
+# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
 #   > py -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
 #   > py -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
 #
