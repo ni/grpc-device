@@ -111,4 +111,4 @@ try :
 # If NiScope API throws an exception, print the error message  
 except grpc.RpcError as e:
     error_message = e.details()
-    print(f'{error_message}')
+    print(error_message)
