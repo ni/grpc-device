@@ -1,6 +1,6 @@
 # NI Device gRPC Server and Client APIs
 
-This repo contains the C++ code and `.proto` files needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples wirtten in Python that demonstrate how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
+This repo contains the C++ code and `.proto` files needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples written in Python that demonstrate how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
 
 The server and the corresponding client API allows NI's instrumentation to be accessed and controlled through a remote interface via pre-defined APIs in a holistic and OS agnostic way using a client/server architecture. The API is not a driver but instead a layer on top of the existing driver C APIs that provides remote capabilities.
 
@@ -33,6 +33,9 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 
 ### Build Debug
+
+Build a debug build if debugging symbols are required during development:
+
 ```
 > mkdir build
 > cd build
@@ -41,6 +44,9 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 
 ### Build Release
+
+Build a release build for use in a production environment:
+
 ```
 > mkdir build
 > cd build
@@ -91,6 +97,8 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Build Debug
 
+Build a debug build if debugging symbols are required during development:
+
 ```
 > mkdir -p cmake/build
 > cd cmake/build
@@ -99,6 +107,8 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 
 ### Build Release
+
+Build a release build for use in a production environment:
 
 ```
 > mkdir -p cmake/build
@@ -169,6 +179,8 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 6. Security configuration errors. See [Server SSL TLS Support wiki page](https://github.com/ni/grpc-device/wiki/Server-SSL-TLS-Support).
 
 ### Default Configuration File (insecure):
+
+Below are the contents of a default configuration file using port `31763` and configured without SSL/TLS.  A configuration file with these contents also exists in the same directory as the `ni_grpc_device_server` binary.
 
 ```json
 {
