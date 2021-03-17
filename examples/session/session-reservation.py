@@ -2,7 +2,8 @@
 # Copyright 2020 National Instruments Corp
 # Licensed under the MIT license
 #
-# This example initiates an NI-SCOPE session and uses the session API to exercise some common reservation operations on the session.
+# This example initiates a session and uses the session API to exercise some common reservation operations on the session.
+# This particular example is using NI-SCOPE but the session reservation API should work for any driver session.
 #
 # Getting Started:
 #
