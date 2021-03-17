@@ -256,6 +256,8 @@ TEST(DeviceEnumerationTests, GetResourceIndexedPropertySetsName_EnumerateDevices
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty)
+      .WillRepeatedly(Return(NISysCfg_OK));
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
       .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty)
