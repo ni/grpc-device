@@ -14,6 +14,12 @@ using ::testing::Return;
 using ::testing::Throw;
 using ::testing::WithArg;
 
+NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
+{
+    *session_handle = (NISysCfgSessionHandle)1;
+    return NISysCfg_OK;
+}
+
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
@@ -55,8 +61,8 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
-  EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
+  EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
+  EXPECT_EQ(grpc::nidevice::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListOfDevicesIsEmpty)
@@ -72,12 +78,6 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListO
   EXPECT_EQ(0, devices.size());
 }
 
-NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
-{
-  *session_handle = (NISysCfgSessionHandle)1;
-  return NISysCfg_OK;
-}
-
 TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_SessionHandleIsPassedToCloseHandle)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
@@ -88,7 +88,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_
   EXPECT_CALL(mock_library, CloseHandle(_))
       .WillRepeatedly(Return(NISysCfg_OK));
   EXPECT_CALL(mock_library, CloseHandle((void*)1))
-      .WillOnce(Return(NISysCfg_OK));
+      .Times(0);
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
@@ -100,6 +100,8 @@ TEST(DeviceEnumerationTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevi
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, InitializeSession)
+      .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_EndOfEnum));
 
@@ -121,6 +123,8 @@ TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_Lis
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, InitializeSession)
+      .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -140,6 +144,8 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
   google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, InitializeSession)
+      .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -162,8 +168,13 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_DeviceEnumeration_Initializ
 {
     NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
     grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+    google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+    EXPECT_CALL(mock_library, InitializeSession)
+        .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
 
-    EXPECT_NE(nullptr, device_enumerator.get_syscfg_session(true));
+    NISysCfgSessionHandle  session_handle = device_enumerator.get_syscfg_session(true);
+
+    EXPECT_NE(nullptr, session_handle);
 }
 
 }  // namespace unit
