@@ -95,7 +95,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
 }
 
-TEST(DeviceEnumeratorTests, NextResourceReturnsError_EnumerateDevices_ReturnsInternalGrpcStatusCode)
+TEST(DeviceEnumeratorTests, NextResourceReturnsError_EnumerateDevices_ListOfDevicesIsEmptyAndReturnsInternalError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -109,18 +109,6 @@ TEST(DeviceEnumeratorTests, NextResourceReturnsError_EnumerateDevices_ReturnsInt
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
   EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
-}
-
-TEST(DeviceEnumeratorTests, NextResourceReturnsError_EnumerateDevices_ListOfDevicesIsEmpty)
-{
-  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
-  EXPECT_CALL(mock_library, NextResource)
-      .WillOnce(Return(NISysCfg_InvalidArg));
-
-  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
-
   EXPECT_EQ(0, devices.size());
 }
 
@@ -145,7 +133,7 @@ TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_Reso
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
+  EXPECT_TRUE(status.ok());
 }
 
 TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_ResourceHandleIsPassedToCloseHandle)
@@ -163,7 +151,7 @@ TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_Reso
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
+  EXPECT_TRUE(status.ok());
 }
 
 TEST(DeviceEnumerationTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevices_ListOfDevicesIsEmpty)
