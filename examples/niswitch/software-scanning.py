@@ -26,7 +26,7 @@ serverAddress = "localhost:31763"
 
 # Resource name and options for a simulated 2529 switch. Change them according to the switch model.
 resource = "Switch1"
-channelName = "0"
+channel_name = "0"
 options = "Simulate=1, DriverSetup=Model:2529; BoardType:PXI"
 
 # Or you can use real hardware
@@ -38,7 +38,7 @@ options = "Simulate=1, DriverSetup=Model:2529; BoardType:PXI"
 # and create a connection to the niSwitch service
 channel = grpc.insecure_channel(serverAddress)
 switch = gRPCSwitch.NiSwitchStub(channel)
-numberOfTriggers = 5
+number_of_triggers = 5
 anyError = False
 
 # Checks for errors. If any, throws an exception to stop the execution.
@@ -50,22 +50,22 @@ def CheckForError (vi, status) :
 
 # Converts an error code returned by NI-SWITCH into a user-readable string
 def ThrowOnError (vi, errorCode):
-    errorMessageRequest = switchTypes.ErrorMessageRequest(
+    error_message_request = switchTypes.ErrorMessageRequest(
         vi=vi,
         error_code = errorCode
         )
-    errorMessageResponse = switch.ErrorMessage(errorMessageRequest)
-    raise Exception (errorMessageResponse.error_message)
+    error_message_response = switch.ErrorMessage(error_message_request)
+    raise Exception (error_message_response.error_message)
 try :
     # Open session to switch module and set topology. Refer to NI-SWITCH help to find valid values for topology.
-    initWithTopologyResponse = switch.InitWithTopology(switchTypes.InitWithTopologyRequest(
+    init_with_topology_response = switch.InitWithTopology(switchTypes.InitWithTopologyRequest(
         resource_name=resource,
         topology = "2529/2-Wire Dual 4x16 Matrix",
         simulate=True,
         reset_device=False
         ))
-    vi = initWithTopologyResponse.vi
-    CheckForError(vi,initWithTopologyResponse.status)
+    vi = init_with_topology_response.vi
+    CheckForError(vi,init_with_topology_response.status)
 
     # Specify scan list. Use values that are valid for the switch model being used.
     CheckForError(vi, (switch.ConfigureScanList(switchTypes.ConfigureScanListRequest(
@@ -93,13 +93,13 @@ try :
         ))).status)
 
     #Send software trigger to switch module in a loop
-    for x in range(numberOfTriggers):
+    for x in range(number_of_triggers):
         #Wait for 500 ms
         time.sleep(0.5)
         CheckForError(vi, (switch.SendSoftwareTrigger(switchTypes.SendSoftwareTriggerRequest(
             vi=vi
             ))).status)
-        numberOfTriggers = numberOfTriggers - 1    
+        number_of_triggers = number_of_triggers - 1    
 
     #Abort Scanning
     CheckForError(vi, (switch.AbortScan(switchTypes.AbortScanRequest(
