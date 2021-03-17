@@ -118,6 +118,11 @@ try :
         client_id = client_1_id
         ))
     assert(is_unreserved_response.is_unreserved)
+    is_reserved_by_client1_response = session_client.IsReservedByClient(session_types.IsReservedByClientRequest(
+        reservation_id = session_name,
+        client_id = client_2_id
+        ))
+    assert(not is_reserved_by_client1_response.is_reserved)
     print(f'{session_name} is no longer reserved by {client_1_id}.\n')
 
     # Reset server
