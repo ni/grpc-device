@@ -21,7 +21,7 @@
 #   > py -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
 #   > py -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
 #
-# Refer to the NI Scope Help to determine the valid channel and resource names for your Scope module.
+# Refer to the NI-SCOPE Help to determine the valid channel and resource names for your NI-SCOPE module.
 
 import grpc
 import sys
@@ -39,7 +39,7 @@ def CheckForError (vi, status) :
         any_error = True
         ThrowOnError (vi, status)
 
-# Converts an error code returned by NI-Scope into a user-readable string
+# Converts an error code returned by NI-SCOPE into a user-readable string
 def ThrowOnError (vi, error_code):
     error_message_request = niscope_types.GetErrorMessageRequest(
         vi = vi,
@@ -56,13 +56,13 @@ if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
 # Create the communication channel for the remote host (in this case we are connecting to a local server)
-# and create connections to the niscope and session services
+# and create connections to the NI-SCOPE and session services
 channel = grpc.insecure_channel(server_address)
 niscope_client = grpc_niscope.NiScopeStub(channel)
 session_client = grpc_session.SessionUtilitiesStub(channel)
 
 try :
-    # Resource name and options for a simulated 5164 client. Change them according to the scope model.
+    # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
     resource = "PXI1Slot2"
     options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
     client_1_id = "Client1"
@@ -72,7 +72,7 @@ try :
     reset_server_response = session_client.ResetServer(session_types.ResetServerRequest())
     assert(reset_server_response.is_server_reset)
 
-    # Open session to Scope module with options
+    # Open session to NI-SCOPE module with options
     session_name = "Ni-Scope-Session-1"
     print('\nInitializing session...')
     init_with_options_response = niscope_client.InitWithOptions(niscope_types.InitWithOptionsRequest(
@@ -139,7 +139,7 @@ try :
     assert(reset_server_response.is_server_reset)
     print(f'Server has been reset.\n')
 
-# If NiScope API or Session API throws an exception, print the error message  
+# If NI-SCOPE API or Session API throws an exception, print the error message  
 except grpc.RpcError as e:
     error_message = e.details()
     print(error_message)
