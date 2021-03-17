@@ -12,19 +12,24 @@
 #     > conda install grpcio-tools
 #
 # Generate the python API from the gRPC definition (.ptoto) files
-#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./niDevice.proto
-#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./niScope.proto 
+#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./session.proto
+#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./niscope.proto 
 #
 # Update the server address and resource name and options in this file
 # Run the code to read a waveform from the scope
 #
 
 import grpc
-import niScope_pb2 as scopeTypes
-import niScope_pb2_grpc as gRPCScope
+import niScope_pb2 as scope_types
+import niScope_pb2_grpc as gRPC_scope
+
+def check_status(scope_service, result):
+    if (result.status != 0):
+        error = scope_service.GetError(scope_types.GetErrorRequest())
+        print(error.description)
 
 # This is the location (ipaddress or machine name):(port) of the niDevice server
-serverAddress = "localhost:50051"
+server_address = "localhost:31763"
 
 # Resource name and options for a simulated 5164 scope
 resource = "SimulatedScope7c632f66-e7c2-4fab-85a4-cd15c8be4130"
@@ -32,63 +37,70 @@ options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:161061
 
 # Create the communcation channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the niScope service
-channel = grpc.insecure_channel(serverAddress)
-scope = gRPCScope.niScopeServiceStub(channel)
+channel = grpc.insecure_channel(server_address)
+scope_service = gRPC_scope.NiScopeStub(channel)
 
 # Initialize the scope
-initResult = scope.InitWithOptions(scopeTypes.InitWithOptionsParameters(
-    resourceName=resource, 
-    IDQuery=False, 
-    optionString=options
+init_result = scope_service.InitWithOptions(scope_types.InitWithOptionsRequest(
+    session_name = "demo",
+    resource_name = resource, 
+    id_query = False, 
+    option_string = options
     ))
-vi = initResult.newVi
+vi = init_result.vi
+check_status(scope_service, init_result)
 
 # Configure horizontal timing
-configResult = scope.ConfigureHorizontalTiming(scopeTypes.ConfigureHorizontalTimingParameters(
+config_result = scope_service.ConfigureHorizontalTiming(scope_types.ConfigureHorizontalTimingRequest(
     vi = vi,
-    minSampleRate = 1000000,
-    minNumPts = 100000,
-    refPosition = 50,
-    numRecords = 1,
-    enforceRealtime = True
-    ))
+    min_sample_rate = 1000000,
+    min_num_pts = 100000,
+    ref_position = 50,
+    num_records = 1,
+    enforce_realtime = True
+))
+check_status(scope_service, config_result)
 
 # Configure vertical timing
-verticalResult = scope.ConfigureVertical(scopeTypes.ConfigureVerticalParameters(
+vertical_result = scope_service.ConfigureVertical(scope_types.ConfigureVerticalRequest(
     vi = vi,
-    channelList = "0",
+    channel_list = "0",
     range = 30.0,
     offset = 0,
-    coupling = scopeTypes.val_dc,
+    coupling = scope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
     enabled = True,
-    probeAttenuation = 1
-    ))
+    probe_attenuation = 1
+))
+check_status(scope_service, vertical_result)
 
-confTriggerEdgeResult = scope.ConfigureTriggerEdge(scopeTypes.ConfigureTriggerEdgeParameters(
+confTrigger_edge_result = scope_service.ConfigureTriggerEdge(scope_types.ConfigureTriggerEdgeRequest(
     vi = vi,
-    triggerSource = "0",
+    trigger_source = "0",
     level = 0.00,
-    triggerCoupling = scopeTypes.val_dc,
-    slope = scopeTypes.val_positive
+    trigger_coupling = scope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+    slope = scope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
 ))
+check_status(scope_service, confTrigger_edge_result)
 
-result = scope.SetAttributeViInt32(scopeTypes.SetAttributeViInt32Parameters(
+result = scope_service.SetAttributeViInt32(scope_types.SetAttributeViInt32Request(
     vi = vi,
-    channelList = "0",
-    attributeId = scopeTypes.attr_meas_ref_level_units,
-    value = scopeTypes.attr_meas_percentage_method
+    channel_list = "0",
+    attribute_id = scope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+    value = scope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_VOLTS
 ))
+check_status(scope_service, result)
 
 # Read a waveform from the scope
-readResult = scope.Read(scopeTypes.ReadParameters(
+read_result = scope_service.Read(scope_types.ReadRequest(
     vi = vi,
-    channelList = "0",
+    channel_list = "0",
     timeout = 10000,
-    numSamples = 100000
-    ))
-values = readResult.wfm[0:10]
+    num_samples = 100000
+))
+check_status(scope_service, read_result)
+values = read_result.waveform[0:10]
 print(values)
 
-scope.Close(scopeTypes.CloseParameters(
+scope_service.Close(scope_types.CloseRequest(
     vi = vi
-    ))
+))
