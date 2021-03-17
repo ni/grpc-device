@@ -3,15 +3,14 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-SWITCH
 //---------------------------------------------------------------------
-#ifndef NI_NISWITCH_GRPC_LIBRARY_WRAPPER_H
-#define NI_NISWITCH_GRPC_LIBRARY_WRAPPER_H
+#ifndef GRPC_NISWITCH_LIBRARY_WRAPPER_H
+#define GRPC_NISWITCH_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niswitch.h>
 
-namespace ni {
-namespace niswitch {
 namespace grpc {
+namespace niswitch {
 
 class NiSwitchLibraryInterface {
  public:
@@ -19,46 +18,68 @@ class NiSwitchLibraryInterface {
 
   virtual ViStatus AbortScan(ViSession vi) = 0;
   virtual ViStatus CanConnect(ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32* pathCapability) = 0;
+  virtual ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
+  virtual ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
+  virtual ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
+  virtual ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue) = 0;
+  virtual ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
+  virtual ViStatus ClearError(ViSession vi) = 0;
+  virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
+  virtual ViStatus Close(ViSession vi) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
+  virtual ViStatus ConfigureScanList(ViSession vi, ViConstString scanlist, ViInt32 scanMode) = 0;
+  virtual ViStatus ConfigureScanTrigger(ViSession vi, ViReal64 scanDelay, ViInt32 triggerInput, ViInt32 scanAdvancedOutput) = 0;
   virtual ViStatus Connect(ViSession vi, ViConstString channel1, ViConstString channel2) = 0;
   virtual ViStatus ConnectMultiple(ViSession vi, ViConstString connectionList) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
   virtual ViStatus Disconnect(ViSession vi, ViConstString channel1, ViConstString channel2) = 0;
   virtual ViStatus DisconnectAll(ViSession vi) = 0;
   virtual ViStatus DisconnectMultiple(ViSession vi, ViConstString disconnectionList) = 0;
+  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue) = 0;
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]) = 0;
+  virtual ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue) = 0;
   virtual ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[]) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]) = 0;
+  virtual ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]) = 0;
+  virtual ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) = 0;
   virtual ViStatus GetPath(ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32 bufferSize, ViChar path[]) = 0;
   virtual ViStatus GetRelayCount(ViSession vi, ViConstString relayName, ViInt32* relayCount) = 0;
   virtual ViStatus GetRelayName(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]) = 0;
   virtual ViStatus GetRelayPosition(ViSession vi, ViConstString relayName, ViInt32* relayPosition) = 0;
+  virtual ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
+  virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus InitiateScan(ViSession vi) = 0;
+  virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
+  virtual ViStatus IsDebounced(ViSession vi, ViBoolean* isDebounced) = 0;
+  virtual ViStatus IsScanning(ViSession vi, ViBoolean* isScanning) = 0;
   virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus RelayControl(ViSession vi, ViConstString relayName, ViInt32 relayAction) = 0;
+  virtual ViStatus Reset(ViSession vi) = 0;
+  virtual ViStatus ResetInterchangeCheck(ViSession vi) = 0;
   virtual ViStatus ResetWithDefaults(ViSession vi) = 0;
+  virtual ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]) = 0;
   virtual ViStatus RouteScanAdvancedOutput(ViSession vi, ViInt32 scanAdvancedOutputConnector, ViInt32 scanAdvancedOutputBusLine, ViBoolean invert) = 0;
   virtual ViStatus RouteTriggerInput(ViSession vi, ViInt32 triggerInputConnector, ViInt32 triggerInputBusLine, ViBoolean invert) = 0;
+  virtual ViStatus Scan(ViSession vi, ViConstString scanlist, ViInt16 initiation) = 0;
+  virtual ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
   virtual ViStatus SendSoftwareTrigger(ViSession vi) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue) = 0;
+  virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
+  virtual ViStatus SetContinuousScan(ViSession vi, ViBoolean continuousScan) = 0;
   virtual ViStatus SetPath(ViSession vi, ViConstString pathList) = 0;
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs) = 0;
   virtual ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs) = 0;
-  virtual ViStatus close(ViSession vi) = 0;
-  virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
-  virtual ViStatus reset(ViSession vi) = 0;
-  virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
-}  // namespace grpc
 }  // namespace niswitch
-}  // namespace ni
-#endif  // NI_NISWITCH_GRPC_LIBRARY_WRAPPER_H
+}  // namespace grpc
+#endif  // GRPC_NISWITCH_LIBRARY_WRAPPER_H

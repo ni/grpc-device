@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryInterface for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_MOCK_LIBRARY_H
-#define NI_FAKE_GRPC_MOCK_LIBRARY_H
+#ifndef GRPC_NIFAKE_MOCK_LIBRARY_H
+#define GRPC_NIFAKE_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -15,7 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
+class NiFakeMockLibrary : public grpc::nifake::NiFakeLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AcceptListOfDurationsInSeconds, (ViSession vi, ViInt32 count, ViReal64 delays[]), (override));
@@ -28,11 +28,9 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, GetABoolean, (ViSession vi, ViBoolean* aBoolean), (override));
   MOCK_METHOD(ViStatus, GetANumber, (ViSession vi, ViInt16* aNumber), (override));
   MOCK_METHOD(ViStatus, GetAStringOfFixedMaximumSize, (ViSession vi, ViChar aString[256]), (override));
-  MOCK_METHOD(ViStatus, GetAStringUsingPythonCode, (ViSession vi, ViInt16 aNumber, ViChar aString[]), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceString, (ViSession vi, ViInt32 bufferSize, ViChar aString[]), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistString, (ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize), (override));
-  MOCK_METHOD(ViStatus, GetArrayForPythonCodeDouble, (ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]), (override));
-  MOCK_METHOD(ViStatus, GetArraySizeForPythonCode, (ViSession vi, ViInt32* sizeOut), (override));
+  MOCK_METHOD(ViStatus, GetArraySizeForCustomCode, (ViSession vi, ViInt32* sizeOut), (override));
   MOCK_METHOD(ViStatus, GetArrayUsingIviDance, (ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]), (override));
   MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue), (override));
@@ -75,4 +73,4 @@ class NiFakeMockLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // NI_FAKE_GRPC_MOCK_LIBRARY_H
+#endif  // GRPC_NIFAKE_MOCK_LIBRARY_H

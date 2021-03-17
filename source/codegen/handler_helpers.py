@@ -30,18 +30,38 @@ def sanitize_names(parameters):
             parameter['cppName'] = parameter['cppName'] + 'Parameter'
 
 def get_include_guard_name(config, suffix):
-    include_guard_name = 'ni_' + config['namespace_component'] + '_grpc' + suffix
+    include_guard_name = 'grpc_' + config['namespace_component'] + suffix
     return include_guard_name.upper()
+
+def is_string_arg(parameter):
+    return parameter['type'] == 'ViChar[]' or parameter['type'] == 'ViInt8[]'
 
 def create_args(parameters):
     result = ''
     for parameter in parameters:
       parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-      if parameter["type"].startswith("struct"):
-        parameter_name = parameter_name + ".data()"
-      elif not common_helpers.is_array(parameter['type']) and common_helpers.is_output_parameter(parameter):
-        result = result + '&'
-      result = result + parameter_name + ', '
+      is_array = common_helpers.is_array(parameter['type'])
+      is_output = common_helpers.is_output_parameter(parameter)
+      if common_helpers.is_output_parameter(parameter) and is_string_arg(parameter):
+        type_without_brackets = parameter['type'].replace('[]', '')
+        result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
+      else:
+        if is_array and common_helpers.is_struct(parameter):
+          parameter_name = parameter_name + ".data()"
+        elif not is_array and is_output:
+          result = f'{result}&'
+        result = f'{result}{parameter_name}, '
+    return result[:-2]
+
+def create_args_for_ivi_dance(parameters):
+    result = ''
+    for parameter in parameters:
+      if parameter.get('is_size_param', False):
+        result = f'{result}0, '
+      elif common_helpers.is_output_parameter(parameter):
+        result = f'{result}nullptr, '
+      else:
+        result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
     return result[:-2]
 
 def create_params(parameters):
@@ -105,4 +125,15 @@ def get_output_lookup_values(enum_data):
 def filter_api_functions(functions):
   '''Returns function metadata only for those functions to include for generating the function types to the API library'''
   return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']
+
+def filter_proto_rpc_functions_to_generate(functions):
+  '''Returns function metadata only for those functions to include for generating proto rpc methods'''
+  functions_for_code_gen = {'public'}
+  return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_code_gen]
+
+def get_cname(functions, method_name, c_function_prefix):
+  if ('cname' in functions[method_name]):
+    return functions[method_name]['cname']
+  else:
+    return c_function_prefix + method_name
 

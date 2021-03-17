@@ -37,12 +37,217 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CheckAttributeViBoolean': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CheckAttributeViInt32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CheckAttributeViReal64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CheckAttributeViString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CheckAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ClearError': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ClearInterchangeWarnings': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Close': {
+        'cname' : 'niSwitch_close',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus',
+    },
     'Commit': {
         'parameters': [
             {
                 'direction': 'in',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureScanList': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'scanlist',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ScanMode',
+                'name': 'scanMode',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureScanTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'attribute': 'SCAN_DELAY',
+                'name': 'scanDelay',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TriggerInput',
+                'name': 'triggerInput',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ScanAdvancedOutput',
+                'name': 'scanAdvancedOutput',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -137,8 +342,57 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ErrorMessage': {
+        'cname' : 'niSwitch_error_message',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'errorCode',
+                'type': 'ViStatus'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus',
+    },
+    'ErrorQuery': {
+        'cname' : 'niSwitch_error_query',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorCode',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAttributeViBoolean': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -164,7 +418,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViInt32': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -190,7 +443,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViReal64': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -216,7 +468,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViString': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -246,6 +497,31 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'attributeValue',
+                'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus'
@@ -280,8 +556,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetError': {
-        'codegen_method': 'public',
-        'is_error_handling': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -309,7 +583,54 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
+    },
+    'GetNextCoercionRecord': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'coercionRecord',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus',
+    },
+    'GetNextInterchangeWarning': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'interchangeWarning',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus',
     },
     'GetPath': {
         'parameters': [
@@ -415,8 +736,9 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'InitWithTopology': {
-        'codegen_method': 'public',
+    'Init': {
+        'init_method': True,
+        'cname': 'niSwitch_init ',
         'parameters': [
             {
                 'direction': 'in',
@@ -424,40 +746,131 @@ functions = {
                 'type': 'ViRsrc'
             },
             {
-                'default_value': '"Configured Topology"',
                 'direction': 'in',
-                'name': 'topology',
-                'type': 'ViConstString'
-            },
-            {
-                'default_value': False,
-                'direction': 'in',
-                'name': 'simulate',
+                'name': 'idQuery',
                 'type': 'ViBoolean'
             },
             {
-                'default_value': False,
                 'direction': 'in',
                 'name': 'resetDevice',
                 'type': 'ViBoolean'
             },
             {
-                'default_value': '""',
                 'direction': 'out',
                 'name': 'vi',
                 'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
+    },
+    'InitWithOptions': {
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'direction': 'in',
+                'name': 'idQuery',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'in',
+                'name': 'resetDevice',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'out',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus',
+    },
+    'InitWithTopology': {
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'direction': 'in',
+                'name': 'topology',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'simulate',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'in',
+                'name': 'resetDevice',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'out',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus',
     },
     'InitiateScan': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'InvalidateAllAttributes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'IsDebounced': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'isDebounced',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'IsScanning': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'isScanning',
+                'type': 'ViBoolean'
             }
         ],
         'returns': 'ViStatus'
@@ -477,7 +890,6 @@ functions = {
         ],
         'render_in_session_base': True,
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'RelayControl': {
         'parameters': [
@@ -500,12 +912,62 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'Reset': {
+        'cname' : 'niSwitch_reset',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ResetInterchangeCheck': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ResetWithDefaults': {
         'parameters': [
             {
                 'direction': 'in',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'RevisionQuery': {
+        'cname' : 'niSwitch_revision_query',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'instrumentDriverRevision',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'firmwareRevision',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
             }
         ],
         'returns': 'ViStatus'
@@ -530,7 +992,6 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': False,
                 'direction': 'in',
                 'name': 'invert',
                 'type': 'ViBoolean'
@@ -558,10 +1019,55 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': False,
                 'direction': 'in',
                 'name': 'invert',
                 'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Scan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'scanlist',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'HandshakingInitiation',
+                'name': 'initiation',
+                'type': 'ViInt16'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SelfTest': {
+        'cname' : 'niSwitch_self_test',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'selfTestResult',
+                'type': 'ViInt16'
+            },
+            {
+                'direction': 'out',
+                'name': 'selfTestMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
             }
         ],
         'returns': 'ViStatus'
@@ -577,7 +1083,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViBoolean': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -603,7 +1108,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViInt32': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -629,7 +1133,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViReal64': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -655,7 +1158,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViString': {
-        'codegen_method': 'public',
         'parameters': [
             {
                 'direction': 'in',
@@ -676,6 +1178,46 @@ functions = {
                 'direction': 'in',
                 'name': 'attributeValue',
                 'type': 'ViString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetContinuousScan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'continuousScan',
+                'type': 'ViBoolean'
             }
         ],
         'returns': 'ViStatus'
@@ -710,7 +1252,6 @@ functions = {
         ],
         'render_in_session_base': True,
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'WaitForDebounce': {
         'parameters': [
@@ -720,7 +1261,6 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(milliseconds=5000)',
                 'direction': 'in',
                 'name': 'maximumTimeMs',
                 'type': 'ViInt32'
@@ -736,84 +1276,9 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(milliseconds=5000)',
                 'direction': 'in',
                 'name': 'maximumTimeMs',
                 'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'close': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus',
-        'use_session_lock': False
-    },
-    'error_message': {
-        'codegen_method': 'public',
-        'is_error_handling': True,
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'errorCode',
-                'type': 'ViStatus'
-            },
-            {
-                'direction': 'out',
-                'name': 'errorMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus',
-        'use_session_lock': False
-    },
-    'reset': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'self_test': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'name': 'selfTestResult',
-                'type': 'ViInt16'
-            },
-            {
-                'direction': 'out',
-                'name': 'selfTestMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
             }
         ],
         'returns': 'ViStatus'

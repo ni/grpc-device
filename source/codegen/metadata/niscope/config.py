@@ -5,10 +5,10 @@ config = {
     'c_header': 'niScope.h',
     'c_function_prefix': 'niScope_',
     'service_class_prefix': 'NiScope',
-    'java_package': 'com.ni.scope.grpc',
-    'csharp_namespace': 'NationalInstruments.Scope.Grpc',
-    'namespace_component': 'scope',
-    'close_function': 'close',
+    'java_package': 'com.ni.grpc.scope',
+    'csharp_namespace': 'NationalInstruments.Grpc.Scope',
+    'namespace_component': 'niscope',
+    'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'Abort',
         'initiate_function': 'InitiateAcquisition',
@@ -58,6 +58,64 @@ config = {
                     'type': 'ViReal64',
                     'name': 'reserved2',
                     'grpc_name': 'reserved2'
+                }
+            ]
+        },
+        { 
+            'name': 'niScope_coefficientInfo',
+            'grpc_name': 'CoefficientInfo',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'offset',
+                    'grpc_name': 'offset'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'gain',
+                    'grpc_name': 'gain'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved1',
+                    'grpc_name': 'reserved1'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved2',
+                    'grpc_name': 'reserved2'
+                }
+            ]
+        },
+        { 
+            'name': 'NIComplexNumber_struct',
+            'grpc_name': 'NIComplexNumber',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'real',
+                    'grpc_name': 'real'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'imaginary',
+                    'grpc_name': 'imaginary'
+                }
+            ]
+        },
+        { 
+            'name': 'NIComplexI16_struct',
+            'grpc_name': 'NIComplexInt32',
+            'fields': [
+                {
+                    'type': 'ViInt16',
+                    'name': 'real',
+                    'grpc_name': 'real'
+                },
+                {
+                    'type': 'ViInt16',
+                    'name': 'imaginary',
+                    'grpc_name': 'imaginary'
                 }
             ]
         }

@@ -3,10 +3,8 @@
 
 #include <shared_mutex>
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
 class Semaphore {
  public:
@@ -22,9 +20,7 @@ class Semaphore {
   std::condition_variable cv_;
 };
 
-}  // namespace internal
+}  // namespace nidevice
 }  // namespace grpc
-}  // namespace hardware
-}  // namespace ni
 
 #endif  // NI_HARDWARE_GRPC_INTERNAL_SEMAPHORE

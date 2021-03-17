@@ -57,7 +57,7 @@ jobs:
         cache-name: hostgrpccache
       with:
         path: third_party/grpc/build/
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
+        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
 
     - name: Configure Host OS gRPC Support
       if: steps.hostgrpccache.outputs.cache-hit != 'true'
@@ -138,7 +138,7 @@ jobs:
       run: >-
         tar -cvf NILinuxRealTime-x86_64.tar
         ${GITHUB_WORKSPACE}/build/certs/
-        ${GITHUB_WORKSPACE}/build/core_server
+        ${GITHUB_WORKSPACE}/build/ni_grpc_device_server
         ${GITHUB_WORKSPACE}/build/CTestTestfile.cmake
         ${GITHUB_WORKSPACE}/build/IntegrationTestsRunner
         ${GITHUB_WORKSPACE}/build/libTestApi.so

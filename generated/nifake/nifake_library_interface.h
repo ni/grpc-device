@@ -3,15 +3,14 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_LIBRARY_WRAPPER_H
-#define NI_FAKE_GRPC_LIBRARY_WRAPPER_H
+#ifndef GRPC_NIFAKE_LIBRARY_WRAPPER_H
+#define GRPC_NIFAKE_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niFake.h>
 
-namespace ni {
-namespace fake {
 namespace grpc {
+namespace nifake {
 
 class NiFakeLibraryInterface {
  public:
@@ -28,11 +27,9 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
   virtual ViStatus GetANumber(ViSession vi, ViInt16* aNumber) = 0;
   virtual ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]) = 0;
-  virtual ViStatus GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber, ViChar aString[]) = 0;
   virtual ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]) = 0;
   virtual ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize) = 0;
-  virtual ViStatus GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]) = 0;
-  virtual ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut) = 0;
+  virtual ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut) = 0;
   virtual ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue) = 0;
@@ -72,7 +69,6 @@ class NiFakeLibraryInterface {
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
+}  // namespace nifake
 }  // namespace grpc
-}  // namespace fake
-}  // namespace ni
-#endif  // NI_FAKE_GRPC_LIBRARY_WRAPPER_H
+#endif  // GRPC_NIFAKE_LIBRARY_WRAPPER_H

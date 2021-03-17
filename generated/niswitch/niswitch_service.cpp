@@ -12,13 +12,10 @@
 #include <atomic>
 #include <vector>
 
-namespace ni {
-namespace niswitch {
 namespace grpc {
+namespace niswitch {
 
-  namespace internal = ni::hardware::grpc::internal;
-
-  NiSwitchService::NiSwitchService(NiSwitchLibraryInterface* library, internal::SessionRepository* session_repository)
+  NiSwitchService::NiSwitchService(NiSwitchLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -31,14 +28,17 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->AbortScan(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -47,20 +47,191 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::CanConnect(::grpc::ServerContext* context, const CanConnectRequest* request, CanConnectResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel1 = request->channel1().c_str();
       ViConstString channel2 = request->channel2().c_str();
       ViInt32 path_capability {};
       auto status = library_->CanConnect(vi, channel1, channel2, &path_capability);
       response->set_status(status);
       if (status == 0) {
-        response->set_path_capability(static_cast<ni::niswitch::grpc::PathCapability>(path_capability));
+        response->set_path_capability(static_cast<grpc::niswitch::PathCapability>(path_capability));
+        response->set_path_capability_raw(path_capability);
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViBoolean attribute_value = request->attribute_value();
+      auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::CheckAttributeViInt32(::grpc::ServerContext* context, const CheckAttributeViInt32Request* request, CheckAttributeViInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViInt32 attribute_value = request->attribute_value();
+      auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::CheckAttributeViReal64(::grpc::ServerContext* context, const CheckAttributeViReal64Request* request, CheckAttributeViReal64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViReal64 attribute_value = request->attribute_value();
+      auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::CheckAttributeViString(::grpc::ServerContext* context, const CheckAttributeViStringRequest* request, CheckAttributeViStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViString attribute_value = (ViString)request->attribute_value().c_str();
+      auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::CheckAttributeViSession(::grpc::ServerContext* context, const CheckAttributeViSessionRequest* request, CheckAttributeViSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      auto attribute_value_grpc_session = request->attribute_value();
+      ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.id(), attribute_value_grpc_session.name());
+      auto status = library_->CheckAttributeViSession(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ClearError(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ClearInterchangeWarnings(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      session_repository_->remove_session(vi);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -69,14 +240,96 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Commit(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ConfigureScanList(::grpc::ServerContext* context, const ConfigureScanListRequest* request, ConfigureScanListResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString scanlist = request->scanlist().c_str();
+      ViInt32 scan_mode;
+      switch (request->scan_mode_enum_case()) {
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::kScanMode:
+          scan_mode = (ViInt32)request->scan_mode();
+          break;
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::kScanModeRaw:
+          scan_mode = (ViInt32)request->scan_mode_raw();
+          break;
+        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::SCAN_MODE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_mode was not specified or out of range");
+          break;
+      }
+
+      auto status = library_->ConfigureScanList(vi, scanlist, scan_mode);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ConfigureScanTrigger(::grpc::ServerContext* context, const ConfigureScanTriggerRequest* request, ConfigureScanTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 scan_delay = request->scan_delay();
+      ViInt32 trigger_input;
+      switch (request->trigger_input_enum_case()) {
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInput:
+          trigger_input = (ViInt32)request->trigger_input();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInputRaw:
+          trigger_input = (ViInt32)request->trigger_input_raw();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::TRIGGER_INPUT_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input was not specified or out of range");
+          break;
+      }
+
+      ViInt32 scan_advanced_output;
+      switch (request->scan_advanced_output_enum_case()) {
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutput:
+          scan_advanced_output = (ViInt32)request->scan_advanced_output();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutputRaw:
+          scan_advanced_output = (ViInt32)request->scan_advanced_output_raw();
+          break;
+        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::SCAN_ADVANCED_OUTPUT_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output was not specified or out of range");
+          break;
+      }
+
+      auto status = library_->ConfigureScanTrigger(vi, scan_delay, trigger_input, scan_advanced_output);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -85,16 +338,19 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel1 = request->channel1().c_str();
       ViConstString channel2 = request->channel2().c_str();
       auto status = library_->Connect(vi, channel1, channel2);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -103,15 +359,18 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::ConnectMultiple(::grpc::ServerContext* context, const ConnectMultipleRequest* request, ConnectMultipleResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString connection_list = request->connection_list().c_str();
       auto status = library_->ConnectMultiple(vi, connection_list);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -120,14 +379,17 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Disable(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -136,16 +398,19 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::Disconnect(::grpc::ServerContext* context, const DisconnectRequest* request, DisconnectResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel1 = request->channel1().c_str();
       ViConstString channel2 = request->channel2().c_str();
       auto status = library_->Disconnect(vi, channel1, channel2);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -154,14 +419,17 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::DisconnectAll(::grpc::ServerContext* context, const DisconnectAllRequest* request, DisconnectAllResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisconnectAll(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -170,15 +438,67 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::DisconnectMultiple(::grpc::ServerContext* context, const DisconnectMultipleRequest* request, DisconnectMultipleResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString disconnection_list = request->disconnection_list().c_str();
       auto status = library_->DisconnectMultiple(vi, disconnection_list);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViStatus error_code = request->error_code();
+      std::string error_message(256, '\0');
+      auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_error_message(error_message);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 error_code {};
+      std::string error_message(256, '\0');
+      auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_error_code(error_code);
+        response->set_error_message(error_message);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -187,9 +507,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
@@ -200,7 +523,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -209,9 +532,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
@@ -222,7 +548,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -231,9 +557,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
@@ -244,7 +573,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -253,10 +582,56 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    catch (internal::LibraryLoadException& ex) {
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+
+      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 array_size = status;
+
+      std::string attribute_value(array_size, '\0');
+      status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_attribute_value(attribute_value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViSession attribute_value {};
+      auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_attribute_value()->set_id(attribute_value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -265,10 +640,30 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    catch (internal::LibraryLoadException& ex) {
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 index = request->index();
+
+      auto status = library_->GetChannelName(vi, index, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string channel_name_buffer(buffer_size, '\0');
+      status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name_buffer.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_channel_name_buffer(channel_name_buffer);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -277,10 +672,93 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    catch (internal::LibraryLoadException& ex) {
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->GetError(vi, nullptr, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      ViStatus code {};
+      std::string description(buffer_size, '\0');
+      status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_code(code);
+        response->set_description(description);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->GetNextCoercionRecord(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string coercion_record(buffer_size, '\0');
+      status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_coercion_record(coercion_record);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->GetNextInterchangeWarning(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string interchange_warning(buffer_size, '\0');
+      status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_interchange_warning(interchange_warning);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -289,10 +767,31 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetPath(::grpc::ServerContext* context, const GetPathRequest* request, GetPathResponse* response)
   {
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    catch (internal::LibraryLoadException& ex) {
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel1 = request->channel1().c_str();
+      ViConstString channel2 = request->channel2().c_str();
+
+      auto status = library_->GetPath(vi, channel1, channel2, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 buffer_size = status;
+
+      std::string path(buffer_size, '\0');
+      status = library_->GetPath(vi, channel1, channel2, buffer_size, (ViChar*)path.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_path(path);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -301,9 +800,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetRelayCount(::grpc::ServerContext* context, const GetRelayCountRequest* request, GetRelayCountResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString relay_name = request->relay_name().c_str();
       ViInt32 relay_count {};
       auto status = library_->GetRelayCount(vi, relay_name, &relay_count);
@@ -313,7 +815,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -322,10 +824,30 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetRelayName(::grpc::ServerContext* context, const GetRelayNameRequest* request, GetRelayNameResponse* response)
   {
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    catch (internal::LibraryLoadException& ex) {
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 index = request->index();
+
+      auto status = library_->GetRelayName(vi, index, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 relay_name_buffer_size = status;
+
+      std::string relay_name_buffer(relay_name_buffer_size, '\0');
+      status = library_->GetRelayName(vi, index, relay_name_buffer_size, (ViChar*)relay_name_buffer.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_relay_name_buffer(relay_name_buffer);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -334,19 +856,88 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::GetRelayPosition(::grpc::ServerContext* context, const GetRelayPositionRequest* request, GetRelayPositionResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString relay_name = request->relay_name().c_str();
       ViInt32 relay_position {};
       auto status = library_->GetRelayPosition(vi, relay_name, &relay_position);
       response->set_status(status);
       if (status == 0) {
-        response->set_relay_position(static_cast<ni::niswitch::grpc::RelayPosition>(relay_position));
+        response->set_relay_position(static_cast<grpc::niswitch::RelayPosition>(relay_position));
+        response->set_relay_position_raw(relay_position);
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViBoolean id_query = request->id_query();
+      ViBoolean reset_device = request->reset_device();
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->Init(resource_name, id_query, reset_device, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_vi()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViBoolean id_query = request->id_query();
+      ViBoolean reset_device = request->reset_device();
+      ViConstString option_string = request->option_string().c_str();
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_vi()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -355,6 +946,9 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::InitWithTopology(::grpc::ServerContext* context, const InitWithTopologyRequest* request, InitWithTopologyResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViConstString topology = request->topology().c_str();
@@ -368,7 +962,7 @@ namespace grpc {
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -376,7 +970,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -385,14 +979,82 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::InitiateScan(::grpc::ServerContext* context, const InitiateScanRequest* request, InitiateScanResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->InitiateScan(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->InvalidateAllAttributes(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::IsDebounced(::grpc::ServerContext* context, const IsDebouncedRequest* request, IsDebouncedResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean is_debounced {};
+      auto status = library_->IsDebounced(vi, &is_debounced);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_is_debounced(is_debounced);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::IsScanning(::grpc::ServerContext* context, const IsScanningRequest* request, IsScanningResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean is_scanning {};
+      auto status = library_->IsScanning(vi, &is_scanning);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_is_scanning(is_scanning);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -401,9 +1063,12 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViBoolean caller_has_lock {};
       auto status = library_->LockSession(vi, &caller_has_lock);
       response->set_status(status);
@@ -412,7 +1077,7 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -421,269 +1086,31 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::RelayControl(::grpc::ServerContext* context, const RelayControlRequest* request, RelayControlResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString relay_name = request->relay_name().c_str();
-      ViInt32 relay_action = (ViInt32)request->relay_action();
+      ViInt32 relay_action;
+      switch (request->relay_action_enum_case()) {
+        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::kRelayAction:
+          relay_action = (ViInt32)request->relay_action();
+          break;
+        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::kRelayActionRaw:
+          relay_action = (ViInt32)request->relay_action_raw();
+          break;
+        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::RELAY_ACTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for relay_action was not specified or out of range");
+          break;
+      }
+
       auto status = library_->RelayControl(vi, relay_name, relay_action);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_->ResetWithDefaults(vi);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::RouteScanAdvancedOutput(::grpc::ServerContext* context, const RouteScanAdvancedOutputRequest* request, RouteScanAdvancedOutputResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
-      ViInt32 scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
-      ViBoolean invert = request->invert();
-      auto status = library_->RouteScanAdvancedOutput(vi, scan_advanced_output_connector, scan_advanced_output_bus_line, invert);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::RouteTriggerInput(::grpc::ServerContext* context, const RouteTriggerInputRequest* request, RouteTriggerInputResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 trigger_input_connector = (ViInt32)request->trigger_input_connector();
-      ViInt32 trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
-      ViBoolean invert = request->invert();
-      auto status = library_->RouteTriggerInput(vi, trigger_input_connector, trigger_input_bus_line, invert);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::SendSoftwareTrigger(::grpc::ServerContext* context, const SendSoftwareTriggerRequest* request, SendSoftwareTriggerResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_->SendSoftwareTrigger(vi);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      ViBoolean attribute_value = request->attribute_value();
-      auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      ViInt32 attribute_value = request->attribute_value();
-      auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      ViReal64 attribute_value = request->attribute_value();
-      auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      ViString attribute_value = (ViString)request->attribute_value().c_str();
-      auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::SetPath(::grpc::ServerContext* context, const SetPathRequest* request, SetPathResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViConstString path_list = request->path_list().c_str();
-      auto status = library_->SetPath(vi, path_list);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViBoolean caller_has_lock {};
-      auto status = library_->UnlockSession(vi, &caller_has_lock);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::WaitForDebounce(::grpc::ServerContext* context, const WaitForDebounceRequest* request, WaitForDebounceResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 maximum_time_ms = request->maximum_time_ms();
-      auto status = library_->WaitForDebounce(vi, maximum_time_ms);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::WaitForScanComplete(::grpc::ServerContext* context, const WaitForScanCompleteRequest* request, WaitForScanCompleteResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViInt32 maximum_time_ms = request->maximum_time_ms();
-      auto status = library_->WaitForScanComplete(vi, maximum_time_ms);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      session_repository_->remove_session(vi);
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSwitchService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
-  {
-    try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      ViStatus error_code = request->error_code();
-      ViChar error_message[256];
-      auto status = library_->error_message(vi, error_code, error_message);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_message(error_message);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -692,14 +1119,205 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
-      auto status = library_->reset(vi);
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Reset(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ResetInterchangeCheck(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ResetWithDefaults(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      std::string instrument_driver_revision(256, '\0');
+      std::string firmware_revision(256, '\0');
+      auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_instrument_driver_revision(instrument_driver_revision);
+        response->set_firmware_revision(firmware_revision);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::RouteScanAdvancedOutput(::grpc::ServerContext* context, const RouteScanAdvancedOutputRequest* request, RouteScanAdvancedOutputResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 scan_advanced_output_connector;
+      switch (request->scan_advanced_output_connector_enum_case()) {
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnector:
+          scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnectorRaw:
+          scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector_raw();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::SCAN_ADVANCED_OUTPUT_CONNECTOR_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_connector was not specified or out of range");
+          break;
+      }
+
+      ViInt32 scan_advanced_output_bus_line;
+      switch (request->scan_advanced_output_bus_line_enum_case()) {
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLine:
+          scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLineRaw:
+          scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line_raw();
+          break;
+        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::SCAN_ADVANCED_OUTPUT_BUS_LINE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_bus_line was not specified or out of range");
+          break;
+      }
+
+      ViBoolean invert = request->invert();
+      auto status = library_->RouteScanAdvancedOutput(vi, scan_advanced_output_connector, scan_advanced_output_bus_line, invert);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::RouteTriggerInput(::grpc::ServerContext* context, const RouteTriggerInputRequest* request, RouteTriggerInputResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 trigger_input_connector;
+      switch (request->trigger_input_connector_enum_case()) {
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnector:
+          trigger_input_connector = (ViInt32)request->trigger_input_connector();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnectorRaw:
+          trigger_input_connector = (ViInt32)request->trigger_input_connector_raw();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::TRIGGER_INPUT_CONNECTOR_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_connector was not specified or out of range");
+          break;
+      }
+
+      ViInt32 trigger_input_bus_line;
+      switch (request->trigger_input_bus_line_enum_case()) {
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLine:
+          trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLineRaw:
+          trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line_raw();
+          break;
+        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::TRIGGER_INPUT_BUS_LINE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_bus_line was not specified or out of range");
+          break;
+      }
+
+      ViBoolean invert = request->invert();
+      auto status = library_->RouteTriggerInput(vi, trigger_input_connector, trigger_input_bus_line, invert);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::Scan(::grpc::ServerContext* context, const ScanRequest* request, ScanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString scanlist = request->scanlist().c_str();
+      ViInt16 initiation;
+      switch (request->initiation_enum_case()) {
+        case grpc::niswitch::ScanRequest::InitiationEnumCase::kInitiation:
+          initiation = (ViInt16)request->initiation();
+          break;
+        case grpc::niswitch::ScanRequest::InitiationEnumCase::kInitiationRaw:
+          initiation = (ViInt16)request->initiation_raw();
+          break;
+        case grpc::niswitch::ScanRequest::InitiationEnumCase::INITIATION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for initiation was not specified or out of range");
+          break;
+      }
+
+      auto status = library_->Scan(vi, scanlist, initiation);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -708,12 +1326,15 @@ namespace grpc {
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
-      auto session = request->vi();
-      ViSession vi = session_repository_->access_session(session.id(), session.name());
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
-      ViChar self_test_message[256];
-      auto status = library_->self_test(vi, &self_test_result, self_test_message);
+      std::string self_test_message(256, '\0');
+      auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);
@@ -721,12 +1342,244 @@ namespace grpc {
       }
       return ::grpc::Status::OK;
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
-} // namespace grpc
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SendSoftwareTrigger(::grpc::ServerContext* context, const SendSoftwareTriggerRequest* request, SendSoftwareTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->SendSoftwareTrigger(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViBoolean attribute_value = request->attribute_value();
+      auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViInt32 attribute_value = request->attribute_value();
+      auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViReal64 attribute_value = request->attribute_value();
+      auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      ViString attribute_value = (ViString)request->attribute_value().c_str();
+      auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      auto attribute_value_grpc_session = request->attribute_value();
+      ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.id(), attribute_value_grpc_session.name());
+      auto status = library_->SetAttributeViSession(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetContinuousScan(::grpc::ServerContext* context, const SetContinuousScanRequest* request, SetContinuousScanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean continuous_scan = request->continuous_scan();
+      auto status = library_->SetContinuousScan(vi, continuous_scan);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::SetPath(::grpc::ServerContext* context, const SetPathRequest* request, SetPathResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString path_list = request->path_list().c_str();
+      auto status = library_->SetPath(vi, path_list);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean caller_has_lock {};
+      auto status = library_->UnlockSession(vi, &caller_has_lock);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_caller_has_lock(caller_has_lock);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::WaitForDebounce(::grpc::ServerContext* context, const WaitForDebounceRequest* request, WaitForDebounceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 maximum_time_ms = request->maximum_time_ms();
+      auto status = library_->WaitForDebounce(vi, maximum_time_ms);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSwitchService::WaitForScanComplete(::grpc::ServerContext* context, const WaitForScanCompleteRequest* request, WaitForScanCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 maximum_time_ms = request->maximum_time_ms();
+      auto status = library_->WaitForScanComplete(vi, maximum_time_ms);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (grpc::nidevice::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 } // namespace niswitch
-} // namespace ni
+} // namespace grpc
 

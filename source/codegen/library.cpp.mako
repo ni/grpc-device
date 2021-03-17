@@ -8,7 +8,7 @@ enums = data['enums']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
+namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
@@ -28,9 +28,8 @@ static const char* kLibraryName = "${windows_libary_name}";
 static const char* kLibraryName = "lib${linux_library_name}.so";
 #endif
 
-namespace ni {
-namespace ${config["namespace_component"]} {
 namespace grpc {
+namespace ${config["namespace_component"]} {
 
 ${service_class_prefix}Library::${service_class_prefix}Library() : shared_library_(kLibraryName)
 {
@@ -41,7 +40,10 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : shared_librar
     return;
   }
 % for method_name in handler_helpers.filter_api_functions(functions):
-  function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_function_prefix}${method_name}"));
+<%
+  c_name = handler_helpers.get_cname(functions, method_name, c_function_prefix)
+%>\
+  function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_name}"));
 %endfor
 }
 
@@ -64,20 +66,20 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
   return_type = f['returns']
   parameter_list = handler_helpers.create_params(parameters)
   argument_list = ', '.join(p['cppName'] for p in parameters)
+  c_name = handler_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
 ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 {
   if (!function_pointers_.${method_name}) {
-    throw ni::hardware::grpc::internal::LibraryLoadException("Could not find ${c_function_prefix}${method_name}.");
+    throw grpc::nidevice::LibraryLoadException("Could not find ${c_name}.");
   }
 #if defined(_MSC_VER)
-  return ${c_function_prefix}${method_name}(${argument_list});
+  return ${c_name}(${argument_list});
 #else
   return function_pointers_.${method_name}(${argument_list});
 #endif
 }
 
 %endfor
-}  // namespace ni
 }  // namespace ${config["namespace_component"]}
 }  // namespace grpc

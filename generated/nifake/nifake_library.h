@@ -3,18 +3,17 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef NI_FAKE_GRPC_LIBRARY_H
-#define NI_FAKE_GRPC_LIBRARY_H
+#ifndef GRPC_NIFAKE_LIBRARY_H
+#define GRPC_NIFAKE_LIBRARY_H
 
 #include "nifake_library_interface.h"
 
 #include <server/shared_library.h>
 
-namespace ni {
-namespace fake {
 namespace grpc {
+namespace nifake {
 
-class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
+class NiFakeLibrary : public grpc::nifake::NiFakeLibraryInterface {
  public:
   NiFakeLibrary();
   virtual ~NiFakeLibrary();
@@ -31,11 +30,9 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean);
   ViStatus GetANumber(ViSession vi, ViInt16* aNumber);
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]);
-  ViStatus GetAStringUsingPythonCode(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
-  ViStatus GetArrayForPythonCodeDouble(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
-  ViStatus GetArraySizeForPythonCode(ViSession vi, ViInt32* sizeOut);
+  ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut);
   ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
@@ -86,11 +83,9 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
   using GetABooleanPtr = ViStatus (*)(ViSession vi, ViBoolean* aBoolean);
   using GetANumberPtr = ViStatus (*)(ViSession vi, ViInt16* aNumber);
   using GetAStringOfFixedMaximumSizePtr = ViStatus (*)(ViSession vi, ViChar aString[256]);
-  using GetAStringUsingPythonCodePtr = ViStatus (*)(ViSession vi, ViInt16 aNumber, ViChar aString[]);
   using GetAnIviDanceStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   using GetAnIviDanceWithATwistStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
-  using GetArrayForPythonCodeDoublePtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViReal64 arrayOut[]);
-  using GetArraySizeForPythonCodePtr = ViStatus (*)(ViSession vi, ViInt32* sizeOut);
+  using GetArraySizeForCustomCodePtr = ViStatus (*)(ViSession vi, ViInt32* sizeOut);
   using GetArrayUsingIviDancePtr = ViStatus (*)(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
   using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
@@ -141,11 +136,9 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     GetABooleanPtr GetABoolean;
     GetANumberPtr GetANumber;
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
-    GetAStringUsingPythonCodePtr GetAStringUsingPythonCode;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
-    GetArrayForPythonCodeDoublePtr GetArrayForPythonCodeDouble;
-    GetArraySizeForPythonCodePtr GetArraySizeForPythonCode;
+    GetArraySizeForCustomCodePtr GetArraySizeForCustomCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;
     GetAttributeViBooleanPtr GetAttributeViBoolean;
     GetAttributeViInt32Ptr GetAttributeViInt32;
@@ -185,12 +178,11 @@ class NiFakeLibrary : public ni::fake::grpc::NiFakeLibraryInterface {
     self_testPtr self_test;
   } FunctionLoadStatus;
 
-  ni::hardware::grpc::internal::SharedLibrary shared_library_;
+  grpc::nidevice::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 };
 
+}  // namespace nifake
 }  // namespace grpc
-}  // namespace fake
-}  // namespace ni
 
-#endif  // NI_FAKE_GRPC_LIBRARY_H
+#endif  // GRPC_NIFAKE_LIBRARY_H

@@ -12,7 +12,7 @@ if len(config["custom_types"]) > 0:
   custom_template = "custom_proto.mako"
   has_custom_template = True
 service_class_prefix = config["service_class_prefix"]
-attribute_value_prefix = service_class_prefix.upper()
+attribute_value_prefix = service_class_prefix.upper() + "_ATTRIBUTE"
 used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
 
@@ -28,15 +28,15 @@ option java_package = "${config["java_package"]}";
 option java_outer_classname = "${service_class_prefix}";
 option csharp_namespace = "${config["csharp_namespace"]}";
 
-package ni.${config["namespace_component"]}.grpc;
+package grpc.${config["namespace_component"]};
 
 import "session.proto";
 
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
-  common_helpers.mark_len_params(functions[function]["parameters"])
-  method_name = common_helpers.snake_to_camel(function)
+  common_helpers.mark_non_grpc_params(functions[function]["parameters"])
+  method_name = common_helpers.snake_to_pascal(function)
 %>\
   rpc ${method_name}(${method_name}Request) returns (${method_name}Response);
 % endfor
@@ -69,7 +69,7 @@ nonint_index = 1
 % for value in enum["values"]:
 % if enum.get("generate-mappings", false):
   ${enum_value_prefix}_${value["name"]} = ${nonint_index};
-<% 
+<%
   nonint_index = nonint_index+1
 %>\
 % else:
@@ -86,13 +86,13 @@ ${lookup.get_template(custom_template).render()}
 <%
   parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
-  if function == config['init_function']:
+  if common_helpers.is_init_method(functions[function]):
     session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
     input_parameters.insert(0, session_name_param)
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
   index = 0
 %>\
-message ${common_helpers.snake_to_camel(function)}Request {
+message ${common_helpers.snake_to_pascal(function)}Request {
 % for parameter in input_parameters:
 <%
   index  = index + 1
@@ -101,11 +101,24 @@ message ${common_helpers.snake_to_camel(function)}Request {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
+%if 'enum' in parameter:
+<%
+  index = index + 1
+  is_array = common_helpers.is_array(parameter["type"])
+  non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
+  parameter_name = common_helpers.camel_to_snake(parameter["name"])
+%>\
+  oneof ${parameter_name}_enum {
+    ${parameter_type} ${parameter_name} = ${index-1};
+    ${non_enum_type} ${parameter_name}_raw = ${index};
+  }
+%else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
+%endif
 % endfor
 }
 
-message ${common_helpers.snake_to_camel(function)}Response {
+message ${common_helpers.snake_to_pascal(function)}Response {
   int32 status = 1;
 <%
   index = 1
@@ -118,7 +131,17 @@ message ${common_helpers.snake_to_camel(function)}Response {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
+%if 'enum' in parameter:
+<%
+  index = index + 1
+  is_array = common_helpers.is_array(parameter["type"])
+  non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
+%>\
+  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index-1};
+  ${non_enum_type} ${common_helpers.camel_to_snake(parameter["name"])}_raw = ${index};
+%else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
+%endif
 %endfor
 }
 

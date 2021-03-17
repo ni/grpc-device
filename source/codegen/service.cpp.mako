@@ -8,13 +8,13 @@ functions = data['functions']
 lookup = data["lookup"]
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "ni::" + config["namespace_component"] + "::grpc::"
+namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
 windows_libary_name = config['library_info']['Windows']['64bit']['name']
 if len(config["custom_types"]) > 0:
-  custom_type = config["custom_types"][0]
+  custom_types = config["custom_types"]
 %>\
 
 //---------------------------------------------------------------------
@@ -30,31 +30,10 @@ if len(config["custom_types"]) > 0:
 #include <atomic>
 #include <vector>
 
-namespace ni {
-namespace ${config["namespace_component"]} {
 namespace grpc {
+namespace ${config["namespace_component"]} {
 
-%if 'custom_type' in locals():
-  namespace {
-    void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) {
-%for field in custom_type["fields"]: 
-      output->set_${field["grpc_name"]}(input.${field["name"]});
-%endfor
-    }
-
-    void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) {
-      for (auto item : input) {
-        auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
-        Copy(item, message);
-        output->AddAllocated(message);
-      }
-    }
-  }
-
-%endif
-  namespace internal = ni::hardware::grpc::internal;
-
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, internal::SessionRepository* session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -63,36 +42,60 @@ namespace grpc {
   {
   }
 
-% for function_name in common_helpers.filter_proto_rpc_functions(functions):
+  %if 'custom_types' in locals():
+  %for custom_type in custom_types:
+  void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
+  {
+%for field in custom_type["fields"]: 
+    output->set_${field["grpc_name"]}(input.${field["name"]});
+%endfor
+  }
+
+  void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
+  {
+    for (auto item : input) {
+      auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+%endfor
+%endif
+% for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
-    method_name = common_helpers.snake_to_camel(function_name)
+    method_name = common_helpers.snake_to_pascal(function_name)
     parameters = function_data['parameters']
     handler_helpers.sanitize_names(parameters)
-    common_helpers.mark_len_params(parameters)
+    common_helpers.mark_non_grpc_params(parameters)
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
   {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
     try {
 % if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-% elif function_name == config['init_function']:
+% elif common_helpers.is_init_method(function_data):
 ${gen_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+% elif common_helpers.has_ivi_dance_param(parameters):
+${gen_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % else:
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
     }
-    catch (internal::LibraryLoadException& ex) {
+    catch (grpc::nidevice::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
 % endfor
-} // namespace grpc
 } // namespace ${config["namespace_component"]}
-} // namespace ni
+} // namespace grpc
 \
 \
 \
@@ -104,7 +107,7 @@ ${gen_simple_method_body(function_name=function_name, function_data=function_dat
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
   session_output_var_name = session_output_param['cppName']
 %>\
-${request_input_parameters(parameters)}
+${request_input_parameters(function_name, parameters)}
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession ${session_output_var_name};
         int status = library_->${function_name}(${handler_helpers.create_args(parameters)});
@@ -124,11 +127,39 @@ ${request_input_parameters(parameters)}
 \
 \
 \
+<%def name="gen_ivi_dance_method_body(function_name, function_data, parameters)">\
+<%
+  (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+%>\
+${request_input_parameters(function_name, non_ivi_params)}\
+
+      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters)});
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ${size_param['type']} ${common_helpers.camel_to_snake(size_param['cppName'])} = status;
+
+${initialize_output_variables_snippet(output_parameters)}\
+      status = library_->${function_name}(${handler_helpers.create_args(parameters)});
+      response->set_status(status);
+%if output_parameters:
+      if (status == 0) {
+${set_response_values(output_parameters)}\
+      }
+%endif
+      return ::grpc::Status::OK;\
+</%def>\
+\
+\
+\
+\
 <%def name="gen_simple_method_body(function_name, function_data, parameters)">\
 <%
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${request_input_parameters(parameters)}\
+${request_input_parameters(function_name, parameters)}\
 ${initialize_output_variables_snippet(output_parameters)}\
 %if function_name == config['close_function']:
       session_repository_->remove_session(${handler_helpers.create_args(parameters)});
@@ -147,47 +178,67 @@ ${set_response_values(output_parameters=output_parameters)}\
 \
 \
 \
-<%def name="request_input_parameters(parameters)">\
+<%def name="request_input_parameters(function_name, parameters)">\
 <%
     input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
-${initialize_input_param_snippet(parameter=parameter)}
+${initialize_input_param_snippet(function_name, parameter)}
 % endfor
 </%def>\
 \
 \
 \
 \
-<%def name="initialize_input_param_snippet(parameter)">\
-%if common_helpers.is_enum(parameter) == True and enums[parameter["enum"]].get("generate-mappings", False):
-${initialize_enum_input_param(parameter)}
-% elif parameter.get("determine_size_from", '') != '':
+<%def name="initialize_input_param_snippet(function_name, parameter)">\
+% if common_helpers.is_enum(parameter) and enums[parameter["enum"]].get("generate-mappings", False):
+${initialize_enum_input_param(function_name, parameter)}\
+% elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
 % else:
-${initialize_standard_input_param(parameter)}\
+${initialize_standard_input_param(function_name, parameter)}\
 % endif
 </%def>\
 \
 \
 \
 \
-<%def name="initialize_enum_input_param(parameter)">\
+<%def name="initialize_enum_input_param(function_name, parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  pascal_parameter_name = common_helpers.snake_to_pascal(parameter_name)
   map_name = parameter["enum"].lower() + "_input_map_"
   iterator_name = parameter_name + "_imap_it"
+  enum_type_prefix = function_name + "Request::" + pascal_parameter_name + "EnumCase::"
+  param_all_caps_snake = parameter_name.upper()
 %>\
-      auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
-
-      if (${iterator_name} == ${map_name}.end()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
-      }
+      ${parameter['type']} ${parameter_name};
+      switch (request->${parameter_name}_enum_case()) {
+        case ${enum_type_prefix}k${pascal_parameter_name}: {
+          auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
+          if (${iterator_name} == ${map_name}.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+          }
 %if parameter['type'] == "ViConstString":
-      auto ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());\
+          ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
 %else:
-      auto ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);\
+          ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
 %endif
+          break;
+        }
+        case ${enum_type_prefix}k${pascal_parameter_name}Raw: {
+%if parameter['type'] == "ViConstString":
+          ${parameter_name} = static_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
+%else:
+          ${parameter_name} = static_cast<${parameter['type']}>(request->${parameter_name}_raw());
+%endif
+          break;
+        } 
+        case ${enum_type_prefix}${param_all_caps_snake}_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range");
+          break;
+        }
+      }
 </%def>\
 \
 \
@@ -204,7 +255,7 @@ ${initialize_standard_input_param(parameter)}\
 \
 \
 \
-<%def name="initialize_standard_input_param(parameter)">\
+<%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
@@ -218,31 +269,33 @@ ${initialize_standard_input_param(parameter)}\
       ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
     % elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
       ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
-    % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8' or 'enum' in parameter:
+    % elif 'enum' in parameter:
+<%
+PascalFieldName = common_helpers.snake_to_pascal(field_name)
+one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Request::{PascalFieldName}EnumCase'
+%>\
+      ${c_type} ${parameter_name};
+      switch (request->${field_name}_enum_case()) {
+        case ${one_of_case_prefix}::k${PascalFieldName}:
+          ${parameter_name} = (${c_type})${request_snippet};
+          break;
+        case ${one_of_case_prefix}::k${PascalFieldName}Raw:
+          ${parameter_name} = (${c_type})request->${field_name}_raw();
+          break;
+        case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${field_name} was not specified or out of range");
+          break;
+      }
+    % elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8':
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
     % elif c_type == 'ViSession':
-      auto session = ${request_snippet};
-      ${c_type} ${parameter_name} = session_repository_->access_session(session.id(), session.name());\
+      auto ${parameter_name}_grpc_session = ${request_snippet};
+      ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
     % elif common_helpers.is_array(c_type):
-      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.data();\
+      auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
     % else:
       ${c_type} ${parameter_name} = ${request_snippet};\
     % endif
-</%def>\
-\
-\
-\
-\
-<%def name="initialize_struct_output(parameter)">\
-<%
-parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-parameter_type = common_helpers.isolate_struct_type(parameter["type"])
-%>\
-% if common_helpers.is_array(parameter["type"]):
-std::vector<${parameter_type}> ${parameter_name}(${common_helpers.camel_to_snake(parameter["size"]["value"])});
-% else: 
-parameter_type parameter_name = {};
-% endif
 </%def>\
 \
 \
@@ -252,18 +305,26 @@ parameter_type parameter_name = {};
 %for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
+%>\
+% if common_helpers.is_array(parameter['type']):
+<%
+  size = ''
+  if common_helpers.get_size_mechanism(parameter) == 'fixed':
+    size = parameter['size']['value']
+  else:
+    size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
 % if common_helpers.is_struct(parameter):
-      ${initialize_struct_output(parameter)}\
-% elif common_helpers.is_array(parameter['type']):
-% if parameter['size']['mechanism'] == 'fixed':
-<%
-  type_without_brackets = parameter['type'].replace('[]', '')
-%>\
-      ${type_without_brackets} ${parameter_name}[${parameter['size']['value']}];
+      std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
+% elif handler_helpers.is_string_arg(parameter):
+      std::string ${parameter_name}(${size}, '\0');
+% else:
+      response->mutable_${parameter_name}()->Resize(${size}, 0);
+      ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 % endif
 % else:
-      ${parameter['type']} ${parameter_name} {};
+      ${underlying_param_type} ${parameter_name} {};
 % endif
 %endfor
 </%def>\
@@ -277,23 +338,28 @@ parameter_type parameter_name = {};
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
 %if common_helpers.is_enum(parameter) == True:
-%if enums[parameter["enum"]].get("generate-mappings", False):
+%  if enums[parameter["enum"]].get("generate-mappings", False):
 <%
   map_name = parameter["enum"].lower() + "_output_map_"
-  iterator_name = parameter_name + "_imap_it"
+  iterator_name = parameter_name + "_omap_it"
 %>\
-
         auto ${iterator_name} = ${map_name}.find(${parameter_name});
-        if(${iterator_name} == ${map_name}.end()) {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
+        if(${iterator_name} != ${map_name}.end()) {
+          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
         }
-        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
-%else:
+%  else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
-%endif
-%elif common_helpers.is_struct(parameter):
+%  endif
+        response->set_${parameter_name}_raw(${parameter_name});
+%elif common_helpers.is_array(parameter['type']):
+%  if handler_helpers.is_string_arg(parameter):
+        response->set_${parameter_name}(${parameter_name});
+%  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
-% else:
+%  endif
+%elif parameter['type'] == 'ViSession':
+        response->mutable_${parameter_name}()->set_id(${parameter_name});
+%else :
         response->set_${parameter_name}(${parameter_name});
 %endif
 %endfor

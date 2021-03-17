@@ -3,7 +3,7 @@ import common_helpers
 def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
   add_repeated = is_array
   if 'ViSession' in type:
-    type = 'ni.hardware.grpc.Session'
+    type = 'grpc.nidevice.Session'
   if 'ViBoolean' in type:
     type = 'bool'
   if 'ViReal64' in type:
@@ -74,4 +74,4 @@ def determine_allow_alias(enums):
 def filter_parameters_for_grpc_fields(parameters):
   """Filter out the parameters that shouldn't be represented by a field on a grpc message.
      For example, get rid of any parameters whose values should be deteremined from another parameter."""
-  return [p for p in parameters if p.get('determine_size_from', '') == '']
+  return [p for p in parameters if p.get('include_in_proto', True)]

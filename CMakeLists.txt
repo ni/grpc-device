@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12.0)
 
-project(core_server C CXX)
+project(ni_grpc_device_server C CXX)
 
 #----------------------------------------------------------------------
 # Include the gRPC's cmake build
@@ -157,7 +157,7 @@ foreach(api ${nidrivers})
   endif()
 endforeach()
 
-add_executable(core_server
+add_executable(ni_grpc_device_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
    "source/server/semaphore.cpp"
@@ -166,11 +166,12 @@ add_executable(core_server
    "source/server/session_repository.cpp"
    "source/server/session_utilities_service.cpp"
    "source/server/shared_library.cpp"
+   "source/server/syscfg_library.cpp"
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
 
-target_link_libraries(core_server
+target_link_libraries(ni_grpc_device_server
    ${_REFLECTION}
    ${_GRPC_GRPCPP}
    ${_PROTOBUF_LIBPROTOBUF}
@@ -179,19 +180,19 @@ target_link_libraries(core_server
    )
 
 if(WIN32)
-  target_link_libraries(core_server Delayimp niScope niswitch)
-  set_target_properties(core_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
-  set(core_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp niScope niswitch)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
 endif()
 
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory
 #----------------------------------------------------------------------
 add_custom_command(
-   TARGET core_server POST_BUILD
+   TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_SOURCE_DIR}/source/config/insecure_config.json
-            $<TARGET_FILE_DIR:core_server>/server_config.json)
+            $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
 # Add JSON parser
@@ -207,6 +208,7 @@ add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FRO
 add_executable(IntegrationTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
+    "source/tests/integration/session_utilities_service_tests_endtoend.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
@@ -221,6 +223,7 @@ add_executable(IntegrationTestsRunner
 
 target_link_libraries(IntegrationTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
     Threads::Threads)
@@ -231,20 +234,20 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/unit/session_utilities_service_tests.cpp"
-    "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
+    "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
+    "source/tests/unit/syscfg_library_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
     "source/server/server_security_configuration.cpp"
     "source/server/session_repository.cpp"
-    "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${service_output_dir}/nifake/nifake_service.cpp"
@@ -280,13 +283,30 @@ add_custom_command(
            
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/system/stub_test.cpp")
+    "source/tests/system/session_utilities_service_tests.cpp"
+    "source/tests/system/niscope_driver_api_tests.cpp"
+    "source/tests/system/niscope_session_tests.cpp"
+    "source/server/device_enumerator.cpp"
+    "source/server/session_repository.cpp"
+    "source/server/semaphore.cpp"
+    "source/server/session_utilities_service.cpp"
+    "source/server/shared_library.cpp"
+    "source/server/syscfg_library.cpp"
+    ${session_proto_srcs}
+    ${session_grpc_srcs}
+    ${nidriver_service_srcs})
 
 target_link_libraries(SystemTestsRunner
     gtest
+    gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS})
 
+if(WIN32)
+    target_link_libraries(SystemTestsRunner Delayimp niScope niswitch)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll")
+endif()
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )

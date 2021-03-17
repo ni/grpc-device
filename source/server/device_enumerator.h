@@ -1,36 +1,32 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
-#define NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
+#ifndef GRPC_NIDEVICE_DEVICEENUMERATOR
+#define GRPC_NIDEVICE_DEVICEENUMERATOR
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
+#include <session.grpc.pb.h>
 
-#include "session_repository.h"
 #include "shared_library.h"
+#include "syscfg_library_interface.h"
 
-namespace ni {
-namespace hardware {
 namespace grpc {
-namespace internal {
+namespace nidevice {
 
-class DeviceEnumerator
-{
+static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
+static const char* kLocalHostTargetName = "localhost";
+static const char* kNetworkExpertName = "network";
+
+class DeviceEnumerator {
  public:
-  DeviceEnumerator();
-  DeviceEnumerator(const char* library_name);
+  DeviceEnumerator(SysCfgLibraryInterface* library);
+  virtual ~DeviceEnumerator();
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
-  std::string get_syscfg_library_name() const;
-  bool is_syscfg_library_loaded() const;
 
  private:
-  NISysCfgStatus get_list_of_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
-
-  internal::SharedLibrary syscfg_library_;
+  SysCfgLibraryInterface* library_;
 };
 
-} // namespace internal
-} // namespace grpc
-} // namespace hardware
-} // namespace ni
+}  // namespace nidevice
+}  // namespace grpc
 
-#endif // NI_HARDWARE_GRPC_INTERNAL_DEVICEMANAGEMENT
+#endif  // GRPC_NIDEVICE_DEVICEENUMERATOR

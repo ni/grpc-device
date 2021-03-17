@@ -42,22 +42,28 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
-def isolate_struct_type(struct):
-  return struct.replace("struct ","").replace('[]', '')
+def get_underlying_type_name(parameter_type):
+  '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
+  return parameter_type.replace("struct ","").replace('[]', '')
 
 def has_unsupported_parameter(function):
   return any(is_unsupported_parameter(p) for p in function['parameters'])
 
 def is_unsupported_parameter(parameter):
-  type = parameter['type']
-  supported_size_mechanisms = {'fixed', 'len'}
-  supported_struct_size_mechanisms = {'passed-in'}
-  is_unsupported_array = is_array(type) and parameter['size']['mechanism'] not in supported_size_mechanisms
-  is_unsupported_struct_array = is_array(type) and parameter['size']['mechanism'] not in supported_struct_size_mechanisms
-  if is_struct(parameter):
-    return  is_unsupported_struct_array
-  else:
-    return is_unsupported_array
+  return is_unsupported_size_mechanism(parameter) \
+      or is_unsupported_struct(parameter) \
+      or is_unsupported_scalar_array(parameter)
+
+def is_unsupported_size_mechanism(parameter):
+  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', None}
+
+def is_unsupported_struct(parameter):
+  return is_struct(parameter) and is_input_parameter(parameter)
+
+def is_unsupported_scalar_array(parameter):
+  if not is_array(parameter['type']):
+    return False
+  return is_enum(parameter) or get_underlying_type_name(parameter['type']) in {'ViInt16', 'ViBoolean'}
 
 def camel_to_snake(camelString):
   camelString = list(camelString)
@@ -70,7 +76,7 @@ def camel_to_snake(camelString):
       index = index + 1
   return ("".join(camelString))
 
-def snake_to_camel(snake_string):
+def snake_to_pascal(snake_string):
   snake_string = list(snake_string)
   index = 0
   snake_string[index] = snake_string[index].upper()
@@ -93,7 +99,8 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
   '''Returns function metadata only for those functions to include for generating proto rpc methods'''
-  return [name for name, function in functions.items() if function.get('codegen_method', 'public') == 'public']
+  functions_for_proto = {'public', 'CustomCode'}
+  return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
 
 def get_service_namespace(driver_name_caps_underscore):
   driver_full_namespace = driver_name_caps_underscore + "_" + "grpc"
@@ -111,18 +118,33 @@ def get_used_enums(functions, attributes):
       used_enums.add(attributes[attribute]["enum"])
   return used_enums
 
-def determine_size_from(parameter, parameters):
-  """Returns a string representing the parameter name the given parameter should determine its value from. If none is found returns empty string."""
-  expected_len_name = parameter['name']
-  for possible_size_from_param in parameters:
-    if possible_size_from_param.get('size', {}).get('mechanism', '') == 'len':
-      if possible_size_from_param['size']['value'] == expected_len_name:
-        return possible_size_from_param['name']
-  return ''
+def mark_non_grpc_params(parameters):
+  named_params = { p['name'] : p for p in parameters }
+  for param in parameters:
+    mechanism = get_size_mechanism(param)
+    if mechanism in {'len', 'ivi-dance', 'passed-in'}:
+      size_param = named_params.get(param['size']['value'], None)
+      size_param['is_size_param'] = True
+      if mechanism == 'len' or mechanism == 'ivi-dance':
+        size_param['include_in_proto'] = False
+        if mechanism == 'len':
+          size_param['determine_size_from'] = param['name']
 
-def mark_len_params(parameters):
-  """Adds a 'determine_size_from' field for parameters that are determined by the size of another array parameter."""
-  for parameter in parameters:
-      determine_size_from_name = determine_size_from(parameter, parameters)
-      if (determine_size_from != ''):
-        parameter['determine_size_from'] = determine_size_from_name
+def get_size_mechanism(parameter):
+  size = parameter.get('size', {})
+  return size.get('mechanism', None)
+
+def is_ivi_dance_array_param(parameter):
+  return get_size_mechanism(parameter) == 'ivi-dance'
+
+def has_ivi_dance_param(parameters):
+  return any(is_ivi_dance_array_param(p) for p in parameters)
+
+def get_ivi_dance_params(parameters):
+  array_param = next((p for p in parameters if is_ivi_dance_array_param(p)), None)
+  size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
+  other_params = (p for p in parameters if p != array_param and p != size_param)
+  return (size_param, array_param, other_params)
+
+def is_init_method(function_data):
+  return function_data.get('init_method', False)

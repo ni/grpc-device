@@ -5,9 +5,9 @@ config = {
     'c_header': 'niFake.h',
     'c_function_prefix': 'niFake_',
     'service_class_prefix': 'NiFake',
-    'java_package': 'com.ni.fake.grpc',
-    'csharp_namespace': 'NationalInstruments.Fake.Grpc',
-    'namespace_component': 'fake',
+    'java_package': 'com.ni.grpc.fake',
+    'csharp_namespace': 'NationalInstruments.Grpc.Fake',
+    'namespace_component': 'nifake',
     'close_function': 'close',
     'context_manager_name': {
         'abort_function': 'Abort',

@@ -987,5 +987,21 @@ enums = {
                 'value': 2
             }
         ]
+    },
+    'WireMode': {
+        'values': [
+            {
+                'name': 'NISWITCH_VAL_1_WIRE',
+                'value': 1
+            },
+            {
+                'name': 'NISWITCH_VAL_2_WIRE',
+                'value': 2
+            },
+            {
+                'name': 'NISWITCH_VAL_4_WIRE',
+                'value': 4
+            }
+        ]
     }
 }
