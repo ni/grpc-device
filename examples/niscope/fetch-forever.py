@@ -53,7 +53,7 @@ server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
-# Create the communcation channel for the remote host (in this case we are connecting to a local server)
+# Create the communication channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the niScope service
 channel = grpc.insecure_channel(server_address)
 client = grpc_niscope.NiScopeStub(channel)
