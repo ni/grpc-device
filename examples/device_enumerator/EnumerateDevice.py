@@ -30,6 +30,7 @@ def print_devices(devices) :
         print(f"    Serial Number: {device.serial_number} \n")
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
+#   > python EnumerateDevice.py localhost 31763
 # If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
@@ -37,11 +38,11 @@ if len(sys.argv) == 3 :
 
 # Create communication with the server using gRPC APIs
 channel = grpc.insecure_channel(server_address)
-server = grpc_session.SessionUtilitiesStub(channel)
+client = grpc_session.SessionUtilitiesStub(channel)
 
 try :
     # EnumerateDevices API gives a list of devices (simulated and physical) connected to the server machine.
-    enumerate_devices_response = server.EnumerateDevices(session_types.EnumerateDevicesRequest())
+    enumerate_devices_response = client.EnumerateDevices(session_types.EnumerateDevicesRequest())
 
     # Display devices connected to the server machine
     print_devices(enumerate_devices_response.devices)     
