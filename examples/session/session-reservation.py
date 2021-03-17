@@ -82,6 +82,7 @@ try :
     print(f'Session initialized with name {session_name} and id {vi.id}.\n')
 
     # Check if session is reserved by client 1
+    # Note: The reservation_id is defined by and has meaning only for the client + Session Reservation API.
     print(f'Checking if {session_name} is reserved by {client_1_id}...')
     is_reserved_response = session_client.IsReservedByClient(session_types.IsReservedByClientRequest(
         reservation_id = session_name,
