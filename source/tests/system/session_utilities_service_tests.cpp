@@ -69,11 +69,22 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
   for (auto it : response.devices()) {
-    EXPECT_THAT(it.name(), Not(IsEmpty()));
+    EXPECT_THAT(it.name(), AnyOf( Not(IsEmpty()), IsEmpty()));
     EXPECT_NE(it.model().c_str(), nullptr);
     EXPECT_NE(it.vendor().c_str(), nullptr);
     EXPECT_NE(it.serial_number().c_str(), nullptr);
   }
+}
+
+TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_ReturnsSuccessfullyUsingCachedSession)
+{
+    grpc::nidevice::EnumerateDevicesRequest request;
+    grpc::nidevice::EnumerateDevicesResponse response;
+    ::grpc::ClientContext context;
+
+    ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
+
+    EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
 }
 
 }  // namespace system
