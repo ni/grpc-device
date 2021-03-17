@@ -147,7 +147,7 @@ TEST(DeviceEnumeratorTests, FindHardwareSetsResourceEnumHandle_EnumerateDevices_
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
+  EXPECT_TRUE(status.ok());
 }
 
 TEST(DeviceEnumerationTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevices_ListOfDevicesIsEmpty)
