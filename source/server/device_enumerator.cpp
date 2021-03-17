@@ -1,4 +1,6 @@
 #include "device_enumerator.h"
+#include "syscfg_library.h"
+#include <shared_mutex>
 
 namespace grpc {
 namespace nidevice {
@@ -6,6 +8,7 @@ namespace nidevice {
 DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
     : library_(library)
 {
+    cached_syscfg_session = nullptr;
 }
 
 DeviceEnumerator::~DeviceEnumerator()
@@ -30,10 +33,11 @@ DeviceEnumerator::~DeviceEnumerator()
   NISysCfgBool is_ni_product = NISysCfgBoolFalse;
 
   try {
-    // TODO: Caching of syscfg_session will be added in a separate PR.
-    // All parameters of InitializeSession other than the first are System Configuration default values.
-    if (NISysCfg_Succeeded(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &session))) {
-      if (NISysCfg_Succeeded(status = library_->CreateFilter(session, &filter))) {
+
+      session = get_syscfg_session(false);
+      if (session != NULL){
+
+        if (NISysCfg_Succeeded(status = library_->CreateFilter(session, &filter))) {
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
         if (NISysCfg_Succeeded(status = library_->FindHardware(session, NISysCfgFilterModeMatchValuesAny, filter, NULL, &resources_handle))) {
@@ -58,9 +62,11 @@ DeviceEnumerator::~DeviceEnumerator()
           library_->CloseHandle(resources_handle);
         }
         library_->CloseHandle(filter);
+        }
       }
-      library_->CloseHandle(session);
-    }
+      else {
+          return ::grpc::Status(::grpc::NOT_FOUND, kSysCfgApiNotInstalledMessage);
+      }
   }
   catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -71,6 +77,44 @@ DeviceEnumerator::~DeviceEnumerator()
   }
 
   return ::grpc::Status::OK;
+}
+
+// Returns cached NISysCfgSession.
+// This takes an optional reinitialize boolean as input which can be used to enforce initialization when needed.
+// Returns null session after failed initialization.
+NISysCfgSessionHandle DeviceEnumerator::get_syscfg_session(bool reinitialize)
+{
+    std::unique_lock<std::shared_mutex> lock(session_mutex);
+    if (cached_syscfg_session == nullptr)
+    {
+        create_sysconfig_session();
+    }
+    else if (reinitialize)
+    {
+        library_->CloseHandle(cached_syscfg_session);
+        create_sysconfig_session();
+    }
+    return cached_syscfg_session;
+}
+
+// Initializes cached_syscfg_session.
+// In case of failure sets cached_syscfg_session to null.
+void DeviceEnumerator::create_sysconfig_session()
+{
+    cached_syscfg_session = nullptr;
+    NISysCfgStatus status = NISysCfg_OK;
+    if (NISysCfg_Succeeded(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session)))
+        return;
+    else
+        cached_syscfg_session = nullptr;
+}
+
+//Calls Closehandle to clear sysconfig session and sets cached_syscfg_session to null.
+void DeviceEnumerator::clear_sysconfig_session()
+{
+    std::unique_lock<std::shared_mutex> lock(session_mutex);
+    library_->CloseHandle(cached_syscfg_session);
+    cached_syscfg_session = nullptr;
 }
 
 }  // namespace nidevice
