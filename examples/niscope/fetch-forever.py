@@ -23,6 +23,7 @@
 # Refer to the NI Scope Help to determine the valid channel and resource names for your Scope module.
 
 import grpc
+import sys
 import time
 import numpy as np
 import niscope_pb2 as niscope_types
@@ -45,9 +46,15 @@ def ThrowOnError (vi, error_code):
     error_message_response = client.GetErrorMessage(error_message_request)
     raise Exception (error_message_response)
 
+# Server machine's IP address and port number have to be passed as two separate command line arguments.
+#   > python fetch-forever.py localhost 31763
+# If not passed as command line arguments, then by default server address would be "localhost:31763"
+server_address = "localhost:31763"
+if len(sys.argv) == 3 :
+    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+
 # Create the communcation channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the niScope service
-server_address = "localhost:31763"
 channel = grpc.insecure_channel(server_address)
 client = grpc_niscope.NiScopeStub(channel)
 
@@ -58,8 +65,6 @@ try :
     options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
     total_acquisition_time_in_seconds = 10
     sample_rate_in_hz = 1000
-
-    
 
     # Open session to Scope module with options
     init_with_options_response = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
