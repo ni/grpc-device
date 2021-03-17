@@ -39,12 +39,18 @@ import asyncio
 from grpclib.client import Channel
 import matplotlib.pyplot as plt
 import time
+import sys
 
-# This is the location (ipaddress or machine name):(port) of the niDevice server
-# It contains 2 parts: host [IP] address and port
-# resouce is the resource name of the hardware exposed by the server
+# Server machine's IP address and port number have to be passed as two separate command line arguments.
+#   > python EnumerateDevice.py localhost 31763
+# If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost"
 server_port = 31763
+if len(sys.argv) == 3 :
+    server_address = sys.argv[1]
+    server_port = int(sys.argv[2])
+
+
 resource = "Scope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
 

@@ -32,9 +32,16 @@
 from grpc import niscope as scope_types
 import asyncio
 from grpclib.client import Channel
+import sys
 
-# This is the location (ipaddress or machine name):(port) of the niDevice server
-serverAddress = "localhost:31763"
+# Server machine's IP address and port number have to be passed as two separate command line arguments.
+#   > python EnumerateDevice.py localhost 31763
+# If not passed as command line arguments, then by default server address would be "localhost:31763"
+host = "localhost"
+port = 31763
+if len(sys.argv) == 3 :
+    host = sys.argv[1]
+    port = int(sys.argv[2])
 
 # Resource name and options for a simulated 5164 scope
 resource = "SimulatedScope7c632f66-e7c2-4fab-85a4-cd15c8be4130"

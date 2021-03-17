@@ -28,14 +28,19 @@ import niScope_pb2 as scope_types
 import niScope_pb2_grpc as gRPC_scope
 import matplotlib.pyplot as plt
 import time
+import sys
 
 def check_status(scope_service, result):
     if (result.status != 0):
         error = scope_service.GetError(scope_types.GetErrorRequest())
         print(error.description)
 
-# This is the location (ipaddress or machine name):(port) of the niDevice server
+# Server machine's IP address and port number have to be passed as two separate command line arguments.
+#   > python EnumerateDevice.py localhost 31763
+# If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost:31763"
+if len(sys.argv) == 3 :
+    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
 # Resource name and options for a simulated 5164 scope
 resource = "SimulatedScope7c632f66-e7c2-4fab-85a4-cd15c8be4130"
