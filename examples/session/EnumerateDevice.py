@@ -23,13 +23,13 @@ import session_pb2_grpc as grpc_session
 # Helper to print the devices 
 def print_devices(devices) :
     print("\n-----------------------------------------------------------------------------------------------------\n")
-    print("List of devices connected to the server: \n")
+    print("  List of devices connected to the server: \n")
     print("-----------------------------------------------------------------------------------------------------\n")
     for device in devices :
-        print(f"{device.name}")
-        print(f"    Model: {device.model}")
-        print(f"    Vendor: {device.vendor}")
-        print(f"    Serial Number: {device.serial_number} \n")
+        print(f"  {device.name}")
+        print(f"      Model: {device.model}")
+        print(f"      Vendor: {device.vendor}")
+        print(f"      Serial Number: {device.serial_number} \n")
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
 #   > python EnumerateDevice.py localhost 31763
