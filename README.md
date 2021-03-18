@@ -1,8 +1,8 @@
 # NI Device gRPC Server and Client APIs
 
-This repo contains the C++ code and `.proto` files needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples written in Python that demonstrate how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
+This repo contains the source code needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples that demonstrate how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
 
-The server and the corresponding client API allows NI's instrumentation to be accessed and controlled through a remote interface via pre-defined APIs in a holistic and OS agnostic way using a client/server architecture. The API is not a driver but instead a layer on top of the existing driver C APIs that provides remote capabilities.
+The server and the corresponding client API allows NI's instrumentation to be accessed and controlled through a remote interface via pre-defined APIs on multiple platforms using a client/server architecture. The API is not a driver but instead a layer on top of the existing driver C APIs that provides remote capabilities.
 
 For more detailed information on the server and API design refer to the [wiki](https://github.com/ni/grpc-device/wiki).
 
