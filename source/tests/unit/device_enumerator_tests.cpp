@@ -238,18 +238,17 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
 
 TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_DeviceEnumeration_GetSysCfgSessionReturnsOKStatus)
 {
-    
-        NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-        grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-        google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
-        EXPECT_CALL(mock_library, InitializeSession)
-            .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, InitializeSession)
+      .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
 
-        NISysCfgSessionHandle session = nullptr;
+  NISysCfgSessionHandle session = nullptr;
 
-        NISysCfgStatus status = device_enumerator.get_syscfg_session(&session);
+  NISysCfgStatus status = device_enumerator.get_syscfg_session(&session);
 
-        EXPECT_NE(NISysCfg_OK, status);
+  EXPECT_NE(NISysCfg_OK, status);
 }
 
 }  // namespace unit

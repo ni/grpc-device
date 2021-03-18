@@ -5,35 +5,36 @@
 #include <nisyscfg.h>
 #include <session.grpc.pb.h>
 
-#include "shared_library.h"
-#include "syscfg_library_interface.h"
 #include <shared_mutex>
 
+#include "shared_library.h"
+#include "syscfg_library_interface.h"
+
 namespace grpc {
-	namespace nidevice {
+namespace nidevice {
 
-		static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
-		static const char* kLocalHostTargetName = "localhost";
-		static const char* kNetworkExpertName = "network";
+static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
+static const char* kLocalHostTargetName = "localhost";
+static const char* kNetworkExpertName = "network";
 
-		class DeviceEnumerator {
-		public:
-			DeviceEnumerator(SysCfgLibraryInterface* library);
-			virtual ~DeviceEnumerator();
+class DeviceEnumerator {
+ public:
+  DeviceEnumerator(SysCfgLibraryInterface* library);
+  virtual ~DeviceEnumerator();
 
-			::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
+  ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
 
-			NISysCfgStatus get_syscfg_session(NISysCfgSessionHandle* session);
-			void clear_sysconfig_session();
+  NISysCfgStatus get_syscfg_session(NISysCfgSessionHandle* session);
+  void clear_sysconfig_session();
 
-		private:
-			SysCfgLibraryInterface* library_;
+ private:
+  SysCfgLibraryInterface* library_;
 
-			std::shared_mutex session_mutex;
-			NISysCfgSessionHandle cached_syscfg_session;
-		};
+  std::shared_mutex session_mutex;
+  NISysCfgSessionHandle cached_syscfg_session;
+};
 
-	}  // namespace nidevice
+}  // namespace nidevice
 }  // namespace grpc
 
 #endif  // GRPC_NIDEVICE_DEVICEENUMERATOR
