@@ -24,7 +24,7 @@ class DeviceEnumerator {
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
 
-  NISysCfgStatus get_syscfg_session(NISysCfgSessionHandle* session);
+  NISysCfgStatus try_get_syscfg_session(NISysCfgSessionHandle* session);
   void clear_sysconfig_session();
 
  private:

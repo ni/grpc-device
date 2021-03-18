@@ -36,7 +36,7 @@ DeviceEnumerator::~DeviceEnumerator()
   NISysCfgBool is_ni_product = NISysCfgBoolFalse;
 
   try {
-    if (NISysCfg_Succeeded(status = get_syscfg_session(&session))) {
+    if (NISysCfg_Succeeded(status = try_get_syscfg_session(&session))) {
       if (NISysCfg_Succeeded(status = library_->CreateFilter(session, &filter))) {
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
@@ -79,7 +79,7 @@ DeviceEnumerator::~DeviceEnumerator()
 // Sets cached NISysCfgSession to passed session handle.
 // Sets null to cached session after failed initialization.
 // Returns status of getting valid cached_syscfg_session is successful.
-NISysCfgStatus DeviceEnumerator::get_syscfg_session(NISysCfgSessionHandle* session)
+NISysCfgStatus DeviceEnumerator::try_get_syscfg_session(NISysCfgSessionHandle* session)
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
   NISysCfgStatus status = NISysCfg_OK;
