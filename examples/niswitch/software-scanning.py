@@ -29,10 +29,9 @@ server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
-# Resource name and options for a simulated 2529 switch. Change them according to the switch model.
-resource = "Switch1"
-channel_name = "0"
-options = "Simulate=1, DriverSetup=Model:2529; BoardType:PXI"
+# Resource name and topology string for a simulated 2529 switch. Refer to NI-SWITCH help to find valid values for the device being used currently.
+resource = "Switch2"
+topology_string = "2529/2-Wire Dual 4x16 Matrix"
 
 # Or you can use real hardware
 # resource = "2529"
@@ -62,10 +61,10 @@ def ThrowOnError (vi, errorCode):
     error_message_response = switch.ErrorMessage(error_message_request)
     raise Exception (error_message_response.error_message)
 try :
-    # Open session to switch module and set topology. Refer to NI-SWITCH help to find valid values for topology.
+    # Open session to switch module and set topology. Set simulate to false if actual device is being used.
     init_with_topology_response = switch.InitWithTopology(switchTypes.InitWithTopologyRequest(
         resource_name=resource,
-        topology = "2529/2-Wire Dual 4x16 Matrix",
+        topology = topology_string,
         simulate=True,
         reset_device=False
         ))
