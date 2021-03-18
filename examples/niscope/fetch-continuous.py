@@ -1,5 +1,5 @@
 # 
-# Copyright 2020 National Instruments Corp
+# Copyright 2021 National Instruments Corp
 # Licensed under the MIT license
 #
 # This example initiates an acquisition and continuously fetches waveform samples per channel.
@@ -19,7 +19,7 @@
 #   if you are using anaconda
 #     > conda install numpy
 #
-# Generate the python API from the gRPC definition (.proto) files
+# Generate the python API from the gRPC definition (.proto) files.
 # Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
 # If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
 #   > py -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
@@ -42,7 +42,7 @@ def CheckForError (vi, status) :
         any_error = True
         ThrowOnError (vi, status)
 
-# Converts an error code returned by NI-SCOPE into a user-readable string
+# Converts an error code returned by NI-SCOPE into a user-readable string.
 def ThrowOnError (vi, error_code):
     error_message_request = niscope_types.GetErrorMessageRequest(
         vi = vi,
@@ -52,14 +52,13 @@ def ThrowOnError (vi, error_code):
     raise Exception (error_message_response)
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python fetch-forever.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
+#   > python fetch-continuous.py <server_address> <port_number>
+# If not passed as command line arguments, then by default server address would be "localhost:31763".
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
-# Create the communication channel for the remote host (in this case we are connecting to a local server)
-# and create a connection to the NI-SCOPE service
+# Create the communication channel for the remote host and create a connection to the NI-SCOPE service.
 channel = grpc.insecure_channel(server_address)
 client = grpc_niscope.NiScopeStub(channel)
 
@@ -71,7 +70,7 @@ try :
     total_acquisition_time_in_seconds = 10
     sample_rate_in_hz = 1000
 
-    # Open session to NI-SCOPE module with options
+    # Open session to NI-SCOPE module with options.
     init_with_options_response = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
         resource_name=resource,
         id_query = False,
@@ -80,7 +79,7 @@ try :
     vi = init_with_options_response.vi
     CheckForError(vi, init_with_options_response.status)
 
-    # Configure vertical
+    # Configure vertical.
     voltage = 1.0
     CheckForError(vi, (client.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
         vi = vi,
@@ -92,7 +91,7 @@ try :
         enabled = True
         ))).status)
 
-    # Configure horizontal timing
+    # Configure horizontal timing.
     CheckForError(vi, (client.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
         vi = vi,
         min_sample_rate = sample_rate_in_hz,
@@ -116,26 +115,26 @@ try :
         ))).status)
 
     # Allocate space for the waveform according to the max number of
-    # points to fetch and the number of waveforms
+    # points to fetch and the number of waveforms.
     channel_list = channels.split(',')
     total_samples = int(total_acquisition_time_in_seconds * sample_rate_in_hz)
     waveforms = [np.ndarray(total_samples, dtype=np.float64) for c in channel_list]
 
-    # Set fetch relative to attribute
+    # Set fetch relative to attribute.
     CheckForError(vi, (client.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
         vi = vi,
         channel_list = "",
         attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_FETCH_RELATIVE_TO,
         value = niscope_types.FetchRelativeTo.FETCH_RELATIVE_TO_NISCOPE_VAL_READ_POINTER
         ))).status)
-
-    # Fetch forever
+ 
+    # Fetch continuously until all samples are acquired.
     current_pos = 0
     samples_per_fetch = 100
     while current_pos < total_samples:
 
-        # We fetch each channel at a time so we don't have to de-interleave afterwards
-        # We do not keep the wfm_info returned from fetch
+        # We fetch each channel at a time so we don't have to de-interleave afterwards.
+        # We do not keep the wfm_info returned from fetch.
         for channel, waveform in zip(channel_list, waveforms):
             fetch_response = client.Fetch(niscope_types.FetchRequest(
                 vi = vi,
@@ -154,7 +153,7 @@ try :
         vi = vi
         ))).status)
 
-# If NI-SCOPE API throws an exception, print the error message  
+# If NI-SCOPE API throws an exception, print the error message.
 except grpc.RpcError as e:
     error_message = e.details()
     print(error_message)

@@ -1,5 +1,5 @@
 # 
-# Copyright 2020 National Instruments Corp
+# Copyright 2021 National Instruments Corp
 # Licensed under the MIT license
 #
 # This example initiates an acquisition and fetches a waveform for each specified channel.
@@ -36,7 +36,7 @@ def CheckForError (vi, status) :
         any_error = True
         ThrowOnError (vi, status)
 
-# Converts an error code returned by NI-SCOPE into a user-readable string
+# Converts an error code returned by NI-SCOPE into a user-readable string.
 def ThrowOnError (vi, error_code):
     error_message_request = niscope_types.GetErrorMessageRequest(
         vi = vi,
@@ -46,14 +46,13 @@ def ThrowOnError (vi, error_code):
     raise Exception (error_message_response)
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python fetch.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
+#   > python fetch.py <server_address> <port_number>
+# If not passed as command line arguments, then by default server address would be "localhost:31763".
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
-# Create the communication channel for the remote host (in this case we are connecting to a local server)
-# and create a connection to the NI-SCOPE service
+# Create the communication channel for the remote host and create a connection to the NI-SCOPE service.
 channel = grpc.insecure_channel(server_address)
 client = grpc_niscope.NiScopeStub(channel)
 
@@ -63,7 +62,7 @@ try :
     channels = "0"
     options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
 
-    # Open session to NI-SCOPE module with options
+    # Open session to NI-SCOPE module with options.
     init_with_options_response = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
         resource_name=resource,
         id_query = False,
@@ -72,7 +71,7 @@ try :
     vi = init_with_options_response.vi
     CheckForError(vi, init_with_options_response.status)
 
-    # Configure vertical
+    # Configure vertical.
     voltage = 1.0
     CheckForError(vi, (client.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
         vi = vi,
@@ -84,7 +83,7 @@ try :
         enabled = True
         ))).status)
 
-    # Configure horizontal timing
+    # Configure horizontal timing.
     samples = 1000
     CheckForError(vi, (client.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
         vi = vi,
@@ -95,12 +94,12 @@ try :
         enforce_realtime = True
         ))).status)
 
-    # Initiate acquisition
+    # Initiate acquisition.
     CheckForError(vi, (client.InitiateAcquisition(niscope_types.InitiateAcquisitionRequest(
         vi = vi
         ))).status)
 
-    # Fetch waveforms
+    # Fetch waveforms.
     fetch_response = client.Fetch(niscope_types.FetchRequest(
         vi = vi,
         channel_list = channels,
@@ -110,7 +109,7 @@ try :
     CheckForError(vi, fetch_response.status)
     waveforms = fetch_response.waveform
 
-    # Print waveform results
+    # Print waveform results.
     for i in range(len(waveforms)):
         print(f'Waveform {i} information:')
         print(f'{waveforms[i]}\n')
@@ -120,7 +119,7 @@ try :
         vi = vi
         ))).status)
 
-# If NI-SCOPE API throws an exception, print the error message  
+# If NI-SCOPE API throws an exception, print the error message.
 except grpc.RpcError as e:
     error_message = e.details()
     print(error_message)
