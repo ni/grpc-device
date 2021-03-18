@@ -15,6 +15,7 @@ DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
 
 DeviceEnumerator::~DeviceEnumerator()
 {
+    // Caller is expected to close the syscfg session before calling destructor.
 }
 
 // Provides a list of devices or chassis connected to server under localhost. This internally uses the
@@ -88,7 +89,6 @@ NISysCfgStatus DeviceEnumerator::get_syscfg_session(NISysCfgSessionHandle* sessi
   try {
     if (cached_syscfg_session == nullptr) {
       if (NISysCfg_Failed(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session))) {
-        cached_syscfg_session = nullptr;
         return status;
       }
     }
@@ -104,8 +104,10 @@ NISysCfgStatus DeviceEnumerator::get_syscfg_session(NISysCfgSessionHandle* sessi
 void DeviceEnumerator::clear_sysconfig_session()
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
-  library_->CloseHandle(cached_syscfg_session);
-  cached_syscfg_session = nullptr;
+  if (cached_syscfg_session != nullptr) {
+    library_->CloseHandle(cached_syscfg_session);
+    cached_syscfg_session = nullptr;
+  }
 }
 
 }  // namespace nidevice
