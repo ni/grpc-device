@@ -51,9 +51,9 @@ def ThrowOnError (vi, error_code):
     error_message_response = client.GetErrorMessage(error_message_request)
     raise Exception (error_message_response)
 
-# Server machine's IP address and port number have to be passed as two separate command line arguments.
+# Server machine's IP address and port number can be passed as two separate command line arguments.
 #   > python fetch-continuous.py <server_address> <port_number>
-# If not passed as command line arguments, then by default server address would be "localhost:31763".
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763".
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
