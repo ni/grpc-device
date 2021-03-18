@@ -248,7 +248,7 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_DeviceEnumeration_GetSysCfg
 
   NISysCfgStatus status = device_enumerator.get_syscfg_session(&session);
 
-  EXPECT_NE(NISysCfg_OK, status);
+  EXPECT_EQ(NISysCfg_OK, status);
 }
 
 }  // namespace unit

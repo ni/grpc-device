@@ -85,9 +85,16 @@ NISysCfgStatus DeviceEnumerator::get_syscfg_session(NISysCfgSessionHandle* sessi
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
   NISysCfgStatus status = NISysCfg_OK;
-  if (cached_syscfg_session == nullptr) {
-    if (NISysCfg_Failed(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session)))
-      return status;
+  try {
+    if (cached_syscfg_session == nullptr) {
+      if (NISysCfg_Failed(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session))) {
+        cached_syscfg_session = nullptr;
+        return status;
+      }
+    }
+  }
+  catch (LibraryLoadException ex) {
+    throw ex;
   }
   session = &cached_syscfg_session;
   return status;
