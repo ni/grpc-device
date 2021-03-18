@@ -17,12 +17,17 @@
 # and the valid channel names and valid resource names for your switch module.
 
 import grpc
+import sys
 import time
 import niswitch_pb2 as switchTypes
 import niswitch_pb2_grpc as gRPCSwitch
 
-# This is the location (ipaddress or machine name):(port) of the niDevice server
-serverAddress = "localhost:31763"
+# Server machine's IP address and port number have to be passed as two separate command line arguments.
+#   > python software-scanning.py localhost 31763
+# If not passed as command line arguments, then by default server address would be "localhost:31763"
+server_address = "localhost:31763"
+if len(sys.argv) == 3 :
+    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
 # Resource name and options for a simulated 2529 switch. Change them according to the switch model.
 resource = "Switch1"
@@ -36,7 +41,7 @@ options = "Simulate=1, DriverSetup=Model:2529; BoardType:PXI"
 
 # Create the communcation channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the niSwitch service
-channel = grpc.insecure_channel(serverAddress)
+channel = grpc.insecure_channel(server_address)
 switch = gRPCSwitch.NiSwitchStub(channel)
 number_of_triggers = 5
 anyError = False
@@ -112,6 +117,8 @@ try :
         ))).status)
 
 # If NiSwitch API throws an exception, print the error message  
-except grpc.RpcError as e:
-    error_message = e.details()
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
+        error_message = f"Failed to connect to server on {server_address}"
     print(f"{error_message}") 
