@@ -4,8 +4,8 @@
 #
 # Getting Started:
 #
-# To run this example, install the "NI System Configuration API" on the server machine.
-# Link to download page: https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html
+# To run this example, install "NI System Configuration API" on the server machine.
+# Link : https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html
 #
 # Install the gRPC tools for Python:
 #     > pip install grpcio-tools
