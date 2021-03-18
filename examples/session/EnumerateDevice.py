@@ -22,9 +22,9 @@ import session_pb2_grpc as grpc_session
 
 # Helper to print the devices 
 def print_devices(devices) :
-    print("-----------------------------------------------------------------------------------------------------")
+    print("\n-----------------------------------------------------------------------------------------------------\n")
     print("List of devices connected to the server: \n")
-    print("-----------------------------------------------------------------------------------------------------")
+    print("-----------------------------------------------------------------------------------------------------\n")
     for device in devices :
         print(f"{device.name}")
         print(f"    Model: {device.model}")
@@ -33,7 +33,7 @@ def print_devices(devices) :
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
 #   > python EnumerateDevice.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
+# If not passed as command line arguments, then by default server address would be "localhost:31763".
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
@@ -46,12 +46,12 @@ try :
     # EnumerateDevices API gives a list of devices (simulated and physical) connected to the server machine.
     enumerate_devices_response = client.EnumerateDevices(session_types.EnumerateDevicesRequest())
 
-    # Display devices connected to the server machine
+    # Display devices connected to the server machine.
     print_devices(enumerate_devices_response.devices)     
 
-# If EnumerateDevices API throws an exception, print the error message
+# If EnumerateDevices API throws an exception, print the error message.
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
-        error_message = f"Failed to connect to server on {server_address}"
+        error_message = f"Failed to connect to the server on {server_address}."
     print(f"{error_message}")
