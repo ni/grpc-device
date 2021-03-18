@@ -1,6 +1,6 @@
 #
 # This example lists out devices connected to the server machine (in this case localhost)
-# by estabilishing communication with it over gRPC
+# by establishing communication with it over gRPC.
 #
 # Getting Started:
 #
