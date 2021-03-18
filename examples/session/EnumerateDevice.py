@@ -7,12 +7,12 @@
 # To run this example, install "NI System Configuration API" on the server machine.
 # Link : https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html
 #
-# Install the gRPC tools for Python
+# Install the gRPC tools for Python:
 #     > pip install grpcio-tools
 #   if you are using anaconda
 #     > conda install grpcio-tools
 #
-# Generate the python API from the gRPC definition (.proto) files
+# Generate the python API from the gRPC definition (.proto) files:
 #   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
 #
 import grpc
@@ -26,19 +26,19 @@ def print_devices(devices) :
     print("  List of devices connected to the server: \n")
     print("-----------------------------------------------------------------------------------------------------\n")
     for device in devices :
-        print(f"  {device.name}")
-        print(f"      Model: {device.model}")
-        print(f"      Vendor: {device.vendor}")
-        print(f"      Serial Number: {device.serial_number} \n")
+        print(f"    {device.name}")
+        print(f"        Model: {device.model}")
+        print(f"        Vendor: {device.vendor}")
+        print(f"        Serial Number: {device.serial_number} \n")
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python EnumerateDevice.py localhost 31763
+#   > python EnumerateDevice.py 10.24.38.46 31763
 # If not passed as command line arguments, then by default server address would be "localhost:31763".
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
-# Create communication with the server using gRPC APIs
+# Create communication with the server using gRPC APIs.
 channel = grpc.insecure_channel(server_address)
 client = grpc_session.SessionUtilitiesStub(channel)
 
