@@ -377,9 +377,8 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt32Attribute_SendRequest_GetViInt32At
 TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt64AttributeMatches)
 {
   const char* channel_list = "";
-  // TODO: ViInt64 attributes in niScope.h missing in niscope.proto. Do we want to add them?
-  // It works with a ViInt32 attribute though so testing that for now.
-  // const scope::NiScopeAttributes attribute_to_set = NiScopeAttributes::NISCOPE_ATTRIBUTE_P2P_DESTINATION_WINDOW_ADDR;
+  // The ViInt64 attributes in niScope.h (p2p ones) can't be used on a simulated device. So
+  // we'll just set a ViInt32 attribute to still exercise the get and set ViInt64 methods.
   const scope::NiScopeAttributes attribute_to_set = scope::NiScopeAttributes::NISCOPE_ATTRIBUTE_FETCH_NUM_RECORDS;
   const ViInt64 expected_value = 4;
   ::grpc::ClientContext context;

@@ -95,6 +95,46 @@ TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
 }
 
+TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ListOfDevicesIsEmptyAndReturnsInternalError)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, CreateFilter)
+      .WillOnce(Return(NISysCfg_InvalidArg));
+  EXPECT_CALL(mock_library, FindHardware)
+      .Times(0);
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
+  EXPECT_EQ(0, devices.size());
+}
+
+NISysCfgStatus SetFilterHandleToOne(NISysCfgFilterHandle* filter_handle)
+{
+  *filter_handle = (NISysCfgFilterHandle)1;
+  return NISysCfg_OK;
+}
+
+TEST(DeviceEnumeratorTests, CreateFilterSetsFilterHandle_EnumerateDevices_FilterHandleIsPassedToCloseHandle)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, CreateFilter)
+      .WillOnce(WithArg<1>(Invoke(SetFilterHandleToOne)));
+  EXPECT_CALL(mock_library, CloseHandle)
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, CloseHandle((void*)1))
+      .WillOnce(Return(NISysCfg_OK));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_TRUE(status.ok());
+}
+
 TEST(DeviceEnumeratorTests, FindHardwareReturnsError_EnumerateDevices_ListOfDevicesIsEmptyAndReturnsInternalError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
@@ -164,6 +204,41 @@ TEST(DeviceEnumerationTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevi
   EXPECT_EQ(0, devices.size());
 }
 
+NISysCfgStatus SetIsNIProductToTrue(void* value)
+{
+  NISysCfgBool* is_ni_product = (NISysCfgBool*)value;
+  *is_ni_product = NISysCfgBoolTrue;
+  return NISysCfg_OK;
+}
+
+NISysCfgStatus SetIsNIProductToFalse(void* value)
+{
+  NISysCfgBool* is_ni_product = (NISysCfgBool*)value;
+  *is_ni_product = NISysCfgBoolFalse;
+  return NISysCfg_OK;
+}
+
+TEST(DeviceEnumerationTests, LocalHostContainsNonNiDevices_EnumerateDevices_ListOfDevicesContainsOnlyNiDevices)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, NextResource)
+      .WillOnce(Return(NISysCfg_OK))
+      .WillOnce(Return(NISysCfg_OK))
+      .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty)
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToFalse)));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
+  EXPECT_EQ(1, devices.size());
+}
+
 NISysCfgStatus SetExpertNameToNetwork(void* value)
 {
   char* expert_name = (char*)value;
@@ -179,6 +254,8 @@ TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_Lis
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty)
       .WillOnce(WithArg<3>(Invoke(SetExpertNameToNetwork)));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyExpertUserAlias, _, _))
@@ -202,6 +279,8 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
       .WillRepeatedly(Return(NISysCfg_PropDoesNotExist));
   EXPECT_CALL(mock_library, GetResourceProperty)
       .WillRepeatedly(Return(NISysCfg_PropDoesNotExist));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
@@ -209,7 +288,6 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
   EXPECT_EQ(1, devices.size());
   EXPECT_EQ("", devices.Get(0).name());
   EXPECT_EQ("", devices.Get(0).model());
-  EXPECT_EQ("", devices.Get(0).vendor());
   EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
