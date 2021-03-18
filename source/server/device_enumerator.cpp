@@ -96,7 +96,7 @@ NISysCfgStatus DeviceEnumerator::get_syscfg_session(NISysCfgSessionHandle* sessi
   catch (LibraryLoadException ex) {
     throw ex;
   }
-  session = &cached_syscfg_session;
+  *session = cached_syscfg_session;
   return status;
 }
 
