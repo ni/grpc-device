@@ -78,9 +78,8 @@ DeviceEnumerator::~DeviceEnumerator()
   return ::grpc::Status::OK;
 }
 
-// Returns cached NISysCfgSession.
-// This takes an optional reinitialize boolean as input which can be used to enforce initialization when needed.
-// Returns null session after failed initialization.
+// Sets cached NISysCfgSession to passed session handle.
+// Sets null to cached session after failed initialization.
 NISysCfgStatus DeviceEnumerator::get_syscfg_session(NISysCfgSessionHandle* session)
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
