@@ -80,6 +80,7 @@ DeviceEnumerator::~DeviceEnumerator()
 
 // Sets cached NISysCfgSession to passed session handle.
 // Sets null to cached session after failed initialization.
+// Returns status of getting valid cached_syscfg_session is successful.
 NISysCfgStatus DeviceEnumerator::get_syscfg_session(NISysCfgSessionHandle* session)
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
