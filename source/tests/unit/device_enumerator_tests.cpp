@@ -55,8 +55,8 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
-  EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
-  EXPECT_EQ(grpc::nidevice::kSysCfgApiNotInstalledMessage, status.error_message());
+  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
 }
 
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListOfDevicesIsEmpty)
@@ -78,7 +78,7 @@ NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_SessionHandleIsPassedToCloseHandle)
+TEST(DeviceEnumeratorTests, InitializeSessionSetsSessionHandle_EnumerateDevices_SessionHandleIsClosedByGenericCloseHandle)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
