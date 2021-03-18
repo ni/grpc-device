@@ -22,7 +22,9 @@ import session_pb2_grpc as grpc_session
 
 # Helper to print the devices 
 def print_devices(devices) :
-    print(f"Devices: \n") 
+    print("-----------------------------------------------------------------------------------------------------")
+    print("List of devices connected to the server: \n")
+    print("-----------------------------------------------------------------------------------------------------")
     for device in devices :
         print(f"{device.name}")
         print(f"    Model: {device.model}")
