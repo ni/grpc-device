@@ -14,6 +14,11 @@ using ::testing::Return;
 using ::testing::Throw;
 using ::testing::WithArg;
 
+static const char* kScopeName = "MyScope";
+static const char* kModel = "NI PXIe-5122";
+static const char* kVendor = "NI";
+static const char* kSerialNumber = "37ED39FC0D17";
+
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
@@ -289,6 +294,124 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
   EXPECT_EQ("", devices.Get(0).name());
   EXPECT_EQ("", devices.Get(0).model());
   EXPECT_EQ("", devices.Get(0).serial_number());
+}
+
+NISysCfgStatus SetAliasName(void* value)
+{
+  char* name = (char*)value;
+  strcpy(name, kScopeName);
+  return NISysCfg_OK;
+}
+
+TEST(DeviceEnumerationTests, GetResourceIndexedPropertySetsName_EnumerateDevices_ResponseContainsThatName)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, NextResource)
+      .WillOnce(Return(NISysCfg_OK))
+      .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty)
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
+  EXPECT_CALL(mock_library, GetResourceIndexedProperty)
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyExpertUserAlias, _, _))
+      .WillOnce(WithArg<3>(Invoke(SetAliasName)));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(1, devices.size());
+  EXPECT_EQ(kScopeName, devices.Get(0).name());
+}
+
+NISysCfgStatus SetModelName(void* value)
+{
+  char* model = (char*)value;
+  strcpy(model, kModel);
+  return NISysCfg_OK;
+}
+
+TEST(DeviceEnumerationTests, GetResourcePropertySetsModelName_EnumerateDevices_ResponseContainsThatModelName)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, NextResource)
+      .WillOnce(Return(NISysCfg_OK))
+      .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty)
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyProductName, _))
+      .WillOnce(WithArg<2>(Invoke(SetModelName)));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(1, devices.size());
+  EXPECT_EQ(kModel, devices.Get(0).model());
+}
+
+NISysCfgStatus SetVendorName(void* value)
+{
+  char* vendor = (char*)value;
+  strcpy(vendor, kVendor);
+  return NISysCfg_OK;
+}
+
+TEST(DeviceEnumerationTests, GetResourcePropertySetsVendorName_EnumerateDevices_ResponseContainsThatVendorName)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, NextResource)
+      .WillOnce(Return(NISysCfg_OK))
+      .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty)
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyVendorName, _))
+      .WillOnce(WithArg<2>(Invoke(SetVendorName)));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(1, devices.size());
+  EXPECT_EQ(kVendor, devices.Get(0).vendor());
+}
+
+NISysCfgStatus SetSerialNumber(void* value)
+{
+  char* serial_number = (char*)value;
+  strcpy(serial_number, kSerialNumber);
+  return NISysCfg_OK;
+}
+
+TEST(DeviceEnumerationTests, GetResourcePropertySetsSerialNumber_EnumerateDevices_ResponseContainsThatSerialNumber)
+{
+  NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  EXPECT_CALL(mock_library, NextResource)
+      .WillOnce(Return(NISysCfg_OK))
+      .WillOnce(Return(NISysCfg_EndOfEnum));
+  EXPECT_CALL(mock_library, GetResourceProperty)
+      .WillRepeatedly(Return(NISysCfg_OK));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyIsNIProduct, _))
+      .WillOnce(WithArg<2>(Invoke(SetIsNIProductToTrue)));
+  EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertySerialNumber, _))
+      .WillOnce(WithArg<2>(Invoke(SetSerialNumber)));
+
+  ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(1, devices.size());
+  EXPECT_EQ(kSerialNumber, devices.Get(0).serial_number());
 }
 
 }  // namespace unit
