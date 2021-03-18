@@ -246,7 +246,7 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_DeviceEnumeration_GetSysCfg
 
   NISysCfgSessionHandle session = nullptr;
 
-  NISysCfgStatus status = device_enumerator.get_syscfg_session(&session);
+  NISysCfgStatus status = device_enumerator.try_get_syscfg_session(&session);
 
   EXPECT_EQ(NISysCfg_OK, status);
 }
