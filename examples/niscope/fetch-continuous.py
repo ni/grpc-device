@@ -1,7 +1,4 @@
 # 
-# Copyright 2021 National Instruments Corp
-# Licensed under the MIT license
-#
 # This example initiates an acquisition and continuously fetches waveform samples per channel.
 #
 # Getting Started:
