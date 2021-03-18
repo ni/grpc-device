@@ -64,9 +64,6 @@ DeviceEnumerator::~DeviceEnumerator()
         library_->CloseHandle(filter);
       }
     }
-    else {
-      return ::grpc::Status(::grpc::NOT_FOUND, kSysCfgApiNotInstalledMessage);
-    }
   }
   catch (LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
