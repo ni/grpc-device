@@ -51,6 +51,7 @@ SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repo
   }
   bool is_server_reset = session_repository_->reset_server();
   response->set_is_server_reset(is_server_reset);
+  device_enumerator_->clear_sysconfig_session();
   return ::grpc::Status::OK;
 }
 
