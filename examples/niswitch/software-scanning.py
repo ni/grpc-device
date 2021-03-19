@@ -29,7 +29,7 @@ server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
-# Resource name and topology string for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used currently.
+# Resource name and topology string for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
 resource = "Switch1"
 topology_string = "2529/2-Wire Dual 4x16 Matrix"
 
@@ -55,7 +55,7 @@ def ThrowOnError (vi, errorCode):
     error_message_response = niswitch_client.ErrorMessage(error_message_request)
     raise Exception (error_message_response.error_message)
 try :
-    # Open session to NI-SWITCH and set topology. Set simulate parameter to false if real hardware device is being used.
+    # Open session to NI-SWITCH and set topology. Set the simulate parameter to false if real hardware device is being used.
     init_with_topology_response = niswitch_client.InitWithTopology(niswitch_types.InitWithTopologyRequest(
         resource_name=resource,
         topology = topology_string,
