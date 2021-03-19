@@ -1,6 +1,10 @@
-# gRPC Support for NI Hardware Driver APIs
+# NI Device gRPC Server and Client APIs
 
-This repo contains necessary C++ code and .proto files needed to build a gRPC server for NI hardware driver APIs.
+This repo contains the source code needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples that demonstrate how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
+
+The server and the client APIs allow NI's instrumentation to be accessed and controlled through a remote interface via pre-defined APIs using a client/server architecture. The API is not a driver but instead a layer on top of the existing driver C APIs that provides remote capabilities.
+
+For more detailed information on the server and API design refer to the [wiki](https://github.com/ni/grpc-device/wiki).
 
 ## Build Status
 ![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
@@ -12,11 +16,11 @@ This repo contains necessary C++ code and .proto files needed to build a gRPC se
 To prepare for cmake + Microsoft Visual C++ compiler build
 - Install Visual Studio 2015, 2017, or 2019 (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
-- Install [CMake](https://cmake.org/download/) 3.12.0 or newer.
-- Install [Python](https://www.python.org/downloads/).
+- Install [CMake](https://cmake.org/download/) 3.12.0 or newer and add it to the PATH.
+- Install [Python](https://www.python.org/downloads/) and add it to the PATH.
 - Install [mako](https://www.makotemplates.org/download.html)
 
-Launch "x64 Native Tools Command Prompt for Visual Studio"
+Launch "x64 Native Tools Command Prompt for Visual Studio" and change to a directory where you have write permissions. Alternatively, use Windows PowerShell in a directory where you have write permissions.
 
 ### Clone Repo
 
@@ -29,6 +33,9 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 
 ### Build Debug
+
+Build a debug build if debugging symbols are required during development:
+
 ```
 > mkdir build
 > cd build
@@ -37,6 +44,9 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 
 ### Build Release
+
+Build a release build for use in a production environment:
+
 ```
 > mkdir build
 > cd build
@@ -87,6 +97,8 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 
 ### Build Debug
 
+Build a debug build if debugging symbols are required during development:
+
 ```
 > mkdir -p cmake/build
 > cd cmake/build
@@ -95,6 +107,8 @@ Clone the repo and update submodules, this will pull the gRPC components and all
 ```
 
 ### Build Release
+
+Build a release build for use in a production environment:
 
 ```
 > mkdir -p cmake/build
@@ -120,7 +134,7 @@ Setting | Google | Ours | Justification
 
 ## Running the gRPC Server
 
-The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support).
+The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support). The location of the server binary is not important as long as the user has proper permissions in the chosen directory.
 
 There are two ways to start the server:
 
@@ -130,7 +144,7 @@ There are two ways to start the server:
     
     `.\ni_grpc_device_server.exe`
 
-    **Linux**
+    **Linux and Linux RT**
     
     `./ni_grpc_device_server`
 
@@ -140,7 +154,7 @@ There are two ways to start the server:
     
     `.\ni_grpc_device_server.exe C:\path\to\config\file\server_config.json`
 
-    **Linux**
+    **Linux and Linux RT**
     
     `./ni_grpc_device_server /path/to/config/file/server_config.json`
 
@@ -166,6 +180,8 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 
 ### Default Configuration File (insecure):
 
+Below are the contents of a default configuration file using port `31763` and configured without SSL/TLS.  A configuration file with these contents also exists in the same directory as the `ni_grpc_device_server` binary.
+
 ```json
 {
    "port": 31763,
@@ -179,7 +195,7 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 
 ## Creating a gRPC Client
 
-Coming Soon
+Each supported driver API has a corresponding `.proto` file that defines the interface used by clients to interact with the NI devices connected to the server. Creating a client requires compiling the `.proto` into supporting files in the client's language of choice using the protocol buffer compiler `protoc`. For more detailed information refer to the [Creating a gRPC Client wiki page](https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client).
 
 ## SSL/TLS Support
 

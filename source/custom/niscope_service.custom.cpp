@@ -185,7 +185,19 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 array_meas_function = request->array_meas_function();
+    ViInt32 array_meas_function;
+    switch (request->array_meas_function_enum_case()) {
+      case grpc::niscope::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunction:
+        array_meas_function = (ViInt32)request->array_meas_function();
+        break;
+      case grpc::niscope::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunctionRaw:
+        array_meas_function = (ViInt32)request->array_meas_function_raw();
+        break;
+      case grpc::niscope::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::ARRAY_MEAS_FUNCTION_ENUM_NOT_SET:
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for array_meas_function was not specified or out of range");
+        break;
+    }
+
     ViInt32 measurement_waveform_size;
     CheckStatus(library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size));
 
@@ -223,7 +235,18 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 scalar_meas_function = request->scalar_meas_function();
+    ViInt32 scalar_meas_function;
+    switch (request->scalar_meas_function_enum_case()) {
+      case grpc::niscope::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
+        scalar_meas_function = (ViInt32)request->scalar_meas_function();
+        break;
+      case grpc::niscope::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
+        scalar_meas_function = (ViInt32)request->scalar_meas_function_raw();
+        break;
+      case grpc::niscope::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scalar_meas_function was not specified or out of range");
+        break;
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -384,7 +407,18 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 scalar_meas_function = request->scalar_meas_function();
+    ViInt32 scalar_meas_function;
+    switch (request->scalar_meas_function_enum_case()) {
+      case grpc::niscope::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
+        scalar_meas_function = (ViInt32)request->scalar_meas_function();
+        break;
+      case grpc::niscope::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
+        scalar_meas_function = (ViInt32)request->scalar_meas_function_raw();
+        break;
+      case grpc::niscope::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scalar_meas_function was not specified or out of range");
+        break;
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
@@ -482,7 +516,18 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 scalar_meas_function = request->scalar_meas_function();
+    ViInt32 scalar_meas_function;
+    switch (request->scalar_meas_function_enum_case()) {
+      case grpc::niscope::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
+        scalar_meas_function = (ViInt32)request->scalar_meas_function();
+        break;
+      case grpc::niscope::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
+        scalar_meas_function = (ViInt32)request->scalar_meas_function_raw();
+        break;
+      case grpc::niscope::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scalar_meas_function was not specified or out of range");
+        break;
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));
