@@ -1,5 +1,5 @@
 #
-# This example lists out devices connected to the server machine (in this case localhost)
+# This example lists out devices connected to the server machine
 # by establishing communication with it over gRPC.
 #
 # Getting Started:
@@ -32,7 +32,7 @@ def print_devices(devices) :
         print(f"        Serial Number: {device.serial_number} \n")
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python EnumerateDevice.py 10.24.38.46 31763
+#   > python EnumerateDevice.py <server_address> <port_number>
 # If not passed as command line arguments, then by default server address would be "localhost:31763".
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
