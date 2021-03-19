@@ -10,6 +10,20 @@ For more detailed information on the server and API design refer to the [wiki](h
 ![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
 ![NI Linux Real-Time Build](https://github.com/ni/grpc-device/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
 
+## Installing from a Release
+
+### Installing the Server
+1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
+2. Download the latest Server Release `.tar` or `.zip` for the desired platform.
+3. Extract the contents of the `.tar` or `.zip` to a directory with read and write permissions.
+4. [Run the server](#running-the-grpc-server)
+
+### Download Client Files
+1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
+2. Download the latest Server Release `protos.tgz` or `protos.zip` depending on the client platform.
+3. Extract the contents of `protos.tgz` or `protos.zip` to a directory with read and write permissions.
+4. [Create a gRPC client](#creating-a-grpc-client).
+
 ## Building on Windows 64-bit
 
 ### Prerequisites
