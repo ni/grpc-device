@@ -95,7 +95,7 @@ NISysCfgStatus DeviceEnumerator::open_or_get_localhost_syscfg_session(NISysCfgSe
   return status;
 }
 
-//Calls Closehandle to clear sysconfig session and sets cached_syscfg_session to null.
+// Calls Closehandle to clear sysconfig session and sets cached_syscfg_session to null.
 void DeviceEnumerator::clear_syscfg_session()
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
