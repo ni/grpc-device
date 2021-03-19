@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 #include <server/session_utilities_service.h>
-#include <server/syscfg_library.h>
-#include <tests/utilities/syscfg_mock_library.h>
 
 #include "niswitch/niswitch_library.h"
 #include "niswitch/niswitch_service.h"
@@ -11,9 +9,6 @@ namespace tests {
 namespace system {
 
 namespace niswitch = grpc::niswitch;
-
-using ::testing::NiceMock;
-using ::testing::Throw;
 
 const int kViErrorRsrcNotFound = -1074118654;
 const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.";
@@ -28,14 +23,8 @@ class NiSwitchSessionTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
-    syscfg_mock_library_ = std::make_unique<NiceMock<ni::tests::utilities::SysCfgMockLibrary>>();
-    ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
-        .WillByDefault(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
-    device_enumerator_ = std::make_unique<grpc::nidevice::DeviceEnumerator>(syscfg_mock_library_.get());
-    session_utilities_service_ = std::make_unique<grpc::nidevice::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
     niswitch_library_ = std::make_unique<niswitch::NiSwitchLibrary>();
     niswitch_service_ = std::make_unique<niswitch::NiSwitchService>(niswitch_library_.get(), session_repository_.get());
-    builder.RegisterService(session_utilities_service_.get());
     builder.RegisterService(niswitch_service_.get());
 
     server_ = builder.BuildAndStart();
@@ -48,7 +37,6 @@ class NiSwitchSessionTest : public ::testing::Test {
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
     niswitch_stub_ = niswitch::NiSwitch::NewStub(channel_);
-    session_utilities_stub_ = grpc::nidevice::SessionUtilities::NewStub(channel_);
   }
 
   std::unique_ptr<niswitch::NiSwitch::Stub>& GetStub()
@@ -73,11 +61,7 @@ class NiSwitchSessionTest : public ::testing::Test {
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
-  std::unique_ptr<grpc::nidevice::SessionUtilities::Stub> session_utilities_stub_;
   std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
-  std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
-  std::unique_ptr<grpc::nidevice::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<::grpc::nidevice::SessionUtilitiesService> session_utilities_service_;
   std::unique_ptr<niswitch::NiSwitchLibrary> niswitch_library_;
   std::unique_ptr<niswitch::NiSwitchService> niswitch_service_;
   std::unique_ptr<::grpc::Server> server_;
@@ -157,6 +141,7 @@ TEST_F(NiSwitchSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMess
   error_request.set_error_code(kViErrorRsrcNotFound);
   niswitch::ErrorMessageResponse error_response;
   ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
+
   EXPECT_TRUE(status.ok());
   EXPECT_STREQ(kViErrorRsrcNotFoundMessage, error_response.error_message().c_str());
 }

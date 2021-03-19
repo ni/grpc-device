@@ -258,6 +258,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchRelayControl_SendRequest_RelayPositionMatc
   int get_relay_pos = get_relay_position(kRelayName);
   EXPECT_EQ(expected_value, get_relay_pos);
 }
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
