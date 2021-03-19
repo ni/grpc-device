@@ -83,6 +83,8 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Retur
     ::grpc::ClientContext context;
 
     ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
+    status = GetStub()->EnumerateDevices(&context, request, &response);
+
 
     EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
 }

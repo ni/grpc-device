@@ -1,7 +1,5 @@
 #include "device_enumerator.h"
-
 #include <shared_mutex>
-
 #include "syscfg_library.h"
 
 namespace grpc {
@@ -36,7 +34,7 @@ DeviceEnumerator::~DeviceEnumerator()
   NISysCfgBool is_ni_product = NISysCfgBoolFalse;
 
   try {
-    if (NISysCfg_Succeeded(status = try_get_syscfg_session(&session))) {
+    if (NISysCfg_Succeeded(status = open_or_get_localhost_syscfg_session(&session))) {
       if (NISysCfg_Succeeded(status = library_->CreateFilter(session, &filter))) {
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
         library_->SetFilterProperty(filter, NISysCfgFilterPropertyIsChassis, NISysCfgBoolTrue);
@@ -65,7 +63,7 @@ DeviceEnumerator::~DeviceEnumerator()
       }
     }
   }
-  catch (LibraryLoadException& ex) {
+  catch (const LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 
@@ -79,7 +77,7 @@ DeviceEnumerator::~DeviceEnumerator()
 // Sets cached NISysCfgSession to passed session handle.
 // Sets null to cached session after failed initialization.
 // Returns status of getting valid cached_syscfg_session is successful.
-NISysCfgStatus DeviceEnumerator::try_get_syscfg_session(NISysCfgSessionHandle* session)
+NISysCfgStatus DeviceEnumerator::open_or_get_localhost_syscfg_session(NISysCfgSessionHandle* session)
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
   NISysCfgStatus status = NISysCfg_OK;
@@ -90,15 +88,15 @@ NISysCfgStatus DeviceEnumerator::try_get_syscfg_session(NISysCfgSessionHandle* s
       }
     }
   }
-  catch (LibraryLoadException ex) {
-    throw ex;
+  catch (const LibraryLoadException& ex) {
+    throw;
   }
   *session = cached_syscfg_session;
   return status;
 }
 
 //Calls Closehandle to clear sysconfig session and sets cached_syscfg_session to null.
-void DeviceEnumerator::clear_sysconfig_session()
+void DeviceEnumerator::clear_syscfg_session()
 {
   std::unique_lock<std::shared_mutex> lock(session_mutex);
   if (cached_syscfg_session != nullptr) {

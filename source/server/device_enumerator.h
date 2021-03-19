@@ -4,9 +4,7 @@
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 #include <session.grpc.pb.h>
-
 #include <shared_mutex>
-
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
 
@@ -24,8 +22,8 @@ class DeviceEnumerator {
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
 
-  NISysCfgStatus try_get_syscfg_session(NISysCfgSessionHandle* session);
-  void clear_sysconfig_session();
+  NISysCfgStatus open_or_get_localhost_syscfg_session(NISysCfgSessionHandle* session);
+  void clear_syscfg_session();
 
  private:
   SysCfgLibraryInterface* library_;
