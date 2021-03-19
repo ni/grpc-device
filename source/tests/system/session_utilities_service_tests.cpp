@@ -68,11 +68,11 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
 
   ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
 
-  for (auto it : response.devices()) {
-    EXPECT_THAT(it.name(), Not(IsEmpty()));
-    EXPECT_NE(it.model().c_str(), nullptr);
-    EXPECT_NE(it.vendor().c_str(), nullptr);
-    EXPECT_NE(it.serial_number().c_str(), nullptr);
+  for (auto device : response.devices()) {
+    EXPECT_THAT(device.name(), Not(IsEmpty()));
+    EXPECT_NE(device.model().c_str(), nullptr);
+    EXPECT_THAT(device.vendor(), Not(IsEmpty()));
+    EXPECT_NE(device.serial_number().c_str(), nullptr);
   }
 }
 
