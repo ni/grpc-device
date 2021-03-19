@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <server/session_utilities_service.h>
 
 #include "niswitch/niswitch_library.h"
 #include "niswitch/niswitch_service.h"
