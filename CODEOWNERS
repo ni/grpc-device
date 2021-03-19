@@ -2,16 +2,20 @@
 * @jonlugoatx
 
 # Owners for the build files
-/CMakeLists.txt   @SparkingSpork
-/.github/**/*.yml @SparkingSpork
-/scripts/         @SparkingSpork
+/CMakeLists.txt      @SparkingSpork
+/.github/**/*.yml    @SparkingSpork
+/scripts/            @SparkingSpork
+
+# Examples and docs
+/examples            @kylesull30 @jonlugoatx
+README.md            @kylesull30 @jonlugoatx
 
 # Codegen
-/generated        @reckenro @jonlugoatx
-/source/codegen/  @reckenro @jonlugoatx
+/generated           @reckenro @jonlugoatx
+/source/codegen/     @reckenro @jonlugoatx
 
 # Core server
-/source/core_server/ @epetersoni @kylesull30 @jonlugoatx
+/source/core_server/ @kylesull30 @jonlugoatx
 
 # Test
-/source/tests/ @epetersoni @kylesull30
+/source/tests/       @reckenro @jonlugoatx
