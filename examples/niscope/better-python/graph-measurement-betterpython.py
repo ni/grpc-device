@@ -38,9 +38,10 @@ import time
 import sys
 import grpc
 
-# Server machine's IP address and port number have to be passed as two separate command line arguments.
+# Server machine's IP address, port number, and resource name (optional) can be passed as separate command line arguments.
 #   > python graph_measurement-betterpython.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
+#   > python graph_measurement-betterpython.py localhost 31763 Scope1
+# If not passed as command line arguments, then by default server address would be "localhost:31763" and a resource will be simulated
 server_address = "localhost"
 server_port = 31763
 resource = "SimulatedScope"
