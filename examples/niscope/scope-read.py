@@ -1,10 +1,10 @@
 #
-# Example communication with niScope over gRPC
-#
-# Copyright 2020 National Instruments
-# Licensed under the MIT license
+# Example communication with NI-SCOPE over gRPC
 #
 # Getting Started:
+#
+# To run this example, install "NI-SCOPE Driver" on the server machine.
+# Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-scope.html
 #
 # Install the gRPC tools for Python
 #     > pip install grpcio-tools
@@ -15,48 +15,50 @@
 #   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./session.proto
 #   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./niscope.proto 
 #
-# Update the server address and resource name and options in this file
+# Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
+# Link : https://github.com/ni/grpc-device/wiki/niScope_header
+#
 # Run the code to read a waveform from the scope
 #
 
 import grpc
-import niScope_pb2 as scope_types
-import niScope_pb2_grpc as gRPC_scope
+import niScope_pb2 as niscope_types
+import niScope_pb2_grpc as grpc_scope
 import sys
 
-def check_status(scope_service, result):
+def CheckStatus(scope_service, result):
     if (result.status != 0):
-        error = scope_service.GetError(scope_types.GetErrorRequest())
+        error = scope_service.GetError(niscope_types.GetErrorRequest())
         print(error.description)
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python EnumerateDevice.py localhost 31763
+#   > python scope-read.py localhost 31763
 # If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
 # Resource name and options for a simulated 5164 scope
-resource = "SimulatedScope7c632f66-e7c2-4fab-85a4-cd15c8be4130"
+resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
 
 # Create the communcation channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the niScope service
 channel = grpc.insecure_channel(server_address)
-scope_service = gRPC_scope.NiScopeStub(channel)
+scope_service = grpc_scope.NiScopeStub(channel)
 
 # Initialize the scope
-init_result = scope_service.InitWithOptions(scope_types.InitWithOptionsRequest(
+init_result = scope_service.InitWithOptions(niscope_types.InitWithOptionsRequest(
     session_name = "demo",
     resource_name = resource, 
     id_query = False, 
     option_string = options
     ))
 vi = init_result.vi
-check_status(scope_service, init_result)
+CheckStatus(scope_service, init_result)
 
 # Configure horizontal timing
-config_result = scope_service.ConfigureHorizontalTiming(scope_types.ConfigureHorizontalTimingRequest(
+config_result = scope_service.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
     vi = vi,
     min_sample_rate = 1000000,
     min_num_pts = 100000,
@@ -64,48 +66,48 @@ config_result = scope_service.ConfigureHorizontalTiming(scope_types.ConfigureHor
     num_records = 1,
     enforce_realtime = True
 ))
-check_status(scope_service, config_result)
+CheckStatus(scope_service, config_result)
 
 # Configure vertical timing
-vertical_result = scope_service.ConfigureVertical(scope_types.ConfigureVerticalRequest(
+vertical_result = scope_service.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
     vi = vi,
     channel_list = "0",
     range = 30.0,
     offset = 0,
-    coupling = scope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+    coupling = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
     enabled = True,
     probe_attenuation = 1
 ))
-check_status(scope_service, vertical_result)
+CheckStatus(scope_service, vertical_result)
 
-confTrigger_edge_result = scope_service.ConfigureTriggerEdge(scope_types.ConfigureTriggerEdgeRequest(
+confTrigger_edge_result = scope_service.ConfigureTriggerEdge(niscope_types.ConfigureTriggerEdgeRequest(
     vi = vi,
     trigger_source = "0",
     level = 0.00,
-    trigger_coupling = scope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-    slope = scope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
+    trigger_coupling = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+    slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
 ))
-check_status(scope_service, confTrigger_edge_result)
+CheckStatus(scope_service, confTrigger_edge_result)
 
-result = scope_service.SetAttributeViInt32(scope_types.SetAttributeViInt32Request(
+result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
     vi = vi,
     channel_list = "0",
-    attribute_id = scope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-    value = scope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_VOLTS
+    attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+    value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_VOLTS
 ))
-check_status(scope_service, result)
+CheckStatus(scope_service, result)
 
 # Read a waveform from the scope
-read_result = scope_service.Read(scope_types.ReadRequest(
+read_result = scope_service.Read(niscope_types.ReadRequest(
     vi = vi,
     channel_list = "0",
     timeout = 10000,
     num_samples = 100000
 ))
-check_status(scope_service, read_result)
+CheckStatus(scope_service, read_result)
 values = read_result.waveform[0:10]
 print(values)
 
-scope_service.Close(scope_types.CloseRequest(
+scope_service.Close(niscope_types.CloseRequest(
     vi = vi
 ))
