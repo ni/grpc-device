@@ -25,6 +25,12 @@
 #   > python -m grpc_tools.protoc -I. --python_betterproto_out=. --grpc_python_out=. ./session.proto
 #   > python -m grpc_tools.protoc -I. --python_betterproto_out=. --grpc_python_out=. ./niscope.proto
 #
+# Generate the python API from the gRPC definition (.proto) files
+# Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
+# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
+#   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. session.proto
+#   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. niscope.proto 
+#
 # NOTE: betterproto has a bug generating helpers for gRPC messages with oneofs. 
 # Only the last field in the oneof can be properly set without wrapper modification
 #

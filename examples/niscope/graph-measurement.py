@@ -11,16 +11,18 @@
 #   if you are using anaconda
 #     > conda install grpcio-tools
 #
-# Generate the python API from the gRPC definition (.ptoto) files
-#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./session.proto
-#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./niscope.proto
+# Generate the python API from the gRPC definition (.proto) files
+# Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
+# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
+#   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
+#   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
 #
 # Update the server address and resource name and options in this file
 # Run the code to read a waveform from the scope
 
 import grpc
-import niScope_pb2 as niscope_types
-import niScope_pb2_grpc as gRPC_scope
+import niscope_pb2 as niscope_types
+import niscope_pb2_grpc as gRPC_scope
 import matplotlib.pyplot as plt
 import time
 import sys

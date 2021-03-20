@@ -33,7 +33,7 @@ from grpclib.client import Channel
 import sys
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python scope-read-betterpython.py localhost 31763
+#   > python plot-read-waveform-betterpython.py localhost 31763
 # If not passed as command line arguments, then by default server address would be "localhost:31763"
 host = "localhost"
 port = 31763

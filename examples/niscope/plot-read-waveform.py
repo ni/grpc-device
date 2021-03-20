@@ -11,9 +11,11 @@
 #   if you are using anaconda
 #     > conda install grpcio-tools
 #
-# Generate the python API from the gRPC definition (.ptoto) files
-#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./session.proto
-#   > python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./niscope.proto 
+# Generate the python API from the gRPC definition (.proto) files
+# Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
+# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
+#   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
+#   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
 #
 # Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
 # Link : https://github.com/ni/grpc-device/wiki/niScope_header
@@ -22,8 +24,8 @@
 #
 
 import grpc
-import niScope_pb2 as niscope_types
-import niScope_pb2_grpc as grpc_scope
+import niscope_pb2 as niscope_types
+import niscope_pb2_grpc as grpc_scope
 import sys
 
 def CheckStatus(scope_service, result):
@@ -32,7 +34,7 @@ def CheckStatus(scope_service, result):
         print(error.description)
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python scope-read.py localhost 31763
+#   > python plot-read-waveform.py localhost 31763
 # If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
