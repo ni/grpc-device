@@ -1,8 +1,11 @@
-# Justification
-TODO: Describe why this change is required or what problem it solves. If work-item/issue-tracking links are included, provide some details about them.
+### What does this Pull Request accomplish?
 
-# Implementation
-TODO: Describe how the change addresses the problem. Consider factors such as complexity, alternative solutions, performance impact, etc. Consider listing files with important changes or comment on them directly in the pull request.
+TODO: Include high-level description of the changes in this pull request.
 
-# Testing
-TODO: Detail the testing done to ensure this submission meets requirements. Include automated/manual test additions or modifications, testing done on a local build, private CI run results, and additional testing not covered by automatic pull request validation.
+### Why should this Pull Request be merged?
+
+TODO: Justify why this contribution should be part of the project.
+
+### What testing has been done?
+
+TODO: Detail what testing has been done to ensure this submission meets requirements.
