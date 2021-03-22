@@ -12,9 +12,9 @@
 #   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
 #   > python -m grpc_tools.protoc -I../../generated/niswitch --python_out=. --grpc_python_out=. niswitch.proto 
 #
-# Run the code to initialize a session with NI-SWITCH. This example demonstrates how to scan a series of channels on a module using software scanning.
+# Run the code to initialize a session with NI-SWITCH. This example demonstrates how to control an individual relay on a module.
 #
-# Refer to the NI-SWITCH Help to determine if your module supports scanning, the scan list syntax, valid channel names and valid resource names  
+# Refer to the NI-SWITCH Help to determine topology,relay names and resource names.  
 
 import grpc
 import sys
@@ -23,7 +23,7 @@ import niswitch_pb2 as niswitch_types
 import niswitch_pb2_grpc as grpc_niswitch
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python software-scanning.py 10.20.30.40 31763
+#   > python controlling-an-individual-relay.py 10.20.30.40 31763
 # If not passed as command line arguments, then by default server address would be "localhost:31763"
 server_address = "localhost:31763"
 if len(sys.argv) == 3 :
