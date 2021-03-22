@@ -72,6 +72,9 @@ static void RunServer(const std::string& config_file_path)
   std::cout << "Security is configured with " << security_description << tls_description << "." << std::endl;
   // This call will block until another thread shuts down the server.
   server->Wait();
+  // This code is currently unreachable, but if the call to wait exits, we need to clean up the service here.
+  session_repository.reset_server();
+  device_enumerator.clear_syscfg_session();
 }
 
 int main(int argc, char** argv)
