@@ -166,7 +166,7 @@ is created that merges to `main`.
 The test name should match the class being tested.
 
 > Example:<br>
-> A unit test for class `MyFoo` should be named `MyFooTests` and go in `/source/tests/integration/my_foo.cpp`
+> An integration test for class `MyFoo` should be named `MyFooTests` and go in `/source/tests/integration/my_foo.cpp`
 
 ### System
 A system test tests the server and client on a system with the supported NI device drivers installed. These tests are not
