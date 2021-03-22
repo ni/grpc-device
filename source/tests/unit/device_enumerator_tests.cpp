@@ -372,7 +372,7 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsIniti
   EXPECT_EQ(NISysCfg_OK, status);
 }
 
-TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CalledCloseHandleOnce)
+TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledCloseHandleOnce)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
