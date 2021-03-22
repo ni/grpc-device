@@ -11,9 +11,9 @@ namespace niswitch = grpc::niswitch;
 
 const int kViErrorRsrcNotFound = -1074118654;
 const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.";
-const char* kTestRsrcName = "FakeDevice";
+const char* kTestRsrcName = "";
 const char* kTestSessName = "SessionName";
-const char* kInvalidRsrcName = "";
+const char* kInvalidRsrcName = "InvalidName";
 const char* kTopology = "2529/2-Wire Dual 4x16 Matrix";
 
 class NiSwitchSessionTest : public ::testing::Test {
