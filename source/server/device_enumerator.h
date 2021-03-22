@@ -4,7 +4,6 @@
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 #include <session.grpc.pb.h>
-
 #include <shared_mutex>
 
 #include "shared_library.h"

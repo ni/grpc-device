@@ -10,8 +10,7 @@ DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
 
 DeviceEnumerator::~DeviceEnumerator()
 {
-  if (syscfg_session_)
-    clear_syscfg_session();
+  // Caller is expected to close the syscfg session before calling destructor.
 }
 
 // Provides a list of devices or chassis connected to server under localhost. This internally uses the

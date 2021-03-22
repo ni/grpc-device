@@ -83,7 +83,7 @@ NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumeratorTests, InitializeSessionSucceeds_EnumerateDevices_CallsCloseHandleOnes)
+TEST(DeviceEnumeratorTests, InitializeSessionSucceeds_EnumerateDevices_CallsInitializeButNotClose)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -92,7 +92,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionSucceeds_EnumerateDevices_CallsClos
   EXPECT_CALL(mock_library, CloseHandle(_))
       .WillRepeatedly(Return(NISysCfg_OK));
   EXPECT_CALL(mock_library, CloseHandle((void*)1))
-      .Times(1);
+      .Times(0);
 
   google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
@@ -372,7 +372,7 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsIniti
   EXPECT_EQ(NISysCfg_OK, status);
 }
 
-TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_ClearSysCfgSesion_CallsCloseHandleTwice)
+TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CalledCloseHandleOnce)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -380,7 +380,7 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_ClearSysCfgSesion_CallsClos
   EXPECT_CALL(mock_library, InitializeSession)
       .WillRepeatedly(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, CloseHandle)
-      .Times(2);
+      .Times(1);
   NISysCfgSessionHandle session = nullptr;
   NISysCfgStatus status = device_enumerator.open_or_get_localhost_syscfg_session(&session);
 
