@@ -35,14 +35,17 @@ def CheckStatus(scope_service, result):
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
 #   > python plot-read-waveform.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
-server_address = "localhost:31763"
-if len(sys.argv) == 3 :
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
-
-# Resource name and options for a simulated 5164 scope
+# If not passed as command line arguments, then by default server address would be "localhost:31763" and a resource will be simulated
+server_address = "localhost"
+server_port = 31763
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
+if len(sys.argv) >= 3 :
+    server_address = sys.argv[1]
+    server_port = int(sys.argv[2])
+    if (len(sys.argv) == 4):
+        resource = sys.argv[3]
+        options = ""
 
 # Create the communcation channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the niScope service

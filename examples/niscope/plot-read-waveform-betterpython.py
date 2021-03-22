@@ -37,16 +37,17 @@ import sys
 
 # Server machine's IP address and port number have to be passed as two separate command line arguments.
 #   > python plot-read-waveform-betterpython.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
-host = "localhost"
-port = 31763
-if len(sys.argv) == 3 :
-    host = sys.argv[1]
-    port = int(sys.argv[2])
-
-# Resource name and options for a simulated 5164 scope
+# If not passed as command line arguments, then by default server address would be "localhost:31763" and a resource will be simulated
+server_address = "localhost"
+server_port = 31763
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
+if len(sys.argv) >= 3 :
+    server_address = sys.argv[1]
+    server_port = int(sys.argv[2])
+    if (len(sys.argv) == 4):
+        resource = sys.argv[3]
+        options = ""
 
 async def CheckStatus(scope_service, result):
     if (result.status != 0):
