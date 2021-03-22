@@ -30,9 +30,10 @@
 #   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. session.proto
 #   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. niscope.proto 
 #
-# NOTE: betterproto has a bug generating helpers for gRPC messages with oneofs. 
-# Only the last field in the oneof can be properly set without wrapper modification
-# For example, when calling configure_vertical, we set coupling_raw instead of coupling to avoid this issue
+# NOTE: The betterproto code generator has a bug generating helpers for gRPC messages with oneof fields.
+# If any parameter accepts either an enum value or a raw value, only the raw value is used. For example,
+# when calling configure_vertical, we set coupling_raw instead of coupling to avoid a default raw value
+# being used.
 #
 # Update the server address and resource name and options in this file
 
