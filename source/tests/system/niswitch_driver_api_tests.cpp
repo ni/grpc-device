@@ -73,12 +73,13 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     niswitch::ErrorMessageResponse response;
 
     ::grpc::Status status = GetStub()->ErrorMessage(&context, request, &response);
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kSwitchDriverApiSuccess, response.status());
     return response.error_message();
   }
 
-void initialize_driver_session()
+  void initialize_driver_session()
   {
     ::grpc::ClientContext context;
     niswitch::InitWithTopologyRequest request;
@@ -111,24 +112,32 @@ void initialize_driver_session()
 
   void wait_for_debounce()
   {
-      ::grpc::ClientContext context;
-      niswitch::WaitForDebounceRequest request;
-      request.mutable_vi()->set_id(GetSessionId());
-      request.set_maximum_time_ms(kWaitForDebounceMaxTime);
-      niswitch::WaitForDebounceResponse response;
-      ::grpc::Status status = GetStub()->WaitForDebounce(&context, request, &response);
-      EXPECT_TRUE(status.ok());
-      expect_api_success(response.status());
+    ::grpc::ClientContext context;
+    niswitch::WaitForDebounceRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_maximum_time_ms(kWaitForDebounceMaxTime);
+    niswitch::WaitForDebounceResponse response;
+
+    ::grpc::Status status = GetStub()->WaitForDebounce(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
   }
-  void can_connect()
+
+  int can_connect(const char* channel1, const char* channel2)
   {
-      ::grpc::ClientContext context;
-      niswitch::CanConnectRequest request;
-      request.mutable_vi()->set_id(GetSessionId());
-      request.set_channel1(firstChannelName);
-      request.set_channel2(secondChannelName);
-      niswitch::CanConnectResponse response;
-      ::grpc::Status status = GetStub()->CanConnect(&context, request, &response);
+    ::grpc::ClientContext context;
+    niswitch::CanConnectRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel1(channel1);
+    request.set_channel2(channel2);
+    niswitch::CanConnectResponse response;
+
+    ::grpc::Status status = GetStub()->CanConnect(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+    return response.path_capability();
   }
 
   void connect(const char* channel1, const char* channel2)
@@ -138,21 +147,23 @@ void initialize_driver_session()
     request.mutable_vi()->set_id(GetSessionId());
     request.set_channel1(channel1);
     request.set_channel2(channel2);
-    
     niswitch::ConnectResponse response;
+
     ::grpc::Status status = GetStub()->Connect(&context, request, &response);
+
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
   }
 
   void disconnect_all()
   {
-      ::grpc::ClientContext context;
+    ::grpc::ClientContext context;
     niswitch::DisconnectAllRequest request;
     request.mutable_vi()->set_id(GetSessionId());
-
     niswitch::DisconnectAllResponse response;
+
     ::grpc::Status status = GetStub()->DisconnectAll(&context, request, &response);
+
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
   }
@@ -163,9 +174,10 @@ void initialize_driver_session()
     niswitch::GetRelayPositionRequest request;
     request.mutable_vi()->set_id(GetSessionId());
     request.set_relay_name(relay_name);
-
     niswitch::GetRelayPositionResponse response;
+
     ::grpc::Status status = GetStub()->GetRelayPosition(&context, request, &response);
+
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
     return response.relay_position();
@@ -179,7 +191,9 @@ void initialize_driver_session()
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
     niswitch::GetAttributeViReal64Response response;
+
     ::grpc::Status status = GetStub()->GetAttributeViReal64(&context, request, &response);
+
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
     return response.attribute_value();
@@ -193,7 +207,9 @@ void initialize_driver_session()
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
     niswitch::GetAttributeViStringResponse response;
+
     ::grpc::Status status = GetStub()->GetAttributeViString(&context, request, &response);
+
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
     return response.attribute_value();
@@ -251,9 +267,9 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
   niswitch::SetAttributeViReal64Response response;
 
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
+  
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
-
   ViReal64 get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
@@ -272,9 +288,9 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStri
   niswitch::SetAttributeViStringResponse response;
 
   ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
+
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
-
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
   EXPECT_STREQ(expected_value, get_attribute_value.c_str());
 }
@@ -291,49 +307,33 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchRelayControl_SendRequest_RelayPositionMatc
   niswitch::RelayControlResponse response;
 
   ::grpc::Status status = GetStub()->RelayControl(&context, request, &response);
+
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   wait_for_debounce();
-
   int get_relay_pos = get_relay_position(kRelayName);
   EXPECT_EQ(expected_value, get_relay_pos);
 }
 
-TEST_F(NiSwitchDriverApiTest, NiSwitchCanConnect_ChannelsAreUnconnected_PathAvailableIsReturned)
+TEST_F(NiSwitchDriverApiTest, NiSwitchChannelsAreUnconnected_CanConnectIsCalled_PathAvailableIsReturned)
 {
-    const niswitch::PathCapability expected_value = niswitch::PathCapability::PATH_CAPABILITY_NISWITCH_VAL_PATH_AVAILABLE;
-    ::grpc::ClientContext context;
-    niswitch::CanConnectRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
-    request.set_channel1(firstChannelName);
-    request.set_channel2(secondChannelName);
-    niswitch::CanConnectResponse response;
+  const niswitch::PathCapability expected_value = niswitch::PathCapability::PATH_CAPABILITY_NISWITCH_VAL_PATH_AVAILABLE;
 
-    ::grpc::Status status = GetStub()->CanConnect(&context, request, &response);
-    EXPECT_TRUE(status.ok());
-    expect_api_success(response.status());
+  int get_path_capability = can_connect(firstChannelName, secondChannelName);
     
-    EXPECT_EQ(expected_value, response.path_capability());
+  EXPECT_EQ(expected_value, get_path_capability);
 }
 
-TEST_F(NiSwitchDriverApiTest, NiSwitchCanConnect_ChannelsAreAlreadyConnected_PathExistsIsReturned)
+TEST_F(NiSwitchDriverApiTest, NiSwitchChannelsAreAlreadyConnected_CanConnectIsCalled_PathExistsIsReturned)
 {
-    const niswitch::PathCapability expected_value = niswitch::PathCapability::PATH_CAPABILITY_NISWITCH_VAL_PATH_EXISTS;
-    connect(thirdChannelName, fourthChannelName);
-    wait_for_debounce();
-    ::grpc::ClientContext context;
-    niswitch::CanConnectRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
-    request.set_channel1(thirdChannelName);
-    request.set_channel2(fourthChannelName);
-    niswitch::CanConnectResponse response;
+  const niswitch::PathCapability expected_value = niswitch::PathCapability::PATH_CAPABILITY_NISWITCH_VAL_PATH_EXISTS;
+  connect(thirdChannelName, fourthChannelName);
+  wait_for_debounce();
 
-    ::grpc::Status status = GetStub()->CanConnect(&context, request, &response);
-    EXPECT_TRUE(status.ok());
-    expect_api_success(response.status());
+  int get_path_capability = can_connect(thirdChannelName, fourthChannelName);
 
-    EXPECT_EQ(expected_value, response.path_capability());
-    disconnect_all();
+  EXPECT_EQ(expected_value, get_path_capability);
+  disconnect_all();
 }
 
 }  // namespace system
