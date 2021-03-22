@@ -1,9 +1,5 @@
 #include "device_enumerator.h"
 
-#include <shared_mutex>
-
-#include "syscfg_library.h"
-
 namespace grpc {
 namespace nidevice {
 
