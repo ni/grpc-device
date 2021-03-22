@@ -14,14 +14,14 @@ For more detailed information on the server and API design refer to the [wiki](h
 
 ### Download the Server
 1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
-2. Download the latest Server Release `.tgz` or `.zip` for the desired platform.
-3. Extract the contents of the `.tgz` or `.zip` to a directory with read and write permissions.
+2. Download the latest Server Release `.tar.gz` or `.zip` for the desired platform.
+3. Extract the contents of the `.tar.gz` or `.zip` to a directory with read and write permissions.
 4. [Run the server](#running-the-grpc-server)
 
 ### Download the Client Files
 1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
-2. Download the latest Client Release's `protos.tgz` or `protos.zip` depending on the client platform.
-3. Extract the contents of `protos.tgz` or `protos.zip` to a directory with read and write permissions.
+2. Download the latest Client Release's `ni-grpc-device-client.tar.gz` or `ni-grpc-device-client.zip` depending on the client platform.
+3. Extract the contents of `ni-grpc-device-client.tar.gz` or `ni-grpc-device-client.zip` to a directory with read and write permissions.
 4. [Create a gRPC client](#creating-a-grpc-client).
 
 ## Building on Windows 64-bit
@@ -141,7 +141,9 @@ There are two ways to start the server:
     **Windows**
     
     `.\ni_grpc_device_server.exe`
-
+    
+   **Note:** It is also possible to start the server by double-clicking the executable. Starting the server through a command prompt, however, allows for observation of startup     errors.
+   
     **Linux and Linux RT**
     
     `./ni_grpc_device_server`
