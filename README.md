@@ -14,8 +14,8 @@ For more detailed information on the server and API design refer to the [wiki](h
 
 ### Download the Server
 1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
-2. Download the latest Server Release `.tar.gz` or `.zip` for the desired platform.
-3. Extract the contents of the `.tar.gz` or `.zip` to a directory with read and write permissions.
+2. Download the latest Server Release `.tgz` or `.zip` for the desired platform.
+3. Extract the contents of the `.tgz` or `.zip` to a directory with read and write permissions.
 4. [Run the server](#running-the-grpc-server)
 
 ### Download the Client Files
