@@ -22,8 +22,8 @@ import session_pb2_grpc as grpc_session
 
 # Helper to print the devices 
 def print_devices(devices) :
-    if len(devices) == 0:
-        print("Currently no devices are connected to the server machine.")
+    if not devices:
+        print("No devices are connected.")
         return
     print("\n-----------------------------------------------------------------------------------------------------\n")
     print("  List of devices connected to the server: \n")
