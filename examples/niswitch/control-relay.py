@@ -30,10 +30,11 @@ if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 session_name = "NI-Switch-Session-1"
 
-# Resource name and topology string for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
+# Resource name, topology string and relay name for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
 # If you are using real hardware device, use the appropriate resource name and set the simulation parameter to false.
 resource = ""
-topology_string = "2529/2-Wire Dual 4x16 Matrix"
+topology_string = "2571/66-SPDT"
+relay_name = "k15"
 simulation = True
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH service
@@ -58,7 +59,7 @@ def ThrowOnError (vi, errorCode):
     error_message_response = niswitch_client.ErrorMessage(error_message_request)
     raise Exception (error_message_response.error_message)
 try :
-    # Open session to NI-SWITCH and set topology.
+    # Open session to NI-SWITCH and set topology. Set the simulate parameter to false if real hardware device is being used.
     init_with_topology_response = niswitch_client.InitWithTopology(niswitch_types.InitWithTopologyRequest(
         session_name=session_name,
         resource_name=resource,
@@ -70,47 +71,20 @@ try :
     CheckForError(vi,init_with_topology_response.status)
     print("Topology set successfully.")
 
-    # Specify scan list. Use values that are valid for the model being used.
-    CheckForError(vi, (niswitch_client.ConfigureScanList(niswitch_types.ConfigureScanListRequest(
+    # Close the relay. Use values that are valid for the model being used.
+    CheckForError(vi, (niswitch_client.RelayControl(niswitch_types.RelayControlRequest(
         vi=vi,
-        scanlist = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3",
-        scan_mode = niswitch_types.ScanMode.SCAN_MODE_NISWITCH_VAL_BREAK_BEFORE_MAKE
-        ))).status)
+        relay_name = relay_name,
+        relay_action = niswitch_types.RelayAction.RELAY_ACTION_NISWITCH_VAL_CLOSE_RELAY
+        ))).status)   
+    print("Relay closed.")
 
-    # Configures the trigger to be software trigger.
-    CheckForError(vi, (niswitch_client.ConfigureScanTrigger(niswitch_types.ConfigureScanTriggerRequest(
+    #Wait for debounce
+    CheckForError(vi, (niswitch_client.WaitForDebounce(niswitch_types.WaitForDebounceRequest(
         vi=vi,
-        trigger_input = niswitch_types.TriggerInput.TRIGGER_INPUT_NISWITCH_VAL_SOFTWARE_TRIG,
-        scan_advanced_output = niswitch_types.ScanAdvancedOutput.SCAN_ADVANCED_OUTPUT_NISWITCH_VAL_NONE
+        maximum_time_ms = 1000
         ))).status)
-    print("Configured the trigger as Software Trigger")
-
-    # Loop through scan list continuously
-    CheckForError(vi, (niswitch_client.SetContinuousScan(niswitch_types.SetContinuousScanRequest(
-        vi=vi,
-        continuous_scan = True
-        ))).status)
-
-    #Initiate scanning
-    CheckForError(vi, (niswitch_client.InitiateScan(niswitch_types.InitiateScanRequest(
-        vi=vi
-        ))).status)
-    print("Scanning initiated...")
-
-    #Send software trigger to module in a loop
-    for x in range(number_of_triggers):
-        #Wait for 500 ms
-        time.sleep(0.5)
-        CheckForError(vi, (niswitch_client.SendSoftwareTrigger(niswitch_types.SendSoftwareTriggerRequest(
-            vi=vi
-            ))).status)
-        number_of_triggers = number_of_triggers - 1    
-
-    #Abort Scanning
-    CheckForError(vi, (niswitch_client.AbortScan(niswitch_types.AbortScanRequest(
-        vi=vi
-        ))).status)
-    print("Scanning completed.")
+    print("Wait for debounce completed.")
 
     # Close NI-SWITCH session.
     CheckForError(vi, (niswitch_client.Close(niswitch_types.CloseRequest(
