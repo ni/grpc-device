@@ -4,7 +4,9 @@
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 #include <session.grpc.pb.h>
+
 #include <shared_mutex>
+
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
 
@@ -14,7 +16,7 @@ namespace nidevice {
 static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
 static const char* kLocalHostTargetName = "localhost";
 static const char* kNetworkExpertName = "network";
-static const int kConstantNamingConvention = 10000;
+static const int kConnectionTimeoutMilliSec = 10000;
 
 class DeviceEnumerator {
  public:

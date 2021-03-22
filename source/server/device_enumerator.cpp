@@ -84,7 +84,7 @@ NISysCfgStatus DeviceEnumerator::open_or_get_localhost_syscfg_session(NISysCfgSe
   std::unique_lock<std::shared_mutex> lock(session_mutex_);
   NISysCfgStatus status = NISysCfg_OK;
   if (!syscfg_session_) {
-    if (NISysCfg_Failed(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, kConstantNamingConvention, NULL, &syscfg_session_))) {
+    if (NISysCfg_Failed(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, kConnectionTimeoutMilliSec, NULL, &syscfg_session_))) {
       return status;
     }
   }
