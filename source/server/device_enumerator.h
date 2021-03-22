@@ -14,6 +14,7 @@ namespace nidevice {
 static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices";
 static const char* kLocalHostTargetName = "localhost";
 static const char* kNetworkExpertName = "network";
+static const int kConstantNamingConvention = 10000;
 
 class DeviceEnumerator {
  public:
@@ -27,9 +28,8 @@ class DeviceEnumerator {
 
  private:
   SysCfgLibraryInterface* library_;
-
-  std::shared_mutex session_mutex;
-  NISysCfgSessionHandle cached_syscfg_session;
+  std::shared_mutex session_mutex_;
+  NISysCfgSessionHandle syscfg_session_;
 };
 
 }  // namespace nidevice

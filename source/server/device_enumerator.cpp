@@ -1,19 +1,21 @@
 #include "device_enumerator.h"
+
 #include <shared_mutex>
+
 #include "syscfg_library.h"
 
 namespace grpc {
 namespace nidevice {
 
 DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
-    : library_(library)
+    : library_(library), syscfg_session_(nullptr)
 {
-  cached_syscfg_session = nullptr;
 }
 
 DeviceEnumerator::~DeviceEnumerator()
 {
-    // Caller is expected to close the syscfg session before calling destructor.
+  if (syscfg_session_)
+    clear_syscfg_session();
 }
 
 // Provides a list of devices or chassis connected to server under localhost. This internally uses the
@@ -79,29 +81,24 @@ DeviceEnumerator::~DeviceEnumerator()
 // Returns status of getting valid cached_syscfg_session is successful.
 NISysCfgStatus DeviceEnumerator::open_or_get_localhost_syscfg_session(NISysCfgSessionHandle* session)
 {
-  std::unique_lock<std::shared_mutex> lock(session_mutex);
+  std::unique_lock<std::shared_mutex> lock(session_mutex_);
   NISysCfgStatus status = NISysCfg_OK;
-  try {
-    if (cached_syscfg_session == nullptr) {
-      if (NISysCfg_Failed(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, 10000, NULL, &cached_syscfg_session))) {
-        return status;
-      }
+  if (!syscfg_session_) {
+    if (NISysCfg_Failed(status = library_->InitializeSession(kLocalHostTargetName, NULL, NULL, NISysCfgLocaleDefault, NISysCfgBoolTrue, kConstantNamingConvention, NULL, &syscfg_session_))) {
+      return status;
     }
   }
-  catch (const LibraryLoadException& ex) {
-    throw;
-  }
-  *session = cached_syscfg_session;
+  *session = syscfg_session_;
   return status;
 }
 
 // Calls Closehandle to clear sysconfig session and sets cached_syscfg_session to null.
 void DeviceEnumerator::clear_syscfg_session()
 {
-  std::unique_lock<std::shared_mutex> lock(session_mutex);
-  if (cached_syscfg_session != nullptr) {
-    library_->CloseHandle(cached_syscfg_session);
-    cached_syscfg_session = nullptr;
+  std::unique_lock<std::shared_mutex> lock(session_mutex_);
+  if (syscfg_session_) {
+    library_->CloseHandle(syscfg_session_);
+    syscfg_session_ = nullptr;
   }
 }
 

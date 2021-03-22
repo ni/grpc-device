@@ -76,19 +76,6 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
   }
 }
 
-TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_ReturnsSuccessfullyUsingCachedSession)
-{
-    grpc::nidevice::EnumerateDevicesRequest request;
-    grpc::nidevice::EnumerateDevicesResponse response;
-    ::grpc::ClientContext context;
-
-    ::grpc::Status status = GetStub()->EnumerateDevices(&context, request, &response);
-    status = GetStub()->EnumerateDevices(&context, request, &response);
-
-
-    EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
-}
-
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
