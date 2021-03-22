@@ -1,5 +1,4 @@
-# This is an example of using the NI-SCOPE driver through gRPC
-# Tested with a 100 kHz tone input to channel 0
+# This is an example of plotting waveforms read from an NI-SCOPE device through gRPC
 #
 # The gRPC API is built from the C API.  NI-SCOPE documentation is found:
 # C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\scopeFunc.chm
@@ -33,6 +32,7 @@
 #
 # NOTE: betterproto has a bug generating helpers for gRPC messages with oneofs. 
 # Only the last field in the oneof can be properly set without wrapper modification
+# For example, when calling configure_vertical, we set coupling_raw instead of coupling to avoid this issue
 #
 # Update the server address and resource name and options in this file
 
@@ -153,7 +153,7 @@ async def MeasureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi
     try:
         while True:
             if show_plot:
-                plt.clf()                   # clear from last iteration
+                plt.clf()                    # clear from last iteration
                 plt.axis([0, 100, -6, 6])    # setup axis again
 
             # Read a waveform from the scope

@@ -1,5 +1,5 @@
 #
-# This is an example of using the NI-SCOPE driver through gRPC
+# This is an example of plotting waveforms read from an NI-SCOPE device through gRPC
 # Tested with a 100 kHz tone input to channel 0
 # The gRPC API is built from the C API.  NI-SCOPE documentation is found:
 # C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\scopeFunc.chm
@@ -22,7 +22,7 @@
 
 import grpc
 import niscope_pb2 as niscope_types
-import niscope_pb2_grpc as gRPC_scope
+import niscope_pb2_grpc as grpc_scope
 import matplotlib.pyplot as plt
 import time
 import sys
@@ -48,9 +48,9 @@ options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:161061
 # options = ""
 
 # Create the communication channel for the remote host (in this case we are connecting to a local server)
-# and create a connection to the niScope service
+# and create a connection to the NI-SCOPE service
 channel = grpc.insecure_channel(server_address)
-scope_service = gRPC_scope.NiScopeStub(channel)
+scope_service = grpc_scope.NiScopeStub(channel)
 
 # Initialize the scope
 init_result = scope_service.InitWithOptions(niscope_types.InitWithOptionsRequest(
