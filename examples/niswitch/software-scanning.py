@@ -30,11 +30,12 @@ if len(sys.argv) == 3 :
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 session_name = "NI-Switch-Session-1"
 
-# Resource name and topology string for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
+# Resource name, topology string and scanlist for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
 # If you are using real hardware device, use the appropriate resource name and set the simulation parameter to false.
 resource = ""
 topology_string = "2529/2-Wire Dual 4x16 Matrix"
 simulation = True
+scan_list = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3"
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH service
 channel = grpc.insecure_channel(server_address)
@@ -68,12 +69,12 @@ try :
         ))
     vi = init_with_topology_response.vi
     CheckForError(vi,init_with_topology_response.status)
-    print("Topology set successfully.")
+    print("Topology set to : ",topology_string)
 
-    # Specify scan list. Use values that are valid for the model being used.
+    # Configure the scan list.
     CheckForError(vi, (niswitch_client.ConfigureScanList(niswitch_types.ConfigureScanListRequest(
         vi=vi,
-        scanlist = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3",
+        scanlist = scan_list,
         scan_mode = niswitch_types.ScanMode.SCAN_MODE_NISWITCH_VAL_BREAK_BEFORE_MAKE
         ))).status)
 

@@ -32,15 +32,16 @@ session_name = "NI-Switch-Session-1"
 
 # Resource name, topology string and relay name for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
 # If you are using real hardware device, use the appropriate resource name and set the simulation parameter to false.
+# Set the maximimum time to wait for debounce.
 resource = ""
 topology_string = "2571/66-SPDT"
 relay_name = "k15"
 simulation = True
+max_time = 1000
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH service
 channel = grpc.insecure_channel(server_address)
 niswitch_client = grpc_niswitch.NiSwitchStub(channel)
-number_of_triggers = 5
 anyError = False
 
 # Checks for errors. If any, throws an exception to stop the execution.
@@ -59,7 +60,7 @@ def ThrowOnError (vi, errorCode):
     error_message_response = niswitch_client.ErrorMessage(error_message_request)
     raise Exception (error_message_response.error_message)
 try :
-    # Open session to NI-SWITCH and set topology. Set the simulate parameter to false if real hardware device is being used.
+    # Open session to NI-SWITCH and set topology.
     init_with_topology_response = niswitch_client.InitWithTopology(niswitch_types.InitWithTopologyRequest(
         session_name=session_name,
         resource_name=resource,
@@ -69,7 +70,7 @@ try :
         ))
     vi = init_with_topology_response.vi
     CheckForError(vi,init_with_topology_response.status)
-    print("Topology set successfully.")
+    print("Topology set to : ",topology_string)
 
     # Close the relay. Use values that are valid for the model being used.
     CheckForError(vi, (niswitch_client.RelayControl(niswitch_types.RelayControlRequest(
@@ -82,9 +83,9 @@ try :
     #Wait for debounce
     CheckForError(vi, (niswitch_client.WaitForDebounce(niswitch_types.WaitForDebounceRequest(
         vi=vi,
-        maximum_time_ms = 1000
+        maximum_time_ms = max_time
         ))).status)
-    print("Wait for debounce completed.")
+    print("Wait for debounce to complete.")
 
     # Close NI-SWITCH session.
     CheckForError(vi, (niswitch_client.Close(niswitch_types.CloseRequest(
