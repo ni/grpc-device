@@ -254,7 +254,7 @@ TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_Reso
   EXPECT_TRUE(status.ok());
 }
 
-TEST(DeviceEnumerationTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevices_ListOfDevicesIsEmpty)
+TEST(DeviceEnumeratorTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevices_ListOfDevicesIsEmpty)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -282,7 +282,7 @@ NISysCfgStatus SetIsNIProductToFalse(void* value)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumerationTests, LocalHostContainsNonNiDevices_EnumerateDevices_ListOfDevicesContainsOnlyNiDevices)
+TEST(DeviceEnumeratorTests, LocalHostContainsNonNiDevices_EnumerateDevices_ListOfDevicesContainsOnlyNiDevices)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -310,7 +310,7 @@ NISysCfgStatus SetExpertNameToNetwork(void* value)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_ListOfDevicesReturnedDoesNotContainNetworkDevices)
+TEST(DeviceEnumeratorTests, LocalHostContainsNetworkDevice_EnumerateDevices_ListOfDevicesReturnedDoesNotContainNetworkDevices)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -331,7 +331,7 @@ TEST(DeviceEnumerationTests, LocalHostContainsNetworkDevice_EnumerateDevices_Lis
   EXPECT_EQ(0, devices.size());
 }
 
-TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices_DevicePropertiesAreSetToEmptyString)
+TEST(DeviceEnumeratorTests, GetResourcePropertyApisReturnError_EnumerateDevices_DevicePropertiesAreSetToEmptyString)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -355,7 +355,7 @@ TEST(DeviceEnumerationTests, GetResourcePropertyApisReturnError_EnumerateDevices
   EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
-TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsInitializeSessionOnceAndReturnsOK)
+TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsInitializeSessionOnceAndReturnsOK)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -372,7 +372,7 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsIniti
   EXPECT_EQ(NISysCfg_OK, status);
 }
 
-TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledCloseHandleOnce)
+TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledCloseHandleOnce)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -397,7 +397,7 @@ NISysCfgStatus SetAliasName(void* value)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumerationTests, GetResourceIndexedPropertySetsName_EnumerateDevices_ResponseContainsThatName)
+TEST(DeviceEnumeratorTests, GetResourceIndexedPropertySetsName_EnumerateDevices_ResponseContainsThatName)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -428,7 +428,7 @@ NISysCfgStatus SetModelName(void* value)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumerationTests, GetResourcePropertySetsModelName_EnumerateDevices_ResponseContainsThatModelName)
+TEST(DeviceEnumeratorTests, GetResourcePropertySetsModelName_EnumerateDevices_ResponseContainsThatModelName)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -457,7 +457,7 @@ NISysCfgStatus SetVendorName(void* value)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumerationTests, GetResourcePropertySetsVendorName_EnumerateDevices_ResponseContainsThatVendorName)
+TEST(DeviceEnumeratorTests, GetResourcePropertySetsVendorName_EnumerateDevices_ResponseContainsThatVendorName)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -486,7 +486,7 @@ NISysCfgStatus SetSerialNumber(void* value)
   return NISysCfg_OK;
 }
 
-TEST(DeviceEnumerationTests, GetResourcePropertySetsSerialNumber_EnumerateDevices_ResponseContainsThatSerialNumber)
+TEST(DeviceEnumeratorTests, GetResourcePropertySetsSerialNumber_EnumerateDevices_ResponseContainsThatSerialNumber)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
