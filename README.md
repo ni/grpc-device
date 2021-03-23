@@ -142,7 +142,7 @@ There are two ways to start the server:
     
     `.\ni_grpc_device_server.exe`
     
-   **Note:** It is also possible to start the server by double-clicking the executable. Starting the server through a command prompt, however, allows for observation of startup errors.
+   **Note:** It is also possible to start the server by double-clicking the executable. Starting the server through a command prompt, however, allows for observation of [startup errors](#common-server-startup-errors).
    
     **Linux and Linux RT**
     
