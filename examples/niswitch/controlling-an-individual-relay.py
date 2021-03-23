@@ -15,7 +15,7 @@
 # Running from command line:
 #
 # Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
-#   > python fetch.py <server_address> <port_number> <resource_name>
+#   > python controlling-an-individual-relay.py <server_address> <port_number> <resource_name>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with
 # To successfully run this example, the resource name must be passed in via cmd line or hard coded in this file
 
