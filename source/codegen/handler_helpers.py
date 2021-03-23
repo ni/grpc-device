@@ -30,7 +30,7 @@ def sanitize_names(parameters):
             parameter['cppName'] = parameter['cppName'] + 'Parameter'
 
 def get_include_guard_name(config, suffix):
-    include_guard_name = 'grpc_' + config['namespace_component'] + suffix
+    include_guard_name = config['namespace_component'] + "_grpc" + suffix
     return include_guard_name.upper()
 
 def is_string_arg(parameter):

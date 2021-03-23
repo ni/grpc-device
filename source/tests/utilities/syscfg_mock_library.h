@@ -11,7 +11,7 @@ namespace utilities {
 
 using ::testing::Return;
 
-class SysCfgMockLibrary : public grpc::nidevice::SysCfgLibraryInterface {
+class SysCfgMockLibrary : public nidevice_grpc::SysCfgLibraryInterface {
  public:
   SysCfgMockLibrary()
   {

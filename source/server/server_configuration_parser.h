@@ -1,11 +1,10 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SERVER_CONFIGURATION_PARSER_H_
-#define NI_HARDWARE_GRPC_INTERNAL_SERVER_CONFIGURATION_PARSER_H_
+#ifndef NIDEVICE_GRPC_SERVER_CONFIGURATION_PARSER_H
+#define NIDEVICE_GRPC_SERVER_CONFIGURATION_PARSER_H
 
 #include <fstream>
 #include <nlohmann/json.hpp>
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 static const char* kConfigFileNotFoundMessage = "The server configuration file was not found at: ";
 static const char* kInvalidPortMessage = "The specified port number must between 0 and 65535.";
@@ -74,7 +73,6 @@ class ServerConfigurationParser {
   std::string certs_directory_;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SERVER_CONFIGURATION_PARSER_H_
+#endif  // NIDEVICE_GRPC_SERVER_CONFIGURATION_PARSER_H

@@ -1,7 +1,6 @@
 #include "session_repository.h"
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 SessionRepository::SessionRepository()
 {
@@ -234,5 +233,4 @@ void SessionRepository::cleanup_session(const std::shared_ptr<SessionInfo>& sess
   }
 }
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc

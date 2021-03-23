@@ -6,7 +6,7 @@ config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "grpc::" + config["namespace_component"]
+namespace_prefix = config["namespace_component"] + "_grpc"
 include_guard_name = handler_helpers.get_include_guard_name(config, "_MOCK_LIBRARY_H")
 %>\
 //---------------------------------------------------------------------

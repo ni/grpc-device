@@ -4,8 +4,8 @@
 //---------------------------------------------------------------------
 // Service header for the NI-SWITCH Metadata
 //---------------------------------------------------------------------
-#ifndef GRPC_NISWITCH_SERVICE_H
-#define GRPC_NISWITCH_SERVICE_H
+#ifndef NISWITCH_GRPC_SERVICE_H
+#define NISWITCH_GRPC_SERVICE_H
 
 #include <niswitch.grpc.pb.h>
 #include <condition_variable>
@@ -18,12 +18,11 @@
 
 #include "niswitch_library_interface.h"
 
-namespace grpc {
-namespace niswitch {
+namespace niswitch_grpc {
 
 class NiSwitchService final : public NiSwitch::Service {
 public:
-  NiSwitchService(NiSwitchLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository);
+  NiSwitchService(NiSwitchLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
   virtual ~NiSwitchService();
   ::grpc::Status AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response) override;
   ::grpc::Status CanConnect(::grpc::ServerContext* context, const CanConnectRequest* request, CanConnectResponse* response) override;
@@ -89,9 +88,9 @@ public:
   ::grpc::Status WaitForScanComplete(::grpc::ServerContext* context, const WaitForScanCompleteRequest* request, WaitForScanCompleteResponse* response) override;
 private:
   NiSwitchLibraryInterface* library_;
-  grpc::nidevice::SessionRepository* session_repository_;
+  nidevice_grpc::SessionRepository* session_repository_;
 };
 
-} // namespace niswitch
-} // namespace grpc
-#endif  // GRPC_NISWITCH_SERVICE_H
+} // namespace niswitch_grpc
+
+#endif  // NISWITCH_GRPC_SERVICE_H

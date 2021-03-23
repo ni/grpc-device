@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryInterface for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef GRPC_NIFAKE_MOCK_LIBRARY_H
-#define GRPC_NIFAKE_MOCK_LIBRARY_H
+#ifndef NIFAKE_GRPC_MOCK_LIBRARY_H
+#define NIFAKE_GRPC_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -15,7 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-class NiFakeMockLibrary : public grpc::nifake::NiFakeLibraryInterface {
+class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AcceptListOfDurationsInSeconds, (ViSession vi, ViInt32 count, ViReal64 delays[]), (override));
@@ -73,4 +73,4 @@ class NiFakeMockLibrary : public grpc::nifake::NiFakeLibraryInterface {
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // GRPC_NIFAKE_MOCK_LIBRARY_H
+#endif  // NIFAKE_GRPC_MOCK_LIBRARY_H

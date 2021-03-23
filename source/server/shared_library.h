@@ -1,5 +1,5 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
-#define NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
+#ifndef NIDEVICE_GRPC_SHARED_LIBRARY
+#define NIDEVICE_GRPC_SHARED_LIBRARY
 
 #include <stdexcept>
 #include <string>
@@ -8,8 +8,7 @@
   #include <Windows.h>
 #endif
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 #ifdef _MSC_VER
 typedef HMODULE LibraryHandle;
@@ -45,7 +44,6 @@ class SharedLibrary {
   LibraryHandle handle_;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SHARED_LIBRARY
+#endif  // NIDEVICE_GRPC_SHARED_LIBRARY

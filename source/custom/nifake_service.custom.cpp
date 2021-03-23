@@ -1,8 +1,5 @@
 #include <nifake/nifake_service.h>
 
-namespace grpc {
-namespace nifake {
+namespace nifake_grpc {
 
-
-}  // namespace nifake
-}  // namespace grpc
+}  // namespace nifake_grpc

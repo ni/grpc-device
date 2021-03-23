@@ -1,10 +1,9 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SEMAPHORE
-#define NI_HARDWARE_GRPC_INTERNAL_SEMAPHORE
+#ifndef NIDEVICE_GRPC_SEMAPHORE_H
+#define NIDEVICE_GRPC_SEMAPHORE_H
 
 #include <shared_mutex>
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 class Semaphore {
  public:
@@ -20,7 +19,6 @@ class Semaphore {
   std::condition_variable cv_;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SEMAPHORE
+#endif  // NIDEVICE_GRPC_SEMAPHORE_H
