@@ -15,7 +15,7 @@ static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 namespace ni {
 namespace tests {
 namespace integration {
-    
+
 using ::testing::Throw;
 
 TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_ReturnsNotFoundGrpcStatusError)

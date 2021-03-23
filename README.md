@@ -10,6 +10,20 @@ For more detailed information on the server and API design refer to the [wiki](h
 ![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
 ![NI Linux Real-Time Build](https://github.com/ni/grpc-device/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
 
+## Downloading a Release
+
+### Download the Server
+1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
+2. Download the latest Server Release `.tar.gz` or `.zip` for the desired platform.
+3. Extract the contents of the `.tar.gz` or `.zip` to a directory with read and write permissions.
+4. [Run the server](#running-the-grpc-server)
+
+### Download the Client Files
+1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
+2. Download the latest Client Release's `ni-grpc-device-client.tar.gz` or `ni-grpc-device-client.zip` depending on the client platform.
+3. Extract the contents of `ni-grpc-device-client.tar.gz` or `ni-grpc-device-client.zip` to a directory with read and write permissions.
+4. [Create a gRPC client](#creating-a-grpc-client).
+
 ## Building on Windows 64-bit
 
 ### Prerequisites
@@ -116,22 +130,6 @@ Build a release build for use in a production environment:
 > cmake -DCMAKE_BUILD_TYPE=Release ../..
 > make
 ```
-
-## C++ Coding Conventions
-
-This project follows the Google style guidelines for all C++ and protobuf files with the exceptions documented below.
-
-The C++ style is encoded in the `clang-format` file at the root of the repository.<br>
-See https://clang.llvm.org/docs/ClangFormatStyleOptions.html
-
-Setting | Google | Ours | Justification
---|--|--|--
-`ColumnLimit` | `80` | `0` | Some times a long line is appropriate. We should police that in PRs, not with our tooling.
-`AlignAfterOpenBracket` | `Align` | `AlwaysBreak` | Either all parameters should be on one line or all of them on separate lines. Without this the formatter would allow you to leave parameters on the first line and would align the other lines with the first parameter. This adds a lot of whitespace.
-`BreakBeforeBraces` | `Attach` | `Stroustrup` | This puts function curly braces on the next line and puts `else` blocks on the next line. This helps with control flow readability.
-`DerivePointerAlignment` | `true` | `false` | We should be consistent with our pointer alignment. Left alignment (`void* foo`) is more standard than right (`void *foo`) and is the default Google style.
-`IndentPPDirectives` | `None` | `BeforeHash` | Indented `#include` directives inside `#defined` blocks improves readability.
-
 ## Running the gRPC Server
 
 The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support). The location of the server binary is not important as long as the user has proper permissions in the chosen directory.
@@ -143,7 +141,9 @@ There are two ways to start the server:
     **Windows**
     
     `.\ni_grpc_device_server.exe`
-
+    
+   **Note:** It is also possible to start the server by double-clicking the executable. Starting the server through a command prompt, however, allows for observation of [startup errors](#common-server-startup-errors).
+   
     **Linux and Linux RT**
     
     `./ni_grpc_device_server`
