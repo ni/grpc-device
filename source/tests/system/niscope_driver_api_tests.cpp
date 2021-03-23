@@ -7,7 +7,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-namespace scope = grpc::niscope;
+namespace scope = niscope_grpc;
 
 const int kScopeDriverApiSuccess = 0;
 
@@ -16,7 +16,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   NiScopeDriverApiTest()
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
+    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
     builder.RegisterService(niscope_service_.get());
@@ -65,7 +65,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     scope::InitWithOptionsResponse response;
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
-    driver_session_ = std::make_unique<grpc::nidevice::Session>(response.vi());
+    driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
     ASSERT_TRUE(status.ok());
     ASSERT_EQ(kScopeDriverApiSuccess, response.status());
@@ -98,7 +98,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     return response.num_wfms();
   }
 
-  int get_actual_measurement_waveform_size(grpc::niscope::ArrayMeasurement array_measurement)
+  int get_actual_measurement_waveform_size(niscope_grpc::ArrayMeasurement array_measurement)
   {
     ::grpc::ClientContext context;
     scope::ActualMeasWfmSizeRequest request;
@@ -225,9 +225,9 @@ class NiScopeDriverApiTest : public ::testing::Test {
 
  private:
   std::shared_ptr<::grpc::Channel> channel_;
-  std::unique_ptr<::grpc::nidevice::Session> driver_session_;
+  std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;
   std::unique_ptr<::grpc::Server> server_;
@@ -289,7 +289,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompl
   const ViInt32 expected_num_samples = 100000;
   const char* channel_list = "0";
   const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
-  const grpc::niscope::ArrayMeasurement measurement_func = grpc::niscope::ArrayMeasurement::ARRAY_MEASUREMENT_NISCOPE_VAL_INVERSE;
+  const niscope_grpc::ArrayMeasurement measurement_func = niscope_grpc::ArrayMeasurement::ARRAY_MEASUREMENT_NISCOPE_VAL_INVERSE;
   const ViInt32 expected_waveform_size = get_actual_measurement_waveform_size(measurement_func);
   ::grpc::ClientContext context;
   scope::FetchArrayMeasurementRequest request;

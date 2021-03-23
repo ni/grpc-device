@@ -3,17 +3,16 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-FAKE
 //---------------------------------------------------------------------
-#ifndef GRPC_NIFAKE_LIBRARY_H
-#define GRPC_NIFAKE_LIBRARY_H
+#ifndef NIFAKE_GRPC_LIBRARY_H
+#define NIFAKE_GRPC_LIBRARY_H
 
 #include "nifake_library_interface.h"
 
 #include <server/shared_library.h>
 
-namespace grpc {
-namespace nifake {
+namespace nifake_grpc {
 
-class NiFakeLibrary : public grpc::nifake::NiFakeLibraryInterface {
+class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
  public:
   NiFakeLibrary();
   virtual ~NiFakeLibrary();
@@ -178,11 +177,10 @@ class NiFakeLibrary : public grpc::nifake::NiFakeLibraryInterface {
     self_testPtr self_test;
   } FunctionLoadStatus;
 
-  grpc::nidevice::SharedLibrary shared_library_;
+  nidevice_grpc::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 };
 
-}  // namespace nifake
-}  // namespace grpc
+}  // namespace nifake_grpc
 
-#endif  // GRPC_NIFAKE_LIBRARY_H
+#endif  // NIFAKE_GRPC_LIBRARY_H

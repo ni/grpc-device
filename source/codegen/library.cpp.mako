@@ -8,7 +8,7 @@ enums = data['enums']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "grpc::" + config["namespace_component"] + "::"
+namespace_prefix = config["namespace_component"] + "_grpc::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
@@ -28,8 +28,7 @@ static const char* kLibraryName = "${windows_libary_name}";
 static const char* kLibraryName = "lib${linux_library_name}.so";
 #endif
 
-namespace grpc {
-namespace ${config["namespace_component"]} {
+namespace ${config["namespace_component"]}_grpc {
 
 ${service_class_prefix}Library::${service_class_prefix}Library() : shared_library_(kLibraryName)
 {
@@ -71,7 +70,7 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
 ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 {
   if (!function_pointers_.${method_name}) {
-    throw grpc::nidevice::LibraryLoadException("Could not find ${c_name}.");
+    throw nidevice_grpc::LibraryLoadException("Could not find ${c_name}.");
   }
 #if defined(_MSC_VER)
   return ${c_name}(${argument_list});
@@ -81,5 +80,4 @@ ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 }
 
 %endfor
-}  // namespace ${config["namespace_component"]}
-}  // namespace grpc
+}  // namespace ${config["namespace_component"]}_grpc

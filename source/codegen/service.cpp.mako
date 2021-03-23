@@ -8,7 +8,7 @@ functions = data['functions']
 lookup = data["lookup"]
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "grpc::" + config["namespace_component"] + "::"
+namespace_prefix = config["namespace_component"] + "_grpc::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
@@ -30,10 +30,9 @@ if len(config["custom_types"]) > 0:
 #include <atomic>
 #include <vector>
 
-namespace grpc {
-namespace ${config["namespace_component"]} {
+namespace ${config["namespace_component"]}_grpc {
 
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -88,14 +87,13 @@ ${gen_ivi_dance_method_body(function_name=function_name, function_data=function_
 ${gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
 % endfor
-} // namespace ${config["namespace_component"]}
-} // namespace grpc
+} // namespace ${config["namespace_component"]}_grpc
 \
 \
 \
@@ -272,7 +270,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
     % elif 'enum' in parameter:
 <%
 PascalFieldName = common_helpers.snake_to_pascal(field_name)
-one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Request::{PascalFieldName}EnumCase'
+one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldName}EnumCase'
 %>\
       ${c_type} ${parameter_name};
       switch (request->${field_name}_enum_case()) {

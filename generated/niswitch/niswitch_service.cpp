@@ -12,10 +12,9 @@
 #include <atomic>
 #include <vector>
 
-namespace grpc {
-namespace niswitch {
+namespace niswitch_grpc {
 
-  NiSwitchService::NiSwitchService(NiSwitchLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
+  NiSwitchService::NiSwitchService(NiSwitchLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -38,7 +37,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -59,12 +58,12 @@ namespace niswitch {
       auto status = library_->CanConnect(vi, channel1, channel2, &path_capability);
       response->set_status(status);
       if (status == 0) {
-        response->set_path_capability(static_cast<grpc::niswitch::PathCapability>(path_capability));
+        response->set_path_capability(static_cast<niswitch_grpc::PathCapability>(path_capability));
         response->set_path_capability_raw(path_capability);
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -86,7 +85,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -108,7 +107,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -130,7 +129,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -152,7 +151,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -175,7 +174,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -194,7 +193,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -213,7 +212,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -231,7 +230,7 @@ namespace niswitch {
       session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -250,7 +249,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -268,13 +267,13 @@ namespace niswitch {
       ViConstString scanlist = request->scanlist().c_str();
       ViInt32 scan_mode;
       switch (request->scan_mode_enum_case()) {
-        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::kScanMode:
+        case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::kScanMode:
           scan_mode = (ViInt32)request->scan_mode();
           break;
-        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::kScanModeRaw:
+        case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::kScanModeRaw:
           scan_mode = (ViInt32)request->scan_mode_raw();
           break;
-        case grpc::niswitch::ConfigureScanListRequest::ScanModeEnumCase::SCAN_MODE_ENUM_NOT_SET:
+        case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::SCAN_MODE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_mode was not specified or out of range");
           break;
       }
@@ -283,7 +282,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -301,26 +300,26 @@ namespace niswitch {
       ViReal64 scan_delay = request->scan_delay();
       ViInt32 trigger_input;
       switch (request->trigger_input_enum_case()) {
-        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInput:
+        case niswitch_grpc::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInput:
           trigger_input = (ViInt32)request->trigger_input();
           break;
-        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInputRaw:
+        case niswitch_grpc::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInputRaw:
           trigger_input = (ViInt32)request->trigger_input_raw();
           break;
-        case grpc::niswitch::ConfigureScanTriggerRequest::TriggerInputEnumCase::TRIGGER_INPUT_ENUM_NOT_SET:
+        case niswitch_grpc::ConfigureScanTriggerRequest::TriggerInputEnumCase::TRIGGER_INPUT_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input was not specified or out of range");
           break;
       }
 
       ViInt32 scan_advanced_output;
       switch (request->scan_advanced_output_enum_case()) {
-        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutput:
+        case niswitch_grpc::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutput:
           scan_advanced_output = (ViInt32)request->scan_advanced_output();
           break;
-        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutputRaw:
+        case niswitch_grpc::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutputRaw:
           scan_advanced_output = (ViInt32)request->scan_advanced_output_raw();
           break;
-        case grpc::niswitch::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::SCAN_ADVANCED_OUTPUT_ENUM_NOT_SET:
+        case niswitch_grpc::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::SCAN_ADVANCED_OUTPUT_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output was not specified or out of range");
           break;
       }
@@ -329,7 +328,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -350,7 +349,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -370,7 +369,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -389,7 +388,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -410,7 +409,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -429,7 +428,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -449,7 +448,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -473,7 +472,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -498,7 +497,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -523,7 +522,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -548,7 +547,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -573,7 +572,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -606,7 +605,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -631,7 +630,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -663,7 +662,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -696,7 +695,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -727,7 +726,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -758,7 +757,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -791,7 +790,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -815,7 +814,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -847,7 +846,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -867,12 +866,12 @@ namespace niswitch {
       auto status = library_->GetRelayPosition(vi, relay_name, &relay_position);
       response->set_status(status);
       if (status == 0) {
-        response->set_relay_position(static_cast<grpc::niswitch::RelayPosition>(relay_position));
+        response->set_relay_position(static_cast<niswitch_grpc::RelayPosition>(relay_position));
         response->set_relay_position_raw(relay_position);
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -904,7 +903,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -937,7 +936,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -970,7 +969,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -989,7 +988,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1008,7 +1007,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1031,7 +1030,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1054,7 +1053,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1077,7 +1076,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1095,13 +1094,13 @@ namespace niswitch {
       ViConstString relay_name = request->relay_name().c_str();
       ViInt32 relay_action;
       switch (request->relay_action_enum_case()) {
-        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::kRelayAction:
+        case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::kRelayAction:
           relay_action = (ViInt32)request->relay_action();
           break;
-        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::kRelayActionRaw:
+        case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::kRelayActionRaw:
           relay_action = (ViInt32)request->relay_action_raw();
           break;
-        case grpc::niswitch::RelayControlRequest::RelayActionEnumCase::RELAY_ACTION_ENUM_NOT_SET:
+        case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::RELAY_ACTION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for relay_action was not specified or out of range");
           break;
       }
@@ -1110,7 +1109,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1129,7 +1128,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1148,7 +1147,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1167,7 +1166,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1192,7 +1191,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1209,26 +1208,26 @@ namespace niswitch {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 scan_advanced_output_connector;
       switch (request->scan_advanced_output_connector_enum_case()) {
-        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnector:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnector:
           scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector();
           break;
-        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnectorRaw:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnectorRaw:
           scan_advanced_output_connector = (ViInt32)request->scan_advanced_output_connector_raw();
           break;
-        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::SCAN_ADVANCED_OUTPUT_CONNECTOR_ENUM_NOT_SET:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::SCAN_ADVANCED_OUTPUT_CONNECTOR_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_connector was not specified or out of range");
           break;
       }
 
       ViInt32 scan_advanced_output_bus_line;
       switch (request->scan_advanced_output_bus_line_enum_case()) {
-        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLine:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLine:
           scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line();
           break;
-        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLineRaw:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLineRaw:
           scan_advanced_output_bus_line = (ViInt32)request->scan_advanced_output_bus_line_raw();
           break;
-        case grpc::niswitch::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::SCAN_ADVANCED_OUTPUT_BUS_LINE_ENUM_NOT_SET:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::SCAN_ADVANCED_OUTPUT_BUS_LINE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_bus_line was not specified or out of range");
           break;
       }
@@ -1238,7 +1237,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1255,26 +1254,26 @@ namespace niswitch {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 trigger_input_connector;
       switch (request->trigger_input_connector_enum_case()) {
-        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnector:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnector:
           trigger_input_connector = (ViInt32)request->trigger_input_connector();
           break;
-        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnectorRaw:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnectorRaw:
           trigger_input_connector = (ViInt32)request->trigger_input_connector_raw();
           break;
-        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::TRIGGER_INPUT_CONNECTOR_ENUM_NOT_SET:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::TRIGGER_INPUT_CONNECTOR_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_connector was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_input_bus_line;
       switch (request->trigger_input_bus_line_enum_case()) {
-        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLine:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLine:
           trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line();
           break;
-        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLineRaw:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLineRaw:
           trigger_input_bus_line = (ViInt32)request->trigger_input_bus_line_raw();
           break;
-        case grpc::niswitch::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::TRIGGER_INPUT_BUS_LINE_ENUM_NOT_SET:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::TRIGGER_INPUT_BUS_LINE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_bus_line was not specified or out of range");
           break;
       }
@@ -1284,7 +1283,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1302,13 +1301,13 @@ namespace niswitch {
       ViConstString scanlist = request->scanlist().c_str();
       ViInt16 initiation;
       switch (request->initiation_enum_case()) {
-        case grpc::niswitch::ScanRequest::InitiationEnumCase::kInitiation:
+        case niswitch_grpc::ScanRequest::InitiationEnumCase::kInitiation:
           initiation = (ViInt16)request->initiation();
           break;
-        case grpc::niswitch::ScanRequest::InitiationEnumCase::kInitiationRaw:
+        case niswitch_grpc::ScanRequest::InitiationEnumCase::kInitiationRaw:
           initiation = (ViInt16)request->initiation_raw();
           break;
-        case grpc::niswitch::ScanRequest::InitiationEnumCase::INITIATION_ENUM_NOT_SET:
+        case niswitch_grpc::ScanRequest::InitiationEnumCase::INITIATION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for initiation was not specified or out of range");
           break;
       }
@@ -1317,7 +1316,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1342,7 +1341,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1361,7 +1360,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1383,7 +1382,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1405,7 +1404,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1427,7 +1426,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1449,7 +1448,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1472,7 +1471,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1492,7 +1491,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1512,7 +1511,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1535,7 +1534,7 @@ namespace niswitch {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1555,7 +1554,7 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1575,11 +1574,10 @@ namespace niswitch {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
-} // namespace niswitch
-} // namespace grpc
+} // namespace niswitch_grpc
 

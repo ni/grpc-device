@@ -12,10 +12,9 @@
 #include <atomic>
 #include <vector>
 
-namespace grpc {
-namespace nifake {
+namespace nifake_grpc {
 
-  NiFakeService::NiFakeService(NiFakeLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
+  NiFakeService::NiFakeService(NiFakeLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -24,16 +23,16 @@ namespace nifake {
   {
   }
 
-  void NiFakeService::Copy(const CustomStruct& input, grpc::nifake::FakeCustomStruct* output) 
+  void NiFakeService::Copy(const CustomStruct& input, nifake_grpc::FakeCustomStruct* output) 
   {
     output->set_struct_int(input.structInt);
     output->set_struct_double(input.structDouble);
   }
 
-  void NiFakeService::Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<grpc::nifake::FakeCustomStruct>* output) 
+  void NiFakeService::Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<nifake_grpc::FakeCustomStruct>* output) 
   {
     for (auto item : input) {
-      auto message = new grpc::nifake::FakeCustomStruct();
+      auto message = new nifake_grpc::FakeCustomStruct();
       Copy(item, message);
       output->AddAllocated(message);
     }
@@ -53,7 +52,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -74,7 +73,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -89,7 +88,7 @@ namespace nifake {
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -110,7 +109,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -125,7 +124,7 @@ namespace nifake {
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -142,13 +141,13 @@ namespace nifake {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 a_turtle;
       switch (request->a_turtle_enum_case()) {
-        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtle:
+        case nifake_grpc::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtle:
           a_turtle = (ViInt16)request->a_turtle();
           break;
-        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtleRaw:
+        case nifake_grpc::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtleRaw:
           a_turtle = (ViInt16)request->a_turtle_raw();
           break;
-        case grpc::nifake::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::A_TURTLE_ENUM_NOT_SET:
+        case nifake_grpc::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::A_TURTLE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_turtle was not specified or out of range");
           break;
       }
@@ -157,7 +156,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -188,7 +187,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -214,7 +213,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -237,7 +236,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -260,7 +259,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -283,7 +282,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -314,7 +313,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -329,7 +328,7 @@ namespace nifake {
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -352,7 +351,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -383,7 +382,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -408,7 +407,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -433,7 +432,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -458,7 +457,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -483,7 +482,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -516,7 +515,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -548,7 +547,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -571,7 +570,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -595,7 +594,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -616,12 +615,12 @@ namespace nifake {
       response->set_status(status);
       if (status == 0) {
         response->set_a_quantity(a_quantity);
-        response->set_a_turtle(static_cast<grpc::nifake::Turtle>(a_turtle));
+        response->set_a_turtle(static_cast<nifake_grpc::Turtle>(a_turtle));
         response->set_a_turtle_raw(a_turtle);
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -642,7 +641,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -675,7 +674,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -690,7 +689,7 @@ namespace nifake {
     try {
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -714,7 +713,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -734,7 +733,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -754,13 +753,13 @@ namespace nifake {
       ViInt64 an_int64 = request->an_int64();
       ViInt16 an_int_enum;
       switch (request->an_int_enum_enum_case()) {
-        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnum:
+        case nifake_grpc::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnum:
           an_int_enum = (ViInt16)request->an_int_enum();
           break;
-        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnumRaw:
+        case nifake_grpc::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::kAnIntEnumRaw:
           an_int_enum = (ViInt16)request->an_int_enum_raw();
           break;
-        case grpc::nifake::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::AN_INT_ENUM_ENUM_NOT_SET:
+        case nifake_grpc::ParametersAreMultipleTypesRequest::AnIntEnumEnumCase::AN_INT_ENUM_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for an_int_enum was not specified or out of range");
           break;
       }
@@ -792,7 +791,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -811,7 +810,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -835,7 +834,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -860,7 +859,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -885,7 +884,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -908,7 +907,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -932,7 +931,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -971,19 +970,19 @@ namespace nifake {
         response->set_a_boolean(a_boolean);
         response->set_an_int32(an_int32);
         response->set_an_int64(an_int64);
-        response->set_an_int_enum(static_cast<grpc::nifake::Turtle>(an_int_enum));
+        response->set_an_int_enum(static_cast<nifake_grpc::Turtle>(an_int_enum));
         response->set_an_int_enum_raw(an_int_enum);
         response->set_a_float(a_float);
         auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
         if(a_float_enum_omap_it != floatenum_output_map_.end()) {
-          response->set_a_float_enum(static_cast<grpc::nifake::FloatEnum>(a_float_enum_omap_it->second));
+          response->set_a_float_enum(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
         }
         response->set_a_float_enum_raw(a_float_enum);
         response->set_a_string(a_string);
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1022,7 +1021,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1043,7 +1042,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1067,7 +1066,7 @@ namespace nifake {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1088,7 +1087,7 @@ namespace nifake {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1106,11 +1105,10 @@ namespace nifake {
       session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
-} // namespace nifake
-} // namespace grpc
+} // namespace nifake_grpc
 

@@ -1,5 +1,5 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SESSIONREPOSITORY
-#define NI_HARDWARE_GRPC_INTERNAL_SESSIONREPOSITORY
+#ifndef NIDEVICE_GRPC_SESSION_REPOSITORY
+#define NIDEVICE_GRPC_SESSION_REPOSITORY
 
 #include <grpcpp/grpcpp.h>
 #include <session.grpc.pb.h>
@@ -8,8 +8,7 @@
 
 #include "semaphore.h"
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 class SessionRepository {
  public:
@@ -65,7 +64,6 @@ class SessionRepository {
   ReservationMap reservations_;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SESSIONREPOSITORY
+#endif  // NIDEVICE_GRPC_SESSION_REPOSITORY

@@ -1,12 +1,11 @@
-#ifndef NI_HARDWARE_GRPC_INTERNAL_SERVER_SECURITY_CONFIGURATION_H_
-#define NI_HARDWARE_GRPC_INTERNAL_SERVER_SECURITY_CONFIGURATION_H_
+#ifndef NIDEVICE_GRPC_SERVER_SECURITY_CONFIGURATION_H
+#define NIDEVICE_GRPC_SERVER_SECURITY_CONFIGURATION_H
 
 #include <grpcpp/grpcpp.h>
 
 #include <string>
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 class ServerSecurityConfiguration {
  public:
@@ -23,7 +22,6 @@ class ServerSecurityConfiguration {
   std::shared_ptr<::grpc::ServerCredentials> server_credentials_;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
 
-#endif  // NI_HARDWARE_GRPC_INTERNAL_SERVER_SECURITY_CONFIGURATION_H_
+#endif  // NIDEVICE_GRPC_SERVER_SECURITY_CONFIGURATION_H

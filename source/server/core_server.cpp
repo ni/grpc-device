@@ -16,9 +16,9 @@ static void RunServer(const std::string& config_file_path)
   std::string server_address, server_cert, server_key, root_cert;
 
   try {
-    grpc::nidevice::ServerConfigurationParser server_config_parser = config_file_path.empty()
-        ? grpc::nidevice::ServerConfigurationParser()
-        : grpc::nidevice::ServerConfigurationParser(config_file_path);
+    nidevice_grpc::ServerConfigurationParser server_config_parser = config_file_path.empty()
+        ? nidevice_grpc::ServerConfigurationParser()
+        : nidevice_grpc::ServerConfigurationParser(config_file_path);
     server_address = server_config_parser.parse_address();
     server_cert = server_config_parser.parse_server_cert();
     server_key = server_config_parser.parse_server_key();
@@ -32,21 +32,21 @@ static void RunServer(const std::string& config_file_path)
 
   grpc::ServerBuilder builder;
   int listeningPort = 0;
-  grpc::nidevice::ServerSecurityConfiguration server_security_config(server_cert, server_key, root_cert);
+  nidevice_grpc::ServerSecurityConfiguration server_security_config(server_cert, server_key, root_cert);
   builder.AddListeningPort(server_address, server_security_config.get_credentials(), &listeningPort);
   // Register services available on the server.
-  grpc::nidevice::SessionRepository session_repository;
-  grpc::nidevice::SysCfgLibrary syscfg_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_library);
-  grpc::nidevice::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
+  nidevice_grpc::SessionRepository session_repository;
+  nidevice_grpc::SysCfgLibrary syscfg_library;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_library);
+  nidevice_grpc::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
   builder.RegisterService(&core_service);
 
-  grpc::niscope::NiScopeLibrary niscope_library;
-  grpc::niscope::NiScopeService niscope_service(&niscope_library, &session_repository);
+  niscope_grpc::NiScopeLibrary niscope_library;
+  niscope_grpc::NiScopeService niscope_service(&niscope_library, &session_repository);
   builder.RegisterService(&niscope_service);
 
-  grpc::niswitch::NiSwitchLibrary niswitch_library;
-  grpc::niswitch::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
+  niswitch_grpc::NiSwitchLibrary niswitch_library;
+  niswitch_grpc::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
   builder.RegisterService(&niswitch_service);
 
   // Assemble the server.

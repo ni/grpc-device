@@ -7,7 +7,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-namespace niswitch = grpc::niswitch;
+namespace niswitch = niswitch_grpc;
 
 const int kViErrorRsrcNotFound = -1074118654;
 const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.";
@@ -21,7 +21,7 @@ class NiSwitchSessionTest : public ::testing::Test {
   NiSwitchSessionTest()
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
+    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
     niswitch_library_ = std::make_unique<niswitch::NiSwitchLibrary>();
     niswitch_service_ = std::make_unique<niswitch::NiSwitchService>(niswitch_library_.get(), session_repository_.get());
     builder.RegisterService(niswitch_service_.get());
@@ -60,7 +60,7 @@ class NiSwitchSessionTest : public ::testing::Test {
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
-  std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
   std::unique_ptr<niswitch::NiSwitchLibrary> niswitch_library_;
   std::unique_ptr<niswitch::NiSwitchService> niswitch_service_;
   std::unique_ptr<::grpc::Server> server_;
@@ -100,7 +100,7 @@ TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   niswitch::InitWithTopologyResponse init_response;
   call_init_with_topology(kTestRsrcName, kTopology, kTestSessName, &init_response);
-  grpc::nidevice::Session session = init_response.vi();
+  nidevice_grpc::Session session = init_response.vi();
 
   ::grpc::ClientContext context;
   niswitch::CloseRequest close_request;
@@ -114,7 +114,7 @@ TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
 TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_NoErrorReported)
 {
-  grpc::nidevice::Session session;
+  nidevice_grpc::Session session;
   session.set_id(NULL);
 
   ::grpc::ClientContext context;
@@ -133,7 +133,7 @@ TEST_F(NiSwitchSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMess
   call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
   EXPECT_EQ(kViErrorRsrcNotFound, init_response.status());
 
-  grpc::nidevice::Session session = init_response.vi();
+  nidevice_grpc::Session session = init_response.vi();
   ::grpc::ClientContext context;
   niswitch::ErrorMessageRequest error_request;
   error_request.mutable_vi()->set_id(session.id());

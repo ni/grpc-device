@@ -2,8 +2,7 @@
 
 #include <typeinfo>
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 ServerSecurityConfiguration::ServerSecurityConfiguration()
     : ServerSecurityConfiguration("", "", "")
@@ -44,5 +43,5 @@ bool ServerSecurityConfiguration::is_insecure_credentials() const
 {
   return is_insecure_credentials_;
 }
-}  // namespace nidevice
-}  // namespace grpc
+
+}  // namespace nidevice_grpc
