@@ -23,9 +23,9 @@ class DeviceEnumerator {
   virtual ~DeviceEnumerator();
 
   ::grpc::Status enumerate_devices(google::protobuf::RepeatedPtrField<DeviceProperties>* devices);
-
   NISysCfgStatus open_or_get_localhost_syscfg_session(NISysCfgSessionHandle* session);
   void clear_syscfg_session();
+  bool is_session_open();
 
  private:
   SysCfgLibraryInterface* library_;

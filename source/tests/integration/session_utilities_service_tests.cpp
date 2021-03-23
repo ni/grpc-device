@@ -555,6 +555,22 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
   EXPECT_EQ(clientc_status.error_code(), ::grpc::ABORTED);
 }
 
+TEST(SessionUtilitiesServiceTests, SysCfgLibraryPresent_ClearSysCfgSession_IsSessionOpenReturnsFalse)
+{
+  grpc::nidevice::SessionRepository session_repository;
+  ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
+  grpc::nidevice::DeviceEnumerator device_enumerator(&syscfg_mock_library);
+  grpc::nidevice::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  ::grpc::ServerContext context;
+  grpc::nidevice::EnumerateDevicesRequest request;
+  grpc::nidevice::EnumerateDevicesResponse response;
+  ::grpc::Status status = service.EnumerateDevices(&context, &request, &response);
+
+  device_enumerator.clear_syscfg_session();
+
+  EXPECT_FALSE(device_enumerator.is_session_open());
+}
+
 }  // namespace integration
 }  // namespace tests
 }  // namespace ni
