@@ -12,7 +12,7 @@
 #
 # Running from command line:
 #
-# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
+# Server machine's IP address and port number can be passed as separate command line arguments.
 #   > python enumerate-device.py <server_address> <port_number>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763"
 
