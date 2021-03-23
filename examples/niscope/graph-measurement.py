@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 import time
 import sys
 
-server_ip = "localhost"
+server_address = "localhost"
 server_port = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
