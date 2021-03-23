@@ -355,7 +355,7 @@ TEST(DeviceEnumeratorTests, GetResourcePropertyApisReturnError_EnumerateDevices_
   EXPECT_EQ("", devices.Get(0).serial_number());
 }
 
-TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsInitializeSessionOnceAndReturnsOK)
+TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsInitializeSessionOnceAndReturnsOK)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
@@ -372,7 +372,7 @@ TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsIniti
   EXPECT_EQ(NISysCfg_OK, status);
 }
 
-TEST(DeviceEnumerationTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledCloseHandleOnce)
+TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledCloseHandleOnce)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
