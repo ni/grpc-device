@@ -35,7 +35,7 @@ default_server_port = "31763"
 channels = "0,1"
 total_acquisition_time_in_seconds = 10
 sample_rate_in_hz = 1000
-resource_name = "SimulatedScope"
+resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
 
 any_error = False
@@ -72,7 +72,7 @@ client = grpc_niscope.NiScopeStub(channel)
 try :
     # Open session to NI-SCOPE module with options.
     init_with_options_response = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
-        resource_name=resource_name,
+        resource_name=resource,
         id_query = False,
         option_string=options
         ))

@@ -29,27 +29,26 @@
 #   > python fetch.py <server_address> <port_number> <resource_name>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
 
-from grpc import niscope as niscope_types
+import niscope_grpc as niscope_types
 import asyncio
 import matplotlib.pyplot as plt
 import time
 import sys
-import grpc
+from grpclib.client import Channel
 
-default_server_ip = "localhost"
-default_server_port = "31763"
+server_ip = "localhost"
+server_port = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
 channels = "0"
-resource_name = "SimulatedScope"
+resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
 
 # Read in cmd args
-server_address = f"{default_server_ip}:{default_server_port}"
-if len(sys.argv) == 2:
-    server_address = f"{sys.argv[1]}:{default_server_port}"
-elif len(sys.argv) >= 3:
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+if len(sys.argv) >= 2:
+    server_ip = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
     if len(sys.argv) == 4:
         resource = sys.argv[3]
         options = ""
@@ -64,9 +63,9 @@ async def CheckStatus(scope_service, result):
         print(error.description)
 
 # Entry Points
-async def OpenGrpcScope(resource_name: str, server_address: str):
+async def OpenGrpcScope(resource_name: str, server_ip: str, server_port):
     print("Entry to open_grpc_scope")
-    channel = grpc.insecure_channel(server_address)
+    channel = Channel(host=server_ip, port=server_port)
     scope_service = niscope_types.NiScopeStub(channel)
 
     # Initialize the scope
@@ -180,7 +179,7 @@ async def MeasureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi
 
 
 async def main():
-    grpc_scope = await OpenGrpcScope(resource, server_address)
+    grpc_scope = await OpenGrpcScope(resource, server_ip, server_port)
     await ConfigureGrpcScope(*grpc_scope)
     await MeasureGrpcScope(*grpc_scope)
     await CloseGrpcScope(*grpc_scope)
