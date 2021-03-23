@@ -30,12 +30,12 @@
 #   > python fetch.py <server_address> <port_number> <resource_name>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
 
-import niscope_grpc as niscope_types
+from nidevice import niscope_grpc
 import asyncio
 from grpclib.client import Channel
 import sys
 
-server_ip = "localhost"
+server_address = "localhost"
 server_port = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
@@ -45,12 +45,12 @@ options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:161061
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_ip = sys.argv[1]
+    server_address = sys.argv[1]
 if len(sys.argv) >= 3:
     server_port = sys.argv[2]
-    if len(sys.argv) == 4:
-        resource = sys.argv[3]
-        options = ""
+if len(sys.argv) == 4:
+    resource = sys.argv[3]
+    options = ""
 
 async def CheckStatus(scope_service, result):
     if (result.status != 0):
@@ -61,8 +61,8 @@ async def PerformAcquire():
 
     # Create the communcation channel for the remote host (in this case we are connecting to a local server)
     # and create a connection to the niScope service
-    channel = Channel(host=server_ip, port=server_port)
-    scope_service = niscope_types.NiScopeStub(channel)
+    channel = Channel(host=server_address, port=server_port)
+    scope_service = niscope_grpc.NiScopeStub(channel)
 
     # Initialize the scope
     init_result = await scope_service.init_with_options(
@@ -93,7 +93,7 @@ async def PerformAcquire():
         channel_list = channels,
         range = 10.0,
         offset = 0,
-        coupling_raw = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+        coupling_raw = niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
         enabled = True,
         probe_attenuation = 1
     )
@@ -104,16 +104,16 @@ async def PerformAcquire():
         trigger_source = channels,
         level = 0.00,
         holdoff = 0.0,
-        trigger_coupling_raw = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
+        trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+        slope = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
     )
     await CheckStatus(scope_service, confTrigger_edge_result)
 
     set_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
         channel_list = channels,
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
+        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+        value = niscope_grpc.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
     )
     await CheckStatus(scope_service, set_result)
 

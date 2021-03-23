@@ -25,8 +25,8 @@ import time
 import niswitch_pb2 as niswitch_types
 import niswitch_pb2_grpc as grpc_niswitch
 
-default_server_ip = "localhost"
-default_server_port = "31763"
+server_address = "localhost"
+server_port = "31763"
 session_name = "NI-Switch-Session-1"
 
 # Resource name, topology string and scanlist for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
@@ -37,16 +37,16 @@ simulation = True
 scan_list = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3"
 
 # Read in cmd args
-server_address = f"{default_server_ip}:{default_server_port}"
-if len(sys.argv) == 2:
-    server_address = f"{sys.argv[1]}:{default_server_port}"
-elif len(sys.argv) >= 3:
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
-    if len(sys.argv) == 4:
-        resource = sys.argv[3]
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    resource = sys.argv[3]
+    options = ""
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH service
-channel = grpc.insecure_channel(server_address)
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 number_of_triggers = 5
 anyError = False

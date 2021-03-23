@@ -31,8 +31,8 @@ import niscope_pb2_grpc as grpc_niscope
 import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
 
-default_server_ip = "localhost"
-default_server_port = "31763"
+server_address = "localhost"
+server_port = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
 resource = "SimulatedScope"
@@ -58,17 +58,16 @@ def ThrowOnError (vi, error_code):
     raise Exception (error_message_response)
 
 # Read in cmd args
-server_address = f"{default_server_ip}:{default_server_port}"
-if len(sys.argv) == 2:
-    server_address = f"{sys.argv[1]}:{default_server_port}"
-elif len(sys.argv) >= 3:
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
-    if len(sys.argv) == 4:
-        resource = sys.argv[3]
-        options = ""
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    resource = sys.argv[3]
+    options = ""
 
 # Create the communication channel for the remote host and create connections to the NI-SCOPE and session services.
-channel = grpc.insecure_channel(server_address)
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 niscope_client = grpc_niscope.NiScopeStub(channel)
 session_client = grpc_session.SessionUtilitiesStub(channel)
 

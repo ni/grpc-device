@@ -30,8 +30,8 @@ import matplotlib.pyplot as plt
 import time
 import sys
 
-default_server_ip = "localhost"
-default_server_port = "31763"
+server_ip = "localhost"
+server_port = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
 channels = "0"
@@ -44,18 +44,17 @@ def CheckStatus(scope_service, result):
         print(error.description)
 
 # Read in cmd args
-server_address = f"{default_server_ip}:{default_server_port}"
-if len(sys.argv) == 2:
-    server_address = f"{sys.argv[1]}:{default_server_port}"
-elif len(sys.argv) >= 3:
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
-    if len(sys.argv) == 4:
-        resource = sys.argv[3]
-        options = ""
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    resource = sys.argv[3]
+    options = ""
 
 # Create the communication channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the NI-SCOPE service
-channel = grpc.insecure_channel(server_address)
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 scope_service = grpc_scope.NiScopeStub(channel)
 
 # Initialize the scope
