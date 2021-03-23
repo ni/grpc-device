@@ -97,5 +97,13 @@ void DeviceEnumerator::clear_syscfg_session()
   }
 }
 
+// Returns status of cached session.
+bool DeviceEnumerator::is_session_open()
+{
+  if (syscfg_session_)
+    return true;
+  return false;
+}
+
 }  // namespace nidevice
 }  // namespace grpc
