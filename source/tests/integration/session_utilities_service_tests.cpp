@@ -555,7 +555,7 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
   EXPECT_EQ(clientc_status.error_code(), ::grpc::ABORTED);
 }
 
-TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_clearSysCfgSession_CallsIsSessionOpenReturnsFalse)
+TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_ClearSysCfgSession_IsSessionOpenReturnsFalse)
 {
   grpc::nidevice::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;

@@ -100,9 +100,7 @@ void DeviceEnumerator::clear_syscfg_session()
 // Returns status of cached session.
 bool DeviceEnumerator::is_session_open()
 {
-  if (syscfg_session_)
-    return true;
-  return false;
+  return (syscfg_session_ != nullptr);
 }
 
 }  // namespace nidevice
