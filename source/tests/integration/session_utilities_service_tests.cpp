@@ -568,7 +568,7 @@ TEST(SessionUtilitiesServiceTests, SysCfgLibraryPresent_ClearSysCfgSession_IsSes
 
   device_enumerator.clear_syscfg_session();
 
-  EXPECT_EQ(false, device_enumerator.is_session_open());
+  EXPECT_FALSE(device_enumerator.is_session_open());
 }
 
 }  // namespace integration
