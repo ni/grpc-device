@@ -1,24 +1,27 @@
 #
 # This is an example of plotting waveforms read from an NI-SCOPE device through gRPC
 # Tested with a 100 kHz tone input to channel 0
-# The gRPC API is built from the C API.  NI-SCOPE documentation is found:
-# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\scopeFunc.chm
+#
+# The gRPC API is built from the C API.  NI-SCOPE documentation is installed with the driver at:
+# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\English\Digitizers.chm
 #
 # Getting Started:
 #
-# Install the gRPC tools for Python
-#     > pip install grpcio-tools
-#   if you are using anaconda
-#     > conda install grpcio-tools
+# To run this example, install "NI-SCOPE Driver" on the server machine.
+# Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-scope.html
 #
-# Generate the python API from the gRPC definition (.proto) files
-# Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
-# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
-#   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
-#   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
-# Update the server address and resource name and options in this file
-# Run the code to read a waveform from the scope
+# Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
+# Link : https://github.com/ni/grpc-device/wiki/niScope_header
+#
+# Running from command line:
+#
+# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
+#   > python fetch.py <server_address> <port_number> <resource_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
+
 
 import grpc
 import niscope_pb2 as niscope_types
@@ -52,7 +55,7 @@ if len(sys.argv) >= 3 :
 
 # Create the communication channel for the remote host (in this case we are connecting to a local server)
 # and create a connection to the NI-SCOPE service
-channel = grpc.insecure_channel(server_address)
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 scope_service = grpc_scope.NiScopeStub(channel)
 
 # Initialize the scope
