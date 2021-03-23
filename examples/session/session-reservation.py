@@ -31,6 +31,15 @@ import niscope_pb2_grpc as grpc_niscope
 import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
 
+default_server_ip = "localhost"
+default_server_port = "31763"
+
+# Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
+resource = "SimulatedScope"
+options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
+client_1_id = "Client1"
+client_2_id = "Client2"
+
 any_error = False
 # Checks for errors. If any, throws an exception to stop the execution.
 def CheckForError (vi, status) :
@@ -48,12 +57,15 @@ def ThrowOnError (vi, error_code):
     error_message_response = niscope_client.GetErrorMessage(error_message_request)
     raise Exception (error_message_response)
 
-# Server machine's IP address and port number can be passed as two separate command line arguments.
-#   > python session-reservation.py <server_address> <port_number>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763".
-server_address = "localhost:31763"
-if len(sys.argv) == 3 :
+# Read in cmd args
+server_address = f"{default_server_ip}:{default_server_port}"
+if len(sys.argv) == 2:
+    server_address = f"{sys.argv[1]}:{default_server_port}"
+elif len(sys.argv) >= 3:
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+    if len(sys.argv) == 4:
+        resource = sys.argv[3]
+        options = ""
 
 # Create the communication channel for the remote host and create connections to the NI-SCOPE and session services.
 channel = grpc.insecure_channel(server_address)
@@ -61,12 +73,6 @@ niscope_client = grpc_niscope.NiScopeStub(channel)
 session_client = grpc_session.SessionUtilitiesStub(channel)
 
 try :
-    # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
-    resource = "PXI1Slot2"
-    options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
-    client_1_id = "Client1"
-    client_2_id = "Client2"
-
     # Reset server to start in a fresh state.
     reset_server_response = session_client.ResetServer(session_types.ResetServerRequest())
     assert(reset_server_response.is_server_reset)

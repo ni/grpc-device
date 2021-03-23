@@ -32,20 +32,25 @@
 
 from grpc import niscope as niscope_types
 import asyncio
-from grpclib.client import Channel
+import grpc
 import sys
+import grpc
 
-# Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python plot-read-waveform-betterpython.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763" and a resource will be simulated
-server_address = "localhost"
-server_port = 31763
+default_server_ip = "localhost"
+default_server_port = "31763"
+
+# Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
+channels = "0"
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
-if len(sys.argv) >= 3 :
-    server_address = sys.argv[1]
-    server_port = int(sys.argv[2])
-    if (len(sys.argv) == 4):
+
+# Read in cmd args
+server_address = f"{default_server_ip}:{default_server_port}"
+if len(sys.argv) == 2:
+    server_address = f"{sys.argv[1]}:{default_server_port}"
+elif len(sys.argv) >= 3:
+    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+    if len(sys.argv) == 4:
         resource = sys.argv[3]
         options = ""
 
@@ -58,7 +63,7 @@ async def PerformAcquire():
 
     # Create the communcation channel for the remote host (in this case we are connecting to a local server)
     # and create a connection to the niScope service
-    channel = Channel(host="localhost", port=31763)
+    channel =  grpc.insecure_channel(server_address)
     scope_service = niscope_types.NiScopeStub(channel)
 
     # Initialize the scope
@@ -87,7 +92,7 @@ async def PerformAcquire():
     # Configure vertical timing
     vertical_result = await scope_service.configure_vertical(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         range = 10.0,
         offset = 0,
         coupling_raw = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
@@ -98,7 +103,7 @@ async def PerformAcquire():
 
     confTrigger_edge_result = await scope_service.configure_trigger_edge(
         vi = vi,
-        trigger_source = "0",
+        trigger_source = channels,
         level = 0.00,
         holdoff = 0.0,
         trigger_coupling_raw = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
@@ -108,7 +113,7 @@ async def PerformAcquire():
 
     set_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
         value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
     )
@@ -116,7 +121,7 @@ async def PerformAcquire():
 
     read_result = await scope_service.read(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         timeout = 10000,
         num_samples = 100000
     )

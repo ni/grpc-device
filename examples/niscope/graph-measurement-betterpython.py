@@ -31,7 +31,6 @@
 
 from grpc import niscope as niscope_types
 import asyncio
-from grpclib.client import Channel
 import matplotlib.pyplot as plt
 import time
 import sys
@@ -39,16 +38,19 @@ import grpc
 
 default_server_ip = "localhost"
 default_server_port = "31763"
+
+# Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
+channels = "0"
 resource_name = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
 
-
-server_address = default_server_ip
-server_port = default_server_port
-if len(sys.argv) >= 3 :
-    server_address = sys.argv[1]
-    server_port = int(sys.argv[2])
-    if (len(sys.argv) == 4):
+# Read in cmd args
+server_address = f"{default_server_ip}:{default_server_port}"
+if len(sys.argv) == 2:
+    server_address = f"{sys.argv[1]}:{default_server_port}"
+elif len(sys.argv) >= 3:
+    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+    if len(sys.argv) == 4:
         resource = sys.argv[3]
         options = ""
 
@@ -62,9 +64,9 @@ async def CheckStatus(scope_service, result):
         print(error.description)
 
 # Entry Points
-async def OpenGrpcScope(resource_name: str, host: str, port: int):
+async def OpenGrpcScope(resource_name: str, server_address: str):
     print("Entry to open_grpc_scope")
-    channel = Channel(host=host, port=port)
+    channel = grpc.insecure_channel(server_address)
     scope_service = niscope_types.NiScopeStub(channel)
 
     # Initialize the scope
@@ -101,7 +103,7 @@ async def ConfigureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, 
     # Configure Vertical
     config_vertical_result = await scope_service.configure_vertical(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         range = 10.0,
         offset = 0,
         coupling_raw = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
@@ -120,7 +122,7 @@ async def ConfigureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, 
 
     configure_trigger_result = await scope_service.configure_trigger_edge(
         vi = vi,
-        trigger_source = "0",
+        trigger_source = channels,
         level = 0.00,
         slope_raw = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
         trigger_coupling_raw = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
@@ -130,7 +132,7 @@ async def ConfigureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, 
 
     set_units_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
         value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
     )
@@ -164,7 +166,7 @@ async def MeasureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi
             # Fetch the measured average frequency
             fetch_result = await scope_service.fetch_measurement_stats(
                 vi = vi,
-                channel_list = "0",
+                channel_list = channels,
                 timeout = 1,
                 scalar_meas_function_raw = niscope_types.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY
             )
@@ -178,7 +180,7 @@ async def MeasureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi
 
 
 async def main():
-    grpc_scope = await OpenGrpcScope(resource, server_address, server_port)
+    grpc_scope = await OpenGrpcScope(resource, server_address)
     await ConfigureGrpcScope(*grpc_scope)
     await MeasureGrpcScope(*grpc_scope)
     await CloseGrpcScope(*grpc_scope)

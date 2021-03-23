@@ -15,8 +15,9 @@
 # Running from command line:
 #
 # Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
-#   > python fetch.py <server_address> <port_number> <resource_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
+#   > python software-scanning.py <server_address> <port_number> <resource_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763"
+# To successfully run this example, the resource name must be passed in via cmd line or hard coded in this file
 
 import grpc
 import sys
@@ -24,12 +25,8 @@ import time
 import niswitch_pb2 as niswitch_types
 import niswitch_pb2_grpc as grpc_niswitch
 
-# Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python software-scanning.py 10.20.30.40 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
-server_address = "localhost:31763"
-if len(sys.argv) == 3 :
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+default_server_ip = "localhost"
+default_server_port = "31763"
 session_name = "NI-Switch-Session-1"
 
 # Resource name, topology string and scanlist for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
@@ -38,6 +35,15 @@ resource = ""
 topology_string = "2529/2-Wire Dual 4x16 Matrix"
 simulation = True
 scan_list = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3"
+
+# Read in cmd args
+server_address = f"{default_server_ip}:{default_server_port}"
+if len(sys.argv) == 2:
+    server_address = f"{sys.argv[1]}:{default_server_port}"
+elif len(sys.argv) >= 3:
+    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+    if len(sys.argv) == 4:
+        resource = sys.argv[3]
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH service
 channel = grpc.insecure_channel(server_address)

@@ -21,6 +21,9 @@ import sys
 import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
 
+default_server_ip = "localhost"
+default_server_port = "31763"
+
 # Helper to print the devices 
 def print_devices(devices) :
     if not devices:
@@ -35,9 +38,11 @@ def print_devices(devices) :
         print(f"        Vendor: {device.vendor}")
         print(f"        Serial Number: {device.serial_number} \n")
 
-# Read in server args
-server_address = "localhost:31763"
-if len(sys.argv) == 3 :
+# Read in cmd args
+server_address = f"{default_server_ip}:{default_server_port}"
+if len(sys.argv) == 2:
+    server_address = f"{sys.argv[1]}:{default_server_port}"
+elif len(sys.argv) == 3:
     server_address = f"{sys.argv[1]}:{sys.argv[2]}"
 
 # Create communication with the server using gRPC APIs.
