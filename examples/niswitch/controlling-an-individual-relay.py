@@ -30,14 +30,14 @@ server_port = "31763"
 
 # Resource name, topology string and relay name for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
 # If you are using real hardware device, use the appropriate resource name and set the simulation parameter to false.
-# Set the maximimum time to wait for debounce.
 resource = ""
 topology_string = "2571/66-SPDT"
 relay_name = "k15"
 simulation = True
 
-session_name = "NI-Switch-Session-1"
+# Set the maximimum time to wait for debounce.
 max_time = 1000
+session_name = "NI-Switch-Session-1"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
