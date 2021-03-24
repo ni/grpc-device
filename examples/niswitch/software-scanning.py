@@ -35,7 +35,7 @@ topology_string = "2529/2-Wire Dual 4x16 Matrix"
 scan_list = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3"
 simulation = True
 
-session_name = "NI-Switch-Session-1
+session_name = "NI-Switch-Session-1"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
