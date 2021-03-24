@@ -7,18 +7,22 @@
 # To run this example, install the "NI System Configuration API" on the server machine.
 # Link to the download page: https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html
 #
-# Install the gRPC tools for Python:
-#     > pip install grpcio-tools
-#   if you are using anaconda
-#     > conda install grpcio-tools
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
-# Generate the python API from the gRPC definition (.proto) files:
-#   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
+# Running from command line:
 #
+# Server machine's IP address and port number can be passed as separate command line arguments.
+#   > python enumerate-device.py <server_address> <port_number>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763"
+
 import grpc
 import sys
 import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
+
+server_address = "localhost"
+server_port = "31763"
 
 # Helper to print the devices 
 def print_devices(devices) :
@@ -34,15 +38,14 @@ def print_devices(devices) :
         print(f"        Vendor: {device.vendor}")
         print(f"        Serial Number: {device.serial_number} \n")
 
-# Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python enumerate-device.py <server_address> <port_number>
-# If not passed as command line arguments, then by default server address would be "localhost:31763".
-server_address = "localhost:31763"
-if len(sys.argv) == 3 :
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+# Read in cmd args
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
 
 # Create communication with the server using gRPC APIs.
-channel = grpc.insecure_channel(server_address)
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_session.SessionUtilitiesStub(channel)
 
 try :

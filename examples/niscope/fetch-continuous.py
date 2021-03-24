@@ -1,29 +1,25 @@
 # 
 # This example initiates an acquisition and continuously fetches waveform samples per channel.
 #
-# Getting Started:
+# The gRPC API is built from the C API.  NI-SCOPE documentation is installed with the driver at:
+# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\English\Digitizers.chm
 #
+# Getting Started:
+# 
 # To run this example, install "NI-SCOPE Driver" on the server machine.
 # Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-scope.html
 #
-# Install the gRPC tools for Python
-#     > pip install grpcio-tools
-#   if you are using anaconda
-#     > conda install grpcio-tools
-#
-# Install numpy for arrays
-#     > pip install numpy
-#   if you are using anaconda
-#     > conda install numpy
-#
-# Generate the python API from the gRPC definition (.proto) files.
-# Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
-# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
-#   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_out=. --grpc_python_out=. session.proto
-#   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_out=. --grpc_python_out=. niscope.proto 
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
 # Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
 # Link : https://github.com/ni/grpc-device/wiki/niScope_header
+#
+# Running from command line:
+#
+# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
+#   > python fetch-continuous.py <server_address> <port_number> <resource_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
 
 import grpc
 import sys
@@ -31,6 +27,17 @@ import time
 import numpy as np
 import niscope_pb2 as niscope_types
 import niscope_pb2_grpc as grpc_niscope
+
+server_address = "localhost"
+server_port = "31763"
+
+# Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
+resource = "SimulatedScope"
+options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
+
+channels = "0,1"
+total_acquisition_time_in_seconds = 10
+sample_rate_in_hz = 1000
 
 any_error = False
 # Checks for errors. If any, throws an exception to stop the execution.
@@ -49,25 +56,20 @@ def ThrowOnError (vi, error_code):
     error_message_response = client.GetErrorMessage(error_message_request)
     raise Exception (error_message_response)
 
-# Server machine's IP address and port number can be passed as two separate command line arguments.
-#   > python fetch-continuous.py <server_address> <port_number>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763".
-server_address = "localhost:31763"
-if len(sys.argv) == 3 :
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
+# Read in cmd args
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    resource = sys.argv[3]
+    options = ""
 
 # Create the communication channel for the remote host and create a connection to the NI-SCOPE service.
-channel = grpc.insecure_channel(server_address)
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_niscope.NiScopeStub(channel)
 
 try :
-    # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
-    resource = "PXI1Slot2"
-    channels = "0,1"
-    options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
-    total_acquisition_time_in_seconds = 10
-    sample_rate_in_hz = 1000
-
     # Open session to NI-SCOPE module with options.
     init_with_options_response = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
         resource_name=resource,

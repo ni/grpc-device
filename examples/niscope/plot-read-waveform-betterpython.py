@@ -1,53 +1,57 @@
 #
 # Example communication with NI-SCOPE over gRPC
 #
-# This example uses the "betterproto" protocol buffers / gRPC library
-#   betterproto produces a more idiomatic version of the gRPC API
-#   for more information see: https://github.com/danielgtaylor/python-betterproto
+# The gRPC API is built from the C API.  NI-SCOPE documentation is installed with the driver at:
+# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\English\Digitizers.chm
 #
 # Getting Started:
 #
-# Install the gRPC tools for Python
-#     > pip install grpcio-tools
-#   if you are using anaconda
-#     > conda install grpcio-tools
+# To run this example, install "NI-SCOPE Driver" on the server machine.
+# Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-scope.html
 #
-# Install the betterproto tools
-#   > pip install --pre "betterproto[compiler]"
+# Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
+# Link : https://github.com/ni/grpc-device/wiki/niScope_header
 #
-# Generate the python API from the gRPC definition (.proto) files
-# Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
-# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
-#   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. session.proto
-#   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. niscope.proto  
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+#
+# This example uses the "betterproto" protocol buffers / gRPC library
+#   betterproto produces a more idiomatic version of the gRPC API
+#   for more information see: https://github.com/danielgtaylor/python-betterproto
 #
 # NOTE: The betterproto code generator has a bug generating helpers for gRPC messages with oneof fields.
 # If any parameter accepts either an enum value or a raw value, only the raw value is used. For example,
 # when calling configure_vertical, we set coupling_raw instead of coupling to avoid a default raw value
 # being used.
 #
-# Update the server address and resource name and options in this file
-# Run the code to read a waveform from the scope
+# Running from command line:
 #
+# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
+#   > python plot-read-waveform-betterpython.py <server_address> <port_number> <resource_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
 
-from grpc import niscope as niscope_types
+from nidevice import niscope_grpc
 import asyncio
 from grpclib.client import Channel
 import sys
 
-# Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python plot-read-waveform-betterpython.py localhost 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763" and a resource will be simulated
 server_address = "localhost"
-server_port = 31763
+server_port = "31763"
+
+# Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
-if len(sys.argv) >= 3 :
+
+channels = "0"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
     server_address = sys.argv[1]
-    server_port = int(sys.argv[2])
-    if (len(sys.argv) == 4):
-        resource = sys.argv[3]
-        options = ""
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) == 4:
+    resource = sys.argv[3]
+    options = ""
 
 async def CheckStatus(scope_service, result):
     if (result.status != 0):
@@ -58,8 +62,8 @@ async def PerformAcquire():
 
     # Create the communcation channel for the remote host (in this case we are connecting to a local server)
     # and create a connection to the niScope service
-    channel = Channel(host="localhost", port=31763)
-    scope_service = niscope_types.NiScopeStub(channel)
+    channel = Channel(host=server_address, port=server_port)
+    scope_service = niscope_grpc.NiScopeStub(channel)
 
     # Initialize the scope
     init_result = await scope_service.init_with_options(
@@ -87,10 +91,10 @@ async def PerformAcquire():
     # Configure vertical timing
     vertical_result = await scope_service.configure_vertical(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         range = 10.0,
         offset = 0,
-        coupling_raw = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+        coupling_raw = niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
         enabled = True,
         probe_attenuation = 1
     )
@@ -98,25 +102,25 @@ async def PerformAcquire():
 
     confTrigger_edge_result = await scope_service.configure_trigger_edge(
         vi = vi,
-        trigger_source = "0",
+        trigger_source = channels,
         level = 0.00,
         holdoff = 0.0,
-        trigger_coupling_raw = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
+        trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+        slope = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
     )
     await CheckStatus(scope_service, confTrigger_edge_result)
 
     set_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
-        channel_list = "0",
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
+        channel_list = channels,
+        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+        value = niscope_grpc.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
     )
     await CheckStatus(scope_service, set_result)
 
     read_result = await scope_service.read(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         timeout = 10000,
         num_samples = 100000
     )

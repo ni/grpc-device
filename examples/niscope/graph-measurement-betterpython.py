@@ -1,64 +1,58 @@
 # This is an example of plotting waveforms read from an NI-SCOPE device through gRPC
 #
-# The gRPC API is built from the C API.  NI-SCOPE documentation is found:
-# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\scopeFunc.chm
+# The gRPC API is built from the C API.  NI-SCOPE documentation is installed with the driver at:
+# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\English\Digitizers.chm
+#
+# Getting Started:
+#
+# To run this example, install "NI-SCOPE Driver" on the server machine.
+# Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-scope.html
+#
+# Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
+# Link : https://github.com/ni/grpc-device/wiki/niScope_header
+#
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
 # This example uses the "betterproto" protocol buffers / gRPC library
 #   betterproto produces a more idiomatic version of the gRPC API
 #   for more information see: https://github.com/danielgtaylor/python-betterproto
-#
-# Getting Started:
-#
-# Install the gRPC tools for Python
-#     > pip install grpcio-tools
-#   if you are using anaconda
-#     > conda install grpcio-tools
-#
-# Install the betterproto tools
-#   Install both the library and compiler
-#       pip install --pre "betterproto[compiler]"
-#   Install just the library (to use the generated code output)
-#       pip install betterproto
-#
-# Generate the python API from the gRPC definition (.ptoto) files
-#   > python -m grpc_tools.protoc -I. --python_betterproto_out=. --grpc_python_out=. ./session.proto
-#   > python -m grpc_tools.protoc -I. --python_betterproto_out=. --grpc_python_out=. ./niscope.proto
-#
-# Generate the python API from the gRPC definition (.proto) files
-# Note: The snippets below assume you are executing from the examples/niscope folder in the repo directory. 
-# If not, you will need to adjust the -I arguments so the compiler knows where to find the proto files.
-#   > python -m grpc_tools.protoc -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. session.proto
-#   > python -m grpc_tools.protoc -I="../../generated/niscope" -I="../../source/protobuf" --python_betterproto_out=. --grpc_python_out=. niscope.proto 
 #
 # NOTE: The betterproto code generator has a bug generating helpers for gRPC messages with oneof fields.
 # If any parameter accepts either an enum value or a raw value, only the raw value is used. For example,
 # when calling configure_vertical, we set coupling_raw instead of coupling to avoid a default raw value
 # being used.
 #
-# Update the server address and resource name and options in this file
+# Running from command line:
+#
+# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
+#   > python graph-measurement-betterpython.py <server_address> <port_number> <resource_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
 
-from grpc import niscope as niscope_types
+from nidevice import niscope_grpc
 import asyncio
-from grpclib.client import Channel
 import matplotlib.pyplot as plt
 import time
 import sys
-import grpc
+from grpclib.client import Channel
 
-# Server machine's IP address, port number, and resource name (optional) can be passed as separate command line arguments.
-#   > python graph_measurement-betterpython.py localhost 31763
-#   > python graph_measurement-betterpython.py localhost 31763 Scope1
-# If not passed as command line arguments, then by default server address would be "localhost:31763" and a resource will be simulated
 server_address = "localhost"
-server_port = 31763
+server_port = "31763"
+
+# Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
-if len(sys.argv) >= 3 :
+
+channels = "0"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
     server_address = sys.argv[1]
-    server_port = int(sys.argv[2])
-    if (len(sys.argv) == 4):
-        resource = sys.argv[3]
-        options = ""
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) == 4:
+    resource = sys.argv[3]
+    options = ""
 
 #set to false to disable graph and increase speed
 show_plot = True 
@@ -70,10 +64,10 @@ async def CheckStatus(scope_service, result):
         print(error.description)
 
 # Entry Points
-async def OpenGrpcScope(resource_name: str, host: str, port: int):
+async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
     print("Entry to open_grpc_scope")
-    channel = Channel(host=host, port=port)
-    scope_service = niscope_types.NiScopeStub(channel)
+    channel = Channel(host=server_address, port=server_port)
+    scope_service = niscope_grpc.NiScopeStub(channel)
 
     # Initialize the scope
     init_result = await scope_service.init_with_options(
@@ -88,13 +82,13 @@ async def OpenGrpcScope(resource_name: str, host: str, port: int):
     return scope_service, channel, vi
 
 
-async def CloseGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi):
+async def CloseGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi):
     await scope_service.close(vi=vi)
     channel.close()
     return 0
 
 
-async def ConfigureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi):
+async def ConfigureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi):
     # Configure horizontal timing
     config_horizontal_result = await scope_service.configure_horizontal_timing(
         vi=vi,
@@ -109,10 +103,10 @@ async def ConfigureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, 
     # Configure Vertical
     config_vertical_result = await scope_service.configure_vertical(
         vi = vi,
-        channel_list = "0",
+        channel_list = channels,
         range = 10.0,
         offset = 0,
-        coupling_raw = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+        coupling_raw = niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
         enabled = True,
         probe_attenuation = 1
     )
@@ -121,30 +115,30 @@ async def ConfigureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, 
     # Setup and Edge Trigger
     set_trigger_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
-        value = niscope_types.TriggerType.TRIGGER_TYPE_NISCOPE_VAL_EDGE_TRIGGER
+        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
+        value = niscope_grpc.TriggerType.TRIGGER_TYPE_NISCOPE_VAL_EDGE_TRIGGER
     )
     await CheckStatus(scope_service, set_trigger_result)
 
     configure_trigger_result = await scope_service.configure_trigger_edge(
         vi = vi,
-        trigger_source = "0",
+        trigger_source = channels,
         level = 0.00,
-        slope_raw = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
-        trigger_coupling_raw = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+        slope_raw = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
+        trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
         holdoff = 0.0,
     )
     await CheckStatus(scope_service, configure_trigger_result)
 
     set_units_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
-        channel_list = "0",
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
+        channel_list = channels,
+        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+        value = niscope_grpc.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
     )
     await CheckStatus(scope_service, set_units_result)
 
-async def MeasureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi):
+async def MeasureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi):
     if show_plot:
         fig = plt.gcf() # Setup a plot to draw the captured waveform
         fig.show()
@@ -172,9 +166,9 @@ async def MeasureGrpcScope(scope_service: niscope_types.NiScopeStub, channel, vi
             # Fetch the measured average frequency
             fetch_result = await scope_service.fetch_measurement_stats(
                 vi = vi,
-                channel_list = "0",
+                channel_list = channels,
                 timeout = 1,
-                scalar_meas_function_raw = niscope_types.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY
+                scalar_meas_function_raw = niscope_grpc.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY
             )
             await CheckStatus(scope_service, fetch_result)
             print("Average Frequency: " + str("%.2f" % round(fetch_result.result[0], 2)) + " Hz")

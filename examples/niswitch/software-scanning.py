@@ -1,20 +1,23 @@
 # Example communication with NI-SWITCH over gRPC
 #
+# The gRPC API is built from the C API.  NI-SWITCH documentation is installed with the driver at:
+# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niSwitch\Documentation\English\SWITCH.chm
+#
 # Getting Started:
 #
-# Install the gRPC tools for Python
-#     > pip install grpcio-tools
-#   if you are using anaconda
-#     > conda install grpcio-tools
-#
-# Generate the python API from the gRPC definition (.proto) files
-# Note: The snippets below assume you are executing from the examples/session folder in the repo directory.
-#   > python -m grpc_tools.protoc -I../../source/protobuf --python_out=. --grpc_python_out=. session.proto
-#   > python -m grpc_tools.protoc -I../../generated/niswitch --python_out=. --grpc_python_out=. niswitch.proto 
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
 # Run the code to initialize a session with NI-SWITCH. This example demonstrates how to scan a series of channels on a module using software scanning.
 #
-# Refer to the NI-SWITCH Help to determine if your module supports scanning, the scan list syntax, valid channel names and valid resource names  
+# Refer to the NI-SWITCH Help to determine if your module supports scanning, the scan list syntax, valid channel names and valid resource names
+#
+# Running from command line:
+#
+# Server machine's IP address and port numbercan be passed as separate command line arguments.
+#   > python software-scanning.py <server_address> <port_number>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763"
+# To successfully run this example, the resource name, topology, and scan list must be hard coded in this file
 
 import grpc
 import sys
@@ -22,23 +25,26 @@ import time
 import niswitch_pb2 as niswitch_types
 import niswitch_pb2_grpc as grpc_niswitch
 
-# Server machine's IP address and port number have to be passed as two separate command line arguments.
-#   > python software-scanning.py 10.20.30.40 31763
-# If not passed as command line arguments, then by default server address would be "localhost:31763"
-server_address = "localhost:31763"
-if len(sys.argv) == 3 :
-    server_address = f"{sys.argv[1]}:{sys.argv[2]}"
-session_name = "NI-Switch-Session-1"
+server_address = "localhost"
+server_port = "31763"
 
 # Resource name, topology string and scanlist for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
 # If you are using real hardware device, use the appropriate resource name and set the simulation parameter to false.
 resource = ""
 topology_string = "2529/2-Wire Dual 4x16 Matrix"
-simulation = True
 scan_list = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3"
+simulation = True
+
+session_name = "NI-Switch-Session-1"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH service
-channel = grpc.insecure_channel(server_address)
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 number_of_triggers = 5
 anyError = False
