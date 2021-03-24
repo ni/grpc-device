@@ -38,10 +38,11 @@ from grpclib.client import Channel
 
 server_address = "localhost"
 server_port = "31763"
-resource = "SimulatedScope"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
+resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
+
 channels = "0"
 
 # Read in cmd args
