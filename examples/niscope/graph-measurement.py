@@ -34,9 +34,10 @@ server_address = "localhost"
 server_port = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
-channels = "0"
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
+
+channels = "0"
 
 def CheckStatus(scope_service, result):
     if (result.status != 0):

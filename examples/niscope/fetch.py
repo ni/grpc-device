@@ -31,9 +31,10 @@ server_address = "localhost"
 server_port = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
-channels = "0"
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
+
+channels = "0"
 
 any_error = False
 # Checks for errors. If any, throws an exception to stop the execution.

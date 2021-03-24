@@ -37,6 +37,7 @@ server_port = "31763"
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE model.
 resource = "SimulatedScope"
 options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
+
 client_1_id = "Client1"
 client_2_id = "Client2"
 
