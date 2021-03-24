@@ -13,13 +13,14 @@ For more detailed information on the server and API design refer to the [wiki](h
 ## Downloading a Release
 
 ### Download the Server
-1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
-2. Download the latest Server Release `.tar.gz` or `.zip` for the desired platform.
-3. Extract the contents of the `.tar.gz` or `.zip` to a directory with read and write permissions.
-4. [Run the server](#running-the-grpc-server)
+1. (Windows Only) Download and install the latest [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0).
+2. Navigate to the [Releases](https://github.com/ni/grpc-device/releases) page.
+3. Download the latest Server Release `.tar.gz` or `.zip` for the desired platform.
+4. Extract the contents of the `.tar.gz` or `.zip` to a directory with read and write permissions.
+5. [Run the server](#running-the-grpc-server)
 
 ### Download the Client Files
-1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases)
+1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases) page.
 2. Download the latest Client Release's `ni-grpc-device-client.tar.gz` or `ni-grpc-device-client.zip` depending on the client platform.
 3. Extract the contents of `ni-grpc-device-client.tar.gz` or `ni-grpc-device-client.zip` to a directory with read and write permissions.
 4. [Create a gRPC client](#creating-a-grpc-client).
