@@ -14,10 +14,10 @@
 #
 # Running from command line:
 #
-# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
-#   > python controlling-an-individual-relay.py <server_address> <port_number> <resource_name>
+# Server machine's IP address and port number can be passed as separate command line arguments.
+#   > python controlling-an-individual-relay.py <server_address> <port_number>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with
-# To successfully run this example, the resource name must be passed in via cmd line or hard coded in this file
+# To successfully run this example, the resource name, topology, and relay name must be hard coded in this file
 
 import grpc
 import sys
@@ -27,7 +27,6 @@ import niswitch_pb2_grpc as grpc_niswitch
 
 server_address = "localhost"
 server_port = "31763"
-session_name = "NI-Switch-Session-1"
 
 # Resource name, topology string and relay name for a simulated 2529 module. Refer to NI-SWITCH help to find valid values for the device being used.
 # If you are using real hardware device, use the appropriate resource name and set the simulation parameter to false.
@@ -36,6 +35,8 @@ resource = ""
 topology_string = "2571/66-SPDT"
 relay_name = "k15"
 simulation = True
+
+session_name = "NI-Switch-Session-1"
 max_time = 1000
 
 # Read in cmd args
@@ -43,9 +44,6 @@ if len(sys.argv) >= 2:
     server_address = sys.argv[1]
 if len(sys.argv) >= 3:
     server_port = sys.argv[2]
-if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH service
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
