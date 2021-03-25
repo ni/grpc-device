@@ -15,7 +15,7 @@
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
-# Refer to the NI-SCOPE gRPC Wiki for the latest C API Function Reference
+# Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
 # Link : https://github.com/ni/grpc-device/wiki/NI-SCOPE-C-Function-Reference
 #
 # Running from command line:
