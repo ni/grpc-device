@@ -112,8 +112,9 @@ jobs:
       if: "(github.ref == 'refs/heads/main') && (runner.os == 'Linux')"
       run: >-
         tar -cvf ni-grpc-device-server-linux-glibc2_23.tar
-        ${GITHUB_WORKSPACE}/build/ni_grpc_device_server
-        ${GITHUB_WORKSPACE}/build/server_config.json
+        -C ${GITHUB_WORKSPACE}/build
+        ni_grpc_device_server
+        server_config.json
 
     - name: Upload Linux Server Binaries Artifact
       uses: actions/upload-artifact@v2
