@@ -4,13 +4,16 @@
 # The gRPC API is built from the C API.  NI-SCOPE documentation is installed with the driver at:
 # C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niScope\Documentation\English\Digitizers.chm
 #
+# A version of this .chm is available online at:
+# Link: https://zone.ni.com/reference/en-XX/help/370592AB-01/
+#
 # Getting Started:
 #
 # To run this example, install "NI-SCOPE Driver" on the server machine.
 # Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-scope.html
 #
 # Refer to the NI-SCOPE gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
-# Link : https://github.com/ni/grpc-device/wiki/niScope_header
+# Link : https://github.com/ni/grpc-device/wiki/NI-SCOPE-C-Function-Reference
 #
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
