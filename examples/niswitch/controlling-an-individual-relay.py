@@ -1,16 +1,20 @@
-# Example communication with NI-SWITCH over gRPC
+# This example demonstrates how to control an individual relay on a module.
 #
 # The gRPC API is built from the C API.  NI-SWITCH documentation is installed with the driver at:
 # C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niSwitch\Documentation\English\SWITCH.chm
+#
+# A version of this .chm is available online at:
+# Link: https://zone.ni.com/reference/en-XX/help/375472H-01/
 #
 # Getting Started:
 #
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
-# Run the code to initialize a session with NI-SWITCH. This example demonstrates how to control an individual relay on a module.
+# Refer to the NI-SWITCH Help to determine topology, relay names, and resource names.
 #
-# Refer to the NI-SWITCH Help to determine topology,relay names and resource names.
+# Refer to the NI-SWITCH gRPC Wiki for the latest C Function Reference:
+# Link: https://github.com/ni/grpc-device/wiki/NI-SWITCH-C-Function-Reference
 #
 # Running from command line:
 #
