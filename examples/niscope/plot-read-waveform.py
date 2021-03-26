@@ -38,10 +38,11 @@ options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:161061
 
 channels = "0"
 
-def CheckStatus(scope_service, result):
+def CheckStatus(scope_service, vi, result):
     if (result.status != 0):
-        error = scope_service.GetError(niscope_types.GetErrorRequest())
-        print(error.description)
+        error_result = scope_service.GetErrorMessage(niscope_types.GetErrorMessageRequest(vi = vi, error_code = result.status))
+        print(error_result.error_message)
+        exit()
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -65,7 +66,7 @@ init_result = scope_service.InitWithOptions(niscope_types.InitWithOptionsRequest
     option_string = options
     ))
 vi = init_result.vi
-CheckStatus(scope_service, init_result)
+CheckStatus(scope_service, vi, init_result)
 
 # Configure horizontal timing
 config_result = scope_service.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
@@ -76,19 +77,19 @@ config_result = scope_service.ConfigureHorizontalTiming(niscope_types.ConfigureH
     num_records = 1,
     enforce_realtime = True
 ))
-CheckStatus(scope_service, config_result)
+CheckStatus(scope_service, vi, config_result)
 
 # Configure vertical timing
 vertical_result = scope_service.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
     vi = vi,
     channel_list = channels,
-    range = 30.0,
+    range = 10.0,
     offset = 0,
     coupling = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
     enabled = True,
     probe_attenuation = 1
 ))
-CheckStatus(scope_service, vertical_result)
+CheckStatus(scope_service, vi, vertical_result)
 
 confTrigger_edge_result = scope_service.ConfigureTriggerEdge(niscope_types.ConfigureTriggerEdgeRequest(
     vi = vi,
@@ -97,7 +98,7 @@ confTrigger_edge_result = scope_service.ConfigureTriggerEdge(niscope_types.Confi
     trigger_coupling = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
     slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
 ))
-CheckStatus(scope_service, confTrigger_edge_result)
+CheckStatus(scope_service, vi, confTrigger_edge_result)
 
 result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
     vi = vi,
@@ -105,7 +106,7 @@ result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Requ
     attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
     value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_VOLTS
 ))
-CheckStatus(scope_service, result)
+CheckStatus(scope_service, vi, result)
 
 # Read a waveform from the scope
 read_result = scope_service.Read(niscope_types.ReadRequest(
@@ -114,10 +115,11 @@ read_result = scope_service.Read(niscope_types.ReadRequest(
     timeout = 10000,
     num_samples = 100000
 ))
-CheckStatus(scope_service, read_result)
+CheckStatus(scope_service, vi, read_result)
 values = read_result.waveform[0:10]
 print(values)
 
 scope_service.Close(niscope_types.CloseRequest(
     vi = vi
 ))
+channel.close()

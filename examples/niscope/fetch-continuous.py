@@ -83,7 +83,7 @@ try :
     CheckForError(vi, init_with_options_response.status)
 
     # Configure vertical.
-    voltage = 1.0
+    voltage = 10.0
     CheckForError(vi, (client.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
         vi = vi,
         channel_list = channels,
@@ -138,16 +138,16 @@ try :
 
         # We fetch each channel at a time so we don't have to de-interleave afterwards.
         # We do not keep the wfm_info returned from fetch.
-        for channel, waveform in zip(channel_list, waveforms):
+        for channel_name, waveform in zip(channel_list, waveforms):
             fetch_response = client.Fetch(niscope_types.FetchRequest(
                 vi = vi,
-                channel_list = channel,
+                channel_list = channel_name,
                 timeout = 500000,
                 num_samples = samples_per_fetch
                 ))
             CheckForError(vi, fetch_response.status)
             waveform[current_pos : current_pos + samples_per_fetch] = fetch_response.waveform
-            print(f'Fetching channel {channel}\'s waveform for indices {current_pos} to {current_pos + samples_per_fetch - 1}')
+            print(f'Fetching channel {channel_name}\'s waveform for indices {current_pos} to {current_pos + samples_per_fetch - 1}')
         print()
         current_pos += samples_per_fetch
 
@@ -155,6 +155,7 @@ try :
     CheckForError(vi, (client.Close(niscope_types.CloseRequest(
         vi = vi
         ))).status)
+    channel.close()
 
 # If NI-SCOPE API throws an exception, print the error message.
 except grpc.RpcError as e:

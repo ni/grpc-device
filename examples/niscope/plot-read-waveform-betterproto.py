@@ -56,10 +56,12 @@ if len(sys.argv) == 4:
     resource = sys.argv[3]
     options = ""
 
-async def CheckStatus(scope_service, result):
+# Error Reporting
+async def CheckStatus(scope_service, vi, result):
     if (result.status != 0):
-        error = await scope_service.get_error()
-        print(error.description)
+        error_result = await scope_service.get_error_message(vi = vi, error_code = result.status)
+        print(error_result.error_message)
+        exit()
 
 async def PerformAcquire():
 
@@ -77,8 +79,7 @@ async def PerformAcquire():
         option_string = options
     )
     vi = init_result.vi
-    print(vi)
-    await CheckStatus(scope_service, init_result)
+    await CheckStatus(scope_service, vi, init_result)
 
     # Configure horizontal timing
     config_result = await scope_service.configure_horizontal_timing(
@@ -89,7 +90,7 @@ async def PerformAcquire():
         num_records = 1,
         enforce_realtime = True
     )
-    await CheckStatus(scope_service, config_result)
+    await CheckStatus(scope_service, vi, config_result)
 
     # Configure vertical timing
     vertical_result = await scope_service.configure_vertical(
@@ -101,7 +102,7 @@ async def PerformAcquire():
         enabled = True,
         probe_attenuation = 1
     )
-    await CheckStatus(scope_service, vertical_result)
+    await CheckStatus(scope_service, vi, vertical_result)
 
     confTrigger_edge_result = await scope_service.configure_trigger_edge(
         vi = vi,
@@ -111,7 +112,7 @@ async def PerformAcquire():
         trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
         slope = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
     )
-    await CheckStatus(scope_service, confTrigger_edge_result)
+    await CheckStatus(scope_service, vi, confTrigger_edge_result)
 
     set_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
@@ -119,7 +120,7 @@ async def PerformAcquire():
         attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
         value = niscope_grpc.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
     )
-    await CheckStatus(scope_service, set_result)
+    await CheckStatus(scope_service, vi, set_result)
 
     read_result = await scope_service.read(
         vi = vi,
@@ -127,7 +128,7 @@ async def PerformAcquire():
         timeout = 10000,
         num_samples = 100000
     )
-    await CheckStatus(scope_service, read_result)
+    await CheckStatus(scope_service, vi, read_result)
 
     # print the value of the first few samples
     values = read_result.waveform[0:10]
@@ -136,6 +137,6 @@ async def PerformAcquire():
     await scope_service.close(vi = vi)
     channel.close()
 
-
 loop = asyncio.get_event_loop()
-asyncio.run(PerformAcquire())
+future = asyncio.ensure_future(PerformAcquire())
+loop.run_until_complete(future)

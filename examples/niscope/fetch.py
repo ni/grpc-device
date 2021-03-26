@@ -80,7 +80,7 @@ try :
     CheckForError(vi, init_with_options_response.status)
 
     # Configure vertical.
-    voltage = 1.0
+    voltage = 10.0
     CheckForError(vi, (client.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
         vi = vi,
         channel_list = channels,
@@ -126,6 +126,7 @@ try :
     CheckForError(vi, (client.Close(niscope_types.CloseRequest(
         vi = vi
         ))).status)
+    channel.close()
 
 # If NI-SCOPE API throws an exception, print the error message.
 except grpc.RpcError as e:
