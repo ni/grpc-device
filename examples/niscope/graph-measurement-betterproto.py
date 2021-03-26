@@ -29,7 +29,7 @@
 # Running from command line:
 #
 # Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
-#   > python graph-measurement-betterpython.py <server_address> <port_number> <resource_name>
+#   > python graph-measurement-betterproto.py <server_address> <port_number> <resource_name>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
 
 from nidevice import niscope_grpc
@@ -61,10 +61,10 @@ if len(sys.argv) == 4:
 show_plot = True 
 
 # Error Reporting
-async def CheckStatus(scope_service, result):
+async def CheckStatus(scope_service, vi, result):
     if (result.status != 0):
-        error = await scope_service.get_error()
-        print(error.description)
+        get_error_message_result = await scope_service.get_error_message()
+        print(get_error_message_result.error_message)
 
 # Entry Points
 async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
