@@ -30,7 +30,7 @@
 # Running from command line:
 #
 # Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
-#   > python plot-read-waveform-betterpython.py <server_address> <port_number> <resource_name>
+#   > python plot-read-waveform-betterproto.py <server_address> <port_number> <resource_name>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedScope" as the resource name
 
 from nidevice import niscope_grpc
