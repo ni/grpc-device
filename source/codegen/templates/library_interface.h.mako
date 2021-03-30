@@ -29,7 +29,6 @@ class ${service_class_prefix}LibraryInterface {
 <%
   f = functions[method_name]
   parameters = f['parameters']
-  service_helpers.sanitize_names(parameters)
   return_type = f['returns']
 %>\
   virtual ${return_type} ${method_name}(${service_helpers.create_params(parameters)}) = 0;

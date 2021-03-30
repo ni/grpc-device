@@ -57,7 +57,6 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
 <%
   f = functions[method_name]
   parameters = f['parameters']
-  service_helpers.sanitize_names(parameters)
   return_type = f['returns']
   parameter_list = service_helpers.create_params(parameters)
   argument_list = ', '.join(p['cppName'] for p in parameters)

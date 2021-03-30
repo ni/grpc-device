@@ -1,33 +1,4 @@
 import common_helpers
-import proto_helpers
-
-RESERVED_WORDS = [
-    'abstract', 'as',
-    'base', 'bool', 'break','byte',
-    'case', 'catch', 'char', 'checked', 'class', 'const', 'continue',
-    'decimal', 'default', 'delegate', 'do', 'double',
-    'else', 'enum', 'event', 'explicit', 'extern',
-    'false', 'finally', 'fixed', 'float', 'for', 'foreach',
-    'goto',
-    'if', 'implicit', 'in', 'int', 'interface', 'internal', 'is',
-    'lock', 'long',
-    'namespace', 'new', 'null',
-    'object', 'operator', 'out', 'override',
-    'params', 'private', 'protected', 'public',
-    'readonly', 'ref', 'return',
-    'sbyte', 'sealed', 'short', 'sizeof', 'stackalloc', 'static', 'status', 'string', 'struct', 'switch',
-    'this', 'throw', 'true', 'try', 'typeof',
-    'uint', 'ulong', 'unchecked', 'unsafe', 'ushort', 'using',
-    'virtual', 'void', 'volatile',
-    'while'
-]
-
-def sanitize_names(parameters):
-    """Sanitizes name fields on a list of parameter objects and populates the cppname field with the sanitized value."""
-    for parameter in parameters:
-        parameter['cppName'] = parameter['name']
-        if parameter['cppName'] in RESERVED_WORDS:
-            parameter['cppName'] = parameter['cppName'] + 'Parameter'
 
 def get_include_guard_name(config, suffix):
     include_guard_name = 'grpc_' + config['namespace_component'] + suffix

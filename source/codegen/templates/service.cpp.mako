@@ -63,8 +63,6 @@ namespace ${config["namespace_component"]} {
     function_data = functions[function_name]
     method_name = common_helpers.snake_to_pascal(function_name)
     parameters = function_data['parameters']
-    service_helpers.sanitize_names(parameters)
-    common_helpers.mark_non_grpc_params(parameters)
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------

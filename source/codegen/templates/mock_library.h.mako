@@ -33,7 +33,6 @@ class ${service_class_prefix}MockLibrary : public ${namespace_prefix}::${service
 <%
   f = functions[method_name]
   parameters = f['parameters']
-  service_helpers.sanitize_names(parameters)
   return_type = f['returns']
 %>\
   MOCK_METHOD(${return_type}, ${method_name}, (${service_helpers.create_params(parameters)}), (override));

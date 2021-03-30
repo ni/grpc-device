@@ -33,7 +33,6 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
 <%
   f = functions[method_name]
   parameters = f['parameters']
-  service_helpers.sanitize_names(parameters)
   return_type = f['returns']
 %>\
   ${return_type} ${method_name}(${service_helpers.create_params(parameters)});

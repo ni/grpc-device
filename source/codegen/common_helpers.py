@@ -118,18 +118,6 @@ def get_used_enums(functions, attributes):
       used_enums.add(attributes[attribute]["enum"])
   return used_enums
 
-def mark_non_grpc_params(parameters):
-  named_params = { p['name'] : p for p in parameters }
-  for param in parameters:
-    mechanism = get_size_mechanism(param)
-    if mechanism in {'len', 'ivi-dance', 'passed-in'}:
-      size_param = named_params.get(param['size']['value'], None)
-      size_param['is_size_param'] = True
-      if mechanism == 'len' or mechanism == 'ivi-dance':
-        size_param['include_in_proto'] = False
-        if mechanism == 'len':
-          size_param['determine_size_from'] = param['name']
-
 def get_size_mechanism(parameter):
   size = parameter.get('size', {})
   return size.get('mechanism', None)
