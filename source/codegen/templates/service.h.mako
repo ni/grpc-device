@@ -1,6 +1,7 @@
 <%
 import common_helpers
 import service_helpers
+
 attributes = data['attributes']
 enums = data['enums']
 config = data['config']

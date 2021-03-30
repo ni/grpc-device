@@ -1,5 +1,4 @@
 <%
-import common_helpers
 import service_helpers
 
 config = data['config']
