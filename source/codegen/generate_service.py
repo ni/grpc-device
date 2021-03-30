@@ -16,7 +16,8 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
   output_file_path = os.path.join(output_dir, file_name)
 
   os.makedirs(output_dir, exist_ok=True)
-  template = mako.template.Template(filename=template_file_path)
+  template_lookup = TemplateLookup(directories = current_dir + "/")
+  template = mako.template.Template(filename=template_file_path, lookup=template_lookup)
   f=open(output_file_path, "w+", newline="")
   f.write(template.render(data=metadata))
   f.close()
@@ -28,8 +29,8 @@ def generate_all(metadata_dir, gen_dir):
   module = importlib.util.module_from_spec(spec)
   spec.loader.exec_module(module)
 
-  metadata = module.metadata;
-  lookup = TemplateLookup(directories=metadata_dir)
+  metadata = module.metadata
+  lookup = TemplateLookup(directories = metadata_dir)
   metadata["lookup"] = lookup
   generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
   generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)

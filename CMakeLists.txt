@@ -67,6 +67,7 @@ set(codegen_scripts
   "${codegen_dir}/proto.mako"
   "${codegen_dir}/proto_helpers.py"
   "${codegen_dir}/service.cpp.mako"
+  "${codegen_dir}/service_helpers.mako"
   "${codegen_dir}/service.h.mako")
 
 # Populated in the api loop below.
