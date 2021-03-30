@@ -1,8 +1,11 @@
+<%!
+  import common_helpers
+  import service_helpers
+%>
+
 ## Description here.
 <%def name="gen_init_method_body(function_name, function_data, parameters)">\
 <%
-  import common_helpers
-  import service_helpers
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
@@ -28,9 +31,6 @@ ${request_input_parameters(function_name, parameters)}
 ## Description here.
 <%def name="gen_ivi_dance_method_body(function_name, function_data, parameters)">\
 <%
-  import common_helpers
-  import service_helpers
-
   (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
@@ -57,9 +57,6 @@ ${set_response_values(output_parameters)}\
 ## Description here.
 <%def name="gen_simple_method_body(function_name, function_data, parameters)">\
 <%
-  import common_helpers
-  import service_helpers
-
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
@@ -82,7 +79,6 @@ ${set_response_values(output_parameters=output_parameters)}\
 ## Description here.
 <%def name="request_input_parameters(function_name, parameters)">\
 <%
-  import common_helpers
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
@@ -93,7 +89,6 @@ ${initialize_input_param_snippet(function_name, parameter)}
 ## Description here.
 <%def name="initialize_input_param_snippet(function_name, parameter)">\
 <%
-  import common_helpers
   enums = data['enums']
 %>\
 % if common_helpers.is_enum(parameter) and enums[parameter["enum"]].get("generate-mappings", False):
@@ -108,7 +103,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
 ## Description here.
 <%def name="initialize_enum_input_param(function_name, parameter)">\
 <%
-  import common_helpers
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   pascal_parameter_name = common_helpers.snake_to_pascal(parameter_name)
   map_name = parameter["enum"].lower() + "_input_map_"
@@ -148,7 +142,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
 ## Description here.
 <%def name="initialize_len_input_param(parameter)">\
 <%
-  import common_helpers
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["determine_size_from"])
 %>\
@@ -158,7 +151,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
 ## Description here.
 <%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
-  import common_helpers
   config = data['config']
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
@@ -203,10 +195,6 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 
 ## Description here.
 <%def name="initialize_output_variables_snippet(output_parameters)">\
-<%
-  import common_helpers
-  import service_helpers
-%>\
 % for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
@@ -237,12 +225,9 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 ## Description here.
 <%def name="set_response_values(output_parameters)">\
 <%
-  import common_helpers
-  import service_helpers
   config = data['config']
   enums = data['enums']
   namespace_prefix = "grpc::" + config["namespace_component"] + "::"
-
 %>\
 % for parameter in output_parameters:
 <%
