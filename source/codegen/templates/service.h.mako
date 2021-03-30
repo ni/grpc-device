@@ -7,6 +7,8 @@ enums = data['enums']
 config = data['config']
 functions = data['functions']
 
+used_enums = common_helpers.get_used_enums(functions, attributes)
+enums_to_map = [enum for enum in used_enums if enums[enum].get("generate-mappings", False)]
 service_class_prefix = config["service_class_prefix"]
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = "grpc::" + config["namespace_component"] + "::"
@@ -19,11 +21,9 @@ if len(config["custom_types"]) > 0:
 //---------------------------------------------------------------------
 // Service header for the ${config["driver_name"]} Metadata
 //---------------------------------------------------------------------
-## Define section
 #ifndef ${include_guard_name}
 #define ${include_guard_name}
 
-## Include section
 #include <${config["module_name"]}.grpc.pb.h>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
@@ -58,17 +58,12 @@ private:
   void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
 % endfor
 % endif
-<%
-  used_enums = common_helpers.get_used_enums(functions, attributes)
-%>\
-% for enum in enums:
-% if enum in used_enums and "generate-mappings" in enums[enum] and enums[enum]["generate-mappings"] == True:
+% for enum in enums_to_map:
 <%
   enum_value = service_helpers.python_to_c(enums[enum])
 %>\
   std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
   std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
-% endif
 % endfor
 };
 
