@@ -12,7 +12,7 @@ namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
-windows_libary_name = config['library_info']['Windows']['64bit']['name']
+windows_library_name = config['library_info']['Windows']['64bit']['name']
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
 %>\

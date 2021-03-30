@@ -12,7 +12,7 @@ namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
 linux_library_name = config['library_info']['Linux']['64bit']['name']
-windows_libary_name = config['library_info']['Windows']['64bit']['name']
+windows_library_name = config['library_info']['Windows']['64bit']['name']
 
 %>\
 //---------------------------------------------------------------------
@@ -23,7 +23,7 @@ windows_libary_name = config['library_info']['Windows']['64bit']['name']
 #include "${module_name}_library.h"
 
 #if defined(_MSC_VER)
-static const char* kLibraryName = "${windows_libary_name}";
+static const char* kLibraryName = "${windows_library_name}";
 #else
 static const char* kLibraryName = "lib${linux_library_name}.so";
 #endif

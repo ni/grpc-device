@@ -73,5 +73,5 @@ def determine_allow_alias(enums):
 
 def filter_parameters_for_grpc_fields(parameters):
   """Filter out the parameters that shouldn't be represented by a field on a grpc message.
-     For example, get rid of any parameters whose values should be deteremined from another parameter."""
+     For example, get rid of any parameters whose values should be determined from another parameter."""
   return [p for p in parameters if p.get('include_in_proto', True)]
