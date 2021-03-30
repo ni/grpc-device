@@ -1,5 +1,4 @@
 <%
-import common_helpers
 import service_helpers
 
 config = data['config']
@@ -13,11 +12,9 @@ include_guard_name = service_helpers.get_include_guard_name(config, "_LIBRARY_WR
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with ${config["driver_name"]}
 //---------------------------------------------------------------------
-## Define section
 #ifndef ${include_guard_name}
 #define ${include_guard_name}
 
-## Include section
 #include <grpcpp/grpcpp.h>
 #include <${config["c_header"]}>
 
