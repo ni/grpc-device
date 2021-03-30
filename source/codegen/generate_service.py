@@ -9,14 +9,15 @@ from mako.lookup import TemplateLookup
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
   current_dir = os.path.dirname(__file__)
-  template_file_path = os.path.join(current_dir, template_file_name)
+  template_file_path = os.path.join(current_dir, "templates", template_file_name)
+  template_directory = os.path.dirname(template_file_path)
   module_name = metadata["config"]["module_name"]
   output_dir = os.path.join(gen_dir, module_name)
   file_name = module_name + generated_file_suffix
   output_file_path = os.path.join(output_dir, file_name)
 
   os.makedirs(output_dir, exist_ok=True)
-  template_lookup = TemplateLookup(directories = current_dir + "/")
+  template_lookup = TemplateLookup(directories = template_directory + "/")
   template = mako.template.Template(filename=template_file_path, lookup=template_lookup)
   f=open(output_file_path, "w+", newline="")
   f.write(template.render(data=metadata))
