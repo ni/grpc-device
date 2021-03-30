@@ -44,7 +44,7 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : shared_librar
   c_name = handler_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
   function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_name}"));
-%endfor
+% endfor
 }
 
 ${service_class_prefix}Library::~${service_class_prefix}Library()
@@ -80,6 +80,6 @@ ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 #endif
 }
 
-%endfor
+% endfor
 }  // namespace ${config["namespace_component"]}
 }  // namespace grpc

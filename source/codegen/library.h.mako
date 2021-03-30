@@ -38,7 +38,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
   return_type = f['returns']
 %>\
   ${return_type} ${method_name}(${handler_helpers.create_params(parameters)});
-%endfor
+% endfor
 
  private:
  % for method_name in handler_helpers.filter_api_functions(functions):
@@ -48,12 +48,12 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
   return_type = f['returns']
 %>\
   using ${method_name}Ptr = ${return_type} (*)(${handler_helpers.create_params(parameters)});
-%endfor
+% endfor
 
   typedef struct FunctionPointers {
 % for method_name in handler_helpers.filter_api_functions(functions):
     ${method_name}Ptr ${method_name};
-%endfor
+% endfor
   } FunctionLoadStatus;
 
   grpc::nidevice::SharedLibrary shared_library_;

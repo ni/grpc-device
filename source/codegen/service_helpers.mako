@@ -46,11 +46,11 @@ ${request_input_parameters(function_name, non_ivi_params)}\
 ${initialize_output_variables_snippet(output_parameters)}\
       status = library_->${function_name}(${handler_helpers.create_args(parameters)});
       response->set_status(status);
-%if output_parameters:
+% if output_parameters:
       if (status == 0) {
 ${set_response_values(output_parameters)}\
       }
-%endif
+% endif
       return ::grpc::Status::OK;\
 </%def>
 
@@ -65,17 +65,17 @@ ${set_response_values(output_parameters)}\
 %>\
 ${request_input_parameters(function_name, parameters)}\
 ${initialize_output_variables_snippet(output_parameters)}\
-%if function_name == config['close_function']:
+% if function_name == config['close_function']:
       session_repository_->remove_session(${handler_helpers.create_args(parameters)});
-%else:
+% else:
       auto status = library_->${function_name}(${handler_helpers.create_args(parameters)});
       response->set_status(status);
-%endif
-%if output_parameters:
+% endif
+% if output_parameters:
       if (status == 0) {
 ${set_response_values(output_parameters=output_parameters)}\
       }
-%endif
+% endif
       return ::grpc::Status::OK;\
 </%def>
 
@@ -123,19 +123,19 @@ ${initialize_standard_input_param(function_name, parameter)}\
           if (${iterator_name} == ${map_name}.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
           }
-%if parameter['type'] == "ViConstString":
+% if parameter['type'] == "ViConstString":
           ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
-%else:
+% else:
           ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
-%endif
+% endif
           break;
         }
         case ${enum_type_prefix}k${pascal_parameter_name}Raw: {
-%if parameter['type'] == "ViConstString":
+% if parameter['type'] == "ViConstString":
           ${parameter_name} = static_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
-%else:
+% else:
           ${parameter_name} = static_cast<${parameter['type']}>(request->${parameter_name}_raw());
-%endif
+% endif
           break;
         } 
         case ${enum_type_prefix}${param_all_caps_snake}_ENUM_NOT_SET: {
@@ -207,7 +207,7 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
   import common_helpers
   import handler_helpers
 %>\
-%for parameter in output_parameters:
+% for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
@@ -231,7 +231,7 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 % else:
       ${underlying_param_type} ${parameter_name} {};
 % endif
-%endfor
+% endfor
 </%def>
 
 ## Description here.
@@ -244,12 +244,12 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
   namespace_prefix = "grpc::" + config["namespace_component"] + "::"
 
 %>\
-%for parameter in output_parameters:
+% for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
-%if common_helpers.is_enum(parameter) == True:
-%  if enums[parameter["enum"]].get("generate-mappings", False):
+% if common_helpers.is_enum(parameter) == True:
+% if enums[parameter["enum"]].get("generate-mappings", False):
 <%
   map_name = parameter["enum"].lower() + "_output_map_"
   iterator_name = parameter_name + "_omap_it"
@@ -262,16 +262,16 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %  endif
         response->set_${parameter_name}_raw(${parameter_name});
-%elif common_helpers.is_array(parameter['type']):
+% elif common_helpers.is_array(parameter['type']):
 %  if handler_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
 %  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %  endif
-%elif parameter['type'] == 'ViSession':
+% elif parameter['type'] == 'ViSession':
         response->mutable_${parameter_name}()->set_id(${parameter_name});
-%else :
+% else :
         response->set_${parameter_name}(${parameter_name});
-%endif
-%endfor
+% endif
+% endfor
 </%def>

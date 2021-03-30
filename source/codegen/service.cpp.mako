@@ -43,13 +43,13 @@ namespace ${config["namespace_component"]} {
   {
   }
 
-  %if 'custom_types' in locals():
-  %for custom_type in custom_types:
+  % if 'custom_types' in locals():
+  % for custom_type in custom_types:
   void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
   {
-%for field in custom_type["fields"]: 
+% for field in custom_type["fields"]: 
     output->set_${field["grpc_name"]}(input.${field["name"]});
-%endfor
+% endfor
   }
 
   void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
@@ -61,8 +61,8 @@ namespace ${config["namespace_component"]} {
     }
   }
 
-%endfor
-%endif
+% endfor
+% endif
 % for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]

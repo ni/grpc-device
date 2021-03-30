@@ -74,14 +74,14 @@ nonint_index = 1
 %>\
 % else:
   ${enum_value_prefix}_${value["name"]} = ${value["value"]};
-%endif
+% endif
 % endfor
 }
 
 % endfor
-%if has_custom_template:
+% if has_custom_template:
 ${lookup.get_template(custom_template).render()}
-%endif
+% endif
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])
@@ -101,7 +101,7 @@ message ${common_helpers.snake_to_pascal(function)}Request {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
-%if 'enum' in parameter:
+% if 'enum' in parameter:
 <%
   index = index + 1
   is_array = common_helpers.is_array(parameter["type"])
@@ -112,9 +112,9 @@ message ${common_helpers.snake_to_pascal(function)}Request {
     ${parameter_type} ${parameter_name} = ${index-1};
     ${non_enum_type} ${parameter_name}_raw = ${index};
   }
-%else:
+% else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
-%endif
+% endif
 % endfor
 }
 
@@ -131,7 +131,7 @@ message ${common_helpers.snake_to_pascal(function)}Response {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
-%if 'enum' in parameter:
+% if 'enum' in parameter:
 <%
   index = index + 1
   is_array = common_helpers.is_array(parameter["type"])
@@ -139,10 +139,10 @@ message ${common_helpers.snake_to_pascal(function)}Response {
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index-1};
   ${non_enum_type} ${common_helpers.camel_to_snake(parameter["name"])}_raw = ${index};
-%else:
+% else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
-%endif
-%endfor
+% endif
+% endfor
 }
 
 % endfor

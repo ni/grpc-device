@@ -36,7 +36,7 @@ class ${service_class_prefix}LibraryInterface {
   return_type = f['returns']
 %>\
   virtual ${return_type} ${method_name}(${handler_helpers.create_params(parameters)}) = 0;
-%endfor
+% endfor
 };
 
 }  // namespace ${config["namespace_component"]}

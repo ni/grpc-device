@@ -51,12 +51,12 @@ public:
 private:
   ${service_class_prefix}LibraryInterface* library_;
   grpc::nidevice::SessionRepository* session_repository_;
-%if 'custom_types' in locals():
-%for custom_type in custom_types:
+% if 'custom_types' in locals():
+% for custom_type in custom_types:
   void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
   void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
-%endfor
-%endif
+% endfor
+% endif
 <%
   used_enums = common_helpers.get_used_enums(functions, attributes)
 %>\
@@ -67,8 +67,8 @@ private:
 %>\
   std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${handler_helpers.get_input_lookup_values(enums[enum])} };
   std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${handler_helpers.get_output_lookup_values(enums[enum])} };
-%endif
-%endfor
+% endif
+% endfor
 };
 
 } // namespace ${config["namespace_component"]}
