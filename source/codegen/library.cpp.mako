@@ -1,6 +1,6 @@
 <%
 import common_helpers
-import handler_helpers
+import service_helpers
 
 attributes = data['attributes']
 config = data['config']
@@ -39,9 +39,9 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : shared_librar
   if (!loaded) {
     return;
   }
-% for method_name in handler_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions):
 <%
-  c_name = handler_helpers.get_cname(functions, method_name, c_function_prefix)
+  c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
   function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_name}"));
 % endfor
@@ -58,15 +58,15 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
-% for method_name in handler_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions):
 <%
   f = functions[method_name]
   parameters = f['parameters']
-  handler_helpers.sanitize_names(parameters)
+  service_helpers.sanitize_names(parameters)
   return_type = f['returns']
-  parameter_list = handler_helpers.create_params(parameters)
+  parameter_list = service_helpers.create_params(parameters)
   argument_list = ', '.join(p['cppName'] for p in parameters)
-  c_name = handler_helpers.get_cname(functions, method_name, c_function_prefix)
+  c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
 ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 {

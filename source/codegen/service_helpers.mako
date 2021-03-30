@@ -2,7 +2,7 @@
 <%def name="gen_init_method_body(function_name, function_data, parameters)">\
 <%
   import common_helpers
-  import handler_helpers
+  import service_helpers
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
@@ -11,7 +11,7 @@
 ${request_input_parameters(function_name, parameters)}
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession ${session_output_var_name};
-        int status = library_->${function_name}(${handler_helpers.create_args(parameters)});
+        int status = library_->${function_name}(${service_helpers.create_args(parameters)});
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -29,14 +29,14 @@ ${request_input_parameters(function_name, parameters)}
 <%def name="gen_ivi_dance_method_body(function_name, function_data, parameters)">\
 <%
   import common_helpers
-  import handler_helpers
+  import service_helpers
 
   (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
 ${request_input_parameters(function_name, non_ivi_params)}\
 
-      auto status = library_->${function_name}(${handler_helpers.create_args_for_ivi_dance(parameters)});
+      auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance(parameters)});
       if (status < 0) {
         response->set_status(status);
         return ::grpc::Status::OK;
@@ -44,7 +44,7 @@ ${request_input_parameters(function_name, non_ivi_params)}\
       ${size_param['type']} ${common_helpers.camel_to_snake(size_param['cppName'])} = status;
 
 ${initialize_output_variables_snippet(output_parameters)}\
-      status = library_->${function_name}(${handler_helpers.create_args(parameters)});
+      status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);
 % if output_parameters:
       if (status == 0) {
@@ -58,7 +58,7 @@ ${set_response_values(output_parameters)}\
 <%def name="gen_simple_method_body(function_name, function_data, parameters)">\
 <%
   import common_helpers
-  import handler_helpers
+  import service_helpers
 
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
@@ -66,9 +66,9 @@ ${set_response_values(output_parameters)}\
 ${request_input_parameters(function_name, parameters)}\
 ${initialize_output_variables_snippet(output_parameters)}\
 % if function_name == config['close_function']:
-      session_repository_->remove_session(${handler_helpers.create_args(parameters)});
+      session_repository_->remove_session(${service_helpers.create_args(parameters)});
 % else:
-      auto status = library_->${function_name}(${handler_helpers.create_args(parameters)});
+      auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);
 % endif
 % if output_parameters:
@@ -205,7 +205,7 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 <%def name="initialize_output_variables_snippet(output_parameters)">\
 <%
   import common_helpers
-  import handler_helpers
+  import service_helpers
 %>\
 % for parameter in output_parameters:
 <%
@@ -222,7 +222,7 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 %>\
 % if common_helpers.is_struct(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
-% elif handler_helpers.is_string_arg(parameter):
+% elif service_helpers.is_string_arg(parameter):
       std::string ${parameter_name}(${size}, '\0');
 % else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -238,7 +238,7 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 <%def name="set_response_values(output_parameters)">\
 <%
   import common_helpers
-  import handler_helpers
+  import service_helpers
   config = data['config']
   enums = data['enums']
   namespace_prefix = "grpc::" + config["namespace_component"] + "::"
@@ -263,7 +263,7 @@ one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Req
 %  endif
         response->set_${parameter_name}_raw(${parameter_name});
 % elif common_helpers.is_array(parameter['type']):
-%  if handler_helpers.is_string_arg(parameter):
+%  if service_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
 %  elif common_helpers.is_struct(parameter):
         Copy(${parameter_name}, response->mutable_${parameter_name}());

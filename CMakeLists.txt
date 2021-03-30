@@ -59,7 +59,7 @@ set(nidrivers "nifake" "niscope" "niswitch")
 set(codegen_scripts
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
-  "${codegen_dir}/handler_helpers.py"
+  "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/library_interface.h.mako"
   "${codegen_dir}/library.cpp.mako"
   "${codegen_dir}/library.h.mako"

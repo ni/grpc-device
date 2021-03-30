@@ -1,6 +1,6 @@
 <%
 import common_helpers
-import handler_helpers
+import service_helpers
 
 config = data['config']
 enums = data['enums']
@@ -63,12 +63,12 @@ namespace ${config["namespace_component"]} {
 
 % endfor
 % endif
-% for function_name in handler_helpers.filter_proto_rpc_functions_to_generate(functions):
+% for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
     method_name = common_helpers.snake_to_pascal(function_name)
     parameters = function_data['parameters']
-    handler_helpers.sanitize_names(parameters)
+    service_helpers.sanitize_names(parameters)
     common_helpers.mark_non_grpc_params(parameters)
 %>\
   //---------------------------------------------------------------------
