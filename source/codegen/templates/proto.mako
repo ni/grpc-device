@@ -37,7 +37,7 @@ service ${service_class_prefix} {
 % endfor
 }
 
-${mako_helper.define_attribute_enums(attributes)}\
+${mako_helper.define_attribute_enum(attributes)}\
 
 ${mako_helper.define_enums(used_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\
