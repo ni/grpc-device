@@ -75,6 +75,7 @@ set(codegen_scripts
   "${codegen_dir}/templates/library.h.mako"
   "${codegen_dir}/templates/mock_library.h.mako"
   "${codegen_dir}/templates/proto.mako"
+  "${codegen_dir}/templates/proto_helpers.mako"
   "${codegen_dir}/templates/service.cpp.mako"
   "${codegen_dir}/templates/service_helpers.mako"
   "${codegen_dir}/templates/service.h.mako")
