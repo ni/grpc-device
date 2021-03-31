@@ -1,26 +1,3 @@
-def driver_name_to_pascal(driver_name):
-  driver_name = list(driver_name.lower())
-  index = 0
-  driver_name[index] = driver_name[index].upper()
-  for x in driver_name :
-      if x == '-' :
-          driver_name[index + 1] = driver_name[index + 1].upper()
-          del driver_name[index]
-
-      index = index + 1
-  return ("".join(driver_name))
-
-def driver_name_add_underscore(driver_name):
-  driver_name = list(driver_name)
-  index = 0
-  for x in driver_name :
-      if x == '-' :
-          driver_name[index] = "_"
-
-      index = index + 1
-  return ("".join(driver_name))
-
-
 def is_output_parameter(parameter):
     if "out" in parameter["direction"]:
       return True
@@ -101,11 +78,6 @@ def filter_proto_rpc_functions(functions):
   '''Returns function metadata only for those functions to include for generating proto rpc methods'''
   functions_for_proto = {'public', 'CustomCode'}
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
-
-def get_service_namespace(driver_name_caps_underscore):
-  driver_full_namespace = driver_name_caps_underscore + "_" + "grpc"
-  driver_full_namespace = driver_full_namespace.lower().replace("_", ".")
-  return driver_full_namespace
 
 def get_used_enums(functions, attributes):
   used_enums = set()
