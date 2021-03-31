@@ -30,7 +30,7 @@ enum ${service_class_prefix}Attributes {
 <%
   enum_value_prefix = common_helpers.pascal_to_snake(enum_name).upper()
   enum = enums[enum_name]
-  allow_alias = proto_helpers.determine_allow_alias(enum)
+  allow_alias = proto_helpers.should_allow_alias(enum)
   nonint_index = 1
 %>\
 enum ${enum_name} {
