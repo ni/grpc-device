@@ -3,8 +3,8 @@
   import proto_helpers
 %>
 
-## Description here.
-<%def name="define_attribute_enums(attributes)">\
+## Define a proto enum capturing all attributes from the metadata.
+<%def name="define_attribute_enum(attributes)">\
 <%
   config = data["config"]
   service_class_prefix = config["service_class_prefix"]
@@ -21,7 +21,7 @@ enum ${service_class_prefix}Attributes {
 }
 </%def>
 
-## Description here.
+## Define enums in the proto for each metadata enum referenced in a proto message.
 <%def name="define_enums(used_enums)">\
 <%
   enums = data["enums"]
@@ -53,7 +53,7 @@ enum ${enum_name} {
 % endfor
 </%def>
 
-## Description here.
+## If there is a custom proto mako template in the metadata, insert it.
 <%def name="insert_custom_template_if_found()">\
 <%
   config = data["config"]
@@ -68,7 +68,7 @@ ${lookup.get_template(custom_template).render()}
 % endif
 </%def>
 
-## Description here.
+## Define a proto request message for a given API function.
 <%def name="define_request_message(function, input_parameters)">\
 <%
   config = data["config"]
@@ -102,7 +102,7 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 }
 </%def>
 
-## Description here.
+## Define a proto response message for a given API function.
 <%def name="define_response_message(function, output_parameters)">\
 <%
   config = data["config"]
