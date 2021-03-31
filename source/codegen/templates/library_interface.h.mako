@@ -18,8 +18,7 @@ include_guard_name = service_helpers.get_include_guard_name(config, "_LIBRARY_WR
 #include <grpcpp/grpcpp.h>
 #include <${config["c_header"]}>
 
-namespace grpc {
-namespace ${config["namespace_component"]} {
+namespace ${config["namespace_component"]}_grpc {
 
 class ${service_class_prefix}LibraryInterface {
  public:
@@ -35,6 +34,5 @@ class ${service_class_prefix}LibraryInterface {
 % endfor
 };
 
-}  // namespace ${config["namespace_component"]}
-}  // namespace grpc
+}  // namespace ${config["namespace_component"]}_grpc
 #endif  // ${include_guard_name}

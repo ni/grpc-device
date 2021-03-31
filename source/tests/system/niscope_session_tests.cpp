@@ -7,7 +7,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-namespace scope = grpc::niscope;
+namespace scope = niscope_grpc;
 
 const int kViErrorRsrcNFound = -1073807343;
 const char* kViErrorRsrcNFoundMessage = "VISA:  (Hex 0xBFFF0011) Insufficient location information or the device or resource is not present in the system.";
@@ -21,7 +21,7 @@ class NiScopeSessionTest : public ::testing::Test {
   NiScopeSessionTest()
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
+    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
     niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
     niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
     builder.RegisterService(niscope_service_.get());
@@ -60,7 +60,7 @@ class NiScopeSessionTest : public ::testing::Test {
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
   std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
   std::unique_ptr<scope::NiScopeService> niscope_service_;
   std::unique_ptr<::grpc::Server> server_;
@@ -100,7 +100,7 @@ TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   scope::InitWithOptionsResponse init_response;
   call_init_with_options(kTestResourceName, kSimulatedOptionsString, kTestSessionName, &init_response);
-  grpc::nidevice::Session session = init_response.vi();
+  nidevice_grpc::Session session = init_response.vi();
 
   ::grpc::ClientContext context;
   scope::CloseRequest close_request;
@@ -114,7 +114,7 @@ TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
 TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_NoErrorReported)
 {
-  grpc::nidevice::Session session;
+  nidevice_grpc::Session session;
   session.set_id(NULL);
 
   ::grpc::ClientContext context;
@@ -133,7 +133,7 @@ TEST_F(NiScopeSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessa
   call_init_with_options(kInvalidResourceName, "", "", &init_response);
   EXPECT_EQ(kViErrorRsrcNFound, init_response.status());
 
-  grpc::nidevice::Session session = init_response.vi();
+  nidevice_grpc::Session session = init_response.vi();
   ::grpc::ClientContext context;
   scope::GetErrorMessageRequest error_request;
   error_request.mutable_vi()->set_id(session.id());

@@ -28,7 +28,7 @@ option java_package = "${config["java_package"]}";
 option java_outer_classname = "${service_class_prefix}";
 option csharp_namespace = "${config["csharp_namespace"]}";
 
-package grpc.${config["namespace_component"]};
+package ${config["namespace_component"]}_grpc;
 
 import "session.proto";
 

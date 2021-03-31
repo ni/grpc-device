@@ -22,26 +22,26 @@ static const char* kSerialNumber = "37ED39FC0D17";
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
-      .WillOnce(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
+      .WillOnce(Throw(nidevice_grpc::LibraryLoadException(nidevice_grpc::kSysCfgApiNotInstalledMessage)));
   EXPECT_CALL(mock_library, CloseHandle)
       .Times(0);
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
-  EXPECT_EQ(grpc::nidevice::kSysCfgApiNotInstalledMessage, status.error_message());
+  EXPECT_EQ(nidevice_grpc::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ListOfDevicesIsEmpty)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
-      .WillOnce(Throw(grpc::nidevice::LibraryLoadException(grpc::nidevice::kSysCfgApiNotInstalledMessage)));
+      .WillOnce(Throw(nidevice_grpc::LibraryLoadException(nidevice_grpc::kSysCfgApiNotInstalledMessage)));
 
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
@@ -51,8 +51,8 @@ TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ListOfDevices
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ReturnsInternalGrpcStatusCode)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(Return(NISysCfg_InvalidLoginCredentials));
   EXPECT_CALL(mock_library, CloseHandle)
@@ -61,14 +61,14 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_Retur
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
-  EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
+  EXPECT_EQ(nidevice_grpc::kDeviceEnumerationFailedMessage, status.error_message());
 }
 
 TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListOfDevicesIsEmpty)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(Return(NISysCfg_InvalidLoginCredentials));
 
@@ -86,7 +86,7 @@ NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
 TEST(DeviceEnumeratorTests, InitializeSessionSucceeds_EnumerateDevices_CallsInitializeButNotClose)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, CloseHandle(_))
@@ -94,7 +94,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionSucceeds_EnumerateDevices_CallsInit
   EXPECT_CALL(mock_library, CloseHandle((void*)1))
       .Times(0);
 
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
@@ -103,8 +103,8 @@ TEST(DeviceEnumeratorTests, InitializeSessionSucceeds_EnumerateDevices_CallsInit
 TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ListOfDevicesIsEmptyAndReturnsInternalError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, CreateFilter)
       .WillOnce(Return(NISysCfg_InvalidArg));
   EXPECT_CALL(mock_library, FindHardware)
@@ -113,7 +113,7 @@ TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ListOfDevi
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
-  EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
+  EXPECT_EQ(nidevice_grpc::kDeviceEnumerationFailedMessage, status.error_message());
   EXPECT_EQ(0, devices.size());
 }
 
@@ -126,8 +126,8 @@ NISysCfgStatus SetFilterHandleToOne(NISysCfgFilterHandle* filter_handle)
 TEST(DeviceEnumeratorTests, CreateFilterSetsFilterHandle_EnumerateDevices_FilterHandleIsPassedToCloseHandle)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, CreateFilter)
       .WillOnce(WithArg<1>(Invoke(SetFilterHandleToOne)));
   EXPECT_CALL(mock_library, CloseHandle)
@@ -143,8 +143,8 @@ TEST(DeviceEnumeratorTests, CreateFilterSetsFilterHandle_EnumerateDevices_Filter
 TEST(DeviceEnumeratorTests, FindHardwareReturnsError_EnumerateDevices_ListOfDevicesIsEmptyAndReturnsInternalError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, FindHardware)
       .WillOnce(Return(NISysCfg_InvalidArg));
   EXPECT_CALL(mock_library, NextResource)
@@ -153,7 +153,7 @@ TEST(DeviceEnumeratorTests, FindHardwareReturnsError_EnumerateDevices_ListOfDevi
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
-  EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
+  EXPECT_EQ(nidevice_grpc::kDeviceEnumerationFailedMessage, status.error_message());
   EXPECT_EQ(0, devices.size());
 }
 
@@ -166,8 +166,8 @@ NISysCfgStatus SetResourceEnumHandleToOne(NISysCfgEnumResourceHandle* resource_e
 TEST(DeviceEnumeratorTests, FindHardwareSetsResourceEnumHandle_EnumerateDevices_ResourceEnumHandleIsPassedToNextResource)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, FindHardware)
       .WillOnce(WithArg<4>(Invoke(SetResourceEnumHandleToOne)));
   EXPECT_CALL(mock_library, NextResource(_, (void*)1, _))
@@ -181,8 +181,8 @@ TEST(DeviceEnumeratorTests, FindHardwareSetsResourceEnumHandle_EnumerateDevices_
 TEST(DeviceEnumeratorTests, FindHardwareSetsResourceEnumHandle_EnumerateDevices_ResourceEnumHandleIsPassedToCloseHandle)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, FindHardware)
       .WillOnce(WithArg<4>(Invoke(SetResourceEnumHandleToOne)));
   EXPECT_CALL(mock_library, CloseHandle)
@@ -198,8 +198,8 @@ TEST(DeviceEnumeratorTests, FindHardwareSetsResourceEnumHandle_EnumerateDevices_
 TEST(DeviceEnumeratorTests, NextResourceReturnsError_EnumerateDevices_ListOfDevicesIsEmptyAndReturnsInternalError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_InvalidArg));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty)
@@ -208,7 +208,7 @@ TEST(DeviceEnumeratorTests, NextResourceReturnsError_EnumerateDevices_ListOfDevi
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
-  EXPECT_EQ(grpc::nidevice::kDeviceEnumerationFailedMessage, status.error_message());
+  EXPECT_EQ(nidevice_grpc::kDeviceEnumerationFailedMessage, status.error_message());
   EXPECT_EQ(0, devices.size());
 }
 
@@ -221,8 +221,8 @@ NISysCfgStatus SetResourceHandleToOne(NISysCfgResourceHandle* resource_handle)
 TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_ResourceHandleIsPassedToGetPropertyApis)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(WithArg<2>(Invoke(SetResourceHandleToOne)))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -239,8 +239,8 @@ TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_Reso
 TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_ResourceHandleIsPassedToCloseHandle)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(WithArg<2>(Invoke(SetResourceHandleToOne)))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -257,8 +257,8 @@ TEST(DeviceEnumeratorTests, NextResourceSetsResourceHandle_EnumerateDevices_Reso
 TEST(DeviceEnumeratorTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevices_ListOfDevicesIsEmpty)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_EndOfEnum));
 
@@ -285,8 +285,8 @@ NISysCfgStatus SetIsNIProductToFalse(void* value)
 TEST(DeviceEnumeratorTests, LocalHostContainsNonNiDevices_EnumerateDevices_ListOfDevicesContainsOnlyNiDevices)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_OK))
@@ -306,15 +306,15 @@ TEST(DeviceEnumeratorTests, LocalHostContainsNonNiDevices_EnumerateDevices_ListO
 NISysCfgStatus SetExpertNameToNetwork(void* value)
 {
   char* expert_name = (char*)value;
-  strcpy(expert_name, grpc::nidevice::kNetworkExpertName);
+  strcpy(expert_name, nidevice_grpc::kNetworkExpertName);
   return NISysCfg_OK;
 }
 
 TEST(DeviceEnumeratorTests, LocalHostContainsNetworkDevice_EnumerateDevices_ListOfDevicesReturnedDoesNotContainNetworkDevices)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -334,8 +334,8 @@ TEST(DeviceEnumeratorTests, LocalHostContainsNetworkDevice_EnumerateDevices_List
 TEST(DeviceEnumeratorTests, GetResourcePropertyApisReturnError_EnumerateDevices_DevicePropertiesAreSetToEmptyString)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -358,8 +358,8 @@ TEST(DeviceEnumeratorTests, GetResourcePropertyApisReturnError_EnumerateDevices_
 TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsInitializeSessionOnceAndReturnsOK)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(WithArg<7>(Invoke(SetSessionHandleToOne)));
   NISysCfgSessionHandle session1 = nullptr;
@@ -375,8 +375,8 @@ TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsInitia
 TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledCloseHandleOnce)
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillRepeatedly(WithArg<7>(Invoke(SetSessionHandleToOne)));
   EXPECT_CALL(mock_library, CloseHandle)
@@ -400,8 +400,8 @@ NISysCfgStatus SetAliasName(void* value)
 TEST(DeviceEnumeratorTests, GetResourceIndexedPropertySetsName_EnumerateDevices_ResponseContainsThatName)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -431,8 +431,8 @@ NISysCfgStatus SetModelName(void* value)
 TEST(DeviceEnumeratorTests, GetResourcePropertySetsModelName_EnumerateDevices_ResponseContainsThatModelName)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -460,8 +460,8 @@ NISysCfgStatus SetVendorName(void* value)
 TEST(DeviceEnumeratorTests, GetResourcePropertySetsVendorName_EnumerateDevices_ResponseContainsThatVendorName)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));
@@ -489,8 +489,8 @@ NISysCfgStatus SetSerialNumber(void* value)
 TEST(DeviceEnumeratorTests, GetResourcePropertySetsSerialNumber_EnumerateDevices_ResponseContainsThatSerialNumber)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
-  grpc::nidevice::DeviceEnumerator device_enumerator(&mock_library);
-  google::protobuf::RepeatedPtrField<grpc::nidevice::DeviceProperties> devices;
+  nidevice_grpc::DeviceEnumerator device_enumerator(&mock_library);
+  google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices;
   EXPECT_CALL(mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK))
       .WillOnce(Return(NISysCfg_EndOfEnum));

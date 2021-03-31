@@ -167,7 +167,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
     % elif 'enum' in parameter:
 <%
 PascalFieldName = common_helpers.snake_to_pascal(field_name)
-one_of_case_prefix = f'grpc::{config["namespace_component"]}::{function_name}Request::{PascalFieldName}EnumCase'
+one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldName}EnumCase'
 %>\
       ${c_type} ${parameter_name};
       switch (request->${field_name}_enum_case()) {

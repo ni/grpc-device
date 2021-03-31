@@ -10,8 +10,8 @@ functions = data['functions']
 used_enums = common_helpers.get_used_enums(functions, attributes)
 enums_to_map = [enum for enum in used_enums if enums[enum].get("generate-mappings", False)]
 service_class_prefix = config["service_class_prefix"]
-include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
-namespace_prefix = "grpc::" + config["namespace_component"] + "::"
+include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
+namespace_prefix = config["namespace_component"] + "_grpc::"
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
 %>\
@@ -35,12 +35,11 @@ if len(config["custom_types"]) > 0:
 
 #include "${config["module_name"]}_library_interface.h"
 
-namespace grpc {
-namespace ${config["namespace_component"]} {
+namespace ${config["namespace_component"]}_grpc {
 
 class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
 public:
-  ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository);
+  ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
   virtual ~${service_class_prefix}Service();
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
@@ -51,9 +50,9 @@ public:
 % endfor
 private:
   ${service_class_prefix}LibraryInterface* library_;
-  grpc::nidevice::SessionRepository* session_repository_;
-% if 'custom_types' in locals():
-% for custom_type in custom_types:
+  nidevice_grpc::SessionRepository* session_repository_;
+%if 'custom_types' in locals():
+%for custom_type in custom_types:
   void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
   void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
 % endfor
@@ -67,6 +66,6 @@ private:
 % endfor
 };
 
-} // namespace ${config["namespace_component"]}
-} // namespace grpc
+} // namespace ${config["namespace_component"]}_grpc
+
 #endif  // ${include_guard_name}

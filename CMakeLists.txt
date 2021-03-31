@@ -32,6 +32,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 #----------------------------------------------------------------------
+# Find python3 for the build system
+#----------------------------------------------------------------------
+find_package(Python3 COMPONENTS Interpreter)
+if(NOT ${Python3_FOUND})
+  message(WARNING "Python3 not found. Python3 is required for code generation.")
+endif()
+
+#----------------------------------------------------------------------
 # Include generated *.pb.h files
 #----------------------------------------------------------------------
 set(proto_srcs_dir "${CMAKE_CURRENT_BINARY_DIR}/proto")
@@ -93,7 +101,7 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
     ${service_output_dir}/${api}/${api}_service.h)
-  set(gen_command COMMAND python ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
+  set(gen_command COMMAND ${Python3_EXECUTABLE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api STREQUAL "nifake")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}

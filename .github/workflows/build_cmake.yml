@@ -23,13 +23,13 @@ jobs:
         - {
             name: "Windows Build", artifact: "Windows.tar.xz",
             os: windows-latest,
-            build_type: "Release", cc: "gcc", cxx: "g++",
+            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "-A x64"
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
-            os: ubuntu-latest,
-            build_type: "Release", cc: "gcc", cxx: "g++",
+            os: ubuntu-16.04,
+            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: ""
           }
 
@@ -107,3 +107,19 @@ jobs:
         if (NOT result EQUAL 0)
             message(FATAL_ERROR "Running tests failed!")
         endif()
+
+    - name: Tar Linux Server Binaries
+      if: "(github.ref == 'refs/heads/main') && (runner.os == 'Linux')"
+      run: >-
+        tar -cvf ni-grpc-device-server-linux-glibc2_23.tar
+        -C ${GITHUB_WORKSPACE}/build
+        ni_grpc_device_server
+        server_config.json
+
+    - name: Upload Linux Server Binaries Artifact
+      uses: actions/upload-artifact@v2
+      if: "(github.ref == 'refs/heads/main') && (runner.os == 'Linux')"
+      with:
+        name: ni-grpc-device-server-linux-glibc2_23
+        path: ni-grpc-device-server-linux-glibc2_23.tar
+        retention-days: 5

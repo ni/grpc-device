@@ -3,8 +3,7 @@
 #define GET_POINTER(ptrs, lib, name) \
   ptrs.name = reinterpret_cast<name##Ptr>(lib.get_function_pointer("NISysCfg" #name));
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 SysCfgLibrary::SysCfgLibrary()
     : shared_library_(kSysCfgApiLibraryName)
@@ -143,5 +142,4 @@ NISysCfgStatus SysCfgLibrary::GetResourceProperty(
   return function_pointers_.GetResourceProperty(resource_handle, property_ID, value);
 }
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc

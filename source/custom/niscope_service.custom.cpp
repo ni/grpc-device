@@ -2,8 +2,7 @@
 
 #include <stdexcept>
 
-namespace grpc {
-namespace niscope {
+namespace niscope_grpc {
 
 struct DriverErrorException : std::runtime_error {
   DriverErrorException(int status) : std::runtime_error("") { status_ = status; }
@@ -47,7 +46,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -86,7 +85,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -125,7 +124,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -164,7 +163,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -187,13 +186,13 @@ void CheckStatus(int status)
     ViReal64 timeout = request->timeout();
     ViInt32 array_meas_function;
     switch (request->array_meas_function_enum_case()) {
-      case grpc::niscope::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunction:
+      case niscope_grpc::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunction:
         array_meas_function = (ViInt32)request->array_meas_function();
         break;
-      case grpc::niscope::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunctionRaw:
+      case niscope_grpc::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunctionRaw:
         array_meas_function = (ViInt32)request->array_meas_function_raw();
         break;
-      case grpc::niscope::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::ARRAY_MEAS_FUNCTION_ENUM_NOT_SET:
+      case niscope_grpc::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::ARRAY_MEAS_FUNCTION_ENUM_NOT_SET:
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for array_meas_function was not specified or out of range");
         break;
     }
@@ -214,7 +213,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -237,13 +236,13 @@ void CheckStatus(int status)
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
     switch (request->scalar_meas_function_enum_case()) {
-      case grpc::niscope::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
+      case niscope_grpc::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
         scalar_meas_function = (ViInt32)request->scalar_meas_function();
         break;
-      case grpc::niscope::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
+      case niscope_grpc::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
         scalar_meas_function = (ViInt32)request->scalar_meas_function_raw();
         break;
-      case grpc::niscope::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
+      case niscope_grpc::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scalar_meas_function was not specified or out of range");
         break;
     }
@@ -269,7 +268,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -308,7 +307,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -347,7 +346,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -386,7 +385,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -409,13 +408,13 @@ void CheckStatus(int status)
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
     switch (request->scalar_meas_function_enum_case()) {
-      case grpc::niscope::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
+      case niscope_grpc::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
         scalar_meas_function = (ViInt32)request->scalar_meas_function();
         break;
-      case grpc::niscope::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
+      case niscope_grpc::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
         scalar_meas_function = (ViInt32)request->scalar_meas_function_raw();
         break;
-      case grpc::niscope::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
+      case niscope_grpc::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scalar_meas_function was not specified or out of range");
         break;
     }
@@ -429,7 +428,7 @@ void CheckStatus(int status)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -462,7 +461,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -495,7 +494,7 @@ void CheckStatus(int status)
     }
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -518,13 +517,13 @@ void CheckStatus(int status)
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
     switch (request->scalar_meas_function_enum_case()) {
-      case grpc::niscope::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
+      case niscope_grpc::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
         scalar_meas_function = (ViInt32)request->scalar_meas_function();
         break;
-      case grpc::niscope::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
+      case niscope_grpc::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunctionRaw:
         scalar_meas_function = (ViInt32)request->scalar_meas_function_raw();
         break;
-      case grpc::niscope::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
+      case niscope_grpc::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::SCALAR_MEAS_FUNCTION_ENUM_NOT_SET:
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scalar_meas_function was not specified or out of range");
         break;
     }
@@ -538,7 +537,7 @@ void CheckStatus(int status)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (grpc::nidevice::LibraryLoadException& ex) {
+  catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
@@ -547,5 +546,4 @@ void CheckStatus(int status)
   }
 }
 
-}  // namespace niscope
-}  // namespace grpc
+}  // namespace niscope_grpc

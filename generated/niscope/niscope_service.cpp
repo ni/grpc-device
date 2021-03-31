@@ -12,10 +12,9 @@
 #include <atomic>
 #include <vector>
 
-namespace grpc {
-namespace niscope {
+namespace niscope_grpc {
 
-  NiScopeService::NiScopeService(NiScopeLibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
+  NiScopeService::NiScopeService(NiScopeLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -24,7 +23,7 @@ namespace niscope {
   {
   }
 
-  void NiScopeService::Copy(const niScope_wfmInfo& input, grpc::niscope::WaveformInfo* output) 
+  void NiScopeService::Copy(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output) 
   {
     output->set_absolute_initial_x(input.absoluteInitialX);
     output->set_relative_initial_x(input.relativeInitialX);
@@ -36,16 +35,16 @@ namespace niscope {
     output->set_reserved2(input.reserved2);
   }
 
-  void NiScopeService::Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<grpc::niscope::WaveformInfo>* output) 
+  void NiScopeService::Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<niscope_grpc::WaveformInfo>* output) 
   {
     for (auto item : input) {
-      auto message = new grpc::niscope::WaveformInfo();
+      auto message = new niscope_grpc::WaveformInfo();
       Copy(item, message);
       output->AddAllocated(message);
     }
   }
 
-  void NiScopeService::Copy(const niScope_coefficientInfo& input, grpc::niscope::CoefficientInfo* output) 
+  void NiScopeService::Copy(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output) 
   {
     output->set_offset(input.offset);
     output->set_gain(input.gain);
@@ -53,40 +52,40 @@ namespace niscope {
     output->set_reserved2(input.reserved2);
   }
 
-  void NiScopeService::Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<grpc::niscope::CoefficientInfo>* output) 
+  void NiScopeService::Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<niscope_grpc::CoefficientInfo>* output) 
   {
     for (auto item : input) {
-      auto message = new grpc::niscope::CoefficientInfo();
+      auto message = new niscope_grpc::CoefficientInfo();
       Copy(item, message);
       output->AddAllocated(message);
     }
   }
 
-  void NiScopeService::Copy(const NIComplexNumber_struct& input, grpc::niscope::NIComplexNumber* output) 
+  void NiScopeService::Copy(const NIComplexNumber_struct& input, niscope_grpc::NIComplexNumber* output) 
   {
     output->set_real(input.real);
     output->set_imaginary(input.imaginary);
   }
 
-  void NiScopeService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<grpc::niscope::NIComplexNumber>* output) 
+  void NiScopeService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexNumber>* output) 
   {
     for (auto item : input) {
-      auto message = new grpc::niscope::NIComplexNumber();
+      auto message = new niscope_grpc::NIComplexNumber();
       Copy(item, message);
       output->AddAllocated(message);
     }
   }
 
-  void NiScopeService::Copy(const NIComplexI16_struct& input, grpc::niscope::NIComplexInt32* output) 
+  void NiScopeService::Copy(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output) 
   {
     output->set_real(input.real);
     output->set_imaginary(input.imaginary);
   }
 
-  void NiScopeService::Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<grpc::niscope::NIComplexInt32>* output) 
+  void NiScopeService::Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexInt32>* output) 
   {
     for (auto item : input) {
-      auto message = new grpc::niscope::NIComplexInt32();
+      auto message = new niscope_grpc::NIComplexInt32();
       Copy(item, message);
       output->AddAllocated(message);
     }
@@ -106,7 +105,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -125,12 +124,12 @@ namespace niscope {
       auto status = library_->AcquisitionStatus(vi, &acquisition_status);
       response->set_status(status);
       if (status == 0) {
-        response->set_acquisition_status(static_cast<grpc::niscope::AcquisitionStatus>(acquisition_status));
+        response->set_acquisition_status(static_cast<niscope_grpc::AcquisitionStatus>(acquisition_status));
         response->set_acquisition_status_raw(acquisition_status);
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -147,13 +146,13 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 array_meas_function;
       switch (request->array_meas_function_enum_case()) {
-        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunction:
+        case niscope_grpc::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunction:
           array_meas_function = (ViInt32)request->array_meas_function();
           break;
-        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunctionRaw:
+        case niscope_grpc::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunctionRaw:
           array_meas_function = (ViInt32)request->array_meas_function_raw();
           break;
-        case grpc::niscope::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::ARRAY_MEAS_FUNCTION_ENUM_NOT_SET:
+        case niscope_grpc::ActualMeasWfmSizeRequest::ArrayMeasFunctionEnumCase::ARRAY_MEAS_FUNCTION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for array_meas_function was not specified or out of range");
           break;
       }
@@ -166,7 +165,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -190,7 +189,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -213,7 +212,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -231,13 +230,13 @@ namespace niscope {
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 meas_function;
       switch (request->meas_function_enum_case()) {
-        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionEnumCase::kMeasFunction:
+        case niscope_grpc::AddWaveformProcessingRequest::MeasFunctionEnumCase::kMeasFunction:
           meas_function = (ViInt32)request->meas_function();
           break;
-        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionEnumCase::kMeasFunctionRaw:
+        case niscope_grpc::AddWaveformProcessingRequest::MeasFunctionEnumCase::kMeasFunctionRaw:
           meas_function = (ViInt32)request->meas_function_raw();
           break;
-        case grpc::niscope::AddWaveformProcessingRequest::MeasFunctionEnumCase::MEAS_FUNCTION_ENUM_NOT_SET:
+        case niscope_grpc::AddWaveformProcessingRequest::MeasFunctionEnumCase::MEAS_FUNCTION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for meas_function was not specified or out of range");
           break;
       }
@@ -246,7 +245,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -266,7 +265,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -285,7 +284,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -304,7 +303,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -323,7 +322,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -341,13 +340,13 @@ namespace niscope {
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 option;
       switch (request->option_enum_case()) {
-        case grpc::niscope::CalSelfCalibrateRequest::OptionEnumCase::kOption:
+        case niscope_grpc::CalSelfCalibrateRequest::OptionEnumCase::kOption:
           option = (ViInt32)request->option();
           break;
-        case grpc::niscope::CalSelfCalibrateRequest::OptionEnumCase::kOptionRaw:
+        case niscope_grpc::CalSelfCalibrateRequest::OptionEnumCase::kOptionRaw:
           option = (ViInt32)request->option_raw();
           break;
-        case grpc::niscope::CalSelfCalibrateRequest::OptionEnumCase::OPTION_ENUM_NOT_SET:
+        case niscope_grpc::CalSelfCalibrateRequest::OptionEnumCase::OPTION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for option was not specified or out of range");
           break;
       }
@@ -356,7 +355,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -378,7 +377,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -400,7 +399,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -422,7 +421,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -444,7 +443,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -467,7 +466,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -489,7 +488,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -507,13 +506,13 @@ namespace niscope {
       ViConstString channel_list = request->channel_list().c_str();
       ViInt32 clearable_measurement_function;
       switch (request->clearable_measurement_function_enum_case()) {
-        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::kClearableMeasurementFunction:
+        case niscope_grpc::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::kClearableMeasurementFunction:
           clearable_measurement_function = (ViInt32)request->clearable_measurement_function();
           break;
-        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::kClearableMeasurementFunctionRaw:
+        case niscope_grpc::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::kClearableMeasurementFunctionRaw:
           clearable_measurement_function = (ViInt32)request->clearable_measurement_function_raw();
           break;
-        case grpc::niscope::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::CLEARABLE_MEASUREMENT_FUNCTION_ENUM_NOT_SET:
+        case niscope_grpc::ClearWaveformMeasurementStatsRequest::ClearableMeasurementFunctionEnumCase::CLEARABLE_MEASUREMENT_FUNCTION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clearable_measurement_function was not specified or out of range");
           break;
       }
@@ -522,7 +521,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -542,7 +541,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -560,7 +559,7 @@ namespace niscope {
       session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -579,7 +578,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -599,7 +598,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -621,7 +620,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -644,7 +643,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -666,7 +665,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -690,7 +689,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -708,13 +707,13 @@ namespace niscope {
       ViConstString trigger_source = request->trigger_source().c_str();
       ViInt32 slope;
       switch (request->slope_enum_case()) {
-        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeEnumCase::kSlope:
+        case niscope_grpc::ConfigureTriggerDigitalRequest::SlopeEnumCase::kSlope:
           slope = (ViInt32)request->slope();
           break;
-        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeEnumCase::kSlopeRaw:
+        case niscope_grpc::ConfigureTriggerDigitalRequest::SlopeEnumCase::kSlopeRaw:
           slope = (ViInt32)request->slope_raw();
           break;
-        case grpc::niscope::ConfigureTriggerDigitalRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerDigitalRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
           break;
       }
@@ -725,7 +724,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -744,26 +743,26 @@ namespace niscope {
       ViReal64 level = request->level();
       ViInt32 slope;
       switch (request->slope_enum_case()) {
-        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeEnumCase::kSlope:
+        case niscope_grpc::ConfigureTriggerEdgeRequest::SlopeEnumCase::kSlope:
           slope = (ViInt32)request->slope();
           break;
-        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeEnumCase::kSlopeRaw:
+        case niscope_grpc::ConfigureTriggerEdgeRequest::SlopeEnumCase::kSlopeRaw:
           slope = (ViInt32)request->slope_raw();
           break;
-        case grpc::niscope::ConfigureTriggerEdgeRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerEdgeRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_coupling;
       switch (request->trigger_coupling_enum_case()) {
-        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+        case niscope_grpc::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+        case niscope_grpc::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
           break;
-        case grpc::niscope::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerEdgeRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
@@ -774,7 +773,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -794,39 +793,39 @@ namespace niscope {
       ViReal64 width = request->width();
       ViInt32 polarity;
       switch (request->polarity_enum_case()) {
-        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityEnumCase::kPolarity:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::PolarityEnumCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityEnumCase::kPolarityRaw:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::PolarityEnumCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
           break;
-        case grpc::niscope::ConfigureTriggerGlitchRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
       ViInt32 glitch_condition;
       switch (request->glitch_condition_enum_case()) {
-        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::kGlitchCondition:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::kGlitchCondition:
           glitch_condition = (ViInt32)request->glitch_condition();
           break;
-        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::kGlitchConditionRaw:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::kGlitchConditionRaw:
           glitch_condition = (ViInt32)request->glitch_condition_raw();
           break;
-        case grpc::niscope::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::GLITCH_CONDITION_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::GlitchConditionEnumCase::GLITCH_CONDITION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for glitch_condition was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_coupling;
       switch (request->trigger_coupling_enum_case()) {
-        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
           break;
-        case grpc::niscope::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerGlitchRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
@@ -837,7 +836,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -857,26 +856,26 @@ namespace niscope {
       ViReal64 hysteresis = request->hysteresis();
       ViInt32 slope;
       switch (request->slope_enum_case()) {
-        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeEnumCase::kSlope:
+        case niscope_grpc::ConfigureTriggerHysteresisRequest::SlopeEnumCase::kSlope:
           slope = (ViInt32)request->slope();
           break;
-        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeEnumCase::kSlopeRaw:
+        case niscope_grpc::ConfigureTriggerHysteresisRequest::SlopeEnumCase::kSlopeRaw:
           slope = (ViInt32)request->slope_raw();
           break;
-        case grpc::niscope::ConfigureTriggerHysteresisRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerHysteresisRequest::SlopeEnumCase::SLOPE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for slope was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_coupling;
       switch (request->trigger_coupling_enum_case()) {
-        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+        case niscope_grpc::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+        case niscope_grpc::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
           break;
-        case grpc::niscope::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerHysteresisRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
@@ -887,7 +886,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -906,7 +905,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -926,26 +925,26 @@ namespace niscope {
       ViReal64 high_threshold = request->high_threshold();
       ViInt32 polarity;
       switch (request->polarity_enum_case()) {
-        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityEnumCase::kPolarity:
+        case niscope_grpc::ConfigureTriggerRuntRequest::PolarityEnumCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityEnumCase::kPolarityRaw:
+        case niscope_grpc::ConfigureTriggerRuntRequest::PolarityEnumCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
           break;
-        case grpc::niscope::ConfigureTriggerRuntRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerRuntRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_coupling;
       switch (request->trigger_coupling_enum_case()) {
-        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+        case niscope_grpc::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+        case niscope_grpc::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
           break;
-        case grpc::niscope::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerRuntRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
@@ -956,7 +955,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -977,7 +976,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -996,26 +995,26 @@ namespace niscope {
       ViBoolean enable_dc_restore = request->enable_dc_restore();
       ViInt32 signal_format;
       switch (request->signal_format_enum_case()) {
-        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatEnumCase::kSignalFormat:
+        case niscope_grpc::ConfigureTriggerVideoRequest::SignalFormatEnumCase::kSignalFormat:
           signal_format = (ViInt32)request->signal_format();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatEnumCase::kSignalFormatRaw:
+        case niscope_grpc::ConfigureTriggerVideoRequest::SignalFormatEnumCase::kSignalFormatRaw:
           signal_format = (ViInt32)request->signal_format_raw();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::SignalFormatEnumCase::SIGNAL_FORMAT_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerVideoRequest::SignalFormatEnumCase::SIGNAL_FORMAT_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_format was not specified or out of range");
           break;
       }
 
       ViInt32 event_parameter;
       switch (request->event_enum_case()) {
-        case grpc::niscope::ConfigureTriggerVideoRequest::EventEnumCase::kEvent:
+        case niscope_grpc::ConfigureTriggerVideoRequest::EventEnumCase::kEvent:
           event_parameter = (ViInt32)request->event();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::EventEnumCase::kEventRaw:
+        case niscope_grpc::ConfigureTriggerVideoRequest::EventEnumCase::kEventRaw:
           event_parameter = (ViInt32)request->event_raw();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::EventEnumCase::EVENT_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerVideoRequest::EventEnumCase::EVENT_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event was not specified or out of range");
           break;
       }
@@ -1023,26 +1022,26 @@ namespace niscope {
       ViInt32 line_number = request->line_number();
       ViInt32 polarity;
       switch (request->polarity_enum_case()) {
-        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityEnumCase::kPolarity:
+        case niscope_grpc::ConfigureTriggerVideoRequest::PolarityEnumCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityEnumCase::kPolarityRaw:
+        case niscope_grpc::ConfigureTriggerVideoRequest::PolarityEnumCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerVideoRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_coupling;
       switch (request->trigger_coupling_enum_case()) {
-        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+        case niscope_grpc::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+        case niscope_grpc::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
           break;
-        case grpc::niscope::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerVideoRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
@@ -1053,7 +1052,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1074,39 +1073,39 @@ namespace niscope {
       ViReal64 high_threshold = request->high_threshold();
       ViInt32 polarity;
       switch (request->polarity_enum_case()) {
-        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityEnumCase::kPolarity:
+        case niscope_grpc::ConfigureTriggerWidthRequest::PolarityEnumCase::kPolarity:
           polarity = (ViInt32)request->polarity();
           break;
-        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityEnumCase::kPolarityRaw:
+        case niscope_grpc::ConfigureTriggerWidthRequest::PolarityEnumCase::kPolarityRaw:
           polarity = (ViInt32)request->polarity_raw();
           break;
-        case grpc::niscope::ConfigureTriggerWidthRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerWidthRequest::PolarityEnumCase::POLARITY_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for polarity was not specified or out of range");
           break;
       }
 
       ViInt32 condition;
       switch (request->condition_enum_case()) {
-        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionEnumCase::kCondition:
+        case niscope_grpc::ConfigureTriggerWidthRequest::ConditionEnumCase::kCondition:
           condition = (ViInt32)request->condition();
           break;
-        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionEnumCase::kConditionRaw:
+        case niscope_grpc::ConfigureTriggerWidthRequest::ConditionEnumCase::kConditionRaw:
           condition = (ViInt32)request->condition_raw();
           break;
-        case grpc::niscope::ConfigureTriggerWidthRequest::ConditionEnumCase::CONDITION_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerWidthRequest::ConditionEnumCase::CONDITION_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for condition was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_coupling;
       switch (request->trigger_coupling_enum_case()) {
-        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+        case niscope_grpc::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+        case niscope_grpc::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
           break;
-        case grpc::niscope::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerWidthRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
@@ -1117,7 +1116,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1137,26 +1136,26 @@ namespace niscope {
       ViReal64 high_level = request->high_level();
       ViInt32 window_mode;
       switch (request->window_mode_enum_case()) {
-        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeEnumCase::kWindowMode:
+        case niscope_grpc::ConfigureTriggerWindowRequest::WindowModeEnumCase::kWindowMode:
           window_mode = (ViInt32)request->window_mode();
           break;
-        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeEnumCase::kWindowModeRaw:
+        case niscope_grpc::ConfigureTriggerWindowRequest::WindowModeEnumCase::kWindowModeRaw:
           window_mode = (ViInt32)request->window_mode_raw();
           break;
-        case grpc::niscope::ConfigureTriggerWindowRequest::WindowModeEnumCase::WINDOW_MODE_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerWindowRequest::WindowModeEnumCase::WINDOW_MODE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for window_mode was not specified or out of range");
           break;
       }
 
       ViInt32 trigger_coupling;
       switch (request->trigger_coupling_enum_case()) {
-        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::kTriggerCoupling:
+        case niscope_grpc::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::kTriggerCoupling:
           trigger_coupling = (ViInt32)request->trigger_coupling();
           break;
-        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
+        case niscope_grpc::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::kTriggerCouplingRaw:
           trigger_coupling = (ViInt32)request->trigger_coupling_raw();
           break;
-        case grpc::niscope::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureTriggerWindowRequest::TriggerCouplingEnumCase::TRIGGER_COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_coupling was not specified or out of range");
           break;
       }
@@ -1167,7 +1166,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1187,13 +1186,13 @@ namespace niscope {
       ViReal64 offset = request->offset();
       ViInt32 coupling;
       switch (request->coupling_enum_case()) {
-        case grpc::niscope::ConfigureVerticalRequest::CouplingEnumCase::kCoupling:
+        case niscope_grpc::ConfigureVerticalRequest::CouplingEnumCase::kCoupling:
           coupling = (ViInt32)request->coupling();
           break;
-        case grpc::niscope::ConfigureVerticalRequest::CouplingEnumCase::kCouplingRaw:
+        case niscope_grpc::ConfigureVerticalRequest::CouplingEnumCase::kCouplingRaw:
           coupling = (ViInt32)request->coupling_raw();
           break;
-        case grpc::niscope::ConfigureVerticalRequest::CouplingEnumCase::COUPLING_ENUM_NOT_SET:
+        case niscope_grpc::ConfigureVerticalRequest::CouplingEnumCase::COUPLING_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for coupling was not specified or out of range");
           break;
       }
@@ -1204,7 +1203,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1223,7 +1222,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1248,7 +1247,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1279,7 +1278,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1299,7 +1298,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1316,13 +1315,13 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 signal;
       switch (request->signal_enum_case()) {
-        case grpc::niscope::ExportSignalRequest::SignalEnumCase::kSignal:
+        case niscope_grpc::ExportSignalRequest::SignalEnumCase::kSignal:
           signal = (ViInt32)request->signal();
           break;
-        case grpc::niscope::ExportSignalRequest::SignalEnumCase::kSignalRaw:
+        case niscope_grpc::ExportSignalRequest::SignalEnumCase::kSignalRaw:
           signal = (ViInt32)request->signal_raw();
           break;
-        case grpc::niscope::ExportSignalRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET:
+        case niscope_grpc::ExportSignalRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
           break;
       }
@@ -1333,7 +1332,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1358,7 +1357,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1383,7 +1382,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1408,7 +1407,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1433,7 +1432,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1458,7 +1457,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1491,7 +1490,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1523,7 +1522,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1555,7 +1554,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1580,7 +1579,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1613,7 +1612,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1645,7 +1644,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1676,7 +1675,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1700,7 +1699,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1721,7 +1720,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1741,7 +1740,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1773,7 +1772,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1806,7 +1805,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1825,7 +1824,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1848,7 +1847,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1867,7 +1866,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1886,7 +1885,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1905,7 +1904,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1924,7 +1923,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1949,7 +1948,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1972,7 +1971,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -1995,7 +1994,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2020,7 +2019,7 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2037,13 +2036,13 @@ namespace niscope {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 which_trigger;
       switch (request->which_trigger_enum_case()) {
-        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::kWhichTrigger:
+        case niscope_grpc::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::kWhichTrigger:
           which_trigger = (ViInt32)request->which_trigger();
           break;
-        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::kWhichTriggerRaw:
+        case niscope_grpc::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::kWhichTriggerRaw:
           which_trigger = (ViInt32)request->which_trigger_raw();
           break;
-        case grpc::niscope::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::WHICH_TRIGGER_ENUM_NOT_SET:
+        case niscope_grpc::SendSoftwareTriggerEdgeRequest::WhichTriggerEnumCase::WHICH_TRIGGER_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for which_trigger was not specified or out of range");
           break;
       }
@@ -2052,7 +2051,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2074,7 +2073,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2096,7 +2095,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2118,7 +2117,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2140,7 +2139,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2163,7 +2162,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2185,7 +2184,7 @@ namespace niscope {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
@@ -2208,11 +2207,10 @@ namespace niscope {
       }
       return ::grpc::Status::OK;
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
-} // namespace niscope
-} // namespace grpc
+} // namespace niscope_grpc
 

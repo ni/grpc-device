@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Mock of LibraryInterface for NI-SWITCH
 //---------------------------------------------------------------------
-#ifndef GRPC_NISWITCH_MOCK_LIBRARY_H
-#define GRPC_NISWITCH_MOCK_LIBRARY_H
+#ifndef NISWITCH_GRPC_MOCK_LIBRARY_H
+#define NISWITCH_GRPC_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -15,7 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-class NiSwitchMockLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
+class NiSwitchMockLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, AbortScan, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CanConnect, (ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32* pathCapability), (override));
@@ -84,4 +84,4 @@ class NiSwitchMockLibrary : public grpc::niswitch::NiSwitchLibraryInterface {
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // GRPC_NISWITCH_MOCK_LIBRARY_H
+#endif  // NISWITCH_GRPC_MOCK_LIBRARY_H

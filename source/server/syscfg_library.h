@@ -1,5 +1,5 @@
-#ifndef GRPC_NIDEVICE_SYSCFG_LIBRARY_H
-#define GRPC_NIDEVICE_SYSCFG_LIBRARY_H
+#ifndef NIDEVICE_GRPC_SYSCFG_LIBRARY_H
+#define NIDEVICE_GRPC_SYSCFG_LIBRARY_H
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
@@ -7,8 +7,7 @@
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 #if defined(_MSC_VER)
 static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
@@ -117,7 +116,6 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   FunctionPointers function_pointers_;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
 
-#endif  // GRPC_NIDEVICE_SYSCFG_LIBRARY_H
+#endif  // NIDEVICE_GRPC_SYSCFG_LIBRARY_H

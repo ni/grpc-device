@@ -3,14 +3,13 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-FAKE
 //---------------------------------------------------------------------
-#ifndef GRPC_NIFAKE_LIBRARY_WRAPPER_H
-#define GRPC_NIFAKE_LIBRARY_WRAPPER_H
+#ifndef NIFAKE_GRPC_LIBRARY_WRAPPER_H
+#define NIFAKE_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niFake.h>
 
-namespace grpc {
-namespace nifake {
+namespace nifake_grpc {
 
 class NiFakeLibraryInterface {
  public:
@@ -69,6 +68,5 @@ class NiFakeLibraryInterface {
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
-}  // namespace nifake
-}  // namespace grpc
-#endif  // GRPC_NIFAKE_LIBRARY_WRAPPER_H
+}  // namespace nifake_grpc
+#endif  // NIFAKE_GRPC_LIBRARY_WRAPPER_H

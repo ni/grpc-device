@@ -3,14 +3,13 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef GRPC_NISCOPE_LIBRARY_WRAPPER_H
-#define GRPC_NISCOPE_LIBRARY_WRAPPER_H
+#ifndef NISCOPE_GRPC_LIBRARY_WRAPPER_H
+#define NISCOPE_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niScope.h>
 
-namespace grpc {
-namespace niscope {
+namespace niscope_grpc {
 
 class NiScopeLibraryInterface {
  public:
@@ -108,6 +107,5 @@ class NiScopeLibraryInterface {
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
 };
 
-}  // namespace niscope
-}  // namespace grpc
-#endif  // GRPC_NISCOPE_LIBRARY_WRAPPER_H
+}  // namespace niscope_grpc
+#endif  // NISCOPE_GRPC_LIBRARY_WRAPPER_H

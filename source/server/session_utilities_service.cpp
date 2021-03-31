@@ -1,7 +1,6 @@
 #include "session_utilities_service.h"
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator)
     : session_repository_(session_repository), device_enumerator_(device_enumerator)
@@ -55,5 +54,4 @@ SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repo
   return ::grpc::Status::OK;
 }
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc

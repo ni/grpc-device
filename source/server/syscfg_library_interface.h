@@ -1,11 +1,10 @@
-#ifndef GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H
-#define GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H
+#ifndef NIDEVICE_GRPC_SYSCFG_LIBRARY_INTERFACE_H
+#define NIDEVICE_GRPC_SYSCFG_LIBRARY_INTERFACE_H
 
 #include <grpcpp/grpcpp.h>
 #include <nisyscfg.h>
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 class SysCfgLibraryInterface {
  public:
@@ -50,7 +49,6 @@ class SysCfgLibraryInterface {
       void* value) = 0;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
 
-#endif  // GRPC_NIDEVICE_SYSCFGLIBRARYINTERFACE_H
+#endif  // NIDEVICE_GRPC_SYSCFG_LIBRARY_INTERFACE_H

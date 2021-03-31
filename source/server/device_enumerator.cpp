@@ -1,7 +1,6 @@
 #include "device_enumerator.h"
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 DeviceEnumerator::DeviceEnumerator(SysCfgLibraryInterface* library)
     : library_(library), syscfg_session_(nullptr)
@@ -97,5 +96,10 @@ void DeviceEnumerator::clear_syscfg_session()
   }
 }
 
-}  // namespace nidevice
-}  // namespace grpc
+// Returns status of cached session.
+bool DeviceEnumerator::is_session_open()
+{
+  return syscfg_session_ != nullptr;
+}
+
+}  // namespace nidevice_grpc

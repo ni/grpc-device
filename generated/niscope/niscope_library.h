@@ -3,17 +3,16 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-SCOPE
 //---------------------------------------------------------------------
-#ifndef GRPC_NISCOPE_LIBRARY_H
-#define GRPC_NISCOPE_LIBRARY_H
+#ifndef NISCOPE_GRPC_LIBRARY_H
+#define NISCOPE_GRPC_LIBRARY_H
 
 #include "niscope_library_interface.h"
 
 #include <server/shared_library.h>
 
-namespace grpc {
-namespace niscope {
+namespace niscope_grpc {
 
-class NiScopeLibrary : public grpc::niscope::NiScopeLibraryInterface {
+class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
  public:
   NiScopeLibrary();
   virtual ~NiScopeLibrary();
@@ -295,11 +294,10 @@ class NiScopeLibrary : public grpc::niscope::NiScopeLibraryInterface {
     UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
-  grpc::nidevice::SharedLibrary shared_library_;
+  nidevice_grpc::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 };
 
-}  // namespace niscope
-}  // namespace grpc
+}  // namespace niscope_grpc
 
-#endif  // GRPC_NISCOPE_LIBRARY_H
+#endif  // NISCOPE_GRPC_LIBRARY_H

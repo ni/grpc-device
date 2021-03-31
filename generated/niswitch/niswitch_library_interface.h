@@ -3,14 +3,13 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-SWITCH
 //---------------------------------------------------------------------
-#ifndef GRPC_NISWITCH_LIBRARY_WRAPPER_H
-#define GRPC_NISWITCH_LIBRARY_WRAPPER_H
+#ifndef NISWITCH_GRPC_LIBRARY_WRAPPER_H
+#define NISWITCH_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niswitch.h>
 
-namespace grpc {
-namespace niswitch {
+namespace niswitch_grpc {
 
 class NiSwitchLibraryInterface {
  public:
@@ -80,6 +79,5 @@ class NiSwitchLibraryInterface {
   virtual ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs) = 0;
 };
 
-}  // namespace niswitch
-}  // namespace grpc
-#endif  // GRPC_NISWITCH_LIBRARY_WRAPPER_H
+}  // namespace niswitch_grpc
+#endif  // NISWITCH_GRPC_LIBRARY_WRAPPER_H

@@ -1,7 +1,5 @@
 #include <niswitch/niswitch_service.h>
 
-namespace grpc {
-namespace niswitch {
+namespace niswitch_grpc {
 
-}  // namespace niswitch
-}  // namespace grpc
+}  // namespace niswitch_grpc

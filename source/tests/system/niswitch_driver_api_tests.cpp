@@ -7,7 +7,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-namespace niswitch = grpc::niswitch;
+namespace niswitch = niswitch_grpc;
 
 const int kSwitchDriverApiSuccess = 0;
 const int kWaitForDebounceMaxTime = 5000;
@@ -22,7 +22,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   NiSwitchDriverApiTest()
   {
     ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<grpc::nidevice::SessionRepository>();
+    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
     niswitch_library_ = std::make_unique<niswitch::NiSwitchLibrary>();
     niswitch_service_ = std::make_unique<niswitch::NiSwitchService>(niswitch_library_.get(), session_repository_.get());
     builder.RegisterService(niswitch_service_.get());
@@ -91,7 +91,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     niswitch::InitWithTopologyResponse response;
 
     ::grpc::Status status = GetStub()->InitWithTopology(&context, request, &response);
-    driver_session_ = std::make_unique<grpc::nidevice::Session>(response.vi());
+    driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
     ASSERT_TRUE(status.ok());
     ASSERT_EQ(kSwitchDriverApiSuccess, response.status());
@@ -217,9 +217,9 @@ class NiSwitchDriverApiTest : public ::testing::Test {
 
   private:
   std::shared_ptr<::grpc::Channel> channel_;
-  std::unique_ptr<::grpc::nidevice::Session> driver_session_;
+  std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
-  std::unique_ptr<grpc::nidevice::SessionRepository> session_repository_;
+  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
   std::unique_ptr<niswitch::NiSwitchLibrary> niswitch_library_;
   std::unique_ptr<niswitch::NiSwitchService> niswitch_service_;
   std::unique_ptr<::grpc::Server> server_;

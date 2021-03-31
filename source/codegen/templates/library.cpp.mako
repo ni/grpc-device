@@ -23,8 +23,7 @@ static const char* kLibraryName = "${windows_library_name}";
 static const char* kLibraryName = "lib${linux_library_name}.so";
 #endif
 
-namespace grpc {
-namespace ${config["namespace_component"]} {
+namespace ${config["namespace_component"]}_grpc {
 
 ${service_class_prefix}Library::${service_class_prefix}Library() : shared_library_(kLibraryName)
 {
@@ -65,7 +64,7 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
 ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 {
   if (!function_pointers_.${method_name}) {
-    throw grpc::nidevice::LibraryLoadException("Could not find ${c_name}.");
+    throw nidevice_grpc::LibraryLoadException("Could not find ${c_name}.");
   }
 #if defined(_MSC_VER)
   return ${c_name}(${argument_list});
@@ -74,6 +73,5 @@ ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 #endif
 }
 
-% endfor
-}  // namespace ${config["namespace_component"]}
-}  // namespace grpc
+%endfor
+}  // namespace ${config["namespace_component"]}_grpc

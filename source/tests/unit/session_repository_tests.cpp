@@ -8,7 +8,7 @@ namespace unit {
 
 TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNotStoreSession)
 {
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id = 42;
   int status = session_repository.add_session(
       "",
@@ -22,7 +22,7 @@ TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNot
 
 TEST(SessionRepositoryTests, AddSession_StoresSessionWithGivenId)
 {
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id;
   int status = session_repository.add_session(
       "",
@@ -38,7 +38,7 @@ TEST(SessionRepositoryTests, AddSession_StoresSessionWithGivenId)
 TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
 {
   std::string session_name = "session_name";
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
@@ -54,7 +54,7 @@ TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
 
 TEST(SessionRepositoryTests, UnnamedSessionAdded_RemoveSession_RemovesSession)
 {
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id;
   session_repository.add_session(
       "",
@@ -70,7 +70,7 @@ TEST(SessionRepositoryTests, UnnamedSessionAdded_RemoveSession_RemovesSession)
 TEST(SessionRepositoryTests, NamedSessionAdded_RemoveSession_RemovesSession)
 {
   std::string session_name = "session_name";
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
@@ -87,7 +87,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_RemoveSession_RemovesSession)
 TEST(SessionRepositoryTests, NamedSessionAdded_AddSessionWithSameName_ReturnsFirstSessionIdAndDoesNotCallInit)
 {
   std::string session_name = "session_name";
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id;
   session_repository.add_session(
       session_name,
@@ -113,7 +113,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_AddSessionWithSameName_ReturnsFir
 TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
 {
   std::string session_name = "session_name";
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
@@ -130,7 +130,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
 
 TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
 {
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t session_id;
   session_repository.add_session(
       "",
@@ -147,7 +147,7 @@ TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
 TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBothSessions)
 {
   std::string session_name = "session_name";
-  grpc::nidevice::SessionRepository session_repository;
+  nidevice_grpc::SessionRepository session_repository;
   uint32_t named_session_id;
   int status = session_repository.add_session(
       session_name,

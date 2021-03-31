@@ -6,8 +6,7 @@
 #include "device_enumerator.h"
 #include "session_repository.h"
 
-namespace grpc {
-namespace nidevice {
+namespace nidevice_grpc {
 
 class SessionUtilitiesService final : public SessionUtilities::Service {
  public:
@@ -24,5 +23,4 @@ class SessionUtilitiesService final : public SessionUtilities::Service {
   DeviceEnumerator* device_enumerator_;
 };
 
-}  // namespace nidevice
-}  // namespace grpc
+}  // namespace nidevice_grpc
