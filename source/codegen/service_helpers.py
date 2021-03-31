@@ -14,7 +14,7 @@ def create_args(parameters):
       is_array = common_helpers.is_array(parameter['type'])
       is_output = common_helpers.is_output_parameter(parameter)
       if common_helpers.is_output_parameter(parameter) and is_string_arg(parameter):
-        type_without_brackets = parameter['type'].replace('[]', '')
+        type_without_brackets = common_helpers.get_underlying_type_name(parameter['type'])
         result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
       else:
         if is_array and common_helpers.is_struct(parameter):
@@ -103,8 +103,7 @@ def filter_proto_rpc_functions_to_generate(functions):
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_code_gen]
 
 def get_cname(functions, method_name, c_function_prefix):
-  if ('cname' in functions[method_name]):
+  if 'cname' in functions[method_name]:
     return functions[method_name]['cname']
-  else:
-    return c_function_prefix + method_name
+  return c_function_prefix + method_name
 
