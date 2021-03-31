@@ -26,9 +26,12 @@ def sanitize_names(parameters):
     for parameter in parameters:
         parameter['cppName'] = parameter['name']
         if parameter['cppName'] in RESERVED_WORDS:
-            parameter['cppName'] = parameter['cppName'] + 'Parameter'
+            parameter['cppName'] += 'Parameter'
 
-def mark_non_grpc_params(parameters):
+def mark_size_params(parameters):
+  """Marks the size parameters in the metadata. Also, as appropriate it will 
+     mark the parameters whose value shouldn't be derived from a gRPC request message and
+     adds information on how to get their value instead for the API call."""
   named_params = { p['name'] : p for p in parameters }
   for param in parameters:
     mechanism = common_helpers.get_size_mechanism(param)

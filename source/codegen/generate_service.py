@@ -28,7 +28,7 @@ def fix_up_metadata(metadata):
   for function in metadata["functions"]:
     parameters = metadata["functions"][function]["parameters"]
     metadata_mutation.sanitize_names(parameters)
-    metadata_mutation.mark_non_grpc_params(parameters)
+    metadata_mutation.mark_size_params(parameters)
 
 def generate_all(metadata_dir, gen_dir):
   sys.path.append(metadata_dir)
