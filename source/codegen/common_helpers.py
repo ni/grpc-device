@@ -1,20 +1,14 @@
 def is_output_parameter(parameter):
-    if "out" in parameter["direction"]:
-      return True
-    return False
+    return "out" in parameter["direction"]
 
 def is_input_parameter(parameter):
-    if "in" in parameter["direction"]:
-        return True
-    return False
+    return "in" in parameter["direction"]
 
 def is_array(dataType):
   return dataType.endswith("[]")
 
 def is_enum(parameter):
-  if "enum" in parameter:
-    return True
-  return False
+  return "enum" in parameter
 
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
@@ -43,6 +37,7 @@ def is_unsupported_scalar_array(parameter):
   return is_enum(parameter) or get_underlying_type_name(parameter['type']) in {'ViInt16', 'ViBoolean'}
 
 def camel_to_snake(camelString):
+  '''Returns a snake_string for a given camelString.'''
   camelString = list(camelString)
   index = 0
   for x in camelString :
@@ -54,6 +49,7 @@ def camel_to_snake(camelString):
   return ("".join(camelString))
 
 def snake_to_pascal(snake_string):
+  '''Returns a PascalString for a given snake_string.'''
   snake_string = list(snake_string)
   index = 0
   snake_string[index] = snake_string[index].upper()
@@ -65,11 +61,13 @@ def snake_to_pascal(snake_string):
   return ("".join(snake_string))
 
 def pascal_to_camel(pascal_string):
+  '''Returns a camelString for a given PascalString.'''
   pascal_string = list(pascal_string)
   pascal_string[0] = pascal_string[0].lower()
   return ("".join(pascal_string))
 
 def pascal_to_snake(pascal_string):
+  '''Returns a snake_string for a given PascalString.'''
   camel_string = pascal_to_camel(pascal_string)
   snake_string = camel_to_snake(camel_string)
   return ("".join(snake_string))
@@ -80,6 +78,7 @@ def filter_proto_rpc_functions(functions):
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
 
 def get_used_enums(functions, attributes):
+  '''Returns a set of enums used with functions or attributes.'''
   used_enums = set()
   for function in functions:
     for parameter in functions[function]["parameters"]:
