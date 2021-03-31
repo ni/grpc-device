@@ -74,11 +74,11 @@ namespace ${config["namespace_component"]}_grpc {
 % if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
 % elif common_helpers.is_init_method(function_data):
-${mako_helper.gen_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+${mako_helper.define_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % elif common_helpers.has_ivi_dance_param(parameters):
-${mako_helper.gen_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+${mako_helper.define_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % else:
-${mako_helper.gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

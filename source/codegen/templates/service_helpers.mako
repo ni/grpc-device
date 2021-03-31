@@ -3,15 +3,15 @@
   import service_helpers
 %>
 
-## Description here.
-<%def name="gen_init_method_body(function_name, function_data, parameters)">\
+## Generate the core method body for an Init method. This should be what gets included within the try block in the service method.
+<%def name="define_init_method_body(function_name, function_data, parameters)">\
 <%
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
   session_output_var_name = session_output_param['cppName']
 %>\
-${request_input_parameters(function_name, parameters)}
+${initialize_input_params(function_name, parameters)}
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession ${session_output_var_name};
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
@@ -28,13 +28,13 @@ ${request_input_parameters(function_name, parameters)}
       return ::grpc::Status::OK;\
 </%def>
 
-## Description here.
-<%def name="gen_ivi_dance_method_body(function_name, function_data, parameters)">\
+## Generate the core method body for an ivi-dance method. This should be what gets included within the try block in the service method.
+<%def name="define_ivi_dance_method_body(function_name, function_data, parameters)">\
 <%
   (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${request_input_parameters(function_name, non_ivi_params)}\
+${initialize_input_params(function_name, non_ivi_params)}\
 
       auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance(parameters)});
       if (status < 0) {
@@ -43,7 +43,7 @@ ${request_input_parameters(function_name, non_ivi_params)}\
       }
       ${size_param['type']} ${common_helpers.camel_to_snake(size_param['cppName'])} = status;
 
-${initialize_output_variables_snippet(output_parameters)}\
+${initialize_output_params(output_parameters)}\
       status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);
 % if output_parameters:
@@ -54,14 +54,14 @@ ${set_response_values(output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
-## Description here.
-<%def name="gen_simple_method_body(function_name, function_data, parameters)">\
+## Generate the core method body for an ivi-dance method. This should be what gets included within the try block in the service method.
+<%def name="define_simple_method_body(function_name, function_data, parameters)">\
 <%
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${request_input_parameters(function_name, parameters)}\
-${initialize_output_variables_snippet(output_parameters)}\
+${initialize_input_params(function_name, parameters)}\
+${initialize_output_params(output_parameters)}\
 % if function_name == config['close_function']:
       session_repository_->remove_session(${service_helpers.create_args(parameters)});
 % else:
@@ -76,18 +76,18 @@ ${set_response_values(output_parameters=output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
-## Description here.
-<%def name="request_input_parameters(function_name, parameters)">\
+## Initialize the input parameters to the API call.
+<%def name="initialize_input_params(function_name, parameters)">\
 <%
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
-${initialize_input_param_snippet(function_name, parameter)}
+${initialize_input_param(function_name, parameter)}
 % endfor
 </%def>
 
-## Description here.
-<%def name="initialize_input_param_snippet(function_name, parameter)">\
+## Initialize an input parameter for an API call.
+<%def name="initialize_input_param(function_name, parameter)">\
 <%
   enums = data['enums']
 %>\
@@ -100,7 +100,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
 % endif
 </%def>
 
-## Description here.
+## Initialize an enum input parameter for an API call.
 <%def name="initialize_enum_input_param(function_name, parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
@@ -139,7 +139,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
       }
 </%def>
 
-## Description here.
+## Initialize an input parameter that is determined by the 'len' size mechanism.
 <%def name="initialize_len_input_param(parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
@@ -148,7 +148,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
       ${parameter['type']} ${parameter_name} = request->${field_name}().size();\
 </%def>
 
-## Description here.
+## Initialize an input parameter for an API call.
 <%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
   config = data['config']
@@ -194,8 +194,8 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
     % endif
 </%def>
 
-## Description here.
-<%def name="initialize_output_variables_snippet(output_parameters)">\
+## Initialize the output parameters for an API call.
+<%def name="initialize_output_params(output_parameters)">\
 % for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
@@ -223,7 +223,7 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 % endfor
 </%def>
 
-## Description here.
+## Set output parameters updated through API call on the gRPC response message.
 <%def name="set_response_values(output_parameters)">\
 <%
   config = data['config']
