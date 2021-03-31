@@ -154,6 +154,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
   config = data['config']
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
+  namespace_prefix = config["namespace_component"] + "_grpc::"
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
   c_type_pointer = c_type.replace('[]','*')
@@ -227,7 +228,7 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 <%
   config = data['config']
   enums = data['enums']
-  namespace_prefix = "grpc::" + config["namespace_component"] + "::"
+  namespace_prefix = config["namespace_component"] + "_grpc::"
 %>\
 % for parameter in output_parameters:
 <%

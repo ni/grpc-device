@@ -6,7 +6,7 @@ config = data['config']
 functions = data['functions']
 
 service_class_prefix = config["service_class_prefix"]
-namespace_prefix = "grpc::" + config["namespace_component"] + "::"
+namespace_prefix = config["namespace_component"] + "_grpc::"
 module_name = config["module_name"]
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
@@ -26,10 +26,9 @@ if len(config["custom_types"]) > 0:
 #include <atomic>
 #include <vector>
 
-namespace grpc {
-namespace ${config["namespace_component"]} {
+namespace ${config["namespace_component"]}_grpc {
 
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, grpc::nidevice::SessionRepository* session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -38,13 +37,13 @@ namespace ${config["namespace_component"]} {
   {
   }
 
-  % if 'custom_types' in locals():
-  % for custom_type in custom_types:
+  %if 'custom_types' in locals():
+  %for custom_type in custom_types:
   void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
   {
-% for field in custom_type["fields"]: 
+%for field in custom_type["fields"]: 
     output->set_${field["grpc_name"]}(input.${field["name"]});
-% endfor
+%endfor
   }
 
   void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
@@ -56,8 +55,8 @@ namespace ${config["namespace_component"]} {
     }
   }
 
-% endfor
-% endif
+%endfor
+%endif
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
@@ -82,12 +81,11 @@ ${mako_helper.gen_ivi_dance_method_body(function_name=function_name, function_da
 ${mako_helper.gen_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 % endif
     }
-    catch (grpc::nidevice::LibraryLoadException& ex) {
+    catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
 % endfor
-} // namespace ${config["namespace_component"]}
-} // namespace grpc
+} // namespace ${config["namespace_component"]}_grpc
 

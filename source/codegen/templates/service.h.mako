@@ -10,7 +10,7 @@ functions = data['functions']
 used_enums = common_helpers.get_used_enums(functions, attributes)
 enums_to_map = [enum for enum in used_enums if enums[enum].get("generate-mappings", False)]
 service_class_prefix = config["service_class_prefix"]
-include_guard_name = handler_helpers.get_include_guard_name(config, "_SERVICE_H")
+include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = config["namespace_component"] + "_grpc::"
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
