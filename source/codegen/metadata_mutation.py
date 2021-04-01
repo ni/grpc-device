@@ -29,16 +29,23 @@ def sanitize_names(parameters):
             parameter['cppName'] += 'Parameter'
 
 def mark_size_params(parameters):
-  """Marks the size parameters in the metadata. Also, as appropriate it will 
-     mark the parameters whose value shouldn't be derived from a gRPC request message and
-     adds information on how to get their value instead for the API call."""
-  named_params = { p['name'] : p for p in parameters }
-  for param in parameters:
-    mechanism = common_helpers.get_size_mechanism(param)
-    if mechanism in {'len', 'ivi-dance', 'passed-in'}:
-      size_param = named_params.get(param['size']['value'], None)
-      size_param['is_size_param'] = True
-      if mechanism == 'len' or mechanism == 'ivi-dance':
-        size_param['include_in_proto'] = False
-        if mechanism == 'len':
-          size_param['determine_size_from'] = param['name']
+    """Marks the size parameters in the metadata."""
+    for param in parameters:
+        mechanism = common_helpers.get_size_mechanism(param)
+        if mechanism in {'len', 'ivi-dance', 'passed-in'}:
+            size_param = get_size_param(param, parameters)
+            size_param['is_size_param'] = True
+
+def mark_non_grpc_params(parameters):
+    """Mark the parameters whose value shouldn't be derived from a gRPC request message."""
+    for param in parameters:
+        mechanism = common_helpers.get_size_mechanism(param)
+        if mechanism in {'len', 'ivi-dance'}:
+            size_param = get_size_param(param, parameters)
+            size_param['include_in_proto'] = False
+            if mechanism == 'len':
+                size_param['determine_size_from'] = param['name']
+
+def get_size_param(param, parameters):
+    named_params = { p['name'] : p for p in parameters }
+    return named_params.get(param['size']['value'], None)
