@@ -179,31 +179,31 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'ConfigureOvp': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'enabled',
-        'direction': 'in',
-        'type': 'ViBoolean'
-      },
-      {
-        'name': 'limit',
-        'direction': 'in',
-        'type': 'ViReal64'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
+#   'ConfigureOvp': {
+#     'parameters': [
+#       {
+#         'name': 'vi',
+#         'direction': 'in',
+#         'type': 'ViSession'
+#       },
+#       {
+#         'name': 'channelName',
+#         'direction': 'in',
+#         'type': 'ViConstString'
+#       },
+#       {
+#         'name': 'enabled',
+#         'direction': 'in',
+#         'type': 'ViBoolean'
+#       },
+#       {
+#         'name': 'limit',
+#         'direction': 'in',
+#         'type': 'ViReal64'
+#       }
+#     ],
+#     'returns': 'ViStatus'
+#   },
   'ConfigureSoftwareEdgeMeasureTriggerWithChannels': {
     'parameters': [
       {
@@ -998,16 +998,16 @@ functions = {
 #     ],
 #     'returns': 'ViStatus'
 #   },
-  'Close': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
+#   'Close': {
+#     'parameters': [
+#       {
+#         'name': 'vi',
+#         'direction': 'in',
+#         'type': 'ViSession'
+#       }
+#     ],
+#     'returns': 'ViStatus'
+#   },
   'CloseExtCal': {
     'parameters': [
       {
@@ -1874,30 +1874,30 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'ErrorMessage': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'errorCode',
-        'direction': 'in',
-        'type': 'ViStatus'
-      },
-      {
-        'name': 'errorMessage',
-        'direction': 'out',
-        'type': 'ViChar[]',
-        'size': {
-          'mechanism': 'fixed',
-          'value': 256
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
+#   'ErrorMessage': {
+#     'parameters': [
+#       {
+#         'name': 'vi',
+#         'direction': 'in',
+#         'type': 'ViSession'
+#       },
+#       {
+#         'name': 'errorCode',
+#         'direction': 'in',
+#         'type': 'ViStatus'
+#       },
+#       {
+#         'name': 'errorMessage',
+#         'direction': 'out',
+#         'type': 'ViChar[]',
+#         'size': {
+#           'mechanism': 'fixed',
+#           'value': 256
+#         }
+#       }
+#     ],
+#     'returns': 'ViStatus'
+#   },
 #   'ExportAttributeConfigurationBuffer': {
 #     'parameters': [
 #       {
@@ -2796,16 +2796,16 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'Reset': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
+#   'Reset': {
+#     'parameters': [
+#       {
+#         'name': 'vi',
+#         'direction': 'in',
+#         'type': 'ViSession'
+#       }
+#     ],
+#     'returns': 'ViStatus'
+#   },
   'ResetDevice': {
     'parameters': [
       {
@@ -2864,30 +2864,30 @@ functions = {
 #     ],
 #     'returns': 'ViStatus'
 #   },
-  'SelfTest': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'selfTestResult',
-        'direction': 'out',
-        'type': 'ViInt16'
-      },
-      {
-        'name': 'selfTestMessage',
-        'direction': 'out',
-        'type': 'ViChar[]',
-        'size': {
-          'mechanism': 'fixed',
-          'value': 256
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
+#   'SelfTest': {
+#     'parameters': [
+#       {
+#         'name': 'vi',
+#         'direction': 'in',
+#         'type': 'ViSession'
+#       },
+#       {
+#         'name': 'selfTestResult',
+#         'direction': 'out',
+#         'type': 'ViInt16'
+#       },
+#       {
+#         'name': 'selfTestMessage',
+#         'direction': 'out',
+#         'type': 'ViChar[]',
+#         'size': {
+#           'mechanism': 'fixed',
+#           'value': 256
+#         }
+#       }
+#     ],
+#     'returns': 'ViStatus'
+#   },
   'SendSoftwareEdgeTrigger': {
     'parameters': [
       {

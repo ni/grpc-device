@@ -25,7 +25,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeShutdownTriggerWithChannels, (ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge), (override));
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeSourceTriggerWithChannels, (ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge), (override));
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeStartTriggerWithChannels, (ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge), (override));
-  MOCK_METHOD(ViStatus, ConfigureOvp, (ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit), (override));
   MOCK_METHOD(ViStatus, ConfigureSoftwareEdgeMeasureTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, ConfigureSoftwareEdgePulseTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
@@ -35,7 +34,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureSourceModeWithChannels, (ViSession vi, ViConstString channelName, ViInt32 sourceMode), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceCommitStepWithChannels, (ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceStepWithChannels, (ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep), (override));
-  MOCK_METHOD(ViStatus, CreateAdvancedSequenceWithChannels, (ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
   MOCK_METHOD(ViStatus, DeleteAdvancedSequenceWithChannels, (ViSession vi, ViConstString channelName, ViConstString sequenceName), (override));
   MOCK_METHOD(ViStatus, DisablePulseTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, DisableSequenceAdvanceTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
@@ -62,7 +60,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ChangeExtCalPassword, (ViSession vi, ViConstString oldPassword, ViConstString newPassword), (override));
   MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClearInterchangeWarnings, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
   MOCK_METHOD(ViStatus, Commit, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ConfigureApertureTime, (ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units), (override));
@@ -104,7 +101,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureVoltageLimit, (ViSession vi, ViConstString channelName, ViReal64 limit), (override));
   MOCK_METHOD(ViStatus, ConfigureVoltageLimitRange, (ViSession vi, ViConstString channelName, ViReal64 range), (override));
   MOCK_METHOD(ViStatus, ConnectInternalReference, (ViSession vi, ViInt32 internalReference), (override));
-  MOCK_METHOD(ViStatus, CreateAdvancedSequence, (ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceStep, (ViSession vi, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, DeleteAdvancedSequence, (ViSession vi, ViConstString sequenceName), (override));
   MOCK_METHOD(ViStatus, Disable, (ViSession vi), (override));
@@ -112,8 +108,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, DisableSequenceAdvanceTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableSourceTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableStartTrigger, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
-  MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViAddr configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, FetchMultiple, (ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount), (override));
@@ -135,7 +129,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, GetNextInterchangeWarning, (ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
-  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViAddr configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, InitExtCal, (ViChar resourceName[], ViConstString password, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitializeWithChannels, (ViChar resourceName[], ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi), (override));
@@ -149,11 +142,9 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, QueryMinCurrentLimit, (ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* minCurrentLimit), (override));
   MOCK_METHOD(ViStatus, QueryOutputState, (ViSession vi, ViConstString channelName, ViInt32 outputState, ViBoolean* inState), (override));
   MOCK_METHOD(ViStatus, ReadCurrentTemperature, (ViSession vi, ViReal64* temperature), (override));
-  MOCK_METHOD(ViStatus, Reset, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetDevice, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetInterchangeCheck, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetWithDefaults, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
   MOCK_METHOD(ViStatus, SendSoftwareEdgeTrigger, (ViSession vi, ViInt32 trigger), (override));
   MOCK_METHOD(ViStatus, SetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue), (override));

@@ -23,7 +23,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureDigitalEdgeShutdownTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge) = 0;
   virtual ViStatus ConfigureDigitalEdgeSourceTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge) = 0;
   virtual ViStatus ConfigureDigitalEdgeStartTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge) = 0;
-  virtual ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit) = 0;
   virtual ViStatus ConfigureSoftwareEdgeMeasureTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus ConfigureSoftwareEdgePulseTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
@@ -33,7 +32,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureSourceModeWithChannels(ViSession vi, ViConstString channelName, ViInt32 sourceMode) = 0;
   virtual ViStatus CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep) = 0;
   virtual ViStatus CreateAdvancedSequenceStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep) = 0;
-  virtual ViStatus CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence) = 0;
   virtual ViStatus DeleteAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName) = 0;
   virtual ViStatus DisablePulseTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus DisableSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
@@ -60,7 +58,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
-  virtual ViStatus Close(ViSession vi) = 0;
   virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus ConfigureApertureTime(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units) = 0;
@@ -102,7 +99,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit) = 0;
   virtual ViStatus ConfigureVoltageLimitRange(ViSession vi, ViConstString channelName, ViReal64 range) = 0;
   virtual ViStatus ConnectInternalReference(ViSession vi, ViInt32 internalReference) = 0;
-  virtual ViStatus CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence) = 0;
   virtual ViStatus CreateAdvancedSequenceStep(ViSession vi, ViBoolean setAsActiveStep) = 0;
   virtual ViStatus DeleteAdvancedSequence(ViSession vi, ViConstString sequenceName) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
@@ -110,8 +106,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus DisableSequenceAdvanceTrigger(ViSession vi) = 0;
   virtual ViStatus DisableSourceTrigger(ViSession vi) = 0;
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
-  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
-  virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;
   virtual ViStatus FetchMultiple(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount) = 0;
@@ -133,7 +127,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) = 0;
   virtual ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature) = 0;
-  virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus InitExtCal(ViChar resourceName[], ViConstString password, ViSession* vi) = 0;
   virtual ViStatus InitializeWithChannels(ViChar resourceName[], ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi) = 0;
@@ -147,11 +140,9 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus QueryMinCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* minCurrentLimit) = 0;
   virtual ViStatus QueryOutputState(ViSession vi, ViConstString channelName, ViInt32 outputState, ViBoolean* inState) = 0;
   virtual ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature) = 0;
-  virtual ViStatus Reset(ViSession vi) = 0;
   virtual ViStatus ResetDevice(ViSession vi) = 0;
   virtual ViStatus ResetInterchangeCheck(ViSession vi) = 0;
   virtual ViStatus ResetWithDefaults(ViSession vi) = 0;
-  virtual ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
   virtual ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;

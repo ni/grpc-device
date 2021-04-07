@@ -24,7 +24,6 @@ service NiDCPower {
   rpc ConfigureDigitalEdgeShutdownTriggerWithChannels(ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest) returns (ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse);
   rpc ConfigureDigitalEdgeSourceTriggerWithChannels(ConfigureDigitalEdgeSourceTriggerWithChannelsRequest) returns (ConfigureDigitalEdgeSourceTriggerWithChannelsResponse);
   rpc ConfigureDigitalEdgeStartTriggerWithChannels(ConfigureDigitalEdgeStartTriggerWithChannelsRequest) returns (ConfigureDigitalEdgeStartTriggerWithChannelsResponse);
-  rpc ConfigureOvp(ConfigureOvpRequest) returns (ConfigureOvpResponse);
   rpc ConfigureSoftwareEdgeMeasureTriggerWithChannels(ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest) returns (ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse);
   rpc ConfigureSoftwareEdgePulseTriggerWithChannels(ConfigureSoftwareEdgePulseTriggerWithChannelsRequest) returns (ConfigureSoftwareEdgePulseTriggerWithChannelsResponse);
   rpc ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsRequest) returns (ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse);
@@ -34,7 +33,6 @@ service NiDCPower {
   rpc ConfigureSourceModeWithChannels(ConfigureSourceModeWithChannelsRequest) returns (ConfigureSourceModeWithChannelsResponse);
   rpc CreateAdvancedSequenceCommitStepWithChannels(CreateAdvancedSequenceCommitStepWithChannelsRequest) returns (CreateAdvancedSequenceCommitStepWithChannelsResponse);
   rpc CreateAdvancedSequenceStepWithChannels(CreateAdvancedSequenceStepWithChannelsRequest) returns (CreateAdvancedSequenceStepWithChannelsResponse);
-  rpc CreateAdvancedSequenceWithChannels(CreateAdvancedSequenceWithChannelsRequest) returns (CreateAdvancedSequenceWithChannelsResponse);
   rpc DeleteAdvancedSequenceWithChannels(DeleteAdvancedSequenceWithChannelsRequest) returns (DeleteAdvancedSequenceWithChannelsResponse);
   rpc DisablePulseTriggerWithChannels(DisablePulseTriggerWithChannelsRequest) returns (DisablePulseTriggerWithChannelsResponse);
   rpc DisableSequenceAdvanceTriggerWithChannels(DisableSequenceAdvanceTriggerWithChannelsRequest) returns (DisableSequenceAdvanceTriggerWithChannelsResponse);
@@ -61,7 +59,6 @@ service NiDCPower {
   rpc ChangeExtCalPassword(ChangeExtCalPasswordRequest) returns (ChangeExtCalPasswordResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
-  rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc ConfigureApertureTime(ConfigureApertureTimeRequest) returns (ConfigureApertureTimeResponse);
@@ -103,7 +100,6 @@ service NiDCPower {
   rpc ConfigureVoltageLimit(ConfigureVoltageLimitRequest) returns (ConfigureVoltageLimitResponse);
   rpc ConfigureVoltageLimitRange(ConfigureVoltageLimitRangeRequest) returns (ConfigureVoltageLimitRangeResponse);
   rpc ConnectInternalReference(ConnectInternalReferenceRequest) returns (ConnectInternalReferenceResponse);
-  rpc CreateAdvancedSequence(CreateAdvancedSequenceRequest) returns (CreateAdvancedSequenceResponse);
   rpc CreateAdvancedSequenceStep(CreateAdvancedSequenceStepRequest) returns (CreateAdvancedSequenceStepResponse);
   rpc DeleteAdvancedSequence(DeleteAdvancedSequenceRequest) returns (DeleteAdvancedSequenceResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
@@ -111,8 +107,6 @@ service NiDCPower {
   rpc DisableSequenceAdvanceTrigger(DisableSequenceAdvanceTriggerRequest) returns (DisableSequenceAdvanceTriggerResponse);
   rpc DisableSourceTrigger(DisableSourceTriggerRequest) returns (DisableSourceTriggerResponse);
   rpc DisableStartTrigger(DisableStartTriggerRequest) returns (DisableStartTriggerResponse);
-  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
-  rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc FetchMultiple(FetchMultipleRequest) returns (FetchMultipleResponse);
@@ -134,7 +128,6 @@ service NiDCPower {
   rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetSelfCalLastTemp(GetSelfCalLastTempRequest) returns (GetSelfCalLastTempResponse);
-  rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitializeWithChannels(InitializeWithChannelsRequest) returns (InitializeWithChannelsResponse);
@@ -148,11 +141,9 @@ service NiDCPower {
   rpc QueryMinCurrentLimit(QueryMinCurrentLimitRequest) returns (QueryMinCurrentLimitResponse);
   rpc QueryOutputState(QueryOutputStateRequest) returns (QueryOutputStateResponse);
   rpc ReadCurrentTemperature(ReadCurrentTemperatureRequest) returns (ReadCurrentTemperatureResponse);
-  rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
-  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
   rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
   rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
   rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
@@ -559,17 +550,6 @@ message ConfigureDigitalEdgeStartTriggerWithChannelsResponse {
   int32 status = 1;
 }
 
-message ConfigureOvpRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  bool enabled = 3;
-  double limit = 4;
-}
-
-message ConfigureOvpResponse {
-  int32 status = 1;
-}
-
 message ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -651,18 +631,6 @@ message CreateAdvancedSequenceStepWithChannelsRequest {
 }
 
 message CreateAdvancedSequenceStepWithChannelsResponse {
-  int32 status = 1;
-}
-
-message CreateAdvancedSequenceWithChannelsRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  string sequence_name = 3;
-  repeated sint32 attribute_ids = 4;
-  bool set_as_active_sequence = 5;
-}
-
-message CreateAdvancedSequenceWithChannelsResponse {
   int32 status = 1;
 }
 
@@ -918,14 +886,6 @@ message ClearInterchangeWarningsRequest {
 }
 
 message ClearInterchangeWarningsResponse {
-  int32 status = 1;
-}
-
-message CloseRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message CloseResponse {
   int32 status = 1;
 }
 
@@ -1331,17 +1291,6 @@ message ConnectInternalReferenceResponse {
   int32 status = 1;
 }
 
-message CreateAdvancedSequenceRequest {
-  nidevice_grpc.Session vi = 1;
-  string sequence_name = 2;
-  repeated sint32 attribute_ids = 3;
-  bool set_as_active_sequence = 4;
-}
-
-message CreateAdvancedSequenceResponse {
-  int32 status = 1;
-}
-
 message CreateAdvancedSequenceStepRequest {
   nidevice_grpc.Session vi = 1;
   bool set_as_active_step = 2;
@@ -1398,25 +1347,6 @@ message DisableStartTriggerRequest {
 
 message DisableStartTriggerResponse {
   int32 status = 1;
-}
-
-message ErrorMessageRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 error_code = 2;
-}
-
-message ErrorMessageResponse {
-  int32 status = 1;
-  string error_message = 2;
-}
-
-message ExportAttributeConfigurationBufferRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message ExportAttributeConfigurationBufferResponse {
-  int32 status = 1;
-  repeated fixed64 configuration = 2;
 }
 
 message ExportAttributeConfigurationFileRequest {
@@ -1642,15 +1572,6 @@ message GetSelfCalLastTempResponse {
   double temperature = 2;
 }
 
-message ImportAttributeConfigurationBufferRequest {
-  nidevice_grpc.Session vi = 1;
-  repeated fixed64 configuration = 2;
-}
-
-message ImportAttributeConfigurationBufferResponse {
-  int32 status = 1;
-}
-
 message ImportAttributeConfigurationFileRequest {
   nidevice_grpc.Session vi = 1;
   string file_path = 2;
@@ -1790,14 +1711,6 @@ message ReadCurrentTemperatureResponse {
   double temperature = 2;
 }
 
-message ResetRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message ResetResponse {
-  int32 status = 1;
-}
-
 message ResetDeviceRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1820,16 +1733,6 @@ message ResetWithDefaultsRequest {
 
 message ResetWithDefaultsResponse {
   int32 status = 1;
-}
-
-message SelfTestRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message SelfTestResponse {
-  int32 status = 1;
-  sint32 self_test_result = 2;
-  string self_test_message = 3;
 }
 
 message SendSoftwareEdgeTriggerRequest {

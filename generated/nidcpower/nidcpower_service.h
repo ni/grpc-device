@@ -32,7 +32,6 @@ public:
   ::grpc::Status ConfigureDigitalEdgeShutdownTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest* request, ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse* response) override;
   ::grpc::Status ConfigureDigitalEdgeSourceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeSourceTriggerWithChannelsRequest* request, ConfigureDigitalEdgeSourceTriggerWithChannelsResponse* response) override;
   ::grpc::Status ConfigureDigitalEdgeStartTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerWithChannelsRequest* request, ConfigureDigitalEdgeStartTriggerWithChannelsResponse* response) override;
-  ::grpc::Status ConfigureOvp(::grpc::ServerContext* context, const ConfigureOvpRequest* request, ConfigureOvpResponse* response) override;
   ::grpc::Status ConfigureSoftwareEdgeMeasureTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest* request, ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse* response) override;
   ::grpc::Status ConfigureSoftwareEdgePulseTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgePulseTriggerWithChannelsRequest* request, ConfigureSoftwareEdgePulseTriggerWithChannelsResponse* response) override;
   ::grpc::Status ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsRequest* request, ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse* response) override;
@@ -42,7 +41,6 @@ public:
   ::grpc::Status ConfigureSourceModeWithChannels(::grpc::ServerContext* context, const ConfigureSourceModeWithChannelsRequest* request, ConfigureSourceModeWithChannelsResponse* response) override;
   ::grpc::Status CreateAdvancedSequenceCommitStepWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceCommitStepWithChannelsRequest* request, CreateAdvancedSequenceCommitStepWithChannelsResponse* response) override;
   ::grpc::Status CreateAdvancedSequenceStepWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceStepWithChannelsRequest* request, CreateAdvancedSequenceStepWithChannelsResponse* response) override;
-  ::grpc::Status CreateAdvancedSequenceWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceWithChannelsRequest* request, CreateAdvancedSequenceWithChannelsResponse* response) override;
   ::grpc::Status DeleteAdvancedSequenceWithChannels(::grpc::ServerContext* context, const DeleteAdvancedSequenceWithChannelsRequest* request, DeleteAdvancedSequenceWithChannelsResponse* response) override;
   ::grpc::Status DisablePulseTriggerWithChannels(::grpc::ServerContext* context, const DisablePulseTriggerWithChannelsRequest* request, DisablePulseTriggerWithChannelsResponse* response) override;
   ::grpc::Status DisableSequenceAdvanceTriggerWithChannels(::grpc::ServerContext* context, const DisableSequenceAdvanceTriggerWithChannelsRequest* request, DisableSequenceAdvanceTriggerWithChannelsResponse* response) override;
@@ -69,7 +67,6 @@ public:
   ::grpc::Status ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response) override;
   ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
   ::grpc::Status ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response) override;
-  ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response) override;
   ::grpc::Status Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response) override;
   ::grpc::Status ConfigureApertureTime(::grpc::ServerContext* context, const ConfigureApertureTimeRequest* request, ConfigureApertureTimeResponse* response) override;
@@ -111,7 +108,6 @@ public:
   ::grpc::Status ConfigureVoltageLimit(::grpc::ServerContext* context, const ConfigureVoltageLimitRequest* request, ConfigureVoltageLimitResponse* response) override;
   ::grpc::Status ConfigureVoltageLimitRange(::grpc::ServerContext* context, const ConfigureVoltageLimitRangeRequest* request, ConfigureVoltageLimitRangeResponse* response) override;
   ::grpc::Status ConnectInternalReference(::grpc::ServerContext* context, const ConnectInternalReferenceRequest* request, ConnectInternalReferenceResponse* response) override;
-  ::grpc::Status CreateAdvancedSequence(::grpc::ServerContext* context, const CreateAdvancedSequenceRequest* request, CreateAdvancedSequenceResponse* response) override;
   ::grpc::Status CreateAdvancedSequenceStep(::grpc::ServerContext* context, const CreateAdvancedSequenceStepRequest* request, CreateAdvancedSequenceStepResponse* response) override;
   ::grpc::Status DeleteAdvancedSequence(::grpc::ServerContext* context, const DeleteAdvancedSequenceRequest* request, DeleteAdvancedSequenceResponse* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
@@ -119,8 +115,6 @@ public:
   ::grpc::Status DisableSequenceAdvanceTrigger(::grpc::ServerContext* context, const DisableSequenceAdvanceTriggerRequest* request, DisableSequenceAdvanceTriggerResponse* response) override;
   ::grpc::Status DisableSourceTrigger(::grpc::ServerContext* context, const DisableSourceTriggerRequest* request, DisableSourceTriggerResponse* response) override;
   ::grpc::Status DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response) override;
-  ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
-  ::grpc::Status ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status FetchMultiple(::grpc::ServerContext* context, const FetchMultipleRequest* request, FetchMultipleResponse* response) override;
@@ -142,7 +136,6 @@ public:
   ::grpc::Status GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response) override;
   ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response) override;
-  ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InitializeWithChannels(::grpc::ServerContext* context, const InitializeWithChannelsRequest* request, InitializeWithChannelsResponse* response) override;
@@ -156,11 +149,9 @@ public:
   ::grpc::Status QueryMinCurrentLimit(::grpc::ServerContext* context, const QueryMinCurrentLimitRequest* request, QueryMinCurrentLimitResponse* response) override;
   ::grpc::Status QueryOutputState(::grpc::ServerContext* context, const QueryOutputStateRequest* request, QueryOutputStateResponse* response) override;
   ::grpc::Status ReadCurrentTemperature(::grpc::ServerContext* context, const ReadCurrentTemperatureRequest* request, ReadCurrentTemperatureResponse* response) override;
-  ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
   ::grpc::Status ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response) override;
   ::grpc::Status ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response) override;
-  ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
   ::grpc::Status SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response) override;
   ::grpc::Status SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response) override;
   ::grpc::Status SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response) override;
