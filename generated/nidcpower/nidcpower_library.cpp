@@ -25,7 +25,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(shared_library_.get_function_pointer("niDCPower_CalSelfCalibrate"));
   function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niDCPower_Commit"));
   function_pointers_.ConfigureApertureTime = reinterpret_cast<ConfigureApertureTimePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureApertureTime"));
-  function_pointers_.CreateAdvancedSequence = reinterpret_cast<CreateAdvancedSequencePtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequence"));
   function_pointers_.CreateAdvancedSequenceStep = reinterpret_cast<CreateAdvancedSequenceStepPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceStep"));
   function_pointers_.DeleteAdvancedSequence = reinterpret_cast<DeleteAdvancedSequencePtr>(shared_library_.get_function_pointer("niDCPower_DeleteAdvancedSequence"));
   function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niDCPower_Disable"));
@@ -70,6 +69,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.WaitForEvent = reinterpret_cast<WaitForEventPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEvent"));
   function_pointers_.close = reinterpret_cast<closePtr>(shared_library_.get_function_pointer("niDCPower_close"));
   function_pointers_.error_message = reinterpret_cast<error_messagePtr>(shared_library_.get_function_pointer("niDCPower_error_message"));
+  function_pointers_.reset = reinterpret_cast<resetPtr>(shared_library_.get_function_pointer("niDCPower_reset"));
   function_pointers_.self_test = reinterpret_cast<self_testPtr>(shared_library_.get_function_pointer("niDCPower_self_test"));
 }
 
@@ -129,18 +129,6 @@ ViStatus NiDCPowerLibrary::ConfigureApertureTime(ViSession vi, ViConstString cha
   return niDCPower_ConfigureApertureTime(vi, channelName, apertureTime, units);
 #else
   return function_pointers_.ConfigureApertureTime(vi, channelName, apertureTime, units);
-#endif
-}
-
-ViStatus NiDCPowerLibrary::CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence)
-{
-  if (!function_pointers_.CreateAdvancedSequence) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequence.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_CreateAdvancedSequence(vi, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
-#else
-  return function_pointers_.CreateAdvancedSequence(vi, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
 #endif
 }
 
@@ -669,6 +657,18 @@ ViStatus NiDCPowerLibrary::error_message(ViSession vi, ViStatus errorCode, ViCha
   return niDCPower_error_message(vi, errorCode, errorMessage);
 #else
   return function_pointers_.error_message(vi, errorCode, errorMessage);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::reset(ViSession vi)
+{
+  if (!function_pointers_.reset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_reset.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_reset(vi);
+#else
+  return function_pointers_.reset(vi);
 #endif
 }
 

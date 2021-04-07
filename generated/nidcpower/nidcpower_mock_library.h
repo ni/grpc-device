@@ -21,7 +21,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, CalSelfCalibrate, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, Commit, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ConfigureApertureTime, (ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units), (override));
-  MOCK_METHOD(ViStatus, CreateAdvancedSequence, (ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceStep, (ViSession vi, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, DeleteAdvancedSequence, (ViSession vi, ViConstString sequenceName), (override));
   MOCK_METHOD(ViStatus, Disable, (ViSession vi), (override));
@@ -66,6 +65,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, WaitForEvent, (ViSession vi, ViInt32 eventId, ViReal64 timeout), (override));
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, error_message, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
+  MOCK_METHOD(ViStatus, reset, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
 };
 

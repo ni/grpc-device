@@ -22,7 +22,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName);
   ViStatus Commit(ViSession vi);
   ViStatus ConfigureApertureTime(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units);
-  ViStatus CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
   ViStatus CreateAdvancedSequenceStep(ViSession vi, ViBoolean setAsActiveStep);
   ViStatus DeleteAdvancedSequence(ViSession vi, ViConstString sequenceName);
   ViStatus Disable(ViSession vi);
@@ -67,6 +66,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout);
   ViStatus close(ViSession vi);
   ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus reset(ViSession vi);
   ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
 
  private:
@@ -74,7 +74,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using CalSelfCalibratePtr = ViStatus (*)(ViSession vi, ViConstString channelName);
   using CommitPtr = ViStatus (*)(ViSession vi);
   using ConfigureApertureTimePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units);
-  using CreateAdvancedSequencePtr = ViStatus (*)(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
   using CreateAdvancedSequenceStepPtr = ViStatus (*)(ViSession vi, ViBoolean setAsActiveStep);
   using DeleteAdvancedSequencePtr = ViStatus (*)(ViSession vi, ViConstString sequenceName);
   using DisablePtr = ViStatus (*)(ViSession vi);
@@ -119,6 +118,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using WaitForEventPtr = ViStatus (*)(ViSession vi, ViInt32 eventId, ViReal64 timeout);
   using closePtr = ViStatus (*)(ViSession vi);
   using error_messagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  using resetPtr = ViStatus (*)(ViSession vi);
   using self_testPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
 
   typedef struct FunctionPointers {
@@ -126,7 +126,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     CalSelfCalibratePtr CalSelfCalibrate;
     CommitPtr Commit;
     ConfigureApertureTimePtr ConfigureApertureTime;
-    CreateAdvancedSequencePtr CreateAdvancedSequence;
     CreateAdvancedSequenceStepPtr CreateAdvancedSequenceStep;
     DeleteAdvancedSequencePtr DeleteAdvancedSequence;
     DisablePtr Disable;
@@ -171,6 +170,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     WaitForEventPtr WaitForEvent;
     closePtr close;
     error_messagePtr error_message;
+    resetPtr reset;
     self_testPtr self_test;
   } FunctionLoadStatus;
 

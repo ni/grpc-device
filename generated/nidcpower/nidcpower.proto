@@ -20,7 +20,6 @@ service NiDCPower {
   rpc CalSelfCalibrate(CalSelfCalibrateRequest) returns (CalSelfCalibrateResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc ConfigureApertureTime(ConfigureApertureTimeRequest) returns (ConfigureApertureTimeResponse);
-  rpc CreateAdvancedSequence(CreateAdvancedSequenceRequest) returns (CreateAdvancedSequenceResponse);
   rpc CreateAdvancedSequenceStep(CreateAdvancedSequenceStepRequest) returns (CreateAdvancedSequenceStepResponse);
   rpc DeleteAdvancedSequence(DeleteAdvancedSequenceRequest) returns (DeleteAdvancedSequenceResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
@@ -65,6 +64,7 @@ service NiDCPower {
   rpc WaitForEvent(WaitForEventRequest) returns (WaitForEventResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
+  rpc Reset(ResetRequest) returns (ResetResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
 }
 
@@ -417,17 +417,6 @@ message ConfigureApertureTimeRequest {
 }
 
 message ConfigureApertureTimeResponse {
-  int32 status = 1;
-}
-
-message CreateAdvancedSequenceRequest {
-  nidevice_grpc.Session vi = 1;
-  string sequence_name = 2;
-  repeated sint32 attribute_ids = 3;
-  bool set_as_active_sequence = 4;
-}
-
-message CreateAdvancedSequenceResponse {
   int32 status = 1;
 }
 
@@ -888,6 +877,14 @@ message ErrorMessageRequest {
 message ErrorMessageResponse {
   int32 status = 1;
   string error_message = 2;
+}
+
+message ResetRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetResponse {
+  int32 status = 1;
 }
 
 message SelfTestRequest {

@@ -19,7 +19,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus ConfigureApertureTime(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units) = 0;
-  virtual ViStatus CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence) = 0;
   virtual ViStatus CreateAdvancedSequenceStep(ViSession vi, ViBoolean setAsActiveStep) = 0;
   virtual ViStatus DeleteAdvancedSequence(ViSession vi, ViConstString sequenceName) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
@@ -64,6 +63,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout) = 0;
   virtual ViStatus close(ViSession vi) = 0;
   virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus reset(ViSession vi) = 0;
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
