@@ -9,12 +9,9 @@ namespace system {
 
 namespace nisync = nisync_grpc;
 
-const int kViErrorRsrcNotFound = -1074118654;
-const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.";
-const char* kTestRsrcName = "";
-const char* kTestSessName = "SessionName";
-const char* kInvalidRsrcName = "InvalidName";
-const char* kTopology = "2529/2-Wire Dual 4x16 Matrix";
+static const int kSyncDeviceNotFound = -1074118634;
+static const char* kTestRsrcName = "";
+static const char* kInvalidRsrcName = "InvalidName";
 
 class NiSyncSessionTest : public ::testing::Test {
  protected:
@@ -43,16 +40,14 @@ class NiSyncSessionTest : public ::testing::Test {
     return nisync_stub_;
   }
 
-  ::grpc::Status call_init(const char* resource_name, const char* session_name, nisync::InitResponse* response)
+  ::grpc::Status call_init(const char* resource_name, nisync::InitResponse* response)
   {
     ::grpc::ClientContext context;
     nisync::InitRequest request;
     request.set_resource_name(resource_name);
-    request.set_session_name(session_name);
     request.set_reset_device(false);
-    request.set_simulate(true);
 
-    ::grpc::Status status = GetStub()->InitWithTopology(&context, request, response);
+    ::grpc::Status status = GetStub()->Init(&context, request, response);
     return status;
   }
 
@@ -65,20 +60,10 @@ class NiSyncSessionTest : public ::testing::Test {
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
-{
-  nisync::InitResponse response;
-  ::grpc::Status status = call_init(kTestRsrcName, kTestSessName, &response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
-}
-
 TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
 {
   nisync::InitResponse response;
-  ::grpc::Status status = call_init(kTestRsrcName, "", &response);
+  ::grpc::Status status = call_init(kTestRsrcName, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -88,18 +73,19 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
 TEST_F(NiSyncSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
   nisync::InitResponse response;
-  ::grpc::Status status = call_init(kInvalidRsrcName, "", &response);
+  ::grpc::Status status = call_init(kInvalidRsrcName, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kViErrorRsrcNotFound, response.status());
+  EXPECT_EQ(kSyncDeviceNotFound, response.status());
   EXPECT_EQ(0, response.vi().id());
 }
 
 TEST_F(NiSyncSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   nisync::InitResponse init_response;
-  call_init(kTestRsrcName, kTestSessName, &init_response);
+  call_init(kTestRsrcName, &init_response);
   nidevice_grpc::Session session = init_response.vi();
+  EXPECT_EQ(0, init_response.status());
 
   ::grpc::ClientContext context;
   nisync::CloseRequest close_request;
@@ -124,24 +110,6 @@ TEST_F(NiSyncSessionTest, InvalidSession_CloseSession_NoErrorReported)
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-}
-
-TEST_F(NiSyncSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)
-{
-  nisync::InitResponse init_response;
-  call_init(kInvalidRsrcName, "", &init_response);
-  EXPECT_EQ(kViErrorRsrcNotFound, init_response.status());
-
-  nidevice_grpc::Session session = init_response.vi();
-  ::grpc::ClientContext context;
-  nisync::ErrorMessageRequest error_request;
-  error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kViErrorRsrcNotFound);
-  nisync::ErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kViErrorRsrcNotFoundMessage, error_response.error_message().c_str());
 }
 
 }  // namespace system
