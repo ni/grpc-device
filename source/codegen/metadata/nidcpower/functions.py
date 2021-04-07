@@ -112,645 +112,645 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'CreateAdvancedSequence': {
-        'codegen_method': 'public',
-        'documentation': {
-            'description': '\nCreates an empty advanced sequence. Call the\nniDCPower_CreateAdvancedSequenceStep function to add steps to the\nactive advanced sequence.\n\nYou can create multiple advanced sequences in a session.\n\n**Support for this function**\n\nYou must set the source mode to Sequence to use this function.\n\nUsing the niDCPower_SetSequence function with Advanced Sequence\nfunctions is unsupported.\n\nUse this function in the Uncommitted or Committed programming states.\nRefer to the `Programming\nStates <REPLACE_DRIVER_SPECIFIC_URL_1(programmingstates)>`__ topic in\nthe *NI DC Power Supplies and SMUs Help* for more information about\nNI-DCPower programming states.\n\n**Related Topics**:\n\n`Advanced Sequence\nMode <REPLACE_DRIVER_SPECIFIC_URL_1(advancedsequencemode)>`__\n\n`Programming\nStates <REPLACE_DRIVER_SPECIFIC_URL_1(programmingstates)>`__\n\nniDCPower_CreateAdvancedSequenceStep\n',
-            'note': "\nThis function is not supported on all devices. Refer to `Supported\nFunctions by\nDevice <REPLACE_DRIVER_SPECIFIC_URL_2(nidcpowercref.chm',%20'supportedfunctions)>`__\nfor more information about supported devices.\n"
-        },
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': '\nIdentifies a particular instrument session. **vi** is obtained from the\nniDCPower_InitializeWithChannels function.\n'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the name of the sequence to create.'
-                },
-                'name': 'sequenceName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the number of attributes in the attributeIDs array.'
-                },
-                'name': 'attributeIdCount',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': '\nSpecifies the attributes you reconfigure per step in the advanced\nsequence. The following table lists which attributes can be configured\nin an advanced sequence for each NI-DCPower device that supports\nadvanced sequencing. A Yes indicates that the attribute can be configured\nin advanced sequencing. An No indicates that the attribute cannot be\nconfigured in advanced sequencing.\n',
-                    'table_body': [
-                        [
-                            'NIDCPOWER_ATTR_DC_NOISE_REJECTION',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'No',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_APERTURE_TIME',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_MEASURE_RECORD_LENGTH',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_SENSE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_OVP_ENABLED',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_OVP_LIMIT',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_DELAY',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_OFF_TIME',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_ON_TIME',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_SOURCE_DELAY',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_COMPENSATION_FREQUENCY',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_GAIN_BANDWIDTH',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_POLE_ZERO_RATIO',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_COMPENSATION_FREQUENCY',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_GAIN_BANDWIDTH',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_POLE_ZERO_RATIO',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_LEVEL',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_LEVEL_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_LIMIT',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_LIMIT_HIGH',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_LIMIT_LOW',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_LIMIT_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_LIMIT',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_LIMIT_HIGH',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_LIMIT_LOW',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_CURRENT_LIMIT_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_LEVEL',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_VOLTAGE_LEVEL_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_OUTPUT_ENABLED',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_OUTPUT_FUNCTION',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_OUTPUT_RESISTANCE',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No',
-                            'Yes',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LEVEL',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LIMIT',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LIMIT_HIGH',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LIMIT_LOW',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_CURRENT_LEVEL',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_CURRENT_LEVEL_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT_HIGH',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT_LOW',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LIMIT',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LIMIT_HIGH',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LIMIT_LOW',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LEVEL',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT_HIGH',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT_LOW',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_VOLTAGE_LEVEL',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_PULSE_VOLTAGE_LEVEL_RANGE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'No',
-                            'No',
-                            'No'
-                        ],
-                        [
-                            'NIDCPOWER_ATTR_TRANSIENT_RESPONSE',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes',
-                            'Yes'
-                        ]
-                    ],
-                    'table_header': [
-                        'Attribute',
-                        'PXIe-4135',
-                        'PXIe-4136',
-                        'PXIe-4137',
-                        'PXIe-4138',
-                        'PXIe-4139',
-                        'PXIe-4140/4142/4144',
-                        'PXIe-4141/4143/4145',
-                        'PXIe-4162/4163'
-                    ]
-                },
-                'name': 'attributeIds',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'attributeIdCount'
-                },
-                'type': 'ViInt32[]'
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies that this current sequence is active.'
-                },
-                'name': 'setAsActiveSequence',
-                'type': 'ViBoolean'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
+    # 'CreateAdvancedSequence': {
+    #     'codegen_method': 'public',
+    #     'documentation': {
+    #         'description': '\nCreates an empty advanced sequence. Call the\nniDCPower_CreateAdvancedSequenceStep function to add steps to the\nactive advanced sequence.\n\nYou can create multiple advanced sequences in a session.\n\n**Support for this function**\n\nYou must set the source mode to Sequence to use this function.\n\nUsing the niDCPower_SetSequence function with Advanced Sequence\nfunctions is unsupported.\n\nUse this function in the Uncommitted or Committed programming states.\nRefer to the `Programming\nStates <REPLACE_DRIVER_SPECIFIC_URL_1(programmingstates)>`__ topic in\nthe *NI DC Power Supplies and SMUs Help* for more information about\nNI-DCPower programming states.\n\n**Related Topics**:\n\n`Advanced Sequence\nMode <REPLACE_DRIVER_SPECIFIC_URL_1(advancedsequencemode)>`__\n\n`Programming\nStates <REPLACE_DRIVER_SPECIFIC_URL_1(programmingstates)>`__\n\nniDCPower_CreateAdvancedSequenceStep\n',
+    #         'note': "\nThis function is not supported on all devices. Refer to `Supported\nFunctions by\nDevice <REPLACE_DRIVER_SPECIFIC_URL_2(nidcpowercref.chm',%20'supportedfunctions)>`__\nfor more information about supported devices.\n"
+    #     },
+    #     'parameters': [
+    #         {
+    #             'direction': 'in',
+    #             'documentation': {
+    #                 'description': '\nIdentifies a particular instrument session. **vi** is obtained from the\nniDCPower_InitializeWithChannels function.\n'
+    #             },
+    #             'name': 'vi',
+    #             'type': 'ViSession'
+    #         },
+    #         {
+    #             'direction': 'in',
+    #             'documentation': {
+    #                 'description': 'Specifies the name of the sequence to create.'
+    #             },
+    #             'name': 'sequenceName',
+    #             'type': 'ViConstString'
+    #         },
+    #         {
+    #             'direction': 'in',
+    #             'documentation': {
+    #                 'description': 'Specifies the number of attributes in the attributeIDs array.'
+    #             },
+    #             'name': 'attributeIdCount',
+    #             'type': 'ViInt32'
+    #         },
+    #         {
+    #             'direction': 'in',
+    #             'documentation': {
+    #                 'description': '\nSpecifies the attributes you reconfigure per step in the advanced\nsequence. The following table lists which attributes can be configured\nin an advanced sequence for each NI-DCPower device that supports\nadvanced sequencing. A Yes indicates that the attribute can be configured\nin advanced sequencing. An No indicates that the attribute cannot be\nconfigured in advanced sequencing.\n',
+    #                 'table_body': [
+    #                     [
+    #                         'NIDCPOWER_ATTR_DC_NOISE_REJECTION',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_APERTURE_TIME',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_MEASURE_RECORD_LENGTH',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_SENSE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_OVP_ENABLED',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_OVP_LIMIT',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_DELAY',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_OFF_TIME',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_ON_TIME',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_SOURCE_DELAY',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_COMPENSATION_FREQUENCY',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_GAIN_BANDWIDTH',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_POLE_ZERO_RATIO',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_COMPENSATION_FREQUENCY',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_GAIN_BANDWIDTH',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_POLE_ZERO_RATIO',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_LEVEL',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_LEVEL_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_LIMIT',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_LIMIT_HIGH',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_LIMIT_LOW',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_LIMIT_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_LIMIT',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_LIMIT_HIGH',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_LIMIT_LOW',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_CURRENT_LIMIT_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_LEVEL',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_VOLTAGE_LEVEL_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_OUTPUT_ENABLED',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_OUTPUT_FUNCTION',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_OUTPUT_RESISTANCE',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No',
+    #                         'Yes',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LEVEL',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LIMIT',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LIMIT_HIGH',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LIMIT_LOW',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_CURRENT_LEVEL',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_CURRENT_LEVEL_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT_HIGH',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT_LOW',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_VOLTAGE_LIMIT_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LIMIT',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LIMIT_HIGH',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_CURRENT_LIMIT_LOW',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_BIAS_VOLTAGE_LEVEL',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT_HIGH',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT_LOW',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_CURRENT_LIMIT_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_VOLTAGE_LEVEL',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_PULSE_VOLTAGE_LEVEL_RANGE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'No',
+    #                         'No',
+    #                         'No'
+    #                     ],
+    #                     [
+    #                         'NIDCPOWER_ATTR_TRANSIENT_RESPONSE',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes',
+    #                         'Yes'
+    #                     ]
+    #                 ],
+    #                 'table_header': [
+    #                     'Attribute',
+    #                     'PXIe-4135',
+    #                     'PXIe-4136',
+    #                     'PXIe-4137',
+    #                     'PXIe-4138',
+    #                     'PXIe-4139',
+    #                     'PXIe-4140/4142/4144',
+    #                     'PXIe-4141/4143/4145',
+    #                     'PXIe-4162/4163'
+    #                 ]
+    #             },
+    #             'name': 'attributeIds',
+    #             'size': {
+    #                 'mechanism': 'len',
+    #                 'value': 'attributeIdCount'
+    #             },
+    #             'type': 'ViInt32[]'
+    #         },
+    #         {
+    #             'direction': 'in',
+    #             'documentation': {
+    #                 'description': 'Specifies that this current sequence is active.'
+    #             },
+    #             'name': 'setAsActiveSequence',
+    #             'type': 'ViBoolean'
+    #         }
+    #     ],
+    #     'returns': 'ViStatus'
+    # },
     'CreateAdvancedSequenceStep': {
         'documentation': {
             'description': '\nCreates a new advanced sequence step in the advanced sequence specified\nby the Active advanced sequence. When you create an advanced sequence\nstep, each attribute you passed to the niDCPower_CreateAdvancedSequence\nfunction is reset to its default value for that step unless otherwise\nspecified.\n\n**Support for this Function**\n\nYou must set the source mode to Sequence to use this function.\n\nUsing the niDCPower_SetSequence function with Advanced Sequence\nfunctions is unsupported.\n\n**Related Topics**:\n\n`Advanced Sequence\nMode <REPLACE_DRIVER_SPECIFIC_URL_1(advancedsequencemode)>`__\n\n`Programming\nStates <REPLACE_DRIVER_SPECIFIC_URL_1(programmingstates)>`__\n\nniDCPower_CreateAdvancedSequence\n',
@@ -2735,22 +2735,22 @@ functions = {
     #     'python_name': 'self_test',
     #     'returns': 'ViStatus'
     # },
-    # 'reset': {
-    #     'documentation': {
-    #         'description': '\nResets the device to a known state. This function disables power\ngeneration, resets session attributes to their default values, commits\nthe session attributes, and leaves the session in the Uncommitted state.\nRefer to the `Programming\nStates <REPLACE_DRIVER_SPECIFIC_URL_1(programmingstates)>`__ topic for\nmore information about NI-DCPower software states.\n'
-    #     },
-    #     'parameters': [
-    #         {
-    #             'direction': 'in',
-    #             'documentation': {
-    #                 'description': '\nIdentifies a particular instrument session. **vi** is obtained from the\nniDCPower_InitializeWithChannels function.\n'
-    #             },
-    #             'name': 'vi',
-    #             'type': 'ViSession'
-    #         }
-    #     ],
-    #     'returns': 'ViStatus'
-    # },
+    'reset': {
+        'documentation': {
+            'description': '\nResets the device to a known state. This function disables power\ngeneration, resets session attributes to their default values, commits\nthe session attributes, and leaves the session in the Uncommitted state.\nRefer to the `Programming\nStates <REPLACE_DRIVER_SPECIFIC_URL_1(programmingstates)>`__ topic for\nmore information about NI-DCPower software states.\n'
+        },
+        'parameters': [
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': '\nIdentifies a particular instrument session. **vi** is obtained from the\nniDCPower_InitializeWithChannels function.\n'
+                },
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'self_test': {
         'codegen_method': 'public',
         'documentation': {
