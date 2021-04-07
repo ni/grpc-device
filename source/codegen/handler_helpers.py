@@ -73,7 +73,7 @@ def create_param(parameter):
     if common_helpers.is_struct(parameter):
       type = type.replace("struct ", "")
     if common_helpers.is_array(type):
-        is_fixed = parameter['size']['mechanism'] == 'fixed'
+        is_fixed = parameter.get('size',{}).get('mechanism',{}) == 'fixed'
         array_size = parameter['size']['value'] if is_fixed else ''
         return f'{type[:-2]} {name}[{array_size}]'
     elif common_helpers.is_output_parameter(parameter):

@@ -2,6 +2,8 @@
 #include <niscope/niscope_service.h>
 #include <niswitch/niswitch_library.h>
 #include <niswitch/niswitch_service.h>
+#include <nidcpower/nidcpower_library.h>
+#include <nidcpower/nidcpower_service.h>
 
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
@@ -48,6 +50,10 @@ static void RunServer(const std::string& config_file_path)
   niswitch_grpc::NiSwitchLibrary niswitch_library;
   niswitch_grpc::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
   builder.RegisterService(&niswitch_service);
+
+  nidcpower_grpc::NiDCPowerLibrary nidcpower_library;
+  nidcpower_grpc::NiDCPowerService nidcpower_service(&nidcpower_library, &session_repository);
+  builder.RegisterService(&nidcpower_service);
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
