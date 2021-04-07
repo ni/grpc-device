@@ -1898,30 +1898,30 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'ExportAttributeConfigurationBuffer': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'size',
-        'direction': 'in',
-        'type': 'ViInt32'
-      },
-      {
-        'name': 'configuration',
-        'direction': 'out',
-        'type': 'ViAddr[]',
-        'size': {
-          'mechanism': 'ivi-dance',
-          'value': 'size'
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
+#   'ExportAttributeConfigurationBuffer': {
+#     'parameters': [
+#       {
+#         'name': 'vi',
+#         'direction': 'in',
+#         'type': 'ViSession'
+#       },
+#       {
+#         'name': 'size',
+#         'direction': 'in',
+#         'type': 'ViInt32'
+#       },
+#       {
+#         'name': 'configuration',
+#         'direction': 'out',
+#         'type': 'ViAddr[]',
+#         'size': {
+#           'mechanism': 'ivi-dance',
+#           'value': 'size'
+#         }
+#       }
+#     ],
+#     'returns': 'ViStatus'
+#   },
   'ExportAttributeConfigurationFile': {
     'parameters': [
       {
@@ -2463,30 +2463,30 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'ImportAttributeConfigurationBuffer': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'size',
-        'direction': 'in',
-        'type': 'ViInt32'
-      },
-      {
-        'name': 'configuration',
-        'direction': 'in',
-        'type': 'ViAddr[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'size'
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
+#   'ImportAttributeConfigurationBuffer': {
+#     'parameters': [
+#       {
+#         'name': 'vi',
+#         'direction': 'in',
+#         'type': 'ViSession'
+#       },
+#       {
+#         'name': 'size',
+#         'direction': 'in',
+#         'type': 'ViInt32'
+#       },
+#       {
+#         'name': 'configuration',
+#         'direction': 'in',
+#         'type': 'ViAddr[]',
+#         'size': {
+#           'mechanism': 'len',
+#           'value': 'size'
+#         }
+#       }
+#     ],
+#     'returns': 'ViStatus'
+#   },
   'ImportAttributeConfigurationFile': {
     'parameters': [
       {
