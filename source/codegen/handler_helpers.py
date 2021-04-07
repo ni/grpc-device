@@ -81,7 +81,7 @@ def create_param(parameter):
     else:
         return f'{type} {name}'
 
-def python_to_c(enum):u
+def python_to_c(enum):
   enum_value = enum["values"][0]["value"]
   if isinstance(enum_value, float):
     return "float"
