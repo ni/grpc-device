@@ -46,6 +46,7 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
+  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
   ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
@@ -97,6 +98,7 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   using GetSelfCalSupportedPtr = ViStatus (*)(ViSession vi, ViBoolean* selfCalSupported);
   using ImportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 size, ViInt8 configuration[]);
   using ImportAttributeConfigurationFilePtr = ViStatus (*)(ViSession vi, ViConstString filePath);
+  using InitPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using InitWithOptionsPtr = ViStatus (*)(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   using InitiatePtr = ViStatus (*)(ViSession vi);
   using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
@@ -148,6 +150,7 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
     GetSelfCalSupportedPtr GetSelfCalSupported;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
+    InitPtr Init;
     InitWithOptionsPtr InitWithOptions;
     InitiatePtr Initiate;
     LockSessionPtr LockSession;

@@ -49,6 +49,7 @@ NiDMMLibrary::NiDMMLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetSelfCalSupported = reinterpret_cast<GetSelfCalSupportedPtr>(shared_library_.get_function_pointer("niDMM_GetSelfCalSupported"));
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDMM_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDMM_ImportAttributeConfigurationFile"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niScope_init"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niDMM_InitWithOptions"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niDMM_Initiate"));
   function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niDMM_LockSession"));
@@ -416,6 +417,18 @@ ViStatus NiDMMLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstStr
   return niDMM_ImportAttributeConfigurationFile(vi, filePath);
 #else
   return function_pointers_.ImportAttributeConfigurationFile(vi, filePath);
+#endif
+}
+
+ViStatus NiDMMLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
+{
+  if (!function_pointers_.Init) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niScope_init.");
+  }
+#if defined(_MSC_VER)
+  return niScope_init(resourceName, idQuery, resetDevice, vi);
+#else
+  return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
 #endif
 }
 

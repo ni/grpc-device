@@ -44,6 +44,7 @@ service NiDMM {
   rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
+  rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
@@ -645,11 +646,24 @@ message ImportAttributeConfigurationFileResponse {
   int32 status = 1;
 }
 
+message InitRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
+}
+
+message InitResponse {
+  int32 status = 1;
+  nidevice_grpc.Session vi = 2;
+}
+
 message InitWithOptionsRequest {
-  string resource_name = 1;
-  bool id_query = 2;
-  bool reset_device = 3;
-  string option_string = 4;
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
+  string option_string = 5;
 }
 
 message InitWithOptionsResponse {
