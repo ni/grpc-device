@@ -1353,9 +1353,9 @@ functions = {
             }
         ],
         'returns': 'ViStatus'
-    },'Init':{
+    },
+    'Init':{
         'init_method': True,
-        'cname' : 'niScope_init',
         'parameters':[
             {
                 'direction': 'in',
