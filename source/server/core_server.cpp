@@ -2,6 +2,8 @@
 #include <niscope/niscope_service.h>
 #include <niswitch/niswitch_library.h>
 #include <niswitch/niswitch_service.h>
+#include <nidmm/nidmm_library.h>
+#include <nidmm/nidmm_service.h>
 
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
@@ -48,6 +50,10 @@ static void RunServer(const std::string& config_file_path)
   niswitch_grpc::NiSwitchLibrary niswitch_library;
   niswitch_grpc::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
   builder.RegisterService(&niswitch_service);
+
+  nidmm_grpc::NiDMMLibrary nidmm_library;
+  nidmm_grpc::NiDMMService nidmm_service(&nidmm_library, &session_repository);
+  builder.RegisterService(&nidmm_service);
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
