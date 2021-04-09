@@ -26,8 +26,8 @@ extern "C" {
 /****************************************************************************
  *----------------- Instrument Driver Revision Information -----------------*
  ****************************************************************************/
-#define NISYNC_MAJOR_VERSION                 __NISYNC_MAJOR_VERSION__ /* Inst. driver major version */
-#define NISYNC_MINOR_VERSION                 __NISYNC_MINOR_VERSION__ /* Inst. driver minor version */
+#define NISYNC_MAJOR_VERSION                 21 /* Inst. driver major version */
+#define NISYNC_MINOR_VERSION                 0 /* Inst. driver minor version */
 
 /****************************************************************************
  *---------------------------- Attribute Defines ---------------------------*
