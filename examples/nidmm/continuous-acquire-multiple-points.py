@@ -1,3 +1,27 @@
+# 
+# This example performs continuous multipoint acquisition and prints the number of points read and average value of measurements.
+#
+# The gRPC API is built from the C API.  NI-DMM documentation is installed with the driver at:
+# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niDMM\Documentation\English\DMM.chm
+
+#
+# Getting Started:
+#
+# To run this example, install "NI-DMM Driver" on the server machine.
+# Link : https://www.ni.com/en-us/support/downloads/drivers/download.ni-dmm.html
+#
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+#
+# Refer to the NI-DMM gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
+# Link : https://github.com/ni/grpc-device/wiki/NI-DMM-C-Function-Reference
+#
+# Running from command line:
+#
+# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
+#   > python continuous-acquire-multiple-points.py <server_address> <port_number> <resource_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDMM" as the resource name
+
 import grpc
 import sys
 import time
