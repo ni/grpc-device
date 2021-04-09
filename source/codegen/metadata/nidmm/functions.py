@@ -2212,5 +2212,1101 @@ functions = {
             }
         ],
         'returns': 'ViStatus'
+    },
+    "InvalidateAllAttributes": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CalAdjustAcFilter": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "mode",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "range",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "frequency",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "expectedValue",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CalAdjustGain": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "mode",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "range",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "inputResistance",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "expectedValue",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CalAdjustLc": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "type",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CalAdjustLinearization": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "function",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "range",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "inputResistance",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "expectedValue",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CalAdjustMisc": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "type",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CalAdjustOffset": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "mode",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "range",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "inputResistance",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CheckAttributeViBoolean": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "channelName",
+            "direction": "in",
+            "type": "ViConstString"
+        },
+        {
+            "name": "attributeId",
+            "direction": "in",
+            "type": "ViAttr"
+        },
+        {
+            "name": "attributeValue",
+            "direction": "in",
+            "type": "ViBoolean"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CheckAttributeViInt32": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "channelName",
+            "direction": "in",
+            "type": "ViConstString"
+        },
+        {
+            "name": "attributeId",
+            "direction": "in",
+            "type": "ViAttr"
+        },
+        {
+            "name": "attributeValue",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CheckAttributeViReal64": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "channelName",
+            "direction": "in",
+            "type": "ViConstString"
+        },
+        {
+            "name": "attributeId",
+            "direction": "in",
+            "type": "ViAttr"
+        },
+        {
+            "name": "attributeValue",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CheckAttributeViSession": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "channelName",
+            "direction": "in",
+            "type": "ViConstString"
+        },
+        {
+            "name": "attributeId",
+            "direction": "in",
+            "type": "ViAttr"
+        },
+        {
+            "name": "attributeValue",
+            "direction": "in",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CheckAttributeViString": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "channelName",
+            "direction": "in",
+            "type": "ViConstString"
+        },
+        {
+            "name": "attributeId",
+            "direction": "in",
+            "type": "ViAttr"
+        },
+        {
+            "name": "attributeValue",
+            "direction": "in",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ClearError": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ClearInterchangeWarnings": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CloseExtCal": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "action",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureAcBandwidth": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "acMinimumFrequencyHz",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "acMaximumFrequencyHz",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureAdcCalibration": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "adcCalibration",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureAutoZeroMode": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "autoZeroMode",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureCableCompType": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "cableCompType",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureCurrentSource": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "currentSource",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureFixedRefJunction": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "fixedReferenceJunction",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureFrequencyVoltageRange": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "voltageRange",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureMeasCompleteDest": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "measCompleteDestination",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureMeasCompleteSlope": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "measCompleteSlope",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureOffsetCompOhms": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "offsetCompOhms",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureOpenCableCompValues": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "conductance",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "susceptance",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigurePowerLineFrequency": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "powerLineFrequencyHz",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureSampleTriggerSlope": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "sampleTriggerSlope",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureThermistorType": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "thermistorType",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureTransducerType": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "transducerType",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureTriggerSlope": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "triggerSlope",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureWaveformCoupling": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "waveformCoupling",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "Control": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "controlAction",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ErrorQuery": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "errorCode",
+            "direction": "out",
+            "type": "ViStatus"
+        },
+        {
+            "name": "errorMessage",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "FormatMeasAbsolute": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "measurementFunction",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "range",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "resolution",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "measurement",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "modeString",
+            "direction": "out",
+            "type": "ViChar[]"
+        },
+        {
+            "name": "rangeString",
+            "direction": "out",
+            "type": "ViChar[]"
+        },
+        {
+            "name": "dataString",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetApertureTimeInfo": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "apertureTime",
+            "direction": "out",
+            "type": "ViReal64"
+        },
+        {
+            "name": "apertureTimeUnits",
+            "direction": "out",
+            "type": "ViInt32",
+            "enum": "ApertureTimeUnits"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetAttributeViSession": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "channelName",
+            "direction": "in",
+            "type": "ViConstString"
+        },
+        {
+            "name": "attributeId",
+            "direction": "in",
+            "type": "ViAttr"
+        },
+        {
+            "name": "attributeValue",
+            "direction": "out",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetAutoRangeValue": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "actualRange",
+            "direction": "out",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetCalCount": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "calType",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "count",
+            "direction": "out",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetCalUserDefinedInfo": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "bufferSize",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "info",
+            "direction": "out",
+            "type": "ViChar[]",
+            "size": {
+            "mechanism": "fixed",
+            "value": 256
+            }
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetCalUserDefinedInfoMaxSize": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "infoSize",
+            "direction": "out",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetChannelName": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "index",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "bufferSize",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "channelString",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetErrorMessage": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "errorCode",
+            "direction": "in",
+            "type": "ViStatus"
+        },
+        {
+            "name": "bufferSize",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "errorMessage",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetMeasurementPeriod": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "period",
+            "direction": "out",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetNextCoercionRecord": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "bufferSize",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "coercionRecord",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetNextInterchangeWarning": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "bufferSize",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "interchangeWarning",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "InitExtCal": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "resourceName",
+            "direction": "in",
+            "type": "ViChar[]"
+        },
+        {
+            "name": "calibrationPassword",
+            "direction": "in",
+            "type": "ViChar[]"
+        },
+        {
+            "name": "vi",
+            "direction": "out",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "IsOverRange": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "measurementValue",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "isOverRange",
+            "direction": "out",
+            "type": "ViBoolean"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "IsUnderRange": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "measurementValue",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "isUnderRange",
+            "direction": "out",
+            "type": "ViBoolean"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ResetInterchangeCheck": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "RestoreLastExtCalConstants": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "RevisionQuery": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "instrumentDriverRevision",
+            "direction": "out",
+            "type": "ViChar[]"
+        },
+        {
+            "name": "firmwareRevision",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetAttributeViSession": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "channelName",
+            "direction": "in",
+            "type": "ViConstString"
+        },
+        {
+            "name": "attributeId",
+            "direction": "in",
+            "type": "ViAttr"
+        },
+        {
+            "name": "attributeValue",
+            "direction": "in",
+            "type": "ViSession"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetCalPassword": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "oldPassword",
+            "direction": "in",
+            "type": "ViChar[]"
+        },
+        {
+            "name": "newPassword",
+            "direction": "in",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetCalUserDefinedInfo": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "info",
+            "direction": "in",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
     }
+
 }

@@ -88,7 +88,6 @@ public:
   ::grpc::Status CheckAttributeViString(::grpc::ServerContext* context, const CheckAttributeViStringRequest* request, CheckAttributeViStringResponse* response) override;
   ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
   ::grpc::Status ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response) override;
-  ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response) override;
   ::grpc::Status ConfigureAcBandwidth(::grpc::ServerContext* context, const ConfigureAcBandwidthRequest* request, ConfigureAcBandwidthResponse* response) override;
   ::grpc::Status ConfigureAdcCalibration(::grpc::ServerContext* context, const ConfigureAdcCalibrationRequest* request, ConfigureAdcCalibrationResponse* response) override;
@@ -108,7 +107,6 @@ public:
   ::grpc::Status ConfigureTriggerSlope(::grpc::ServerContext* context, const ConfigureTriggerSlopeRequest* request, ConfigureTriggerSlopeResponse* response) override;
   ::grpc::Status ConfigureWaveformCoupling(::grpc::ServerContext* context, const ConfigureWaveformCouplingRequest* request, ConfigureWaveformCouplingResponse* response) override;
   ::grpc::Status Control(::grpc::ServerContext* context, const ControlRequest* request, ControlResponse* response) override;
-  ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response) override;
   ::grpc::Status FormatMeasAbsolute(::grpc::ServerContext* context, const FormatMeasAbsoluteRequest* request, FormatMeasAbsoluteResponse* response) override;
   ::grpc::Status GetApertureTimeInfo(::grpc::ServerContext* context, const GetApertureTimeInfoRequest* request, GetApertureTimeInfoResponse* response) override;
@@ -128,7 +126,6 @@ public:
   ::grpc::Status ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response) override;
   ::grpc::Status RestoreLastExtCalConstants(::grpc::ServerContext* context, const RestoreLastExtCalConstantsRequest* request, RestoreLastExtCalConstantsResponse* response) override;
   ::grpc::Status RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response) override;
-  ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetCalPassword(::grpc::ServerContext* context, const SetCalPasswordRequest* request, SetCalPasswordResponse* response) override;
   ::grpc::Status SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response) override;

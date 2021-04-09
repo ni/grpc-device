@@ -81,7 +81,6 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, CheckAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViChar attributeValue[]), (override));
   MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClearInterchangeWarnings, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
   MOCK_METHOD(ViStatus, ConfigureAcBandwidth, (ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz), (override));
   MOCK_METHOD(ViStatus, ConfigureAdcCalibration, (ViSession vi, ViInt32 adcCalibration), (override));
@@ -101,7 +100,6 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureTriggerSlope, (ViSession vi, ViInt32 triggerSlope), (override));
   MOCK_METHOD(ViStatus, ConfigureWaveformCoupling, (ViSession vi, ViInt32 waveformCoupling), (override));
   MOCK_METHOD(ViStatus, Control, (ViSession vi, ViInt32 controlAction), (override));
-  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViStatus* errorCode, ViChar errorMessage[]), (override));
   MOCK_METHOD(ViStatus, FormatMeasAbsolute, (ViInt32 measurementFunction, ViReal64 range, ViReal64 resolution, ViReal64 measurement, ViChar modeString[], ViChar rangeString[], ViChar dataString[]), (override));
   MOCK_METHOD(ViStatus, GetApertureTimeInfo, (ViSession vi, ViReal64* apertureTime, ViInt32* apertureTimeUnits), (override));
@@ -121,7 +119,6 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, ResetInterchangeCheck, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, RestoreLastExtCalConstants, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, RevisionQuery, (ViSession vi, ViChar instrumentDriverRevision[], ViChar firmwareRevision[]), (override));
-  MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
   MOCK_METHOD(ViStatus, SetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue), (override));
   MOCK_METHOD(ViStatus, SetCalPassword, (ViSession vi, ViChar oldPassword[], ViChar newPassword[]), (override));
   MOCK_METHOD(ViStatus, SetCalUserDefinedInfo, (ViSession vi, ViChar info[]), (override));

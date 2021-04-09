@@ -82,7 +82,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViChar attributeValue[]);
   ViStatus ClearError(ViSession vi);
   ViStatus ClearInterchangeWarnings(ViSession vi);
-  ViStatus Close(ViSession vi);
   ViStatus CloseExtCal(ViSession vi, ViInt32 action);
   ViStatus ConfigureAcBandwidth(ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz);
   ViStatus ConfigureAdcCalibration(ViSession vi, ViInt32 adcCalibration);
@@ -102,7 +101,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   ViStatus ConfigureTriggerSlope(ViSession vi, ViInt32 triggerSlope);
   ViStatus ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformCoupling);
   ViStatus Control(ViSession vi, ViInt32 controlAction);
-  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ErrorQuery(ViSession vi, ViStatus* errorCode, ViChar errorMessage[]);
   ViStatus FormatMeasAbsolute(ViInt32 measurementFunction, ViReal64 range, ViReal64 resolution, ViReal64 measurement, ViChar modeString[], ViChar rangeString[], ViChar dataString[]);
   ViStatus GetApertureTimeInfo(ViSession vi, ViReal64* apertureTime, ViInt32* apertureTimeUnits);
@@ -122,7 +120,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   ViStatus ResetInterchangeCheck(ViSession vi);
   ViStatus RestoreLastExtCalConstants(ViSession vi);
   ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[], ViChar firmwareRevision[]);
-  ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   ViStatus SetCalPassword(ViSession vi, ViChar oldPassword[], ViChar newPassword[]);
   ViStatus SetCalUserDefinedInfo(ViSession vi, ViChar info[]);
@@ -192,7 +189,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   using CheckAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViChar attributeValue[]);
   using ClearErrorPtr = ViStatus (*)(ViSession vi);
   using ClearInterchangeWarningsPtr = ViStatus (*)(ViSession vi);
-  using ClosePtr = ViStatus (*)(ViSession vi);
   using CloseExtCalPtr = ViStatus (*)(ViSession vi, ViInt32 action);
   using ConfigureAcBandwidthPtr = ViStatus (*)(ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz);
   using ConfigureAdcCalibrationPtr = ViStatus (*)(ViSession vi, ViInt32 adcCalibration);
@@ -212,7 +208,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   using ConfigureTriggerSlopePtr = ViStatus (*)(ViSession vi, ViInt32 triggerSlope);
   using ConfigureWaveformCouplingPtr = ViStatus (*)(ViSession vi, ViInt32 waveformCoupling);
   using ControlPtr = ViStatus (*)(ViSession vi, ViInt32 controlAction);
-  using ErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   using ErrorQueryPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViChar errorMessage[]);
   using FormatMeasAbsolutePtr = ViStatus (*)(ViInt32 measurementFunction, ViReal64 range, ViReal64 resolution, ViReal64 measurement, ViChar modeString[], ViChar rangeString[], ViChar dataString[]);
   using GetApertureTimeInfoPtr = ViStatus (*)(ViSession vi, ViReal64* apertureTime, ViInt32* apertureTimeUnits);
@@ -232,7 +227,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   using ResetInterchangeCheckPtr = ViStatus (*)(ViSession vi);
   using RestoreLastExtCalConstantsPtr = ViStatus (*)(ViSession vi);
   using RevisionQueryPtr = ViStatus (*)(ViSession vi, ViChar instrumentDriverRevision[], ViChar firmwareRevision[]);
-  using SelfTestPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
   using SetAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   using SetCalPasswordPtr = ViStatus (*)(ViSession vi, ViChar oldPassword[], ViChar newPassword[]);
   using SetCalUserDefinedInfoPtr = ViStatus (*)(ViSession vi, ViChar info[]);
@@ -302,7 +296,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
     CheckAttributeViStringPtr CheckAttributeViString;
     ClearErrorPtr ClearError;
     ClearInterchangeWarningsPtr ClearInterchangeWarnings;
-    ClosePtr Close;
     CloseExtCalPtr CloseExtCal;
     ConfigureAcBandwidthPtr ConfigureAcBandwidth;
     ConfigureAdcCalibrationPtr ConfigureAdcCalibration;
@@ -322,7 +315,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
     ConfigureTriggerSlopePtr ConfigureTriggerSlope;
     ConfigureWaveformCouplingPtr ConfigureWaveformCoupling;
     ControlPtr Control;
-    ErrorMessagePtr ErrorMessage;
     ErrorQueryPtr ErrorQuery;
     FormatMeasAbsolutePtr FormatMeasAbsolute;
     GetApertureTimeInfoPtr GetApertureTimeInfo;
@@ -342,7 +334,6 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
     ResetInterchangeCheckPtr ResetInterchangeCheck;
     RestoreLastExtCalConstantsPtr RestoreLastExtCalConstants;
     RevisionQueryPtr RevisionQuery;
-    SelfTestPtr SelfTest;
     SetAttributeViSessionPtr SetAttributeViSession;
     SetCalPasswordPtr SetCalPassword;
     SetCalUserDefinedInfoPtr SetCalUserDefinedInfo;

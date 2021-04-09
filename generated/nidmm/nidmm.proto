@@ -80,7 +80,6 @@ service NiDMM {
   rpc CheckAttributeViString(CheckAttributeViStringRequest) returns (CheckAttributeViStringResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
-  rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc ConfigureAcBandwidth(ConfigureAcBandwidthRequest) returns (ConfigureAcBandwidthResponse);
   rpc ConfigureAdcCalibration(ConfigureAdcCalibrationRequest) returns (ConfigureAdcCalibrationResponse);
@@ -100,7 +99,6 @@ service NiDMM {
   rpc ConfigureTriggerSlope(ConfigureTriggerSlopeRequest) returns (ConfigureTriggerSlopeResponse);
   rpc ConfigureWaveformCoupling(ConfigureWaveformCouplingRequest) returns (ConfigureWaveformCouplingResponse);
   rpc Control(ControlRequest) returns (ControlResponse);
-  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
   rpc FormatMeasAbsolute(FormatMeasAbsoluteRequest) returns (FormatMeasAbsoluteResponse);
   rpc GetApertureTimeInfo(GetApertureTimeInfoRequest) returns (GetApertureTimeInfoResponse);
@@ -120,7 +118,6 @@ service NiDMM {
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc RestoreLastExtCalConstants(RestoreLastExtCalConstantsRequest) returns (RestoreLastExtCalConstantsResponse);
   rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
-  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetCalPassword(SetCalPasswordRequest) returns (SetCalPasswordResponse);
   rpc SetCalUserDefinedInfo(SetCalUserDefinedInfoRequest) returns (SetCalUserDefinedInfoResponse);
@@ -1068,14 +1065,6 @@ message ClearInterchangeWarningsResponse {
   int32 status = 1;
 }
 
-message CloseRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message CloseResponse {
-  int32 status = 1;
-}
-
 message CloseExtCalRequest {
   nidevice_grpc.Session vi = 1;
   sint32 action = 2;
@@ -1247,16 +1236,6 @@ message ControlRequest {
 
 message ControlResponse {
   int32 status = 1;
-}
-
-message ErrorMessageRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 error_code = 2;
-}
-
-message ErrorMessageResponse {
-  int32 status = 1;
-  string error_message = 2;
 }
 
 message ErrorQueryRequest {
@@ -1448,16 +1427,6 @@ message RevisionQueryResponse {
   int32 status = 1;
   string instrument_driver_revision = 2;
   string firmware_revision = 3;
-}
-
-message SelfTestRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message SelfTestResponse {
-  int32 status = 1;
-  sint32 self_test_result = 2;
-  string self_test_message = 3;
 }
 
 message SetAttributeViSessionRequest {

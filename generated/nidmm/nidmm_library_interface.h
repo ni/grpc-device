@@ -79,7 +79,6 @@ class NiDMMLibraryInterface {
   virtual ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViChar attributeValue[]) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
-  virtual ViStatus Close(ViSession vi) = 0;
   virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus ConfigureAcBandwidth(ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz) = 0;
   virtual ViStatus ConfigureAdcCalibration(ViSession vi, ViInt32 adcCalibration) = 0;
@@ -99,7 +98,6 @@ class NiDMMLibraryInterface {
   virtual ViStatus ConfigureTriggerSlope(ViSession vi, ViInt32 triggerSlope) = 0;
   virtual ViStatus ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformCoupling) = 0;
   virtual ViStatus Control(ViSession vi, ViInt32 controlAction) = 0;
-  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus ErrorQuery(ViSession vi, ViStatus* errorCode, ViChar errorMessage[]) = 0;
   virtual ViStatus FormatMeasAbsolute(ViInt32 measurementFunction, ViReal64 range, ViReal64 resolution, ViReal64 measurement, ViChar modeString[], ViChar rangeString[], ViChar dataString[]) = 0;
   virtual ViStatus GetApertureTimeInfo(ViSession vi, ViReal64* apertureTime, ViInt32* apertureTimeUnits) = 0;
@@ -119,7 +117,6 @@ class NiDMMLibraryInterface {
   virtual ViStatus ResetInterchangeCheck(ViSession vi) = 0;
   virtual ViStatus RestoreLastExtCalConstants(ViSession vi) = 0;
   virtual ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[], ViChar firmwareRevision[]) = 0;
-  virtual ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
   virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
   virtual ViStatus SetCalPassword(ViSession vi, ViChar oldPassword[], ViChar newPassword[]) = 0;
   virtual ViStatus SetCalUserDefinedInfo(ViSession vi, ViChar info[]) = 0;

@@ -1607,25 +1607,6 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDMMService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->Close(vi);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDMMService::CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1999,30 +1980,6 @@ namespace nidmm_grpc {
       ViInt32 control_action = request->control_action();
       auto status = library_->Control(vi, control_action);
       response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDMMService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViStatus error_code = request->error_code();
-      std::string error_message(256, '\0');
-      auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_message(error_message);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2476,31 +2433,6 @@ namespace nidmm_grpc {
       if (status == 0) {
         response->set_instrument_driver_revision(instrument_driver_revision);
         response->set_firmware_revision(firmware_revision);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDMMService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt16 self_test_result {};
-      std::string self_test_message(256, '\0');
-      auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_self_test_result(self_test_result);
-        response->set_self_test_message(self_test_message);
       }
       return ::grpc::Status::OK;
     }

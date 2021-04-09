@@ -85,7 +85,6 @@ NiDMMLibrary::NiDMMLibrary() : shared_library_(kLibraryName)
   function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViString"));
   function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDMM_ClearError"));
   function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niDMM_ClearInterchangeWarnings"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niDMM_Close"));
   function_pointers_.CloseExtCal = reinterpret_cast<CloseExtCalPtr>(shared_library_.get_function_pointer("niDMM_CloseExtCal"));
   function_pointers_.ConfigureAcBandwidth = reinterpret_cast<ConfigureAcBandwidthPtr>(shared_library_.get_function_pointer("niDMM_ConfigureAcBandwidth"));
   function_pointers_.ConfigureAdcCalibration = reinterpret_cast<ConfigureAdcCalibrationPtr>(shared_library_.get_function_pointer("niDMM_ConfigureAdcCalibration"));
@@ -105,7 +104,6 @@ NiDMMLibrary::NiDMMLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureTriggerSlope = reinterpret_cast<ConfigureTriggerSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureTriggerSlope"));
   function_pointers_.ConfigureWaveformCoupling = reinterpret_cast<ConfigureWaveformCouplingPtr>(shared_library_.get_function_pointer("niDMM_ConfigureWaveformCoupling"));
   function_pointers_.Control = reinterpret_cast<ControlPtr>(shared_library_.get_function_pointer("niDMM_Control"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niDMM_ErrorMessage"));
   function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niDMM_ErrorQuery"));
   function_pointers_.FormatMeasAbsolute = reinterpret_cast<FormatMeasAbsolutePtr>(shared_library_.get_function_pointer("niDMM_FormatMeasAbsolute"));
   function_pointers_.GetApertureTimeInfo = reinterpret_cast<GetApertureTimeInfoPtr>(shared_library_.get_function_pointer("niDMM_GetApertureTimeInfo"));
@@ -125,7 +123,6 @@ NiDMMLibrary::NiDMMLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_.get_function_pointer("niDMM_ResetInterchangeCheck"));
   function_pointers_.RestoreLastExtCalConstants = reinterpret_cast<RestoreLastExtCalConstantsPtr>(shared_library_.get_function_pointer("niDMM_RestoreLastExtCalConstants"));
   function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niDMM_RevisionQuery"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niDMM_SelfTest"));
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDMM_SetAttributeViSession"));
   function_pointers_.SetCalPassword = reinterpret_cast<SetCalPasswordPtr>(shared_library_.get_function_pointer("niDMM_SetCalPassword"));
   function_pointers_.SetCalUserDefinedInfo = reinterpret_cast<SetCalUserDefinedInfoPtr>(shared_library_.get_function_pointer("niDMM_SetCalUserDefinedInfo"));
@@ -910,18 +907,6 @@ ViStatus NiDMMLibrary::ClearInterchangeWarnings(ViSession vi)
 #endif
 }
 
-ViStatus NiDMMLibrary::Close(ViSession vi)
-{
-  if (!function_pointers_.Close) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_Close.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_Close(vi);
-#else
-  return function_pointers_.Close(vi);
-#endif
-}
-
 ViStatus NiDMMLibrary::CloseExtCal(ViSession vi, ViInt32 action)
 {
   if (!function_pointers_.CloseExtCal) {
@@ -1150,18 +1135,6 @@ ViStatus NiDMMLibrary::Control(ViSession vi, ViInt32 controlAction)
 #endif
 }
 
-ViStatus NiDMMLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
-{
-  if (!function_pointers_.ErrorMessage) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ErrorMessage.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_ErrorMessage(vi, errorCode, errorMessage);
-#else
-  return function_pointers_.ErrorMessage(vi, errorCode, errorMessage);
-#endif
-}
-
 ViStatus NiDMMLibrary::ErrorQuery(ViSession vi, ViStatus* errorCode, ViChar errorMessage[])
 {
   if (!function_pointers_.ErrorQuery) {
@@ -1387,18 +1360,6 @@ ViStatus NiDMMLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevisi
   return niDMM_RevisionQuery(vi, instrumentDriverRevision, firmwareRevision);
 #else
   return function_pointers_.RevisionQuery(vi, instrumentDriverRevision, firmwareRevision);
-#endif
-}
-
-ViStatus NiDMMLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
-{
-  if (!function_pointers_.SelfTest) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SelfTest.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_SelfTest(vi, selfTestResult, selfTestMessage);
-#else
-  return function_pointers_.SelfTest(vi, selfTestResult, selfTestMessage);
 #endif
 }
 
