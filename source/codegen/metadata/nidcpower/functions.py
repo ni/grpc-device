@@ -506,6 +506,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'InitializeWithIndependentChannels': {
+    'init_method' : True,
     'parameters': [
       {
         'name': 'resourceName',
@@ -941,7 +942,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'Close': {
-      'cname' : 'niDCPower_close',
+     'cname' : 'niDCPower_close',
      'parameters': [
        {
          'name': 'vi',
