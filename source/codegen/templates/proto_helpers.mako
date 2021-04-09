@@ -59,7 +59,7 @@ enum ${enum_name} {
   config = data["config"]
   lookup = data["lookup"]
   has_custom_template = False
-  if len(config["custom_types"]) > 0:
+  if config["custom_types"]:
     custom_template = "custom_proto.mako"
     has_custom_template = True
 %>\
