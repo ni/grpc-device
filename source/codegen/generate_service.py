@@ -24,7 +24,7 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
   f.write(template.render(data=metadata))
   f.close()
 
-def fix_up_metadata(metadata):
+def mutate_metadata(metadata):
   for function in metadata["functions"]:
     parameters = metadata["functions"][function]["parameters"]
     metadata_mutation.sanitize_names(parameters)
@@ -41,7 +41,7 @@ def generate_all(metadata_dir, gen_dir):
   metadata = module.metadata
   lookup = TemplateLookup(directories = metadata_dir)
   metadata["lookup"] = lookup
-  fix_up_metadata(metadata)
+  mutate_metadata(metadata)
   generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
   generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
   generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)
