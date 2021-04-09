@@ -18,11 +18,11 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   virtual ~NiSyncLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  ViStatus init(ViRsrc resourceName, ViBoolean IDQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus close(ViSession vi);
 
  private:
-  using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean IDQuery, ViBoolean resetDevice, ViSession* vi);
+  using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using closePtr = ViStatus (*)(ViSession vi);
 
   typedef struct FunctionPointers {

@@ -17,7 +17,7 @@ namespace unit {
 
 class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
  public:
-  MOCK_METHOD(ViStatus, init, (ViRsrc resourceName, ViBoolean IDQuery, ViBoolean resetDevice, ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
 };
 

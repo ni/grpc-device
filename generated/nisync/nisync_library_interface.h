@@ -15,7 +15,7 @@ class NiSyncLibraryInterface {
  public:
   virtual ~NiSyncLibraryInterface() {}
 
-  virtual ViStatus init(ViRsrc resourceName, ViBoolean IDQuery, ViBoolean resetDevice, ViSession* vi) = 0;
+  virtual ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus close(ViSession vi) = 0;
 };
 

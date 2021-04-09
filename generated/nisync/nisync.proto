@@ -25,9 +25,10 @@ enum NiSyncAttributes {
 }
 
 message InitRequest {
-  string resource_name = 1;
-  bool _i_d_query = 2;
-  bool reset_device = 3;
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
 }
 
 message InitResponse {

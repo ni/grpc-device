@@ -32,13 +32,21 @@ namespace nisync_grpc {
     }
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViBoolean _i_d_query = request->_i_d_query();
+      ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
-      ViSession vi {};
-      auto status = library_->init(resource_name, _i_d_query, reset_device, &vi);
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->init(resource_name, id_query, reset_device, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(vi);
+        response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
