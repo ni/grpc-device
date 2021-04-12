@@ -141,7 +141,6 @@ try:
             # avoid reallocating the array for measurements
             pts_available = min(pts_available, MAXPTSTOREAD)
             if pts_available > 0:
-
                 # Clear the plot and setup the axis
                 plt.clf()
                 plt.axis([0, pts_available, -6, 6])
@@ -171,10 +170,8 @@ try:
                 time.sleep(0.1)
     except KeyboardInterrupt:
         pass
-                
 
     print(f'Number of measurements = {num_measurements}')
-
     # Calculate average
     average = sum_measurements/num_measurements
     print(f'Average = {average}')
