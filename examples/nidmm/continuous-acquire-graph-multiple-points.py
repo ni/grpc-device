@@ -19,7 +19,7 @@
 # Running from command line:
 #
 # Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
-#   > python continuous-acquire-multiple-points.py <server_address> <port_number> <resource_name>
+#   > python continuous-acquire-graph-multiple-points.py <server_address> <port_number> <resource_name>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDMM" as the resource name
 
 import grpc
@@ -34,7 +34,7 @@ import keyword
 
 server_address = "localhost"
 server_port = "31763"
-session_name = "NI-DMM-Session-1"
+session_name = "NI-DMM-Session"
 
 # Resource name and options for a simulated 4065 client. Change them according to the NI-DMM model.
 resource = "SimulatedDMM"
@@ -140,7 +140,6 @@ try:
             # available, set pts_available to MAXPTSTOREAD in order to
             # avoid reallocating the array for measurements
             pts_available = min(pts_available, MAXPTSTOREAD)
-
             if pts_available > 0:
 
                 # Clear the plot and setup the axis
