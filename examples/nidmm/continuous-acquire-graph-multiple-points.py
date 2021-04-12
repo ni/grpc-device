@@ -45,6 +45,7 @@ MAXPTSTOREAD        = 1000
 config_range        = 10.00
 resolution          = 5.5
 measurementType     = nidmm_types.Function.FUNCTION_NIDMM_VAL_DC_VOLTS
+powerlineFreq       = 60.0
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -105,6 +106,13 @@ try:
         sample_interval = 0.0
     ))
     CheckForError(vi, config_multipoint_response.status)
+
+    # Configure powerline frequency
+    config_powlinefreq_response = nidmm_client.ConfigurePowerLineFrequency(nidmm_types.ConfigurePowerLineFrequencyRequest(
+        vi = vi,
+        power_line_frequency_hz = powerlineFreq
+    ))
+    CheckForError(vi, config_powlinefreq_response.status)
 
     # Initiate Acquisition
     initiate_acquisition_response = nidmm_client.Initiate(nidmm_types.InitiateRequest(
