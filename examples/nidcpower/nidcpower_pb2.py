@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'\n\025com.ni.grpc.nidcpowerB\tNiDCPowerP\001\252\002 NationalInstruments.Grpc.DCPower',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fnidcpower.proto\x12\x0enidcpower_grpc\x1a\rsession.proto\"T\n\x18\x41\x62ortWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"+\n\x19\x41\x62ortWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"U\n\x19\x43ommitWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\",\n\x1a\x43ommitWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x97\x01\n5ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"H\n6ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x95\x01\n3ConfigureDigitalEdgePulseTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"F\n4ConfigureDigitalEdgePulseTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x9f\x01\n=ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"P\n>ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x98\x01\n6ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"I\n7ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x96\x01\n4ConfigureDigitalEdgeSourceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"G\n5ConfigureDigitalEdgeSourceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x95\x01\n3ConfigureDigitalEdgeStartTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"F\n4ConfigureDigitalEdgeStartTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"o\n\x13\x43onfigureOvpRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x03 \x01(\x08\x12\r\n\x05limit\x18\x04 \x01(\x01\"&\n\x14\x43onfigureOvpResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"r\n6ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"I\n7ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n4ConfigureSoftwareEdgePulseTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"G\n5ConfigureSoftwareEdgePulseTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"z\n>ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"Q\n?ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"s\n7ConfigureSoftwareEdgeShutdownTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"J\n8ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n5ConfigureSoftwareEdgeSourceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"H\n6ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n4ConfigureSoftwareEdgeStartTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"G\n5ConfigureSoftwareEdgeStartTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"w\n&ConfigureSourceModeWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x13\n\x0bsource_mode\x18\x03 \x01(\x11\"9\n\'ConfigureSourceModeWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x8b\x01\n3CreateAdvancedSequenceCommitStepWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x1a\n\x12set_as_active_step\x18\x03 \x01(\x08\"F\n4CreateAdvancedSequenceCommitStepWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x85\x01\n-CreateAdvancedSequenceStepWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x1a\n\x12set_as_active_step\x18\x03 \x01(\x08\"@\n.CreateAdvancedSequenceStepWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"|\n)DeleteAdvancedSequenceWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rsequence_name\x18\x03 \x01(\t\"<\n*DeleteAdvancedSequenceWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"b\n&DisablePulseTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"9\n\'DisablePulseTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n0DisableSequenceAdvanceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"C\n1DisableSequenceAdvanceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"e\n)DisableShutdownTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"<\n*DisableShutdownTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"c\n\'DisableSourceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\":\n(DisableSourceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"b\n&DisableStartTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"9\n\'DisableStartTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"N\n\x11\x45rrorQueryRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x15\n\rerror_message\x18\x02 \x01(\t\"8\n\x12\x45rrorQueryResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x12\n\nerror_code\x18\x02 \x01(\x11\"\x9f\x01\n\x1f\x45xportSignalWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0e\n\x06signal\x18\x03 \x01(\x11\x12\x19\n\x11signal_identifier\x18\x04 \x01(\t\x12\x17\n\x0foutput_terminal\x18\x05 \x01(\t\"2\n ExportSignalWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"g\n(InitializeWithIndependentChannelsRequest\x12\x15\n\rresource_name\x18\x01 \x01(\t\x12\r\n\x05reset\x18\x02 \x01(\x08\x12\x15\n\roption_string\x18\x03 \x01(\t\"_\n)InitializeWithIndependentChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x02vi\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"W\n\x1bInitiateWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\".\n\x1cInitiateWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"D\n\x1eInvalidateAllAttributesRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"1\n\x1fInvalidateAllAttributesResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"T\n\x18ResetWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"+\n\x19ResetWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"w\n*SendSoftwareEdgeTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07trigger\x18\x03 \x01(\x11\"=\n+SendSoftwareEdgeTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"~\n\x1fWaitForEventWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x10\n\x08\x65vent_id\x18\x03 \x01(\x11\x12\x0f\n\x07timeout\x18\x04 \x01(\x01\"2\n WaitForEventWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"2\n\x0c\x41\x62ortRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x1f\n\rAbortResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x9c\x01\n\x1c\x43\x61lAdjustCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x19\n\x11requested_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"/\n\x1d\x43\x61lAdjustCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xa1\x01\n\"CalAdjustCurrentMeasurementRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x18\n\x10reported_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"5\n#CalAdjustCurrentMeasurementResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x88\x01\n!CalAdjustInternalReferenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1a\n\x12internal_reference\x18\x02 \x01(\x11\x12#\n\x1b\x61\x64justed_internal_reference\x18\x03 \x01(\x01\"4\n\"CalAdjustInternalReferenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x91\x01\n CalAdjustOutputResistanceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x19\n\x11requested_outputs\x18\x03 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x04 \x03(\x01\"3\n!CalAdjustOutputResistanceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"a\n%CalAdjustResidualCurrentOffsetRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"8\n&CalAdjustResidualCurrentOffsetResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"a\n%CalAdjustResidualVoltageOffsetRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"8\n&CalAdjustResidualVoltageOffsetResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x9c\x01\n\x1c\x43\x61lAdjustVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x19\n\x11requested_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"/\n\x1d\x43\x61lAdjustVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xa1\x01\n\"CalAdjustVoltageMeasurementRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x18\n\x10reported_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"5\n#CalAdjustVoltageMeasurementResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"S\n\x17\x43\x61lSelfCalibrateRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"*\n\x18\x43\x61lSelfCalibrateResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"m\n\x1b\x43hangeExtCalPasswordRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0cold_password\x18\x02 \x01(\t\x12\x14\n\x0cnew_password\x18\x03 \x01(\t\".\n\x1c\x43hangeExtCalPasswordResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"7\n\x11\x43learErrorRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"$\n\x12\x43learErrorResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"E\n\x1f\x43learInterchangeWarningsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"2\n ClearInterchangeWarningsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"2\n\x0c\x43loseRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x1f\n\rCloseResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"H\n\x12\x43loseExtCalRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x0e\n\x06\x61\x63tion\x18\x02 \x01(\x11\"%\n\x13\x43loseExtCalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"3\n\rCommitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\" \n\x0e\x43ommitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xc6\x01\n\x1c\x43onfigureApertureTimeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\raperture_time\x18\x03 \x01(\x01\x12\x32\n\x05units\x18\x04 \x01(\x0e\x32!.nidcpower_grpc.ApertureTimeUnitsH\x00\x12\x13\n\tunits_raw\x18\x05 \x01(\x11H\x00\x42\x0c\n\nunits_enum\"/\n\x1d\x43onfigureApertureTimeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xae\x01\n\x18\x43onfigureAutoZeroRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12-\n\tauto_zero\x18\x03 \x01(\x0e\x32\x18.nidcpower_grpc.AutoZeroH\x00\x12\x17\n\rauto_zero_raw\x18\x04 \x01(\x11H\x00\x42\x10\n\x0e\x61uto_zero_enum\"+\n\x19\x43onfigureAutoZeroResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"g\n\x1c\x43onfigureCurrentLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"/\n\x1d\x43onfigureCurrentLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureCurrentLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureCurrentLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"y\n\x1c\x43onfigureCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x10\n\x08\x62\x65havior\x18\x03 \x01(\x11\x12\r\n\x05limit\x18\x04 \x01(\x01\"/\n\x1d\x43onfigureCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureCurrentLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureCurrentLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"u\n)ConfigureDigitalEdgeMeasureTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\"<\n*ConfigureDigitalEdgeMeasureTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"s\n\'ConfigureDigitalEdgePulseTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\":\n(ConfigureDigitalEdgePulseTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"}\n1ConfigureDigitalEdgeSequenceAdvanceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\"D\n2ConfigureDigitalEdgeSequenceAdvanceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"t\n(ConfigureDigitalEdgeSourceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\";\n)ConfigureDigitalEdgeSourceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"s\n\'ConfigureDigitalEdgeStartTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\":\n(ConfigureDigitalEdgeStartTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"j\n\x1d\x43onfigureOutputEnabledRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x03 \x01(\x08\"0\n\x1e\x43onfigureOutputEnabledResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n\x1e\x43onfigureOutputFunctionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x10\n\x08\x66unction\x18\x03 \x01(\x11\"1\n\x1f\x43onfigureOutputFunctionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n ConfigureOutputResistanceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x12\n\nresistance\x18\x03 \x01(\x01\"3\n!ConfigureOutputResistanceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"e\n\"ConfigurePowerLineFrequencyRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1b\n\x13powerline_frequency\x18\x02 \x01(\x01\"5\n#ConfigurePowerLineFrequencyResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasCurrentLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasCurrentLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasVoltageLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasVoltageLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseCurrentLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"4\n\"ConfigurePulseCurrentLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseCurrentLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseCurrentLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"4\n\"ConfigurePulseCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseCurrentLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseCurrentLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"4\n\"ConfigurePulseVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseVoltageLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseVoltageLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseVoltageLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"4\n\"ConfigurePulseVoltageLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseVoltageLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseVoltageLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"`\n\x15\x43onfigureSenseRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05sense\x18\x03 \x01(\x11\"(\n\x16\x43onfigureSenseResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"P\n*ConfigureSoftwareEdgeMeasureTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"=\n+ConfigureSoftwareEdgeMeasureTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"N\n(ConfigureSoftwareEdgePulseTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\";\n)ConfigureSoftwareEdgePulseTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"X\n2ConfigureSoftwareEdgeSequenceAdvanceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"E\n3ConfigureSoftwareEdgeSequenceAdvanceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"O\n)ConfigureSoftwareEdgeSourceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"<\n*ConfigureSoftwareEdgeSourceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"N\n(ConfigureSoftwareEdgeStartTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\";\n)ConfigureSoftwareEdgeStartTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"U\n\x1a\x43onfigureSourceModeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x13\n\x0bsource_mode\x18\x02 \x01(\x11\"-\n\x1b\x43onfigureSourceModeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"g\n\x1c\x43onfigureVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"/\n\x1d\x43onfigureVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureVoltageLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureVoltageLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"g\n\x1c\x43onfigureVoltageLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"/\n\x1d\x43onfigureVoltageLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureVoltageLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureVoltageLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"a\n\x1f\x43onnectInternalReferenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1a\n\x12internal_reference\x18\x02 \x01(\x11\"2\n ConnectInternalReferenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"c\n!CreateAdvancedSequenceStepRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1a\n\x12set_as_active_step\x18\x02 \x01(\x08\"4\n\"CreateAdvancedSequenceStepResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"Z\n\x1d\x44\x65leteAdvancedSequenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x15\n\rsequence_name\x18\x02 \x01(\t\"0\n\x1e\x44\x65leteAdvancedSequenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"4\n\x0e\x44isableRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"!\n\x0f\x44isableResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"@\n\x1a\x44isablePulseTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"-\n\x1b\x44isablePulseTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"J\n$DisableSequenceAdvanceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"7\n%DisableSequenceAdvanceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"A\n\x1b\x44isableSourceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\".\n\x1c\x44isableSourceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"@\n\x1a\x44isableStartTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"-\n\x1b\x44isableStartTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"M\n\x13\x45rrorMessageRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x12\n\nerror_code\x18\x02 \x01(\x11\"=\n\x14\x45rrorMessageResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x15\n\rerror_message\x18\x02 \x01(\t\"`\n\'ExportAttributeConfigurationFileRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x11\n\tfile_path\x18\x02 \x01(\t\":\n(ExportAttributeConfigurationFileResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xc2\x01\n\x13\x45xportSignalRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12.\n\x06signal\x18\x02 \x01(\x0e\x32\x1c.nidcpower_grpc.ExportSignalH\x00\x12\x14\n\nsignal_raw\x18\x03 \x01(\x11H\x00\x12\x19\n\x11signal_identifier\x18\x04 \x01(\t\x12\x17\n\x0foutput_terminal\x18\x05 \x01(\tB\r\n\x0bsignal_enum\"&\n\x14\x45xportSignalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n\x14\x46\x65tchMultipleRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07timeout\x18\x03 \x01(\x01\x12\r\n\x05\x63ount\x18\x04 \x01(\x11\"\x90\x01\n\x15\x46\x65tchMultipleResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x1c\n\x14voltage_measurements\x18\x02 \x03(\x01\x12\x1c\n\x14\x63urrent_measurements\x18\x03 \x03(\x01\x12\x15\n\rin_compliance\x18\x04 \x03(\x08\x12\x14\n\x0c\x61\x63tual_count\x18\x05 \x01(\x11\"\x93\x01\n\x1cGetAttributeViBooleanRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"H\n\x1dGetAttributeViBooleanResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x08\"\x91\x01\n\x1aGetAttributeViInt32Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"F\n\x1bGetAttributeViInt32Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x11\"\x91\x01\n\x1aGetAttributeViInt64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"F\n\x1bGetAttributeViInt64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x03\"\x92\x01\n\x1bGetAttributeViReal64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"G\n\x1cGetAttributeViReal64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x01\"\x93\x01\n\x1cGetAttributeViSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"`\n\x1dGetAttributeViSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12/\n\x0f\x61ttribute_value\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x92\x01\n\x1bGetAttributeViStringRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"G\n\x1cGetAttributeViStringResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\t\"B\n\x1cGetCalUserDefinedInfoRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"=\n\x1dGetCalUserDefinedInfoResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04info\x18\x02 \x01(\t\"I\n#GetCalUserDefinedInfoMaxSizeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"I\n$GetCalUserDefinedInfoMaxSizeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x11\n\tinfo_size\x18\x02 \x01(\x11\"J\n\x15GetChannelNameRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\r\n\x05index\x18\x02 \x01(\x11\">\n\x16GetChannelNameResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"T\n\x1fGetChannelNameFromStringRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\r\n\x05index\x18\x02 \x01(\t\"H\n GetChannelNameFromStringResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"5\n\x0fGetErrorRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"E\n\x10GetErrorResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04\x63ode\x18\x02 \x01(\x11\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\"E\n\x1fGetExtCalLastDateAndTimeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"z\n GetExtCalLastDateAndTimeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04year\x18\x02 \x01(\x11\x12\r\n\x05month\x18\x03 \x01(\x11\x12\x0b\n\x03\x64\x61y\x18\x04 \x01(\x11\x12\x0c\n\x04hour\x18\x05 \x01(\x11\x12\x0e\n\x06minute\x18\x06 \x01(\x11\">\n\x18GetExtCalLastTempRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"@\n\x19GetExtCalLastTempResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0btemperature\x18\x02 \x01(\x01\"I\n#GetExtCalRecommendedIntervalRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"F\n$GetExtCalRecommendedIntervalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0e\n\x06months\x18\x02 \x01(\x11\"B\n\x1cGetNextCoercionRecordRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"H\n\x1dGetNextCoercionRecordResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x63oercion_record\x18\x02 \x01(\t\"F\n GetNextInterchangeWarningRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"P\n!GetNextInterchangeWarningResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x1b\n\x13interchange_warning\x18\x02 \x01(\t\"F\n GetSelfCalLastDateAndTimeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"{\n!GetSelfCalLastDateAndTimeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04year\x18\x02 \x01(\x11\x12\r\n\x05month\x18\x03 \x01(\x11\x12\x0b\n\x03\x64\x61y\x18\x04 \x01(\x11\x12\x0c\n\x04hour\x18\x05 \x01(\x11\x12\x0e\n\x06minute\x18\x06 \x01(\x11\"?\n\x19GetSelfCalLastTempRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"A\n\x1aGetSelfCalLastTempResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0btemperature\x18\x02 \x01(\x01\"`\n\'ImportAttributeConfigurationFileRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x11\n\tfile_path\x18\x02 \x01(\t\":\n(ImportAttributeConfigurationFileResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"<\n\x11InitExtCalRequest\x12\x15\n\rresource_name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"H\n\x12InitExtCalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x02vi\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"n\n\x1dInitializeWithChannelsRequest\x12\x15\n\rresource_name\x18\x01 \x01(\t\x12\x10\n\x08\x63hannels\x18\x02 \x01(\t\x12\r\n\x05reset\x18\x03 \x01(\x08\x12\x15\n\roption_string\x18\x04 \x01(\t\"T\n\x1eInitializeWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x02vi\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"5\n\x0fInitiateRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\"\n\x10InitiateResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"8\n\x12LockSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\">\n\x13LockSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x63\x61ller_has_lock\x18\x02 \x01(\x08\"\xc1\x01\n\x0eMeasureRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12<\n\x10measurement_type\x18\x03 \x01(\x0e\x32 .nidcpower_grpc.MeasurementTypesH\x00\x12\x1e\n\x14measurement_type_raw\x18\x04 \x01(\x11H\x00\x42\x17\n\x15measurement_type_enum\"6\n\x0fMeasureResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0bmeasurement\x18\x02 \x01(\x01\"R\n\x16MeasureMultipleRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"e\n\x17MeasureMultipleResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x1c\n\x14voltage_measurements\x18\x02 \x03(\x01\x12\x1c\n\x14\x63urrent_measurements\x18\x03 \x03(\x01\"T\n\x18QueryInComplianceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"B\n\x19QueryInComplianceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x15\n\rin_compliance\x18\x02 \x01(\x08\"n\n\x1bQueryMaxCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rvoltage_level\x18\x03 \x01(\x01\"I\n\x1cQueryMaxCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x19\n\x11max_current_limit\x18\x02 \x01(\x01\"n\n\x1bQueryMaxVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rcurrent_limit\x18\x03 \x01(\x01\"I\n\x1cQueryMaxVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x19\n\x11max_voltage_level\x18\x02 \x01(\x01\"n\n\x1bQueryMinCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rvoltage_level\x18\x03 \x01(\x01\"I\n\x1cQueryMinCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x19\n\x11min_current_limit\x18\x02 \x01(\x01\"\xba\x01\n\x17QueryOutputStateRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x34\n\x0coutput_state\x18\x03 \x01(\x0e\x32\x1c.nidcpower_grpc.OutputStatesH\x00\x12\x1a\n\x10output_state_raw\x18\x04 \x01(\x11H\x00\x42\x13\n\x11output_state_enum\"<\n\x18QueryOutputStateResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x10\n\x08in_state\x18\x02 \x01(\x08\"C\n\x1dReadCurrentTemperatureRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"E\n\x1eReadCurrentTemperatureResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0btemperature\x18\x02 \x01(\x01\"2\n\x0cResetRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x1f\n\rResetResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"8\n\x12ResetDeviceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"%\n\x13ResetDeviceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"B\n\x1cResetInterchangeCheckRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"/\n\x1dResetInterchangeCheckResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\">\n\x18ResetWithDefaultsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"+\n\x19ResetWithDefaultsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\":\n\x14RevisionQueryRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"f\n\x15RevisionQueryResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x1ainstrument_driver_revision\x18\x02 \x01(\t\x12\x19\n\x11\x66irmware_revision\x18\x03 \x01(\t\"5\n\x0fSelfTestRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"W\n\x10SelfTestResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x18\n\x10self_test_result\x18\x02 \x01(\x11\x12\x19\n\x11self_test_message\x18\x03 \x01(\t\"U\n\x1eSendSoftwareEdgeTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x0f\n\x07trigger\x18\x02 \x01(\x11\"1\n\x1fSendSoftwareEdgeTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xac\x01\n\x1cSetAttributeViBooleanRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x08\"/\n\x1dSetAttributeViBooleanResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xaa\x01\n\x1aSetAttributeViInt32Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x11\"-\n\x1bSetAttributeViInt32Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xaa\x01\n\x1aSetAttributeViInt64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x03\"-\n\x1bSetAttributeViInt64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xab\x01\n\x1bSetAttributeViReal64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x01\".\n\x1cSetAttributeViReal64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xc4\x01\n\x1cSetAttributeViSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12/\n\x0f\x61ttribute_value\x18\x04 \x01(\x0b\x32\x16.nidevice_grpc.Session\"/\n\x1dSetAttributeViSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xab\x01\n\x1bSetAttributeViStringRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\t\".\n\x1cSetAttributeViStringResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"P\n\x1cSetCalUserDefinedInfoRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x0c\n\x04info\x18\x02 \x01(\t\"/\n\x1dSetCalUserDefinedInfoResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"u\n\x12SetSequenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0e\n\x06values\x18\x03 \x03(\x01\x12\x15\n\rsource_delays\x18\x04 \x03(\x01\"%\n\x13SetSequenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\":\n\x14UnlockSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"@\n\x15UnlockSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x63\x61ller_has_lock\x18\x02 \x01(\x08\"\\\n\x13WaitForEventRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x10\n\x08\x65vent_id\x18\x02 \x01(\x11\x12\x0f\n\x07timeout\x18\x03 \x01(\x01\"&\n\x14WaitForEventResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05*\xcc<\n\x13NiDCPowerAttributes\x12#\n\x1fNIDCPOWER_ATTRIBUTE_UNSPECIFIED\x10\x00\x12\x31\n+NIDCPOWER_ATTRIBUTE_QUERY_INSTRUMENT_STATUS\x10\x93\x8b@\x12\"\n\x1cNIDCPOWER_ATTRIBUTE_SIMULATE\x10\x95\x8b@\x12&\n NIDCPOWER_ATTRIBUTE_DRIVER_SETUP\x10\x97\x8b@\x12\'\n!NIDCPOWER_ATTRIBUTE_CHANNEL_COUNT\x10\xdb\x8c@\x12\x30\n*NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_PREFIX\x10\xbe\x8d@\x12\x30\n*NIDCPOWER_ATTRIBUTE_IO_RESOURCE_DESCRIPTOR\x10\xc0\x8d@\x12&\n NIDCPOWER_ATTRIBUTE_LOGICAL_NAME\x10\xc1\x8d@\x12\x35\n/NIDCPOWER_ATTRIBUTE_SUPPORTED_INSTRUMENT_MODELS\x10\xd7\x8d@\x12\x36\n0NIDCPOWER_ATTRIBUTE_INSTRUMENT_FIRMWARE_REVISION\x10\x8e\x8f@\x12\x31\n+NIDCPOWER_ATTRIBUTE_INSTRUMENT_MANUFACTURER\x10\x8f\x8f@\x12*\n$NIDCPOWER_ATTRIBUTE_INSTRUMENT_MODEL\x10\x90\x8f@\x12\x30\n*NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_VENDOR\x10\x91\x8f@\x12\x35\n/NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_DESCRIPTION\x10\x92\x8f@\x12\x32\n,NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_REVISION\x10\xb7\x8f@\x12&\n NIDCPOWER_ATTRIBUTE_POWER_SOURCE\x10\xb0\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_POWER_SOURCE_IN_USE\x10\xb1\x98\x46\x12:\n4NIDCPOWER_ATTRIBUTE_AUXILIARY_POWER_SOURCE_AVAILABLE\x10\xb2\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_SAMPLES_TO_AVERAGE\x10\xb3\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_RANGE\x10\xb4\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_RANGE\x10\xb5\x98\x46\x12:\n4NIDCPOWER_ATTRIBUTE_RESET_AVERAGE_BEFORE_MEASUREMENT\x10\xb6\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_OVERRANGING_ENABLED\x10\xb7\x98\x46\x12)\n#NIDCPOWER_ATTRIBUTE_OUTPUT_FUNCTION\x10\xb8\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL\x10\xb9\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT\x10\xba\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL_RANGE\x10\xbb\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_RANGE\x10\xbc\x98\x46\x12\x1f\n\x19NIDCPOWER_ATTRIBUTE_SENSE\x10\xbd\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_OUTPUT_CAPACITANCE\x10\xbe\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_AUTORANGE\x10\xbf\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_AUTORANGE\x10\xc0\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL_AUTORANGE\x10\xc1\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_AUTORANGE\x10\xc2\x98\x46\x12.\n(NIDCPOWER_ATTRIBUTE_POWER_LINE_FREQUENCY\x10\xc4\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_START_TRIGGER_TYPE\x10\xc5\x98\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_START_TRIGGER_INPUT_TERMINAL\x10\xc7\x98\x46\x12@\n:NIDCPOWER_ATTRIBUTE_EXPORTED_START_TRIGGER_OUTPUT_TERMINAL\x10\xc8\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_SEQUENCE_LOOP_COUNT\x10\xc9\x98\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_SEQUENCE_ADVANCE_TRIGGER_TYPE\x10\xca\x98\x46\x12N\nHNIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SEQUENCE_ADVANCE_TRIGGER_INPUT_TERMINAL\x10\xcc\x98\x46\x12K\nENIDCPOWER_ATTRIBUTE_EXPORTED_SEQUENCE_ADVANCE_TRIGGER_OUTPUT_TERMINAL\x10\xcd\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_SOURCE_TRIGGER_TYPE\x10\xce\x98\x46\x12\x44\n>NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SOURCE_TRIGGER_INPUT_TERMINAL\x10\xd0\x98\x46\x12\x41\n;NIDCPOWER_ATTRIBUTE_EXPORTED_SOURCE_TRIGGER_OUTPUT_TERMINAL\x10\xd1\x98\x46\x12.\n(NIDCPOWER_ATTRIBUTE_MEASURE_TRIGGER_TYPE\x10\xd2\x98\x46\x12\x45\n?NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_MEASURE_TRIGGER_INPUT_TERMINAL\x10\xd4\x98\x46\x12\x42\n<NIDCPOWER_ATTRIBUTE_EXPORTED_MEASURE_TRIGGER_OUTPUT_TERMINAL\x10\xd5\x98\x46\x12J\nDNIDCPOWER_ATTRIBUTE_SEQUENCE_ITERATION_COMPLETE_EVENT_PULSE_POLARITY\x10\xd6\x98\x46\x12G\nANIDCPOWER_ATTRIBUTE_SEQUENCE_ITERATION_COMPLETE_EVENT_PULSE_WIDTH\x10\xd7\x98\x46\x12K\nENIDCPOWER_ATTRIBUTE_SEQUENCE_ITERATION_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\xd8\x98\x46\x12>\n8NIDCPOWER_ATTRIBUTE_SOURCE_COMPLETE_EVENT_PULSE_POLARITY\x10\xd9\x98\x46\x12;\n5NIDCPOWER_ATTRIBUTE_SOURCE_COMPLETE_EVENT_PULSE_WIDTH\x10\xda\x98\x46\x12?\n9NIDCPOWER_ATTRIBUTE_SOURCE_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\xdb\x98\x46\x12?\n9NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_PULSE_POLARITY\x10\xdc\x98\x46\x12<\n6NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_PULSE_WIDTH\x10\xdd\x98\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_DELAY\x10\xde\x98\x46\x12@\n:NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\xdf\x98\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_SEQUENCE_ENGINE_DONE_EVENT_PULSE_POLARITY\x10\xe0\x98\x46\x12@\n:NIDCPOWER_ATTRIBUTE_SEQUENCE_ENGINE_DONE_EVENT_PULSE_WIDTH\x10\xe1\x98\x46\x12\x44\n>NIDCPOWER_ATTRIBUTE_SEQUENCE_ENGINE_DONE_EVENT_OUTPUT_TERMINAL\x10\xe2\x98\x46\x12&\n NIDCPOWER_ATTRIBUTE_SOURCE_DELAY\x10\xe3\x98\x46\x12%\n\x1fNIDCPOWER_ATTRIBUTE_SOURCE_MODE\x10\xe6\x98\x46\x12#\n\x1dNIDCPOWER_ATTRIBUTE_AUTO_ZERO\x10\xe7\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_FETCH_BACKLOG\x10\xe8\x98\x46\x12&\n NIDCPOWER_ATTRIBUTE_MEASURE_WHEN\x10\xe9\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_APERTURE_TIME\x10\xea\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_APERTURE_TIME_UNITS\x10\xeb\x98\x46\x12*\n$NIDCPOWER_ATTRIBUTE_OUTPUT_CONNECTED\x10\xec\x98\x46\x12+\n%NIDCPOWER_ATTRIBUTE_OUTPUT_RESISTANCE\x10\xed\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_TRANSIENT_RESPONSE\x10\xee\x98\x46\x12/\n)NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH\x10\xef\x98\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE\x10\xf0\x98\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_DELTA_TIME\x10\xf1\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_DC_NOISE_REJECTION\x10\xf2\x98\x46\x12\x30\n*NIDCPOWER_ATTRIBUTE_VOLTAGE_GAIN_BANDWIDTH\x10\xf3\x98\x46\x12\x38\n2NIDCPOWER_ATTRIBUTE_VOLTAGE_COMPENSATION_FREQUENCY\x10\xf4\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_VOLTAGE_POLE_ZERO_RATIO\x10\xf5\x98\x46\x12\x30\n*NIDCPOWER_ATTRIBUTE_CURRENT_GAIN_BANDWIDTH\x10\xf6\x98\x46\x12\x38\n2NIDCPOWER_ATTRIBUTE_CURRENT_COMPENSATION_FREQUENCY\x10\xf7\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_CURRENT_POLE_ZERO_RATIO\x10\xf8\x98\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_SELF_CALIBRATION_PERSISTENCE\x10\xf9\x98\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_ACTIVE_ADVANCED_SEQUENCE\x10\xfa\x98\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_ACTIVE_ADVANCED_SEQUENCE_STEP\x10\xfb\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_MEASURE_BUFFER_SIZE\x10\xfd\x98\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_SEQUENCE_LOOP_COUNT_IS_FINITE\x10\xfe\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LEVEL\x10\x80\x99\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT\x10\x81\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LEVEL\x10\x82\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LIMIT\x10\x83\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LEVEL_RANGE\x10\x84\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT_RANGE\x10\x85\x99\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LEVEL\x10\x86\x99\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT\x10\x87\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LEVEL\x10\x88\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LIMIT\x10\x89\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LEVEL_RANGE\x10\x8a\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT_RANGE\x10\x8b\x99\x46\x12*\n$NIDCPOWER_ATTRIBUTE_PULSE_BIAS_DELAY\x10\x8c\x99\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_PULSE_ON_TIME\x10\x8d\x99\x46\x12(\n\"NIDCPOWER_ATTRIBUTE_PULSE_OFF_TIME\x10\x8e\x99\x46\x12,\n&NIDCPOWER_ATTRIBUTE_PULSE_TRIGGER_TYPE\x10\x8f\x99\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_PULSE_TRIGGER_INPUT_TERMINAL\x10\x91\x99\x46\x12@\n:NIDCPOWER_ATTRIBUTE_EXPORTED_PULSE_TRIGGER_OUTPUT_TERMINAL\x10\x92\x99\x46\x12>\n8NIDCPOWER_ATTRIBUTE_PULSE_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\x93\x99\x46\x12=\n7NIDCPOWER_ATTRIBUTE_PULSE_COMPLETE_EVENT_PULSE_POLARITY\x10\x94\x99\x46\x12:\n4NIDCPOWER_ATTRIBUTE_PULSE_COMPLETE_EVENT_PULSE_WIDTH\x10\x95\x99\x46\x12G\nANIDCPOWER_ATTRIBUTE_READY_FOR_PULSE_TRIGGER_EVENT_OUTPUT_TERMINAL\x10\x96\x99\x46\x12\x46\n@NIDCPOWER_ATTRIBUTE_READY_FOR_PULSE_TRIGGER_EVENT_PULSE_POLARITY\x10\x97\x99\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_READY_FOR_PULSE_TRIGGER_EVENT_PULSE_WIDTH\x10\x98\x99\x46\x12.\n(NIDCPOWER_ATTRIBUTE_INTERLOCK_INPUT_OPEN\x10\x99\x99\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_SERIAL_NUMBER\x10\xc8\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_COMPLIANCE_LIMIT_SYMMETRY\x10\xe8\x99\x46\x12,\n&NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_HIGH\x10\xe9\x99\x46\x12+\n%NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_LOW\x10\xea\x99\x46\x12,\n&NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_HIGH\x10\xeb\x99\x46\x12+\n%NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_LOW\x10\xec\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT_HIGH\x10\xed\x99\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT_LOW\x10\xee\x99\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LIMIT_HIGH\x10\xef\x99\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LIMIT_LOW\x10\xf0\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT_HIGH\x10\xf1\x99\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT_LOW\x10\xf2\x99\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LIMIT_HIGH\x10\xf3\x99\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LIMIT_LOW\x10\xf4\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_SEQUENCE_STEP_DELTA_TIME\x10\xf6\x99\x46\x12:\n4NIDCPOWER_ATTRIBUTE_SEQUENCE_STEP_DELTA_TIME_ENABLED\x10\xf7\x99\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_ACTUAL_POWER_ALLOCATION\x10\xfd\x99\x46\x12\x34\n.NIDCPOWER_ATTRIBUTE_REQUESTED_POWER_ALLOCATION\x10\xfe\x99\x46\x12/\n)NIDCPOWER_ATTRIBUTE_POWER_ALLOCATION_MODE\x10\xff\x99\x46\x12#\n\x1dNIDCPOWER_ATTRIBUTE_AUTORANGE\x10\xa4\x9a\x46\x12,\n&NIDCPOWER_ATTRIBUTE_AUTORANGE_BEHAVIOR\x10\xa5\x9a\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_AUTORANGE_APERTURE_TIME_MODE\x10\xa6\x9a\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_APERTURE_TIME\x10\xa7\x9a\x46\x12?\n9NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_APERTURE_TIME_UNITS\x10\xa8\x9a\x46\x12)\n#NIDCPOWER_ATTRIBUTE_MERGED_CHANNELS\x10\xa9\x9a\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_CURRENT_RANGE\x10\xaf\x9a\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_VOLTAGE_RANGE\x10\xb0\x9a\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_AUTORANGE_THRESHOLD_MODE\x10\xb1\x9a\x46\x12/\n)NIDCPOWER_ATTRIBUTE_SHUTDOWN_TRIGGER_TYPE\x10\xc3\x9a\x46\x12\x46\n@NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SHUTDOWN_TRIGGER_INPUT_TERMINAL\x10\xc5\x9a\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL\x10\xd1\xa5L\x12%\n\x1fNIDCPOWER_ATTRIBUTE_OVP_ENABLED\x10\xd2\xa5L\x12#\n\x1dNIDCPOWER_ATTRIBUTE_OVP_LIMIT\x10\xd3\xa5L\x12\x30\n*NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_BEHAVIOR\x10\xd4\xa5L\x12\'\n!NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT\x10\xd5\xa5L\x12(\n\"NIDCPOWER_ATTRIBUTE_OUTPUT_ENABLED\x10\xd6\xa5L*\xa2\x01\n\x11\x41pertureTimeUnits\x12#\n\x1f\x41PERTURE_TIME_UNITS_UNSPECIFIED\x10\x00\x12.\n)APERTURE_TIME_UNITS_NIDCPOWER_VAL_SECONDS\x10\x84\x08\x12\x38\n3APERTURE_TIME_UNITS_NIDCPOWER_VAL_POWER_LINE_CYCLES\x10\x85\x08*\x8d\x01\n\x08\x41utoZero\x12\x19\n\x15\x41UTO_ZERO_UNSPECIFIED\x10\x00\x12\x1f\n\x1b\x41UTO_ZERO_NIDCPOWER_VAL_OFF\x10\x00\x12\x1e\n\x1a\x41UTO_ZERO_NIDCPOWER_VAL_ON\x10\x01\x12!\n\x1c\x41UTO_ZERO_NIDCPOWER_VAL_ONCE\x10\x80\x08\x1a\x02\x10\x01*\xd3\x01\n\x19\x41utorangeApertureTimeMode\x12,\n(AUTORANGE_APERTURE_TIME_MODE_UNSPECIFIED\x10\x00\x12\x42\n=AUTORANGE_APERTURE_TIME_MODE_NIDCPOWER_VAL_APERTURE_TIME_AUTO\x10\xd6\x08\x12\x44\n?AUTORANGE_APERTURE_TIME_MODE_NIDCPOWER_VAL_APERTURE_TIME_CUSTOM\x10\xd7\x08*\xe3\x01\n\x11\x41utorangeBehavior\x12\"\n\x1e\x41UTORANGE_BEHAVIOR_UNSPECIFIED\x10\x00\x12\x41\n<AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP_TO_LIMIT_THEN_DOWN\x10\xd3\x08\x12.\n)AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP\x10\xd4\x08\x12\x37\n2AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP_AND_DOWN\x10\xd5\x08*\xa6\x03\n\x16\x41utorangeThresholdMode\x12(\n$AUTORANGE_THRESHOLD_MODE_UNSPECIFIED\x10\x00\x12\x41\n<AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_NORMAL\x10\xd8\x08\x12\x44\n?AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_FAST_STEP\x10\xd9\x08\x12J\nEAUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_HIGH_HYSTERESIS\x10\xda\x08\x12L\nGAUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_MEDIUM_HYSTERESIS\x10\xdb\x08\x12?\n:AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_HOLD\x10\xdc\x08*\xb7\x01\n\x17\x43omplianceLimitSymmetry\x12)\n%COMPLIANCE_LIMIT_SYMMETRY_UNSPECIFIED\x10\x00\x12\x35\n1COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_SYMMETRIC\x10\x00\x12\x36\n2COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_ASYMMETRIC\x10\x01\x1a\x02\x10\x01*\xc1\x01\n\x10\x44\x43NoiseRejection\x12#\n\x1f\x44_C_NOISE_REJECTION_UNSPECIFIED\x10\x00\x12\x46\nAD_C_NOISE_REJECTION_NIDCPOWER_VAL_DC_NOISE_REJECTION_SECOND_ORDER\x10\x93\x08\x12@\n;D_C_NOISE_REJECTION_NIDCPOWER_VAL_DC_NOISE_REJECTION_NORMAL\x10\x94\x08*\xc7\x05\n\x0c\x45xportSignal\x12\x1d\n\x19\x45XPORT_SIGNAL_UNSPECIFIED\x10\x00\x12\x36\n1EXPORT_SIGNAL_NIDCPOWER_VAL_SOURCE_COMPLETE_EVENT\x10\x86\x08\x12\x37\n2EXPORT_SIGNAL_NIDCPOWER_VAL_MEASURE_COMPLETE_EVENT\x10\x87\x08\x12\x42\n=EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ITERATION_COMPLETE_EVENT\x10\x88\x08\x12;\n6EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ENGINE_DONE_EVENT\x10\x89\x08\x12\x35\n0EXPORT_SIGNAL_NIDCPOWER_VAL_PULSE_COMPLETE_EVENT\x10\x9b\x08\x12>\n9EXPORT_SIGNAL_NIDCPOWER_VAL_READY_FOR_PULSE_TRIGGER_EVENT\x10\x9c\x08\x12.\n)EXPORT_SIGNAL_NIDCPOWER_VAL_START_TRIGGER\x10\x8a\x08\x12/\n*EXPORT_SIGNAL_NIDCPOWER_VAL_SOURCE_TRIGGER\x10\x8b\x08\x12\x30\n+EXPORT_SIGNAL_NIDCPOWER_VAL_MEASURE_TRIGGER\x10\x8c\x08\x12\x39\n4EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ADVANCE_TRIGGER\x10\x8d\x08\x12.\n)EXPORT_SIGNAL_NIDCPOWER_VAL_PULSE_TRIGGER\x10\x9d\x08\x12\x31\n,EXPORT_SIGNAL_NIDCPOWER_VAL_SHUTDOWN_TRIGGER\x10\xde\x08*\xcf\x01\n\x0bMeasureWhen\x12\x1c\n\x18MEASURE_WHEN_UNSPECIFIED\x10\x00\x12\x43\n>MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE\x10\x81\x08\x12)\n$MEASURE_WHEN_NIDCPOWER_VAL_ON_DEMAND\x10\x82\x08\x12\x32\n-MEASURE_WHEN_NIDCPOWER_VAL_ON_MEASURE_TRIGGER\x10\x83\x08*\xa3\x01\n\x10MeasurementTypes\x12!\n\x1dMEASUREMENT_TYPES_UNSPECIFIED\x10\x00\x12\x33\n/MEASUREMENT_TYPES_NIDCPOWER_VAL_MEASURE_CURRENT\x10\x00\x12\x33\n/MEASUREMENT_TYPES_NIDCPOWER_VAL_MEASURE_VOLTAGE\x10\x01\x1a\x02\x10\x01*\x8e\x01\n\x11OutputCapacitance\x12\"\n\x1eOUTPUT_CAPACITANCE_UNSPECIFIED\x10\x00\x12)\n$OUTPUT_CAPACITANCE_NIDCPOWER_VAL_LOW\x10\xf2\x07\x12*\n%OUTPUT_CAPACITANCE_NIDCPOWER_VAL_HIGH\x10\xf3\x07*\xf3\x01\n\x0eOutputFunction\x12\x1f\n\x1bOUTPUT_FUNCTION_UNSPECIFIED\x10\x00\x12-\n(OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_VOLTAGE\x10\xee\x07\x12-\n(OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_CURRENT\x10\xef\x07\x12\x30\n+OUTPUT_FUNCTION_NIDCPOWER_VAL_PULSE_VOLTAGE\x10\x99\x08\x12\x30\n+OUTPUT_FUNCTION_NIDCPOWER_VAL_PULSE_CURRENT\x10\x9a\x08*\xa3\x01\n\x0cOutputStates\x12\x1d\n\x19OUTPUT_STATES_UNSPECIFIED\x10\x00\x12\x37\n3OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_CONSTANT_VOLTAGE\x10\x00\x12\x37\n3OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_CONSTANT_CURRENT\x10\x01\x1a\x02\x10\x01*u\n\x08Polarity\x12\x18\n\x14POLARITY_UNSPECIFIED\x10\x00\x12\'\n\"POLARITY_NIDCPOWER_VAL_ACTIVE_HIGH\x10\xfa\x07\x12&\n!POLARITY_NIDCPOWER_VAL_ACTIVE_LOW\x10\xfb\x07*\x96\x02\n\x13PowerAllocationMode\x12%\n!POWER_ALLOCATION_MODE_UNSPECIFIED\x10\x00\x12G\nBPOWER_ALLOCATION_MODE_NIDCPOWER_VAL_POWER_ALLOCATION_MODE_DISABLED\x10\xa2\x08\x12H\nCPOWER_ALLOCATION_MODE_NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC\x10\xa3\x08\x12\x45\n@POWER_ALLOCATION_MODE_NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL\x10\xa4\x08*\xab\x01\n\x0bPowerSource\x12\x1c\n\x18POWER_SOURCE_UNSPECIFIED\x10\x00\x12(\n#POWER_SOURCE_NIDCPOWER_VAL_INTERNAL\x10\xeb\x07\x12)\n$POWER_SOURCE_NIDCPOWER_VAL_AUXILIARY\x10\xec\x07\x12)\n$POWER_SOURCE_NIDCPOWER_VAL_AUTOMATIC\x10\xed\x07*\x9a\x01\n\x10PowerSourceInUse\x12#\n\x1fPOWER_SOURCE_IN_USE_UNSPECIFIED\x10\x00\x12/\n*POWER_SOURCE_IN_USE_NIDCPOWER_VAL_INTERNAL\x10\xeb\x07\x12\x30\n+POWER_SOURCE_IN_USE_NIDCPOWER_VAL_AUXILIARY\x10\xec\x07*\xcb\x01\n\x1aSelfCalibrationPersistence\x12,\n(SELF_CALIBRATION_PERSISTENCE_UNSPECIFIED\x10\x00\x12>\n9SELF_CALIBRATION_PERSISTENCE_NIDCPOWER_VAL_KEEP_IN_MEMORY\x10\x95\x08\x12?\n:SELF_CALIBRATION_PERSISTENCE_NIDCPOWER_VAL_WRITE_TO_EEPROM\x10\x96\x08*_\n\x05Sense\x12\x15\n\x11SENSE_UNSPECIFIED\x10\x00\x12\x1e\n\x19SENSE_NIDCPOWER_VAL_LOCAL\x10\xf0\x07\x12\x1f\n\x1aSENSE_NIDCPOWER_VAL_REMOTE\x10\xf1\x07*\x7f\n\nSourceMode\x12\x1b\n\x17SOURCE_MODE_UNSPECIFIED\x10\x00\x12+\n&SOURCE_MODE_NIDCPOWER_VAL_SINGLE_POINT\x10\xfc\x07\x12\'\n\"SOURCE_MODE_NIDCPOWER_VAL_SEQUENCE\x10\xfd\x07*\xeb\x01\n\x11TransientResponse\x12\"\n\x1eTRANSIENT_RESPONSE_UNSPECIFIED\x10\x00\x12,\n\'TRANSIENT_RESPONSE_NIDCPOWER_VAL_NORMAL\x10\x8e\x08\x12*\n%TRANSIENT_RESPONSE_NIDCPOWER_VAL_FAST\x10\x8f\x08\x12*\n%TRANSIENT_RESPONSE_NIDCPOWER_VAL_SLOW\x10\x91\x08\x12,\n\'TRANSIENT_RESPONSE_NIDCPOWER_VAL_CUSTOM\x10\x92\x08*\xae\x01\n\x0bTriggerType\x12\x1c\n\x18TRIGGER_TYPE_UNSPECIFIED\x10\x00\x12$\n\x1fTRIGGER_TYPE_NIDCPOWER_VAL_NONE\x10\xf4\x07\x12,\n\'TRIGGER_TYPE_NIDCPOWER_VAL_DIGITAL_EDGE\x10\xf6\x07\x12-\n(TRIGGER_TYPE_NIDCPOWER_VAL_SOFTWARE_EDGE\x10\xf7\x07\x32\x95\x93\x01\n\tNiDCPower\x12h\n\x11\x41\x62ortWithChannels\x12(.nidcpower_grpc.AbortWithChannelsRequest\x1a).nidcpower_grpc.AbortWithChannelsResponse\x12k\n\x12\x43ommitWithChannels\x12).nidcpower_grpc.CommitWithChannelsRequest\x1a*.nidcpower_grpc.CommitWithChannelsResponse\x12\xbf\x01\n.ConfigureDigitalEdgeMeasureTriggerWithChannels\x12\x45.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest\x1a\x46.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse\x12\xb9\x01\n,ConfigureDigitalEdgePulseTriggerWithChannels\x12\x43.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerWithChannelsRequest\x1a\x44.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerWithChannelsResponse\x12\xd7\x01\n6ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels\x12M.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest\x1aN.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\xc2\x01\n/ConfigureDigitalEdgeShutdownTriggerWithChannels\x12\x46.nidcpower_grpc.ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest\x1aG.nidcpower_grpc.ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse\x12\xbc\x01\n-ConfigureDigitalEdgeSourceTriggerWithChannels\x12\x44.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerWithChannelsRequest\x1a\x45.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerWithChannelsResponse\x12\xb9\x01\n,ConfigureDigitalEdgeStartTriggerWithChannels\x12\x43.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerWithChannelsRequest\x1a\x44.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerWithChannelsResponse\x12Y\n\x0c\x43onfigureOvp\x12#.nidcpower_grpc.ConfigureOvpRequest\x1a$.nidcpower_grpc.ConfigureOvpResponse\x12\xc2\x01\n/ConfigureSoftwareEdgeMeasureTriggerWithChannels\x12\x46.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest\x1aG.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse\x12\xbc\x01\n-ConfigureSoftwareEdgePulseTriggerWithChannels\x12\x44.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerWithChannelsRequest\x1a\x45.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerWithChannelsResponse\x12\xda\x01\n7ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels\x12N.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsRequest\x1aO.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\xc5\x01\n0ConfigureSoftwareEdgeShutdownTriggerWithChannels\x12G.nidcpower_grpc.ConfigureSoftwareEdgeShutdownTriggerWithChannelsRequest\x1aH.nidcpower_grpc.ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse\x12\xbf\x01\n.ConfigureSoftwareEdgeSourceTriggerWithChannels\x12\x45.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerWithChannelsRequest\x1a\x46.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse\x12\xbc\x01\n-ConfigureSoftwareEdgeStartTriggerWithChannels\x12\x44.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerWithChannelsRequest\x1a\x45.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerWithChannelsResponse\x12\x92\x01\n\x1f\x43onfigureSourceModeWithChannels\x12\x36.nidcpower_grpc.ConfigureSourceModeWithChannelsRequest\x1a\x37.nidcpower_grpc.ConfigureSourceModeWithChannelsResponse\x12\xb9\x01\n,CreateAdvancedSequenceCommitStepWithChannels\x12\x43.nidcpower_grpc.CreateAdvancedSequenceCommitStepWithChannelsRequest\x1a\x44.nidcpower_grpc.CreateAdvancedSequenceCommitStepWithChannelsResponse\x12\xa7\x01\n&CreateAdvancedSequenceStepWithChannels\x12=.nidcpower_grpc.CreateAdvancedSequenceStepWithChannelsRequest\x1a>.nidcpower_grpc.CreateAdvancedSequenceStepWithChannelsResponse\x12\x9b\x01\n\"DeleteAdvancedSequenceWithChannels\x12\x39.nidcpower_grpc.DeleteAdvancedSequenceWithChannelsRequest\x1a:.nidcpower_grpc.DeleteAdvancedSequenceWithChannelsResponse\x12\x92\x01\n\x1f\x44isablePulseTriggerWithChannels\x12\x36.nidcpower_grpc.DisablePulseTriggerWithChannelsRequest\x1a\x37.nidcpower_grpc.DisablePulseTriggerWithChannelsResponse\x12\xb0\x01\n)DisableSequenceAdvanceTriggerWithChannels\x12@.nidcpower_grpc.DisableSequenceAdvanceTriggerWithChannelsRequest\x1a\x41.nidcpower_grpc.DisableSequenceAdvanceTriggerWithChannelsResponse\x12\x9b\x01\n\"DisableShutdownTriggerWithChannels\x12\x39.nidcpower_grpc.DisableShutdownTriggerWithChannelsRequest\x1a:.nidcpower_grpc.DisableShutdownTriggerWithChannelsResponse\x12\x95\x01\n DisableSourceTriggerWithChannels\x12\x37.nidcpower_grpc.DisableSourceTriggerWithChannelsRequest\x1a\x38.nidcpower_grpc.DisableSourceTriggerWithChannelsResponse\x12\x92\x01\n\x1f\x44isableStartTriggerWithChannels\x12\x36.nidcpower_grpc.DisableStartTriggerWithChannelsRequest\x1a\x37.nidcpower_grpc.DisableStartTriggerWithChannelsResponse\x12S\n\nErrorQuery\x12!.nidcpower_grpc.ErrorQueryRequest\x1a\".nidcpower_grpc.ErrorQueryResponse\x12}\n\x18\x45xportSignalWithChannels\x12/.nidcpower_grpc.ExportSignalWithChannelsRequest\x1a\x30.nidcpower_grpc.ExportSignalWithChannelsResponse\x12\x98\x01\n!InitializeWithIndependentChannels\x12\x38.nidcpower_grpc.InitializeWithIndependentChannelsRequest\x1a\x39.nidcpower_grpc.InitializeWithIndependentChannelsResponse\x12q\n\x14InitiateWithChannels\x12+.nidcpower_grpc.InitiateWithChannelsRequest\x1a,.nidcpower_grpc.InitiateWithChannelsResponse\x12z\n\x17InvalidateAllAttributes\x12..nidcpower_grpc.InvalidateAllAttributesRequest\x1a/.nidcpower_grpc.InvalidateAllAttributesResponse\x12h\n\x11ResetWithChannels\x12(.nidcpower_grpc.ResetWithChannelsRequest\x1a).nidcpower_grpc.ResetWithChannelsResponse\x12\x9e\x01\n#SendSoftwareEdgeTriggerWithChannels\x12:.nidcpower_grpc.SendSoftwareEdgeTriggerWithChannelsRequest\x1a;.nidcpower_grpc.SendSoftwareEdgeTriggerWithChannelsResponse\x12}\n\x18WaitForEventWithChannels\x12/.nidcpower_grpc.WaitForEventWithChannelsRequest\x1a\x30.nidcpower_grpc.WaitForEventWithChannelsResponse\x12\x44\n\x05\x41\x62ort\x12\x1c.nidcpower_grpc.AbortRequest\x1a\x1d.nidcpower_grpc.AbortResponse\x12t\n\x15\x43\x61lAdjustCurrentLimit\x12,.nidcpower_grpc.CalAdjustCurrentLimitRequest\x1a-.nidcpower_grpc.CalAdjustCurrentLimitResponse\x12\x86\x01\n\x1b\x43\x61lAdjustCurrentMeasurement\x12\x32.nidcpower_grpc.CalAdjustCurrentMeasurementRequest\x1a\x33.nidcpower_grpc.CalAdjustCurrentMeasurementResponse\x12\x83\x01\n\x1a\x43\x61lAdjustInternalReference\x12\x31.nidcpower_grpc.CalAdjustInternalReferenceRequest\x1a\x32.nidcpower_grpc.CalAdjustInternalReferenceResponse\x12\x80\x01\n\x19\x43\x61lAdjustOutputResistance\x12\x30.nidcpower_grpc.CalAdjustOutputResistanceRequest\x1a\x31.nidcpower_grpc.CalAdjustOutputResistanceResponse\x12\x8f\x01\n\x1e\x43\x61lAdjustResidualCurrentOffset\x12\x35.nidcpower_grpc.CalAdjustResidualCurrentOffsetRequest\x1a\x36.nidcpower_grpc.CalAdjustResidualCurrentOffsetResponse\x12\x8f\x01\n\x1e\x43\x61lAdjustResidualVoltageOffset\x12\x35.nidcpower_grpc.CalAdjustResidualVoltageOffsetRequest\x1a\x36.nidcpower_grpc.CalAdjustResidualVoltageOffsetResponse\x12t\n\x15\x43\x61lAdjustVoltageLevel\x12,.nidcpower_grpc.CalAdjustVoltageLevelRequest\x1a-.nidcpower_grpc.CalAdjustVoltageLevelResponse\x12\x86\x01\n\x1b\x43\x61lAdjustVoltageMeasurement\x12\x32.nidcpower_grpc.CalAdjustVoltageMeasurementRequest\x1a\x33.nidcpower_grpc.CalAdjustVoltageMeasurementResponse\x12\x65\n\x10\x43\x61lSelfCalibrate\x12\'.nidcpower_grpc.CalSelfCalibrateRequest\x1a(.nidcpower_grpc.CalSelfCalibrateResponse\x12q\n\x14\x43hangeExtCalPassword\x12+.nidcpower_grpc.ChangeExtCalPasswordRequest\x1a,.nidcpower_grpc.ChangeExtCalPasswordResponse\x12S\n\nClearError\x12!.nidcpower_grpc.ClearErrorRequest\x1a\".nidcpower_grpc.ClearErrorResponse\x12}\n\x18\x43learInterchangeWarnings\x12/.nidcpower_grpc.ClearInterchangeWarningsRequest\x1a\x30.nidcpower_grpc.ClearInterchangeWarningsResponse\x12\x44\n\x05\x43lose\x12\x1c.nidcpower_grpc.CloseRequest\x1a\x1d.nidcpower_grpc.CloseResponse\x12V\n\x0b\x43loseExtCal\x12\".nidcpower_grpc.CloseExtCalRequest\x1a#.nidcpower_grpc.CloseExtCalResponse\x12G\n\x06\x43ommit\x12\x1d.nidcpower_grpc.CommitRequest\x1a\x1e.nidcpower_grpc.CommitResponse\x12t\n\x15\x43onfigureApertureTime\x12,.nidcpower_grpc.ConfigureApertureTimeRequest\x1a-.nidcpower_grpc.ConfigureApertureTimeResponse\x12h\n\x11\x43onfigureAutoZero\x12(.nidcpower_grpc.ConfigureAutoZeroRequest\x1a).nidcpower_grpc.ConfigureAutoZeroResponse\x12t\n\x15\x43onfigureCurrentLevel\x12,.nidcpower_grpc.ConfigureCurrentLevelRequest\x1a-.nidcpower_grpc.ConfigureCurrentLevelResponse\x12\x83\x01\n\x1a\x43onfigureCurrentLevelRange\x12\x31.nidcpower_grpc.ConfigureCurrentLevelRangeRequest\x1a\x32.nidcpower_grpc.ConfigureCurrentLevelRangeResponse\x12t\n\x15\x43onfigureCurrentLimit\x12,.nidcpower_grpc.ConfigureCurrentLimitRequest\x1a-.nidcpower_grpc.ConfigureCurrentLimitResponse\x12\x83\x01\n\x1a\x43onfigureCurrentLimitRange\x12\x31.nidcpower_grpc.ConfigureCurrentLimitRangeRequest\x1a\x32.nidcpower_grpc.ConfigureCurrentLimitRangeResponse\x12\x9b\x01\n\"ConfigureDigitalEdgeMeasureTrigger\x12\x39.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerRequest\x1a:.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerResponse\x12\x95\x01\n ConfigureDigitalEdgePulseTrigger\x12\x37.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerRequest\x1a\x38.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerResponse\x12\xb3\x01\n*ConfigureDigitalEdgeSequenceAdvanceTrigger\x12\x41.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerRequest\x1a\x42.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerResponse\x12\x98\x01\n!ConfigureDigitalEdgeSourceTrigger\x12\x38.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerRequest\x1a\x39.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerResponse\x12\x95\x01\n ConfigureDigitalEdgeStartTrigger\x12\x37.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerRequest\x1a\x38.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerResponse\x12w\n\x16\x43onfigureOutputEnabled\x12-.nidcpower_grpc.ConfigureOutputEnabledRequest\x1a..nidcpower_grpc.ConfigureOutputEnabledResponse\x12z\n\x17\x43onfigureOutputFunction\x12..nidcpower_grpc.ConfigureOutputFunctionRequest\x1a/.nidcpower_grpc.ConfigureOutputFunctionResponse\x12\x80\x01\n\x19\x43onfigureOutputResistance\x12\x30.nidcpower_grpc.ConfigureOutputResistanceRequest\x1a\x31.nidcpower_grpc.ConfigureOutputResistanceResponse\x12\x86\x01\n\x1b\x43onfigurePowerLineFrequency\x12\x32.nidcpower_grpc.ConfigurePowerLineFrequencyRequest\x1a\x33.nidcpower_grpc.ConfigurePowerLineFrequencyResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasCurrentLevel\x12\x35.nidcpower_grpc.ConfigurePulseBiasCurrentLevelRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasCurrentLevelResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasCurrentLimit\x12\x35.nidcpower_grpc.ConfigurePulseBiasCurrentLimitRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasCurrentLimitResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasVoltageLevel\x12\x35.nidcpower_grpc.ConfigurePulseBiasVoltageLevelRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasVoltageLevelResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasVoltageLimit\x12\x35.nidcpower_grpc.ConfigurePulseBiasVoltageLimitRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasVoltageLimitResponse\x12\x83\x01\n\x1a\x43onfigurePulseCurrentLevel\x12\x31.nidcpower_grpc.ConfigurePulseCurrentLevelRequest\x1a\x32.nidcpower_grpc.ConfigurePulseCurrentLevelResponse\x12\x92\x01\n\x1f\x43onfigurePulseCurrentLevelRange\x12\x36.nidcpower_grpc.ConfigurePulseCurrentLevelRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseCurrentLevelRangeResponse\x12\x83\x01\n\x1a\x43onfigurePulseCurrentLimit\x12\x31.nidcpower_grpc.ConfigurePulseCurrentLimitRequest\x1a\x32.nidcpower_grpc.ConfigurePulseCurrentLimitResponse\x12\x92\x01\n\x1f\x43onfigurePulseCurrentLimitRange\x12\x36.nidcpower_grpc.ConfigurePulseCurrentLimitRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseCurrentLimitRangeResponse\x12\x83\x01\n\x1a\x43onfigurePulseVoltageLevel\x12\x31.nidcpower_grpc.ConfigurePulseVoltageLevelRequest\x1a\x32.nidcpower_grpc.ConfigurePulseVoltageLevelResponse\x12\x92\x01\n\x1f\x43onfigurePulseVoltageLevelRange\x12\x36.nidcpower_grpc.ConfigurePulseVoltageLevelRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseVoltageLevelRangeResponse\x12\x83\x01\n\x1a\x43onfigurePulseVoltageLimit\x12\x31.nidcpower_grpc.ConfigurePulseVoltageLimitRequest\x1a\x32.nidcpower_grpc.ConfigurePulseVoltageLimitResponse\x12\x92\x01\n\x1f\x43onfigurePulseVoltageLimitRange\x12\x36.nidcpower_grpc.ConfigurePulseVoltageLimitRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseVoltageLimitRangeResponse\x12_\n\x0e\x43onfigureSense\x12%.nidcpower_grpc.ConfigureSenseRequest\x1a&.nidcpower_grpc.ConfigureSenseResponse\x12\x9e\x01\n#ConfigureSoftwareEdgeMeasureTrigger\x12:.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerRequest\x1a;.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerResponse\x12\x98\x01\n!ConfigureSoftwareEdgePulseTrigger\x12\x38.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerRequest\x1a\x39.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerResponse\x12\xb6\x01\n+ConfigureSoftwareEdgeSequenceAdvanceTrigger\x12\x42.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerRequest\x1a\x43.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerResponse\x12\x9b\x01\n\"ConfigureSoftwareEdgeSourceTrigger\x12\x39.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerRequest\x1a:.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerResponse\x12\x98\x01\n!ConfigureSoftwareEdgeStartTrigger\x12\x38.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerRequest\x1a\x39.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerResponse\x12n\n\x13\x43onfigureSourceMode\x12*.nidcpower_grpc.ConfigureSourceModeRequest\x1a+.nidcpower_grpc.ConfigureSourceModeResponse\x12t\n\x15\x43onfigureVoltageLevel\x12,.nidcpower_grpc.ConfigureVoltageLevelRequest\x1a-.nidcpower_grpc.ConfigureVoltageLevelResponse\x12\x83\x01\n\x1a\x43onfigureVoltageLevelRange\x12\x31.nidcpower_grpc.ConfigureVoltageLevelRangeRequest\x1a\x32.nidcpower_grpc.ConfigureVoltageLevelRangeResponse\x12t\n\x15\x43onfigureVoltageLimit\x12,.nidcpower_grpc.ConfigureVoltageLimitRequest\x1a-.nidcpower_grpc.ConfigureVoltageLimitResponse\x12\x83\x01\n\x1a\x43onfigureVoltageLimitRange\x12\x31.nidcpower_grpc.ConfigureVoltageLimitRangeRequest\x1a\x32.nidcpower_grpc.ConfigureVoltageLimitRangeResponse\x12}\n\x18\x43onnectInternalReference\x12/.nidcpower_grpc.ConnectInternalReferenceRequest\x1a\x30.nidcpower_grpc.ConnectInternalReferenceResponse\x12\x83\x01\n\x1a\x43reateAdvancedSequenceStep\x12\x31.nidcpower_grpc.CreateAdvancedSequenceStepRequest\x1a\x32.nidcpower_grpc.CreateAdvancedSequenceStepResponse\x12w\n\x16\x44\x65leteAdvancedSequence\x12-.nidcpower_grpc.DeleteAdvancedSequenceRequest\x1a..nidcpower_grpc.DeleteAdvancedSequenceResponse\x12J\n\x07\x44isable\x12\x1e.nidcpower_grpc.DisableRequest\x1a\x1f.nidcpower_grpc.DisableResponse\x12n\n\x13\x44isablePulseTrigger\x12*.nidcpower_grpc.DisablePulseTriggerRequest\x1a+.nidcpower_grpc.DisablePulseTriggerResponse\x12\x8c\x01\n\x1d\x44isableSequenceAdvanceTrigger\x12\x34.nidcpower_grpc.DisableSequenceAdvanceTriggerRequest\x1a\x35.nidcpower_grpc.DisableSequenceAdvanceTriggerResponse\x12q\n\x14\x44isableSourceTrigger\x12+.nidcpower_grpc.DisableSourceTriggerRequest\x1a,.nidcpower_grpc.DisableSourceTriggerResponse\x12n\n\x13\x44isableStartTrigger\x12*.nidcpower_grpc.DisableStartTriggerRequest\x1a+.nidcpower_grpc.DisableStartTriggerResponse\x12Y\n\x0c\x45rrorMessage\x12#.nidcpower_grpc.ErrorMessageRequest\x1a$.nidcpower_grpc.ErrorMessageResponse\x12\x95\x01\n ExportAttributeConfigurationFile\x12\x37.nidcpower_grpc.ExportAttributeConfigurationFileRequest\x1a\x38.nidcpower_grpc.ExportAttributeConfigurationFileResponse\x12Y\n\x0c\x45xportSignal\x12#.nidcpower_grpc.ExportSignalRequest\x1a$.nidcpower_grpc.ExportSignalResponse\x12\\\n\rFetchMultiple\x12$.nidcpower_grpc.FetchMultipleRequest\x1a%.nidcpower_grpc.FetchMultipleResponse\x12t\n\x15GetAttributeViBoolean\x12,.nidcpower_grpc.GetAttributeViBooleanRequest\x1a-.nidcpower_grpc.GetAttributeViBooleanResponse\x12n\n\x13GetAttributeViInt32\x12*.nidcpower_grpc.GetAttributeViInt32Request\x1a+.nidcpower_grpc.GetAttributeViInt32Response\x12n\n\x13GetAttributeViInt64\x12*.nidcpower_grpc.GetAttributeViInt64Request\x1a+.nidcpower_grpc.GetAttributeViInt64Response\x12q\n\x14GetAttributeViReal64\x12+.nidcpower_grpc.GetAttributeViReal64Request\x1a,.nidcpower_grpc.GetAttributeViReal64Response\x12t\n\x15GetAttributeViSession\x12,.nidcpower_grpc.GetAttributeViSessionRequest\x1a-.nidcpower_grpc.GetAttributeViSessionResponse\x12q\n\x14GetAttributeViString\x12+.nidcpower_grpc.GetAttributeViStringRequest\x1a,.nidcpower_grpc.GetAttributeViStringResponse\x12t\n\x15GetCalUserDefinedInfo\x12,.nidcpower_grpc.GetCalUserDefinedInfoRequest\x1a-.nidcpower_grpc.GetCalUserDefinedInfoResponse\x12\x89\x01\n\x1cGetCalUserDefinedInfoMaxSize\x12\x33.nidcpower_grpc.GetCalUserDefinedInfoMaxSizeRequest\x1a\x34.nidcpower_grpc.GetCalUserDefinedInfoMaxSizeResponse\x12_\n\x0eGetChannelName\x12%.nidcpower_grpc.GetChannelNameRequest\x1a&.nidcpower_grpc.GetChannelNameResponse\x12}\n\x18GetChannelNameFromString\x12/.nidcpower_grpc.GetChannelNameFromStringRequest\x1a\x30.nidcpower_grpc.GetChannelNameFromStringResponse\x12M\n\x08GetError\x12\x1f.nidcpower_grpc.GetErrorRequest\x1a .nidcpower_grpc.GetErrorResponse\x12}\n\x18GetExtCalLastDateAndTime\x12/.nidcpower_grpc.GetExtCalLastDateAndTimeRequest\x1a\x30.nidcpower_grpc.GetExtCalLastDateAndTimeResponse\x12h\n\x11GetExtCalLastTemp\x12(.nidcpower_grpc.GetExtCalLastTempRequest\x1a).nidcpower_grpc.GetExtCalLastTempResponse\x12\x89\x01\n\x1cGetExtCalRecommendedInterval\x12\x33.nidcpower_grpc.GetExtCalRecommendedIntervalRequest\x1a\x34.nidcpower_grpc.GetExtCalRecommendedIntervalResponse\x12t\n\x15GetNextCoercionRecord\x12,.nidcpower_grpc.GetNextCoercionRecordRequest\x1a-.nidcpower_grpc.GetNextCoercionRecordResponse\x12\x80\x01\n\x19GetNextInterchangeWarning\x12\x30.nidcpower_grpc.GetNextInterchangeWarningRequest\x1a\x31.nidcpower_grpc.GetNextInterchangeWarningResponse\x12\x80\x01\n\x19GetSelfCalLastDateAndTime\x12\x30.nidcpower_grpc.GetSelfCalLastDateAndTimeRequest\x1a\x31.nidcpower_grpc.GetSelfCalLastDateAndTimeResponse\x12k\n\x12GetSelfCalLastTemp\x12).nidcpower_grpc.GetSelfCalLastTempRequest\x1a*.nidcpower_grpc.GetSelfCalLastTempResponse\x12\x95\x01\n ImportAttributeConfigurationFile\x12\x37.nidcpower_grpc.ImportAttributeConfigurationFileRequest\x1a\x38.nidcpower_grpc.ImportAttributeConfigurationFileResponse\x12S\n\nInitExtCal\x12!.nidcpower_grpc.InitExtCalRequest\x1a\".nidcpower_grpc.InitExtCalResponse\x12w\n\x16InitializeWithChannels\x12-.nidcpower_grpc.InitializeWithChannelsRequest\x1a..nidcpower_grpc.InitializeWithChannelsResponse\x12M\n\x08Initiate\x12\x1f.nidcpower_grpc.InitiateRequest\x1a .nidcpower_grpc.InitiateResponse\x12V\n\x0bLockSession\x12\".nidcpower_grpc.LockSessionRequest\x1a#.nidcpower_grpc.LockSessionResponse\x12J\n\x07Measure\x12\x1e.nidcpower_grpc.MeasureRequest\x1a\x1f.nidcpower_grpc.MeasureResponse\x12\x62\n\x0fMeasureMultiple\x12&.nidcpower_grpc.MeasureMultipleRequest\x1a\'.nidcpower_grpc.MeasureMultipleResponse\x12h\n\x11QueryInCompliance\x12(.nidcpower_grpc.QueryInComplianceRequest\x1a).nidcpower_grpc.QueryInComplianceResponse\x12q\n\x14QueryMaxCurrentLimit\x12+.nidcpower_grpc.QueryMaxCurrentLimitRequest\x1a,.nidcpower_grpc.QueryMaxCurrentLimitResponse\x12q\n\x14QueryMaxVoltageLevel\x12+.nidcpower_grpc.QueryMaxVoltageLevelRequest\x1a,.nidcpower_grpc.QueryMaxVoltageLevelResponse\x12q\n\x14QueryMinCurrentLimit\x12+.nidcpower_grpc.QueryMinCurrentLimitRequest\x1a,.nidcpower_grpc.QueryMinCurrentLimitResponse\x12\x65\n\x10QueryOutputState\x12\'.nidcpower_grpc.QueryOutputStateRequest\x1a(.nidcpower_grpc.QueryOutputStateResponse\x12w\n\x16ReadCurrentTemperature\x12-.nidcpower_grpc.ReadCurrentTemperatureRequest\x1a..nidcpower_grpc.ReadCurrentTemperatureResponse\x12\x44\n\x05Reset\x12\x1c.nidcpower_grpc.ResetRequest\x1a\x1d.nidcpower_grpc.ResetResponse\x12V\n\x0bResetDevice\x12\".nidcpower_grpc.ResetDeviceRequest\x1a#.nidcpower_grpc.ResetDeviceResponse\x12t\n\x15ResetInterchangeCheck\x12,.nidcpower_grpc.ResetInterchangeCheckRequest\x1a-.nidcpower_grpc.ResetInterchangeCheckResponse\x12h\n\x11ResetWithDefaults\x12(.nidcpower_grpc.ResetWithDefaultsRequest\x1a).nidcpower_grpc.ResetWithDefaultsResponse\x12\\\n\rRevisionQuery\x12$.nidcpower_grpc.RevisionQueryRequest\x1a%.nidcpower_grpc.RevisionQueryResponse\x12M\n\x08SelfTest\x12\x1f.nidcpower_grpc.SelfTestRequest\x1a .nidcpower_grpc.SelfTestResponse\x12z\n\x17SendSoftwareEdgeTrigger\x12..nidcpower_grpc.SendSoftwareEdgeTriggerRequest\x1a/.nidcpower_grpc.SendSoftwareEdgeTriggerResponse\x12t\n\x15SetAttributeViBoolean\x12,.nidcpower_grpc.SetAttributeViBooleanRequest\x1a-.nidcpower_grpc.SetAttributeViBooleanResponse\x12n\n\x13SetAttributeViInt32\x12*.nidcpower_grpc.SetAttributeViInt32Request\x1a+.nidcpower_grpc.SetAttributeViInt32Response\x12n\n\x13SetAttributeViInt64\x12*.nidcpower_grpc.SetAttributeViInt64Request\x1a+.nidcpower_grpc.SetAttributeViInt64Response\x12q\n\x14SetAttributeViReal64\x12+.nidcpower_grpc.SetAttributeViReal64Request\x1a,.nidcpower_grpc.SetAttributeViReal64Response\x12t\n\x15SetAttributeViSession\x12,.nidcpower_grpc.SetAttributeViSessionRequest\x1a-.nidcpower_grpc.SetAttributeViSessionResponse\x12q\n\x14SetAttributeViString\x12+.nidcpower_grpc.SetAttributeViStringRequest\x1a,.nidcpower_grpc.SetAttributeViStringResponse\x12t\n\x15SetCalUserDefinedInfo\x12,.nidcpower_grpc.SetCalUserDefinedInfoRequest\x1a-.nidcpower_grpc.SetCalUserDefinedInfoResponse\x12V\n\x0bSetSequence\x12\".nidcpower_grpc.SetSequenceRequest\x1a#.nidcpower_grpc.SetSequenceResponse\x12\\\n\rUnlockSession\x12$.nidcpower_grpc.UnlockSessionRequest\x1a%.nidcpower_grpc.UnlockSessionResponse\x12Y\n\x0cWaitForEvent\x12#.nidcpower_grpc.WaitForEventRequest\x1a$.nidcpower_grpc.WaitForEventResponseBG\n\x15\x63om.ni.grpc.nidcpowerB\tNiDCPowerP\x01\xaa\x02 NationalInstruments.Grpc.DCPowerb\x06proto3'
+  serialized_pb=b'\n\x0fnidcpower.proto\x12\x0enidcpower_grpc\x1a\rsession.proto\"T\n\x18\x41\x62ortWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"+\n\x19\x41\x62ortWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"U\n\x19\x43ommitWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\",\n\x1a\x43ommitWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x97\x01\n5ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"H\n6ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x95\x01\n3ConfigureDigitalEdgePulseTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"F\n4ConfigureDigitalEdgePulseTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x9f\x01\n=ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"P\n>ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x98\x01\n6ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"I\n7ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x96\x01\n4ConfigureDigitalEdgeSourceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"G\n5ConfigureDigitalEdgeSourceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x95\x01\n3ConfigureDigitalEdgeStartTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x16\n\x0einput_terminal\x18\x03 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x04 \x01(\x11\"F\n4ConfigureDigitalEdgeStartTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"o\n\x13\x43onfigureOvpRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x03 \x01(\x08\x12\r\n\x05limit\x18\x04 \x01(\x01\"&\n\x14\x43onfigureOvpResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"r\n6ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"I\n7ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n4ConfigureSoftwareEdgePulseTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"G\n5ConfigureSoftwareEdgePulseTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"z\n>ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"Q\n?ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"s\n7ConfigureSoftwareEdgeShutdownTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"J\n8ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n5ConfigureSoftwareEdgeSourceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"H\n6ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n4ConfigureSoftwareEdgeStartTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"G\n5ConfigureSoftwareEdgeStartTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"w\n&ConfigureSourceModeWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x13\n\x0bsource_mode\x18\x03 \x01(\x11\"9\n\'ConfigureSourceModeWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x8b\x01\n3CreateAdvancedSequenceCommitStepWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x1a\n\x12set_as_active_step\x18\x03 \x01(\x08\"F\n4CreateAdvancedSequenceCommitStepWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x85\x01\n-CreateAdvancedSequenceStepWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x1a\n\x12set_as_active_step\x18\x03 \x01(\x08\"@\n.CreateAdvancedSequenceStepWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"|\n)DeleteAdvancedSequenceWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rsequence_name\x18\x03 \x01(\t\"<\n*DeleteAdvancedSequenceWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"b\n&DisablePulseTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"9\n\'DisablePulseTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n0DisableSequenceAdvanceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"C\n1DisableSequenceAdvanceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"e\n)DisableShutdownTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"<\n*DisableShutdownTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"c\n\'DisableSourceTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\":\n(DisableSourceTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"b\n&DisableStartTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"9\n\'DisableStartTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"N\n\x11\x45rrorQueryRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x15\n\rerror_message\x18\x02 \x01(\t\"8\n\x12\x45rrorQueryResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x12\n\nerror_code\x18\x02 \x01(\x11\"\x9f\x01\n\x1f\x45xportSignalWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0e\n\x06signal\x18\x03 \x01(\x11\x12\x19\n\x11signal_identifier\x18\x04 \x01(\t\x12\x17\n\x0foutput_terminal\x18\x05 \x01(\t\"2\n ExportSignalWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"}\n(InitializeWithIndependentChannelsRequest\x12\x14\n\x0csession_name\x18\x01 \x01(\t\x12\x15\n\rresource_name\x18\x02 \x01(\t\x12\r\n\x05reset\x18\x03 \x01(\x08\x12\x15\n\roption_string\x18\x04 \x01(\t\"_\n)InitializeWithIndependentChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x02vi\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"W\n\x1bInitiateWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\".\n\x1cInitiateWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"D\n\x1eInvalidateAllAttributesRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"1\n\x1fInvalidateAllAttributesResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"T\n\x18ResetWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"+\n\x19ResetWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"w\n*SendSoftwareEdgeTriggerWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07trigger\x18\x03 \x01(\x11\"=\n+SendSoftwareEdgeTriggerWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"~\n\x1fWaitForEventWithChannelsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x10\n\x08\x65vent_id\x18\x03 \x01(\x11\x12\x0f\n\x07timeout\x18\x04 \x01(\x01\"2\n WaitForEventWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"2\n\x0c\x41\x62ortRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x1f\n\rAbortResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x9c\x01\n\x1c\x43\x61lAdjustCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x19\n\x11requested_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"/\n\x1d\x43\x61lAdjustCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xa1\x01\n\"CalAdjustCurrentMeasurementRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x18\n\x10reported_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"5\n#CalAdjustCurrentMeasurementResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x88\x01\n!CalAdjustInternalReferenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1a\n\x12internal_reference\x18\x02 \x01(\x11\x12#\n\x1b\x61\x64justed_internal_reference\x18\x03 \x01(\x01\"4\n\"CalAdjustInternalReferenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x91\x01\n CalAdjustOutputResistanceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x19\n\x11requested_outputs\x18\x03 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x04 \x03(\x01\"3\n!CalAdjustOutputResistanceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"a\n%CalAdjustResidualCurrentOffsetRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"8\n&CalAdjustResidualCurrentOffsetResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"a\n%CalAdjustResidualVoltageOffsetRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"8\n&CalAdjustResidualVoltageOffsetResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\x9c\x01\n\x1c\x43\x61lAdjustVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x19\n\x11requested_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"/\n\x1d\x43\x61lAdjustVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xa1\x01\n\"CalAdjustVoltageMeasurementRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\x12\x18\n\x10reported_outputs\x18\x04 \x03(\x01\x12\x18\n\x10measured_outputs\x18\x05 \x03(\x01\"5\n#CalAdjustVoltageMeasurementResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"S\n\x17\x43\x61lSelfCalibrateRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"*\n\x18\x43\x61lSelfCalibrateResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"m\n\x1b\x43hangeExtCalPasswordRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0cold_password\x18\x02 \x01(\t\x12\x14\n\x0cnew_password\x18\x03 \x01(\t\".\n\x1c\x43hangeExtCalPasswordResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"7\n\x11\x43learErrorRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"$\n\x12\x43learErrorResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"E\n\x1f\x43learInterchangeWarningsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"2\n ClearInterchangeWarningsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"2\n\x0c\x43loseRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x1f\n\rCloseResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"H\n\x12\x43loseExtCalRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x0e\n\x06\x61\x63tion\x18\x02 \x01(\x11\"%\n\x13\x43loseExtCalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"3\n\rCommitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\" \n\x0e\x43ommitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xc6\x01\n\x1c\x43onfigureApertureTimeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\raperture_time\x18\x03 \x01(\x01\x12\x32\n\x05units\x18\x04 \x01(\x0e\x32!.nidcpower_grpc.ApertureTimeUnitsH\x00\x12\x13\n\tunits_raw\x18\x05 \x01(\x11H\x00\x42\x0c\n\nunits_enum\"/\n\x1d\x43onfigureApertureTimeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xae\x01\n\x18\x43onfigureAutoZeroRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12-\n\tauto_zero\x18\x03 \x01(\x0e\x32\x18.nidcpower_grpc.AutoZeroH\x00\x12\x17\n\rauto_zero_raw\x18\x04 \x01(\x11H\x00\x42\x10\n\x0e\x61uto_zero_enum\"+\n\x19\x43onfigureAutoZeroResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"g\n\x1c\x43onfigureCurrentLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"/\n\x1d\x43onfigureCurrentLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureCurrentLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureCurrentLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"y\n\x1c\x43onfigureCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x10\n\x08\x62\x65havior\x18\x03 \x01(\x11\x12\r\n\x05limit\x18\x04 \x01(\x01\"/\n\x1d\x43onfigureCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureCurrentLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureCurrentLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"u\n)ConfigureDigitalEdgeMeasureTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\"<\n*ConfigureDigitalEdgeMeasureTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"s\n\'ConfigureDigitalEdgePulseTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\":\n(ConfigureDigitalEdgePulseTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"}\n1ConfigureDigitalEdgeSequenceAdvanceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\"D\n2ConfigureDigitalEdgeSequenceAdvanceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"t\n(ConfigureDigitalEdgeSourceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\";\n)ConfigureDigitalEdgeSourceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"s\n\'ConfigureDigitalEdgeStartTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x16\n\x0einput_terminal\x18\x02 \x01(\t\x12\x0c\n\x04\x65\x64ge\x18\x03 \x01(\x11\":\n(ConfigureDigitalEdgeStartTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"j\n\x1d\x43onfigureOutputEnabledRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07\x65nabled\x18\x03 \x01(\x08\"0\n\x1e\x43onfigureOutputEnabledResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n\x1e\x43onfigureOutputFunctionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x10\n\x08\x66unction\x18\x03 \x01(\x11\"1\n\x1f\x43onfigureOutputFunctionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n ConfigureOutputResistanceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x12\n\nresistance\x18\x03 \x01(\x01\"3\n!ConfigureOutputResistanceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"e\n\"ConfigurePowerLineFrequencyRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1b\n\x13powerline_frequency\x18\x02 \x01(\x01\"5\n#ConfigurePowerLineFrequencyResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasCurrentLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasCurrentLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n%ConfigurePulseBiasVoltageLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"8\n&ConfigurePulseBiasVoltageLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseCurrentLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"4\n\"ConfigurePulseCurrentLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseCurrentLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseCurrentLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"4\n\"ConfigurePulseCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseCurrentLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseCurrentLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"4\n\"ConfigurePulseVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseVoltageLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseVoltageLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigurePulseVoltageLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"4\n\"ConfigurePulseVoltageLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"q\n&ConfigurePulseVoltageLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"9\n\'ConfigurePulseVoltageLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"`\n\x15\x43onfigureSenseRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05sense\x18\x03 \x01(\x11\"(\n\x16\x43onfigureSenseResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"P\n*ConfigureSoftwareEdgeMeasureTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"=\n+ConfigureSoftwareEdgeMeasureTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"N\n(ConfigureSoftwareEdgePulseTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\";\n)ConfigureSoftwareEdgePulseTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"X\n2ConfigureSoftwareEdgeSequenceAdvanceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"E\n3ConfigureSoftwareEdgeSequenceAdvanceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"O\n)ConfigureSoftwareEdgeSourceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"<\n*ConfigureSoftwareEdgeSourceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"N\n(ConfigureSoftwareEdgeStartTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\";\n)ConfigureSoftwareEdgeStartTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"U\n\x1a\x43onfigureSourceModeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x13\n\x0bsource_mode\x18\x02 \x01(\x11\"-\n\x1b\x43onfigureSourceModeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"g\n\x1c\x43onfigureVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05level\x18\x03 \x01(\x01\"/\n\x1d\x43onfigureVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureVoltageLevelRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureVoltageLevelRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"g\n\x1c\x43onfigureVoltageLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x01\"/\n\x1d\x43onfigureVoltageLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"l\n!ConfigureVoltageLimitRangeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\r\n\x05range\x18\x03 \x01(\x01\"4\n\"ConfigureVoltageLimitRangeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"a\n\x1f\x43onnectInternalReferenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1a\n\x12internal_reference\x18\x02 \x01(\x11\"2\n ConnectInternalReferenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"c\n!CreateAdvancedSequenceStepRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x1a\n\x12set_as_active_step\x18\x02 \x01(\x08\"4\n\"CreateAdvancedSequenceStepResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"Z\n\x1d\x44\x65leteAdvancedSequenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x15\n\rsequence_name\x18\x02 \x01(\t\"0\n\x1e\x44\x65leteAdvancedSequenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"4\n\x0e\x44isableRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"!\n\x0f\x44isableResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"@\n\x1a\x44isablePulseTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"-\n\x1b\x44isablePulseTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"J\n$DisableSequenceAdvanceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"7\n%DisableSequenceAdvanceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"A\n\x1b\x44isableSourceTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\".\n\x1c\x44isableSourceTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"@\n\x1a\x44isableStartTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"-\n\x1b\x44isableStartTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"M\n\x13\x45rrorMessageRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x12\n\nerror_code\x18\x02 \x01(\x11\"=\n\x14\x45rrorMessageResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x15\n\rerror_message\x18\x02 \x01(\t\"`\n\'ExportAttributeConfigurationFileRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x11\n\tfile_path\x18\x02 \x01(\t\":\n(ExportAttributeConfigurationFileResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xc2\x01\n\x13\x45xportSignalRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12.\n\x06signal\x18\x02 \x01(\x0e\x32\x1c.nidcpower_grpc.ExportSignalH\x00\x12\x14\n\nsignal_raw\x18\x03 \x01(\x11H\x00\x12\x19\n\x11signal_identifier\x18\x04 \x01(\t\x12\x17\n\x0foutput_terminal\x18\x05 \x01(\tB\r\n\x0bsignal_enum\"&\n\x14\x45xportSignalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"p\n\x14\x46\x65tchMultipleRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0f\n\x07timeout\x18\x03 \x01(\x01\x12\r\n\x05\x63ount\x18\x04 \x01(\x11\"\x90\x01\n\x15\x46\x65tchMultipleResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x1c\n\x14voltage_measurements\x18\x02 \x03(\x01\x12\x1c\n\x14\x63urrent_measurements\x18\x03 \x03(\x01\x12\x15\n\rin_compliance\x18\x04 \x03(\x08\x12\x14\n\x0c\x61\x63tual_count\x18\x05 \x01(\x11\"\x93\x01\n\x1cGetAttributeViBooleanRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"H\n\x1dGetAttributeViBooleanResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x08\"\x91\x01\n\x1aGetAttributeViInt32Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"F\n\x1bGetAttributeViInt32Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x11\"\x91\x01\n\x1aGetAttributeViInt64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"F\n\x1bGetAttributeViInt64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x03\"\x92\x01\n\x1bGetAttributeViReal64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"G\n\x1cGetAttributeViReal64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\x01\"\x93\x01\n\x1cGetAttributeViSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"`\n\x1dGetAttributeViSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12/\n\x0f\x61ttribute_value\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x92\x01\n\x1bGetAttributeViStringRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\"G\n\x1cGetAttributeViStringResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x61ttribute_value\x18\x02 \x01(\t\"B\n\x1cGetCalUserDefinedInfoRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"=\n\x1dGetCalUserDefinedInfoResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04info\x18\x02 \x01(\t\"I\n#GetCalUserDefinedInfoMaxSizeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"I\n$GetCalUserDefinedInfoMaxSizeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x11\n\tinfo_size\x18\x02 \x01(\x11\"J\n\x15GetChannelNameRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\r\n\x05index\x18\x02 \x01(\x11\">\n\x16GetChannelNameResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"T\n\x1fGetChannelNameFromStringRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\r\n\x05index\x18\x02 \x01(\t\"H\n GetChannelNameFromStringResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"5\n\x0fGetErrorRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"E\n\x10GetErrorResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04\x63ode\x18\x02 \x01(\x11\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\"E\n\x1fGetExtCalLastDateAndTimeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"z\n GetExtCalLastDateAndTimeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04year\x18\x02 \x01(\x11\x12\r\n\x05month\x18\x03 \x01(\x11\x12\x0b\n\x03\x64\x61y\x18\x04 \x01(\x11\x12\x0c\n\x04hour\x18\x05 \x01(\x11\x12\x0e\n\x06minute\x18\x06 \x01(\x11\">\n\x18GetExtCalLastTempRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"@\n\x19GetExtCalLastTempResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0btemperature\x18\x02 \x01(\x01\"I\n#GetExtCalRecommendedIntervalRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"F\n$GetExtCalRecommendedIntervalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0e\n\x06months\x18\x02 \x01(\x11\"B\n\x1cGetNextCoercionRecordRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"H\n\x1dGetNextCoercionRecordResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x63oercion_record\x18\x02 \x01(\t\"F\n GetNextInterchangeWarningRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"P\n!GetNextInterchangeWarningResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x1b\n\x13interchange_warning\x18\x02 \x01(\t\"F\n GetSelfCalLastDateAndTimeRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"{\n!GetSelfCalLastDateAndTimeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x0c\n\x04year\x18\x02 \x01(\x11\x12\r\n\x05month\x18\x03 \x01(\x11\x12\x0b\n\x03\x64\x61y\x18\x04 \x01(\x11\x12\x0c\n\x04hour\x18\x05 \x01(\x11\x12\x0e\n\x06minute\x18\x06 \x01(\x11\"?\n\x19GetSelfCalLastTempRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"A\n\x1aGetSelfCalLastTempResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0btemperature\x18\x02 \x01(\x01\"`\n\'ImportAttributeConfigurationFileRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x11\n\tfile_path\x18\x02 \x01(\t\":\n(ImportAttributeConfigurationFileResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"<\n\x11InitExtCalRequest\x12\x15\n\rresource_name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"H\n\x12InitExtCalResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x02vi\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"n\n\x1dInitializeWithChannelsRequest\x12\x15\n\rresource_name\x18\x01 \x01(\t\x12\x10\n\x08\x63hannels\x18\x02 \x01(\t\x12\r\n\x05reset\x18\x03 \x01(\x08\x12\x15\n\roption_string\x18\x04 \x01(\t\"T\n\x1eInitializeWithChannelsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x02vi\x18\x02 \x01(\x0b\x32\x16.nidevice_grpc.Session\"5\n\x0fInitiateRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\"\n\x10InitiateResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"8\n\x12LockSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\">\n\x13LockSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x63\x61ller_has_lock\x18\x02 \x01(\x08\"\xc1\x01\n\x0eMeasureRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12<\n\x10measurement_type\x18\x03 \x01(\x0e\x32 .nidcpower_grpc.MeasurementTypesH\x00\x12\x1e\n\x14measurement_type_raw\x18\x04 \x01(\x11H\x00\x42\x17\n\x15measurement_type_enum\"6\n\x0fMeasureResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0bmeasurement\x18\x02 \x01(\x01\"R\n\x16MeasureMultipleRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"e\n\x17MeasureMultipleResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x1c\n\x14voltage_measurements\x18\x02 \x03(\x01\x12\x1c\n\x14\x63urrent_measurements\x18\x03 \x03(\x01\"T\n\x18QueryInComplianceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\"B\n\x19QueryInComplianceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x15\n\rin_compliance\x18\x02 \x01(\x08\"n\n\x1bQueryMaxCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rvoltage_level\x18\x03 \x01(\x01\"I\n\x1cQueryMaxCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x19\n\x11max_current_limit\x18\x02 \x01(\x01\"n\n\x1bQueryMaxVoltageLevelRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rcurrent_limit\x18\x03 \x01(\x01\"I\n\x1cQueryMaxVoltageLevelResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x19\n\x11max_voltage_level\x18\x02 \x01(\x01\"n\n\x1bQueryMinCurrentLimitRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x15\n\rvoltage_level\x18\x03 \x01(\x01\"I\n\x1cQueryMinCurrentLimitResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x19\n\x11min_current_limit\x18\x02 \x01(\x01\"\xba\x01\n\x17QueryOutputStateRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x34\n\x0coutput_state\x18\x03 \x01(\x0e\x32\x1c.nidcpower_grpc.OutputStatesH\x00\x12\x1a\n\x10output_state_raw\x18\x04 \x01(\x11H\x00\x42\x13\n\x11output_state_enum\"<\n\x18QueryOutputStateResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x10\n\x08in_state\x18\x02 \x01(\x08\"C\n\x1dReadCurrentTemperatureRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"E\n\x1eReadCurrentTemperatureResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x13\n\x0btemperature\x18\x02 \x01(\x01\"2\n\x0cResetRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"\x1f\n\rResetResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"8\n\x12ResetDeviceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"%\n\x13ResetDeviceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"B\n\x1cResetInterchangeCheckRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"/\n\x1dResetInterchangeCheckResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\">\n\x18ResetWithDefaultsRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"+\n\x19ResetWithDefaultsResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\":\n\x14RevisionQueryRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"f\n\x15RevisionQueryResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\"\n\x1ainstrument_driver_revision\x18\x02 \x01(\t\x12\x19\n\x11\x66irmware_revision\x18\x03 \x01(\t\"5\n\x0fSelfTestRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"W\n\x10SelfTestResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x18\n\x10self_test_result\x18\x02 \x01(\x11\x12\x19\n\x11self_test_message\x18\x03 \x01(\t\"U\n\x1eSendSoftwareEdgeTriggerRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x0f\n\x07trigger\x18\x02 \x01(\x11\"1\n\x1fSendSoftwareEdgeTriggerResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xac\x01\n\x1cSetAttributeViBooleanRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x08\"/\n\x1dSetAttributeViBooleanResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xaa\x01\n\x1aSetAttributeViInt32Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x11\"-\n\x1bSetAttributeViInt32Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xaa\x01\n\x1aSetAttributeViInt64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x03\"-\n\x1bSetAttributeViInt64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xab\x01\n\x1bSetAttributeViReal64Request\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\x01\".\n\x1cSetAttributeViReal64Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xc4\x01\n\x1cSetAttributeViSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12/\n\x0f\x61ttribute_value\x18\x04 \x01(\x0b\x32\x16.nidevice_grpc.Session\"/\n\x1dSetAttributeViSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"\xab\x01\n\x1bSetAttributeViStringRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x39\n\x0c\x61ttribute_id\x18\x03 \x01(\x0e\x32#.nidcpower_grpc.NiDCPowerAttributes\x12\x17\n\x0f\x61ttribute_value\x18\x04 \x01(\t\".\n\x1cSetAttributeViStringResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"P\n\x1cSetCalUserDefinedInfoRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x0c\n\x04info\x18\x02 \x01(\t\"/\n\x1dSetCalUserDefinedInfoResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\"u\n\x12SetSequenceRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x14\n\x0c\x63hannel_name\x18\x02 \x01(\t\x12\x0e\n\x06values\x18\x03 \x03(\x01\x12\x15\n\rsource_delays\x18\x04 \x03(\x01\"%\n\x13SetSequenceResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\":\n\x14UnlockSessionRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\"@\n\x15UnlockSessionResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\x17\n\x0f\x63\x61ller_has_lock\x18\x02 \x01(\x08\"\\\n\x13WaitForEventRequest\x12\"\n\x02vi\x18\x01 \x01(\x0b\x32\x16.nidevice_grpc.Session\x12\x10\n\x08\x65vent_id\x18\x02 \x01(\x11\x12\x0f\n\x07timeout\x18\x03 \x01(\x01\"&\n\x14WaitForEventResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05*\xcc<\n\x13NiDCPowerAttributes\x12#\n\x1fNIDCPOWER_ATTRIBUTE_UNSPECIFIED\x10\x00\x12\x31\n+NIDCPOWER_ATTRIBUTE_QUERY_INSTRUMENT_STATUS\x10\x93\x8b@\x12\"\n\x1cNIDCPOWER_ATTRIBUTE_SIMULATE\x10\x95\x8b@\x12&\n NIDCPOWER_ATTRIBUTE_DRIVER_SETUP\x10\x97\x8b@\x12\'\n!NIDCPOWER_ATTRIBUTE_CHANNEL_COUNT\x10\xdb\x8c@\x12\x30\n*NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_PREFIX\x10\xbe\x8d@\x12\x30\n*NIDCPOWER_ATTRIBUTE_IO_RESOURCE_DESCRIPTOR\x10\xc0\x8d@\x12&\n NIDCPOWER_ATTRIBUTE_LOGICAL_NAME\x10\xc1\x8d@\x12\x35\n/NIDCPOWER_ATTRIBUTE_SUPPORTED_INSTRUMENT_MODELS\x10\xd7\x8d@\x12\x36\n0NIDCPOWER_ATTRIBUTE_INSTRUMENT_FIRMWARE_REVISION\x10\x8e\x8f@\x12\x31\n+NIDCPOWER_ATTRIBUTE_INSTRUMENT_MANUFACTURER\x10\x8f\x8f@\x12*\n$NIDCPOWER_ATTRIBUTE_INSTRUMENT_MODEL\x10\x90\x8f@\x12\x30\n*NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_VENDOR\x10\x91\x8f@\x12\x35\n/NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_DESCRIPTION\x10\x92\x8f@\x12\x32\n,NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_REVISION\x10\xb7\x8f@\x12&\n NIDCPOWER_ATTRIBUTE_POWER_SOURCE\x10\xb0\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_POWER_SOURCE_IN_USE\x10\xb1\x98\x46\x12:\n4NIDCPOWER_ATTRIBUTE_AUXILIARY_POWER_SOURCE_AVAILABLE\x10\xb2\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_SAMPLES_TO_AVERAGE\x10\xb3\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_RANGE\x10\xb4\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_RANGE\x10\xb5\x98\x46\x12:\n4NIDCPOWER_ATTRIBUTE_RESET_AVERAGE_BEFORE_MEASUREMENT\x10\xb6\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_OVERRANGING_ENABLED\x10\xb7\x98\x46\x12)\n#NIDCPOWER_ATTRIBUTE_OUTPUT_FUNCTION\x10\xb8\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL\x10\xb9\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT\x10\xba\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL_RANGE\x10\xbb\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_RANGE\x10\xbc\x98\x46\x12\x1f\n\x19NIDCPOWER_ATTRIBUTE_SENSE\x10\xbd\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_OUTPUT_CAPACITANCE\x10\xbe\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_AUTORANGE\x10\xbf\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_AUTORANGE\x10\xc0\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL_AUTORANGE\x10\xc1\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_AUTORANGE\x10\xc2\x98\x46\x12.\n(NIDCPOWER_ATTRIBUTE_POWER_LINE_FREQUENCY\x10\xc4\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_START_TRIGGER_TYPE\x10\xc5\x98\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_START_TRIGGER_INPUT_TERMINAL\x10\xc7\x98\x46\x12@\n:NIDCPOWER_ATTRIBUTE_EXPORTED_START_TRIGGER_OUTPUT_TERMINAL\x10\xc8\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_SEQUENCE_LOOP_COUNT\x10\xc9\x98\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_SEQUENCE_ADVANCE_TRIGGER_TYPE\x10\xca\x98\x46\x12N\nHNIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SEQUENCE_ADVANCE_TRIGGER_INPUT_TERMINAL\x10\xcc\x98\x46\x12K\nENIDCPOWER_ATTRIBUTE_EXPORTED_SEQUENCE_ADVANCE_TRIGGER_OUTPUT_TERMINAL\x10\xcd\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_SOURCE_TRIGGER_TYPE\x10\xce\x98\x46\x12\x44\n>NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SOURCE_TRIGGER_INPUT_TERMINAL\x10\xd0\x98\x46\x12\x41\n;NIDCPOWER_ATTRIBUTE_EXPORTED_SOURCE_TRIGGER_OUTPUT_TERMINAL\x10\xd1\x98\x46\x12.\n(NIDCPOWER_ATTRIBUTE_MEASURE_TRIGGER_TYPE\x10\xd2\x98\x46\x12\x45\n?NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_MEASURE_TRIGGER_INPUT_TERMINAL\x10\xd4\x98\x46\x12\x42\n<NIDCPOWER_ATTRIBUTE_EXPORTED_MEASURE_TRIGGER_OUTPUT_TERMINAL\x10\xd5\x98\x46\x12J\nDNIDCPOWER_ATTRIBUTE_SEQUENCE_ITERATION_COMPLETE_EVENT_PULSE_POLARITY\x10\xd6\x98\x46\x12G\nANIDCPOWER_ATTRIBUTE_SEQUENCE_ITERATION_COMPLETE_EVENT_PULSE_WIDTH\x10\xd7\x98\x46\x12K\nENIDCPOWER_ATTRIBUTE_SEQUENCE_ITERATION_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\xd8\x98\x46\x12>\n8NIDCPOWER_ATTRIBUTE_SOURCE_COMPLETE_EVENT_PULSE_POLARITY\x10\xd9\x98\x46\x12;\n5NIDCPOWER_ATTRIBUTE_SOURCE_COMPLETE_EVENT_PULSE_WIDTH\x10\xda\x98\x46\x12?\n9NIDCPOWER_ATTRIBUTE_SOURCE_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\xdb\x98\x46\x12?\n9NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_PULSE_POLARITY\x10\xdc\x98\x46\x12<\n6NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_PULSE_WIDTH\x10\xdd\x98\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_DELAY\x10\xde\x98\x46\x12@\n:NIDCPOWER_ATTRIBUTE_MEASURE_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\xdf\x98\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_SEQUENCE_ENGINE_DONE_EVENT_PULSE_POLARITY\x10\xe0\x98\x46\x12@\n:NIDCPOWER_ATTRIBUTE_SEQUENCE_ENGINE_DONE_EVENT_PULSE_WIDTH\x10\xe1\x98\x46\x12\x44\n>NIDCPOWER_ATTRIBUTE_SEQUENCE_ENGINE_DONE_EVENT_OUTPUT_TERMINAL\x10\xe2\x98\x46\x12&\n NIDCPOWER_ATTRIBUTE_SOURCE_DELAY\x10\xe3\x98\x46\x12%\n\x1fNIDCPOWER_ATTRIBUTE_SOURCE_MODE\x10\xe6\x98\x46\x12#\n\x1dNIDCPOWER_ATTRIBUTE_AUTO_ZERO\x10\xe7\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_FETCH_BACKLOG\x10\xe8\x98\x46\x12&\n NIDCPOWER_ATTRIBUTE_MEASURE_WHEN\x10\xe9\x98\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_APERTURE_TIME\x10\xea\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_APERTURE_TIME_UNITS\x10\xeb\x98\x46\x12*\n$NIDCPOWER_ATTRIBUTE_OUTPUT_CONNECTED\x10\xec\x98\x46\x12+\n%NIDCPOWER_ATTRIBUTE_OUTPUT_RESISTANCE\x10\xed\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_TRANSIENT_RESPONSE\x10\xee\x98\x46\x12/\n)NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH\x10\xef\x98\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE\x10\xf0\x98\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_DELTA_TIME\x10\xf1\x98\x46\x12,\n&NIDCPOWER_ATTRIBUTE_DC_NOISE_REJECTION\x10\xf2\x98\x46\x12\x30\n*NIDCPOWER_ATTRIBUTE_VOLTAGE_GAIN_BANDWIDTH\x10\xf3\x98\x46\x12\x38\n2NIDCPOWER_ATTRIBUTE_VOLTAGE_COMPENSATION_FREQUENCY\x10\xf4\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_VOLTAGE_POLE_ZERO_RATIO\x10\xf5\x98\x46\x12\x30\n*NIDCPOWER_ATTRIBUTE_CURRENT_GAIN_BANDWIDTH\x10\xf6\x98\x46\x12\x38\n2NIDCPOWER_ATTRIBUTE_CURRENT_COMPENSATION_FREQUENCY\x10\xf7\x98\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_CURRENT_POLE_ZERO_RATIO\x10\xf8\x98\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_SELF_CALIBRATION_PERSISTENCE\x10\xf9\x98\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_ACTIVE_ADVANCED_SEQUENCE\x10\xfa\x98\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_ACTIVE_ADVANCED_SEQUENCE_STEP\x10\xfb\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_MEASURE_BUFFER_SIZE\x10\xfd\x98\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_SEQUENCE_LOOP_COUNT_IS_FINITE\x10\xfe\x98\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LEVEL\x10\x80\x99\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT\x10\x81\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LEVEL\x10\x82\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LIMIT\x10\x83\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LEVEL_RANGE\x10\x84\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT_RANGE\x10\x85\x99\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LEVEL\x10\x86\x99\x46\x12-\n\'NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT\x10\x87\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LEVEL\x10\x88\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LIMIT\x10\x89\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LEVEL_RANGE\x10\x8a\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT_RANGE\x10\x8b\x99\x46\x12*\n$NIDCPOWER_ATTRIBUTE_PULSE_BIAS_DELAY\x10\x8c\x99\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_PULSE_ON_TIME\x10\x8d\x99\x46\x12(\n\"NIDCPOWER_ATTRIBUTE_PULSE_OFF_TIME\x10\x8e\x99\x46\x12,\n&NIDCPOWER_ATTRIBUTE_PULSE_TRIGGER_TYPE\x10\x8f\x99\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_PULSE_TRIGGER_INPUT_TERMINAL\x10\x91\x99\x46\x12@\n:NIDCPOWER_ATTRIBUTE_EXPORTED_PULSE_TRIGGER_OUTPUT_TERMINAL\x10\x92\x99\x46\x12>\n8NIDCPOWER_ATTRIBUTE_PULSE_COMPLETE_EVENT_OUTPUT_TERMINAL\x10\x93\x99\x46\x12=\n7NIDCPOWER_ATTRIBUTE_PULSE_COMPLETE_EVENT_PULSE_POLARITY\x10\x94\x99\x46\x12:\n4NIDCPOWER_ATTRIBUTE_PULSE_COMPLETE_EVENT_PULSE_WIDTH\x10\x95\x99\x46\x12G\nANIDCPOWER_ATTRIBUTE_READY_FOR_PULSE_TRIGGER_EVENT_OUTPUT_TERMINAL\x10\x96\x99\x46\x12\x46\n@NIDCPOWER_ATTRIBUTE_READY_FOR_PULSE_TRIGGER_EVENT_PULSE_POLARITY\x10\x97\x99\x46\x12\x43\n=NIDCPOWER_ATTRIBUTE_READY_FOR_PULSE_TRIGGER_EVENT_PULSE_WIDTH\x10\x98\x99\x46\x12.\n(NIDCPOWER_ATTRIBUTE_INTERLOCK_INPUT_OPEN\x10\x99\x99\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_SERIAL_NUMBER\x10\xc8\x99\x46\x12\x33\n-NIDCPOWER_ATTRIBUTE_COMPLIANCE_LIMIT_SYMMETRY\x10\xe8\x99\x46\x12,\n&NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_HIGH\x10\xe9\x99\x46\x12+\n%NIDCPOWER_ATTRIBUTE_VOLTAGE_LIMIT_LOW\x10\xea\x99\x46\x12,\n&NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_HIGH\x10\xeb\x99\x46\x12+\n%NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_LOW\x10\xec\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT_HIGH\x10\xed\x99\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_PULSE_VOLTAGE_LIMIT_LOW\x10\xee\x99\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LIMIT_HIGH\x10\xef\x99\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_PULSE_BIAS_VOLTAGE_LIMIT_LOW\x10\xf0\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT_HIGH\x10\xf1\x99\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_PULSE_CURRENT_LIMIT_LOW\x10\xf2\x99\x46\x12\x37\n1NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LIMIT_HIGH\x10\xf3\x99\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_PULSE_BIAS_CURRENT_LIMIT_LOW\x10\xf4\x99\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_SEQUENCE_STEP_DELTA_TIME\x10\xf6\x99\x46\x12:\n4NIDCPOWER_ATTRIBUTE_SEQUENCE_STEP_DELTA_TIME_ENABLED\x10\xf7\x99\x46\x12\x31\n+NIDCPOWER_ATTRIBUTE_ACTUAL_POWER_ALLOCATION\x10\xfd\x99\x46\x12\x34\n.NIDCPOWER_ATTRIBUTE_REQUESTED_POWER_ALLOCATION\x10\xfe\x99\x46\x12/\n)NIDCPOWER_ATTRIBUTE_POWER_ALLOCATION_MODE\x10\xff\x99\x46\x12#\n\x1dNIDCPOWER_ATTRIBUTE_AUTORANGE\x10\xa4\x9a\x46\x12,\n&NIDCPOWER_ATTRIBUTE_AUTORANGE_BEHAVIOR\x10\xa5\x9a\x46\x12\x36\n0NIDCPOWER_ATTRIBUTE_AUTORANGE_APERTURE_TIME_MODE\x10\xa6\x9a\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_APERTURE_TIME\x10\xa7\x9a\x46\x12?\n9NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_APERTURE_TIME_UNITS\x10\xa8\x9a\x46\x12)\n#NIDCPOWER_ATTRIBUTE_MERGED_CHANNELS\x10\xa9\x9a\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_CURRENT_RANGE\x10\xaf\x9a\x46\x12\x39\n3NIDCPOWER_ATTRIBUTE_AUTORANGE_MINIMUM_VOLTAGE_RANGE\x10\xb0\x9a\x46\x12\x32\n,NIDCPOWER_ATTRIBUTE_AUTORANGE_THRESHOLD_MODE\x10\xb1\x9a\x46\x12/\n)NIDCPOWER_ATTRIBUTE_SHUTDOWN_TRIGGER_TYPE\x10\xc3\x9a\x46\x12\x46\n@NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SHUTDOWN_TRIGGER_INPUT_TERMINAL\x10\xc5\x9a\x46\x12\'\n!NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL\x10\xd1\xa5L\x12%\n\x1fNIDCPOWER_ATTRIBUTE_OVP_ENABLED\x10\xd2\xa5L\x12#\n\x1dNIDCPOWER_ATTRIBUTE_OVP_LIMIT\x10\xd3\xa5L\x12\x30\n*NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT_BEHAVIOR\x10\xd4\xa5L\x12\'\n!NIDCPOWER_ATTRIBUTE_CURRENT_LIMIT\x10\xd5\xa5L\x12(\n\"NIDCPOWER_ATTRIBUTE_OUTPUT_ENABLED\x10\xd6\xa5L*\xa2\x01\n\x11\x41pertureTimeUnits\x12#\n\x1f\x41PERTURE_TIME_UNITS_UNSPECIFIED\x10\x00\x12.\n)APERTURE_TIME_UNITS_NIDCPOWER_VAL_SECONDS\x10\x84\x08\x12\x38\n3APERTURE_TIME_UNITS_NIDCPOWER_VAL_POWER_LINE_CYCLES\x10\x85\x08*\x8d\x01\n\x08\x41utoZero\x12\x19\n\x15\x41UTO_ZERO_UNSPECIFIED\x10\x00\x12\x1f\n\x1b\x41UTO_ZERO_NIDCPOWER_VAL_OFF\x10\x00\x12\x1e\n\x1a\x41UTO_ZERO_NIDCPOWER_VAL_ON\x10\x01\x12!\n\x1c\x41UTO_ZERO_NIDCPOWER_VAL_ONCE\x10\x80\x08\x1a\x02\x10\x01*\xd3\x01\n\x19\x41utorangeApertureTimeMode\x12,\n(AUTORANGE_APERTURE_TIME_MODE_UNSPECIFIED\x10\x00\x12\x42\n=AUTORANGE_APERTURE_TIME_MODE_NIDCPOWER_VAL_APERTURE_TIME_AUTO\x10\xd6\x08\x12\x44\n?AUTORANGE_APERTURE_TIME_MODE_NIDCPOWER_VAL_APERTURE_TIME_CUSTOM\x10\xd7\x08*\xe3\x01\n\x11\x41utorangeBehavior\x12\"\n\x1e\x41UTORANGE_BEHAVIOR_UNSPECIFIED\x10\x00\x12\x41\n<AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP_TO_LIMIT_THEN_DOWN\x10\xd3\x08\x12.\n)AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP\x10\xd4\x08\x12\x37\n2AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP_AND_DOWN\x10\xd5\x08*\xa6\x03\n\x16\x41utorangeThresholdMode\x12(\n$AUTORANGE_THRESHOLD_MODE_UNSPECIFIED\x10\x00\x12\x41\n<AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_NORMAL\x10\xd8\x08\x12\x44\n?AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_FAST_STEP\x10\xd9\x08\x12J\nEAUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_HIGH_HYSTERESIS\x10\xda\x08\x12L\nGAUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_MEDIUM_HYSTERESIS\x10\xdb\x08\x12?\n:AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_HOLD\x10\xdc\x08*\xb7\x01\n\x17\x43omplianceLimitSymmetry\x12)\n%COMPLIANCE_LIMIT_SYMMETRY_UNSPECIFIED\x10\x00\x12\x35\n1COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_SYMMETRIC\x10\x00\x12\x36\n2COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_ASYMMETRIC\x10\x01\x1a\x02\x10\x01*\xc1\x01\n\x10\x44\x43NoiseRejection\x12#\n\x1f\x44_C_NOISE_REJECTION_UNSPECIFIED\x10\x00\x12\x46\nAD_C_NOISE_REJECTION_NIDCPOWER_VAL_DC_NOISE_REJECTION_SECOND_ORDER\x10\x93\x08\x12@\n;D_C_NOISE_REJECTION_NIDCPOWER_VAL_DC_NOISE_REJECTION_NORMAL\x10\x94\x08*\xc7\x05\n\x0c\x45xportSignal\x12\x1d\n\x19\x45XPORT_SIGNAL_UNSPECIFIED\x10\x00\x12\x36\n1EXPORT_SIGNAL_NIDCPOWER_VAL_SOURCE_COMPLETE_EVENT\x10\x86\x08\x12\x37\n2EXPORT_SIGNAL_NIDCPOWER_VAL_MEASURE_COMPLETE_EVENT\x10\x87\x08\x12\x42\n=EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ITERATION_COMPLETE_EVENT\x10\x88\x08\x12;\n6EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ENGINE_DONE_EVENT\x10\x89\x08\x12\x35\n0EXPORT_SIGNAL_NIDCPOWER_VAL_PULSE_COMPLETE_EVENT\x10\x9b\x08\x12>\n9EXPORT_SIGNAL_NIDCPOWER_VAL_READY_FOR_PULSE_TRIGGER_EVENT\x10\x9c\x08\x12.\n)EXPORT_SIGNAL_NIDCPOWER_VAL_START_TRIGGER\x10\x8a\x08\x12/\n*EXPORT_SIGNAL_NIDCPOWER_VAL_SOURCE_TRIGGER\x10\x8b\x08\x12\x30\n+EXPORT_SIGNAL_NIDCPOWER_VAL_MEASURE_TRIGGER\x10\x8c\x08\x12\x39\n4EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ADVANCE_TRIGGER\x10\x8d\x08\x12.\n)EXPORT_SIGNAL_NIDCPOWER_VAL_PULSE_TRIGGER\x10\x9d\x08\x12\x31\n,EXPORT_SIGNAL_NIDCPOWER_VAL_SHUTDOWN_TRIGGER\x10\xde\x08*\xcf\x01\n\x0bMeasureWhen\x12\x1c\n\x18MEASURE_WHEN_UNSPECIFIED\x10\x00\x12\x43\n>MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE\x10\x81\x08\x12)\n$MEASURE_WHEN_NIDCPOWER_VAL_ON_DEMAND\x10\x82\x08\x12\x32\n-MEASURE_WHEN_NIDCPOWER_VAL_ON_MEASURE_TRIGGER\x10\x83\x08*\xa3\x01\n\x10MeasurementTypes\x12!\n\x1dMEASUREMENT_TYPES_UNSPECIFIED\x10\x00\x12\x33\n/MEASUREMENT_TYPES_NIDCPOWER_VAL_MEASURE_CURRENT\x10\x00\x12\x33\n/MEASUREMENT_TYPES_NIDCPOWER_VAL_MEASURE_VOLTAGE\x10\x01\x1a\x02\x10\x01*\x8e\x01\n\x11OutputCapacitance\x12\"\n\x1eOUTPUT_CAPACITANCE_UNSPECIFIED\x10\x00\x12)\n$OUTPUT_CAPACITANCE_NIDCPOWER_VAL_LOW\x10\xf2\x07\x12*\n%OUTPUT_CAPACITANCE_NIDCPOWER_VAL_HIGH\x10\xf3\x07*\xf3\x01\n\x0eOutputFunction\x12\x1f\n\x1bOUTPUT_FUNCTION_UNSPECIFIED\x10\x00\x12-\n(OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_VOLTAGE\x10\xee\x07\x12-\n(OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_CURRENT\x10\xef\x07\x12\x30\n+OUTPUT_FUNCTION_NIDCPOWER_VAL_PULSE_VOLTAGE\x10\x99\x08\x12\x30\n+OUTPUT_FUNCTION_NIDCPOWER_VAL_PULSE_CURRENT\x10\x9a\x08*\xa3\x01\n\x0cOutputStates\x12\x1d\n\x19OUTPUT_STATES_UNSPECIFIED\x10\x00\x12\x37\n3OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_CONSTANT_VOLTAGE\x10\x00\x12\x37\n3OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_CONSTANT_CURRENT\x10\x01\x1a\x02\x10\x01*u\n\x08Polarity\x12\x18\n\x14POLARITY_UNSPECIFIED\x10\x00\x12\'\n\"POLARITY_NIDCPOWER_VAL_ACTIVE_HIGH\x10\xfa\x07\x12&\n!POLARITY_NIDCPOWER_VAL_ACTIVE_LOW\x10\xfb\x07*\x96\x02\n\x13PowerAllocationMode\x12%\n!POWER_ALLOCATION_MODE_UNSPECIFIED\x10\x00\x12G\nBPOWER_ALLOCATION_MODE_NIDCPOWER_VAL_POWER_ALLOCATION_MODE_DISABLED\x10\xa2\x08\x12H\nCPOWER_ALLOCATION_MODE_NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC\x10\xa3\x08\x12\x45\n@POWER_ALLOCATION_MODE_NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL\x10\xa4\x08*\xab\x01\n\x0bPowerSource\x12\x1c\n\x18POWER_SOURCE_UNSPECIFIED\x10\x00\x12(\n#POWER_SOURCE_NIDCPOWER_VAL_INTERNAL\x10\xeb\x07\x12)\n$POWER_SOURCE_NIDCPOWER_VAL_AUXILIARY\x10\xec\x07\x12)\n$POWER_SOURCE_NIDCPOWER_VAL_AUTOMATIC\x10\xed\x07*\x9a\x01\n\x10PowerSourceInUse\x12#\n\x1fPOWER_SOURCE_IN_USE_UNSPECIFIED\x10\x00\x12/\n*POWER_SOURCE_IN_USE_NIDCPOWER_VAL_INTERNAL\x10\xeb\x07\x12\x30\n+POWER_SOURCE_IN_USE_NIDCPOWER_VAL_AUXILIARY\x10\xec\x07*\xcb\x01\n\x1aSelfCalibrationPersistence\x12,\n(SELF_CALIBRATION_PERSISTENCE_UNSPECIFIED\x10\x00\x12>\n9SELF_CALIBRATION_PERSISTENCE_NIDCPOWER_VAL_KEEP_IN_MEMORY\x10\x95\x08\x12?\n:SELF_CALIBRATION_PERSISTENCE_NIDCPOWER_VAL_WRITE_TO_EEPROM\x10\x96\x08*_\n\x05Sense\x12\x15\n\x11SENSE_UNSPECIFIED\x10\x00\x12\x1e\n\x19SENSE_NIDCPOWER_VAL_LOCAL\x10\xf0\x07\x12\x1f\n\x1aSENSE_NIDCPOWER_VAL_REMOTE\x10\xf1\x07*\x7f\n\nSourceMode\x12\x1b\n\x17SOURCE_MODE_UNSPECIFIED\x10\x00\x12+\n&SOURCE_MODE_NIDCPOWER_VAL_SINGLE_POINT\x10\xfc\x07\x12\'\n\"SOURCE_MODE_NIDCPOWER_VAL_SEQUENCE\x10\xfd\x07*\xeb\x01\n\x11TransientResponse\x12\"\n\x1eTRANSIENT_RESPONSE_UNSPECIFIED\x10\x00\x12,\n\'TRANSIENT_RESPONSE_NIDCPOWER_VAL_NORMAL\x10\x8e\x08\x12*\n%TRANSIENT_RESPONSE_NIDCPOWER_VAL_FAST\x10\x8f\x08\x12*\n%TRANSIENT_RESPONSE_NIDCPOWER_VAL_SLOW\x10\x91\x08\x12,\n\'TRANSIENT_RESPONSE_NIDCPOWER_VAL_CUSTOM\x10\x92\x08*\xae\x01\n\x0bTriggerType\x12\x1c\n\x18TRIGGER_TYPE_UNSPECIFIED\x10\x00\x12$\n\x1fTRIGGER_TYPE_NIDCPOWER_VAL_NONE\x10\xf4\x07\x12,\n\'TRIGGER_TYPE_NIDCPOWER_VAL_DIGITAL_EDGE\x10\xf6\x07\x12-\n(TRIGGER_TYPE_NIDCPOWER_VAL_SOFTWARE_EDGE\x10\xf7\x07\x32\x95\x93\x01\n\tNiDCPower\x12h\n\x11\x41\x62ortWithChannels\x12(.nidcpower_grpc.AbortWithChannelsRequest\x1a).nidcpower_grpc.AbortWithChannelsResponse\x12k\n\x12\x43ommitWithChannels\x12).nidcpower_grpc.CommitWithChannelsRequest\x1a*.nidcpower_grpc.CommitWithChannelsResponse\x12\xbf\x01\n.ConfigureDigitalEdgeMeasureTriggerWithChannels\x12\x45.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest\x1a\x46.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse\x12\xb9\x01\n,ConfigureDigitalEdgePulseTriggerWithChannels\x12\x43.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerWithChannelsRequest\x1a\x44.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerWithChannelsResponse\x12\xd7\x01\n6ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels\x12M.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest\x1aN.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\xc2\x01\n/ConfigureDigitalEdgeShutdownTriggerWithChannels\x12\x46.nidcpower_grpc.ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest\x1aG.nidcpower_grpc.ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse\x12\xbc\x01\n-ConfigureDigitalEdgeSourceTriggerWithChannels\x12\x44.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerWithChannelsRequest\x1a\x45.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerWithChannelsResponse\x12\xb9\x01\n,ConfigureDigitalEdgeStartTriggerWithChannels\x12\x43.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerWithChannelsRequest\x1a\x44.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerWithChannelsResponse\x12Y\n\x0c\x43onfigureOvp\x12#.nidcpower_grpc.ConfigureOvpRequest\x1a$.nidcpower_grpc.ConfigureOvpResponse\x12\xc2\x01\n/ConfigureSoftwareEdgeMeasureTriggerWithChannels\x12\x46.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest\x1aG.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse\x12\xbc\x01\n-ConfigureSoftwareEdgePulseTriggerWithChannels\x12\x44.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerWithChannelsRequest\x1a\x45.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerWithChannelsResponse\x12\xda\x01\n7ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels\x12N.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsRequest\x1aO.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse\x12\xc5\x01\n0ConfigureSoftwareEdgeShutdownTriggerWithChannels\x12G.nidcpower_grpc.ConfigureSoftwareEdgeShutdownTriggerWithChannelsRequest\x1aH.nidcpower_grpc.ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse\x12\xbf\x01\n.ConfigureSoftwareEdgeSourceTriggerWithChannels\x12\x45.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerWithChannelsRequest\x1a\x46.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse\x12\xbc\x01\n-ConfigureSoftwareEdgeStartTriggerWithChannels\x12\x44.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerWithChannelsRequest\x1a\x45.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerWithChannelsResponse\x12\x92\x01\n\x1f\x43onfigureSourceModeWithChannels\x12\x36.nidcpower_grpc.ConfigureSourceModeWithChannelsRequest\x1a\x37.nidcpower_grpc.ConfigureSourceModeWithChannelsResponse\x12\xb9\x01\n,CreateAdvancedSequenceCommitStepWithChannels\x12\x43.nidcpower_grpc.CreateAdvancedSequenceCommitStepWithChannelsRequest\x1a\x44.nidcpower_grpc.CreateAdvancedSequenceCommitStepWithChannelsResponse\x12\xa7\x01\n&CreateAdvancedSequenceStepWithChannels\x12=.nidcpower_grpc.CreateAdvancedSequenceStepWithChannelsRequest\x1a>.nidcpower_grpc.CreateAdvancedSequenceStepWithChannelsResponse\x12\x9b\x01\n\"DeleteAdvancedSequenceWithChannels\x12\x39.nidcpower_grpc.DeleteAdvancedSequenceWithChannelsRequest\x1a:.nidcpower_grpc.DeleteAdvancedSequenceWithChannelsResponse\x12\x92\x01\n\x1f\x44isablePulseTriggerWithChannels\x12\x36.nidcpower_grpc.DisablePulseTriggerWithChannelsRequest\x1a\x37.nidcpower_grpc.DisablePulseTriggerWithChannelsResponse\x12\xb0\x01\n)DisableSequenceAdvanceTriggerWithChannels\x12@.nidcpower_grpc.DisableSequenceAdvanceTriggerWithChannelsRequest\x1a\x41.nidcpower_grpc.DisableSequenceAdvanceTriggerWithChannelsResponse\x12\x9b\x01\n\"DisableShutdownTriggerWithChannels\x12\x39.nidcpower_grpc.DisableShutdownTriggerWithChannelsRequest\x1a:.nidcpower_grpc.DisableShutdownTriggerWithChannelsResponse\x12\x95\x01\n DisableSourceTriggerWithChannels\x12\x37.nidcpower_grpc.DisableSourceTriggerWithChannelsRequest\x1a\x38.nidcpower_grpc.DisableSourceTriggerWithChannelsResponse\x12\x92\x01\n\x1f\x44isableStartTriggerWithChannels\x12\x36.nidcpower_grpc.DisableStartTriggerWithChannelsRequest\x1a\x37.nidcpower_grpc.DisableStartTriggerWithChannelsResponse\x12S\n\nErrorQuery\x12!.nidcpower_grpc.ErrorQueryRequest\x1a\".nidcpower_grpc.ErrorQueryResponse\x12}\n\x18\x45xportSignalWithChannels\x12/.nidcpower_grpc.ExportSignalWithChannelsRequest\x1a\x30.nidcpower_grpc.ExportSignalWithChannelsResponse\x12\x98\x01\n!InitializeWithIndependentChannels\x12\x38.nidcpower_grpc.InitializeWithIndependentChannelsRequest\x1a\x39.nidcpower_grpc.InitializeWithIndependentChannelsResponse\x12q\n\x14InitiateWithChannels\x12+.nidcpower_grpc.InitiateWithChannelsRequest\x1a,.nidcpower_grpc.InitiateWithChannelsResponse\x12z\n\x17InvalidateAllAttributes\x12..nidcpower_grpc.InvalidateAllAttributesRequest\x1a/.nidcpower_grpc.InvalidateAllAttributesResponse\x12h\n\x11ResetWithChannels\x12(.nidcpower_grpc.ResetWithChannelsRequest\x1a).nidcpower_grpc.ResetWithChannelsResponse\x12\x9e\x01\n#SendSoftwareEdgeTriggerWithChannels\x12:.nidcpower_grpc.SendSoftwareEdgeTriggerWithChannelsRequest\x1a;.nidcpower_grpc.SendSoftwareEdgeTriggerWithChannelsResponse\x12}\n\x18WaitForEventWithChannels\x12/.nidcpower_grpc.WaitForEventWithChannelsRequest\x1a\x30.nidcpower_grpc.WaitForEventWithChannelsResponse\x12\x44\n\x05\x41\x62ort\x12\x1c.nidcpower_grpc.AbortRequest\x1a\x1d.nidcpower_grpc.AbortResponse\x12t\n\x15\x43\x61lAdjustCurrentLimit\x12,.nidcpower_grpc.CalAdjustCurrentLimitRequest\x1a-.nidcpower_grpc.CalAdjustCurrentLimitResponse\x12\x86\x01\n\x1b\x43\x61lAdjustCurrentMeasurement\x12\x32.nidcpower_grpc.CalAdjustCurrentMeasurementRequest\x1a\x33.nidcpower_grpc.CalAdjustCurrentMeasurementResponse\x12\x83\x01\n\x1a\x43\x61lAdjustInternalReference\x12\x31.nidcpower_grpc.CalAdjustInternalReferenceRequest\x1a\x32.nidcpower_grpc.CalAdjustInternalReferenceResponse\x12\x80\x01\n\x19\x43\x61lAdjustOutputResistance\x12\x30.nidcpower_grpc.CalAdjustOutputResistanceRequest\x1a\x31.nidcpower_grpc.CalAdjustOutputResistanceResponse\x12\x8f\x01\n\x1e\x43\x61lAdjustResidualCurrentOffset\x12\x35.nidcpower_grpc.CalAdjustResidualCurrentOffsetRequest\x1a\x36.nidcpower_grpc.CalAdjustResidualCurrentOffsetResponse\x12\x8f\x01\n\x1e\x43\x61lAdjustResidualVoltageOffset\x12\x35.nidcpower_grpc.CalAdjustResidualVoltageOffsetRequest\x1a\x36.nidcpower_grpc.CalAdjustResidualVoltageOffsetResponse\x12t\n\x15\x43\x61lAdjustVoltageLevel\x12,.nidcpower_grpc.CalAdjustVoltageLevelRequest\x1a-.nidcpower_grpc.CalAdjustVoltageLevelResponse\x12\x86\x01\n\x1b\x43\x61lAdjustVoltageMeasurement\x12\x32.nidcpower_grpc.CalAdjustVoltageMeasurementRequest\x1a\x33.nidcpower_grpc.CalAdjustVoltageMeasurementResponse\x12\x65\n\x10\x43\x61lSelfCalibrate\x12\'.nidcpower_grpc.CalSelfCalibrateRequest\x1a(.nidcpower_grpc.CalSelfCalibrateResponse\x12q\n\x14\x43hangeExtCalPassword\x12+.nidcpower_grpc.ChangeExtCalPasswordRequest\x1a,.nidcpower_grpc.ChangeExtCalPasswordResponse\x12S\n\nClearError\x12!.nidcpower_grpc.ClearErrorRequest\x1a\".nidcpower_grpc.ClearErrorResponse\x12}\n\x18\x43learInterchangeWarnings\x12/.nidcpower_grpc.ClearInterchangeWarningsRequest\x1a\x30.nidcpower_grpc.ClearInterchangeWarningsResponse\x12\x44\n\x05\x43lose\x12\x1c.nidcpower_grpc.CloseRequest\x1a\x1d.nidcpower_grpc.CloseResponse\x12V\n\x0b\x43loseExtCal\x12\".nidcpower_grpc.CloseExtCalRequest\x1a#.nidcpower_grpc.CloseExtCalResponse\x12G\n\x06\x43ommit\x12\x1d.nidcpower_grpc.CommitRequest\x1a\x1e.nidcpower_grpc.CommitResponse\x12t\n\x15\x43onfigureApertureTime\x12,.nidcpower_grpc.ConfigureApertureTimeRequest\x1a-.nidcpower_grpc.ConfigureApertureTimeResponse\x12h\n\x11\x43onfigureAutoZero\x12(.nidcpower_grpc.ConfigureAutoZeroRequest\x1a).nidcpower_grpc.ConfigureAutoZeroResponse\x12t\n\x15\x43onfigureCurrentLevel\x12,.nidcpower_grpc.ConfigureCurrentLevelRequest\x1a-.nidcpower_grpc.ConfigureCurrentLevelResponse\x12\x83\x01\n\x1a\x43onfigureCurrentLevelRange\x12\x31.nidcpower_grpc.ConfigureCurrentLevelRangeRequest\x1a\x32.nidcpower_grpc.ConfigureCurrentLevelRangeResponse\x12t\n\x15\x43onfigureCurrentLimit\x12,.nidcpower_grpc.ConfigureCurrentLimitRequest\x1a-.nidcpower_grpc.ConfigureCurrentLimitResponse\x12\x83\x01\n\x1a\x43onfigureCurrentLimitRange\x12\x31.nidcpower_grpc.ConfigureCurrentLimitRangeRequest\x1a\x32.nidcpower_grpc.ConfigureCurrentLimitRangeResponse\x12\x9b\x01\n\"ConfigureDigitalEdgeMeasureTrigger\x12\x39.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerRequest\x1a:.nidcpower_grpc.ConfigureDigitalEdgeMeasureTriggerResponse\x12\x95\x01\n ConfigureDigitalEdgePulseTrigger\x12\x37.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerRequest\x1a\x38.nidcpower_grpc.ConfigureDigitalEdgePulseTriggerResponse\x12\xb3\x01\n*ConfigureDigitalEdgeSequenceAdvanceTrigger\x12\x41.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerRequest\x1a\x42.nidcpower_grpc.ConfigureDigitalEdgeSequenceAdvanceTriggerResponse\x12\x98\x01\n!ConfigureDigitalEdgeSourceTrigger\x12\x38.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerRequest\x1a\x39.nidcpower_grpc.ConfigureDigitalEdgeSourceTriggerResponse\x12\x95\x01\n ConfigureDigitalEdgeStartTrigger\x12\x37.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerRequest\x1a\x38.nidcpower_grpc.ConfigureDigitalEdgeStartTriggerResponse\x12w\n\x16\x43onfigureOutputEnabled\x12-.nidcpower_grpc.ConfigureOutputEnabledRequest\x1a..nidcpower_grpc.ConfigureOutputEnabledResponse\x12z\n\x17\x43onfigureOutputFunction\x12..nidcpower_grpc.ConfigureOutputFunctionRequest\x1a/.nidcpower_grpc.ConfigureOutputFunctionResponse\x12\x80\x01\n\x19\x43onfigureOutputResistance\x12\x30.nidcpower_grpc.ConfigureOutputResistanceRequest\x1a\x31.nidcpower_grpc.ConfigureOutputResistanceResponse\x12\x86\x01\n\x1b\x43onfigurePowerLineFrequency\x12\x32.nidcpower_grpc.ConfigurePowerLineFrequencyRequest\x1a\x33.nidcpower_grpc.ConfigurePowerLineFrequencyResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasCurrentLevel\x12\x35.nidcpower_grpc.ConfigurePulseBiasCurrentLevelRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasCurrentLevelResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasCurrentLimit\x12\x35.nidcpower_grpc.ConfigurePulseBiasCurrentLimitRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasCurrentLimitResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasVoltageLevel\x12\x35.nidcpower_grpc.ConfigurePulseBiasVoltageLevelRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasVoltageLevelResponse\x12\x8f\x01\n\x1e\x43onfigurePulseBiasVoltageLimit\x12\x35.nidcpower_grpc.ConfigurePulseBiasVoltageLimitRequest\x1a\x36.nidcpower_grpc.ConfigurePulseBiasVoltageLimitResponse\x12\x83\x01\n\x1a\x43onfigurePulseCurrentLevel\x12\x31.nidcpower_grpc.ConfigurePulseCurrentLevelRequest\x1a\x32.nidcpower_grpc.ConfigurePulseCurrentLevelResponse\x12\x92\x01\n\x1f\x43onfigurePulseCurrentLevelRange\x12\x36.nidcpower_grpc.ConfigurePulseCurrentLevelRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseCurrentLevelRangeResponse\x12\x83\x01\n\x1a\x43onfigurePulseCurrentLimit\x12\x31.nidcpower_grpc.ConfigurePulseCurrentLimitRequest\x1a\x32.nidcpower_grpc.ConfigurePulseCurrentLimitResponse\x12\x92\x01\n\x1f\x43onfigurePulseCurrentLimitRange\x12\x36.nidcpower_grpc.ConfigurePulseCurrentLimitRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseCurrentLimitRangeResponse\x12\x83\x01\n\x1a\x43onfigurePulseVoltageLevel\x12\x31.nidcpower_grpc.ConfigurePulseVoltageLevelRequest\x1a\x32.nidcpower_grpc.ConfigurePulseVoltageLevelResponse\x12\x92\x01\n\x1f\x43onfigurePulseVoltageLevelRange\x12\x36.nidcpower_grpc.ConfigurePulseVoltageLevelRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseVoltageLevelRangeResponse\x12\x83\x01\n\x1a\x43onfigurePulseVoltageLimit\x12\x31.nidcpower_grpc.ConfigurePulseVoltageLimitRequest\x1a\x32.nidcpower_grpc.ConfigurePulseVoltageLimitResponse\x12\x92\x01\n\x1f\x43onfigurePulseVoltageLimitRange\x12\x36.nidcpower_grpc.ConfigurePulseVoltageLimitRangeRequest\x1a\x37.nidcpower_grpc.ConfigurePulseVoltageLimitRangeResponse\x12_\n\x0e\x43onfigureSense\x12%.nidcpower_grpc.ConfigureSenseRequest\x1a&.nidcpower_grpc.ConfigureSenseResponse\x12\x9e\x01\n#ConfigureSoftwareEdgeMeasureTrigger\x12:.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerRequest\x1a;.nidcpower_grpc.ConfigureSoftwareEdgeMeasureTriggerResponse\x12\x98\x01\n!ConfigureSoftwareEdgePulseTrigger\x12\x38.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerRequest\x1a\x39.nidcpower_grpc.ConfigureSoftwareEdgePulseTriggerResponse\x12\xb6\x01\n+ConfigureSoftwareEdgeSequenceAdvanceTrigger\x12\x42.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerRequest\x1a\x43.nidcpower_grpc.ConfigureSoftwareEdgeSequenceAdvanceTriggerResponse\x12\x9b\x01\n\"ConfigureSoftwareEdgeSourceTrigger\x12\x39.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerRequest\x1a:.nidcpower_grpc.ConfigureSoftwareEdgeSourceTriggerResponse\x12\x98\x01\n!ConfigureSoftwareEdgeStartTrigger\x12\x38.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerRequest\x1a\x39.nidcpower_grpc.ConfigureSoftwareEdgeStartTriggerResponse\x12n\n\x13\x43onfigureSourceMode\x12*.nidcpower_grpc.ConfigureSourceModeRequest\x1a+.nidcpower_grpc.ConfigureSourceModeResponse\x12t\n\x15\x43onfigureVoltageLevel\x12,.nidcpower_grpc.ConfigureVoltageLevelRequest\x1a-.nidcpower_grpc.ConfigureVoltageLevelResponse\x12\x83\x01\n\x1a\x43onfigureVoltageLevelRange\x12\x31.nidcpower_grpc.ConfigureVoltageLevelRangeRequest\x1a\x32.nidcpower_grpc.ConfigureVoltageLevelRangeResponse\x12t\n\x15\x43onfigureVoltageLimit\x12,.nidcpower_grpc.ConfigureVoltageLimitRequest\x1a-.nidcpower_grpc.ConfigureVoltageLimitResponse\x12\x83\x01\n\x1a\x43onfigureVoltageLimitRange\x12\x31.nidcpower_grpc.ConfigureVoltageLimitRangeRequest\x1a\x32.nidcpower_grpc.ConfigureVoltageLimitRangeResponse\x12}\n\x18\x43onnectInternalReference\x12/.nidcpower_grpc.ConnectInternalReferenceRequest\x1a\x30.nidcpower_grpc.ConnectInternalReferenceResponse\x12\x83\x01\n\x1a\x43reateAdvancedSequenceStep\x12\x31.nidcpower_grpc.CreateAdvancedSequenceStepRequest\x1a\x32.nidcpower_grpc.CreateAdvancedSequenceStepResponse\x12w\n\x16\x44\x65leteAdvancedSequence\x12-.nidcpower_grpc.DeleteAdvancedSequenceRequest\x1a..nidcpower_grpc.DeleteAdvancedSequenceResponse\x12J\n\x07\x44isable\x12\x1e.nidcpower_grpc.DisableRequest\x1a\x1f.nidcpower_grpc.DisableResponse\x12n\n\x13\x44isablePulseTrigger\x12*.nidcpower_grpc.DisablePulseTriggerRequest\x1a+.nidcpower_grpc.DisablePulseTriggerResponse\x12\x8c\x01\n\x1d\x44isableSequenceAdvanceTrigger\x12\x34.nidcpower_grpc.DisableSequenceAdvanceTriggerRequest\x1a\x35.nidcpower_grpc.DisableSequenceAdvanceTriggerResponse\x12q\n\x14\x44isableSourceTrigger\x12+.nidcpower_grpc.DisableSourceTriggerRequest\x1a,.nidcpower_grpc.DisableSourceTriggerResponse\x12n\n\x13\x44isableStartTrigger\x12*.nidcpower_grpc.DisableStartTriggerRequest\x1a+.nidcpower_grpc.DisableStartTriggerResponse\x12Y\n\x0c\x45rrorMessage\x12#.nidcpower_grpc.ErrorMessageRequest\x1a$.nidcpower_grpc.ErrorMessageResponse\x12\x95\x01\n ExportAttributeConfigurationFile\x12\x37.nidcpower_grpc.ExportAttributeConfigurationFileRequest\x1a\x38.nidcpower_grpc.ExportAttributeConfigurationFileResponse\x12Y\n\x0c\x45xportSignal\x12#.nidcpower_grpc.ExportSignalRequest\x1a$.nidcpower_grpc.ExportSignalResponse\x12\\\n\rFetchMultiple\x12$.nidcpower_grpc.FetchMultipleRequest\x1a%.nidcpower_grpc.FetchMultipleResponse\x12t\n\x15GetAttributeViBoolean\x12,.nidcpower_grpc.GetAttributeViBooleanRequest\x1a-.nidcpower_grpc.GetAttributeViBooleanResponse\x12n\n\x13GetAttributeViInt32\x12*.nidcpower_grpc.GetAttributeViInt32Request\x1a+.nidcpower_grpc.GetAttributeViInt32Response\x12n\n\x13GetAttributeViInt64\x12*.nidcpower_grpc.GetAttributeViInt64Request\x1a+.nidcpower_grpc.GetAttributeViInt64Response\x12q\n\x14GetAttributeViReal64\x12+.nidcpower_grpc.GetAttributeViReal64Request\x1a,.nidcpower_grpc.GetAttributeViReal64Response\x12t\n\x15GetAttributeViSession\x12,.nidcpower_grpc.GetAttributeViSessionRequest\x1a-.nidcpower_grpc.GetAttributeViSessionResponse\x12q\n\x14GetAttributeViString\x12+.nidcpower_grpc.GetAttributeViStringRequest\x1a,.nidcpower_grpc.GetAttributeViStringResponse\x12t\n\x15GetCalUserDefinedInfo\x12,.nidcpower_grpc.GetCalUserDefinedInfoRequest\x1a-.nidcpower_grpc.GetCalUserDefinedInfoResponse\x12\x89\x01\n\x1cGetCalUserDefinedInfoMaxSize\x12\x33.nidcpower_grpc.GetCalUserDefinedInfoMaxSizeRequest\x1a\x34.nidcpower_grpc.GetCalUserDefinedInfoMaxSizeResponse\x12_\n\x0eGetChannelName\x12%.nidcpower_grpc.GetChannelNameRequest\x1a&.nidcpower_grpc.GetChannelNameResponse\x12}\n\x18GetChannelNameFromString\x12/.nidcpower_grpc.GetChannelNameFromStringRequest\x1a\x30.nidcpower_grpc.GetChannelNameFromStringResponse\x12M\n\x08GetError\x12\x1f.nidcpower_grpc.GetErrorRequest\x1a .nidcpower_grpc.GetErrorResponse\x12}\n\x18GetExtCalLastDateAndTime\x12/.nidcpower_grpc.GetExtCalLastDateAndTimeRequest\x1a\x30.nidcpower_grpc.GetExtCalLastDateAndTimeResponse\x12h\n\x11GetExtCalLastTemp\x12(.nidcpower_grpc.GetExtCalLastTempRequest\x1a).nidcpower_grpc.GetExtCalLastTempResponse\x12\x89\x01\n\x1cGetExtCalRecommendedInterval\x12\x33.nidcpower_grpc.GetExtCalRecommendedIntervalRequest\x1a\x34.nidcpower_grpc.GetExtCalRecommendedIntervalResponse\x12t\n\x15GetNextCoercionRecord\x12,.nidcpower_grpc.GetNextCoercionRecordRequest\x1a-.nidcpower_grpc.GetNextCoercionRecordResponse\x12\x80\x01\n\x19GetNextInterchangeWarning\x12\x30.nidcpower_grpc.GetNextInterchangeWarningRequest\x1a\x31.nidcpower_grpc.GetNextInterchangeWarningResponse\x12\x80\x01\n\x19GetSelfCalLastDateAndTime\x12\x30.nidcpower_grpc.GetSelfCalLastDateAndTimeRequest\x1a\x31.nidcpower_grpc.GetSelfCalLastDateAndTimeResponse\x12k\n\x12GetSelfCalLastTemp\x12).nidcpower_grpc.GetSelfCalLastTempRequest\x1a*.nidcpower_grpc.GetSelfCalLastTempResponse\x12\x95\x01\n ImportAttributeConfigurationFile\x12\x37.nidcpower_grpc.ImportAttributeConfigurationFileRequest\x1a\x38.nidcpower_grpc.ImportAttributeConfigurationFileResponse\x12S\n\nInitExtCal\x12!.nidcpower_grpc.InitExtCalRequest\x1a\".nidcpower_grpc.InitExtCalResponse\x12w\n\x16InitializeWithChannels\x12-.nidcpower_grpc.InitializeWithChannelsRequest\x1a..nidcpower_grpc.InitializeWithChannelsResponse\x12M\n\x08Initiate\x12\x1f.nidcpower_grpc.InitiateRequest\x1a .nidcpower_grpc.InitiateResponse\x12V\n\x0bLockSession\x12\".nidcpower_grpc.LockSessionRequest\x1a#.nidcpower_grpc.LockSessionResponse\x12J\n\x07Measure\x12\x1e.nidcpower_grpc.MeasureRequest\x1a\x1f.nidcpower_grpc.MeasureResponse\x12\x62\n\x0fMeasureMultiple\x12&.nidcpower_grpc.MeasureMultipleRequest\x1a\'.nidcpower_grpc.MeasureMultipleResponse\x12h\n\x11QueryInCompliance\x12(.nidcpower_grpc.QueryInComplianceRequest\x1a).nidcpower_grpc.QueryInComplianceResponse\x12q\n\x14QueryMaxCurrentLimit\x12+.nidcpower_grpc.QueryMaxCurrentLimitRequest\x1a,.nidcpower_grpc.QueryMaxCurrentLimitResponse\x12q\n\x14QueryMaxVoltageLevel\x12+.nidcpower_grpc.QueryMaxVoltageLevelRequest\x1a,.nidcpower_grpc.QueryMaxVoltageLevelResponse\x12q\n\x14QueryMinCurrentLimit\x12+.nidcpower_grpc.QueryMinCurrentLimitRequest\x1a,.nidcpower_grpc.QueryMinCurrentLimitResponse\x12\x65\n\x10QueryOutputState\x12\'.nidcpower_grpc.QueryOutputStateRequest\x1a(.nidcpower_grpc.QueryOutputStateResponse\x12w\n\x16ReadCurrentTemperature\x12-.nidcpower_grpc.ReadCurrentTemperatureRequest\x1a..nidcpower_grpc.ReadCurrentTemperatureResponse\x12\x44\n\x05Reset\x12\x1c.nidcpower_grpc.ResetRequest\x1a\x1d.nidcpower_grpc.ResetResponse\x12V\n\x0bResetDevice\x12\".nidcpower_grpc.ResetDeviceRequest\x1a#.nidcpower_grpc.ResetDeviceResponse\x12t\n\x15ResetInterchangeCheck\x12,.nidcpower_grpc.ResetInterchangeCheckRequest\x1a-.nidcpower_grpc.ResetInterchangeCheckResponse\x12h\n\x11ResetWithDefaults\x12(.nidcpower_grpc.ResetWithDefaultsRequest\x1a).nidcpower_grpc.ResetWithDefaultsResponse\x12\\\n\rRevisionQuery\x12$.nidcpower_grpc.RevisionQueryRequest\x1a%.nidcpower_grpc.RevisionQueryResponse\x12M\n\x08SelfTest\x12\x1f.nidcpower_grpc.SelfTestRequest\x1a .nidcpower_grpc.SelfTestResponse\x12z\n\x17SendSoftwareEdgeTrigger\x12..nidcpower_grpc.SendSoftwareEdgeTriggerRequest\x1a/.nidcpower_grpc.SendSoftwareEdgeTriggerResponse\x12t\n\x15SetAttributeViBoolean\x12,.nidcpower_grpc.SetAttributeViBooleanRequest\x1a-.nidcpower_grpc.SetAttributeViBooleanResponse\x12n\n\x13SetAttributeViInt32\x12*.nidcpower_grpc.SetAttributeViInt32Request\x1a+.nidcpower_grpc.SetAttributeViInt32Response\x12n\n\x13SetAttributeViInt64\x12*.nidcpower_grpc.SetAttributeViInt64Request\x1a+.nidcpower_grpc.SetAttributeViInt64Response\x12q\n\x14SetAttributeViReal64\x12+.nidcpower_grpc.SetAttributeViReal64Request\x1a,.nidcpower_grpc.SetAttributeViReal64Response\x12t\n\x15SetAttributeViSession\x12,.nidcpower_grpc.SetAttributeViSessionRequest\x1a-.nidcpower_grpc.SetAttributeViSessionResponse\x12q\n\x14SetAttributeViString\x12+.nidcpower_grpc.SetAttributeViStringRequest\x1a,.nidcpower_grpc.SetAttributeViStringResponse\x12t\n\x15SetCalUserDefinedInfo\x12,.nidcpower_grpc.SetCalUserDefinedInfoRequest\x1a-.nidcpower_grpc.SetCalUserDefinedInfoResponse\x12V\n\x0bSetSequence\x12\".nidcpower_grpc.SetSequenceRequest\x1a#.nidcpower_grpc.SetSequenceResponse\x12\\\n\rUnlockSession\x12$.nidcpower_grpc.UnlockSessionRequest\x1a%.nidcpower_grpc.UnlockSessionResponse\x12Y\n\x0cWaitForEvent\x12#.nidcpower_grpc.WaitForEventRequest\x1a$.nidcpower_grpc.WaitForEventResponseBG\n\x15\x63om.ni.grpc.nidcpowerB\tNiDCPowerP\x01\xaa\x02 NationalInstruments.Grpc.DCPowerb\x06proto3'
   ,
   dependencies=[session__pb2.DESCRIPTOR,])
 
@@ -770,8 +770,8 @@ _NIDCPOWERATTRIBUTES = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=24690,
-  serialized_end=32446,
+  serialized_start=24712,
+  serialized_end=32468,
 )
 _sym_db.RegisterEnumDescriptor(_NIDCPOWERATTRIBUTES)
 
@@ -801,8 +801,8 @@ _APERTURETIMEUNITS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=32449,
-  serialized_end=32611,
+  serialized_start=32471,
+  serialized_end=32633,
 )
 _sym_db.RegisterEnumDescriptor(_APERTURETIMEUNITS)
 
@@ -837,8 +837,8 @@ _AUTOZERO = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=b'\020\001',
-  serialized_start=32614,
-  serialized_end=32755,
+  serialized_start=32636,
+  serialized_end=32777,
 )
 _sym_db.RegisterEnumDescriptor(_AUTOZERO)
 
@@ -868,8 +868,8 @@ _AUTORANGEAPERTURETIMEMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=32758,
-  serialized_end=32969,
+  serialized_start=32780,
+  serialized_end=32991,
 )
 _sym_db.RegisterEnumDescriptor(_AUTORANGEAPERTURETIMEMODE)
 
@@ -904,8 +904,8 @@ _AUTORANGEBEHAVIOR = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=32972,
-  serialized_end=33199,
+  serialized_start=32994,
+  serialized_end=33221,
 )
 _sym_db.RegisterEnumDescriptor(_AUTORANGEBEHAVIOR)
 
@@ -950,8 +950,8 @@ _AUTORANGETHRESHOLDMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=33202,
-  serialized_end=33624,
+  serialized_start=33224,
+  serialized_end=33646,
 )
 _sym_db.RegisterEnumDescriptor(_AUTORANGETHRESHOLDMODE)
 
@@ -981,8 +981,8 @@ _COMPLIANCELIMITSYMMETRY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=b'\020\001',
-  serialized_start=33627,
-  serialized_end=33810,
+  serialized_start=33649,
+  serialized_end=33832,
 )
 _sym_db.RegisterEnumDescriptor(_COMPLIANCELIMITSYMMETRY)
 
@@ -1012,8 +1012,8 @@ _DCNOISEREJECTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=33813,
-  serialized_end=34006,
+  serialized_start=33835,
+  serialized_end=34028,
 )
 _sym_db.RegisterEnumDescriptor(_DCNOISEREJECTION)
 
@@ -1093,8 +1093,8 @@ _EXPORTSIGNAL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34009,
-  serialized_end=34720,
+  serialized_start=34031,
+  serialized_end=34742,
 )
 _sym_db.RegisterEnumDescriptor(_EXPORTSIGNAL)
 
@@ -1129,8 +1129,8 @@ _MEASUREWHEN = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=34723,
-  serialized_end=34930,
+  serialized_start=34745,
+  serialized_end=34952,
 )
 _sym_db.RegisterEnumDescriptor(_MEASUREWHEN)
 
@@ -1160,8 +1160,8 @@ _MEASUREMENTTYPES = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=b'\020\001',
-  serialized_start=34933,
-  serialized_end=35096,
+  serialized_start=34955,
+  serialized_end=35118,
 )
 _sym_db.RegisterEnumDescriptor(_MEASUREMENTTYPES)
 
@@ -1191,8 +1191,8 @@ _OUTPUTCAPACITANCE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35099,
-  serialized_end=35241,
+  serialized_start=35121,
+  serialized_end=35263,
 )
 _sym_db.RegisterEnumDescriptor(_OUTPUTCAPACITANCE)
 
@@ -1232,8 +1232,8 @@ _OUTPUTFUNCTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35244,
-  serialized_end=35487,
+  serialized_start=35266,
+  serialized_end=35509,
 )
 _sym_db.RegisterEnumDescriptor(_OUTPUTFUNCTION)
 
@@ -1263,8 +1263,8 @@ _OUTPUTSTATES = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=b'\020\001',
-  serialized_start=35490,
-  serialized_end=35653,
+  serialized_start=35512,
+  serialized_end=35675,
 )
 _sym_db.RegisterEnumDescriptor(_OUTPUTSTATES)
 
@@ -1294,8 +1294,8 @@ _POLARITY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35655,
-  serialized_end=35772,
+  serialized_start=35677,
+  serialized_end=35794,
 )
 _sym_db.RegisterEnumDescriptor(_POLARITY)
 
@@ -1330,8 +1330,8 @@ _POWERALLOCATIONMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=35775,
-  serialized_end=36053,
+  serialized_start=35797,
+  serialized_end=36075,
 )
 _sym_db.RegisterEnumDescriptor(_POWERALLOCATIONMODE)
 
@@ -1366,8 +1366,8 @@ _POWERSOURCE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36056,
-  serialized_end=36227,
+  serialized_start=36078,
+  serialized_end=36249,
 )
 _sym_db.RegisterEnumDescriptor(_POWERSOURCE)
 
@@ -1397,8 +1397,8 @@ _POWERSOURCEINUSE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36230,
-  serialized_end=36384,
+  serialized_start=36252,
+  serialized_end=36406,
 )
 _sym_db.RegisterEnumDescriptor(_POWERSOURCEINUSE)
 
@@ -1428,8 +1428,8 @@ _SELFCALIBRATIONPERSISTENCE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36387,
-  serialized_end=36590,
+  serialized_start=36409,
+  serialized_end=36612,
 )
 _sym_db.RegisterEnumDescriptor(_SELFCALIBRATIONPERSISTENCE)
 
@@ -1459,8 +1459,8 @@ _SENSE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36592,
-  serialized_end=36687,
+  serialized_start=36614,
+  serialized_end=36709,
 )
 _sym_db.RegisterEnumDescriptor(_SENSE)
 
@@ -1490,8 +1490,8 @@ _SOURCEMODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36689,
-  serialized_end=36816,
+  serialized_start=36711,
+  serialized_end=36838,
 )
 _sym_db.RegisterEnumDescriptor(_SOURCEMODE)
 
@@ -1531,8 +1531,8 @@ _TRANSIENTRESPONSE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=36819,
-  serialized_end=37054,
+  serialized_start=36841,
+  serialized_end=37076,
 )
 _sym_db.RegisterEnumDescriptor(_TRANSIENTRESPONSE)
 
@@ -1567,8 +1567,8 @@ _TRIGGERTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=37057,
-  serialized_end=37231,
+  serialized_start=37079,
+  serialized_end=37253,
 )
 _sym_db.RegisterEnumDescriptor(_TRIGGERTYPE)
 
@@ -3821,22 +3821,29 @@ _INITIALIZEWITHINDEPENDENTCHANNELSREQUEST = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='resource_name', full_name='nidcpower_grpc.InitializeWithIndependentChannelsRequest.resource_name', index=0,
+      name='session_name', full_name='nidcpower_grpc.InitializeWithIndependentChannelsRequest.session_name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='reset', full_name='nidcpower_grpc.InitializeWithIndependentChannelsRequest.reset', index=1,
-      number=2, type=8, cpp_type=7, label=1,
+      name='resource_name', full_name='nidcpower_grpc.InitializeWithIndependentChannelsRequest.resource_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='reset', full_name='nidcpower_grpc.InitializeWithIndependentChannelsRequest.reset', index=2,
+      number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='option_string', full_name='nidcpower_grpc.InitializeWithIndependentChannelsRequest.option_string', index=2,
-      number=3, type=9, cpp_type=9, label=1,
+      name='option_string', full_name='nidcpower_grpc.InitializeWithIndependentChannelsRequest.option_string', index=3,
+      number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -3854,7 +3861,7 @@ _INITIALIZEWITHINDEPENDENTCHANNELSREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=4956,
-  serialized_end=5059,
+  serialized_end=5081,
 )
 
 
@@ -3892,8 +3899,8 @@ _INITIALIZEWITHINDEPENDENTCHANNELSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5061,
-  serialized_end=5156,
+  serialized_start=5083,
+  serialized_end=5178,
 )
 
 
@@ -3931,8 +3938,8 @@ _INITIATEWITHCHANNELSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5158,
-  serialized_end=5245,
+  serialized_start=5180,
+  serialized_end=5267,
 )
 
 
@@ -3963,8 +3970,8 @@ _INITIATEWITHCHANNELSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5247,
-  serialized_end=5293,
+  serialized_start=5269,
+  serialized_end=5315,
 )
 
 
@@ -3995,8 +4002,8 @@ _INVALIDATEALLATTRIBUTESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5295,
-  serialized_end=5363,
+  serialized_start=5317,
+  serialized_end=5385,
 )
 
 
@@ -4027,8 +4034,8 @@ _INVALIDATEALLATTRIBUTESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5365,
-  serialized_end=5414,
+  serialized_start=5387,
+  serialized_end=5436,
 )
 
 
@@ -4066,8 +4073,8 @@ _RESETWITHCHANNELSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5416,
-  serialized_end=5500,
+  serialized_start=5438,
+  serialized_end=5522,
 )
 
 
@@ -4098,8 +4105,8 @@ _RESETWITHCHANNELSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5502,
-  serialized_end=5545,
+  serialized_start=5524,
+  serialized_end=5567,
 )
 
 
@@ -4144,8 +4151,8 @@ _SENDSOFTWAREEDGETRIGGERWITHCHANNELSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5547,
-  serialized_end=5666,
+  serialized_start=5569,
+  serialized_end=5688,
 )
 
 
@@ -4176,8 +4183,8 @@ _SENDSOFTWAREEDGETRIGGERWITHCHANNELSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5668,
-  serialized_end=5729,
+  serialized_start=5690,
+  serialized_end=5751,
 )
 
 
@@ -4229,8 +4236,8 @@ _WAITFOREVENTWITHCHANNELSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5731,
-  serialized_end=5857,
+  serialized_start=5753,
+  serialized_end=5879,
 )
 
 
@@ -4261,8 +4268,8 @@ _WAITFOREVENTWITHCHANNELSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5859,
-  serialized_end=5909,
+  serialized_start=5881,
+  serialized_end=5931,
 )
 
 
@@ -4293,8 +4300,8 @@ _ABORTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5911,
-  serialized_end=5961,
+  serialized_start=5933,
+  serialized_end=5983,
 )
 
 
@@ -4325,8 +4332,8 @@ _ABORTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5963,
-  serialized_end=5994,
+  serialized_start=5985,
+  serialized_end=6016,
 )
 
 
@@ -4385,8 +4392,8 @@ _CALADJUSTCURRENTLIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5997,
-  serialized_end=6153,
+  serialized_start=6019,
+  serialized_end=6175,
 )
 
 
@@ -4417,8 +4424,8 @@ _CALADJUSTCURRENTLIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6155,
-  serialized_end=6202,
+  serialized_start=6177,
+  serialized_end=6224,
 )
 
 
@@ -4477,8 +4484,8 @@ _CALADJUSTCURRENTMEASUREMENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6205,
-  serialized_end=6366,
+  serialized_start=6227,
+  serialized_end=6388,
 )
 
 
@@ -4509,8 +4516,8 @@ _CALADJUSTCURRENTMEASUREMENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6368,
-  serialized_end=6421,
+  serialized_start=6390,
+  serialized_end=6443,
 )
 
 
@@ -4555,8 +4562,8 @@ _CALADJUSTINTERNALREFERENCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6424,
-  serialized_end=6560,
+  serialized_start=6446,
+  serialized_end=6582,
 )
 
 
@@ -4587,8 +4594,8 @@ _CALADJUSTINTERNALREFERENCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6562,
-  serialized_end=6614,
+  serialized_start=6584,
+  serialized_end=6636,
 )
 
 
@@ -4640,8 +4647,8 @@ _CALADJUSTOUTPUTRESISTANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6617,
-  serialized_end=6762,
+  serialized_start=6639,
+  serialized_end=6784,
 )
 
 
@@ -4672,8 +4679,8 @@ _CALADJUSTOUTPUTRESISTANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6764,
-  serialized_end=6815,
+  serialized_start=6786,
+  serialized_end=6837,
 )
 
 
@@ -4711,8 +4718,8 @@ _CALADJUSTRESIDUALCURRENTOFFSETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6817,
-  serialized_end=6914,
+  serialized_start=6839,
+  serialized_end=6936,
 )
 
 
@@ -4743,8 +4750,8 @@ _CALADJUSTRESIDUALCURRENTOFFSETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6916,
-  serialized_end=6972,
+  serialized_start=6938,
+  serialized_end=6994,
 )
 
 
@@ -4782,8 +4789,8 @@ _CALADJUSTRESIDUALVOLTAGEOFFSETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6974,
-  serialized_end=7071,
+  serialized_start=6996,
+  serialized_end=7093,
 )
 
 
@@ -4814,8 +4821,8 @@ _CALADJUSTRESIDUALVOLTAGEOFFSETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7073,
-  serialized_end=7129,
+  serialized_start=7095,
+  serialized_end=7151,
 )
 
 
@@ -4874,8 +4881,8 @@ _CALADJUSTVOLTAGELEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7132,
-  serialized_end=7288,
+  serialized_start=7154,
+  serialized_end=7310,
 )
 
 
@@ -4906,8 +4913,8 @@ _CALADJUSTVOLTAGELEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7290,
-  serialized_end=7337,
+  serialized_start=7312,
+  serialized_end=7359,
 )
 
 
@@ -4966,8 +4973,8 @@ _CALADJUSTVOLTAGEMEASUREMENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7340,
-  serialized_end=7501,
+  serialized_start=7362,
+  serialized_end=7523,
 )
 
 
@@ -4998,8 +5005,8 @@ _CALADJUSTVOLTAGEMEASUREMENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7503,
-  serialized_end=7556,
+  serialized_start=7525,
+  serialized_end=7578,
 )
 
 
@@ -5037,8 +5044,8 @@ _CALSELFCALIBRATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7558,
-  serialized_end=7641,
+  serialized_start=7580,
+  serialized_end=7663,
 )
 
 
@@ -5069,8 +5076,8 @@ _CALSELFCALIBRATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7643,
-  serialized_end=7685,
+  serialized_start=7665,
+  serialized_end=7707,
 )
 
 
@@ -5115,8 +5122,8 @@ _CHANGEEXTCALPASSWORDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7687,
-  serialized_end=7796,
+  serialized_start=7709,
+  serialized_end=7818,
 )
 
 
@@ -5147,8 +5154,8 @@ _CHANGEEXTCALPASSWORDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7798,
-  serialized_end=7844,
+  serialized_start=7820,
+  serialized_end=7866,
 )
 
 
@@ -5179,8 +5186,8 @@ _CLEARERRORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7846,
-  serialized_end=7901,
+  serialized_start=7868,
+  serialized_end=7923,
 )
 
 
@@ -5211,8 +5218,8 @@ _CLEARERRORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7903,
-  serialized_end=7939,
+  serialized_start=7925,
+  serialized_end=7961,
 )
 
 
@@ -5243,8 +5250,8 @@ _CLEARINTERCHANGEWARNINGSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7941,
-  serialized_end=8010,
+  serialized_start=7963,
+  serialized_end=8032,
 )
 
 
@@ -5275,8 +5282,8 @@ _CLEARINTERCHANGEWARNINGSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8012,
-  serialized_end=8062,
+  serialized_start=8034,
+  serialized_end=8084,
 )
 
 
@@ -5307,8 +5314,8 @@ _CLOSEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8064,
-  serialized_end=8114,
+  serialized_start=8086,
+  serialized_end=8136,
 )
 
 
@@ -5339,8 +5346,8 @@ _CLOSERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8116,
-  serialized_end=8147,
+  serialized_start=8138,
+  serialized_end=8169,
 )
 
 
@@ -5378,8 +5385,8 @@ _CLOSEEXTCALREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8149,
-  serialized_end=8221,
+  serialized_start=8171,
+  serialized_end=8243,
 )
 
 
@@ -5410,8 +5417,8 @@ _CLOSEEXTCALRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8223,
-  serialized_end=8260,
+  serialized_start=8245,
+  serialized_end=8282,
 )
 
 
@@ -5442,8 +5449,8 @@ _COMMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8262,
-  serialized_end=8313,
+  serialized_start=8284,
+  serialized_end=8335,
 )
 
 
@@ -5474,8 +5481,8 @@ _COMMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8315,
-  serialized_end=8347,
+  serialized_start=8337,
+  serialized_end=8369,
 )
 
 
@@ -5539,8 +5546,8 @@ _CONFIGUREAPERTURETIMEREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=8350,
-  serialized_end=8548,
+  serialized_start=8372,
+  serialized_end=8570,
 )
 
 
@@ -5571,8 +5578,8 @@ _CONFIGUREAPERTURETIMERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8550,
-  serialized_end=8597,
+  serialized_start=8572,
+  serialized_end=8619,
 )
 
 
@@ -5629,8 +5636,8 @@ _CONFIGUREAUTOZEROREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=8600,
-  serialized_end=8774,
+  serialized_start=8622,
+  serialized_end=8796,
 )
 
 
@@ -5661,8 +5668,8 @@ _CONFIGUREAUTOZERORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8776,
-  serialized_end=8819,
+  serialized_start=8798,
+  serialized_end=8841,
 )
 
 
@@ -5707,8 +5714,8 @@ _CONFIGURECURRENTLEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8821,
-  serialized_end=8924,
+  serialized_start=8843,
+  serialized_end=8946,
 )
 
 
@@ -5739,8 +5746,8 @@ _CONFIGURECURRENTLEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8926,
-  serialized_end=8973,
+  serialized_start=8948,
+  serialized_end=8995,
 )
 
 
@@ -5785,8 +5792,8 @@ _CONFIGURECURRENTLEVELRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8975,
-  serialized_end=9083,
+  serialized_start=8997,
+  serialized_end=9105,
 )
 
 
@@ -5817,8 +5824,8 @@ _CONFIGURECURRENTLEVELRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9085,
-  serialized_end=9137,
+  serialized_start=9107,
+  serialized_end=9159,
 )
 
 
@@ -5870,8 +5877,8 @@ _CONFIGURECURRENTLIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9139,
-  serialized_end=9260,
+  serialized_start=9161,
+  serialized_end=9282,
 )
 
 
@@ -5902,8 +5909,8 @@ _CONFIGURECURRENTLIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9262,
-  serialized_end=9309,
+  serialized_start=9284,
+  serialized_end=9331,
 )
 
 
@@ -5948,8 +5955,8 @@ _CONFIGURECURRENTLIMITRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9311,
-  serialized_end=9419,
+  serialized_start=9333,
+  serialized_end=9441,
 )
 
 
@@ -5980,8 +5987,8 @@ _CONFIGURECURRENTLIMITRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9421,
-  serialized_end=9473,
+  serialized_start=9443,
+  serialized_end=9495,
 )
 
 
@@ -6026,8 +6033,8 @@ _CONFIGUREDIGITALEDGEMEASURETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9475,
-  serialized_end=9592,
+  serialized_start=9497,
+  serialized_end=9614,
 )
 
 
@@ -6058,8 +6065,8 @@ _CONFIGUREDIGITALEDGEMEASURETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9594,
-  serialized_end=9654,
+  serialized_start=9616,
+  serialized_end=9676,
 )
 
 
@@ -6104,8 +6111,8 @@ _CONFIGUREDIGITALEDGEPULSETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9656,
-  serialized_end=9771,
+  serialized_start=9678,
+  serialized_end=9793,
 )
 
 
@@ -6136,8 +6143,8 @@ _CONFIGUREDIGITALEDGEPULSETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9773,
-  serialized_end=9831,
+  serialized_start=9795,
+  serialized_end=9853,
 )
 
 
@@ -6182,8 +6189,8 @@ _CONFIGUREDIGITALEDGESEQUENCEADVANCETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9833,
-  serialized_end=9958,
+  serialized_start=9855,
+  serialized_end=9980,
 )
 
 
@@ -6214,8 +6221,8 @@ _CONFIGUREDIGITALEDGESEQUENCEADVANCETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9960,
-  serialized_end=10028,
+  serialized_start=9982,
+  serialized_end=10050,
 )
 
 
@@ -6260,8 +6267,8 @@ _CONFIGUREDIGITALEDGESOURCETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10030,
-  serialized_end=10146,
+  serialized_start=10052,
+  serialized_end=10168,
 )
 
 
@@ -6292,8 +6299,8 @@ _CONFIGUREDIGITALEDGESOURCETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10148,
-  serialized_end=10207,
+  serialized_start=10170,
+  serialized_end=10229,
 )
 
 
@@ -6338,8 +6345,8 @@ _CONFIGUREDIGITALEDGESTARTTRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10209,
-  serialized_end=10324,
+  serialized_start=10231,
+  serialized_end=10346,
 )
 
 
@@ -6370,8 +6377,8 @@ _CONFIGUREDIGITALEDGESTARTTRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10326,
-  serialized_end=10384,
+  serialized_start=10348,
+  serialized_end=10406,
 )
 
 
@@ -6416,8 +6423,8 @@ _CONFIGUREOUTPUTENABLEDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10386,
-  serialized_end=10492,
+  serialized_start=10408,
+  serialized_end=10514,
 )
 
 
@@ -6448,8 +6455,8 @@ _CONFIGUREOUTPUTENABLEDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10494,
-  serialized_end=10542,
+  serialized_start=10516,
+  serialized_end=10564,
 )
 
 
@@ -6494,8 +6501,8 @@ _CONFIGUREOUTPUTFUNCTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10544,
-  serialized_end=10652,
+  serialized_start=10566,
+  serialized_end=10674,
 )
 
 
@@ -6526,8 +6533,8 @@ _CONFIGUREOUTPUTFUNCTIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10654,
-  serialized_end=10703,
+  serialized_start=10676,
+  serialized_end=10725,
 )
 
 
@@ -6572,8 +6579,8 @@ _CONFIGUREOUTPUTRESISTANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10705,
-  serialized_end=10817,
+  serialized_start=10727,
+  serialized_end=10839,
 )
 
 
@@ -6604,8 +6611,8 @@ _CONFIGUREOUTPUTRESISTANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10819,
-  serialized_end=10870,
+  serialized_start=10841,
+  serialized_end=10892,
 )
 
 
@@ -6643,8 +6650,8 @@ _CONFIGUREPOWERLINEFREQUENCYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10872,
-  serialized_end=10973,
+  serialized_start=10894,
+  serialized_end=10995,
 )
 
 
@@ -6675,8 +6682,8 @@ _CONFIGUREPOWERLINEFREQUENCYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10975,
-  serialized_end=11028,
+  serialized_start=10997,
+  serialized_end=11050,
 )
 
 
@@ -6721,8 +6728,8 @@ _CONFIGUREPULSEBIASCURRENTLEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11030,
-  serialized_end=11142,
+  serialized_start=11052,
+  serialized_end=11164,
 )
 
 
@@ -6753,8 +6760,8 @@ _CONFIGUREPULSEBIASCURRENTLEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11144,
-  serialized_end=11200,
+  serialized_start=11166,
+  serialized_end=11222,
 )
 
 
@@ -6799,8 +6806,8 @@ _CONFIGUREPULSEBIASCURRENTLIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11202,
-  serialized_end=11314,
+  serialized_start=11224,
+  serialized_end=11336,
 )
 
 
@@ -6831,8 +6838,8 @@ _CONFIGUREPULSEBIASCURRENTLIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11316,
-  serialized_end=11372,
+  serialized_start=11338,
+  serialized_end=11394,
 )
 
 
@@ -6877,8 +6884,8 @@ _CONFIGUREPULSEBIASVOLTAGELEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11374,
-  serialized_end=11486,
+  serialized_start=11396,
+  serialized_end=11508,
 )
 
 
@@ -6909,8 +6916,8 @@ _CONFIGUREPULSEBIASVOLTAGELEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11488,
-  serialized_end=11544,
+  serialized_start=11510,
+  serialized_end=11566,
 )
 
 
@@ -6955,8 +6962,8 @@ _CONFIGUREPULSEBIASVOLTAGELIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11546,
-  serialized_end=11658,
+  serialized_start=11568,
+  serialized_end=11680,
 )
 
 
@@ -6987,8 +6994,8 @@ _CONFIGUREPULSEBIASVOLTAGELIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11660,
-  serialized_end=11716,
+  serialized_start=11682,
+  serialized_end=11738,
 )
 
 
@@ -7033,8 +7040,8 @@ _CONFIGUREPULSECURRENTLEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11718,
-  serialized_end=11826,
+  serialized_start=11740,
+  serialized_end=11848,
 )
 
 
@@ -7065,8 +7072,8 @@ _CONFIGUREPULSECURRENTLEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11828,
-  serialized_end=11880,
+  serialized_start=11850,
+  serialized_end=11902,
 )
 
 
@@ -7111,8 +7118,8 @@ _CONFIGUREPULSECURRENTLEVELRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11882,
-  serialized_end=11995,
+  serialized_start=11904,
+  serialized_end=12017,
 )
 
 
@@ -7143,8 +7150,8 @@ _CONFIGUREPULSECURRENTLEVELRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11997,
-  serialized_end=12054,
+  serialized_start=12019,
+  serialized_end=12076,
 )
 
 
@@ -7189,8 +7196,8 @@ _CONFIGUREPULSECURRENTLIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12056,
-  serialized_end=12164,
+  serialized_start=12078,
+  serialized_end=12186,
 )
 
 
@@ -7221,8 +7228,8 @@ _CONFIGUREPULSECURRENTLIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12166,
-  serialized_end=12218,
+  serialized_start=12188,
+  serialized_end=12240,
 )
 
 
@@ -7267,8 +7274,8 @@ _CONFIGUREPULSECURRENTLIMITRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12220,
-  serialized_end=12333,
+  serialized_start=12242,
+  serialized_end=12355,
 )
 
 
@@ -7299,8 +7306,8 @@ _CONFIGUREPULSECURRENTLIMITRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12335,
-  serialized_end=12392,
+  serialized_start=12357,
+  serialized_end=12414,
 )
 
 
@@ -7345,8 +7352,8 @@ _CONFIGUREPULSEVOLTAGELEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12394,
-  serialized_end=12502,
+  serialized_start=12416,
+  serialized_end=12524,
 )
 
 
@@ -7377,8 +7384,8 @@ _CONFIGUREPULSEVOLTAGELEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12504,
-  serialized_end=12556,
+  serialized_start=12526,
+  serialized_end=12578,
 )
 
 
@@ -7423,8 +7430,8 @@ _CONFIGUREPULSEVOLTAGELEVELRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12558,
-  serialized_end=12671,
+  serialized_start=12580,
+  serialized_end=12693,
 )
 
 
@@ -7455,8 +7462,8 @@ _CONFIGUREPULSEVOLTAGELEVELRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12673,
-  serialized_end=12730,
+  serialized_start=12695,
+  serialized_end=12752,
 )
 
 
@@ -7501,8 +7508,8 @@ _CONFIGUREPULSEVOLTAGELIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12732,
-  serialized_end=12840,
+  serialized_start=12754,
+  serialized_end=12862,
 )
 
 
@@ -7533,8 +7540,8 @@ _CONFIGUREPULSEVOLTAGELIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12842,
-  serialized_end=12894,
+  serialized_start=12864,
+  serialized_end=12916,
 )
 
 
@@ -7579,8 +7586,8 @@ _CONFIGUREPULSEVOLTAGELIMITRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=12896,
-  serialized_end=13009,
+  serialized_start=12918,
+  serialized_end=13031,
 )
 
 
@@ -7611,8 +7618,8 @@ _CONFIGUREPULSEVOLTAGELIMITRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13011,
-  serialized_end=13068,
+  serialized_start=13033,
+  serialized_end=13090,
 )
 
 
@@ -7657,8 +7664,8 @@ _CONFIGURESENSEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13070,
-  serialized_end=13166,
+  serialized_start=13092,
+  serialized_end=13188,
 )
 
 
@@ -7689,8 +7696,8 @@ _CONFIGURESENSERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13168,
-  serialized_end=13208,
+  serialized_start=13190,
+  serialized_end=13230,
 )
 
 
@@ -7721,8 +7728,8 @@ _CONFIGURESOFTWAREEDGEMEASURETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13210,
-  serialized_end=13290,
+  serialized_start=13232,
+  serialized_end=13312,
 )
 
 
@@ -7753,8 +7760,8 @@ _CONFIGURESOFTWAREEDGEMEASURETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13292,
-  serialized_end=13353,
+  serialized_start=13314,
+  serialized_end=13375,
 )
 
 
@@ -7785,8 +7792,8 @@ _CONFIGURESOFTWAREEDGEPULSETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13355,
-  serialized_end=13433,
+  serialized_start=13377,
+  serialized_end=13455,
 )
 
 
@@ -7817,8 +7824,8 @@ _CONFIGURESOFTWAREEDGEPULSETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13435,
-  serialized_end=13494,
+  serialized_start=13457,
+  serialized_end=13516,
 )
 
 
@@ -7849,8 +7856,8 @@ _CONFIGURESOFTWAREEDGESEQUENCEADVANCETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13496,
-  serialized_end=13584,
+  serialized_start=13518,
+  serialized_end=13606,
 )
 
 
@@ -7881,8 +7888,8 @@ _CONFIGURESOFTWAREEDGESEQUENCEADVANCETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13586,
-  serialized_end=13655,
+  serialized_start=13608,
+  serialized_end=13677,
 )
 
 
@@ -7913,8 +7920,8 @@ _CONFIGURESOFTWAREEDGESOURCETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13657,
-  serialized_end=13736,
+  serialized_start=13679,
+  serialized_end=13758,
 )
 
 
@@ -7945,8 +7952,8 @@ _CONFIGURESOFTWAREEDGESOURCETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13738,
-  serialized_end=13798,
+  serialized_start=13760,
+  serialized_end=13820,
 )
 
 
@@ -7977,8 +7984,8 @@ _CONFIGURESOFTWAREEDGESTARTTRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13800,
-  serialized_end=13878,
+  serialized_start=13822,
+  serialized_end=13900,
 )
 
 
@@ -8009,8 +8016,8 @@ _CONFIGURESOFTWAREEDGESTARTTRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13880,
-  serialized_end=13939,
+  serialized_start=13902,
+  serialized_end=13961,
 )
 
 
@@ -8048,8 +8055,8 @@ _CONFIGURESOURCEMODEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=13941,
-  serialized_end=14026,
+  serialized_start=13963,
+  serialized_end=14048,
 )
 
 
@@ -8080,8 +8087,8 @@ _CONFIGURESOURCEMODERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14028,
-  serialized_end=14073,
+  serialized_start=14050,
+  serialized_end=14095,
 )
 
 
@@ -8126,8 +8133,8 @@ _CONFIGUREVOLTAGELEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14075,
-  serialized_end=14178,
+  serialized_start=14097,
+  serialized_end=14200,
 )
 
 
@@ -8158,8 +8165,8 @@ _CONFIGUREVOLTAGELEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14180,
-  serialized_end=14227,
+  serialized_start=14202,
+  serialized_end=14249,
 )
 
 
@@ -8204,8 +8211,8 @@ _CONFIGUREVOLTAGELEVELRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14229,
-  serialized_end=14337,
+  serialized_start=14251,
+  serialized_end=14359,
 )
 
 
@@ -8236,8 +8243,8 @@ _CONFIGUREVOLTAGELEVELRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14339,
-  serialized_end=14391,
+  serialized_start=14361,
+  serialized_end=14413,
 )
 
 
@@ -8282,8 +8289,8 @@ _CONFIGUREVOLTAGELIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14393,
-  serialized_end=14496,
+  serialized_start=14415,
+  serialized_end=14518,
 )
 
 
@@ -8314,8 +8321,8 @@ _CONFIGUREVOLTAGELIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14498,
-  serialized_end=14545,
+  serialized_start=14520,
+  serialized_end=14567,
 )
 
 
@@ -8360,8 +8367,8 @@ _CONFIGUREVOLTAGELIMITRANGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14547,
-  serialized_end=14655,
+  serialized_start=14569,
+  serialized_end=14677,
 )
 
 
@@ -8392,8 +8399,8 @@ _CONFIGUREVOLTAGELIMITRANGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14657,
-  serialized_end=14709,
+  serialized_start=14679,
+  serialized_end=14731,
 )
 
 
@@ -8431,8 +8438,8 @@ _CONNECTINTERNALREFERENCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14711,
-  serialized_end=14808,
+  serialized_start=14733,
+  serialized_end=14830,
 )
 
 
@@ -8463,8 +8470,8 @@ _CONNECTINTERNALREFERENCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14810,
-  serialized_end=14860,
+  serialized_start=14832,
+  serialized_end=14882,
 )
 
 
@@ -8502,8 +8509,8 @@ _CREATEADVANCEDSEQUENCESTEPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14862,
-  serialized_end=14961,
+  serialized_start=14884,
+  serialized_end=14983,
 )
 
 
@@ -8534,8 +8541,8 @@ _CREATEADVANCEDSEQUENCESTEPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=14963,
-  serialized_end=15015,
+  serialized_start=14985,
+  serialized_end=15037,
 )
 
 
@@ -8573,8 +8580,8 @@ _DELETEADVANCEDSEQUENCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15017,
-  serialized_end=15107,
+  serialized_start=15039,
+  serialized_end=15129,
 )
 
 
@@ -8605,8 +8612,8 @@ _DELETEADVANCEDSEQUENCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15109,
-  serialized_end=15157,
+  serialized_start=15131,
+  serialized_end=15179,
 )
 
 
@@ -8637,8 +8644,8 @@ _DISABLEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15159,
-  serialized_end=15211,
+  serialized_start=15181,
+  serialized_end=15233,
 )
 
 
@@ -8669,8 +8676,8 @@ _DISABLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15213,
-  serialized_end=15246,
+  serialized_start=15235,
+  serialized_end=15268,
 )
 
 
@@ -8701,8 +8708,8 @@ _DISABLEPULSETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15248,
-  serialized_end=15312,
+  serialized_start=15270,
+  serialized_end=15334,
 )
 
 
@@ -8733,8 +8740,8 @@ _DISABLEPULSETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15314,
-  serialized_end=15359,
+  serialized_start=15336,
+  serialized_end=15381,
 )
 
 
@@ -8765,8 +8772,8 @@ _DISABLESEQUENCEADVANCETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15361,
-  serialized_end=15435,
+  serialized_start=15383,
+  serialized_end=15457,
 )
 
 
@@ -8797,8 +8804,8 @@ _DISABLESEQUENCEADVANCETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15437,
-  serialized_end=15492,
+  serialized_start=15459,
+  serialized_end=15514,
 )
 
 
@@ -8829,8 +8836,8 @@ _DISABLESOURCETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15494,
-  serialized_end=15559,
+  serialized_start=15516,
+  serialized_end=15581,
 )
 
 
@@ -8861,8 +8868,8 @@ _DISABLESOURCETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15561,
-  serialized_end=15607,
+  serialized_start=15583,
+  serialized_end=15629,
 )
 
 
@@ -8893,8 +8900,8 @@ _DISABLESTARTTRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15609,
-  serialized_end=15673,
+  serialized_start=15631,
+  serialized_end=15695,
 )
 
 
@@ -8925,8 +8932,8 @@ _DISABLESTARTTRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15675,
-  serialized_end=15720,
+  serialized_start=15697,
+  serialized_end=15742,
 )
 
 
@@ -8964,8 +8971,8 @@ _ERRORMESSAGEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15722,
-  serialized_end=15799,
+  serialized_start=15744,
+  serialized_end=15821,
 )
 
 
@@ -9003,8 +9010,8 @@ _ERRORMESSAGERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15801,
-  serialized_end=15862,
+  serialized_start=15823,
+  serialized_end=15884,
 )
 
 
@@ -9042,8 +9049,8 @@ _EXPORTATTRIBUTECONFIGURATIONFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15864,
-  serialized_end=15960,
+  serialized_start=15886,
+  serialized_end=15982,
 )
 
 
@@ -9074,8 +9081,8 @@ _EXPORTATTRIBUTECONFIGURATIONFILERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=15962,
-  serialized_end=16020,
+  serialized_start=15984,
+  serialized_end=16042,
 )
 
 
@@ -9139,8 +9146,8 @@ _EXPORTSIGNALREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=16023,
-  serialized_end=16217,
+  serialized_start=16045,
+  serialized_end=16239,
 )
 
 
@@ -9171,8 +9178,8 @@ _EXPORTSIGNALRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16219,
-  serialized_end=16257,
+  serialized_start=16241,
+  serialized_end=16279,
 )
 
 
@@ -9224,8 +9231,8 @@ _FETCHMULTIPLEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16259,
-  serialized_end=16371,
+  serialized_start=16281,
+  serialized_end=16393,
 )
 
 
@@ -9284,8 +9291,8 @@ _FETCHMULTIPLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16374,
-  serialized_end=16518,
+  serialized_start=16396,
+  serialized_end=16540,
 )
 
 
@@ -9330,8 +9337,8 @@ _GETATTRIBUTEVIBOOLEANREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16521,
-  serialized_end=16668,
+  serialized_start=16543,
+  serialized_end=16690,
 )
 
 
@@ -9369,8 +9376,8 @@ _GETATTRIBUTEVIBOOLEANRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16670,
-  serialized_end=16742,
+  serialized_start=16692,
+  serialized_end=16764,
 )
 
 
@@ -9415,8 +9422,8 @@ _GETATTRIBUTEVIINT32REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16745,
-  serialized_end=16890,
+  serialized_start=16767,
+  serialized_end=16912,
 )
 
 
@@ -9454,8 +9461,8 @@ _GETATTRIBUTEVIINT32RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16892,
-  serialized_end=16962,
+  serialized_start=16914,
+  serialized_end=16984,
 )
 
 
@@ -9500,8 +9507,8 @@ _GETATTRIBUTEVIINT64REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=16965,
-  serialized_end=17110,
+  serialized_start=16987,
+  serialized_end=17132,
 )
 
 
@@ -9539,8 +9546,8 @@ _GETATTRIBUTEVIINT64RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17112,
-  serialized_end=17182,
+  serialized_start=17134,
+  serialized_end=17204,
 )
 
 
@@ -9585,8 +9592,8 @@ _GETATTRIBUTEVIREAL64REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17185,
-  serialized_end=17331,
+  serialized_start=17207,
+  serialized_end=17353,
 )
 
 
@@ -9624,8 +9631,8 @@ _GETATTRIBUTEVIREAL64RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17333,
-  serialized_end=17404,
+  serialized_start=17355,
+  serialized_end=17426,
 )
 
 
@@ -9670,8 +9677,8 @@ _GETATTRIBUTEVISESSIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17407,
-  serialized_end=17554,
+  serialized_start=17429,
+  serialized_end=17576,
 )
 
 
@@ -9709,8 +9716,8 @@ _GETATTRIBUTEVISESSIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17556,
-  serialized_end=17652,
+  serialized_start=17578,
+  serialized_end=17674,
 )
 
 
@@ -9755,8 +9762,8 @@ _GETATTRIBUTEVISTRINGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17655,
-  serialized_end=17801,
+  serialized_start=17677,
+  serialized_end=17823,
 )
 
 
@@ -9794,8 +9801,8 @@ _GETATTRIBUTEVISTRINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17803,
-  serialized_end=17874,
+  serialized_start=17825,
+  serialized_end=17896,
 )
 
 
@@ -9826,8 +9833,8 @@ _GETCALUSERDEFINEDINFOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17876,
-  serialized_end=17942,
+  serialized_start=17898,
+  serialized_end=17964,
 )
 
 
@@ -9865,8 +9872,8 @@ _GETCALUSERDEFINEDINFORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=17944,
-  serialized_end=18005,
+  serialized_start=17966,
+  serialized_end=18027,
 )
 
 
@@ -9897,8 +9904,8 @@ _GETCALUSERDEFINEDINFOMAXSIZEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18007,
-  serialized_end=18080,
+  serialized_start=18029,
+  serialized_end=18102,
 )
 
 
@@ -9936,8 +9943,8 @@ _GETCALUSERDEFINEDINFOMAXSIZERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18082,
-  serialized_end=18155,
+  serialized_start=18104,
+  serialized_end=18177,
 )
 
 
@@ -9975,8 +9982,8 @@ _GETCHANNELNAMEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18157,
-  serialized_end=18231,
+  serialized_start=18179,
+  serialized_end=18253,
 )
 
 
@@ -10014,8 +10021,8 @@ _GETCHANNELNAMERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18233,
-  serialized_end=18295,
+  serialized_start=18255,
+  serialized_end=18317,
 )
 
 
@@ -10053,8 +10060,8 @@ _GETCHANNELNAMEFROMSTRINGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18297,
-  serialized_end=18381,
+  serialized_start=18319,
+  serialized_end=18403,
 )
 
 
@@ -10092,8 +10099,8 @@ _GETCHANNELNAMEFROMSTRINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18383,
-  serialized_end=18455,
+  serialized_start=18405,
+  serialized_end=18477,
 )
 
 
@@ -10124,8 +10131,8 @@ _GETERRORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18457,
-  serialized_end=18510,
+  serialized_start=18479,
+  serialized_end=18532,
 )
 
 
@@ -10170,8 +10177,8 @@ _GETERRORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18512,
-  serialized_end=18581,
+  serialized_start=18534,
+  serialized_end=18603,
 )
 
 
@@ -10202,8 +10209,8 @@ _GETEXTCALLASTDATEANDTIMEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18583,
-  serialized_end=18652,
+  serialized_start=18605,
+  serialized_end=18674,
 )
 
 
@@ -10269,8 +10276,8 @@ _GETEXTCALLASTDATEANDTIMERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18654,
-  serialized_end=18776,
+  serialized_start=18676,
+  serialized_end=18798,
 )
 
 
@@ -10301,8 +10308,8 @@ _GETEXTCALLASTTEMPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18778,
-  serialized_end=18840,
+  serialized_start=18800,
+  serialized_end=18862,
 )
 
 
@@ -10340,8 +10347,8 @@ _GETEXTCALLASTTEMPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18842,
-  serialized_end=18906,
+  serialized_start=18864,
+  serialized_end=18928,
 )
 
 
@@ -10372,8 +10379,8 @@ _GETEXTCALRECOMMENDEDINTERVALREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18908,
-  serialized_end=18981,
+  serialized_start=18930,
+  serialized_end=19003,
 )
 
 
@@ -10411,8 +10418,8 @@ _GETEXTCALRECOMMENDEDINTERVALRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18983,
-  serialized_end=19053,
+  serialized_start=19005,
+  serialized_end=19075,
 )
 
 
@@ -10443,8 +10450,8 @@ _GETNEXTCOERCIONRECORDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19055,
-  serialized_end=19121,
+  serialized_start=19077,
+  serialized_end=19143,
 )
 
 
@@ -10482,8 +10489,8 @@ _GETNEXTCOERCIONRECORDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19123,
-  serialized_end=19195,
+  serialized_start=19145,
+  serialized_end=19217,
 )
 
 
@@ -10514,8 +10521,8 @@ _GETNEXTINTERCHANGEWARNINGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19197,
-  serialized_end=19267,
+  serialized_start=19219,
+  serialized_end=19289,
 )
 
 
@@ -10553,8 +10560,8 @@ _GETNEXTINTERCHANGEWARNINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19269,
-  serialized_end=19349,
+  serialized_start=19291,
+  serialized_end=19371,
 )
 
 
@@ -10585,8 +10592,8 @@ _GETSELFCALLASTDATEANDTIMEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19351,
-  serialized_end=19421,
+  serialized_start=19373,
+  serialized_end=19443,
 )
 
 
@@ -10652,8 +10659,8 @@ _GETSELFCALLASTDATEANDTIMERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19423,
-  serialized_end=19546,
+  serialized_start=19445,
+  serialized_end=19568,
 )
 
 
@@ -10684,8 +10691,8 @@ _GETSELFCALLASTTEMPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19548,
-  serialized_end=19611,
+  serialized_start=19570,
+  serialized_end=19633,
 )
 
 
@@ -10723,8 +10730,8 @@ _GETSELFCALLASTTEMPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19613,
-  serialized_end=19678,
+  serialized_start=19635,
+  serialized_end=19700,
 )
 
 
@@ -10762,8 +10769,8 @@ _IMPORTATTRIBUTECONFIGURATIONFILEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19680,
-  serialized_end=19776,
+  serialized_start=19702,
+  serialized_end=19798,
 )
 
 
@@ -10794,8 +10801,8 @@ _IMPORTATTRIBUTECONFIGURATIONFILERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19778,
-  serialized_end=19836,
+  serialized_start=19800,
+  serialized_end=19858,
 )
 
 
@@ -10833,8 +10840,8 @@ _INITEXTCALREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19838,
-  serialized_end=19898,
+  serialized_start=19860,
+  serialized_end=19920,
 )
 
 
@@ -10872,8 +10879,8 @@ _INITEXTCALRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19900,
-  serialized_end=19972,
+  serialized_start=19922,
+  serialized_end=19994,
 )
 
 
@@ -10925,8 +10932,8 @@ _INITIALIZEWITHCHANNELSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=19974,
-  serialized_end=20084,
+  serialized_start=19996,
+  serialized_end=20106,
 )
 
 
@@ -10964,8 +10971,8 @@ _INITIALIZEWITHCHANNELSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20086,
-  serialized_end=20170,
+  serialized_start=20108,
+  serialized_end=20192,
 )
 
 
@@ -10996,8 +11003,8 @@ _INITIATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20172,
-  serialized_end=20225,
+  serialized_start=20194,
+  serialized_end=20247,
 )
 
 
@@ -11028,8 +11035,8 @@ _INITIATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20227,
-  serialized_end=20261,
+  serialized_start=20249,
+  serialized_end=20283,
 )
 
 
@@ -11060,8 +11067,8 @@ _LOCKSESSIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20263,
-  serialized_end=20319,
+  serialized_start=20285,
+  serialized_end=20341,
 )
 
 
@@ -11099,8 +11106,8 @@ _LOCKSESSIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20321,
-  serialized_end=20383,
+  serialized_start=20343,
+  serialized_end=20405,
 )
 
 
@@ -11157,8 +11164,8 @@ _MEASUREREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=20386,
-  serialized_end=20579,
+  serialized_start=20408,
+  serialized_end=20601,
 )
 
 
@@ -11196,8 +11203,8 @@ _MEASURERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20581,
-  serialized_end=20635,
+  serialized_start=20603,
+  serialized_end=20657,
 )
 
 
@@ -11235,8 +11242,8 @@ _MEASUREMULTIPLEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20637,
-  serialized_end=20719,
+  serialized_start=20659,
+  serialized_end=20741,
 )
 
 
@@ -11281,8 +11288,8 @@ _MEASUREMULTIPLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20721,
-  serialized_end=20822,
+  serialized_start=20743,
+  serialized_end=20844,
 )
 
 
@@ -11320,8 +11327,8 @@ _QUERYINCOMPLIANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20824,
-  serialized_end=20908,
+  serialized_start=20846,
+  serialized_end=20930,
 )
 
 
@@ -11359,8 +11366,8 @@ _QUERYINCOMPLIANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20910,
-  serialized_end=20976,
+  serialized_start=20932,
+  serialized_end=20998,
 )
 
 
@@ -11405,8 +11412,8 @@ _QUERYMAXCURRENTLIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20978,
-  serialized_end=21088,
+  serialized_start=21000,
+  serialized_end=21110,
 )
 
 
@@ -11444,8 +11451,8 @@ _QUERYMAXCURRENTLIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21090,
-  serialized_end=21163,
+  serialized_start=21112,
+  serialized_end=21185,
 )
 
 
@@ -11490,8 +11497,8 @@ _QUERYMAXVOLTAGELEVELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21165,
-  serialized_end=21275,
+  serialized_start=21187,
+  serialized_end=21297,
 )
 
 
@@ -11529,8 +11536,8 @@ _QUERYMAXVOLTAGELEVELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21277,
-  serialized_end=21350,
+  serialized_start=21299,
+  serialized_end=21372,
 )
 
 
@@ -11575,8 +11582,8 @@ _QUERYMINCURRENTLIMITREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21352,
-  serialized_end=21462,
+  serialized_start=21374,
+  serialized_end=21484,
 )
 
 
@@ -11614,8 +11621,8 @@ _QUERYMINCURRENTLIMITRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21464,
-  serialized_end=21537,
+  serialized_start=21486,
+  serialized_end=21559,
 )
 
 
@@ -11672,8 +11679,8 @@ _QUERYOUTPUTSTATEREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=21540,
-  serialized_end=21726,
+  serialized_start=21562,
+  serialized_end=21748,
 )
 
 
@@ -11711,8 +11718,8 @@ _QUERYOUTPUTSTATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21728,
-  serialized_end=21788,
+  serialized_start=21750,
+  serialized_end=21810,
 )
 
 
@@ -11743,8 +11750,8 @@ _READCURRENTTEMPERATUREREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21790,
-  serialized_end=21857,
+  serialized_start=21812,
+  serialized_end=21879,
 )
 
 
@@ -11782,8 +11789,8 @@ _READCURRENTTEMPERATURERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21859,
-  serialized_end=21928,
+  serialized_start=21881,
+  serialized_end=21950,
 )
 
 
@@ -11814,8 +11821,8 @@ _RESETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21930,
-  serialized_end=21980,
+  serialized_start=21952,
+  serialized_end=22002,
 )
 
 
@@ -11846,8 +11853,8 @@ _RESETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=21982,
-  serialized_end=22013,
+  serialized_start=22004,
+  serialized_end=22035,
 )
 
 
@@ -11878,8 +11885,8 @@ _RESETDEVICEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22015,
-  serialized_end=22071,
+  serialized_start=22037,
+  serialized_end=22093,
 )
 
 
@@ -11910,8 +11917,8 @@ _RESETDEVICERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22073,
-  serialized_end=22110,
+  serialized_start=22095,
+  serialized_end=22132,
 )
 
 
@@ -11942,8 +11949,8 @@ _RESETINTERCHANGECHECKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22112,
-  serialized_end=22178,
+  serialized_start=22134,
+  serialized_end=22200,
 )
 
 
@@ -11974,8 +11981,8 @@ _RESETINTERCHANGECHECKRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22180,
-  serialized_end=22227,
+  serialized_start=22202,
+  serialized_end=22249,
 )
 
 
@@ -12006,8 +12013,8 @@ _RESETWITHDEFAULTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22229,
-  serialized_end=22291,
+  serialized_start=22251,
+  serialized_end=22313,
 )
 
 
@@ -12038,8 +12045,8 @@ _RESETWITHDEFAULTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22293,
-  serialized_end=22336,
+  serialized_start=22315,
+  serialized_end=22358,
 )
 
 
@@ -12070,8 +12077,8 @@ _REVISIONQUERYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22338,
-  serialized_end=22396,
+  serialized_start=22360,
+  serialized_end=22418,
 )
 
 
@@ -12116,8 +12123,8 @@ _REVISIONQUERYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22398,
-  serialized_end=22500,
+  serialized_start=22420,
+  serialized_end=22522,
 )
 
 
@@ -12148,8 +12155,8 @@ _SELFTESTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22502,
-  serialized_end=22555,
+  serialized_start=22524,
+  serialized_end=22577,
 )
 
 
@@ -12194,8 +12201,8 @@ _SELFTESTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22557,
-  serialized_end=22644,
+  serialized_start=22579,
+  serialized_end=22666,
 )
 
 
@@ -12233,8 +12240,8 @@ _SENDSOFTWAREEDGETRIGGERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22646,
-  serialized_end=22731,
+  serialized_start=22668,
+  serialized_end=22753,
 )
 
 
@@ -12265,8 +12272,8 @@ _SENDSOFTWAREEDGETRIGGERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22733,
-  serialized_end=22782,
+  serialized_start=22755,
+  serialized_end=22804,
 )
 
 
@@ -12318,8 +12325,8 @@ _SETATTRIBUTEVIBOOLEANREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22785,
-  serialized_end=22957,
+  serialized_start=22807,
+  serialized_end=22979,
 )
 
 
@@ -12350,8 +12357,8 @@ _SETATTRIBUTEVIBOOLEANRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=22959,
-  serialized_end=23006,
+  serialized_start=22981,
+  serialized_end=23028,
 )
 
 
@@ -12403,8 +12410,8 @@ _SETATTRIBUTEVIINT32REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23009,
-  serialized_end=23179,
+  serialized_start=23031,
+  serialized_end=23201,
 )
 
 
@@ -12435,8 +12442,8 @@ _SETATTRIBUTEVIINT32RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23181,
-  serialized_end=23226,
+  serialized_start=23203,
+  serialized_end=23248,
 )
 
 
@@ -12488,8 +12495,8 @@ _SETATTRIBUTEVIINT64REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23229,
-  serialized_end=23399,
+  serialized_start=23251,
+  serialized_end=23421,
 )
 
 
@@ -12520,8 +12527,8 @@ _SETATTRIBUTEVIINT64RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23401,
-  serialized_end=23446,
+  serialized_start=23423,
+  serialized_end=23468,
 )
 
 
@@ -12573,8 +12580,8 @@ _SETATTRIBUTEVIREAL64REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23449,
-  serialized_end=23620,
+  serialized_start=23471,
+  serialized_end=23642,
 )
 
 
@@ -12605,8 +12612,8 @@ _SETATTRIBUTEVIREAL64RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23622,
-  serialized_end=23668,
+  serialized_start=23644,
+  serialized_end=23690,
 )
 
 
@@ -12658,8 +12665,8 @@ _SETATTRIBUTEVISESSIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23671,
-  serialized_end=23867,
+  serialized_start=23693,
+  serialized_end=23889,
 )
 
 
@@ -12690,8 +12697,8 @@ _SETATTRIBUTEVISESSIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23869,
-  serialized_end=23916,
+  serialized_start=23891,
+  serialized_end=23938,
 )
 
 
@@ -12743,8 +12750,8 @@ _SETATTRIBUTEVISTRINGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=23919,
-  serialized_end=24090,
+  serialized_start=23941,
+  serialized_end=24112,
 )
 
 
@@ -12775,8 +12782,8 @@ _SETATTRIBUTEVISTRINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24092,
-  serialized_end=24138,
+  serialized_start=24114,
+  serialized_end=24160,
 )
 
 
@@ -12814,8 +12821,8 @@ _SETCALUSERDEFINEDINFOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24140,
-  serialized_end=24220,
+  serialized_start=24162,
+  serialized_end=24242,
 )
 
 
@@ -12846,8 +12853,8 @@ _SETCALUSERDEFINEDINFORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24222,
-  serialized_end=24269,
+  serialized_start=24244,
+  serialized_end=24291,
 )
 
 
@@ -12899,8 +12906,8 @@ _SETSEQUENCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24271,
-  serialized_end=24388,
+  serialized_start=24293,
+  serialized_end=24410,
 )
 
 
@@ -12931,8 +12938,8 @@ _SETSEQUENCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24390,
-  serialized_end=24427,
+  serialized_start=24412,
+  serialized_end=24449,
 )
 
 
@@ -12963,8 +12970,8 @@ _UNLOCKSESSIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24429,
-  serialized_end=24487,
+  serialized_start=24451,
+  serialized_end=24509,
 )
 
 
@@ -13002,8 +13009,8 @@ _UNLOCKSESSIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24489,
-  serialized_end=24553,
+  serialized_start=24511,
+  serialized_end=24575,
 )
 
 
@@ -13048,8 +13055,8 @@ _WAITFOREVENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24555,
-  serialized_end=24647,
+  serialized_start=24577,
+  serialized_end=24669,
 )
 
 
@@ -13080,8 +13087,8 @@ _WAITFOREVENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=24649,
-  serialized_end=24687,
+  serialized_start=24671,
+  serialized_end=24709,
 )
 
 _ABORTWITHCHANNELSREQUEST.fields_by_name['vi'].message_type = session__pb2._SESSION
@@ -15654,8 +15661,8 @@ _NIDCPOWER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=37235,
-  serialized_end=56072,
+  serialized_start=37257,
+  serialized_end=56094,
   methods=[
   _descriptor.MethodDescriptor(
     name='AbortWithChannels',
