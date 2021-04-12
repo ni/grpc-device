@@ -308,11 +308,10 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 % if common_helpers.is_array(parameter['type']):
 <%
   size = ''
-  if parameter.get('size'): 
-    if common_helpers.get_size_mechanism(parameter) == 'fixed':
-      size = parameter['size']['value']
-    else:
-      size = common_helpers.camel_to_snake(parameter['size']['value'])
+  if common_helpers.get_size_mechanism(parameter) == 'fixed':
+    size = parameter['size']['value']
+  else:
+    size = common_helpers.camel_to_snake(parameter.get('size',{}).get('value',{}))
 %>\
 % if common_helpers.is_struct(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
