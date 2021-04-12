@@ -37,13 +37,13 @@ namespace ${config["namespace_component"]}_grpc {
   {
   }
 
-  %if 'custom_types' in locals():
-  %for custom_type in custom_types:
+% if 'custom_types' in locals():
+%   for custom_type in custom_types:
   void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
   {
-%for field in custom_type["fields"]: 
+%     for field in custom_type["fields"]: 
     output->set_${field["grpc_name"]}(input.${field["name"]});
-%endfor
+%     endfor
   }
 
   void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
@@ -55,8 +55,8 @@ namespace ${config["namespace_component"]}_grpc {
     }
   }
 
-%endfor
-%endif
+%   endfor
+% endif
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
@@ -71,15 +71,15 @@ namespace ${config["namespace_component"]}_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-% if common_helpers.has_unsupported_parameter(function_data):
+%   if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-% elif common_helpers.is_init_method(function_data):
+%   elif common_helpers.is_init_method(function_data):
 ${mako_helper.define_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
-% elif common_helpers.has_ivi_dance_param(parameters):
+%   elif common_helpers.has_ivi_dance_param(parameters):
 ${mako_helper.define_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
-% else:
+%   else:
 ${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
-% endif
+%   endif
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

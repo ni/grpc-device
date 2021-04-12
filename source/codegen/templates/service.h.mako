@@ -51,11 +51,11 @@ public:
 private:
   ${service_class_prefix}LibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
-%if 'custom_types' in locals():
-%for custom_type in custom_types:
+% if 'custom_types' in locals():
+%   for custom_type in custom_types:
   void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
   void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
-% endfor
+%   endfor
 % endif
 % for enum in enums_to_map:
 <%

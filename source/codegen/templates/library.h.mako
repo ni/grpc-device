@@ -38,7 +38,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
 % endfor
 
  private:
- % for method_name in service_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions):
 <%
   f = functions[method_name]
   parameters = f['parameters']

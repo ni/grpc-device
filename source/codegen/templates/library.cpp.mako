@@ -73,5 +73,5 @@ ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 #endif
 }
 
-%endfor
+% endfor
 }  // namespace ${config["namespace_component"]}_grpc

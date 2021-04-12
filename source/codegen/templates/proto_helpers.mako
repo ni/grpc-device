@@ -34,20 +34,20 @@ enum ${service_class_prefix}Attributes {
   nonint_index = 1
 %>\
 enum ${enum_name} {
-% if allow_alias == True:
+%   if allow_alias == True:
   option allow_alias = true;
-% endif
+%   endif
   ${enum_value_prefix}_UNSPECIFIED = 0;
-% for value in enum["values"]:
-% if enum.get("generate-mappings", False):
+%   for value in enum["values"]:
+%     if enum.get("generate-mappings", False):
   ${enum_value_prefix}_${value["name"]} = ${nonint_index};
 <%
-  nonint_index = nonint_index + 1
+    nonint_index = nonint_index + 1
 %>\
-% else:
+%     else:
   ${enum_value_prefix}_${value["name"]} = ${value["value"]};
-% endif
-% endfor
+%     endif
+%   endfor
 }
 
 % endfor
@@ -84,7 +84,7 @@ message ${common_helpers.snake_to_pascal(function)}Request {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
-% if common_helpers.is_enum(parameter):
+%   if common_helpers.is_enum(parameter):
 <%
   index = index + 1
   is_array = common_helpers.is_array(parameter["type"])
@@ -95,9 +95,9 @@ message ${common_helpers.snake_to_pascal(function)}Request {
     ${parameter_type} ${parameter_name} = ${index-1};
     ${non_enum_type} ${parameter_name}_raw = ${index};
   }
-% else:
+%   else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
-% endif
+%   endif
 % endfor
 }
 </%def>
@@ -119,7 +119,7 @@ message ${common_helpers.snake_to_pascal(function)}Response {
   else:
     parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
 %>\
-% if common_helpers.is_enum(parameter):
+%   if common_helpers.is_enum(parameter):
 <%
   index = index + 1
   is_array = common_helpers.is_array(parameter["type"])
@@ -127,9 +127,9 @@ message ${common_helpers.snake_to_pascal(function)}Response {
 %>\
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index-1};
   ${non_enum_type} ${common_helpers.camel_to_snake(parameter["name"])}_raw = ${index};
-% else:
+%   else:
   ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
-% endif
+%   endif
 % endfor
 }
 </%def>
