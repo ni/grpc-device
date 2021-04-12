@@ -319,7 +319,7 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
   % if type(size) == str and len(size) > 0:
       std::string ${parameter_name}(${size}, '\0');
   % else:
-      std::string ${parameter_name}('\0');
+      std::string ${parameter_name};
   % endif
 % else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
