@@ -67,15 +67,18 @@ set(nidrivers "nifake" "niscope" "niswitch" "nisync")
 set(codegen_scripts
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
-  "${codegen_dir}/handler_helpers.py"
-  "${codegen_dir}/library_interface.h.mako"
-  "${codegen_dir}/library.cpp.mako"
-  "${codegen_dir}/library.h.mako"
-  "${codegen_dir}/mock_library.h.mako"
-  "${codegen_dir}/proto.mako"
+  "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
-  "${codegen_dir}/service.cpp.mako"
-  "${codegen_dir}/service.h.mako")
+  "${codegen_dir}/metadata_mutation.py"
+  "${codegen_dir}/templates/library_interface.h.mako"
+  "${codegen_dir}/templates/library.cpp.mako"
+  "${codegen_dir}/templates/library.h.mako"
+  "${codegen_dir}/templates/mock_library.h.mako"
+  "${codegen_dir}/templates/proto.mako"
+  "${codegen_dir}/templates/proto_helpers.mako"
+  "${codegen_dir}/templates/service.cpp.mako"
+  "${codegen_dir}/templates/service_helpers.mako"
+  "${codegen_dir}/templates/service.h.mako")
 
 # Populated in the api loop below.
 set(nidriver_service_srcs "")
