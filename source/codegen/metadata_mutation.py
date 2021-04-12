@@ -36,8 +36,9 @@ def mark_size_params(parameters):
             size_param = get_size_param(param, parameters)
             size_param['is_size_param'] = True
 
-def mark_non_grpc_params(parameters):
-    """Mark the parameters whose value shouldn't be derived from a gRPC request message."""
+def mark_non_proto_params(parameters):
+    """Mark the parameters that shouldn't be included in the proto request message. 
+       Their values should be derived from other sources in the service handlers."""
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
         if mechanism in {'len', 'ivi-dance'}:
