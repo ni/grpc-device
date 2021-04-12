@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    "api_version": "20.6.0d7",
+    "api_version": "20.1.0",
     "c_header": "nisync.h",
     "c_function_prefix": "niSync_",
     "service_class_prefix": "NiSync",
