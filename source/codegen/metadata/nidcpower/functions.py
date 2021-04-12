@@ -506,6 +506,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'InitializeWithIndependentChannels': {
+    'init_method' : True,
     'parameters': [
       {
         'name': 'resourceName',
@@ -2385,6 +2386,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'InitializeWithChannels': {
+    'init_method' : True,
     'parameters': [
       {
         'name': 'resourceName',
