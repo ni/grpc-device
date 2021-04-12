@@ -13,7 +13,7 @@
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
-# Refer to the NI-DMM gRPC Wiki to determine the valid channel and resource names for your NI-SCOPE module.
+# Refer to the NI-DMM gRPC Wiki to determine the valid channel and resource names for your NI-DMM module.
 # Link : https://github.com/ni/grpc-device/wiki/NI-DMM-C-Function-Reference
 #
 # Running from command line:
@@ -29,6 +29,8 @@ import nidmm_pb2 as nidmm_types
 import nidmm_pb2_grpc as grpc_nidmm
 import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
+import matplotlib.pyplot as plt
+import keyword
 
 server_address = "localhost"
 server_port = "31763"
@@ -76,7 +78,6 @@ def ThrowOnError (vi, error_code):
 
 try:
     # Open session to NI-DMM with options
-    print('\nInitializing session...')
     init_with_options_response = nidmm_client.InitWithOptions(nidmm_types.InitWithOptionsRequest(
         session_name = session_name,
         resource_name = resource,
@@ -85,10 +86,8 @@ try:
     ))
     vi = init_with_options_response.vi
     CheckForError(vi, init_with_options_response.status)
-    print(f'Session initialized with name {session_name} and id {vi.id}.\n')
 
     # Configure measurement
-    print('Configuring Measurement...')
     config_measurement_response = nidmm_client.ConfigureMeasurementDigits(nidmm_types.ConfigureMeasurementDigitsRequest(
         vi = vi,
         measurement_function = measurementType,
@@ -96,10 +95,8 @@ try:
         resolution_digits = resolution
     ))
     CheckForError(vi, config_measurement_response.status)
-    print('Measurement Configured.\n')
 
     # Configure a multipoint acquisition
-    print('Configuring Multipoint Acquisition...')
     config_multipoint_response = nidmm_client.ConfigureMultiPoint(nidmm_types.ConfigureMultiPointRequest(
         vi = vi,
         trigger_count = 1,
@@ -108,15 +105,12 @@ try:
         sample_interval = 0.0
     ))
     CheckForError(vi, config_multipoint_response.status)
-    print('Multipoint Acquisition Configured.\n')
 
     # Initiate Acquisition
-    print('Initiating Acquisition...')
     initiate_acquisition_response = nidmm_client.Initiate(nidmm_types.InitiateRequest(
         vi = vi
     ))
     CheckForError(vi, initiate_acquisition_response.status)
-    print('Acquisition Initiated.\n')
 
     # Set while loop control
     stop_measurement = False
@@ -125,44 +119,60 @@ try:
     num_measurements = 0
     sum_measurements = 0
 
-    while(not stop_measurement):
-        pts_available = 0
-        # Check available data
-        read_status_response = nidmm_client.ReadStatus(nidmm_types.ReadStatusRequest(
-            vi = vi
-        ))
-        CheckForError(vi, read_status_response.status)
-        pts_available = read_status_response.acquisition_backlog
+    # Setup a plot to draw the captured waveform
+    fig = plt.gcf()
+    fig.show()
+    fig.canvas.draw()
 
-        # if there are more than MAXPTSTOREAD measurements
-        # available, set pts_available to MAXPTSTOREAD in order to
-        # avoid reallocating the array for measurements
-        pts_available = min(pts_available, MAXPTSTOREAD)
+    print("\nReading values in loop. CTRL+C or Q to stop.\n")
 
-        if pts_available > 0:
-
-            # Fetch data
-            fetch_multipoints_response = nidmm_client.FetchMultiPoint(nidmm_types.FetchMultiPointRequest(
-                vi = vi,
-                maximum_time = -1,
-                array_size = pts_available
+    try:
+        while True:
+            pts_available = 0
+            # Check available data
+            read_status_response = nidmm_client.ReadStatus(nidmm_types.ReadStatusRequest(
+                vi = vi
             ))
-            CheckForError(vi, fetch_multipoints_response.status)
-            num_pts_read = fetch_multipoints_response.actual_number_of_points
-            measurements = fetch_multipoints_response.reading_array
+            CheckForError(vi, read_status_response.status)
+            pts_available = read_status_response.acquisition_backlog
 
-            # Increment number of measurements
-            num_measurements += num_pts_read
+            # if there are more than MAXPTSTOREAD measurements
+            # available, set pts_available to MAXPTSTOREAD in order to
+            # avoid reallocating the array for measurements
+            pts_available = min(pts_available, MAXPTSTOREAD)
 
-            # Calculate sum
-            for i in range(num_pts_read):
-                sum_measurements += measurements[i]
-            
-            # Set stop_measurement when done
-            if num_measurements >= 10*MAXPTSTOREAD:
-                stop_measurement = True
+            if pts_available > 0:
 
-    print('Acquisition Completed.\n')
+                # Clear the plot and setup the axis
+                plt.clf()
+                plt.axis([0, pts_available, -6, 6])
+
+                # Fetch data
+                fetch_multipoints_response = nidmm_client.FetchMultiPoint(nidmm_types.FetchMultiPointRequest(
+                    vi = vi,
+                    maximum_time = -1,
+                    array_size = pts_available
+                ))
+                CheckForError(vi, fetch_multipoints_response.status)
+                num_pts_read = fetch_multipoints_response.actual_number_of_points
+                measurements = fetch_multipoints_response.reading_array
+
+                # Update the plot with the new measurements
+                plt.plot(measurements)
+                fig.canvas.draw()
+                plt.pause(0.001)
+
+                # Increment number of measurements
+                num_measurements += num_pts_read
+
+                # Calculate sum
+                for i in range(num_pts_read):
+                    sum_measurements += measurements[i]
+                
+                time.sleep(0.1)
+    except KeyboardInterrupt:
+        pass
+                
 
     print(f'Number of measurements = {num_measurements}')
 
@@ -171,12 +181,10 @@ try:
     print(f'Average = {average}')
 
     # Close NI-DMM session
-    print('Closing session...')
     close_session_response = nidmm_client.Close(nidmm_types.CloseRequest(
         vi = vi
     ))
     CheckForError(vi, close_session_response.status)
-    print('Session closed.\n')
 
 # If NI-DMM API throws an exception, print the error message  
 except grpc.RpcError as rpc_error:
