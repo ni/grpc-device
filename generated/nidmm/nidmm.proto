@@ -17,59 +17,7 @@ import "session.proto";
 
 service NiDMM {
   rpc Abort(AbortRequest) returns (AbortResponse);
-  rpc ConfigureMeasurementAbsolute(ConfigureMeasurementAbsoluteRequest) returns (ConfigureMeasurementAbsoluteResponse);
-  rpc ConfigureMeasurementDigits(ConfigureMeasurementDigitsRequest) returns (ConfigureMeasurementDigitsResponse);
-  rpc ConfigureMultiPoint(ConfigureMultiPointRequest) returns (ConfigureMultiPointResponse);
-  rpc ConfigureRTDCustom(ConfigureRTDCustomRequest) returns (ConfigureRTDCustomResponse);
-  rpc ConfigureRTDType(ConfigureRTDTypeRequest) returns (ConfigureRTDTypeResponse);
-  rpc ConfigureThermistorCustom(ConfigureThermistorCustomRequest) returns (ConfigureThermistorCustomResponse);
-  rpc ConfigureThermocouple(ConfigureThermocoupleRequest) returns (ConfigureThermocoupleResponse);
-  rpc ConfigureTrigger(ConfigureTriggerRequest) returns (ConfigureTriggerResponse);
-  rpc ConfigureWaveformAcquisition(ConfigureWaveformAcquisitionRequest) returns (ConfigureWaveformAcquisitionResponse);
-  rpc Disable(DisableRequest) returns (DisableResponse);
-  rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
-  rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
-  rpc Fetch(FetchRequest) returns (FetchResponse);
-  rpc FetchMultiPoint(FetchMultiPointRequest) returns (FetchMultiPointResponse);
-  rpc FetchWaveform(FetchWaveformRequest) returns (FetchWaveformResponse);
-  rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
-  rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
-  rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
-  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
-  rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
-  rpc GetDevTemp(GetDevTempRequest) returns (GetDevTempResponse);
-  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
-  rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
-  rpc GetLastCalTemp(GetLastCalTempRequest) returns (GetLastCalTempResponse);
-  rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
-  rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
-  rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
-  rpc Init(InitRequest) returns (InitResponse);
-  rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
-  rpc Initiate(InitiateRequest) returns (InitiateResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
-  rpc PerformOpenCableComp(PerformOpenCableCompRequest) returns (PerformOpenCableCompResponse);
-  rpc PerformShortCableComp(PerformShortCableCompRequest) returns (PerformShortCableCompResponse);
-  rpc Read(ReadRequest) returns (ReadResponse);
-  rpc ReadMultiPoint(ReadMultiPointRequest) returns (ReadMultiPointResponse);
-  rpc ReadStatus(ReadStatusRequest) returns (ReadStatusResponse);
-  rpc ReadWaveform(ReadWaveformRequest) returns (ReadWaveformResponse);
-  rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
-  rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
-  rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
-  rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
-  rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
-  rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
-  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
-  rpc Close(CloseRequest) returns (CloseResponse);
-  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
-  rpc Reset(ResetRequest) returns (ResetResponse);
-  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
-  rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
-  rpc CalAdjustAcFilter(CalAdjustAcFilterRequest) returns (CalAdjustAcFilterResponse);
   rpc CalAdjustGain(CalAdjustGainRequest) returns (CalAdjustGainResponse);
-  rpc CalAdjustLc(CalAdjustLcRequest) returns (CalAdjustLcResponse);
   rpc CalAdjustLinearization(CalAdjustLinearizationRequest) returns (CalAdjustLinearizationResponse);
   rpc CalAdjustMisc(CalAdjustMiscRequest) returns (CalAdjustMiscResponse);
   rpc CalAdjustOffset(CalAdjustOffsetRequest) returns (CalAdjustOffsetResponse);
@@ -80,47 +28,92 @@ service NiDMM {
   rpc CheckAttributeViString(CheckAttributeViStringRequest) returns (CheckAttributeViStringResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
-  rpc ConfigureAcBandwidth(ConfigureAcBandwidthRequest) returns (ConfigureAcBandwidthResponse);
-  rpc ConfigureAdcCalibration(ConfigureAdcCalibrationRequest) returns (ConfigureAdcCalibrationResponse);
   rpc ConfigureAutoZeroMode(ConfigureAutoZeroModeRequest) returns (ConfigureAutoZeroModeResponse);
   rpc ConfigureCableCompType(ConfigureCableCompTypeRequest) returns (ConfigureCableCompTypeResponse);
   rpc ConfigureCurrentSource(ConfigureCurrentSourceRequest) returns (ConfigureCurrentSourceResponse);
   rpc ConfigureFixedRefJunction(ConfigureFixedRefJunctionRequest) returns (ConfigureFixedRefJunctionResponse);
   rpc ConfigureFrequencyVoltageRange(ConfigureFrequencyVoltageRangeRequest) returns (ConfigureFrequencyVoltageRangeResponse);
   rpc ConfigureMeasCompleteDest(ConfigureMeasCompleteDestRequest) returns (ConfigureMeasCompleteDestResponse);
+  rpc ConfigureMeasurementAbsolute(ConfigureMeasurementAbsoluteRequest) returns (ConfigureMeasurementAbsoluteResponse);
   rpc ConfigureMeasCompleteSlope(ConfigureMeasCompleteSlopeRequest) returns (ConfigureMeasCompleteSlopeResponse);
+  rpc ConfigureMeasurementDigits(ConfigureMeasurementDigitsRequest) returns (ConfigureMeasurementDigitsResponse);
+  rpc ConfigureMultiPoint(ConfigureMultiPointRequest) returns (ConfigureMultiPointResponse);
   rpc ConfigureOffsetCompOhms(ConfigureOffsetCompOhmsRequest) returns (ConfigureOffsetCompOhmsResponse);
   rpc ConfigureOpenCableCompValues(ConfigureOpenCableCompValuesRequest) returns (ConfigureOpenCableCompValuesResponse);
   rpc ConfigurePowerLineFrequency(ConfigurePowerLineFrequencyRequest) returns (ConfigurePowerLineFrequencyResponse);
+  rpc ConfigureRTDCustom(ConfigureRTDCustomRequest) returns (ConfigureRTDCustomResponse);
+  rpc ConfigureRTDType(ConfigureRTDTypeRequest) returns (ConfigureRTDTypeResponse);
   rpc ConfigureSampleTriggerSlope(ConfigureSampleTriggerSlopeRequest) returns (ConfigureSampleTriggerSlopeResponse);
+  rpc ConfigureThermistorCustom(ConfigureThermistorCustomRequest) returns (ConfigureThermistorCustomResponse);
+  rpc ConfigureThermocouple(ConfigureThermocoupleRequest) returns (ConfigureThermocoupleResponse);
   rpc ConfigureThermistorType(ConfigureThermistorTypeRequest) returns (ConfigureThermistorTypeResponse);
   rpc ConfigureTransducerType(ConfigureTransducerTypeRequest) returns (ConfigureTransducerTypeResponse);
+  rpc ConfigureTrigger(ConfigureTriggerRequest) returns (ConfigureTriggerResponse);
   rpc ConfigureTriggerSlope(ConfigureTriggerSlopeRequest) returns (ConfigureTriggerSlopeResponse);
+  rpc ConfigureWaveformAcquisition(ConfigureWaveformAcquisitionRequest) returns (ConfigureWaveformAcquisitionResponse);
   rpc ConfigureWaveformCoupling(ConfigureWaveformCouplingRequest) returns (ConfigureWaveformCouplingResponse);
   rpc Control(ControlRequest) returns (ControlResponse);
-  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
+  rpc Disable(DisableRequest) returns (DisableResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
+  rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
+  rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
+  rpc Fetch(FetchRequest) returns (FetchResponse);
+  rpc FetchMultiPoint(FetchMultiPointRequest) returns (FetchMultiPointResponse);
+  rpc FetchWaveform(FetchWaveformRequest) returns (FetchWaveformResponse);
   rpc FormatMeasAbsolute(FormatMeasAbsoluteRequest) returns (FormatMeasAbsoluteResponse);
   rpc GetApertureTimeInfo(GetApertureTimeInfoRequest) returns (GetApertureTimeInfoResponse);
+  rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
+  rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
+  rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
+  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetAutoRangeValue(GetAutoRangeValueRequest) returns (GetAutoRangeValueResponse);
   rpc GetCalCount(GetCalCountRequest) returns (GetCalCountResponse);
+  rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
   rpc GetCalUserDefinedInfo(GetCalUserDefinedInfoRequest) returns (GetCalUserDefinedInfoResponse);
   rpc GetCalUserDefinedInfoMaxSize(GetCalUserDefinedInfoMaxSizeRequest) returns (GetCalUserDefinedInfoMaxSizeResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
+  rpc GetDevTemp(GetDevTempRequest) returns (GetDevTempResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetErrorMessage(GetErrorMessageRequest) returns (GetErrorMessageResponse);
+  rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
+  rpc GetLastCalTemp(GetLastCalTempRequest) returns (GetLastCalTempResponse);
   rpc GetMeasurementPeriod(GetMeasurementPeriodRequest) returns (GetMeasurementPeriodResponse);
   rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
   rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
+  rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
+  rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
+  rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
+  rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
+  rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsOverRange(IsOverRangeRequest) returns (IsOverRangeResponse);
   rpc IsUnderRange(IsUnderRangeRequest) returns (IsUnderRangeResponse);
+  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
+  rpc PerformOpenCableComp(PerformOpenCableCompRequest) returns (PerformOpenCableCompResponse);
+  rpc PerformShortCableComp(PerformShortCableCompRequest) returns (PerformShortCableCompResponse);
+  rpc Read(ReadRequest) returns (ReadResponse);
+  rpc ReadMultiPoint(ReadMultiPointRequest) returns (ReadMultiPointResponse);
+  rpc ReadStatus(ReadStatusRequest) returns (ReadStatusResponse);
+  rpc ReadWaveform(ReadWaveformRequest) returns (ReadWaveformResponse);
+  rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
+  rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc RestoreLastExtCalConstants(RestoreLastExtCalConstantsRequest) returns (RestoreLastExtCalConstantsResponse);
-  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
+  rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
+  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
+  rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
+  rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
+  rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
+  rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
+  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetCalPassword(SetCalPasswordRequest) returns (SetCalPasswordResponse);
   rpc SetCalUserDefinedInfo(SetCalUserDefinedInfoRequest) returns (SetCalUserDefinedInfoResponse);
+  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
 }
 
 enum NiDMMAttributes {
@@ -395,552 +388,6 @@ message AbortResponse {
   int32 status = 1;
 }
 
-message ConfigureMeasurementAbsoluteRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof measurement_function_enum {
-    Function measurement_function = 2;
-    sint32 measurement_function_raw = 3;
-  }
-  double range = 4;
-  double resolution_absolute = 5;
-}
-
-message ConfigureMeasurementAbsoluteResponse {
-  int32 status = 1;
-}
-
-message ConfigureMeasurementDigitsRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof measurement_function_enum {
-    Function measurement_function = 2;
-    sint32 measurement_function_raw = 3;
-  }
-  double range = 4;
-  double resolution_digits = 5;
-}
-
-message ConfigureMeasurementDigitsResponse {
-  int32 status = 1;
-}
-
-message ConfigureMultiPointRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 trigger_count = 2;
-  sint32 sample_count = 3;
-  oneof sample_trigger_enum {
-    SampleTrigger sample_trigger = 4;
-    sint32 sample_trigger_raw = 5;
-  }
-  double sample_interval = 6;
-}
-
-message ConfigureMultiPointResponse {
-  int32 status = 1;
-}
-
-message ConfigureRTDCustomRequest {
-  nidevice_grpc.Session vi = 1;
-  double rtd_a = 2;
-  double rtd_b = 3;
-  double rtd_c = 4;
-}
-
-message ConfigureRTDCustomResponse {
-  int32 status = 1;
-}
-
-message ConfigureRTDTypeRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof rtd_type_enum {
-    RTDType rtd_type = 2;
-    sint32 rtd_type_raw = 3;
-  }
-  double rtd_resistance = 4;
-}
-
-message ConfigureRTDTypeResponse {
-  int32 status = 1;
-}
-
-message ConfigureThermistorCustomRequest {
-  nidevice_grpc.Session vi = 1;
-  double thermistor_a = 2;
-  double thermistor_b = 3;
-  double thermistor_c = 4;
-}
-
-message ConfigureThermistorCustomResponse {
-  int32 status = 1;
-}
-
-message ConfigureThermocoupleRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof thermocouple_type_enum {
-    ThermocoupleType thermocouple_type = 2;
-    sint32 thermocouple_type_raw = 3;
-  }
-  oneof reference_junction_type_enum {
-    ThermocoupleReferenceJunctionType reference_junction_type = 4;
-    sint32 reference_junction_type_raw = 5;
-  }
-}
-
-message ConfigureThermocoupleResponse {
-  int32 status = 1;
-}
-
-message ConfigureTriggerRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof trigger_source_enum {
-    TriggerSource trigger_source = 2;
-    sint32 trigger_source_raw = 3;
-  }
-  double trigger_delay = 4;
-}
-
-message ConfigureTriggerResponse {
-  int32 status = 1;
-}
-
-message ConfigureWaveformAcquisitionRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof measurement_function_enum {
-    Function measurement_function = 2;
-    sint32 measurement_function_raw = 3;
-  }
-  double range = 4;
-  double rate = 5;
-  sint32 waveform_points = 6;
-}
-
-message ConfigureWaveformAcquisitionResponse {
-  int32 status = 1;
-}
-
-message DisableRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message DisableResponse {
-  int32 status = 1;
-}
-
-message ExportAttributeConfigurationBufferRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message ExportAttributeConfigurationBufferResponse {
-  int32 status = 1;
-  bytes configuration = 2;
-}
-
-message ExportAttributeConfigurationFileRequest {
-  nidevice_grpc.Session vi = 1;
-  string file_path = 2;
-}
-
-message ExportAttributeConfigurationFileResponse {
-  int32 status = 1;
-}
-
-message FetchRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-}
-
-message FetchResponse {
-  int32 status = 1;
-  double reading = 2;
-}
-
-message FetchMultiPointRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
-}
-
-message FetchMultiPointResponse {
-  int32 status = 1;
-  repeated double reading_array = 2;
-  sint32 actual_number_of_points = 3;
-}
-
-message FetchWaveformRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
-}
-
-message FetchWaveformResponse {
-  int32 status = 1;
-  repeated double waveform_array = 2;
-  sint32 actual_number_of_points = 3;
-}
-
-message GetAttributeViBooleanRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-}
-
-message GetAttributeViBooleanResponse {
-  int32 status = 1;
-  bool attribute_value = 2;
-}
-
-message GetAttributeViInt32Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-}
-
-message GetAttributeViInt32Response {
-  int32 status = 1;
-  sint32 attribute_value = 2;
-}
-
-message GetAttributeViReal64Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-}
-
-message GetAttributeViReal64Response {
-  int32 status = 1;
-  double attribute_value = 2;
-}
-
-message GetAttributeViStringRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-}
-
-message GetAttributeViStringResponse {
-  int32 status = 1;
-  string attribute_value = 2;
-}
-
-message GetCalDateAndTimeRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 cal_type = 2;
-}
-
-message GetCalDateAndTimeResponse {
-  int32 status = 1;
-  sint32 month = 2;
-  sint32 day = 3;
-  sint32 year = 4;
-  sint32 hour = 5;
-  sint32 minute = 6;
-}
-
-message GetDevTempRequest {
-  nidevice_grpc.Session vi = 1;
-  string options = 2;
-}
-
-message GetDevTempResponse {
-  int32 status = 1;
-  double temperature = 2;
-}
-
-message GetErrorRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetErrorResponse {
-  int32 status = 1;
-  sint32 error_code = 2;
-  string description = 3;
-}
-
-message GetExtCalRecommendedIntervalRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetExtCalRecommendedIntervalResponse {
-  int32 status = 1;
-  sint32 months = 2;
-}
-
-message GetLastCalTempRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 cal_type = 2;
-}
-
-message GetLastCalTempResponse {
-  int32 status = 1;
-  double temperature = 2;
-}
-
-message GetSelfCalSupportedRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetSelfCalSupportedResponse {
-  int32 status = 1;
-  bool self_cal_supported = 2;
-}
-
-message ImportAttributeConfigurationBufferRequest {
-  nidevice_grpc.Session vi = 1;
-  bytes configuration = 2;
-}
-
-message ImportAttributeConfigurationBufferResponse {
-  int32 status = 1;
-}
-
-message ImportAttributeConfigurationFileRequest {
-  nidevice_grpc.Session vi = 1;
-  string file_path = 2;
-}
-
-message ImportAttributeConfigurationFileResponse {
-  int32 status = 1;
-}
-
-message InitRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  bool id_query = 3;
-  bool reset_device = 4;
-}
-
-message InitResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
-message InitWithOptionsRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  bool id_query = 3;
-  bool reset_device = 4;
-  string option_string = 5;
-}
-
-message InitWithOptionsResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
-message InitiateRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message InitiateResponse {
-  int32 status = 1;
-}
-
-message LockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
-message PerformOpenCableCompRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message PerformOpenCableCompResponse {
-  int32 status = 1;
-  double conductance = 2;
-  double susceptance = 3;
-}
-
-message PerformShortCableCompRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message PerformShortCableCompResponse {
-  int32 status = 1;
-  double resistance = 2;
-  double reactance = 3;
-}
-
-message ReadRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-}
-
-message ReadResponse {
-  int32 status = 1;
-  double reading = 2;
-}
-
-message ReadMultiPointRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
-}
-
-message ReadMultiPointResponse {
-  int32 status = 1;
-  repeated double reading_array = 2;
-  sint32 actual_number_of_points = 3;
-}
-
-message ReadStatusRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message ReadStatusResponse {
-  int32 status = 1;
-  sint32 acquisition_backlog = 2;
-  AcquisitionStatus acquisition_status = 3;
-  sint32 acquisition_status_raw = 4;
-}
-
-message ReadWaveformRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
-}
-
-message ReadWaveformResponse {
-  int32 status = 1;
-  repeated double waveform_array = 2;
-  sint32 actual_number_of_points = 3;
-}
-
-message ResetWithDefaultsRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message ResetWithDefaultsResponse {
-  int32 status = 1;
-}
-
-message SelfCalRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message SelfCalResponse {
-  int32 status = 1;
-}
-
-message SendSoftwareTriggerRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message SendSoftwareTriggerResponse {
-  int32 status = 1;
-}
-
-message SetAttributeViBooleanRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-  bool attribute_value = 4;
-}
-
-message SetAttributeViBooleanResponse {
-  int32 status = 1;
-}
-
-message SetAttributeViInt32Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-  sint32 attribute_value = 4;
-}
-
-message SetAttributeViInt32Response {
-  int32 status = 1;
-}
-
-message SetAttributeViReal64Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-  double attribute_value = 4;
-}
-
-message SetAttributeViReal64Response {
-  int32 status = 1;
-}
-
-message SetAttributeViStringRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiDMMAttributes attribute_id = 3;
-  string attribute_value = 4;
-}
-
-message SetAttributeViStringResponse {
-  int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
-message CloseRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message CloseResponse {
-  int32 status = 1;
-}
-
-message ErrorMessageRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 error_code = 2;
-}
-
-message ErrorMessageResponse {
-  int32 status = 1;
-  string error_message = 2;
-}
-
-message ResetRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message ResetResponse {
-  int32 status = 1;
-}
-
-message SelfTestRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message SelfTestResponse {
-  int32 status = 1;
-  sint32 self_test_result = 2;
-  string self_test_message = 3;
-}
-
-message InvalidateAllAttributesRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message InvalidateAllAttributesResponse {
-  int32 status = 1;
-}
-
-message CalAdjustAcFilterRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 mode = 2;
-  double range = 3;
-  double frequency = 4;
-  double expected_value = 5;
-}
-
-message CalAdjustAcFilterResponse {
-  int32 status = 1;
-}
-
 message CalAdjustGainRequest {
   nidevice_grpc.Session vi = 1;
   sint32 mode = 2;
@@ -950,15 +397,6 @@ message CalAdjustGainRequest {
 }
 
 message CalAdjustGainResponse {
-  int32 status = 1;
-}
-
-message CalAdjustLcRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 type = 2;
-}
-
-message CalAdjustLcResponse {
   int32 status = 1;
 }
 
@@ -1065,31 +503,20 @@ message ClearInterchangeWarningsResponse {
   int32 status = 1;
 }
 
+message CloseRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
 message CloseExtCalRequest {
   nidevice_grpc.Session vi = 1;
   sint32 action = 2;
 }
 
 message CloseExtCalResponse {
-  int32 status = 1;
-}
-
-message ConfigureAcBandwidthRequest {
-  nidevice_grpc.Session vi = 1;
-  double ac_minimum_frequency_hz = 2;
-  double ac_maximum_frequency_hz = 3;
-}
-
-message ConfigureAcBandwidthResponse {
-  int32 status = 1;
-}
-
-message ConfigureAdcCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 adc_calibration = 2;
-}
-
-message ConfigureAdcCalibrationResponse {
   int32 status = 1;
 }
 
@@ -1147,12 +574,55 @@ message ConfigureMeasCompleteDestResponse {
   int32 status = 1;
 }
 
+message ConfigureMeasurementAbsoluteRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof measurement_function_enum {
+    Function measurement_function = 2;
+    sint32 measurement_function_raw = 3;
+  }
+  double range = 4;
+  double resolution_absolute = 5;
+}
+
+message ConfigureMeasurementAbsoluteResponse {
+  int32 status = 1;
+}
+
 message ConfigureMeasCompleteSlopeRequest {
   nidevice_grpc.Session vi = 1;
   sint32 meas_complete_slope = 2;
 }
 
 message ConfigureMeasCompleteSlopeResponse {
+  int32 status = 1;
+}
+
+message ConfigureMeasurementDigitsRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof measurement_function_enum {
+    Function measurement_function = 2;
+    sint32 measurement_function_raw = 3;
+  }
+  double range = 4;
+  double resolution_digits = 5;
+}
+
+message ConfigureMeasurementDigitsResponse {
+  int32 status = 1;
+}
+
+message ConfigureMultiPointRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 trigger_count = 2;
+  sint32 sample_count = 3;
+  oneof sample_trigger_enum {
+    SampleTrigger sample_trigger = 4;
+    sint32 sample_trigger_raw = 5;
+  }
+  double sample_interval = 6;
+}
+
+message ConfigureMultiPointResponse {
   int32 status = 1;
 }
 
@@ -1184,12 +654,63 @@ message ConfigurePowerLineFrequencyResponse {
   int32 status = 1;
 }
 
+message ConfigureRTDCustomRequest {
+  nidevice_grpc.Session vi = 1;
+  double rtd_a = 2;
+  double rtd_b = 3;
+  double rtd_c = 4;
+}
+
+message ConfigureRTDCustomResponse {
+  int32 status = 1;
+}
+
+message ConfigureRTDTypeRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof rtd_type_enum {
+    RTDType rtd_type = 2;
+    sint32 rtd_type_raw = 3;
+  }
+  double rtd_resistance = 4;
+}
+
+message ConfigureRTDTypeResponse {
+  int32 status = 1;
+}
+
 message ConfigureSampleTriggerSlopeRequest {
   nidevice_grpc.Session vi = 1;
   sint32 sample_trigger_slope = 2;
 }
 
 message ConfigureSampleTriggerSlopeResponse {
+  int32 status = 1;
+}
+
+message ConfigureThermistorCustomRequest {
+  nidevice_grpc.Session vi = 1;
+  double thermistor_a = 2;
+  double thermistor_b = 3;
+  double thermistor_c = 4;
+}
+
+message ConfigureThermistorCustomResponse {
+  int32 status = 1;
+}
+
+message ConfigureThermocoupleRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof thermocouple_type_enum {
+    ThermocoupleType thermocouple_type = 2;
+    sint32 thermocouple_type_raw = 3;
+  }
+  oneof reference_junction_type_enum {
+    ThermocoupleReferenceJunctionType reference_junction_type = 4;
+    sint32 reference_junction_type_raw = 5;
+  }
+}
+
+message ConfigureThermocoupleResponse {
   int32 status = 1;
 }
 
@@ -1211,12 +732,40 @@ message ConfigureTransducerTypeResponse {
   int32 status = 1;
 }
 
+message ConfigureTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_source_enum {
+    TriggerSource trigger_source = 2;
+    sint32 trigger_source_raw = 3;
+  }
+  double trigger_delay = 4;
+}
+
+message ConfigureTriggerResponse {
+  int32 status = 1;
+}
+
 message ConfigureTriggerSlopeRequest {
   nidevice_grpc.Session vi = 1;
   sint32 trigger_slope = 2;
 }
 
 message ConfigureTriggerSlopeResponse {
+  int32 status = 1;
+}
+
+message ConfigureWaveformAcquisitionRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof measurement_function_enum {
+    Function measurement_function = 2;
+    sint32 measurement_function_raw = 3;
+  }
+  double range = 4;
+  double rate = 5;
+  sint32 waveform_points = 6;
+}
+
+message ConfigureWaveformAcquisitionResponse {
   int32 status = 1;
 }
 
@@ -1238,14 +787,74 @@ message ControlResponse {
   int32 status = 1;
 }
 
-message ErrorQueryRequest {
+message DisableRequest {
   nidevice_grpc.Session vi = 1;
 }
 
-message ErrorQueryResponse {
+message DisableResponse {
   int32 status = 1;
+}
+
+message ErrorMessageRequest {
+  nidevice_grpc.Session vi = 1;
   sint32 error_code = 2;
-  string error_message = 3;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
+message ExportAttributeConfigurationBufferRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ExportAttributeConfigurationBufferResponse {
+  int32 status = 1;
+  bytes configuration = 2;
+}
+
+message ExportAttributeConfigurationFileRequest {
+  nidevice_grpc.Session vi = 1;
+  string file_path = 2;
+}
+
+message ExportAttributeConfigurationFileResponse {
+  int32 status = 1;
+}
+
+message FetchRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 maximum_time = 2;
+}
+
+message FetchResponse {
+  int32 status = 1;
+  double reading = 2;
+}
+
+message FetchMultiPointRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 maximum_time = 2;
+  sint32 array_size = 3;
+}
+
+message FetchMultiPointResponse {
+  int32 status = 1;
+  repeated double reading_array = 2;
+  sint32 actual_number_of_points = 3;
+}
+
+message FetchWaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 maximum_time = 2;
+  sint32 array_size = 3;
+}
+
+message FetchWaveformResponse {
+  int32 status = 1;
+  repeated double waveform_array = 2;
+  sint32 actual_number_of_points = 3;
 }
 
 message FormatMeasAbsoluteRequest {
@@ -1273,6 +882,39 @@ message GetApertureTimeInfoResponse {
   sint32 aperture_time_units_raw = 4;
 }
 
+message GetAttributeViBooleanRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+}
+
+message GetAttributeViBooleanResponse {
+  int32 status = 1;
+  bool attribute_value = 2;
+}
+
+message GetAttributeViInt32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+}
+
+message GetAttributeViInt32Response {
+  int32 status = 1;
+  sint32 attribute_value = 2;
+}
+
+message GetAttributeViReal64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+}
+
+message GetAttributeViReal64Response {
+  int32 status = 1;
+  double attribute_value = 2;
+}
+
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1282,6 +924,17 @@ message GetAttributeViSessionRequest {
 message GetAttributeViSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session attribute_value = 2;
+}
+
+message GetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+}
+
+message GetAttributeViStringResponse {
+  int32 status = 1;
+  string attribute_value = 2;
 }
 
 message GetAutoRangeValueRequest {
@@ -1301,6 +954,20 @@ message GetCalCountRequest {
 message GetCalCountResponse {
   int32 status = 1;
   sint32 count = 2;
+}
+
+message GetCalDateAndTimeRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 cal_type = 2;
+}
+
+message GetCalDateAndTimeResponse {
+  int32 status = 1;
+  sint32 month = 2;
+  sint32 day = 3;
+  sint32 year = 4;
+  sint32 hour = 5;
+  sint32 minute = 6;
 }
 
 message GetCalUserDefinedInfoRequest {
@@ -1333,6 +1000,26 @@ message GetChannelNameResponse {
   string channel_string = 2;
 }
 
+message GetDevTempRequest {
+  nidevice_grpc.Session vi = 1;
+  string options = 2;
+}
+
+message GetDevTempResponse {
+  int32 status = 1;
+  double temperature = 2;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string description = 3;
+}
+
 message GetErrorMessageRequest {
   nidevice_grpc.Session vi = 1;
   sint32 error_code = 2;
@@ -1342,6 +1029,25 @@ message GetErrorMessageRequest {
 message GetErrorMessageResponse {
   int32 status = 1;
   string error_message = 2;
+}
+
+message GetExtCalRecommendedIntervalRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetExtCalRecommendedIntervalResponse {
+  int32 status = 1;
+  sint32 months = 2;
+}
+
+message GetLastCalTempRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 cal_type = 2;
+}
+
+message GetLastCalTempResponse {
+  int32 status = 1;
+  double temperature = 2;
 }
 
 message GetMeasurementPeriodRequest {
@@ -1373,6 +1079,33 @@ message GetNextInterchangeWarningResponse {
   string interchange_warning = 2;
 }
 
+message GetSelfCalSupportedRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetSelfCalSupportedResponse {
+  int32 status = 1;
+  bool self_cal_supported = 2;
+}
+
+message ImportAttributeConfigurationBufferRequest {
+  nidevice_grpc.Session vi = 1;
+  bytes configuration = 2;
+}
+
+message ImportAttributeConfigurationBufferResponse {
+  int32 status = 1;
+}
+
+message ImportAttributeConfigurationFileRequest {
+  nidevice_grpc.Session vi = 1;
+  string file_path = 2;
+}
+
+message ImportAttributeConfigurationFileResponse {
+  int32 status = 1;
+}
+
 message InitExtCalRequest {
   string resource_name = 1;
   string calibration_password = 2;
@@ -1381,6 +1114,35 @@ message InitExtCalRequest {
 message InitExtCalResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
+}
+
+message InitWithOptionsRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
+  string option_string = 5;
+}
+
+message InitWithOptionsResponse {
+  int32 status = 1;
+  nidevice_grpc.Session vi = 2;
+}
+
+message InitiateRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message InitiateResponse {
+  int32 status = 1;
+}
+
+message InvalidateAllAttributesRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message InvalidateAllAttributesResponse {
+  int32 status = 1;
 }
 
 message IsOverRangeRequest {
@@ -1403,11 +1165,101 @@ message IsUnderRangeResponse {
   bool is_under_range = 2;
 }
 
+message LockSessionRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message LockSessionResponse {
+  int32 status = 1;
+  bool caller_has_lock = 2;
+}
+
+message PerformOpenCableCompRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message PerformOpenCableCompResponse {
+  int32 status = 1;
+  double conductance = 2;
+  double susceptance = 3;
+}
+
+message PerformShortCableCompRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message PerformShortCableCompResponse {
+  int32 status = 1;
+  double resistance = 2;
+  double reactance = 3;
+}
+
+message ReadRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 maximum_time = 2;
+}
+
+message ReadResponse {
+  int32 status = 1;
+  double reading = 2;
+}
+
+message ReadMultiPointRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 maximum_time = 2;
+  sint32 array_size = 3;
+}
+
+message ReadMultiPointResponse {
+  int32 status = 1;
+  repeated double reading_array = 2;
+  sint32 actual_number_of_points = 3;
+}
+
+message ReadStatusRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ReadStatusResponse {
+  int32 status = 1;
+  sint32 acquisition_backlog = 2;
+  AcquisitionStatus acquisition_status = 3;
+  sint32 acquisition_status_raw = 4;
+}
+
+message ReadWaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 maximum_time = 2;
+  sint32 array_size = 3;
+}
+
+message ReadWaveformResponse {
+  int32 status = 1;
+  repeated double waveform_array = 2;
+  sint32 actual_number_of_points = 3;
+}
+
+message ResetRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetResponse {
+  int32 status = 1;
+}
+
 message ResetInterchangeCheckRequest {
   nidevice_grpc.Session vi = 1;
 }
 
 message ResetInterchangeCheckResponse {
+  int32 status = 1;
+}
+
+message ResetWithDefaultsRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetWithDefaultsResponse {
   int32 status = 1;
 }
 
@@ -1419,14 +1271,63 @@ message RestoreLastExtCalConstantsResponse {
   int32 status = 1;
 }
 
-message RevisionQueryRequest {
+message SelfCalRequest {
   nidevice_grpc.Session vi = 1;
 }
 
-message RevisionQueryResponse {
+message SelfCalResponse {
   int32 status = 1;
-  string instrument_driver_revision = 2;
-  string firmware_revision = 3;
+}
+
+message SelfTestRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SelfTestResponse {
+  int32 status = 1;
+  sint32 self_test_result = 2;
+  string self_test_message = 3;
+}
+
+message SendSoftwareTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SendSoftwareTriggerResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViBooleanRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+  bool attribute_value = 4;
+}
+
+message SetAttributeViBooleanResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViInt32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+  sint32 attribute_value = 4;
+}
+
+message SetAttributeViInt32Response {
+  int32 status = 1;
+}
+
+message SetAttributeViReal64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+  double attribute_value = 4;
+}
+
+message SetAttributeViReal64Response {
+  int32 status = 1;
 }
 
 message SetAttributeViSessionRequest {
@@ -1437,6 +1338,17 @@ message SetAttributeViSessionRequest {
 }
 
 message SetAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDMMAttributes attribute_id = 3;
+  string attribute_value = 4;
+}
+
+message SetAttributeViStringResponse {
   int32 status = 1;
 }
 
@@ -1457,5 +1369,14 @@ message SetCalUserDefinedInfoRequest {
 
 message SetCalUserDefinedInfoResponse {
   int32 status = 1;
+}
+
+message UnlockSessionRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message UnlockSessionResponse {
+  int32 status = 1;
+  bool caller_has_lock = 2;
 }
 
