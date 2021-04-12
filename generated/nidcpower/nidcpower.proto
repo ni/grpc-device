@@ -730,9 +730,10 @@ message ExportSignalWithChannelsResponse {
 }
 
 message InitializeWithIndependentChannelsRequest {
-  string resource_name = 1;
-  bool reset = 2;
-  string option_string = 3;
+  string session_name = 1;
+  string resource_name = 2;
+  bool reset = 3;
+  string option_string = 4;
 }
 
 message InitializeWithIndependentChannelsResponse {
@@ -1638,10 +1639,11 @@ message InitExtCalResponse {
 }
 
 message InitializeWithChannelsRequest {
-  string resource_name = 1;
-  string channels = 2;
-  bool reset = 3;
-  string option_string = 4;
+  string session_name = 1;
+  string resource_name = 2;
+  string channels = 3;
+  bool reset = 4;
+  string option_string = 5;
 }
 
 message InitializeWithChannelsResponse {
