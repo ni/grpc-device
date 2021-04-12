@@ -2386,6 +2386,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'InitializeWithChannels': {
+    'init_method' : True,
     'parameters': [
       {
         'name': 'resourceName',
