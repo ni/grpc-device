@@ -961,7 +961,7 @@ namespace nidmm_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
-      std::string error_message('\0');
+      std::string error_message;
       auto status = library_->error_message(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
@@ -1115,9 +1115,9 @@ namespace nidmm_grpc {
       ViReal64 range = request->range();
       ViReal64 resolution = request->resolution();
       ViReal64 measurement = request->measurement();
-      std::string mode_string('\0');
-      std::string range_string('\0');
-      std::string data_string('\0');
+      std::string mode_string;
+      std::string range_string;
+      std::string data_string;
       auto status = library_->FormatMeasAbsolute(measurement_function, range, resolution, measurement, (ViChar*)mode_string.data(), (ViChar*)range_string.data(), (ViChar*)data_string.data());
       response->set_status(status);
       if (status == 0) {
@@ -1381,7 +1381,7 @@ namespace nidmm_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 buffer_size = request->buffer_size();
-      std::string info('\0');
+      std::string info;
       auto status = library_->GetCalUserDefinedInfo(vi, buffer_size, (ViChar*)info.data());
       response->set_status(status);
       if (status == 0) {
@@ -1429,7 +1429,7 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 index = request->index();
       ViInt32 buffer_size = request->buffer_size();
-      std::string channel_string('\0');
+      std::string channel_string;
       auto status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
       response->set_status(status);
       if (status == 0) {
@@ -1511,7 +1511,7 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
       ViInt32 buffer_size = request->buffer_size();
-      std::string error_message('\0');
+      std::string error_message;
       auto status = library_->GetErrorMessage(vi, error_code, buffer_size, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
@@ -1605,7 +1605,7 @@ namespace nidmm_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 buffer_size = request->buffer_size();
-      std::string coercion_record('\0');
+      std::string coercion_record;
       auto status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
       response->set_status(status);
       if (status == 0) {
@@ -1629,7 +1629,7 @@ namespace nidmm_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 buffer_size = request->buffer_size();
-      std::string interchange_warning('\0');
+      std::string interchange_warning;
       auto status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
       response->set_status(status);
       if (status == 0) {
@@ -2131,7 +2131,7 @@ namespace nidmm_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
-      std::string self_test_message('\0');
+      std::string self_test_message;
       auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {

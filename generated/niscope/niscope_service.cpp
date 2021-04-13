@@ -1239,7 +1239,7 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
       ViChar* error_source = (ViChar*)request->error_source().c_str();
-      std::string error_description('\0');
+      std::string error_description;
       auto status = library_->ErrorHandler(vi, error_code, error_source, (ViChar*)error_description.data());
       response->set_status(status);
       if (status == 0) {
@@ -1938,8 +1938,8 @@ namespace niscope_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      std::string driver_revision('\0');
-      std::string firmware_revision('\0');
+      std::string driver_revision;
+      std::string firmware_revision;
       auto status = library_->RevisionQuery(vi, (ViChar*)driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
       if (status == 0) {
@@ -2010,7 +2010,7 @@ namespace niscope_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
-      std::string self_test_message('\0');
+      std::string self_test_message;
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
