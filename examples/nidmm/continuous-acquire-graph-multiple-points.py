@@ -132,7 +132,7 @@ try:
     fig.show()
     fig.canvas.draw()
 
-    print("\nReading values in loop. CTRL+C or Q to stop.\n")
+    print("\nReading values in loop. CTRL+C to stop.\n")
 
     try:
         while True:
@@ -151,7 +151,7 @@ try:
             if pts_available > 0:
                 # Clear the plot and setup the axis
                 plt.clf()
-                plt.axis([0, pts_available, -6, 6])
+                plt.axis([0, pts_available, 4.9999, 5.0005])
 
                 # Fetch data
                 fetch_multipoints_response = nidmm_client.FetchMultiPoint(nidmm_types.FetchMultiPointRequest(
