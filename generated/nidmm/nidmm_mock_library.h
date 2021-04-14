@@ -19,6 +19,8 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CalAdjustGain, (ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue), (override));
+  MOCK_METHOD(ViStatus, CalAdjustACFilter, (ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 frequency, ViReal64 expectedValue), (override));
+  MOCK_METHOD(ViStatus, CalAdjustLC, (ViSession vi, ViInt32 type), (override));
   MOCK_METHOD(ViStatus, CalAdjustLinearization, (ViSession vi, ViInt32 function, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue), (override));
   MOCK_METHOD(ViStatus, CalAdjustMisc, (ViSession vi, ViInt32 type), (override));
   MOCK_METHOD(ViStatus, CalAdjustOffset, (ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance), (override));
@@ -31,6 +33,8 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, ClearInterchangeWarnings, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
+  MOCK_METHOD(ViStatus, ConfigureACBandwidth, (ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz), (override));
+  MOCK_METHOD(ViStatus, ConfigureADCCalibration, (ViSession vi, ViInt32 adcCalibration), (override));
   MOCK_METHOD(ViStatus, ConfigureAutoZeroMode, (ViSession vi, ViInt32 autoZeroMode), (override));
   MOCK_METHOD(ViStatus, ConfigureCableCompType, (ViSession vi, ViInt32 cableCompType), (override));
   MOCK_METHOD(ViStatus, ConfigureCurrentSource, (ViSession vi, ViReal64 currentSource), (override));
@@ -58,6 +62,7 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, Control, (ViSession vi, ViInt32 controlAction), (override));
   MOCK_METHOD(ViStatus, Disable, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, error_message, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
+  MOCK_METHOD(ViStatus, error_query, (ViSession vi, ViStatus* errorCode, ViChar errorMessage[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, Fetch, (ViSession vi, ViInt32 maximumTime, ViReal64* reading), (override));
@@ -88,6 +93,7 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, InitExtCal, (ViChar resourceName[], ViChar calibrationPassword[], ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
@@ -104,6 +110,7 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, ResetInterchangeCheck, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetWithDefaults, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, RestoreLastExtCalConstants, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, revision_query, (ViSession vi, ViChar instrumentDriverRevision[], ViChar firmwareRevision[]), (override));
   MOCK_METHOD(ViStatus, SelfCal, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
   MOCK_METHOD(ViStatus, SendSoftwareTrigger, (ViSession vi), (override));

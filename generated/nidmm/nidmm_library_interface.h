@@ -17,6 +17,8 @@ class NiDMMLibraryInterface {
 
   virtual ViStatus Abort(ViSession vi) = 0;
   virtual ViStatus CalAdjustGain(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue) = 0;
+  virtual ViStatus CalAdjustACFilter(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 frequency, ViReal64 expectedValue) = 0;
+  virtual ViStatus CalAdjustLC(ViSession vi, ViInt32 type) = 0;
   virtual ViStatus CalAdjustLinearization(ViSession vi, ViInt32 function, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue) = 0;
   virtual ViStatus CalAdjustMisc(ViSession vi, ViInt32 type) = 0;
   virtual ViStatus CalAdjustOffset(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance) = 0;
@@ -29,6 +31,8 @@ class NiDMMLibraryInterface {
   virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
   virtual ViStatus close(ViSession vi) = 0;
   virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
+  virtual ViStatus ConfigureACBandwidth(ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz) = 0;
+  virtual ViStatus ConfigureADCCalibration(ViSession vi, ViInt32 adcCalibration) = 0;
   virtual ViStatus ConfigureAutoZeroMode(ViSession vi, ViInt32 autoZeroMode) = 0;
   virtual ViStatus ConfigureCableCompType(ViSession vi, ViInt32 cableCompType) = 0;
   virtual ViStatus ConfigureCurrentSource(ViSession vi, ViReal64 currentSource) = 0;
@@ -56,6 +60,7 @@ class NiDMMLibraryInterface {
   virtual ViStatus Control(ViSession vi, ViInt32 controlAction) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
   virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus error_query(ViSession vi, ViStatus* errorCode, ViChar errorMessage[]) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus Fetch(ViSession vi, ViInt32 maximumTime, ViReal64* reading) = 0;
@@ -86,6 +91,7 @@ class NiDMMLibraryInterface {
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus InitExtCal(ViChar resourceName[], ViChar calibrationPassword[], ViSession* vi) = 0;
+  virtual ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
@@ -102,6 +108,7 @@ class NiDMMLibraryInterface {
   virtual ViStatus ResetInterchangeCheck(ViSession vi) = 0;
   virtual ViStatus ResetWithDefaults(ViSession vi) = 0;
   virtual ViStatus RestoreLastExtCalConstants(ViSession vi) = 0;
+  virtual ViStatus revision_query(ViSession vi, ViChar instrumentDriverRevision[], ViChar firmwareRevision[]) = 0;
   virtual ViStatus SelfCal(ViSession vi) = 0;
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
   virtual ViStatus SendSoftwareTrigger(ViSession vi) = 0;

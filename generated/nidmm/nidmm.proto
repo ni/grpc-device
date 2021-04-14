@@ -18,6 +18,8 @@ import "session.proto";
 service NiDMM {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc CalAdjustGain(CalAdjustGainRequest) returns (CalAdjustGainResponse);
+  rpc CalAdjustACFilter(CalAdjustACFilterRequest) returns (CalAdjustACFilterResponse);
+  rpc CalAdjustLC(CalAdjustLCRequest) returns (CalAdjustLCResponse);
   rpc CalAdjustLinearization(CalAdjustLinearizationRequest) returns (CalAdjustLinearizationResponse);
   rpc CalAdjustMisc(CalAdjustMiscRequest) returns (CalAdjustMiscResponse);
   rpc CalAdjustOffset(CalAdjustOffsetRequest) returns (CalAdjustOffsetResponse);
@@ -30,6 +32,8 @@ service NiDMM {
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
+  rpc ConfigureACBandwidth(ConfigureACBandwidthRequest) returns (ConfigureACBandwidthResponse);
+  rpc ConfigureADCCalibration(ConfigureADCCalibrationRequest) returns (ConfigureADCCalibrationResponse);
   rpc ConfigureAutoZeroMode(ConfigureAutoZeroModeRequest) returns (ConfigureAutoZeroModeResponse);
   rpc ConfigureCableCompType(ConfigureCableCompTypeRequest) returns (ConfigureCableCompTypeResponse);
   rpc ConfigureCurrentSource(ConfigureCurrentSourceRequest) returns (ConfigureCurrentSourceResponse);
@@ -57,6 +61,7 @@ service NiDMM {
   rpc Control(ControlRequest) returns (ControlResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
+  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
   rpc Fetch(FetchRequest) returns (FetchResponse);
@@ -87,6 +92,7 @@ service NiDMM {
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
+  rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
@@ -103,6 +109,7 @@ service NiDMM {
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc RestoreLastExtCalConstants(RestoreLastExtCalConstantsRequest) returns (RestoreLastExtCalConstantsResponse);
+  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
   rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
   rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
@@ -400,6 +407,27 @@ message CalAdjustGainResponse {
   int32 status = 1;
 }
 
+message CalAdjustACFilterRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 mode = 2;
+  double range = 3;
+  double frequency = 4;
+  double expected_value = 5;
+}
+
+message CalAdjustACFilterResponse {
+  int32 status = 1;
+}
+
+message CalAdjustLCRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 type = 2;
+}
+
+message CalAdjustLCResponse {
+  int32 status = 1;
+}
+
 message CalAdjustLinearizationRequest {
   nidevice_grpc.Session vi = 1;
   sint32 function = 2;
@@ -517,6 +545,25 @@ message CloseExtCalRequest {
 }
 
 message CloseExtCalResponse {
+  int32 status = 1;
+}
+
+message ConfigureACBandwidthRequest {
+  nidevice_grpc.Session vi = 1;
+  double ac_minimum_frequency_hz = 2;
+  double ac_maximum_frequency_hz = 3;
+}
+
+message ConfigureACBandwidthResponse {
+  int32 status = 1;
+}
+
+message ConfigureADCCalibrationRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 adc_calibration = 2;
+}
+
+message ConfigureADCCalibrationResponse {
   int32 status = 1;
 }
 
@@ -803,6 +850,16 @@ message ErrorMessageRequest {
 message ErrorMessageResponse {
   int32 status = 1;
   string error_message = 2;
+}
+
+message ErrorQueryRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ErrorQueryResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string error_message = 3;
 }
 
 message ExportAttributeConfigurationBufferRequest {
@@ -1116,6 +1173,18 @@ message InitExtCalResponse {
   nidevice_grpc.Session vi = 2;
 }
 
+message InitRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
+}
+
+message InitResponse {
+  int32 status = 1;
+  nidevice_grpc.Session vi = 2;
+}
+
 message InitWithOptionsRequest {
   string session_name = 1;
   string resource_name = 2;
@@ -1269,6 +1338,16 @@ message RestoreLastExtCalConstantsRequest {
 
 message RestoreLastExtCalConstantsResponse {
   int32 status = 1;
+}
+
+message RevisionQueryRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message RevisionQueryResponse {
+  int32 status = 1;
+  string instrument_driver_revision = 2;
+  string firmware_revision = 3;
 }
 
 message SelfCalRequest {

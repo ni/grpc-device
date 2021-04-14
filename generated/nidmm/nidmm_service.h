@@ -26,6 +26,8 @@ public:
   virtual ~NiDMMService();
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status CalAdjustGain(::grpc::ServerContext* context, const CalAdjustGainRequest* request, CalAdjustGainResponse* response) override;
+  ::grpc::Status CalAdjustACFilter(::grpc::ServerContext* context, const CalAdjustACFilterRequest* request, CalAdjustACFilterResponse* response) override;
+  ::grpc::Status CalAdjustLC(::grpc::ServerContext* context, const CalAdjustLCRequest* request, CalAdjustLCResponse* response) override;
   ::grpc::Status CalAdjustLinearization(::grpc::ServerContext* context, const CalAdjustLinearizationRequest* request, CalAdjustLinearizationResponse* response) override;
   ::grpc::Status CalAdjustMisc(::grpc::ServerContext* context, const CalAdjustMiscRequest* request, CalAdjustMiscResponse* response) override;
   ::grpc::Status CalAdjustOffset(::grpc::ServerContext* context, const CalAdjustOffsetRequest* request, CalAdjustOffsetResponse* response) override;
@@ -38,6 +40,8 @@ public:
   ::grpc::Status ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response) override;
+  ::grpc::Status ConfigureACBandwidth(::grpc::ServerContext* context, const ConfigureACBandwidthRequest* request, ConfigureACBandwidthResponse* response) override;
+  ::grpc::Status ConfigureADCCalibration(::grpc::ServerContext* context, const ConfigureADCCalibrationRequest* request, ConfigureADCCalibrationResponse* response) override;
   ::grpc::Status ConfigureAutoZeroMode(::grpc::ServerContext* context, const ConfigureAutoZeroModeRequest* request, ConfigureAutoZeroModeResponse* response) override;
   ::grpc::Status ConfigureCableCompType(::grpc::ServerContext* context, const ConfigureCableCompTypeRequest* request, ConfigureCableCompTypeResponse* response) override;
   ::grpc::Status ConfigureCurrentSource(::grpc::ServerContext* context, const ConfigureCurrentSourceRequest* request, ConfigureCurrentSourceResponse* response) override;
@@ -65,6 +69,7 @@ public:
   ::grpc::Status Control(::grpc::ServerContext* context, const ControlRequest* request, ControlResponse* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
+  ::grpc::Status ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status Fetch(::grpc::ServerContext* context, const FetchRequest* request, FetchResponse* response) override;
@@ -95,6 +100,7 @@ public:
   ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
+  ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
@@ -111,6 +117,7 @@ public:
   ::grpc::Status ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response) override;
   ::grpc::Status ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response) override;
   ::grpc::Status RestoreLastExtCalConstants(::grpc::ServerContext* context, const RestoreLastExtCalConstantsRequest* request, RestoreLastExtCalConstantsResponse* response) override;
+  ::grpc::Status RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response) override;
   ::grpc::Status SelfCal(::grpc::ServerContext* context, const SelfCalRequest* request, SelfCalResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
   ::grpc::Status SendSoftwareTrigger(::grpc::ServerContext* context, const SendSoftwareTriggerRequest* request, SendSoftwareTriggerResponse* response) override;

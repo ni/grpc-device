@@ -48,6 +48,53 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "CalAdjustACFilter": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "mode",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "range",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "frequency",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "expectedValue",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "CalAdjustLC": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "type",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
     "CalAdjustLinearization": {
         'codegen_method': 'public',
         "parameters": [
@@ -302,6 +349,43 @@ functions = {
         },
         {
             "name": "action",
+            "direction": "in",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureACBandwidth": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "acMinimumFrequencyHz",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "acMaximumFrequencyHz",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "ConfigureADCCalibration": {
+        'codegen_method': 'public',
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "adcCalibration",
             "direction": "in",
             "type": "ViInt32"
         }
@@ -1150,6 +1234,27 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
+    "error_query": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "errorCode",
+            "direction": "out",
+            "type": "ViStatus"
+        },
+        {
+            "name": "errorMessage",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
     'ExportAttributeConfigurationBuffer': {
         'documentation': {
             'description': '\nExports the attribute configuration of the session to the specified\nconfiguration buffer.\n\nYou can export and import session attribute configurations only between\ndevices with identical model numbers.\n\nThis function verifies that the attributes you have configured for the\nsession are valid. If the configuration is invalid, NI‑DMM returns an\nerror.\n\n**Coercion Behavior for Certain Devices**\n\nImported and exported attribute configurations contain coerced values\nfor the following NI‑DMM devices:\n\n-  PXI/PCI/PCIe/USB‑4065\n-  PXI/PCI‑4070\n-  PXI‑4071\n-  PXI‑4072\n\nNI‑DMM coerces attribute values when the value you set is within the\nallowed range for the attribute but is not one of the discrete valid\nvalues the attribute supports. For example, for an attribute that\ncoerces values up, if you choose a value of 4 when the adjacent valid\nvalues are 1 and 10, the attribute coerces the value to 10.\n\n**Related Topics:**\n\n`Using Attributes and Properties with\nNI‑DMM <REPLACE_DRIVER_SPECIFIC_URL_1(attributes)>`__\n\n`Setting Attributes Before Reading\nAttributes <REPLACE_DRIVER_SPECIFIC_URL_1(setting_before_reading_attributes)>`__\n',
@@ -1962,62 +2067,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    # 'GetLastCalDateAndTime': {
-    #     'codegen_method': 'python-only',
-    #     'documentation': {
-    #         'description': 'Returns the date and time of the last calibration performed.',
-    #         'note': 'The NI 4050 and NI 4060 are not supported.'
-    #     },
-    #     'method_templates': [
-    #         {
-    #             'documentation_filename': 'default_method',
-    #             'method_python_name_suffix': '',
-    #             'session_filename': 'datetime_wrappers'
-    #         }
-    #     ],
-    #     'parameters': [
-    #         {
-    #             'direction': 'in',
-    #             'documentation': {
-    #                 'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niDMM_init or niDMM_InitWithOptions. The default is None.'
-    #             },
-    #             'name': 'vi',
-    #             'type': 'ViSession'
-    #         },
-    #         {
-    #             'direction': 'in',
-    #             'documentation': {
-    #                 'description': 'Specifies the type of calibration performed (external or self-calibration).',
-    #                 'note': 'The NI 4065 does not support self-calibration.',
-    #                 'table_body': [
-    #                     [
-    #                         'NIDMM_VAL_INTERNAL_AREA (default)',
-    #                         '0',
-    #                         'Self-Calibration'
-    #                     ],
-    #                     [
-    #                         'NIDMM_VAL_EXTERNAL_AREA',
-    #                         '1',
-    #                         'External Calibration'
-    #                     ]
-    #                 ]
-    #             },
-    #             'name': 'calType',
-    #             'type': 'ViInt32'
-    #         },
-    #         {
-    #             'direction': 'out',
-    #             'documentation': {
-    #                 'description': 'Indicates date and time of the last calibration.'
-    #             },
-    #             'name': 'month',
-    #             'type': 'hightime.datetime'
-    #         }
-    #     ],
-    #     'python_name': 'get_cal_date_and_time',
-    #     'real_datetime_call': 'GetCalDateAndTime',
-    #     'returns': 'ViStatus'
-    # },
     'GetLastCalTemp': {
         'documentation': {
             'description': 'Returns the **Temperature** during the last calibration procedure.',
@@ -2242,6 +2291,32 @@ functions = {
         }
         ],
         "returns": "ViStatus"
+    },
+    'init':{
+        'init_method': True,
+        'parameters':[
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'name':'idQuery',
+                'direction':'in',
+                'type':'ViBoolean'
+            },
+            {
+                'name':'resetDevice',
+                'direction':'in',
+                'type':'ViBoolean'
+            },
+            {
+                'name':'vi',
+                'direction':'out',
+                'type':'ViSession'
+            }
+        ],
+        'returns':'ViStatus'
     },
     'InitWithOptions': {
         'init_method': True,
@@ -2793,6 +2868,27 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "revision_query": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "instrumentDriverRevision",
+            "direction": "out",
+            "type": "ViChar[]"
+        },
+        {
+            "name": "firmwareRevision",
+            "direction": "out",
+            "type": "ViChar[]"
+        }
+        ],
+        "returns": "ViStatus"
+    },
     'SelfCal': {
         'documentation': {
             'description': '\nFor the NI 4080/4081/4082 and the NI 4070/4071/4072, executes the\nself-calibration routine to maintain measurement accuracy.\n',
@@ -3127,33 +3223,4 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     }
-    # 'fancy_self_test': {
-    #     'codegen_method': 'python-only',
-    #     'documentation': {
-    #         'description': '\nPerforms a self-test on the DMM to ensure that the DMM is functioning\nproperly. Self-test does not calibrate the DMM. Zero\nindicates success. \n\nOn the NI 4080/4082 and NI 4070/4072, the error code 1013 indicates that\nyou should check the fuse and replace it, if necessary.\n\nRaises `SelfTestError` on self test failure. Attributes on exception object:\n\n- code - failure code from driver\n- message - status message from driver\n',
-    #         'note': [
-    #             'Self-test does not check the fuse on the NI 4065, NI 4071, and NI 4081. Hence, even if the fuse is blown on the device, self-test does not return error code 1013.',
-    #             'This function calls niDMM_reset, and any configurations previous to the call will be lost. All attributes will be set to their default values after the call returns.'
-    #         ]
-    #     },
-    #     'method_templates': [
-    #         {
-    #             'documentation_filename': 'default_method',
-    #             'method_python_name_suffix': '',
-    #             'session_filename': 'fancy_self_test'
-    #         }
-    #     ],
-    #     'parameters': [
-    #         {
-    #             'direction': 'in',
-    #             'documentation': {
-    #                 'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niDMM_init or niDMM_InitWithOptions.'
-    #             },
-    #             'name': 'vi',
-    #             'type': 'ViSession'
-    #         }
-    #     ],
-    #     'python_name': 'self_test',
-    #     'returns': 'ViStatus'
-    # },
 }
