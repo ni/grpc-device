@@ -8,7 +8,7 @@ config = {
     'java_package': 'com.ni.grpc.dcpower',
     'csharp_namespace': 'NationalInstruments.Grpc.DCPower',
     'namespace_component': 'nidcpower',
-    'close_function': 'close',
+    'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'Abort',
         'initiate_function': 'Initiate',
