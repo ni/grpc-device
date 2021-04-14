@@ -2366,6 +2366,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'InitExtCal': {
+    'init_method' : True,
     'parameters': [
       {
         'name': 'resourceName',
