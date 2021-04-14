@@ -39,6 +39,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureSourceModeWithChannels = reinterpret_cast<ConfigureSourceModeWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSourceModeWithChannels"));
   function_pointers_.CreateAdvancedSequenceCommitStepWithChannels = reinterpret_cast<CreateAdvancedSequenceCommitStepWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceCommitStepWithChannels"));
   function_pointers_.CreateAdvancedSequenceStepWithChannels = reinterpret_cast<CreateAdvancedSequenceStepWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceStepWithChannels"));
+  function_pointers_.CreateAdvancedSequenceWithChannels = reinterpret_cast<CreateAdvancedSequenceWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceWithChannels"));
   function_pointers_.DeleteAdvancedSequenceWithChannels = reinterpret_cast<DeleteAdvancedSequenceWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DeleteAdvancedSequenceWithChannels"));
   function_pointers_.DisablePulseTriggerWithChannels = reinterpret_cast<DisablePulseTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisablePulseTriggerWithChannels"));
   function_pointers_.DisableSequenceAdvanceTriggerWithChannels = reinterpret_cast<DisableSequenceAdvanceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisableSequenceAdvanceTriggerWithChannels"));
@@ -137,6 +138,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_.get_function_pointer("niDCPower_GetNextInterchangeWarning"));
   function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niDCPower_GetSelfCalLastDateAndTime"));
   function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_.get_function_pointer("niDCPower_GetSelfCalLastTemp"));
+  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationFile"));
   function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(shared_library_.get_function_pointer("niDCPower_InitExtCal"));
   function_pointers_.InitializeWithChannels = reinterpret_cast<InitializeWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitializeWithChannels"));
@@ -393,6 +395,18 @@ ViStatus NiDCPowerLibrary::CreateAdvancedSequenceStepWithChannels(ViSession vi, 
   return niDCPower_CreateAdvancedSequenceStepWithChannels(vi, channelName, setAsActiveStep);
 #else
   return function_pointers_.CreateAdvancedSequenceStepWithChannels(vi, channelName, setAsActiveStep);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence)
+{
+  if (!function_pointers_.CreateAdvancedSequenceWithChannels) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequenceWithChannels.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_CreateAdvancedSequenceWithChannels(vi, channelName, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
+#else
+  return function_pointers_.CreateAdvancedSequenceWithChannels(vi, channelName, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
 #endif
 }
 
@@ -1569,6 +1583,18 @@ ViStatus NiDCPowerLibrary::GetSelfCalLastTemp(ViSession vi, ViReal64* temperatur
   return niDCPower_GetSelfCalLastTemp(vi, temperature);
 #else
   return function_pointers_.GetSelfCalLastTemp(vi, temperature);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[])
+{
+  if (!function_pointers_.ImportAttributeConfigurationBuffer) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ImportAttributeConfigurationBuffer.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_ImportAttributeConfigurationBuffer(vi, size, configuration);
+#else
+  return function_pointers_.ImportAttributeConfigurationBuffer(vi, size, configuration);
 #endif
 }
 

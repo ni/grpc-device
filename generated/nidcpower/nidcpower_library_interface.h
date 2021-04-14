@@ -33,6 +33,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureSourceModeWithChannels(ViSession vi, ViConstString channelName, ViInt32 sourceMode) = 0;
   virtual ViStatus CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep) = 0;
   virtual ViStatus CreateAdvancedSequenceStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep) = 0;
+  virtual ViStatus CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence) = 0;
   virtual ViStatus DeleteAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName) = 0;
   virtual ViStatus DisablePulseTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus DisableSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
@@ -131,6 +132,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) = 0;
   virtual ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature) = 0;
+  virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi) = 0;
   virtual ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi) = 0;

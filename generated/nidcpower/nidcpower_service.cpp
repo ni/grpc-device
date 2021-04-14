@@ -402,6 +402,30 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CreateAdvancedSequenceWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceWithChannelsRequest* request, CreateAdvancedSequenceWithChannelsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViConstString sequence_name = request->sequence_name().c_str();
+      ViInt32 attribute_id_count = request->attribute_ids().size();
+      auto attribute_ids = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->attribute_ids().data()));
+      ViBoolean set_as_active_sequence = request->set_as_active_sequence();
+      auto status = library_->CreateAdvancedSequenceWithChannels(vi, channel_name, sequence_name, attribute_id_count, attribute_ids, set_as_active_sequence);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::DeleteAdvancedSequenceWithChannels(::grpc::ServerContext* context, const DeleteAdvancedSequenceWithChannelsRequest* request, DeleteAdvancedSequenceWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2577,6 +2601,27 @@ namespace nidcpower_grpc {
       if (status == 0) {
         response->set_temperature(temperature);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 size = request->configuration().size();
+      auto configuration = const_cast<ViAddr*>(reinterpret_cast<const ViAddr*>(request->configuration().data()));
+      auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

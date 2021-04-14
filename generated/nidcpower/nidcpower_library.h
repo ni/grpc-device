@@ -36,6 +36,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus ConfigureSourceModeWithChannels(ViSession vi, ViConstString channelName, ViInt32 sourceMode);
   ViStatus CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
   ViStatus CreateAdvancedSequenceStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
+  ViStatus CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
   ViStatus DeleteAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName);
   ViStatus DisablePulseTriggerWithChannels(ViSession vi, ViConstString channelName);
   ViStatus DisableSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName);
@@ -134,6 +135,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]);
   ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
   ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
+  ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi);
   ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi);
@@ -184,6 +186,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ConfigureSourceModeWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 sourceMode);
   using CreateAdvancedSequenceCommitStepWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
   using CreateAdvancedSequenceStepWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
+  using CreateAdvancedSequenceWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
   using DeleteAdvancedSequenceWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString sequenceName);
   using DisablePulseTriggerWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName);
   using DisableSequenceAdvanceTriggerWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName);
@@ -282,6 +285,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using GetNextInterchangeWarningPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]);
   using GetSelfCalLastDateAndTimePtr = ViStatus (*)(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
   using GetSelfCalLastTempPtr = ViStatus (*)(ViSession vi, ViReal64* temperature);
+  using ImportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 size, ViAddr configuration[]);
   using ImportAttributeConfigurationFilePtr = ViStatus (*)(ViSession vi, ViConstString filePath);
   using InitExtCalPtr = ViStatus (*)(ViRsrc resourceName, ViConstString password, ViSession* vi);
   using InitializeWithChannelsPtr = ViStatus (*)(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi);
@@ -332,6 +336,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     ConfigureSourceModeWithChannelsPtr ConfigureSourceModeWithChannels;
     CreateAdvancedSequenceCommitStepWithChannelsPtr CreateAdvancedSequenceCommitStepWithChannels;
     CreateAdvancedSequenceStepWithChannelsPtr CreateAdvancedSequenceStepWithChannels;
+    CreateAdvancedSequenceWithChannelsPtr CreateAdvancedSequenceWithChannels;
     DeleteAdvancedSequenceWithChannelsPtr DeleteAdvancedSequenceWithChannels;
     DisablePulseTriggerWithChannelsPtr DisablePulseTriggerWithChannels;
     DisableSequenceAdvanceTriggerWithChannelsPtr DisableSequenceAdvanceTriggerWithChannels;
@@ -430,6 +435,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     GetNextInterchangeWarningPtr GetNextInterchangeWarning;
     GetSelfCalLastDateAndTimePtr GetSelfCalLastDateAndTime;
     GetSelfCalLastTempPtr GetSelfCalLastTemp;
+    ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
     InitExtCalPtr InitExtCal;
     InitializeWithChannelsPtr InitializeWithChannels;
