@@ -27,16 +27,6 @@ class NiDMMDriverApiTest : public ::testing::Test {
 
         virtual ~NiDMMDriverApiTest() {}
 
-        void SetUp() override
-        {
-            initialize_driver_session();
-        }
-
-        void TearDown() override
-        {
-            close_driver_session();
-        }
-
         void ResetStub()
         {
             channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
@@ -51,48 +41,6 @@ class NiDMMDriverApiTest : public ::testing::Test {
         int GetSessionId()
         {
             return driver_session_->id();
-        }
-
-        void initialize_driver_session()
-        {
-            ::grpc::ClientContext context;
-            dmm::InitWithOptionsRequest request;
-            request.set_resource_name("FakeDevice");
-            request.set_option_string("Simulate=1, DriverSetup=Model:4065; BoardType:PCI");
-            request.set_session_name("");
-            request.set_reset_device(false);
-            request.set_id_query(false);
-            dmm::InitWithOptionsResponse response;
-
-            ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
-            driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
-
-            ASSERT_TRUE(status.ok());
-            ASSERT_EQ(kDMMDriverApiSuccess, response.status());
-        }
-
-        void close_driver_session()
-        {
-            ::grpc::ClientContext context;
-            dmm::CloseRequest request;
-            request.mutable_vi()->set_id(driver_session_->id());
-            dmm::CloseResponse response;
-
-            ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-            EXPECT_TRUE(status.ok());
-            expect_api_success(response.status());
-        }
-
-        void initiate_acquisition()
-        {
-            ::grpc::ClientContext context;
-            dmm::InitiateRequest request;
-            request.mutable_vi()->set_id(GetSessionId());
-            dmm::InitiateResponse response;
-            auto status = GetStub()->Initiate(&context, request, &response);
-            EXPECT_TRUE(status.ok());
-            expect_api_success(response.status());
         }
 
         void expect_api_success(int error_status)
@@ -250,9 +198,92 @@ TEST_F(NiDMMDriverApiTest, NiDMMSetViStringAttribute_SendRequest_GetViStringAttr
   EXPECT_STREQ(expected_value, get_attribute_value.c_str());
 }
 
+TEST_F(NiDMMDriverApiTest, NiDMMSetViInt32Attribute_SendRequest_GetViInt32AttributeMatches)
+{
+  const char* channel_name = "";
+  const dmm::NiDMMAttributes attribute_to_set = dmm::NiDMMAttributes::NIDMM_ATTRIBUTE_SAMPLE_COUNT;
+  const ViInt32 expected_value = 4;
+  ::grpc::ClientContext context;
+  dmm::SetAttributeViInt32Request request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_to_set);
+  request.set_attribute_value(expected_value);
+  dmm::SetAttributeViInt32Response response;
 
+  ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
 
+  ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
+  EXPECT_EQ(expected_value, get_attribute_value);
 }
+
+TEST_F(NiDMMDriverApiTest, NiDMMSetBoolAttribute_SendRequest_GetBoolAttributeMatches)
+{
+  const char* channel_name = "";
+  const dmm::NiDMMAttributes attribute_to_set = dmm::NiDMMAttributes::NIDMM_ATTRIBUTE_SIMULATE;
+  const ViBoolean expected_value = true;
+  ::grpc::ClientContext context;
+  dmm::SetAttributeViBooleanRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_to_set);
+  request.set_attribute_value(expected_value);
+  dmm::SetAttributeViBooleanResponse response;
+
+  ::grpc::Status status = GetStub()->SetAttributeViBoolean(&context, request, &response);
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+
+  ViBoolean get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
+  EXPECT_EQ(expected_value, get_attribute_value);
 }
+
+TEST_F(NiDMMDriverApiTest, NiDMMConfigureMeasurementAbsolute_SendRequest_ConfigureCompletesSuccessfully)
+{
+    ::grpc::ClientContext context;
+    dmm::ConfigureMeasurementAbsoluteRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_measurement_function(dmm::Function::FUNCTION_NIDMM_VAL_DC_VOLTS);
+    request.set_range(10);
+    request.set_resolution_absolute(5.5);
+    dmm::ConfigureMeasurementAbsoluteResponse response;
+
+    ::grpc::Status status = GetStub()->ConfigureMeasurementAbsolute(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
 }
+
+TEST_F(NiDMMDriverApiTest, NiDMMConfigureCurrentSourse_SendRequest_ConfigureCompletesSuccessfully)
+{
+    ::grpc::ClientContext context;
+    dmm::ConfigureCurrentSourceRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_current_source(10);
+    dmm::ConfigureCurrentSourceResponse response;
+
+    ::grpc::Status status = GetStub()->ConfigureCurrentSource(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+}
+
+TEST_F(NiDMMDriverApiTest, NiDMMSelfCal_SendRequest_SelfCalCompletesSuccessfully)
+{
+    ::grpc::ClientContext context;
+    dmm::SelfCalRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    dmm::SelfCalResponse response;
+
+    ::grpc::Status status = GetStub()->SelfCal(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+}
+
+} // namespace system
+} // namespace tests
+} // namespace ni
 
