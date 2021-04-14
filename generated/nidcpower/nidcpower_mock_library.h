@@ -36,6 +36,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceCommitStepWithChannels, (ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceStepWithChannels, (ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceWithChannels, (ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
+  MOCK_METHOD(ViStatus, CreateAdvancedSequence, (ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
   MOCK_METHOD(ViStatus, DeleteAdvancedSequenceWithChannels, (ViSession vi, ViConstString channelName, ViConstString sequenceName), (override));
   MOCK_METHOD(ViStatus, DisablePulseTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, DisableSequenceAdvanceTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
@@ -134,7 +135,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, GetNextInterchangeWarning, (ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
-  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViAddr configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, InitExtCal, (ViRsrc resourceName, ViConstString password, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitializeWithChannels, (ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi), (override));

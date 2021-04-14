@@ -35,6 +35,7 @@ service NiDCPower {
   rpc CreateAdvancedSequenceCommitStepWithChannels(CreateAdvancedSequenceCommitStepWithChannelsRequest) returns (CreateAdvancedSequenceCommitStepWithChannelsResponse);
   rpc CreateAdvancedSequenceStepWithChannels(CreateAdvancedSequenceStepWithChannelsRequest) returns (CreateAdvancedSequenceStepWithChannelsResponse);
   rpc CreateAdvancedSequenceWithChannels(CreateAdvancedSequenceWithChannelsRequest) returns (CreateAdvancedSequenceWithChannelsResponse);
+  rpc CreateAdvancedSequence(CreateAdvancedSequenceRequest) returns (CreateAdvancedSequenceResponse);
   rpc DeleteAdvancedSequenceWithChannels(DeleteAdvancedSequenceWithChannelsRequest) returns (DeleteAdvancedSequenceWithChannelsResponse);
   rpc DisablePulseTriggerWithChannels(DisablePulseTriggerWithChannelsRequest) returns (DisablePulseTriggerWithChannelsResponse);
   rpc DisableSequenceAdvanceTriggerWithChannels(DisableSequenceAdvanceTriggerWithChannelsRequest) returns (DisableSequenceAdvanceTriggerWithChannelsResponse);
@@ -133,7 +134,6 @@ service NiDCPower {
   rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetSelfCalLastTemp(GetSelfCalLastTempRequest) returns (GetSelfCalLastTempResponse);
-  rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitializeWithChannels(InitializeWithChannelsRequest) returns (InitializeWithChannelsResponse);
@@ -663,6 +663,17 @@ message CreateAdvancedSequenceWithChannelsRequest {
 }
 
 message CreateAdvancedSequenceWithChannelsResponse {
+  int32 status = 1;
+}
+
+message CreateAdvancedSequenceRequest {
+  nidevice_grpc.Session vi = 1;
+  string sequence_name = 2;
+  repeated sint32 attribute_ids = 3;
+  bool set_as_active_sequence = 4;
+}
+
+message CreateAdvancedSequenceResponse {
   int32 status = 1;
 }
 
@@ -1631,15 +1642,6 @@ message GetSelfCalLastTempRequest {
 message GetSelfCalLastTempResponse {
   int32 status = 1;
   double temperature = 2;
-}
-
-message ImportAttributeConfigurationBufferRequest {
-  nidevice_grpc.Session vi = 1;
-  repeated fixed64 configuration = 2;
-}
-
-message ImportAttributeConfigurationBufferResponse {
-  int32 status = 1;
 }
 
 message ImportAttributeConfigurationFileRequest {
