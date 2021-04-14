@@ -151,7 +151,7 @@ try:
             if pts_available > 0:
                 # Clear the plot and setup the axis
                 plt.clf()
-                plt.axis([0, pts_available, 4.9999, 5.0005])
+                plt.axis()
 
                 # Fetch data
                 fetch_multipoints_response = nidmm_client.FetchMultiPoint(nidmm_types.FetchMultiPointRequest(
