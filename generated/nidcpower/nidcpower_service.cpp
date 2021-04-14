@@ -603,11 +603,19 @@ namespace nidcpower_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViBoolean reset = request->reset();
       ViConstString option_string = request->option_string().c_str();
-      ViSession vi {};
-      auto status = library_->InitializeWithIndependentChannels(resource_name, reset, option_string, &vi);
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->InitializeWithIndependentChannels(resource_name, reset, option_string, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(vi);
+        response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -1006,8 +1014,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->Close(vi);
-      response->set_status(status);
+      session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2659,11 +2666,19 @@ namespace nidcpower_grpc {
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViConstString password = request->password().c_str();
-      ViSession vi {};
-      auto status = library_->InitExtCal(resource_name, password, &vi);
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->InitExtCal(resource_name, password, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(vi);
+        response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -2684,11 +2699,19 @@ namespace nidcpower_grpc {
       ViConstString channels = request->channels().c_str();
       ViBoolean reset = request->reset();
       ViConstString option_string = request->option_string().c_str();
-      ViSession vi {};
-      auto status = library_->InitializeWithChannels(resource_name, channels, reset, option_string, &vi);
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->InitializeWithChannels(resource_name, channels, reset, option_string, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(vi);
+        response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }

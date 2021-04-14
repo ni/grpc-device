@@ -5,10 +5,10 @@ config = {
     'c_header': 'nidcpower.h',
     'c_function_prefix': 'niDCPower_',
     'service_class_prefix': 'NiDCPower',
-    'java_package': 'com.ni.grpc.nidcpower',
+    'java_package': 'com.ni.grpc.dcpower',
     'csharp_namespace': 'NationalInstruments.Grpc.DCPower',
     'namespace_component': 'nidcpower',
-    'close_function': 'close',
+    'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'Abort',
         'initiate_function': 'Initiate',
