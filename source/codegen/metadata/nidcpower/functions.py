@@ -394,6 +394,40 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
+  'CreateAdvancedSequence': {
+    'parameters': [
+      {
+        'name': 'vi',
+        'direction': 'in',
+        'type': 'ViSession'
+      },
+      {
+        'name': 'sequenceName',
+        'direction': 'in',
+        'type': 'ViConstString'
+      },
+      {
+        'name': 'attributeIdCount',
+        'direction': 'in',
+        'type': 'ViInt32'
+      },
+      {
+        'name': 'attributeIds',
+        'direction': 'in',
+        'type': 'ViInt32[]',
+        'size': {
+          'mechanism': 'len',
+          'value': 'attributeIdCount'
+        }
+      },
+      {
+        'name': 'setAsActiveSequence',
+        'direction': 'in',
+        'type': 'ViBoolean'
+      }
+    ],
+    'returns': 'ViStatus'
+  },
   'DeleteAdvancedSequenceWithChannels': {
     'parameters': [
       {
