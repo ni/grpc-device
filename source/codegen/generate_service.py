@@ -5,21 +5,31 @@ import importlib
 import importlib.util
 import mako.template
 import pathlib
+import metadata_mutation
 from mako.lookup import TemplateLookup
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
   current_dir = os.path.dirname(__file__)
-  template_file_path = os.path.join(current_dir, template_file_name)
+  template_file_path = os.path.join(current_dir, "templates", template_file_name)
+  template_directory = os.path.dirname(template_file_path)
   module_name = metadata["config"]["module_name"]
   output_dir = os.path.join(gen_dir, module_name)
   file_name = module_name + generated_file_suffix
   output_file_path = os.path.join(output_dir, file_name)
 
   os.makedirs(output_dir, exist_ok=True)
-  template = mako.template.Template(filename=template_file_path)
+  template_lookup = TemplateLookup(directories = template_directory + "/")
+  template = mako.template.Template(filename=template_file_path, lookup=template_lookup)
   f=open(output_file_path, "w+", newline="")
   f.write(template.render(data=metadata))
   f.close()
+
+def mutate_metadata(metadata):
+  for function in metadata["functions"]:
+    parameters = metadata["functions"][function]["parameters"]
+    metadata_mutation.sanitize_names(parameters)
+    metadata_mutation.mark_size_params(parameters)
+    metadata_mutation.mark_non_proto_params(parameters)
 
 def generate_all(metadata_dir, gen_dir):
   sys.path.append(metadata_dir)
@@ -28,9 +38,10 @@ def generate_all(metadata_dir, gen_dir):
   module = importlib.util.module_from_spec(spec)
   spec.loader.exec_module(module)
 
-  metadata = module.metadata;
-  lookup = TemplateLookup(directories=metadata_dir)
+  metadata = module.metadata
+  lookup = TemplateLookup(directories = metadata_dir)
   metadata["lookup"] = lookup
+  mutate_metadata(metadata)
   generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
   generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
   generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)
