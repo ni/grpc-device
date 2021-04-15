@@ -207,13 +207,17 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
   if common_helpers.get_size_mechanism(parameter) == 'fixed':
     size = parameter['size']['value']
   else:
-    size = common_helpers.camel_to_snake(parameter['size']['value'])
+    size = common_helpers.camel_to_snake(parameter.get('size',{}).get('value',{}))
 %>\
 %     if common_helpers.is_struct(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
-%     elif service_helpers.is_string_arg(parameter):
+% elif service_helpers.is_string_arg(parameter):
+  % if type(size) == str and len(size) > 0:
       std::string ${parameter_name}(${size}, '\0');
-%     else:
+  % else:
+      std::string ${parameter_name};
+  % endif
+% else:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 %     endif

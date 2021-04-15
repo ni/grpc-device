@@ -59,7 +59,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nifake" "niscope" "niswitch" "nisync")
+set(nidrivers "nidmm" "nifake" "niscope" "niswitch" "nisync")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -191,9 +191,9 @@ target_link_libraries(ni_grpc_device_server
    )
 
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp niScope niswitch nisync)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp niScope niswitch nidmm nisync)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nidmm.dll /DELAYLOAD:nisync.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nidmm.dll /DELAYLOAD:nisync.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -317,9 +317,9 @@ target_link_libraries(SystemTestsRunner
     ${CMAKE_DL_LIBS})
 
 if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp niScope niswitch nisync)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+    target_link_libraries(SystemTestsRunner Delayimp niScope niswitch nidmm nisync)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nidmm.dll /DELAYLOAD:nisync.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nidmm.dll /DELAYLOAD:nisync.dll")
 endif()
 
 # Hook up different google test runners to CTest

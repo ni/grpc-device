@@ -101,7 +101,7 @@ def has_ivi_dance_param(parameters):
 
 def get_ivi_dance_params(parameters):
   array_param = next((p for p in parameters if is_ivi_dance_array_param(p)), None)
-  size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
+  size_param = next(p for p in parameters if p['name'] == array_param.get('size', {}).get('value')) if array_param else None
   other_params = (p for p in parameters if p != array_param and p != size_param)
   return (size_param, array_param, other_params)
 
