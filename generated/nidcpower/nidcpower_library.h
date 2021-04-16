@@ -36,6 +36,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus ConfigureSourceModeWithChannels(ViSession vi, ViConstString channelName, ViInt32 sourceMode);
   ViStatus CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
   ViStatus CreateAdvancedSequenceStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
+  ViStatus CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
+  ViStatus CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
   ViStatus DeleteAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName);
   ViStatus DisablePulseTriggerWithChannels(ViSession vi, ViConstString channelName);
   ViStatus DisableSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName);
@@ -184,6 +186,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ConfigureSourceModeWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 sourceMode);
   using CreateAdvancedSequenceCommitStepWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
   using CreateAdvancedSequenceStepWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
+  using CreateAdvancedSequenceWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
+  using CreateAdvancedSequencePtr = ViStatus (*)(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
   using DeleteAdvancedSequenceWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString sequenceName);
   using DisablePulseTriggerWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName);
   using DisableSequenceAdvanceTriggerWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelName);
@@ -332,6 +336,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     ConfigureSourceModeWithChannelsPtr ConfigureSourceModeWithChannels;
     CreateAdvancedSequenceCommitStepWithChannelsPtr CreateAdvancedSequenceCommitStepWithChannels;
     CreateAdvancedSequenceStepWithChannelsPtr CreateAdvancedSequenceStepWithChannels;
+    CreateAdvancedSequenceWithChannelsPtr CreateAdvancedSequenceWithChannels;
+    CreateAdvancedSequencePtr CreateAdvancedSequence;
     DeleteAdvancedSequenceWithChannelsPtr DeleteAdvancedSequenceWithChannels;
     DisablePulseTriggerWithChannelsPtr DisablePulseTriggerWithChannels;
     DisableSequenceAdvanceTriggerWithChannelsPtr DisableSequenceAdvanceTriggerWithChannels;

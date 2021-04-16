@@ -42,6 +42,8 @@ public:
   ::grpc::Status ConfigureSourceModeWithChannels(::grpc::ServerContext* context, const ConfigureSourceModeWithChannelsRequest* request, ConfigureSourceModeWithChannelsResponse* response) override;
   ::grpc::Status CreateAdvancedSequenceCommitStepWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceCommitStepWithChannelsRequest* request, CreateAdvancedSequenceCommitStepWithChannelsResponse* response) override;
   ::grpc::Status CreateAdvancedSequenceStepWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceStepWithChannelsRequest* request, CreateAdvancedSequenceStepWithChannelsResponse* response) override;
+  ::grpc::Status CreateAdvancedSequenceWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceWithChannelsRequest* request, CreateAdvancedSequenceWithChannelsResponse* response) override;
+  ::grpc::Status CreateAdvancedSequence(::grpc::ServerContext* context, const CreateAdvancedSequenceRequest* request, CreateAdvancedSequenceResponse* response) override;
   ::grpc::Status DeleteAdvancedSequenceWithChannels(::grpc::ServerContext* context, const DeleteAdvancedSequenceWithChannelsRequest* request, DeleteAdvancedSequenceWithChannelsResponse* response) override;
   ::grpc::Status DisablePulseTriggerWithChannels(::grpc::ServerContext* context, const DisablePulseTriggerWithChannelsRequest* request, DisablePulseTriggerWithChannelsResponse* response) override;
   ::grpc::Status DisableSequenceAdvanceTriggerWithChannels(::grpc::ServerContext* context, const DisableSequenceAdvanceTriggerWithChannelsRequest* request, DisableSequenceAdvanceTriggerWithChannelsResponse* response) override;

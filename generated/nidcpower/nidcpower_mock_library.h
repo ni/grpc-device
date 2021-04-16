@@ -35,6 +35,8 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureSourceModeWithChannels, (ViSession vi, ViConstString channelName, ViInt32 sourceMode), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceCommitStepWithChannels, (ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceStepWithChannels, (ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep), (override));
+  MOCK_METHOD(ViStatus, CreateAdvancedSequenceWithChannels, (ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
+  MOCK_METHOD(ViStatus, CreateAdvancedSequence, (ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
   MOCK_METHOD(ViStatus, DeleteAdvancedSequenceWithChannels, (ViSession vi, ViConstString channelName, ViConstString sequenceName), (override));
   MOCK_METHOD(ViStatus, DisablePulseTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, DisableSequenceAdvanceTriggerWithChannels, (ViSession vi, ViConstString channelName), (override));

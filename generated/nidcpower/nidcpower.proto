@@ -34,6 +34,8 @@ service NiDCPower {
   rpc ConfigureSourceModeWithChannels(ConfigureSourceModeWithChannelsRequest) returns (ConfigureSourceModeWithChannelsResponse);
   rpc CreateAdvancedSequenceCommitStepWithChannels(CreateAdvancedSequenceCommitStepWithChannelsRequest) returns (CreateAdvancedSequenceCommitStepWithChannelsResponse);
   rpc CreateAdvancedSequenceStepWithChannels(CreateAdvancedSequenceStepWithChannelsRequest) returns (CreateAdvancedSequenceStepWithChannelsResponse);
+  rpc CreateAdvancedSequenceWithChannels(CreateAdvancedSequenceWithChannelsRequest) returns (CreateAdvancedSequenceWithChannelsResponse);
+  rpc CreateAdvancedSequence(CreateAdvancedSequenceRequest) returns (CreateAdvancedSequenceResponse);
   rpc DeleteAdvancedSequenceWithChannels(DeleteAdvancedSequenceWithChannelsRequest) returns (DeleteAdvancedSequenceWithChannelsResponse);
   rpc DisablePulseTriggerWithChannels(DisablePulseTriggerWithChannelsRequest) returns (DisablePulseTriggerWithChannelsResponse);
   rpc DisableSequenceAdvanceTriggerWithChannels(DisableSequenceAdvanceTriggerWithChannelsRequest) returns (DisableSequenceAdvanceTriggerWithChannelsResponse);
@@ -649,6 +651,29 @@ message CreateAdvancedSequenceStepWithChannelsRequest {
 }
 
 message CreateAdvancedSequenceStepWithChannelsResponse {
+  int32 status = 1;
+}
+
+message CreateAdvancedSequenceWithChannelsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string sequence_name = 3;
+  repeated sint32 attribute_ids = 4;
+  bool set_as_active_sequence = 5;
+}
+
+message CreateAdvancedSequenceWithChannelsResponse {
+  int32 status = 1;
+}
+
+message CreateAdvancedSequenceRequest {
+  nidevice_grpc.Session vi = 1;
+  string sequence_name = 2;
+  repeated sint32 attribute_ids = 3;
+  bool set_as_active_sequence = 4;
+}
+
+message CreateAdvancedSequenceResponse {
   int32 status = 1;
 }
 
