@@ -26,7 +26,6 @@ class NiDMMLibraryInterface {
   virtual ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
   virtual ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
-  virtual ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViChar attributeValue[]) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
   virtual ViStatus close(ViSession vi) = 0;
@@ -75,19 +74,14 @@ class NiDMMLibraryInterface {
   virtual ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetCalUserDefinedInfo(ViSession vi, ViInt32 bufferSize, ViChar info[256]) = 0;
   virtual ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize) = 0;
-  virtual ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[]) = 0;
   virtual ViStatus GetDevTemp(ViSession vi, ViString options, ViReal64* temperature) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
-  virtual ViStatus GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]) = 0;
   virtual ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months) = 0;
   virtual ViStatus GetLastCalTemp(ViSession vi, ViInt32 calType, ViReal64* temperature) = 0;
   virtual ViStatus GetMeasurementPeriod(ViSession vi, ViReal64* period) = 0;
-  virtual ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]) = 0;
-  virtual ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) = 0;
   virtual ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
-  virtual ViStatus InitExtCal(ViChar resourceName[], ViChar calibrationPassword[], ViSession* vi) = 0;
   virtual ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
@@ -105,7 +99,6 @@ class NiDMMLibraryInterface {
   virtual ViStatus ResetInterchangeCheck(ViSession vi) = 0;
   virtual ViStatus ResetWithDefaults(ViSession vi) = 0;
   virtual ViStatus RestoreLastExtCalConstants(ViSession vi) = 0;
-  virtual ViStatus revision_query(ViSession vi, ViChar instrumentDriverRevision[], ViChar firmwareRevision[]) = 0;
   virtual ViStatus SelfCal(ViSession vi) = 0;
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
   virtual ViStatus SendSoftwareTrigger(ViSession vi) = 0;
@@ -114,8 +107,6 @@ class NiDMMLibraryInterface {
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue) = 0;
-  virtual ViStatus SetCalPassword(ViSession vi, ViChar oldPassword[], ViChar newPassword[]) = 0;
-  virtual ViStatus SetCalUserDefinedInfo(ViSession vi, ViChar info[]) = 0;
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
 };
 

@@ -272,32 +272,32 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    "CheckAttributeViString": {
-        'codegen_method': 'public',
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "channelName",
-            "direction": "in",
-            "type": "ViConstString"
-        },
-        {
-            "name": "attributeId",
-            "direction": "in",
-            "type": "ViAttr"
-        },
-        {
-            "name": "attributeValue",
-            "direction": "in",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
+    # "CheckAttributeViString": {
+    #     'codegen_method': 'public',
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "channelName",
+    #         "direction": "in",
+    #         "type": "ViConstString"
+    #     },
+    #     {
+    #         "name": "attributeId",
+    #         "direction": "in",
+    #         "type": "ViAttr"
+    #     },
+    #     {
+    #         "name": "attributeValue",
+    #         "direction": "in",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
     "ClearError": {
         'codegen_method': 'public',
         "parameters": [
@@ -1805,32 +1805,32 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    "GetChannelName": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "index",
-            "direction": "in",
-            "type": "ViInt32"
-        },
-        {
-            "name": "bufferSize",
-            "direction": "in",
-            "type": "ViInt32"
-        },
-        {
-            "name": "channelString",
-            "direction": "out",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
+    # "GetChannelName": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "index",
+    #         "direction": "in",
+    #         "type": "ViInt32"
+    #     },
+    #     {
+    #         "name": "bufferSize",
+    #         "direction": "in",
+    #         "type": "ViInt32"
+    #     },
+    #     {
+    #         "name": "channelString",
+    #         "direction": "out",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
     'GetDevTemp': {
         'documentation': {
             'description': 'Returns the current **Temperature** of the device.',
@@ -1912,32 +1912,32 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
-    "GetErrorMessage": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "errorCode",
-            "direction": "in",
-            "type": "ViStatus"
-        },
-        {
-            "name": "bufferSize",
-            "direction": "in",
-            "type": "ViInt32"
-        },
-        {
-            "name": "errorMessage",
-            "direction": "out",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
+    # "GetErrorMessage": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "errorCode",
+    #         "direction": "in",
+    #         "type": "ViStatus"
+    #     },
+    #     {
+    #         "name": "bufferSize",
+    #         "direction": "in",
+    #         "type": "ViInt32"
+    #     },
+    #     {
+    #         "name": "errorMessage",
+    #         "direction": "out",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
     'GetExtCalRecommendedInterval': {
         'codegen_method': 'public',
         'documentation': {
@@ -2028,48 +2028,48 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    "GetNextCoercionRecord": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "bufferSize",
-            "direction": "in",
-            "type": "ViInt32"
-        },
-        {
-            "name": "coercionRecord",
-            "direction": "out",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
-    "GetNextInterchangeWarning": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "bufferSize",
-            "direction": "in",
-            "type": "ViInt32"
-        },
-        {
-            "name": "interchangeWarning",
-            "direction": "out",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
+    # "GetNextCoercionRecord": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "bufferSize",
+    #         "direction": "in",
+    #         "type": "ViInt32"
+    #     },
+    #     {
+    #         "name": "coercionRecord",
+    #         "direction": "out",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
+    # "GetNextInterchangeWarning": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "bufferSize",
+    #         "direction": "in",
+    #         "type": "ViInt32"
+    #     },
+    #     {
+    #         "name": "interchangeWarning",
+    #         "direction": "out",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
     'GetSelfCalSupported': {
         'documentation': {
             'description': '\nReturns a Boolean value that expresses whether or not the DMM that you\nare using can perform self-calibration.\n'
@@ -2170,27 +2170,27 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "InitExtCal": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "resourceName",
-            "direction": "in",
-            "type": "ViChar[]"
-        },
-        {
-            "name": "calibrationPassword",
-            "direction": "in",
-            "type": "ViChar[]"
-        },
-        {
-            "name": "vi",
-            "direction": "out",
-            "type": "ViSession"
-        }
-        ],
-        "returns": "ViStatus"
-    },
+    # "InitExtCal": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "resourceName",
+    #         "direction": "in",
+    #         "type": "ViChar[]"
+    #     },
+    #     {
+    #         "name": "calibrationPassword",
+    #         "direction": "in",
+    #         "type": "ViChar[]"
+    #     },
+    #     {
+    #         "name": "vi",
+    #         "direction": "out",
+    #         "type": "ViSession"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
     'init':{
         'init_method': True,
         'parameters':[
@@ -2767,27 +2767,27 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    "revision_query": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "instrumentDriverRevision",
-            "direction": "out",
-            "type": "ViChar[]"
-        },
-        {
-            "name": "firmwareRevision",
-            "direction": "out",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
+    # "revision_query": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "instrumentDriverRevision",
+    #         "direction": "out",
+    #         "type": "ViChar[]"
+    #     },
+    #     {
+    #         "name": "firmwareRevision",
+    #         "direction": "out",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
     'SelfCal': {
         'documentation': {
             'description': '\nFor the NI 4080/4081/4082 and the NI 4070/4071/4072, executes the\nself-calibration routine to maintain measurement accuracy.\n',
@@ -3051,43 +3051,43 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "SetCalPassword": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "oldPassword",
-            "direction": "in",
-            "type": "ViChar[]"
-        },
-        {
-            "name": "newPassword",
-            "direction": "in",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
-    "SetCalUserDefinedInfo": {
-        "codegen_method":"public",
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "info",
-            "direction": "in",
-            "type": "ViChar[]"
-        }
-        ],
-        "returns": "ViStatus"
-    },
+    # "SetCalPassword": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "oldPassword",
+    #         "direction": "in",
+    #         "type": "ViChar[]"
+    #     },
+    #     {
+    #         "name": "newPassword",
+    #         "direction": "in",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
+    # "SetCalUserDefinedInfo": {
+    #     "codegen_method":"public",
+    #     "parameters": [
+    #     {
+    #         "name": "vi",
+    #         "direction": "in",
+    #         "type": "ViSession"
+    #     },
+    #     {
+    #         "name": "info",
+    #         "direction": "in",
+    #         "type": "ViChar[]"
+    #     }
+    #     ],
+    #     "returns": "ViStatus"
+    # },
     'UnlockSession': {
         'documentation': {
             'description': '\nThis function releases a lock that you acquired on an instrument session\nusing niDMM_LockSession. Refer to niDMM_LockSession for additional\ninformation on session locks.\n'
