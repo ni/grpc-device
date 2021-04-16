@@ -39,6 +39,8 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureSourceModeWithChannels = reinterpret_cast<ConfigureSourceModeWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSourceModeWithChannels"));
   function_pointers_.CreateAdvancedSequenceCommitStepWithChannels = reinterpret_cast<CreateAdvancedSequenceCommitStepWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceCommitStepWithChannels"));
   function_pointers_.CreateAdvancedSequenceStepWithChannels = reinterpret_cast<CreateAdvancedSequenceStepWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceStepWithChannels"));
+  function_pointers_.CreateAdvancedSequenceWithChannels = reinterpret_cast<CreateAdvancedSequenceWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceWithChannels"));
+  function_pointers_.CreateAdvancedSequence = reinterpret_cast<CreateAdvancedSequencePtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequence"));
   function_pointers_.DeleteAdvancedSequenceWithChannels = reinterpret_cast<DeleteAdvancedSequenceWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DeleteAdvancedSequenceWithChannels"));
   function_pointers_.DisablePulseTriggerWithChannels = reinterpret_cast<DisablePulseTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisablePulseTriggerWithChannels"));
   function_pointers_.DisableSequenceAdvanceTriggerWithChannels = reinterpret_cast<DisableSequenceAdvanceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisableSequenceAdvanceTriggerWithChannels"));
@@ -393,6 +395,30 @@ ViStatus NiDCPowerLibrary::CreateAdvancedSequenceStepWithChannels(ViSession vi, 
   return niDCPower_CreateAdvancedSequenceStepWithChannels(vi, channelName, setAsActiveStep);
 #else
   return function_pointers_.CreateAdvancedSequenceStepWithChannels(vi, channelName, setAsActiveStep);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence)
+{
+  if (!function_pointers_.CreateAdvancedSequenceWithChannels) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequenceWithChannels.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_CreateAdvancedSequenceWithChannels(vi, channelName, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
+#else
+  return function_pointers_.CreateAdvancedSequenceWithChannels(vi, channelName, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence)
+{
+  if (!function_pointers_.CreateAdvancedSequence) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequence.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_CreateAdvancedSequence(vi, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
+#else
+  return function_pointers_.CreateAdvancedSequence(vi, sequenceName, attributeIdCount, attributeIds, setAsActiveSequence);
 #endif
 }
 

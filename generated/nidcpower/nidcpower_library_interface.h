@@ -33,6 +33,8 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureSourceModeWithChannels(ViSession vi, ViConstString channelName, ViInt32 sourceMode) = 0;
   virtual ViStatus CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep) = 0;
   virtual ViStatus CreateAdvancedSequenceStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep) = 0;
+  virtual ViStatus CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence) = 0;
+  virtual ViStatus CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence) = 0;
   virtual ViStatus DeleteAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName) = 0;
   virtual ViStatus DisablePulseTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus DisableSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
