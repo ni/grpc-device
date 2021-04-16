@@ -4,6 +4,8 @@
 #include <niswitch/niswitch_service.h>
 #include <nisync/nisync_library.h>
 #include <nisync/nisync_service.h>
+#include <nidcpower/nidcpower_library.h>
+#include <nidcpower/nidcpower_service.h>
 
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
@@ -54,6 +56,10 @@ static void RunServer(const std::string& config_file_path)
   nisync_grpc::NiSyncLibrary nisync_library;
   nisync_grpc::NiSyncService nisync_service(&nisync_library, &session_repository);
   builder.RegisterService(&nisync_service);
+
+  nidcpower_grpc::NiDCPowerLibrary nidcpower_library;
+  nidcpower_grpc::NiDCPowerService nidcpower_service(&nidcpower_library, &session_repository);
+  builder.RegisterService(&nidcpower_service);
 
   // Assemble the server.
   auto server = builder.BuildAndStart();
