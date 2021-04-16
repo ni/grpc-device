@@ -78,6 +78,7 @@ class NiDMMMockLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   MOCK_METHOD(ViStatus, GetCalUserDefinedInfoMaxSize, (ViSession vi, ViInt32* infoSize), (override));
   MOCK_METHOD(ViStatus, GetDevTemp, (ViSession vi, ViString options, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]), (override));
+  MOCK_METHOD(ViStatus, GetErrorMessage, (ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]), (override));
   MOCK_METHOD(ViStatus, GetExtCalRecommendedInterval, (ViSession vi, ViInt32* months), (override));
   MOCK_METHOD(ViStatus, GetLastCalTemp, (ViSession vi, ViInt32 calType, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetMeasurementPeriod, (ViSession vi, ViReal64* period), (override));

@@ -82,6 +82,7 @@ NiDMMLibrary::NiDMMLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetCalUserDefinedInfoMaxSize = reinterpret_cast<GetCalUserDefinedInfoMaxSizePtr>(shared_library_.get_function_pointer("niDMM_GetCalUserDefinedInfoMaxSize"));
   function_pointers_.GetDevTemp = reinterpret_cast<GetDevTempPtr>(shared_library_.get_function_pointer("niDMM_GetDevTemp"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDMM_GetError"));
+  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_.get_function_pointer("niDMM_GetErrorMessage"));
   function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_.get_function_pointer("niDMM_GetExtCalRecommendedInterval"));
   function_pointers_.GetLastCalTemp = reinterpret_cast<GetLastCalTempPtr>(shared_library_.get_function_pointer("niDMM_GetLastCalTemp"));
   function_pointers_.GetMeasurementPeriod = reinterpret_cast<GetMeasurementPeriodPtr>(shared_library_.get_function_pointer("niDMM_GetMeasurementPeriod"));
@@ -856,6 +857,18 @@ ViStatus NiDMMLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 buffe
   return niDMM_GetError(vi, errorCode, bufferSize, description);
 #else
   return function_pointers_.GetError(vi, errorCode, bufferSize, description);
+#endif
+}
+
+ViStatus NiDMMLibrary::GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[])
+{
+  if (!function_pointers_.GetErrorMessage) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetErrorMessage.");
+  }
+#if defined(_MSC_VER)
+  return niDMM_GetErrorMessage(vi, errorCode, bufferSize, errorMessage);
+#else
+  return function_pointers_.GetErrorMessage(vi, errorCode, bufferSize, errorMessage);
 #endif
 }
 

@@ -85,6 +85,7 @@ public:
   ::grpc::Status GetCalUserDefinedInfoMaxSize(::grpc::ServerContext* context, const GetCalUserDefinedInfoMaxSizeRequest* request, GetCalUserDefinedInfoMaxSizeResponse* response) override;
   ::grpc::Status GetDevTemp(::grpc::ServerContext* context, const GetDevTempRequest* request, GetDevTempResponse* response) override;
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
+  ::grpc::Status GetErrorMessage(::grpc::ServerContext* context, const GetErrorMessageRequest* request, GetErrorMessageResponse* response) override;
   ::grpc::Status GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response) override;
   ::grpc::Status GetLastCalTemp(::grpc::ServerContext* context, const GetLastCalTempRequest* request, GetLastCalTempResponse* response) override;
   ::grpc::Status GetMeasurementPeriod(::grpc::ServerContext* context, const GetMeasurementPeriodRequest* request, GetMeasurementPeriodResponse* response) override;

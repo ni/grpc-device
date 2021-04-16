@@ -77,6 +77,7 @@ service NiDMM {
   rpc GetCalUserDefinedInfoMaxSize(GetCalUserDefinedInfoMaxSizeRequest) returns (GetCalUserDefinedInfoMaxSizeResponse);
   rpc GetDevTemp(GetDevTempRequest) returns (GetDevTempResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetErrorMessage(GetErrorMessageRequest) returns (GetErrorMessageResponse);
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
   rpc GetLastCalTemp(GetLastCalTempRequest) returns (GetLastCalTempResponse);
   rpc GetMeasurementPeriod(GetMeasurementPeriodRequest) returns (GetMeasurementPeriodResponse);
@@ -1007,6 +1008,16 @@ message GetErrorResponse {
   int32 status = 1;
   sint32 error_code = 2;
   string description = 3;
+}
+
+message GetErrorMessageRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message GetErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
 }
 
 message GetExtCalRecommendedIntervalRequest {

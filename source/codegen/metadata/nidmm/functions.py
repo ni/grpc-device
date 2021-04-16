@@ -1912,32 +1912,36 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
-    # "GetErrorMessage": {
-    #     "codegen_method":"public",
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "errorCode",
-    #         "direction": "in",
-    #         "type": "ViStatus"
-    #     },
-    #     {
-    #         "name": "bufferSize",
-    #         "direction": "in",
-    #         "type": "ViInt32"
-    #     },
-    #     {
-    #         "name": "errorMessage",
-    #         "direction": "out",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
+    "GetErrorMessage": {
+        "codegen_method":"public",
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "errorCode",
+            "direction": "in",
+            "type": "ViStatus"
+        },
+        {
+            "name": "bufferSize",
+            "direction": "in",
+            "type": "ViInt32"
+        },
+        {
+            "name": "errorMessage",
+            "direction": "out",
+            "type": "ViChar[]",
+            'size':{
+                'mechanism':'ivi-dance',
+                'value':'bufferSize'
+            }
+        }
+        ],
+        "returns": "ViStatus"
+    },
     'GetExtCalRecommendedInterval': {
         'codegen_method': 'public',
         'documentation': {

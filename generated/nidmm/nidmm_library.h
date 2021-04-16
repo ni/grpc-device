@@ -79,6 +79,7 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize);
   ViStatus GetDevTemp(ViSession vi, ViString options, ViReal64* temperature);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
+  ViStatus GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]);
   ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months);
   ViStatus GetLastCalTemp(ViSession vi, ViInt32 calType, ViReal64* temperature);
   ViStatus GetMeasurementPeriod(ViSession vi, ViReal64* period);
@@ -174,6 +175,7 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
   using GetCalUserDefinedInfoMaxSizePtr = ViStatus (*)(ViSession vi, ViInt32* infoSize);
   using GetDevTempPtr = ViStatus (*)(ViSession vi, ViString options, ViReal64* temperature);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
+  using GetErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]);
   using GetExtCalRecommendedIntervalPtr = ViStatus (*)(ViSession vi, ViInt32* months);
   using GetLastCalTempPtr = ViStatus (*)(ViSession vi, ViInt32 calType, ViReal64* temperature);
   using GetMeasurementPeriodPtr = ViStatus (*)(ViSession vi, ViReal64* period);
@@ -269,6 +271,7 @@ class NiDMMLibrary : public nidmm_grpc::NiDMMLibraryInterface {
     GetCalUserDefinedInfoMaxSizePtr GetCalUserDefinedInfoMaxSize;
     GetDevTempPtr GetDevTemp;
     GetErrorPtr GetError;
+    GetErrorMessagePtr GetErrorMessage;
     GetExtCalRecommendedIntervalPtr GetExtCalRecommendedInterval;
     GetLastCalTempPtr GetLastCalTemp;
     GetMeasurementPeriodPtr GetMeasurementPeriod;

@@ -76,6 +76,7 @@ class NiDMMLibraryInterface {
   virtual ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize) = 0;
   virtual ViStatus GetDevTemp(ViSession vi, ViString options, ViReal64* temperature) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
+  virtual ViStatus GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]) = 0;
   virtual ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months) = 0;
   virtual ViStatus GetLastCalTemp(ViSession vi, ViInt32 calType, ViReal64* temperature) = 0;
   virtual ViStatus GetMeasurementPeriod(ViSession vi, ViReal64* period) = 0;
