@@ -1663,12 +1663,12 @@ namespace nidmm_grpc {
 
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession vi;
-        int status = library_->init(resource_name, id_query, reset_device, &vi);
+        int status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -1701,7 +1701,7 @@ namespace nidmm_grpc {
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -1987,7 +1987,7 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->reset(vi);
+      auto status = library_->Reset(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2084,7 +2084,7 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
       std::string self_test_message(256, '\0');
-      auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
+      auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);
