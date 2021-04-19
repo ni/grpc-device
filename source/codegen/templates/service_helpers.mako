@@ -187,7 +187,7 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 % elif c_type == 'ViSession':
       auto ${parameter_name}_grpc_session = ${request_snippet};
       ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
-% elif c_type == 'ViInt32[]':
+% elif c_type == 'ViInt32[]' or c_type == 'ViAddr[]':
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
@@ -215,8 +215,11 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 %     elif service_helpers.is_string_arg(parameter):
       std::string ${parameter_name}(${size}, '\0');
-%     else:
+%     elif underlying_param_type == 'ViAddr':
       response->mutable_${parameter_name}()->Resize(${size}, 0);
+      ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());
+%     else:
+      response->mutable_${parameter_name}()->Resize(${size}, 0); 
       ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 %     endif
 %   else:

@@ -2077,6 +2077,37 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 size = status;
+
+      response->mutable_configuration()->Resize(size, 0);
+      ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
+      status = library_->ExportAttributeConfigurationBuffer(vi, size, configuration);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2631,6 +2662,27 @@ namespace nidcpower_grpc {
       if (status == 0) {
         response->set_temperature(temperature);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 size = request->configuration().size();
+      auto configuration = const_cast<ViAddr*>(reinterpret_cast<const ViAddr*>(request->configuration().data()));
+      auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

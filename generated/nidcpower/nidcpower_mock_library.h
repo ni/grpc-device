@@ -114,6 +114,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, DisableSourceTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableStartTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
+  MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViAddr configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, FetchMultiple, (ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount), (override));
@@ -135,6 +136,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, GetNextInterchangeWarning, (ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
+  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViAddr configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, InitExtCal, (ViRsrc resourceName, ViConstString password, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitializeWithChannels, (ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi), (override));

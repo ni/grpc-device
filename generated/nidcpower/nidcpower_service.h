@@ -121,6 +121,7 @@ public:
   ::grpc::Status DisableSourceTrigger(::grpc::ServerContext* context, const DisableSourceTriggerRequest* request, DisableSourceTriggerResponse* response) override;
   ::grpc::Status DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
+  ::grpc::Status ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status FetchMultiple(::grpc::ServerContext* context, const FetchMultipleRequest* request, FetchMultipleResponse* response) override;
@@ -142,6 +143,7 @@ public:
   ::grpc::Status GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response) override;
   ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response) override;
+  ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InitializeWithChannels(::grpc::ServerContext* context, const InitializeWithChannelsRequest* request, InitializeWithChannelsResponse* response) override;
