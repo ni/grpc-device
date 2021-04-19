@@ -1,10 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is generated from NI-DCPower API metadata version 20.7.0d8
 attributes = {
+    1050002: {
+        'access': 'read-write',
+        'channel_based': False,
+        'name': 'RANGE_CHECK',
+        'resettable': False,
+        'type': 'ViBoolean'
+    },
     1050003: {
         'access': 'read-write',
         'channel_based': False,
         'name': 'QUERY_INSTRUMENT_STATUS',
+        'resettable': False,
+        'type': 'ViBoolean'
+    },
+    1050004: {
+        'access': 'read-write',
+        'channel_based': False,
+        'name': 'CACHE',
         'resettable': False,
         'type': 'ViBoolean'
     },
@@ -15,12 +29,26 @@ attributes = {
         'resettable': False,
         'type': 'ViBoolean'
     },
+    1050006: {
+        'access': 'read-write',
+        'channel_based': False,
+        'name': 'RECORD_COERCIONS',
+        'resettable': False,
+        'type': 'ViBoolean'
+    },
     1050007: {
         'access': 'read only',
         'channel_based': False,
         'name': 'DRIVER_SETUP',
         'resettable': False,
         'type': 'ViString'
+    },
+    1050021: {
+        'access': 'read-write',
+        'channel_based': False,
+        'name': 'INTERCHANGE_CHECK',
+        'resettable': False,
+        'type': 'ViBoolean'
     },
     1050203: {
         'access': 'read only',
@@ -57,6 +85,13 @@ attributes = {
         'resettable': False,
         'type': 'ViString'
     },
+    1050401: {
+        'access': 'read only',
+        'channel_based': False,
+        'name': 'GROUP_CAPABILITIES',
+        'resettable': False,
+        'type': 'ViString'
+    },
     1050510: {
         'access': 'read only',
         'channel_based': True,
@@ -90,6 +125,20 @@ attributes = {
         'name': 'SPECIFIC_DRIVER_DESCRIPTION',
         'resettable': False,
         'type': 'ViString'
+    },
+    1050515: {
+        'access': 'read only',
+        'channel_based': False,
+        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1050516: {
+        'access': 'read only',
+        'channel_based': False,
+        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'        
     },
     1050551: {
         'access': 'read only',
@@ -255,6 +304,14 @@ attributes = {
         'resettable': False,
         'type': 'ViInt32'
     },
+    1150022: {
+        'access': 'read-write',
+        'channel_based': True,
+        'enum': 'DigitalEdge',
+        'name': 'DIGITAL_EDGE_START_TRIGGER_EDGE',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
     1150023: {
         'access': 'read-write',
         'channel_based': True,
@@ -284,6 +341,14 @@ attributes = {
         'resettable': False,
         'type': 'ViInt32'
     },
+    1150027: {
+        'access': 'read-write',
+        'channel_based': True,
+        'enum': 'DigitalEdge',
+        'name': 'DIGITAL_EDGE_SEQUENCE_ADVANCE_TRIGGER_EDGE',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
     1150028: {
         'access': 'read-write',
         'channel_based': True,
@@ -306,6 +371,14 @@ attributes = {
         'resettable': False,
         'type': 'ViInt32'
     },
+    1150031: {
+        'access': 'read-write',
+        'channel_based': True,
+        'enum': 'DigitalEdge',
+        'name': 'DIGITAL_EDGE_SOURCE_TRIGGER_EDGE',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
     1150032: {
         'access': 'read-write',
         'channel_based': True,
@@ -325,6 +398,14 @@ attributes = {
         'channel_based': True,
         'enum': 'TriggerType',
         'name': 'MEASURE_TRIGGER_TYPE',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1150035: {
+        'access': 'read-write',
+        'channel_based': True,
+        'enum': 'DigitalEdge',
+        'name': 'DIGITAL_EDGE_MEASURE_TRIGGER_EDGE',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -742,6 +823,14 @@ attributes = {
         'resettable': False,
         'type': 'ViInt32'
     },
+    1150096: {
+        'access': 'read-write',
+        'channel_based': True,
+        'enum': 'DigitalEdge',
+        'name': 'DIGITAL_EDGE_PULSE_TRIGGER_EDGE',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
     1150097: {
         'access': 'read-write',
         'channel_based': True,
@@ -1016,6 +1105,14 @@ attributes = {
         'channel_based': True,
         'enum': 'TriggerType',
         'name': 'SHUTDOWN_TRIGGER_TYPE',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1150276: {
+        'access': 'read-write',
+        'channel_based': True,
+        'enum': 'DigitalEdge',
+        'name': 'DIGITAL_EDGE_SHUTDOWN_TRIGGER_EDGE',
         'resettable': False,
         'type': 'ViInt32'
     },
