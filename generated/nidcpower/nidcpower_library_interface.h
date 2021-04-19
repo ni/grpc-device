@@ -112,6 +112,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus DisableSourceTrigger(ViSession vi) = 0;
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;
   virtual ViStatus FetchMultiple(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount) = 0;
@@ -133,6 +134,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) = 0;
   virtual ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute) = 0;
   virtual ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature) = 0;
+  virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi) = 0;
   virtual ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi) = 0;

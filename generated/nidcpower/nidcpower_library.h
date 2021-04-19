@@ -115,6 +115,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus DisableSourceTrigger(ViSession vi);
   ViStatus DisableStartTrigger(ViSession vi);
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
   ViStatus FetchMultiple(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount);
@@ -136,6 +137,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]);
   ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
   ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
+  ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi);
   ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi);
@@ -265,6 +267,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using DisableSourceTriggerPtr = ViStatus (*)(ViSession vi);
   using DisableStartTriggerPtr = ViStatus (*)(ViSession vi);
   using ErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  using ExportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 size, ViAddr configuration[]);
   using ExportAttributeConfigurationFilePtr = ViStatus (*)(ViSession vi, ViConstString filePath);
   using ExportSignalPtr = ViStatus (*)(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
   using FetchMultiplePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount);
@@ -286,6 +289,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using GetNextInterchangeWarningPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]);
   using GetSelfCalLastDateAndTimePtr = ViStatus (*)(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
   using GetSelfCalLastTempPtr = ViStatus (*)(ViSession vi, ViReal64* temperature);
+  using ImportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 size, ViAddr configuration[]);
   using ImportAttributeConfigurationFilePtr = ViStatus (*)(ViSession vi, ViConstString filePath);
   using InitExtCalPtr = ViStatus (*)(ViRsrc resourceName, ViConstString password, ViSession* vi);
   using InitializeWithChannelsPtr = ViStatus (*)(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi);
@@ -415,6 +419,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     DisableSourceTriggerPtr DisableSourceTrigger;
     DisableStartTriggerPtr DisableStartTrigger;
     ErrorMessagePtr ErrorMessage;
+    ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;
     ExportSignalPtr ExportSignal;
     FetchMultiplePtr FetchMultiple;
@@ -436,6 +441,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     GetNextInterchangeWarningPtr GetNextInterchangeWarning;
     GetSelfCalLastDateAndTimePtr GetSelfCalLastDateAndTime;
     GetSelfCalLastTempPtr GetSelfCalLastTemp;
+    ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
     InitExtCalPtr InitExtCal;
     InitializeWithChannelsPtr InitializeWithChannels;
