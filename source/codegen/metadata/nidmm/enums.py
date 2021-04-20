@@ -33,7 +33,6 @@ enums = {
                     'description': 'Running'
                 },
                 'name': 'NIDMM_VAL_RUNNING_ANTICOLLISION',
-                'python_name': 'RUNNING',
                 'value': 0
             },
             {
@@ -215,7 +214,6 @@ enums = {
                     'description': '2-Wire Resistance'
                 },
                 'name': 'NIDMM_VAL_2_WIRE_RES',
-                'python_name': 'TWO_WIRE_RES',
                 'value': 5
             },
             {
@@ -223,7 +221,6 @@ enums = {
                     'description': '4-Wire Resistance'
                 },
                 'name': 'NIDMM_VAL_4_WIRE_RES',
-                'python_name': 'FOUR_WIRE_RES',
                 'value': 101
             },
             {
@@ -627,7 +624,6 @@ enums = {
                     'description': '44004'
                 },
                 'name': 'NIDMM_VAL_TEMP_THERMISTOR_44004',
-                'python_name': 'TEMP_THERMISTOR_THERMISTOR_44004',
                 'value': 1
             },
             {
@@ -635,7 +631,6 @@ enums = {
                     'description': '44006'
                 },
                 'name': 'NIDMM_VAL_TEMP_THERMISTOR_44006',
-                'python_name': 'TEMP_THERMISTOR_THERMISTOR_44006',
                 'value': 2
             },
             {
@@ -643,7 +638,6 @@ enums = {
                     'description': '44007'
                 },
                 'name': 'NIDMM_VAL_TEMP_THERMISTOR_44007',
-                'python_name': 'TEMP_THERMISTOR_THERMISTOR_44007',
                 'value': 3
             }
         ]
@@ -740,7 +734,6 @@ enums = {
                     'description': '2-wire RTD'
                 },
                 'name': 'NIDMM_VAL_2_WIRE_RTD',
-                'python_name': 'TWO_WIRE_RTD',
                 'value': 3
             },
             {
@@ -748,7 +741,6 @@ enums = {
                     'description': '4-wire RTD'
                 },
                 'name': 'NIDMM_VAL_4_WIRE_RTD',
-                'python_name': 'FOUR_WIRE_RTD',
                 'value': 4
             }
         ]
