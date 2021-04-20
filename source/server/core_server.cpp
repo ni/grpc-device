@@ -53,8 +53,8 @@ static void RunServer(const std::string& config_file_path)
   niswitch_grpc::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
   builder.RegisterService(&niswitch_service);
 
-  nidmm_grpc::NiDMMLibrary nidmm_library;
-  nidmm_grpc::NiDMMService nidmm_service(&nidmm_library, &session_repository);
+  nidmm_grpc::NiDmmLibrary nidmm_library;
+  nidmm_grpc::NiDmmService nidmm_service(&nidmm_library, &session_repository);
   builder.RegisterService(&nidmm_service);
   
   nisync_grpc::NiSyncLibrary nisync_library;
