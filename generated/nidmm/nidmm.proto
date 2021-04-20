@@ -46,6 +46,7 @@ service NiDmm {
   rpc ConfigureOffsetCompOhms(ConfigureOffsetCompOhmsRequest) returns (ConfigureOffsetCompOhmsResponse);
   rpc ConfigureOpenCableCompValues(ConfigureOpenCableCompValuesRequest) returns (ConfigureOpenCableCompValuesResponse);
   rpc ConfigurePowerLineFrequency(ConfigurePowerLineFrequencyRequest) returns (ConfigurePowerLineFrequencyResponse);
+  rpc ConfigureShortCableCompValues(ConfigureShortCableCompValuesRequest) returns (ConfigureShortCableCompValuesResponse);
   rpc ConfigureRTDCustom(ConfigureRTDCustomRequest) returns (ConfigureRTDCustomResponse);
   rpc ConfigureRTDType(ConfigureRTDTypeRequest) returns (ConfigureRTDTypeResponse);
   rpc ConfigureSampleTriggerSlope(ConfigureSampleTriggerSlopeRequest) returns (ConfigureSampleTriggerSlopeResponse);
@@ -676,6 +677,16 @@ message ConfigurePowerLineFrequencyRequest {
 }
 
 message ConfigurePowerLineFrequencyResponse {
+  int32 status = 1;
+}
+
+message ConfigureShortCableCompValuesRequest {
+  nidevice_grpc.Session vi = 1;
+  double resistance = 2;
+  double reactance = 3;
+}
+
+message ConfigureShortCableCompValuesResponse {
   int32 status = 1;
 }
 

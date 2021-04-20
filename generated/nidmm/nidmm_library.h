@@ -48,6 +48,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus ConfigureOffsetCompOhms(ViSession vi, ViInt32 offsetCompOhms);
   ViStatus ConfigureOpenCableCompValues(ViSession vi, ViReal64 conductance, ViReal64 susceptance);
   ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerLineFrequencyHz);
+  ViStatus ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance);
   ViStatus ConfigureRTDCustom(ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC);
   ViStatus ConfigureRTDType(ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance);
   ViStatus ConfigureSampleTriggerSlope(ViSession vi, ViInt32 sampleTriggerSlope);
@@ -144,6 +145,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using ConfigureOffsetCompOhmsPtr = ViStatus (*)(ViSession vi, ViInt32 offsetCompOhms);
   using ConfigureOpenCableCompValuesPtr = ViStatus (*)(ViSession vi, ViReal64 conductance, ViReal64 susceptance);
   using ConfigurePowerLineFrequencyPtr = ViStatus (*)(ViSession vi, ViReal64 powerLineFrequencyHz);
+  using ConfigureShortCableCompValuesPtr = ViStatus (*)(ViSession vi, ViReal64 resistance, ViReal64 reactance);
   using ConfigureRTDCustomPtr = ViStatus (*)(ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC);
   using ConfigureRTDTypePtr = ViStatus (*)(ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance);
   using ConfigureSampleTriggerSlopePtr = ViStatus (*)(ViSession vi, ViInt32 sampleTriggerSlope);
@@ -240,6 +242,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     ConfigureOffsetCompOhmsPtr ConfigureOffsetCompOhms;
     ConfigureOpenCableCompValuesPtr ConfigureOpenCableCompValues;
     ConfigurePowerLineFrequencyPtr ConfigurePowerLineFrequency;
+    ConfigureShortCableCompValuesPtr ConfigureShortCableCompValues;
     ConfigureRTDCustomPtr ConfigureRTDCustom;
     ConfigureRTDTypePtr ConfigureRTDType;
     ConfigureSampleTriggerSlopePtr ConfigureSampleTriggerSlope;

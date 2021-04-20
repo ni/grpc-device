@@ -51,6 +51,7 @@ NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureOffsetCompOhms = reinterpret_cast<ConfigureOffsetCompOhmsPtr>(shared_library_.get_function_pointer("niDMM_ConfigureOffsetCompOhms"));
   function_pointers_.ConfigureOpenCableCompValues = reinterpret_cast<ConfigureOpenCableCompValuesPtr>(shared_library_.get_function_pointer("niDMM_ConfigureOpenCableCompValues"));
   function_pointers_.ConfigurePowerLineFrequency = reinterpret_cast<ConfigurePowerLineFrequencyPtr>(shared_library_.get_function_pointer("niDMM_ConfigurePowerLineFrequency"));
+  function_pointers_.ConfigureShortCableCompValues = reinterpret_cast<ConfigureShortCableCompValuesPtr>(shared_library_.get_function_pointer("niDMM_ConfigureShortCableCompValues"));
   function_pointers_.ConfigureRTDCustom = reinterpret_cast<ConfigureRTDCustomPtr>(shared_library_.get_function_pointer("niDMM_ConfigureRTDCustom"));
   function_pointers_.ConfigureRTDType = reinterpret_cast<ConfigureRTDTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureRTDType"));
   function_pointers_.ConfigureSampleTriggerSlope = reinterpret_cast<ConfigureSampleTriggerSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureSampleTriggerSlope"));
@@ -485,6 +486,18 @@ ViStatus NiDmmLibrary::ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerL
   return niDMM_ConfigurePowerLineFrequency(vi, powerLineFrequencyHz);
 #else
   return function_pointers_.ConfigurePowerLineFrequency(vi, powerLineFrequencyHz);
+#endif
+}
+
+ViStatus NiDmmLibrary::ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance)
+{
+  if (!function_pointers_.ConfigureShortCableCompValues) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureShortCableCompValues.");
+  }
+#if defined(_MSC_VER)
+  return niDMM_ConfigureShortCableCompValues(vi, resistance, reactance);
+#else
+  return function_pointers_.ConfigureShortCableCompValues(vi, resistance, reactance);
 #endif
 }
 

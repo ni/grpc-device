@@ -685,6 +685,27 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDmmService::ConfigureShortCableCompValues(::grpc::ServerContext* context, const ConfigureShortCableCompValuesRequest* request, ConfigureShortCableCompValuesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 resistance = request->resistance();
+      ViReal64 reactance = request->reactance();
+      auto status = library_->ConfigureShortCableCompValues(vi, resistance, reactance);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::ConfigureRTDCustom(::grpc::ServerContext* context, const ConfigureRTDCustomRequest* request, ConfigureRTDCustomResponse* response)
   {
     if (context->IsCancelled()) {

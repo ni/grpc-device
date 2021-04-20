@@ -47,6 +47,7 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureOffsetCompOhms, (ViSession vi, ViInt32 offsetCompOhms), (override));
   MOCK_METHOD(ViStatus, ConfigureOpenCableCompValues, (ViSession vi, ViReal64 conductance, ViReal64 susceptance), (override));
   MOCK_METHOD(ViStatus, ConfigurePowerLineFrequency, (ViSession vi, ViReal64 powerLineFrequencyHz), (override));
+  MOCK_METHOD(ViStatus, ConfigureShortCableCompValues, (ViSession vi, ViReal64 resistance, ViReal64 reactance), (override));
   MOCK_METHOD(ViStatus, ConfigureRTDCustom, (ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC), (override));
   MOCK_METHOD(ViStatus, ConfigureRTDType, (ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance), (override));
   MOCK_METHOD(ViStatus, ConfigureSampleTriggerSlope, (ViSession vi, ViInt32 sampleTriggerSlope), (override));

@@ -45,6 +45,7 @@ class NiDmmLibraryInterface {
   virtual ViStatus ConfigureOffsetCompOhms(ViSession vi, ViInt32 offsetCompOhms) = 0;
   virtual ViStatus ConfigureOpenCableCompValues(ViSession vi, ViReal64 conductance, ViReal64 susceptance) = 0;
   virtual ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerLineFrequencyHz) = 0;
+  virtual ViStatus ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance) = 0;
   virtual ViStatus ConfigureRTDCustom(ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC) = 0;
   virtual ViStatus ConfigureRTDType(ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance) = 0;
   virtual ViStatus ConfigureSampleTriggerSlope(ViSession vi, ViInt32 sampleTriggerSlope) = 0;

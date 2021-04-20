@@ -583,6 +583,26 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "ConfigureShortCableCompValues": {
+        "parameters": [
+        {
+            "name": "vi",
+            "direction": "in",
+            "type": "ViSession"
+        },
+        {
+            "name": "resistance",
+            "direction": "in",
+            "type": "ViReal64"
+        },
+        {
+            "name": "reactance",
+            "direction": "in",
+            "type": "ViReal64"
+        }
+        ],
+        "returns": "ViStatus"
+    },
     'ConfigureRTDCustom': {
         'parameters': [
             {

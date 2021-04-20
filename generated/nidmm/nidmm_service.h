@@ -54,6 +54,7 @@ public:
   ::grpc::Status ConfigureOffsetCompOhms(::grpc::ServerContext* context, const ConfigureOffsetCompOhmsRequest* request, ConfigureOffsetCompOhmsResponse* response) override;
   ::grpc::Status ConfigureOpenCableCompValues(::grpc::ServerContext* context, const ConfigureOpenCableCompValuesRequest* request, ConfigureOpenCableCompValuesResponse* response) override;
   ::grpc::Status ConfigurePowerLineFrequency(::grpc::ServerContext* context, const ConfigurePowerLineFrequencyRequest* request, ConfigurePowerLineFrequencyResponse* response) override;
+  ::grpc::Status ConfigureShortCableCompValues(::grpc::ServerContext* context, const ConfigureShortCableCompValuesRequest* request, ConfigureShortCableCompValuesResponse* response) override;
   ::grpc::Status ConfigureRTDCustom(::grpc::ServerContext* context, const ConfigureRTDCustomRequest* request, ConfigureRTDCustomResponse* response) override;
   ::grpc::Status ConfigureRTDType(::grpc::ServerContext* context, const ConfigureRTDTypeRequest* request, ConfigureRTDTypeResponse* response) override;
   ::grpc::Status ConfigureSampleTriggerSlope(::grpc::ServerContext* context, const ConfigureSampleTriggerSlopeRequest* request, ConfigureSampleTriggerSlopeResponse* response) override;
