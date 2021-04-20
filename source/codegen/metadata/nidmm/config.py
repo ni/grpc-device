@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 19.6.0d7
+# This file is generated from NI-Dmm API metadata version 19.6.0d7
 config = {
     'api_version': '19.6.0d7',
     'c_header': 'nidmm.h',
     'c_function_prefix': 'niDMM_',
-    'service_class_prefix': 'NiDMM',
+    'service_class_prefix': 'NiDmm',
     'java_package': 'com.ni.grpc.dmm',
-    'csharp_namespace': 'NationalInstruments.Grpc.DMM',
+    'csharp_namespace': 'NationalInstruments.Grpc.Dmm',
     'namespace_component': 'nidmm',
     'close_function': 'Close',
     'context_manager_name': {
@@ -16,7 +16,7 @@ config = {
     },
     'custom_types': [
     ],
-    'driver_name': 'NI-DMM',
+    'driver_name': 'NI-Dmm',
     'extra_errors_used': [
         'InvalidRepeatedCapabilityError',
         'SelfTestError'
@@ -44,6 +44,6 @@ config = {
     'module_name': 'nidmm',
     'repeated_capabilities': [
     ],
-    'session_class_description': 'An NI-DMM session to a National Instruments Digital Multimeter',
+    'session_class_description': 'An NI-Dmm session to a National Instruments Digital Multimeter',
     'session_handle_parameter_name': 'vi'
 }

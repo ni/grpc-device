@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 19.6.0d7
 functions = {
     'Abort': {
         'parameters': [
@@ -261,31 +259,6 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    # "CheckAttributeViString": {    
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "channelName",
-    #         "direction": "in",
-    #         "type": "ViConstString"
-    #     },
-    #     {
-    #         "name": "attributeId",
-    #         "direction": "in",
-    #         "type": "ViAttr"
-    #     },
-    #     {
-    #         "name": "attributeValue",
-    #         "direction": "in",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
     "ClearError": {   
         "parameters": [
         {
@@ -318,7 +291,6 @@ functions = {
                 'type': 'ViSession'
             }
         ],
-        'python_name': '_close',
         'returns': 'ViStatus',
         'use_session_lock': False
     },
@@ -554,12 +526,9 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=-1)',
                 'direction': 'in',
                 'name': 'sampleInterval',
-                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
                 'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
             }
         ],
         'returns': 'ViStatus'
@@ -767,12 +736,9 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=-1)',
                 'direction': 'in',
                 'name': 'triggerDelay',
-                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
                 'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
             }
         ],
         'returns': 'ViStatus'
@@ -878,14 +844,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'configuration',
-                'python_api_converter_name': 'convert_to_bytes',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'ViInt8[]',
-                'type_in_documentation': 'bytes',
-                'use_array': True
             }
         ],
         'returns': 'ViStatus'
@@ -913,12 +876,9 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(milliseconds=-1)',
                 'direction': 'in',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_milliseconds_int32',
                 'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or int in milliseconds'
             },
             {
                 'direction': 'out',
@@ -936,12 +896,9 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(milliseconds=-1)',
                 'direction': 'in',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_milliseconds_int32',
                 'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or int in milliseconds'
             },
             {
                 'direction': 'in',
@@ -962,24 +919,11 @@ functions = {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
                 'type': 'ViInt32',
-                'use_in_python_api': False
             }
         ],
         'returns': 'ViStatus'
     },
     'FetchWaveform': {
-        'method_templates': [
-            {
-                'documentation_filename': 'default_method',
-                'method_python_name_suffix': '',
-                'session_filename': 'default_method'
-            },
-            {
-                'documentation_filename': 'numpy_method',
-                'method_python_name_suffix': '_into',
-                'session_filename': 'numpy_read_method'
-            }
-        ],
         'parameters': [
             {
                 'direction': 'in',
@@ -987,12 +931,9 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(milliseconds=-1)',
                 'direction': 'in',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_milliseconds_int32',
                 'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or int in milliseconds'
             },
             {
                 'direction': 'in',
@@ -1014,7 +955,6 @@ functions = {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
                 'type': 'ViInt32',
-                'use_in_python_api': False
             }
         ],
         'returns': 'ViStatus'
@@ -1210,7 +1150,6 @@ functions = {
         "returns": "ViStatus"
     },
     'GetCalDateAndTime': {
-        'method_name_for_documentation': 'get_cal_date_and_time',
         'parameters': [
             {
                 'direction': 'in',
@@ -1289,31 +1228,6 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    # "GetChannelName": {
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "index",
-    #         "direction": "in",
-    #         "type": "ViInt32"
-    #     },
-    #     {
-    #         "name": "bufferSize",
-    #         "direction": "in",
-    #         "type": "ViInt32"
-    #     },
-    #     {
-    #         "name": "channelString",
-    #         "direction": "out",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
     'GetDevTemp': {
         'parameters': [
             {
@@ -1322,7 +1236,6 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': '""',
                 'direction': 'in',
                 'name': 'options',
                 'type': 'ViString'
@@ -1405,9 +1318,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'months',
-                'python_api_converter_name': 'convert_month_to_timedelta',
                 'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta'
             }
         ],
         'returns': 'ViStatus'
@@ -1447,46 +1358,6 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    # "GetNextCoercionRecord": {
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "bufferSize",
-    #         "direction": "in",
-    #         "type": "ViInt32"
-    #     },
-    #     {
-    #         "name": "coercionRecord",
-    #         "direction": "out",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
-    # "GetNextInterchangeWarning": {
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "bufferSize",
-    #         "direction": "in",
-    #         "type": "ViInt32"
-    #     },
-    #     {
-    #         "name": "interchangeWarning",
-    #         "direction": "out",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
     'GetSelfCalSupported': {
         'parameters': [
             {
@@ -1517,13 +1388,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'configuration',
-                'python_api_converter_name': 'convert_to_bytes',
                 'size': {
                     'mechanism': 'len',
                     'value': 'size'
                 },
                 'type': 'ViInt8[]',
-                'type_in_documentation': 'bytes'
             }
         ],
         'returns': 'ViStatus'
@@ -1543,26 +1412,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    # "InitExtCal": {
-    #     "parameters": [
-    #     {
-    #         "name": "resourceName",
-    #         "direction": "in",
-    #         "type": "ViChar[]"
-    #     },
-    #     {
-    #         "name": "calibrationPassword",
-    #         "direction": "in",
-    #         "type": "ViChar[]"
-    #     },
-    #     {
-    #         "name": "vi",
-    #         "direction": "out",
-    #         "type": "ViSession"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
     'Init':{
         'init_method': True,
         'cname': 'niDMM_init',
@@ -1592,7 +1441,6 @@ functions = {
     },
     'InitWithOptions': {
         'init_method': True,
-        'method_name_for_documentation': '__init__',
         'parameters': [
             {
                 'direction': 'in',
@@ -1604,7 +1452,6 @@ functions = {
                 'direction': 'in',
                 'name': 'idQuery',
                 'type': 'ViBoolean',
-                'use_in_python_api': False
             },
             {
                 'default_value': False,
@@ -1616,9 +1463,7 @@ functions = {
                 'default_value': '""',
                 'direction': 'in',
                 'name': 'optionString',
-                'python_api_converter_name': 'convert_init_with_options_dictionary',
                 'type': 'ViString',
-                'type_in_documentation': 'dict'
             },
             {
                 'direction': 'out',
@@ -1690,13 +1535,6 @@ functions = {
         "returns": "ViStatus"
     },
     'LockSession': {
-        'method_templates': [
-            {
-                'documentation_filename': 'lock',
-                'method_python_name_suffix': '',
-                'session_filename': 'lock'
-            }
-        ],
         'parameters': [
             {
                 'direction': 'in',
@@ -1709,7 +1547,6 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'python_name': 'lock',
         'render_in_session_base': True,
         'returns': 'ViStatus',
         'use_session_lock': False
@@ -1765,9 +1602,7 @@ functions = {
                 'default_value': 'hightime.timedelta(milliseconds=-1)',
                 'direction': 'in',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_milliseconds_int32',
                 'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or int in milliseconds'
             },
             {
                 'direction': 'out',
@@ -1785,12 +1620,9 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(milliseconds=-1)',
                 'direction': 'in',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_milliseconds_int32',
                 'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or int in milliseconds'
             },
             {
                 'direction': 'in',
@@ -1811,7 +1643,6 @@ functions = {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
                 'type': 'ViInt32',
-                'use_in_python_api': False
             }
         ],
         'returns': 'ViStatus'
@@ -1845,12 +1676,9 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'default_value': 'hightime.timedelta(milliseconds=-1)',
                 'direction': 'in',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_milliseconds_int32',
                 'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or int in milliseconds'
             },
             {
                 'direction': 'in',
@@ -1871,7 +1699,6 @@ functions = {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
                 'type': 'ViInt32',
-                'use_in_python_api': False
             }
         ],
         'returns': 'ViStatus'
@@ -1917,26 +1744,6 @@ functions = {
         ],
         "returns": "ViStatus"
     },
-    # "revision_query": {
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "instrumentDriverRevision",
-    #         "direction": "out",
-    #         "type": "ViChar[]"
-    #     },
-    #     {
-    #         "name": "firmwareRevision",
-    #         "direction": "out",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
     'SelfCal': {
         'parameters': [
             {
@@ -1949,7 +1756,6 @@ functions = {
     },
     'SelfTest': {
         'cname': 'niDMM_self_test',
-        'method_name_for_documentation': 'self_test',
         'parameters': [
             {
                 'direction': 'in',
@@ -2108,49 +1914,7 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    # "SetCalPassword": {
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "oldPassword",
-    #         "direction": "in",
-    #         "type": "ViChar[]"
-    #     },
-    #     {
-    #         "name": "newPassword",
-    #         "direction": "in",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
-    # "SetCalUserDefinedInfo": {
-    #     "parameters": [
-    #     {
-    #         "name": "vi",
-    #         "direction": "in",
-    #         "type": "ViSession"
-    #     },
-    #     {
-    #         "name": "info",
-    #         "direction": "in",
-    #         "type": "ViChar[]"
-    #     }
-    #     ],
-    #     "returns": "ViStatus"
-    # },
     'UnlockSession': {
-        'method_templates': [
-            {
-                'documentation_filename': 'unlock',
-                'method_python_name_suffix': '',
-                'session_filename': 'unlock'
-            }
-        ],
         'parameters': [
             {
                 'direction': 'in',
@@ -2163,7 +1927,6 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'python_name': 'unlock',
         'render_in_session_base': True,
         'returns': 'ViStatus',
         'use_session_lock': False
