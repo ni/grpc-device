@@ -16,7 +16,7 @@ config = {
     },
     'custom_types': [
     ],
-    'driver_name': 'NI-Dmm',
+    'driver_name': 'NI-DMM',
     'extra_errors_used': [
         'InvalidRepeatedCapabilityError',
         'SelfTestError'
@@ -44,6 +44,6 @@ config = {
     'module_name': 'nidmm',
     'repeated_capabilities': [
     ],
-    'session_class_description': 'An NI-Dmm session to a National Instruments Digital Multimeter',
+    'session_class_description': 'An NI-DMM session to a National Instruments Digital Multimeter',
     'session_handle_parameter_name': 'vi'
 }

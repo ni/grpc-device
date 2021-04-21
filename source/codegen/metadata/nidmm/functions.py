@@ -19,9 +19,6 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'documentation': {
-                    'description': '\nIdentifies a particular instrument session. You obtain the **vi**\nparameter from niDMM_init or niDMM_InitWithOptions. The default is\nNone.\n'
-                },
                 'name': 'vi',
                 'type': 'ViSession'
             }
@@ -325,15 +322,11 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'documentation': {
-                    'description': '\nIdentifies a particular instrument session. You obtain the **vi**\nparameter from niDMM_init or niDMM_InitWithOptions. The default is\nNone.\n'
-                },
                 'name': 'vi',
                 'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     "CloseExtCal": {       
         "parameters": [
@@ -1315,10 +1308,10 @@ functions = {
                     "mechanism": "ivi-dance",
                     "value": "bufferSize"
                 },
-         }
-         ],
-         "returns": "ViStatus"
-     },
+        }
+        ],
+        "returns": "ViStatus"
+    },
     'GetDevTemp': {
         'parameters': [
             {
@@ -1368,7 +1361,6 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     "GetErrorMessage": {
         "parameters": [
@@ -1613,7 +1605,6 @@ functions = {
             }
         ],
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'Initiate': {
         'parameters': [
@@ -1709,9 +1700,7 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus',
-        'use_session_lock': False
     },
     'PerformOpenCableComp': {
         'parameters': [
@@ -1930,11 +1919,11 @@ functions = {
              "size": {
                     "mechanism": "fixed",
                     "value": 256
-                }
+        }
          }
-         ],
-         "returns": "ViStatus"
-     },
+        ],
+        "returns": "ViStatus"
+    },
     'SelfCal': {
         'parameters': [
             {
@@ -2154,8 +2143,6 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus',
-        'use_session_lock': False
     }
 }

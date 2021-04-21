@@ -295,6 +295,8 @@ add_custom_command(
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/system/session_utilities_service_tests.cpp"
+    "source/tests/system/nidmm_driver_api_tests.cpp"
+    "source/tests/system/nidmm_session_tests.cpp"
     "source/tests/system/niscope_driver_api_tests.cpp"
     "source/tests/system/niscope_session_tests.cpp"
     "source/tests/system/niswitch_driver_api_tests.cpp"
