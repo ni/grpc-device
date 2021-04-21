@@ -455,7 +455,7 @@ void CheckStatus(int status)
     std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
     auto status = library_->GetNormalizationCoefficients(vi, channel_list, coefficient_info.size(), coefficient_info.data(), &number_of_coefficient_sets);
     response->set_status(status);
-    if (status != 0) {
+    if (status == 0) {
       response->set_number_of_coefficient_sets(number_of_coefficient_sets);
       Copy(coefficient_info, response->mutable_coefficient_info());
     }
@@ -488,7 +488,7 @@ void CheckStatus(int status)
     std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
     auto status = library_->GetScalingCoefficients(vi, channel_list, coefficient_info.size(), coefficient_info.data(), &number_of_coefficient_sets);
     response->set_status(status);
-    if (status != 0) {
+    if (status == 0) {
       response->set_number_of_coefficient_sets(number_of_coefficient_sets);
       Copy(coefficient_info, response->mutable_coefficient_info());
     }
