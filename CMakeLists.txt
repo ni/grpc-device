@@ -298,6 +298,7 @@ add_executable(SystemTestsRunner
     "source/tests/system/nidcpower_driver_api_tests.cpp"
     "source/tests/system/nidcpower_session_tests.cpp"
     "source/tests/system/nidmm_driver_api_tests.cpp"
+    "source/tests/system/nidmm_session_tests.cpp"
     "source/tests/system/niscope_driver_api_tests.cpp"
     "source/tests/system/niscope_session_tests.cpp"
     "source/tests/system/niswitch_driver_api_tests.cpp"
