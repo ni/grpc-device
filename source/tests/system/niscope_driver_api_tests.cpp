@@ -497,6 +497,46 @@ TEST_F(NiScopeDriverApiTest, NiScopeConfigureVertical_SendRequest_ConfigureCompl
   expect_api_success(response.status());
 }
 
+TEST_F(NiScopeDriverApiTest, NiScopeGetScalingCoefficients_SendRequest_NonZeroCoefficientsReturned)
+{
+  auto_setup();
+  ::grpc::ClientContext context;
+  scope::GetScalingCoefficientsRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list("0, 1");
+  scope::GetScalingCoefficientsResponse response;
+
+  ::grpc::Status status = GetStub()->GetScalingCoefficients(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+  EXPECT_EQ(2, response.coefficient_info_size());
+  EXPECT_EQ(0, response.coefficient_info(0).offset());
+  EXPECT_NE(0, response.coefficient_info(0).gain());
+  EXPECT_EQ(0, response.coefficient_info(0).reserved1());
+  EXPECT_EQ(0, response.coefficient_info(0).reserved2());
+}
+
+TEST_F(NiScopeDriverApiTest, NiScopeGetNormalizationCoefficients_SendRequest_NonZeroCoefficientsReturned)
+{
+  auto_setup();
+  ::grpc::ClientContext context;
+  scope::GetNormalizationCoefficientsRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list("0, 1");
+  scope::GetNormalizationCoefficientsResponse response;
+
+  ::grpc::Status status = GetStub()->GetNormalizationCoefficients(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+  EXPECT_EQ(2, response.coefficient_info_size());
+  EXPECT_EQ(0, response.coefficient_info(0).offset());
+  EXPECT_NE(0, response.coefficient_info(0).gain());
+  EXPECT_EQ(0, response.coefficient_info(0).reserved1());
+  EXPECT_EQ(0, response.coefficient_info(0).reserved2());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
