@@ -1616,6 +1616,28 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    "InitExtCal": {
+        "init_method" : True,
+        "codegen-method" : None,
+         "parameters": [
+         {
+             "name": "resourceName",
+             "direction": "in",
+             "type": "ViRsrc"
+         },
+         {
+             "name": "calibrationPassword",
+             "direction": "in",
+             "type": "ViString"
+         },
+         {
+             "name": "vi",
+             "direction": "out",
+             "type": "ViSession"
+         }
+         ],
+         "returns": "ViStatus"
+     },
     "InvalidateAllAttributes": {
         "parameters": [
         {

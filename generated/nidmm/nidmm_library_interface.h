@@ -92,6 +92,7 @@ class NiDmmLibraryInterface {
   virtual ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
+  virtual ViStatus InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi) = 0;
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
   virtual ViStatus IsOverRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange) = 0;
   virtual ViStatus IsUnderRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange) = 0;

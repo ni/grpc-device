@@ -95,6 +95,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
+  ViStatus InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
   ViStatus IsOverRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange);
   ViStatus IsUnderRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange);
@@ -200,6 +201,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using InitPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using InitWithOptionsPtr = ViStatus (*)(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   using InitiatePtr = ViStatus (*)(ViSession vi);
+  using InitExtCalPtr = ViStatus (*)(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi);
   using InvalidateAllAttributesPtr = ViStatus (*)(ViSession vi);
   using IsOverRangePtr = ViStatus (*)(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange);
   using IsUnderRangePtr = ViStatus (*)(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange);
@@ -305,6 +307,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     InitPtr Init;
     InitWithOptionsPtr InitWithOptions;
     InitiatePtr Initiate;
+    InitExtCalPtr InitExtCal;
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsOverRangePtr IsOverRange;
     IsUnderRangePtr IsUnderRange;
