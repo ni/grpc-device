@@ -1618,7 +1618,7 @@ functions = {
     },
     "InitExtCal": {
         "init_method" : True,
-        "codegen-method" : None,
+        "codegen_method" : None,
          "parameters": [
          {
              "name": "resourceName",
