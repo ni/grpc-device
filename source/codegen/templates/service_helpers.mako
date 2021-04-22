@@ -219,7 +219,7 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
       response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());
 %     else:
-      response->mutable_${parameter_name}()->Resize(${size}, 0); 
+      response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 %     endif
 %   else:
