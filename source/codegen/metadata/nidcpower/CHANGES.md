@@ -1,6 +1,34 @@
-# Changes in metadata from the nimi-python metadata
+# Changes in metadata from the base metadata
+
+## config.py
+
+The following metadata was added:
+- 'c_function_prefix': 'niDCPower_'
+- 'service_class_prefix': 'NiDCPower'
+- 'java_package': 'com.ni.grpc.dcpower'
+- 'csharp_namespace': 'NationalInstruments.Grpc.DCPower'
+
+The following function name was capitalised:
+- 'close_function': 'Close'
+
+## functions.py
+
+The following functions were tagged with 'init_method': True, to ensure their generated service handler registers the new session with the session_repository:
+- InitializeWithIndependentChannels
+- InitializeWithChannels
+- InitExtCal
+
+The following functions were tagged with their corresponding c_names:
+- reset
+- self_test
+- revision_query
+- ConfigureOVP
+- error_message
+- error_query
 
 ## attributes.py
+
+The documentation and lv_property values were removed from all the attributes.
 
 The following attributes were added : 
 - NIDCPOWER_ATTRIBUTE_RANGE_CHECK
