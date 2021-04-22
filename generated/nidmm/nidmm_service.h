@@ -101,7 +101,6 @@ public:
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
-  ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status IsOverRange(::grpc::ServerContext* context, const IsOverRangeRequest* request, IsOverRangeResponse* response) override;
   ::grpc::Status IsUnderRange(::grpc::ServerContext* context, const IsUnderRangeRequest* request, IsUnderRangeResponse* response) override;

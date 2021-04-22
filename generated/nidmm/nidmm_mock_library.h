@@ -94,7 +94,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, InitExtCal, (ViRsrc resourceName, ViString calibrationPassword, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsOverRange, (ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange), (override));
   MOCK_METHOD(ViStatus, IsUnderRange, (ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange), (override));

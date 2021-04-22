@@ -98,7 +98,6 @@ NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niDMM_init"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niDMM_InitWithOptions"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niDMM_Initiate"));
-  function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(shared_library_.get_function_pointer("niDMM_InitExtCal"));
   function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niDMM_InvalidateAllAttributes"));
   function_pointers_.IsOverRange = reinterpret_cast<IsOverRangePtr>(shared_library_.get_function_pointer("niDMM_IsOverRange"));
   function_pointers_.IsUnderRange = reinterpret_cast<IsUnderRangePtr>(shared_library_.get_function_pointer("niDMM_IsUnderRange"));
@@ -1059,18 +1058,6 @@ ViStatus NiDmmLibrary::Initiate(ViSession vi)
   return niDMM_Initiate(vi);
 #else
   return function_pointers_.Initiate(vi);
-#endif
-}
-
-ViStatus NiDmmLibrary::InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi)
-{
-  if (!function_pointers_.InitExtCal) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_InitExtCal.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_InitExtCal(resourceName, calibrationPassword, vi);
-#else
-  return function_pointers_.InitExtCal(resourceName, calibrationPassword, vi);
 #endif
 }
 
