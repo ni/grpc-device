@@ -9,8 +9,8 @@ namespace system {
 
 namespace dcpower = nidcpower_grpc;
 
-const int kTestViErrorRsrcNotFound = -1073807343;
-const char* kTestViErrorRsrcNotFoundMessage = "VISA:  (Hex 0xBFFF0011) Insufficient location information or the device or resource is not present in the system.";
+const int kTestViErrorRsrcNotFound = -1074134944;
+const char* kTestViErrorRsrcNotFoundMessage = "IVI: (Hex 0xBFFA0060) Insufficient location information or resource not present in the system.";
 const char* kTestRsrc = "FakeDevice";
 const char* kOptionsString = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";
 const char* kTestSession = "SessionName";
