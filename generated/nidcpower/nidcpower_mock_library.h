@@ -144,6 +144,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, LockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, Measure, (ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement), (override));
   MOCK_METHOD(ViStatus, MeasureMultiple, (ViSession vi, ViConstString channelName, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[]), (override));
+  MOCK_METHOD(ViStatus, ParseChannelCount, (ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels), (override));
   MOCK_METHOD(ViStatus, QueryInCompliance, (ViSession vi, ViConstString channelName, ViBoolean* inCompliance), (override));
   MOCK_METHOD(ViStatus, QueryMaxCurrentLimit, (ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit), (override));
   MOCK_METHOD(ViStatus, QueryMaxVoltageLevel, (ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel), (override));

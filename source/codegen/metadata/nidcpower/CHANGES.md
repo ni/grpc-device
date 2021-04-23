@@ -26,6 +26,12 @@ The following functions were tagged with their corresponding c_names:
 - error_message
 - error_query
 
+The following function, not originally in the base metadata, was newly added from nimi-python metadata:
+- `ParseChannelCount`
+
+The following function was tagged with `'codegen_method': 'private'`, because this API is not exposed in `nidcpower.h`.
+- `ParseChannelCount`
+
 ## attributes.py
 
 The documentation and lv_property values were removed from all the attributes.
