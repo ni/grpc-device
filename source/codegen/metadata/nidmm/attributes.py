@@ -227,7 +227,7 @@ attributes = {
     1150022: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'ADCCalibration',
+        'enum': 'AdcCalibration',
         'name': 'ADC_CALIBRATION',
         'resettable': False,
         'type': 'ViInt32'
@@ -235,6 +235,7 @@ attributes = {
     1150023: {
         'access': 'read-write',
         'channel_based': False,
+        'enum': 'CompensatedOhms',
         'name': 'OFFSET_COMP_OHMS',
         'resettable': False,
         'type': 'ViInt32'
@@ -249,7 +250,7 @@ attributes = {
     1150026: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'DCNoiseRejection',
+        'enum': 'DcNoiseRejection',
         'name': 'DC_NOISE_REJECTION',
         'resettable': False,
         'type': 'ViInt32'
@@ -345,7 +346,7 @@ attributes = {
     1150052: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'LCCalculationModel',
+        'enum': 'LcCalculationModel',
         'name': 'LC_CALCULATION_MODEL',
         'resettable': False,
         'type': 'ViInt32'
@@ -353,6 +354,7 @@ attributes = {
     1150053: {
         'access': 'read-write',
         'channel_based': False,
+        'enum': 'DcBias',
         'name': 'DC_BIAS',
         'resettable': False,
         'type': 'ViInt32'
@@ -447,6 +449,7 @@ attributes = {
     1250002: {
         'access': 'read-write',
         'channel_based': False,
+        'enum': 'Range',
         'name': 'RANGE',
         'resettable': False,
         'type': 'ViReal64'
