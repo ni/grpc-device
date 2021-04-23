@@ -34,7 +34,7 @@ def is_unsupported_struct(parameter):
 def is_unsupported_scalar_array(parameter):
   if not is_array(parameter['type']):
     return False
-  return is_enum(parameter) or get_underlying_type_name(parameter['type']) in {'ViInt16', 'ViBoolean'}
+  return is_enum(parameter) or get_underlying_type_name(parameter['type']) in {'ViInt16'}
 
 def camel_to_snake(camelString):
   '''Returns a snake_string for a given camelString.'''
@@ -88,6 +88,14 @@ def get_used_enums(functions, attributes):
     if "enum" in attributes[attribute]:
       used_enums.add(attributes[attribute]["enum"])
   return used_enums
+
+def has_viboolean_array_param(functions):
+  '''Returns True if atleast one function has parameter of type ViBoolean[]'''
+  for function in functions:
+    for parameter in functions[function]["parameters"]:
+      if parameter['type'] == 'ViBoolean[]':
+        return True
+  return False
 
 def get_size_mechanism(parameter):
   size = parameter.get('size', {})

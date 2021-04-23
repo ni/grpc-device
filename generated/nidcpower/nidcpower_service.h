@@ -177,6 +177,7 @@ public:
 private:
   NiDCPowerLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
+  void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 };
 
 } // namespace nidcpower_grpc

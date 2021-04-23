@@ -51,6 +51,9 @@ public:
 private:
   ${service_class_prefix}LibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
+% if common_helpers.has_viboolean_array_param(functions):
+  void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
+% endif
 % if 'custom_types' in locals():
 %   for custom_type in custom_types:
   void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);

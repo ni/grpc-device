@@ -23,6 +23,12 @@ namespace nidcpower_grpc {
   {
   }
 
+  void NiDCPowerService::Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output) 
+  {
+    for (auto item : input) {
+      output->Add(item != VI_FALSE);
+    }
+  }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::AbortWithChannels(::grpc::ServerContext* context, const AbortWithChannelsRequest* request, AbortWithChannelsResponse* response)
@@ -2168,7 +2174,24 @@ namespace nidcpower_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 timeout = request->timeout();
+      ViInt32 count = request->count();
+      response->mutable_voltage_measurements()->Resize(count, 0);
+      ViReal64* voltage_measurements = response->mutable_voltage_measurements()->mutable_data();
+      response->mutable_current_measurements()->Resize(count, 0);
+      ViReal64* current_measurements = response->mutable_current_measurements()->mutable_data();
+      std::vector<ViBoolean> in_compliance(count, ViBoolean());
+      ViInt32 actual_count {};
+      auto status = library_->FetchMultiple(vi, channel_name, timeout, count, voltage_measurements, current_measurements, in_compliance.data(), &actual_count);
+      response->set_status(status);
+      if (status == 0) {
+        Copy(in_compliance, response->mutable_in_compliance());
+        response->set_actual_count(actual_count);
+      }
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

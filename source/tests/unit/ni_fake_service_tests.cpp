@@ -498,6 +498,33 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_BoolArrayOutputFunction_CallsBoolArrayOutputFunction)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  nifake_grpc::NiFakeService service(&library, &session_repository);
+  ViInt32 number_of_elements = 3;
+  ViBoolean an_array[] = {VI_FALSE, VI_TRUE, VI_TRUE};
+  EXPECT_CALL(library, BoolArrayOutputFunction(kTestViSession, number_of_elements, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(an_array, an_array + number_of_elements),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::BoolArrayOutputFunctionRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_number_of_elements(number_of_elements);
+  nifake_grpc::BoolArrayOutputFunctionResponse response;
+  ::grpc::Status status = service.BoolArrayOutputFunction(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  bool expected_response_booleans[] = {false, true, true};
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(response.an_array_size(), number_of_elements);
+  EXPECT_THAT(response.an_array(), ElementsAreArray(expected_response_booleans, number_of_elements));
+}
+
 TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
 {
   nidevice_grpc::SessionRepository session_repository;

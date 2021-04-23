@@ -37,6 +37,14 @@ namespace ${config["namespace_component"]}_grpc {
   {
   }
 
+% if common_helpers.has_viboolean_array_param(functions):
+  void ${service_class_prefix}Service::Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output) 
+  {
+    for (auto item : input) {
+      output->Add(item != VI_FALSE);
+    }
+  }
+% endif
 % if 'custom_types' in locals():
 %   for custom_type in custom_types:
   void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
