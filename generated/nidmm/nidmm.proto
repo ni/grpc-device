@@ -16,6 +16,7 @@ package nidmm_grpc;
 import "session.proto";
 
 service NiDmm {
+  rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc CalAdjustGain(CalAdjustGainRequest) returns (CalAdjustGainResponse);
   rpc CalAdjustACFilter(CalAdjustACFilterRequest) returns (CalAdjustACFilterResponse);
@@ -27,6 +28,7 @@ service NiDmm {
   rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
   rpc CheckAttributeViReal64(CheckAttributeViReal64Request) returns (CheckAttributeViReal64Response);
   rpc CheckAttributeViSession(CheckAttributeViSessionRequest) returns (CheckAttributeViSessionResponse);
+  rpc CheckAttributeViString(CheckAttributeViStringRequest) returns (CheckAttributeViStringResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
@@ -76,12 +78,15 @@ service NiDmm {
   rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
   rpc GetCalUserDefinedInfo(GetCalUserDefinedInfoRequest) returns (GetCalUserDefinedInfoResponse);
   rpc GetCalUserDefinedInfoMaxSize(GetCalUserDefinedInfoMaxSizeRequest) returns (GetCalUserDefinedInfoMaxSizeResponse);
+  rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetDevTemp(GetDevTempRequest) returns (GetDevTempResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetErrorMessage(GetErrorMessageRequest) returns (GetErrorMessageResponse);
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
   rpc GetLastCalTemp(GetLastCalTempRequest) returns (GetLastCalTempResponse);
   rpc GetMeasurementPeriod(GetMeasurementPeriodRequest) returns (GetMeasurementPeriodResponse);
+  rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
+  rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
@@ -102,6 +107,7 @@ service NiDmm {
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc RestoreLastExtCalConstants(RestoreLastExtCalConstantsRequest) returns (RestoreLastExtCalConstantsResponse);
+  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
   rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
   rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
@@ -110,6 +116,8 @@ service NiDmm {
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
+  rpc SetCalPassword(SetCalPasswordRequest) returns (SetCalPasswordResponse);
+  rpc SetCalUserDefinedInfo(SetCalUserDefinedInfoRequest) returns (SetCalUserDefinedInfoResponse);
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
 }
 
@@ -458,6 +466,15 @@ enum WaveformCoupling {
   WAVEFORM_COUPLING_NIDMM_VAL_WAVEFORM_COUPLING_DC = 1;
 }
 
+message Control4022Request {
+  string resource_name = 1;
+  sint32 configuration = 2;
+}
+
+message Control4022Response {
+  int32 status = 1;
+}
+
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -578,6 +595,17 @@ message CheckAttributeViSessionRequest {
 }
 
 message CheckAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message CheckAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDmmAttributes attribute_id = 3;
+  string attribute_value = 4;
+}
+
+message CheckAttributeViStringResponse {
   int32 status = 1;
 }
 
@@ -1097,6 +1125,16 @@ message GetCalUserDefinedInfoMaxSizeResponse {
   sint32 info_size = 2;
 }
 
+message GetChannelNameRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 index = 2;
+}
+
+message GetChannelNameResponse {
+  int32 status = 1;
+  string channel_string = 2;
+}
+
 message GetDevTempRequest {
   nidevice_grpc.Session vi = 1;
   string options = 2;
@@ -1156,6 +1194,24 @@ message GetMeasurementPeriodRequest {
 message GetMeasurementPeriodResponse {
   int32 status = 1;
   double period = 2;
+}
+
+message GetNextCoercionRecordRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetNextCoercionRecordResponse {
+  int32 status = 1;
+  string coercion_record = 2;
+}
+
+message GetNextInterchangeWarningRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetNextInterchangeWarningResponse {
+  int32 status = 1;
+  string interchange_warning = 2;
 }
 
 message GetSelfCalSupportedRequest {
@@ -1352,6 +1408,16 @@ message RestoreLastExtCalConstantsResponse {
   int32 status = 1;
 }
 
+message RevisionQueryRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message RevisionQueryResponse {
+  int32 status = 1;
+  string instrument_driver_revision = 2;
+  string firmware_revision = 3;
+}
+
 message SelfCalRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1430,6 +1496,25 @@ message SetAttributeViStringRequest {
 }
 
 message SetAttributeViStringResponse {
+  int32 status = 1;
+}
+
+message SetCalPasswordRequest {
+  nidevice_grpc.Session vi = 1;
+  string old_password = 2;
+  string new_password = 3;
+}
+
+message SetCalPasswordResponse {
+  int32 status = 1;
+}
+
+message SetCalUserDefinedInfoRequest {
+  nidevice_grpc.Session vi = 1;
+  string info = 2;
+}
+
+message SetCalUserDefinedInfoResponse {
   int32 status = 1;
 }
 
