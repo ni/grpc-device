@@ -66,11 +66,15 @@ ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
   if (!function_pointers_.${method_name}) {
     throw nidevice_grpc::LibraryLoadException("Could not find ${c_name}.");
   }
+% if service_helpers.is_private_method(f):
+  return function_pointers_.${method_name}(${argument_list});
+% else:
 #if defined(_MSC_VER)
   return ${c_name}(${argument_list});
 #else
   return function_pointers_.${method_name}(${argument_list});
 #endif
+% endif
 }
 
 % endfor

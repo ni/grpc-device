@@ -145,6 +145,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus Measure(ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement);
   ViStatus MeasureMultiple(ViSession vi, ViConstString channelName, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[]);
+  ViStatus ParseChannelCount(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels);
   ViStatus QueryInCompliance(ViSession vi, ViConstString channelName, ViBoolean* inCompliance);
   ViStatus QueryMaxCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit);
   ViStatus QueryMaxVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel);
@@ -297,6 +298,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using MeasurePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement);
   using MeasureMultiplePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[]);
+  using ParseChannelCountPtr = ViStatus (*)(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels);
   using QueryInCompliancePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViBoolean* inCompliance);
   using QueryMaxCurrentLimitPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit);
   using QueryMaxVoltageLevelPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel);
@@ -449,6 +451,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     LockSessionPtr LockSession;
     MeasurePtr Measure;
     MeasureMultiplePtr MeasureMultiple;
+    ParseChannelCountPtr ParseChannelCount;
     QueryInCompliancePtr QueryInCompliance;
     QueryMaxCurrentLimitPtr QueryMaxCurrentLimit;
     QueryMaxVoltageLevelPtr QueryMaxVoltageLevel;

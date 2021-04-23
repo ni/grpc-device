@@ -142,6 +142,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus Measure(ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement) = 0;
   virtual ViStatus MeasureMultiple(ViSession vi, ViConstString channelName, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[]) = 0;
+  virtual ViStatus ParseChannelCount(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels) = 0;
   virtual ViStatus QueryInCompliance(ViSession vi, ViConstString channelName, ViBoolean* inCompliance) = 0;
   virtual ViStatus QueryMaxCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit) = 0;
   virtual ViStatus QueryMaxVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel) = 0;
