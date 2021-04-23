@@ -38,7 +38,7 @@ options = "Simulate=1, DriverSetup=Model:4065; BoardType:PCI"
 
 # parameters
 MAXPTSTOREAD        = 1000
-config_range        = 10.00
+config_range        = 10.0
 resolution          = 5.5
 measurementType     = nidmm_types.Function.FUNCTION_NIDMM_VAL_DC_VOLTS
 powerlineFreq       = 60.0
@@ -54,7 +54,7 @@ if len(sys.argv) >= 4:
 
 # Create the communication channel for the remote host and create connections to the NI-DMM and session services.
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
-nidmm_client = grpc_nidmm.NiDMMStub(channel)
+nidmm_client = grpc_nidmm.NiDmmStub(channel)
 
 any_error = False
 # Checks for errors. If any, throws an exception to stop the execution.
@@ -128,10 +128,17 @@ try:
     fig.show()
     fig.canvas.draw()
 
-    print("\nReading values in loop. CTRL+C to stop.\n")
+    # Handle closing of plot window
+    closed = False
+    def on_close(event):
+        global closed
+        closed = True
+    fig.canvas.mpl_connect('close_event', on_close)
+
+    print("\nReading values in loop. CTRL+C or Close window to stop.\n")
 
     try:
-        while True:
+        while not closed:
             pts_available = 0
             # Check available data
             read_status_response = nidmm_client.ReadStatus(nidmm_types.ReadStatusRequest(

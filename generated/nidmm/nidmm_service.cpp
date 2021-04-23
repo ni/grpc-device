@@ -117,7 +117,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 type = request->type();
+      ViInt32 type;
+      switch (request->type_enum_case()) {
+        case nidmm_grpc::CalAdjustLCRequest::TypeEnumCase::kType:
+          type = (ViInt32)request->type();
+          break;
+        case nidmm_grpc::CalAdjustLCRequest::TypeEnumCase::kTypeRaw:
+          type = (ViInt32)request->type_raw();
+          break;
+        case nidmm_grpc::CalAdjustLCRequest::TypeEnumCase::TYPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for type was not specified or out of range");
+          break;
+      }
+
       auto status = library_->CalAdjustLC(vi, type);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -160,7 +172,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 type = request->type();
+      ViInt32 type;
+      switch (request->type_enum_case()) {
+        case nidmm_grpc::CalAdjustMiscRequest::TypeEnumCase::kType:
+          type = (ViInt32)request->type();
+          break;
+        case nidmm_grpc::CalAdjustMiscRequest::TypeEnumCase::kTypeRaw:
+          type = (ViInt32)request->type_raw();
+          break;
+        case nidmm_grpc::CalAdjustMiscRequest::TypeEnumCase::TYPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for type was not specified or out of range");
+          break;
+      }
+
       auto status = library_->CalAdjustMisc(vi, type);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -369,7 +393,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 action = request->action();
+      ViInt32 action;
+      switch (request->action_enum_case()) {
+        case nidmm_grpc::CloseExtCalRequest::ActionEnumCase::kAction:
+          action = (ViInt32)request->action();
+          break;
+        case nidmm_grpc::CloseExtCalRequest::ActionEnumCase::kActionRaw:
+          action = (ViInt32)request->action_raw();
+          break;
+        case nidmm_grpc::CloseExtCalRequest::ActionEnumCase::ACTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
+          break;
+      }
+
       auto status = library_->CloseExtCal(vi, action);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1395,7 +1431,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 cal_type = request->cal_type();
+      ViInt32 cal_type;
+      switch (request->cal_type_enum_case()) {
+        case nidmm_grpc::GetCalCountRequest::CalTypeEnumCase::kCalType:
+          cal_type = (ViInt32)request->cal_type();
+          break;
+        case nidmm_grpc::GetCalCountRequest::CalTypeEnumCase::kCalTypeRaw:
+          cal_type = (ViInt32)request->cal_type_raw();
+          break;
+        case nidmm_grpc::GetCalCountRequest::CalTypeEnumCase::CAL_TYPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cal_type was not specified or out of range");
+          break;
+      }
+
       ViInt32 count {};
       auto status = library_->GetCalCount(vi, cal_type, &count);
       response->set_status(status);
@@ -1419,7 +1467,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 cal_type = request->cal_type();
+      ViInt32 cal_type;
+      switch (request->cal_type_enum_case()) {
+        case nidmm_grpc::GetCalDateAndTimeRequest::CalTypeEnumCase::kCalType:
+          cal_type = (ViInt32)request->cal_type();
+          break;
+        case nidmm_grpc::GetCalDateAndTimeRequest::CalTypeEnumCase::kCalTypeRaw:
+          cal_type = (ViInt32)request->cal_type_raw();
+          break;
+        case nidmm_grpc::GetCalDateAndTimeRequest::CalTypeEnumCase::CAL_TYPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cal_type was not specified or out of range");
+          break;
+      }
+
       ViInt32 month {};
       ViInt32 day {};
       ViInt32 year {};
@@ -1642,7 +1702,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 cal_type = request->cal_type();
+      ViInt32 cal_type;
+      switch (request->cal_type_enum_case()) {
+        case nidmm_grpc::GetLastCalTempRequest::CalTypeEnumCase::kCalType:
+          cal_type = (ViInt32)request->cal_type();
+          break;
+        case nidmm_grpc::GetLastCalTempRequest::CalTypeEnumCase::kCalTypeRaw:
+          cal_type = (ViInt32)request->cal_type_raw();
+          break;
+        case nidmm_grpc::GetLastCalTempRequest::CalTypeEnumCase::CAL_TYPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cal_type was not specified or out of range");
+          break;
+      }
+
       ViReal64 temperature {};
       auto status = library_->GetLastCalTemp(vi, cal_type, &temperature);
       response->set_status(status);
