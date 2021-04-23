@@ -1,4 +1,20 @@
 functions = {
+    "Control4022":{
+        "cname":"niDMM_4022Control",
+        "parameters":[
+            {
+                "name":"resourceName",
+                "direction":"in",
+                "type":"ViRsrc"
+            },
+            {
+                "name":"configuration",
+                "direction":"in",
+                "type":"ViInt32"
+            }
+        ],
+        "returns":"ViStatus"
+    },
     'Abort': {
         'parameters': [
             {
@@ -258,6 +274,31 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "CheckAttributeViString": {
+         "parameters": [
+         {
+             "name": "vi",
+             "direction": "in",
+             "type": "ViSession"
+         },
+         {
+             "name": "channelName",
+             "direction": "in",
+             "type": "ViConstString"
+         },
+         {
+             "name": "attributeId",
+             "direction": "in",
+             "type": "ViAttr"
+         },
+         {
+             "name": "attributeValue",
+             "direction": "in",
+             "type": "ViString"
+         }
+         ],
+         "returns": "ViStatus"
+     },
     "ClearError": {   
         "parameters": [
         {
@@ -1246,6 +1287,36 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "GetChannelName": {
+         "codegen_method":"public",
+         "parameters": [
+         {
+             "name": "vi",
+             "direction": "in",
+             "type": "ViSession"
+         },
+         {
+             "name": "index",
+             "direction": "in",
+             "type": "ViInt32"
+         },
+         {
+             "name": "bufferSize",
+             "direction": "in",
+             "type": "ViInt32"
+         },
+         {
+             "name": "channelString",
+             "direction": "out",
+             "type": "ViChar[]",
+             "size": {
+                    "mechanism": "ivi-dance",
+                    "value": "bufferSize"
+                },
+        }
+        ],
+        "returns": "ViStatus"
+    },
     'GetDevTemp': {
         'parameters': [
             {
@@ -1376,6 +1447,56 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "GetNextCoercionRecord": {
+         "codegen_method":"public",
+         "parameters": [
+         {
+             "name": "vi",
+             "direction": "in",
+             "type": "ViSession"
+         },
+         {
+             "name": "bufferSize",
+             "direction": "in",
+             "type": "ViInt32"
+         },
+         {
+             "name": "coercionRecord",
+             "direction": "out",
+             "type": "ViChar[]",
+             "size": {
+                    "mechanism": "ivi-dance",
+                    "value": "bufferSize"
+                }
+         }
+         ],
+         "returns": "ViStatus"
+     },
+     "GetNextInterchangeWarning": {
+         "codegen_method":"public",
+         "parameters": [
+         {
+             "name": "vi",
+             "direction": "in",
+             "type": "ViSession"
+         },
+         {
+             "name": "bufferSize",
+             "direction": "in",
+             "type": "ViInt32"
+         },
+         {
+             "name": "interchangeWarning",
+             "direction": "out",
+             "type": "ViChar[]",
+             "size": {
+                    "mechanism": "ivi-dance",
+                    "value": "bufferSize"
+                },
+         }
+         ],
+         "returns": "ViStatus"
+     },
     'GetSelfCalSupported': {
         'parameters': [
             {
@@ -1501,6 +1622,28 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    "InitExtCal": {
+        "init_method" : True,
+        "codegen_method" : None,
+         "parameters": [
+         {
+             "name": "resourceName",
+             "direction": "in",
+             "type": "ViRsrc"
+         },
+         {
+             "name": "calibrationPassword",
+             "direction": "in",
+             "type": "ViString"
+         },
+         {
+             "name": "vi",
+             "direction": "out",
+             "type": "ViSession"
+         }
+         ],
+         "returns": "ViStatus"
+     },
     "InvalidateAllAttributes": {
         "parameters": [
         {
@@ -1759,6 +1902,35 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "RevisionQuery": {
+         "cname":"niDMM_revision_query",
+         "parameters": [
+         {
+             "name": "vi",
+             "direction": "in",
+             "type": "ViSession"
+         },
+         {
+             "name": "instrumentDriverRevision",
+             "direction": "out",
+             "type": "ViChar[]",
+             "size": {
+                    "mechanism": "fixed",
+                    "value": 256
+                }
+         },
+         {
+             "name": "firmwareRevision",
+             "direction": "out",
+             "type": "ViChar[]",
+             "size": {
+                    "mechanism": "fixed",
+                    "value": 256
+        }
+         }
+        ],
+        "returns": "ViStatus"
+    },
     'SelfCal': {
         'parameters': [
             {
@@ -1929,6 +2101,42 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    "SetCalPassword": {
+         "parameters": [
+         {
+             "name": "vi",
+             "direction": "in",
+             "type": "ViSession"
+         },
+         {
+             "name": "oldPassword",
+             "direction": "in",
+             "type": "ViString"
+         },
+         {
+             "name": "newPassword",
+             "direction": "in",
+             "type": "ViString"
+         }
+         ],
+         "returns": "ViStatus"
+     },
+     "SetCalUserDefinedInfo": {
+
+         "parameters": [
+         {
+             "name": "vi",
+             "direction": "in",
+             "type": "ViSession"
+         },
+         {
+             "name": "info",
+             "direction": "in",
+             "type": "ViString"
+         }
+         ],
+         "returns": "ViStatus"
+     },
     'UnlockSession': {
         'parameters': [
             {
