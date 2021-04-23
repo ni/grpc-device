@@ -81,6 +81,7 @@ functions = {
         {
             "name": "type",
             "direction": "in",
+            "enum": "LcCalibration",
             "type": "ViInt32"
         }
         ],
@@ -126,6 +127,7 @@ functions = {
         {
             "name": "type",
             "direction": "in",
+            "enum": "MiscCalibration",
             "type": "ViInt32"
         }
         ],
@@ -297,6 +299,7 @@ functions = {
         {
             "name": "action",
             "direction": "in",
+            "enum": "CalibrationCloseAction",
             "type": "ViInt32"
         }
         ],
@@ -630,7 +633,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'RTDType',
+                'enum': 'RtdType',
                 'name': 'rtdType',
                 'type': 'ViInt32'
             },
@@ -1152,6 +1155,7 @@ functions = {
         {
             "name": "calType",
             "direction": "in",
+            "enum": "CalibrationType",
             "type": "ViInt32"
         },
         {
@@ -1172,6 +1176,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'calType',
+                "enum": "CalibrationType",
                 'type': 'ViInt32'
             },
             {
@@ -1345,6 +1350,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'calType',
+                "enum": "CalibrationType",
                 'type': 'ViInt32'
             },
             {
