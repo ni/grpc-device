@@ -11,7 +11,7 @@ namespace nisync = nisync_grpc;
 
 static const int kSyncDeviceNotFound = -1074118634;
 // Update the value of 'kTestRsrcName' to the name of your NI-Sync device.
-static const char* kTestRsrcName = "PXI1Slot4";
+static const char* kTestRsrcName = "Dev1";
 static const char* kTestSessionName = "TestSession";
 static const char* kEmptySessionName = "";
 static const char* kInvalidRsrcName = "InvalidName";

@@ -26,6 +26,12 @@ public:
   virtual ~NiSyncService();
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
+  ::grpc::Status ConnectClkTerminals(::grpc::ServerContext* context, const ConnectClkTerminalsRequest* request, ConnectClkTerminalsResponse* response) override;
+  ::grpc::Status DisconnectClkTerminals(::grpc::ServerContext* context, const DisconnectClkTerminalsRequest* request, DisconnectClkTerminalsResponse* response) override;
+  ::grpc::Status ConnectSWTrigToTerminal(::grpc::ServerContext* context, const ConnectSWTrigToTerminalRequest* request, ConnectSWTrigToTerminalResponse* response) override;
+  ::grpc::Status DisconnectSWTrigFromTerminal(::grpc::ServerContext* context, const DisconnectSWTrigFromTerminalRequest* request, DisconnectSWTrigFromTerminalResponse* response) override;
+  ::grpc::Status ConnectTrigTerminals(::grpc::ServerContext* context, const ConnectTrigTerminalsRequest* request, ConnectTrigTerminalsResponse* response) override;
+  ::grpc::Status DisconnectTrigTerminals(::grpc::ServerContext* context, const DisconnectTrigTerminalsRequest* request, DisconnectTrigTerminalsResponse* response) override;
 private:
   NiSyncLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;

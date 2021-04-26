@@ -73,5 +73,138 @@ namespace nisync_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::ConnectClkTerminals(::grpc::ServerContext* context, const ConnectClkTerminalsRequest* request, ConnectClkTerminalsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString src_terminal = request->src_terminal().c_str();
+      ViConstString dest_terminal = request->dest_terminal().c_str();
+      auto status = library_->ConnectClkTerminals(vi, src_terminal, dest_terminal);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::DisconnectClkTerminals(::grpc::ServerContext* context, const DisconnectClkTerminalsRequest* request, DisconnectClkTerminalsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString src_terminal = request->src_terminal().c_str();
+      ViConstString dest_terminal = request->dest_terminal().c_str();
+      auto status = library_->DisconnectClkTerminals(vi, src_terminal, dest_terminal);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::ConnectSWTrigToTerminal(::grpc::ServerContext* context, const ConnectSWTrigToTerminalRequest* request, ConnectSWTrigToTerminalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString src_terminal = request->src_terminal().c_str();
+      ViConstString dest_terminal = request->dest_terminal().c_str();
+      ViConstString sync_clock = request->sync_clock().c_str();
+      ViInt32 invert = request->invert();
+      ViInt32 update_edge = request->update_edge();
+      ViReal64 delay = request->delay();
+      auto status = library_->ConnectSWTrigToTerminal(vi, src_terminal, dest_terminal, sync_clock, invert, update_edge, delay);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::DisconnectSWTrigFromTerminal(::grpc::ServerContext* context, const DisconnectSWTrigFromTerminalRequest* request, DisconnectSWTrigFromTerminalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString src_terminal = request->src_terminal().c_str();
+      ViConstString dest_terminal = request->dest_terminal().c_str();
+      auto status = library_->DisconnectSWTrigFromTerminal(vi, src_terminal, dest_terminal);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::ConnectTrigTerminals(::grpc::ServerContext* context, const ConnectTrigTerminalsRequest* request, ConnectTrigTerminalsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString src_terminal = request->src_terminal().c_str();
+      ViConstString dest_terminal = request->dest_terminal().c_str();
+      ViConstString sync_clock = request->sync_clock().c_str();
+      ViInt32 invert = request->invert();
+      ViInt32 update_edge = request->update_edge();
+      auto status = library_->ConnectTrigTerminals(vi, src_terminal, dest_terminal, sync_clock, invert, update_edge);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::DisconnectTrigTerminals(::grpc::ServerContext* context, const DisconnectTrigTerminalsRequest* request, DisconnectTrigTerminalsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString src_terminal = request->src_terminal().c_str();
+      ViConstString dest_terminal = request->dest_terminal().c_str();
+      auto status = library_->DisconnectTrigTerminals(vi, src_terminal, dest_terminal);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 } // namespace nisync_grpc
 

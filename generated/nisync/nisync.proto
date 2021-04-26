@@ -18,6 +18,12 @@ import "session.proto";
 service NiSync {
   rpc Init(InitRequest) returns (InitResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc ConnectClkTerminals(ConnectClkTerminalsRequest) returns (ConnectClkTerminalsResponse);
+  rpc DisconnectClkTerminals(DisconnectClkTerminalsRequest) returns (DisconnectClkTerminalsResponse);
+  rpc ConnectSWTrigToTerminal(ConnectSWTrigToTerminalRequest) returns (ConnectSWTrigToTerminalResponse);
+  rpc DisconnectSWTrigFromTerminal(DisconnectSWTrigFromTerminalRequest) returns (DisconnectSWTrigFromTerminalResponse);
+  rpc ConnectTrigTerminals(ConnectTrigTerminalsRequest) returns (ConnectTrigTerminalsResponse);
+  rpc DisconnectTrigTerminals(DisconnectTrigTerminalsRequest) returns (DisconnectTrigTerminalsResponse);
 }
 
 enum NiSyncAttributes {
@@ -41,6 +47,73 @@ message CloseRequest {
 }
 
 message CloseResponse {
+  int32 status = 1;
+}
+
+message ConnectClkTerminalsRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+}
+
+message ConnectClkTerminalsResponse {
+  int32 status = 1;
+}
+
+message DisconnectClkTerminalsRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+}
+
+message DisconnectClkTerminalsResponse {
+  int32 status = 1;
+}
+
+message ConnectSWTrigToTerminalRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+  string sync_clock = 4;
+  sint32 invert = 5;
+  sint32 update_edge = 6;
+  double delay = 7;
+}
+
+message ConnectSWTrigToTerminalResponse {
+  int32 status = 1;
+}
+
+message DisconnectSWTrigFromTerminalRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+}
+
+message DisconnectSWTrigFromTerminalResponse {
+  int32 status = 1;
+}
+
+message ConnectTrigTerminalsRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+  string sync_clock = 4;
+  sint32 invert = 5;
+  sint32 update_edge = 6;
+}
+
+message ConnectTrigTerminalsResponse {
+  int32 status = 1;
+}
+
+message DisconnectTrigTerminalsRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+}
+
+message DisconnectTrigTerminalsResponse {
   int32 status = 1;
 }
 
