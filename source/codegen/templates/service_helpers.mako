@@ -7,7 +7,6 @@
 <%def name="define_init_method_body(function_name, function_data, parameters)">\
 <%
   config = data['config']
-  function = data['functions']
   
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
@@ -21,8 +20,8 @@ ${initialize_input_params(function_name, parameters)}
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      %if service_helpers.has_close_function(function,function_name):
-      auto cleanup_lambda = ${function[function_name].get('close_function', '')};
+      %if 'custom_close' in function_data:
+      auto cleanup_lambda = [&] (uint32_t id) { library_->${function_data['custom_close']}; };
       %else:
       auto cleanup_lambda = [&] (uint32_t id) { library_->${config['close_function']}(id); };
       %endif

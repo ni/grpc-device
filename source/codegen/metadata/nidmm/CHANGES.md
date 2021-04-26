@@ -71,6 +71,6 @@ The following functions were tagged with `'init_method': True,` to ensure their 
 with the session_repository.
 - `Init`
 - `InitWithOptions`
-- `InitExtCal`
+- `InitExtCal` : Added a 'custom_close' tag to this function, since this API has a corresponding close function called 'CloseExtCal'
 
 `'enum'` key added to function parameters that make use enums but had their enums missing, after adding those respective enums to `enums.py`.
