@@ -15,6 +15,7 @@ static const char* kTestRsrcName = "Dev1";
 static const char* kTestSessionName = "TestSession";
 static const char* kEmptySessionName = "";
 static const char* kInvalidRsrcName = "InvalidName";
+static const char* kInvalidTerminal = "Invalid";
 
 class NiSyncDriverApiTest : public ::testing::Test {
  protected:
@@ -80,6 +81,18 @@ class NiSyncDriverApiTest : public ::testing::Test {
 
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  ::grpc::Status call_SendSoftwareTrigger(ViConstString srcTerminal, ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SendSoftwareTriggerRequest request;
+    nisync::SendSoftwareTriggerResponse response;
+    request.set_src_terminal(srcTerminal);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SendSoftwareTrigger(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
   }
 
   ::grpc::Status call_ConnectClkTerminals(ViConstString srcTerminal, ViConstString destTerminal, ViStatus* viStatusOut)
@@ -198,7 +211,17 @@ TEST_F(NiSyncDriverApiTest, ConnectClkTerminals_ReturnsSuccess)
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  call_DisconnectSWTrigFromTerminal(srcTerminal, destTerminal, &viStatus);
+  call_DisconnectClkTerminals(srcTerminal, destTerminal, &viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, ConnectInvalidClkTerminals_ReturnsInvalidSrcTerminal)
+{
+  ViStatus viStatus;
+  auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_CLKOUT;
+  auto grpcStatus = call_ConnectClkTerminals(srcTerminal, destTerminal, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
 }
 
 TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectClkTerminals_ReturnsSuccess)
@@ -226,7 +249,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectNotConnectedClkTermi
   grpcStatus = call_DisconnectClkTerminals(notConnectedSrcTerminal, destTerminal, &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  call_DisconnectSWTrigFromTerminal(srcTerminal, destTerminal, &viStatus);
+  call_DisconnectClkTerminals(srcTerminal, destTerminal, &viStatus);
 }
 
 TEST_F(NiSyncDriverApiTest, ConnectSWTrigToTerminal_ReturnsSuccess)
@@ -248,6 +271,26 @@ TEST_F(NiSyncDriverApiTest, ConnectSWTrigToTerminal_ReturnsSuccess)
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
   call_DisconnectSWTrigFromTerminal(srcTerminal, destTerminal, &viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTerminal)
+{
+  ViStatus viStatus;
+  auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_PXIEDSTARC;
+  auto syncClock = NISYNC_VAL_SYNC_CLK_FULLSPEED;
+  ViInt32 invert = VI_TRUE, updateEdge = VI_FALSE;
+  ViReal64 delay = 0;
+  auto grpcStatus = call_ConnectSWTrigToTerminal(
+    srcTerminal,
+    destTerminal,
+    syncClock,
+    invert,
+    updateEdge,
+    delay,
+    &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
 }
 
 TEST_F(NiSyncDriverApiTest, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTerminal_ReturnsSuccess)
@@ -274,7 +317,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTermin
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, SWTrigNotConnectedToTerminal_DisconnectSWTrigFromTerminal_ReturnsSuccess)
+TEST_F(NiSyncDriverApiTest, SWTrigConnectedToTerminal_DisconnectSWTrigFromNotConnectedTerminal_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_SWTRIG_GLOBAL, destTerminal = NISYNC_VAL_PXIEDSTARC;
@@ -300,6 +343,26 @@ TEST_F(NiSyncDriverApiTest, SWTrigNotConnectedToTerminal_DisconnectSWTrigFromTer
   call_DisconnectSWTrigFromTerminal(srcTerminal, destTerminal, &viStatus);
 }
 
+TEST_F(NiSyncDriverApiTest, SendSoftwareTrigger_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  auto srcTerminal = NISYNC_VAL_SWTRIG_GLOBAL;
+  auto grpcStatus = call_SendSoftwareTrigger(srcTerminal, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SendSoftwareTriggerOnInvalidTerminal_ReturnsInvalidSrcTerminal)
+{
+  ViStatus viStatus;
+  auto srcTerminal = kInvalidTerminal;
+  auto grpcStatus = call_SendSoftwareTrigger(srcTerminal, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
+}
+
 TEST_F(NiSyncDriverApiTest, ConnectTrigTerminals_ReturnsSuccess)
 {
   ViStatus viStatus;
@@ -316,13 +379,13 @@ TEST_F(NiSyncDriverApiTest, ConnectTrigTerminals_ReturnsSuccess)
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  call_DisconnectSWTrigFromTerminal(srcTerminal, destTerminal, &viStatus);
+  call_DisconnectTrigTerminals(srcTerminal, destTerminal, &viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectTrigTerminalsWithInvalidTerminals_ReturnsInvalidSrcTerminal)
+TEST_F(NiSyncDriverApiTest, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
-  auto srcTerminal = NISYNC_VAL_PFI0, destTerminal = NISYNC_VAL_CLKOUT;
+  auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_CLKOUT;
   auto syncClock = NISYNC_VAL_SYNC_CLK_ASYNC;
   ViInt32 invert = VI_FALSE, updateEdge = VI_FALSE;
   auto grpcStatus = call_ConnectTrigTerminals(
