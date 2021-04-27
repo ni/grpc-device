@@ -1979,7 +1979,7 @@ namespace nidmm_grpc {
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->CloseExtCal(id,NIDMM_EXTCAL_ACTION_ABORT); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->CloseExtCal(id, NIDMM_EXTCAL_ACTION_ABORT); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
