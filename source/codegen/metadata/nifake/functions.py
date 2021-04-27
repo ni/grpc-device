@@ -1242,6 +1242,29 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'InitExtCal': {
+        'codegen_method': 'public',
+        'init_method' : True,
+        'custom_close' : 'CloseExtCal(id, 0)',
+         'parameters': [
+            {
+                'name': 'resourceName',
+                'direction': 'in',
+                'type': 'ViRsrc'
+            },
+            {
+                'name': 'calibrationPassword',
+                'direction': 'in',
+                'type': 'ViString'
+            },
+            {
+                'name': 'vi',
+                'direction': 'out',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+     },
     'LockSession': {
         'codegen_method': 'no',
         'documentation': {
@@ -2368,6 +2391,22 @@ functions = {
         'python_name': '_close',
         'returns': 'ViStatus',
         'use_session_lock': False
+    },
+    'CloseExtCal': { 
+        'codegen_method': 'public',
+        'parameters': [
+           {
+                'name': 'vi',
+                'direction': 'in',
+                'type': 'ViSession'
+           },
+           {
+                'name': 'action',
+                'direction': 'in',
+                'type': 'ViInt32'
+           }
+        ],
+        'returns': 'ViStatus'
     },
     'error_message': {
         'codegen_method': 'private',
