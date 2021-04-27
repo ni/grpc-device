@@ -127,6 +127,7 @@ try:
     fig = plt.gcf()
     fig.show()
     fig.canvas.draw()
+    fig.canvas.set_window_title('Measurements')
 
     # Handle closing of plot window
     closed = False
@@ -155,6 +156,8 @@ try:
                 # Clear the plot and setup the axis
                 plt.clf()
                 plt.axis()
+                plt.xlabel('Samples')
+                plt.ylabel('Amplitude')
 
                 # Fetch data
                 fetch_multipoints_response = nidmm_client.FetchMultiPoint(nidmm_types.FetchMultiPointRequest(
