@@ -2590,6 +2590,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'MeasureMultiple': {
+    'codegen_method': 'CustomCode',
     'parameters': [
       {
         'name': 'vi',
@@ -2606,7 +2607,7 @@ functions = {
         'direction': 'out',
         'type': 'ViReal64[]',
         'size': {
-          'mechanism': 'source-code',
+          'mechanism': 'custom-code',
           'size': 'number_of_channels'
         }
       },
@@ -2615,7 +2616,7 @@ functions = {
         'direction': 'out',
         'type': 'ViReal64[]',
         'size': {
-          'mechanism': 'source-code',
+          'mechanism': 'custom-code',
           'size': 'number_of_channels'
         }
       }
