@@ -171,4 +171,109 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "GetAttributeViInt32": {
+        "parameters": [
+        {
+            "direction": "in",
+            "name": "vi",
+            "type": "ViSession"
+        },
+        {
+            "direction": "in",
+            "name": "terminalName",
+            "type": "ViConstString"
+        },
+        {
+            "direction": "in",
+            "name": "attribute",
+            "type": "ViAttr"
+        },
+        {
+            "direction": "out",
+            "name": "value",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetAttributeViInt32": {
+        "parameters": [
+        {
+            "direction": "in",
+            "name": "vi",
+            "type": "ViSession"
+        },
+        {
+            "direction": "in",
+            "name": "terminalName",
+            "type": "ViConstString"
+        },
+        {
+            "direction": "in",
+            "name": "attribute",
+            "type": "ViAttr"
+        },
+        {
+            "direction": "in",
+            "name": "value",
+            "type": "ViInt32"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetAttributeViString": {
+        "parameters": [
+        {
+            "direction": "in",
+            "name": "vi",
+            "type": "ViSession"
+        },
+        {
+            "direction": "in",
+            "name": "terminalName",
+            "type": "ViConstString"
+        },
+        {
+            "direction": "in",
+            "name": "attribute",
+            "type": "ViAttr"
+        },
+        {
+            "direction": "in",
+            "name": "bufferSize",
+            "type": "ViInt32"
+        },
+        {
+            "direction": "out",
+            "name": "value",
+            "type": "ViChar"
+        }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetAttributeViString": {
+        "parameters": [
+        {
+            "direction": "in",
+            "name": "vi",
+            "type": "ViSession"
+        },
+        {
+            "direction": "in",
+            "name": "terminalName",
+            "type": "ViConstString"
+        },
+        {
+            "direction": "in",
+            "name": "attribute",
+            "type": "ViAttr"
+        },
+        {
+            "direction": "in",
+            "name": "value",
+            "type": "ViConstString"
+        }
+        ],
+        "returns": "ViStatus"
+    },
 }
