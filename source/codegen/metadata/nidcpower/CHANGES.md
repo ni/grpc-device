@@ -13,6 +13,11 @@ The following function name was capitalised:
 
 ## functions.py
 
+The following functions were tagged as 'codegen_method':'CustomCode':
+- MeasureMultiple
+
+For MeasureMultiple function, the value field 'size':'number_of_channels' was added inside parameters 'voltageMeasurements' and 'currentMeasurements'. Also the mechanism was changed to 'mechanism':'custom-code'. Doing this would allow custom implementation of MeasureMultiple API.
+
 The following functions were tagged with 'init_method': True, to ensure their generated service handler registers the new session with the session_repository:
 - InitializeWithIndependentChannels
 - InitializeWithChannels
