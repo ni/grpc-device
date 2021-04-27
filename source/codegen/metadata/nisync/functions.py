@@ -18,171 +18,171 @@ functions = {
     },
     "SendSoftwareTrigger": {
         "parameters": [
-        {
-            "direction": "in",
-            "name": "vi",
-            "type": "ViSession"
-        },
-        {
-            "direction": "in",
-            "name": "srcTerminal",
-            "type": "ViConstString"
-        }
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            }
         ],
         "returns": "ViStatus"
     },
     "ConnectClkTerminals": {
         "parameters": [
-        {
-            "direction": "in",
-            "name": "vi",
-            "type": "ViSession"
-        },
-        {
-            "direction": "in",
-            "name": "srcTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "destTerminal",
-            "type": "ViConstString"
-        }
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "destTerminal",
+                "type": "ViConstString"
+            }
         ],
         "returns": "ViStatus"
     },
     "DisconnectClkTerminals": {
         "parameters": [
-        {
-            "direction": "in",
-            "name": "vi",
-            "type": "ViSession"
-        },
-        {
-            "direction": "in",
-            "name": "srcTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "destTerminal",
-            "type": "ViConstString"
-        }
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "destTerminal",
+                "type": "ViConstString"
+            }
         ],
         "returns": "ViStatus"
     },
     "ConnectSWTrigToTerminal": {
         "parameters": [
-        {
-            "direction": "in",
-            "name": "vi",
-            "type": "ViSession"
-        },
-        {
-            "direction": "in",
-            "name": "srcTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "destTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "syncClock",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "invert",
-            "type": "ViInt32"
-        },
-        {
-            "direction": "in",
-            "name": "updateEdge",
-            "type": "ViInt32"
-        },
-        {
-            "direction": "in",
-            "name": "delay",
-            "type": "ViReal64"
-        }
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "destTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "syncClock",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "invert",
+                "type": "ViInt32"
+            },
+            {
+                "direction": "in",
+                "name": "updateEdge",
+                "type": "ViInt32"
+            },
+            {
+                "direction": "in",
+                "name": "delay",
+                "type": "ViReal64"
+            }
         ],
         "returns": "ViStatus"
     },
     "DisconnectSWTrigFromTerminal": {
         "parameters": [
-        {
-            "direction": "in",
-            "name": "vi",
-            "type": "ViSession"
-        },
-        {
-            "direction": "in",
-            "name": "srcTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "destTerminal",
-            "type": "ViConstString"
-        }
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "destTerminal",
+                "type": "ViConstString"
+            }
         ],
         "returns": "ViStatus"
     },
     "ConnectTrigTerminals": {
         "parameters": [
-        {
-            "direction": "in",
-            "name": "vi",
-            "type": "ViSession"
-        },
-        {
-            "direction": "in",
-            "name": "srcTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "destTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "syncClock",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "invert",
-            "type": "ViInt32"
-        },
-        {
-            "direction": "in",
-            "name": "updateEdge",
-            "type": "ViInt32"
-        }
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "destTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "syncClock",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "invert",
+                "type": "ViInt32"
+            },
+            {
+                "direction": "in",
+                "name": "updateEdge",
+                "type": "ViInt32"
+            }
         ],
         "returns": "ViStatus"
     },
     "DisconnectTrigTerminals": {
         "parameters": [
-        {
-            "direction": "in",
-            "name": "vi",
-            "type": "ViSession"
-        },
-        {
-            "direction": "in",
-            "name": "srcTerminal",
-            "type": "ViConstString"
-        },
-        {
-            "direction": "in",
-            "name": "destTerminal",
-            "type": "ViConstString"
-        }
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "destTerminal",
+                "type": "ViConstString"
+            }
         ],
         "returns": "ViStatus"
     },
