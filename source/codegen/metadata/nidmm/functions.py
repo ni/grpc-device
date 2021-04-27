@@ -1624,7 +1624,7 @@ functions = {
     },
     "InitExtCal": {
         "init_method" : True,
-        "codegen_method" : None,
+        "custom_close" : "CloseExtCal(id, NIDMM_EXTCAL_ACTION_ABORT)",
          "parameters": [
          {
              "name": "resourceName",
