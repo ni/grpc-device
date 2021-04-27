@@ -20,11 +20,10 @@ ${initialize_input_params(function_name, parameters)}
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      %if 'custom_close' in function_data:
-      auto cleanup_lambda = [&] (uint32_t id) { library_->${function_data['custom_close']}; };
-      %else:
-      auto cleanup_lambda = [&] (uint32_t id) { library_->${config['close_function']}(id); };
-      %endif
+<%
+ close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
+%>\
+      auto cleanup_lambda = [&] (uint32_t id) { library_->${close_function_call}; };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
