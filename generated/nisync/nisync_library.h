@@ -20,6 +20,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus close(ViSession vi);
+  ViStatus SendSoftwareTrigger(ViSession vi, ViConstString srcTerminal);
   ViStatus ConnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   ViStatus DisconnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   ViStatus ConnectSWTrigToTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay);
@@ -30,6 +31,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
  private:
   using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using closePtr = ViStatus (*)(ViSession vi);
+  using SendSoftwareTriggerPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal);
   using ConnectClkTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   using DisconnectClkTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   using ConnectSWTrigToTerminalPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay);
@@ -40,6 +42,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   typedef struct FunctionPointers {
     initPtr init;
     closePtr close;
+    SendSoftwareTriggerPtr SendSoftwareTrigger;
     ConnectClkTerminalsPtr ConnectClkTerminals;
     DisconnectClkTerminalsPtr DisconnectClkTerminals;
     ConnectSWTrigToTerminalPtr ConnectSWTrigToTerminal;

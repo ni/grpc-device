@@ -16,6 +16,21 @@ functions = {
         ],
         "returns": "ViStatus",
     },
+    "SendSoftwareTrigger": {
+        "parameters": [
+        {
+            "direction": "in",
+            "name": "vi",
+            "type": "ViSession"
+        },
+        {
+            "direction": "in",
+            "name": "srcTerminal",
+            "type": "ViConstString"
+        }
+        ],
+        "returns": "ViStatus"
+    },
     "ConnectClkTerminals": {
         "parameters": [
         {

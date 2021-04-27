@@ -17,6 +17,7 @@ class NiSyncLibraryInterface {
 
   virtual ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus close(ViSession vi) = 0;
+  virtual ViStatus SendSoftwareTrigger(ViSession vi, ViConstString srcTerminal) = 0;
   virtual ViStatus ConnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal) = 0;
   virtual ViStatus DisconnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal) = 0;
   virtual ViStatus ConnectSWTrigToTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay) = 0;

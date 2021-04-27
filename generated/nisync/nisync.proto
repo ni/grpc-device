@@ -18,6 +18,7 @@ import "session.proto";
 service NiSync {
   rpc Init(InitRequest) returns (InitResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
   rpc ConnectClkTerminals(ConnectClkTerminalsRequest) returns (ConnectClkTerminalsResponse);
   rpc DisconnectClkTerminals(DisconnectClkTerminalsRequest) returns (DisconnectClkTerminalsResponse);
   rpc ConnectSWTrigToTerminal(ConnectSWTrigToTerminalRequest) returns (ConnectSWTrigToTerminalResponse);
@@ -47,6 +48,15 @@ message CloseRequest {
 }
 
 message CloseResponse {
+  int32 status = 1;
+}
+
+message SendSoftwareTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+}
+
+message SendSoftwareTriggerResponse {
   int32 status = 1;
 }
 
