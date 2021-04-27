@@ -28,7 +28,7 @@ class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
   MOCK_METHOD(ViStatus, DisconnectTrigTerminals, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 value), (override));
-  MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar* value), (override));
+  MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString terminalName, ViAttr attribute, ViConstString value), (override));
 };
 

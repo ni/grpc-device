@@ -261,7 +261,11 @@ functions = {
         {
             "direction": "out",
             "name": "value",
-            "type": "ViChar"
+            'size': {
+                'mechanism': 'ivi-dance',
+                'value': 'bufferSize'
+            },
+            'type': 'ViChar[]'
         }
         ],
         "returns": "ViStatus"

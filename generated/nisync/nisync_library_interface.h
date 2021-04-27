@@ -26,7 +26,7 @@ class NiSyncLibraryInterface {
   virtual ViStatus DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32* value) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 value) = 0;
-  virtual ViStatus GetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar* value) = 0;
+  virtual ViStatus GetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViConstString value) = 0;
 };
 

@@ -179,7 +179,7 @@ ViStatus NiSyncLibrary::SetAttributeViInt32(ViSession vi, ViConstString terminal
 #endif
 }
 
-ViStatus NiSyncLibrary::GetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar* value)
+ViStatus NiSyncLibrary::GetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar value[])
 {
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViString.");

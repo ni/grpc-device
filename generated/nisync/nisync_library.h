@@ -29,7 +29,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32* value);
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 value);
-  ViStatus GetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar* value);
+  ViStatus GetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
   ViStatus SetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViConstString value);
 
  private:
@@ -44,7 +44,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using DisconnectTrigTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32* value);
   using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 value);
-  using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar* value);
+  using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
   using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViAttr attribute, ViConstString value);
 
   typedef struct FunctionPointers {
