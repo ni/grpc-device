@@ -3,25 +3,31 @@ cmake_minimum_required(VERSION 3.12.0)
 project(ni_grpc_device_server C CXX)
 
 #----------------------------------------------------------------------
-# Include the gRPC's cmake build
+# Use the grpc targets directly from this build, only when not cross-compiling.
 #----------------------------------------------------------------------
-add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
-
-#----------------------------------------------------------------------
-# Use the grpc targets directly from this build.
-#----------------------------------------------------------------------
-set(_PROTOBUF_LIBPROTOBUF libprotobuf)
-set(_REFLECTION grpc++_reflection)
 if(CMAKE_CROSSCOMPILING)
   find_program(_PROTOBUF_PROTOC protoc)
-else()
-  set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
-endif()
-set(_GRPC_GRPCPP grpc++)
-if(CMAKE_CROSSCOMPILING)
   find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+
+  if(NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
+    find_package(gRPC REQUIRED)
+    find_library(_REFLECTION grpc++_reflection)
+    find_library(_GRPC_GRPCPP grpc++)
+    find_library(_PROTOBUF_LIBPROTOBUF protobuf)
+  else()
+    add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
+    set(_REFLECTION grpc++_reflection)
+    set(_GRPC_GRPCPP grpc++)
+    set(_PROTOBUF_LIBPROTOBUF libprotobuf)
+  endif()
+
 else()
+  add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
+  set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
+  set(_REFLECTION grpc++_reflection)
   set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
+  set(_GRPC_GRPCPP grpc++)
+  set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 endif()
 
 #----------------------------------------------------------------------
@@ -206,14 +212,17 @@ add_custom_command(
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
-# Add JSON parser
+# Add JSON parser and configure google tests
 #----------------------------------------------------------------------
-add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
-
-# Add googletest tests
-enable_testing()
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
+if(CMAKE_CROSSCOMPILING AND NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
+  find_package(nlohmann_json REQUIRED)
+  find_library(gtest REQUIRED)
+else()
+  add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
+  enable_testing()
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
+endif()
 
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
