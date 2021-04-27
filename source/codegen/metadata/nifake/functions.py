@@ -2375,6 +2375,7 @@ functions = {
     },
     'close': {
         'codegen_method': 'public',
+        'close_method': 'True',
         'documentation': {
             'description': 'Closes the specified session and deallocates resources that it reserved.'
         },
@@ -2394,6 +2395,7 @@ functions = {
     },
     'CloseExtCal': { 
         'codegen_method': 'public',
+        'close_method': 'True',
         'parameters': [
            {
                 'name': 'vi',
