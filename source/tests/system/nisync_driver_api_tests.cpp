@@ -502,6 +502,42 @@ TEST_F(NiSyncDriverApiTest, NotConnectedTrigTerminals_DisconnectSWTrigFromTermin
   call_DisconnectTrigTerminals(srcTerminal, destTerminal, &viStatus);
 }
 
+TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViInt32_ReturnsValue)
+{
+  ViStatus viStatus;
+  auto terminalName = "";
+  ViAttr attribute = NISYNC_ATTR_SYNC_CLK_DIV1;
+  ViInt32 expectedValue = NISYNC_VAL_1588_CLK_ACCURACY_WITHIN_1_USEC;
+  auto grpcStatus = call_SetAttributeViInt32(terminalName, attribute, expectedValue, &viStatus);
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+
+  ViInt32 value;
+  grpcStatus = call_GetAttributeViInt32(terminalName, attribute, &value, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_EQ(expectedValue, value);
+}
+
+TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViString_ReturnsValue)
+{
+  ViStatus viStatus;
+  auto terminalName = "";
+  ViAttr attribute = NISYNC_ATTR_FRONT_SYNC_CLK_SRC;
+  ViConstString expectedValue = NISYNC_VAL_CLK10;
+  auto grpcStatus = call_SetAttributeViString(terminalName, attribute, expectedValue, &viStatus);
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+
+  std::string value;
+  grpcStatus = call_GetAttributeViString(terminalName, attribute, &value, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_STREQ(expectedValue, value.c_str());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
