@@ -12,6 +12,9 @@
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
+# Refer to the NI DMM gRPC Wiki for the latest C Function Reference:
+# Link: https://github.com/ni/grpc-device/wiki/NI-DMM-C-Function-Reference
+#
 # Running from command line:
 #
 # Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
@@ -127,6 +130,7 @@ try:
     fig = plt.gcf()
     fig.show()
     fig.canvas.draw()
+    fig.canvas.set_window_title('Measurements')
 
     # Handle closing of plot window
     closed = False
@@ -155,6 +159,8 @@ try:
                 # Clear the plot and setup the axis
                 plt.clf()
                 plt.axis()
+                plt.xlabel('Samples')
+                plt.ylabel('Amplitude')
 
                 # Fetch data
                 fetch_multipoints_response = nidmm_client.FetchMultiPoint(nidmm_types.FetchMultiPointRequest(
