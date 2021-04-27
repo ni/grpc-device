@@ -12,6 +12,9 @@
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
+# Refer to the NI DMM gRPC Wiki for the latest C Function Reference:
+# Link: https://github.com/ni/grpc-device/wiki/NI-DMM-C-Function-Reference
+#
 # Running from command line:
 #
 # Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
