@@ -20,3 +20,5 @@ The following function parameters were changed to generate the correct parameter
             },
             'type': 'ViChar[]'
 ```
+
+Renamed parameter `terminalName` to `activeItem` in `GetAttribute*` and `SetAttribute*` functions.

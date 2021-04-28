@@ -243,7 +243,7 @@ message DisconnectTrigTerminalsResponse {
 
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
-  string terminal_name = 2;
+  string active_item = 2;
   NiSyncAttributes attribute = 3;
 }
 
@@ -254,7 +254,7 @@ message GetAttributeViInt32Response {
 
 message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
-  string terminal_name = 2;
+  string active_item = 2;
   NiSyncAttributes attribute = 3;
   sint32 value = 4;
 }
@@ -265,7 +265,7 @@ message SetAttributeViInt32Response {
 
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
-  string terminal_name = 2;
+  string active_item = 2;
   NiSyncAttributes attribute = 3;
 }
 
@@ -276,7 +276,7 @@ message GetAttributeViStringResponse {
 
 message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
-  string terminal_name = 2;
+  string active_item = 2;
   NiSyncAttributes attribute = 3;
   string value = 4;
 }

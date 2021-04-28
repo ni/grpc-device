@@ -155,51 +155,51 @@ ViStatus NiSyncLibrary::DisconnectTrigTerminals(ViSession vi, ViConstString srcT
 #endif
 }
 
-ViStatus NiSyncLibrary::GetAttributeViInt32(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32* value)
+ViStatus NiSyncLibrary::GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value)
 {
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViInt32.");
   }
 #if defined(_MSC_VER)
-  return niSync_GetAttributeViInt32(vi, terminalName, attribute, value);
+  return niSync_GetAttributeViInt32(vi, activeItem, attribute, value);
 #else
-  return function_pointers_.GetAttributeViInt32(vi, terminalName, attribute, value);
+  return function_pointers_.GetAttributeViInt32(vi, activeItem, attribute, value);
 #endif
 }
 
-ViStatus NiSyncLibrary::SetAttributeViInt32(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 value)
+ViStatus NiSyncLibrary::SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value)
 {
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViInt32.");
   }
 #if defined(_MSC_VER)
-  return niSync_SetAttributeViInt32(vi, terminalName, attribute, value);
+  return niSync_SetAttributeViInt32(vi, activeItem, attribute, value);
 #else
-  return function_pointers_.SetAttributeViInt32(vi, terminalName, attribute, value);
+  return function_pointers_.SetAttributeViInt32(vi, activeItem, attribute, value);
 #endif
 }
 
-ViStatus NiSyncLibrary::GetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViInt32 bufferSize, ViChar value[])
+ViStatus NiSyncLibrary::GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[])
 {
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViString.");
   }
 #if defined(_MSC_VER)
-  return niSync_GetAttributeViString(vi, terminalName, attribute, bufferSize, value);
+  return niSync_GetAttributeViString(vi, activeItem, attribute, bufferSize, value);
 #else
-  return function_pointers_.GetAttributeViString(vi, terminalName, attribute, bufferSize, value);
+  return function_pointers_.GetAttributeViString(vi, activeItem, attribute, bufferSize, value);
 #endif
 }
 
-ViStatus NiSyncLibrary::SetAttributeViString(ViSession vi, ViConstString terminalName, ViAttr attribute, ViConstString value)
+ViStatus NiSyncLibrary::SetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value)
 {
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViString.");
   }
 #if defined(_MSC_VER)
-  return niSync_SetAttributeViString(vi, terminalName, attribute, value);
+  return niSync_SetAttributeViString(vi, activeItem, attribute, value);
 #else
-  return function_pointers_.SetAttributeViString(vi, terminalName, attribute, value);
+  return function_pointers_.SetAttributeViString(vi, activeItem, attribute, value);
 #endif
 }
 

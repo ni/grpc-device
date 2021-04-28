@@ -236,10 +236,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString terminal_name = request->terminal_name().c_str();
+      ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
       ViInt32 value {};
-      auto status = library_->GetAttributeViInt32(vi, terminal_name, attribute, &value);
+      auto status = library_->GetAttributeViInt32(vi, active_item, attribute, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -261,10 +261,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString terminal_name = request->terminal_name().c_str();
+      ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
       ViInt32 value = request->value();
-      auto status = library_->SetAttributeViInt32(vi, terminal_name, attribute, value);
+      auto status = library_->SetAttributeViInt32(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -283,10 +283,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString terminal_name = request->terminal_name().c_str();
+      ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
 
-      auto status = library_->GetAttributeViString(vi, terminal_name, attribute, 0, nullptr);
+      auto status = library_->GetAttributeViString(vi, active_item, attribute, 0, nullptr);
       if (status < 0) {
         response->set_status(status);
         return ::grpc::Status::OK;
@@ -294,7 +294,7 @@ namespace nisync_grpc {
       ViInt32 buffer_size = status;
 
       std::string value(buffer_size, '\0');
-      status = library_->GetAttributeViString(vi, terminal_name, attribute, buffer_size, (ViChar*)value.data());
+      status = library_->GetAttributeViString(vi, active_item, attribute, buffer_size, (ViChar*)value.data());
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -316,10 +316,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString terminal_name = request->terminal_name().c_str();
+      ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
       ViConstString value = request->value().c_str();
-      auto status = library_->SetAttributeViString(vi, terminal_name, attribute, value);
+      auto status = library_->SetAttributeViString(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

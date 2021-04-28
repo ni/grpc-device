@@ -193,12 +193,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
-  ::grpc::Status call_SetAttributeViInt32(ViConstString terminalName, ViAttr attribute, ViInt32 value, ViStatus* viStatusOut)
+  ::grpc::Status call_SetAttributeViInt32(ViConstString activeItem, ViAttr attribute, ViInt32 value, ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::SetAttributeViInt32Request request;
     nisync::SetAttributeViInt32Response response;
-    request.set_terminal_name(terminalName);
+    request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
     request.set_value(value);
     request.mutable_vi()->set_id(driver_session_->id());
@@ -207,12 +207,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
-  ::grpc::Status call_GetAttributeViInt32(ViConstString terminalName, ViAttr attribute, ViInt32* valueOut, ViStatus* viStatusOut)
+  ::grpc::Status call_GetAttributeViInt32(ViConstString activeItem, ViAttr attribute, ViInt32* valueOut, ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::GetAttributeViInt32Request request;
     nisync::GetAttributeViInt32Response response;
-    request.set_terminal_name(terminalName);
+    request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->GetAttributeViInt32(&clientContext, request, &response);
@@ -221,12 +221,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
-  ::grpc::Status call_SetAttributeViString(ViConstString terminalName, ViAttr attribute, ViConstString value, ViStatus* viStatusOut)
+  ::grpc::Status call_SetAttributeViString(ViConstString activeItem, ViAttr attribute, ViConstString value, ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::SetAttributeViStringRequest request;
     nisync::SetAttributeViStringResponse response;
-    request.set_terminal_name(terminalName);
+    request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
     request.set_value(value);
     request.mutable_vi()->set_id(driver_session_->id());
@@ -235,12 +235,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
-  ::grpc::Status call_GetAttributeViString(ViConstString terminalName, ViAttr attribute, std::string* valueOut, ViStatus* viStatusOut)
+  ::grpc::Status call_GetAttributeViString(ViConstString activeItem, ViAttr attribute, std::string* valueOut, ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::GetAttributeViStringRequest request;
     nisync::GetAttributeViStringResponse response;
-    request.set_terminal_name(terminalName);
+    request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->GetAttributeViString(&clientContext, request, &response);
@@ -505,15 +505,15 @@ TEST_F(NiSyncDriverApiTest, NotConnectedTrigTerminals_DisconnectSWTrigFromTermin
 TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViInt32_ReturnsValue)
 {
   ViStatus viStatus;
-  auto terminalName = "";
+  auto activeItem = "";
   ViAttr attribute = NISYNC_ATTR_SYNC_CLK_DIV1;
   ViInt32 expectedValue = NISYNC_VAL_1588_CLK_ACCURACY_WITHIN_1_USEC;
-  auto grpcStatus = call_SetAttributeViInt32(terminalName, attribute, expectedValue, &viStatus);
+  auto grpcStatus = call_SetAttributeViInt32(activeItem, attribute, expectedValue, &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
 
   ViInt32 value;
-  grpcStatus = call_GetAttributeViInt32(terminalName, attribute, &value, &viStatus);
+  grpcStatus = call_GetAttributeViInt32(activeItem, attribute, &value, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
@@ -523,15 +523,15 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViInt32_ReturnsValue)
 TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViString_ReturnsValue)
 {
   ViStatus viStatus;
-  auto terminalName = "";
+  auto activeItem = "";
   ViAttr attribute = NISYNC_ATTR_FRONT_SYNC_CLK_SRC;
   ViConstString expectedValue = NISYNC_VAL_CLK10;
-  auto grpcStatus = call_SetAttributeViString(terminalName, attribute, expectedValue, &viStatus);
+  auto grpcStatus = call_SetAttributeViString(activeItem, attribute, expectedValue, &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
 
   std::string value;
-  grpcStatus = call_GetAttributeViString(terminalName, attribute, &value, &viStatus);
+  grpcStatus = call_GetAttributeViString(activeItem, attribute, &value, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);

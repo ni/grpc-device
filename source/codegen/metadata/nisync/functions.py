@@ -195,7 +195,7 @@ functions = {
             },
             {
                 "direction": "in",
-                "name": "terminalName",
+                "name": "activeItem",
                 "type": "ViConstString"
             },
             {
@@ -220,7 +220,7 @@ functions = {
             },
             {
                 "direction": "in",
-                "name": "terminalName",
+                "name": "activeItem",
                 "type": "ViConstString"
             },
             {
@@ -245,7 +245,7 @@ functions = {
             },
             {
                 "direction": "in",
-                "name": "terminalName",
+                "name": "activeItem",
                 "type": "ViConstString"
             },
             {
@@ -279,7 +279,7 @@ functions = {
             },
             {
                 "direction": "in",
-                "name": "terminalName",
+                "name": "activeItem",
                 "type": "ViConstString"
             },
             {
