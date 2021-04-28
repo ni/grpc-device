@@ -21,7 +21,8 @@ For MeasureMultiple function, the value field 'size':'number_of_channels' was ad
 The following functions were tagged with 'init_method': True, to ensure their generated service handler registers the new session with the session_repository:
 - InitializeWithIndependentChannels
 - InitializeWithChannels
-- InitExtCal
+- InitExtCal : 
+    - Also added a 'custom_close' tag to this function, since this API has a corresponding close function called 'CloseExtCal'
 
 The following functions were tagged with their corresponding c_names:
 - reset
@@ -88,3 +89,5 @@ The following attributes were added :
 
 Following enums were defined :
 - InternalReference
+- NIDCPOWER_VAL_CANCEL
+- NIDCPOWER_VAL_COMMIT

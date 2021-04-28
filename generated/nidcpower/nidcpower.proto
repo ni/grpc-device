@@ -367,6 +367,12 @@ enum AutorangeThresholdMode {
   AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_HOLD = 1116;
 }
 
+enum CalibrationCloseAction {
+  CALIBRATION_CLOSE_ACTION_UNSPECIFIED = 0;
+  CALIBRATION_CLOSE_ACTION_NIDCPOWER_VAL_CANCEL = 1001;
+  CALIBRATION_CLOSE_ACTION_NIDCPOWER_VAL_COMMIT = 1002;
+}
+
 enum ComplianceLimitSymmetry {
   option allow_alias = true;
   COMPLIANCE_LIMIT_SYMMETRY_UNSPECIFIED = 0;
@@ -1022,7 +1028,10 @@ message CloseResponse {
 
 message CloseExtCalRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 action = 2;
+  oneof action_enum {
+    CalibrationCloseAction action = 2;
+    sint32 action_raw = 3;
+  }
 }
 
 message CloseExtCalResponse {

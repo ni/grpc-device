@@ -126,6 +126,18 @@ enums = {
             }
         ]
     },
+    'CalibrationCloseAction': {
+        'values':[
+            {
+                'name': 'NIDCPOWER_VAL_CANCEL',
+                'value': 1001
+            },
+            {
+                'name': 'NIDCPOWER_VAL_COMMIT',
+                'value': 1002
+            }
+        ]
+    },
     'ComplianceLimitSymmetry': {
         'values': [
             {
