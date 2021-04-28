@@ -11,6 +11,6 @@ with the session_repository.
 - `InitWithOptions`
 - `InitExtCal` : Added a 'custom_close' tag to this function, since this API has a corresponding close function called `'CloseExtCal'`
 
-The following function was tagged with `'custom_close_method': True,` to ensure it's generated service handlers removes the session from
-session_repository.
+The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
+the registered session from session_repository.
 - `CloseExtCal`
