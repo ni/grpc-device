@@ -374,6 +374,13 @@ enum ComplianceLimitSymmetry {
   COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_ASYMMETRIC = 1;
 }
 
+enum CurrentLimitBehavior {
+  option allow_alias = true;
+  CURRENT_LIMIT_BEHAVIOR_UNSPECIFIED = 0;
+  CURRENT_LIMIT_BEHAVIOR_NIDCPOWER_VAL_CURRENT_REGULATE = 0;
+  CURRENT_LIMIT_BEHAVIOR_NIDCPOWER_VAL_CURRENT_TRIP = 1;
+}
+
 enum DCNoiseRejection {
   D_C_NOISE_REJECTION_UNSPECIFIED = 0;
   D_C_NOISE_REJECTION_NIDCPOWER_VAL_DC_NOISE_REJECTION_SECOND_ORDER = 1043;
@@ -400,6 +407,14 @@ enum ExportSignal {
   EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ADVANCE_TRIGGER = 1037;
   EXPORT_SIGNAL_NIDCPOWER_VAL_PULSE_TRIGGER = 1053;
   EXPORT_SIGNAL_NIDCPOWER_VAL_SHUTDOWN_TRIGGER = 1118;
+}
+
+enum InternalReference {
+  INTERNAL_REFERENCE_UNSPECIFIED = 0;
+  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_5V = 1054;
+  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_100KOHM = 1055;
+  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_GROUND = 1056;
+  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_NONE = 1057;
 }
 
 enum MeasureWhen {
@@ -518,7 +533,10 @@ message ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string input_terminal = 3;
-  sint32 edge = 4;
+  oneof edge_enum {
+    DigitalEdge edge = 4;
+    sint32 edge_raw = 5;
+  }
 }
 
 message ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse {
@@ -529,7 +547,10 @@ message ConfigureDigitalEdgePulseTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string input_terminal = 3;
-  sint32 edge = 4;
+  oneof edge_enum {
+    DigitalEdge edge = 4;
+    sint32 edge_raw = 5;
+  }
 }
 
 message ConfigureDigitalEdgePulseTriggerWithChannelsResponse {
@@ -540,7 +561,10 @@ message ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string input_terminal = 3;
-  sint32 edge = 4;
+  oneof edge_enum {
+    DigitalEdge edge = 4;
+    sint32 edge_raw = 5;
+  }
 }
 
 message ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse {
@@ -551,7 +575,10 @@ message ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string input_terminal = 3;
-  sint32 edge = 4;
+  oneof edge_enum {
+    DigitalEdge edge = 4;
+    sint32 edge_raw = 5;
+  }
 }
 
 message ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse {
@@ -562,7 +589,10 @@ message ConfigureDigitalEdgeSourceTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string input_terminal = 3;
-  sint32 edge = 4;
+  oneof edge_enum {
+    DigitalEdge edge = 4;
+    sint32 edge_raw = 5;
+  }
 }
 
 message ConfigureDigitalEdgeSourceTriggerWithChannelsResponse {
@@ -573,7 +603,10 @@ message ConfigureDigitalEdgeStartTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string input_terminal = 3;
-  sint32 edge = 4;
+  oneof edge_enum {
+    DigitalEdge edge = 4;
+    sint32 edge_raw = 5;
+  }
 }
 
 message ConfigureDigitalEdgeStartTriggerWithChannelsResponse {
@@ -648,7 +681,10 @@ message ConfigureSoftwareEdgeStartTriggerWithChannelsResponse {
 message ConfigureSourceModeWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 source_mode = 3;
+  oneof source_mode_enum {
+    SourceMode source_mode = 3;
+    sint32 source_mode_raw = 4;
+  }
 }
 
 message ConfigureSourceModeWithChannelsResponse {
@@ -766,9 +802,12 @@ message ErrorQueryResponse {
 message ExportSignalWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 signal = 3;
-  string signal_identifier = 4;
-  string output_terminal = 5;
+  oneof signal_enum {
+    ExportSignal signal = 3;
+    sint32 signal_raw = 4;
+  }
+  string signal_identifier = 5;
+  string output_terminal = 6;
 }
 
 message ExportSignalWithChannelsResponse {
@@ -816,7 +855,10 @@ message ResetWithChannelsResponse {
 message SendSoftwareEdgeTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 trigger = 3;
+  oneof trigger_enum {
+    ExportSignal trigger = 3;
+    sint32 trigger_raw = 4;
+  }
 }
 
 message SendSoftwareEdgeTriggerWithChannelsResponse {
@@ -826,8 +868,11 @@ message SendSoftwareEdgeTriggerWithChannelsResponse {
 message WaitForEventWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 event_id = 3;
-  double timeout = 4;
+  oneof event_id_enum {
+    ExportSignal event_id = 3;
+    sint32 event_id_raw = 4;
+  }
+  double timeout = 5;
 }
 
 message WaitForEventWithChannelsResponse {
@@ -868,8 +913,11 @@ message CalAdjustCurrentMeasurementResponse {
 
 message CalAdjustInternalReferenceRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 internal_reference = 2;
-  double adjusted_internal_reference = 3;
+  oneof internal_reference_enum {
+    InternalReference internal_reference = 2;
+    sint32 internal_reference_raw = 3;
+  }
+  double adjusted_internal_reference = 4;
 }
 
 message CalAdjustInternalReferenceResponse {
@@ -1039,8 +1087,11 @@ message ConfigureCurrentLevelRangeResponse {
 message ConfigureCurrentLimitRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 behavior = 3;
-  double limit = 4;
+  oneof behavior_enum {
+    CurrentLimitBehavior behavior = 3;
+    sint32 behavior_raw = 4;
+  }
+  double limit = 5;
 }
 
 message ConfigureCurrentLimitResponse {
@@ -1060,7 +1111,10 @@ message ConfigureCurrentLimitRangeResponse {
 message ConfigureDigitalEdgeMeasureTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string input_terminal = 2;
-  sint32 edge = 3;
+  oneof edge_enum {
+    DigitalEdge edge = 3;
+    sint32 edge_raw = 4;
+  }
 }
 
 message ConfigureDigitalEdgeMeasureTriggerResponse {
@@ -1070,7 +1124,10 @@ message ConfigureDigitalEdgeMeasureTriggerResponse {
 message ConfigureDigitalEdgePulseTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string input_terminal = 2;
-  sint32 edge = 3;
+  oneof edge_enum {
+    DigitalEdge edge = 3;
+    sint32 edge_raw = 4;
+  }
 }
 
 message ConfigureDigitalEdgePulseTriggerResponse {
@@ -1080,7 +1137,10 @@ message ConfigureDigitalEdgePulseTriggerResponse {
 message ConfigureDigitalEdgeSequenceAdvanceTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string input_terminal = 2;
-  sint32 edge = 3;
+  oneof edge_enum {
+    DigitalEdge edge = 3;
+    sint32 edge_raw = 4;
+  }
 }
 
 message ConfigureDigitalEdgeSequenceAdvanceTriggerResponse {
@@ -1090,7 +1150,10 @@ message ConfigureDigitalEdgeSequenceAdvanceTriggerResponse {
 message ConfigureDigitalEdgeSourceTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string input_terminal = 2;
-  sint32 edge = 3;
+  oneof edge_enum {
+    DigitalEdge edge = 3;
+    sint32 edge_raw = 4;
+  }
 }
 
 message ConfigureDigitalEdgeSourceTriggerResponse {
@@ -1100,7 +1163,10 @@ message ConfigureDigitalEdgeSourceTriggerResponse {
 message ConfigureDigitalEdgeStartTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string input_terminal = 2;
-  sint32 edge = 3;
+  oneof edge_enum {
+    DigitalEdge edge = 3;
+    sint32 edge_raw = 4;
+  }
 }
 
 message ConfigureDigitalEdgeStartTriggerResponse {
@@ -1120,7 +1186,10 @@ message ConfigureOutputEnabledResponse {
 message ConfigureOutputFunctionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 function = 3;
+  oneof function_enum {
+    OutputFunction function = 3;
+    sint32 function_raw = 4;
+  }
 }
 
 message ConfigureOutputFunctionResponse {
@@ -1269,7 +1338,10 @@ message ConfigurePulseVoltageLimitRangeResponse {
 message ConfigureSenseRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 sense = 3;
+  oneof sense_enum {
+    Sense sense = 3;
+    sint32 sense_raw = 4;
+  }
 }
 
 message ConfigureSenseResponse {
@@ -1318,7 +1390,10 @@ message ConfigureSoftwareEdgeStartTriggerResponse {
 
 message ConfigureSourceModeRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 source_mode = 2;
+  oneof source_mode_enum {
+    SourceMode source_mode = 2;
+    sint32 source_mode_raw = 3;
+  }
 }
 
 message ConfigureSourceModeResponse {
@@ -1367,7 +1442,10 @@ message ConfigureVoltageLimitRangeResponse {
 
 message ConnectInternalReferenceRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 internal_reference = 2;
+  oneof internal_reference_enum {
+    InternalReference internal_reference = 2;
+    sint32 internal_reference_raw = 3;
+  }
 }
 
 message ConnectInternalReferenceResponse {
@@ -1878,7 +1956,10 @@ message SelfTestResponse {
 
 message SendSoftwareEdgeTriggerRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 trigger = 2;
+  oneof trigger_enum {
+    ExportSignal trigger = 2;
+    sint32 trigger_raw = 3;
+  }
 }
 
 message SendSoftwareEdgeTriggerResponse {
@@ -1982,8 +2063,11 @@ message UnlockSessionResponse {
 
 message WaitForEventRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 event_id = 2;
-  double timeout = 3;
+  oneof event_id_enum {
+    ExportSignal event_id = 2;
+    sint32 event_id_raw = 3;
+  }
+  double timeout = 4;
 }
 
 message WaitForEventResponse {
