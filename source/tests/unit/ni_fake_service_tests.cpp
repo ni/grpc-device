@@ -175,7 +175,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
   EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
 }
 
-TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenClose_SessionIsClosed)
+TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenCloseExtCal_SessionIsClosed)
 {
     nidevice_grpc::SessionRepository session_repository;
     NiFakeMockLibrary library;

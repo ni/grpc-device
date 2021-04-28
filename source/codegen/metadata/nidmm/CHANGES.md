@@ -74,3 +74,7 @@ with the session_repository.
 - `InitExtCal` : Added a 'custom_close' tag to this function, since this API has a corresponding close function called 'CloseExtCal'
 
 `'enum'` key added to function parameters that make use enums but had their enums missing, after adding those respective enums to `enums.py`.
+
+The following function was tagged with `'custom_close_method': True,` to ensure it's generated service handlers removes the session from
+session_repository.
+- `CloseExtCal`
