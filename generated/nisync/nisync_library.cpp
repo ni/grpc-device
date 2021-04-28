@@ -23,6 +23,13 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.init = reinterpret_cast<initPtr>(shared_library_.get_function_pointer("niSync_init"));
   function_pointers_.close = reinterpret_cast<closePtr>(shared_library_.get_function_pointer("niSync_close"));
+  function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_.get_function_pointer("niSync_SendSoftwareTrigger"));
+  function_pointers_.ConnectClkTerminals = reinterpret_cast<ConnectClkTerminalsPtr>(shared_library_.get_function_pointer("niSync_ConnectClkTerminals"));
+  function_pointers_.DisconnectClkTerminals = reinterpret_cast<DisconnectClkTerminalsPtr>(shared_library_.get_function_pointer("niSync_DisconnectClkTerminals"));
+  function_pointers_.ConnectSWTrigToTerminal = reinterpret_cast<ConnectSWTrigToTerminalPtr>(shared_library_.get_function_pointer("niSync_ConnectSWTrigToTerminal"));
+  function_pointers_.DisconnectSWTrigFromTerminal = reinterpret_cast<DisconnectSWTrigFromTerminalPtr>(shared_library_.get_function_pointer("niSync_DisconnectSWTrigFromTerminal"));
+  function_pointers_.ConnectTrigTerminals = reinterpret_cast<ConnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_ConnectTrigTerminals"));
+  function_pointers_.DisconnectTrigTerminals = reinterpret_cast<DisconnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_DisconnectTrigTerminals"));
 }
 
 NiSyncLibrary::~NiSyncLibrary()
@@ -57,6 +64,90 @@ ViStatus NiSyncLibrary::close(ViSession vi)
   return niSync_close(vi);
 #else
   return function_pointers_.close(vi);
+#endif
+}
+
+ViStatus NiSyncLibrary::SendSoftwareTrigger(ViSession vi, ViConstString srcTerminal)
+{
+  if (!function_pointers_.SendSoftwareTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SendSoftwareTrigger.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SendSoftwareTrigger(vi, srcTerminal);
+#else
+  return function_pointers_.SendSoftwareTrigger(vi, srcTerminal);
+#endif
+}
+
+ViStatus NiSyncLibrary::ConnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
+{
+  if (!function_pointers_.ConnectClkTerminals) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_ConnectClkTerminals.");
+  }
+#if defined(_MSC_VER)
+  return niSync_ConnectClkTerminals(vi, srcTerminal, destTerminal);
+#else
+  return function_pointers_.ConnectClkTerminals(vi, srcTerminal, destTerminal);
+#endif
+}
+
+ViStatus NiSyncLibrary::DisconnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
+{
+  if (!function_pointers_.DisconnectClkTerminals) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisconnectClkTerminals.");
+  }
+#if defined(_MSC_VER)
+  return niSync_DisconnectClkTerminals(vi, srcTerminal, destTerminal);
+#else
+  return function_pointers_.DisconnectClkTerminals(vi, srcTerminal, destTerminal);
+#endif
+}
+
+ViStatus NiSyncLibrary::ConnectSWTrigToTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay)
+{
+  if (!function_pointers_.ConnectSWTrigToTerminal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_ConnectSWTrigToTerminal.");
+  }
+#if defined(_MSC_VER)
+  return niSync_ConnectSWTrigToTerminal(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge, delay);
+#else
+  return function_pointers_.ConnectSWTrigToTerminal(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge, delay);
+#endif
+}
+
+ViStatus NiSyncLibrary::DisconnectSWTrigFromTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
+{
+  if (!function_pointers_.DisconnectSWTrigFromTerminal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisconnectSWTrigFromTerminal.");
+  }
+#if defined(_MSC_VER)
+  return niSync_DisconnectSWTrigFromTerminal(vi, srcTerminal, destTerminal);
+#else
+  return function_pointers_.DisconnectSWTrigFromTerminal(vi, srcTerminal, destTerminal);
+#endif
+}
+
+ViStatus NiSyncLibrary::ConnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge)
+{
+  if (!function_pointers_.ConnectTrigTerminals) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_ConnectTrigTerminals.");
+  }
+#if defined(_MSC_VER)
+  return niSync_ConnectTrigTerminals(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge);
+#else
+  return function_pointers_.ConnectTrigTerminals(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge);
+#endif
+}
+
+ViStatus NiSyncLibrary::DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
+{
+  if (!function_pointers_.DisconnectTrigTerminals) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisconnectTrigTerminals.");
+  }
+#if defined(_MSC_VER)
+  return niSync_DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
+#else
+  return function_pointers_.DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
 #endif
 }
 

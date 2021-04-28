@@ -19,6 +19,13 @@ class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, close, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, SendSoftwareTrigger, (ViSession vi, ViConstString srcTerminal), (override));
+  MOCK_METHOD(ViStatus, ConnectClkTerminals, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal), (override));
+  MOCK_METHOD(ViStatus, DisconnectClkTerminals, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal), (override));
+  MOCK_METHOD(ViStatus, ConnectSWTrigToTerminal, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay), (override));
+  MOCK_METHOD(ViStatus, DisconnectSWTrigFromTerminal, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal), (override));
+  MOCK_METHOD(ViStatus, ConnectTrigTerminals, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge), (override));
+  MOCK_METHOD(ViStatus, DisconnectTrigTerminals, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal), (override));
 };
 
 }  // namespace unit
