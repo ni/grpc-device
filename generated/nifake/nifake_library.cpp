@@ -24,6 +24,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niFake_Abort"));
   function_pointers_.AcceptListOfDurationsInSeconds = reinterpret_cast<AcceptListOfDurationsInSecondsPtr>(shared_library_.get_function_pointer("niFake_AcceptListOfDurationsInSeconds"));
   function_pointers_.BoolArrayOutputFunction = reinterpret_cast<BoolArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayOutputFunction"));
+  function_pointers_.BoolArrayInputFunction = reinterpret_cast<BoolArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayInputFunction"));
   function_pointers_.DoubleAllTheNums = reinterpret_cast<DoubleAllTheNumsPtr>(shared_library_.get_function_pointer("niFake_DoubleAllTheNums"));
   function_pointers_.EnumArrayOutputFunction = reinterpret_cast<EnumArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_EnumArrayOutputFunction"));
   function_pointers_.EnumInputFunctionWithDefaults = reinterpret_cast<EnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
@@ -118,6 +119,18 @@ ViStatus NiFakeLibrary::BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfEl
   return niFake_BoolArrayOutputFunction(vi, numberOfElements, anArray);
 #else
   return function_pointers_.BoolArrayOutputFunction(vi, numberOfElements, anArray);
+#endif
+}
+
+ViStatus NiFakeLibrary::BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[])
+{
+  if (!function_pointers_.BoolArrayInputFunction) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_BoolArrayInputFunction.");
+  }
+#if defined(_MSC_VER)
+  return niFake_BoolArrayInputFunction(vi, numberOfElements, anArray);
+#else
+  return function_pointers_.BoolArrayInputFunction(vi, numberOfElements, anArray);
 #endif
 }
 

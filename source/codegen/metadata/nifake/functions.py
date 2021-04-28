@@ -94,6 +94,43 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'BoolArrayInputFunction': {
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'This function accepts an array of booleans.'
+        },
+        'parameters': [
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
+                },
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Number of elements in the array.'
+                },
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Input boolean array'
+                },
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViBoolean[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'DoubleAllTheNums': {
         'documentation': {
             'description': 'Test for buffer with converter'
