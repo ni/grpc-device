@@ -314,6 +314,26 @@ enums = {
             }
         ]
     },
+    'InternalReference': {
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_5V',
+                'value': 1054
+            },
+            {
+                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_100KOHM',
+                'value': 1055
+            },
+            {
+                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_GROUND',
+                'value': 1056
+            },
+            {
+                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_NONE',
+                'value': 1057
+            }
+        ]
+    },
     'MeasureWhen': {
         'values': [
             {

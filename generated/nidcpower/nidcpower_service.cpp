@@ -81,7 +81,19 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeMeasureTriggerWithChannels(vi, channel_name, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -103,7 +115,19 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgePulseTriggerWithChannels(vi, channel_name, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -125,7 +149,19 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels(vi, channel_name, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -147,7 +183,19 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeShutdownTriggerWithChannels(vi, channel_name, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -169,7 +217,19 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeSourceTriggerWithChannels(vi, channel_name, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -191,7 +251,19 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeStartTriggerWithChannels(vi, channel_name, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -354,7 +426,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 source_mode = request->source_mode();
+      ViInt32 source_mode;
+      switch (request->source_mode_enum_case()) {
+        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceMode:
+          source_mode = (ViInt32)request->source_mode();
+          break;
+        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceModeRaw:
+          source_mode = (ViInt32)request->source_mode_raw();
+          break;
+        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mode was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureSourceModeWithChannels(vi, channel_name, source_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -609,7 +693,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 signal = request->signal();
+      ViInt32 signal;
+      switch (request->signal_enum_case()) {
+        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignal:
+          signal = (ViInt32)request->signal();
+          break;
+        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignalRaw:
+          signal = (ViInt32)request->signal_raw();
+          break;
+        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
+          break;
+      }
+
       ViConstString signal_identifier = request->signal_identifier().c_str();
       ViConstString output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignalWithChannels(vi, channel_name, signal, signal_identifier, output_terminal);
@@ -723,7 +819,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 trigger = request->trigger();
+      ViInt32 trigger;
+      switch (request->trigger_enum_case()) {
+        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTrigger:
+          trigger = (ViInt32)request->trigger();
+          break;
+        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTriggerRaw:
+          trigger = (ViInt32)request->trigger_raw();
+          break;
+        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
+          break;
+      }
+
       auto status = library_->SendSoftwareEdgeTriggerWithChannels(vi, channel_name, trigger);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -744,7 +852,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 event_id = request->event_id();
+      ViInt32 event_id;
+      switch (request->event_id_enum_case()) {
+        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventId:
+          event_id = (ViInt32)request->event_id();
+          break;
+        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventIdRaw:
+          event_id = (ViInt32)request->event_id_raw();
+          break;
+        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event_id was not specified or out of range");
+          break;
+      }
+
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitForEventWithChannels(vi, channel_name, event_id, timeout);
       response->set_status(status);
@@ -832,7 +952,19 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 internal_reference = request->internal_reference();
+      ViInt32 internal_reference;
+      switch (request->internal_reference_enum_case()) {
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::kInternalReference:
+          internal_reference = (ViInt32)request->internal_reference();
+          break;
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::kInternalReferenceRaw:
+          internal_reference = (ViInt32)request->internal_reference_raw();
+          break;
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::INTERNAL_REFERENCE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for internal_reference was not specified or out of range");
+          break;
+      }
+
       ViReal64 adjusted_internal_reference = request->adjusted_internal_reference();
       auto status = library_->CalAdjustInternalReference(vi, internal_reference, adjusted_internal_reference);
       response->set_status(status);
@@ -1210,7 +1342,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 behavior = request->behavior();
+      ViInt32 behavior;
+      switch (request->behavior_enum_case()) {
+        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehavior:
+          behavior = (ViInt32)request->behavior();
+          break;
+        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehaviorRaw:
+          behavior = (ViInt32)request->behavior_raw();
+          break;
+        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::BEHAVIOR_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for behavior was not specified or out of range");
+          break;
+      }
+
       ViReal64 limit = request->limit();
       auto status = library_->ConfigureCurrentLimit(vi, channel_name, behavior, limit);
       response->set_status(status);
@@ -1253,7 +1397,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeMeasureTrigger(vi, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1274,7 +1430,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgePulseTrigger(vi, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1295,7 +1463,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTrigger(vi, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1316,7 +1496,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeSourceTrigger(vi, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1337,7 +1529,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString input_terminal = request->input_terminal().c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdge:
+          edge = (ViInt32)request->edge();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdgeRaw:
+          edge = (ViInt32)request->edge_raw();
+          break;
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, input_terminal, edge);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1379,7 +1583,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 function = request->function();
+      ViInt32 function;
+      switch (request->function_enum_case()) {
+        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::kFunction:
+          function = (ViInt32)request->function();
+          break;
+        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::kFunctionRaw:
+          function = (ViInt32)request->function_raw();
+          break;
+        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::FUNCTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for function was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureOutputFunction(vi, channel_name, function);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1693,7 +1909,19 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 sense = request->sense();
+      ViInt32 sense;
+      switch (request->sense_enum_case()) {
+        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSense:
+          sense = (ViInt32)request->sense();
+          break;
+        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSenseRaw:
+          sense = (ViInt32)request->sense_raw();
+          break;
+        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::SENSE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sense was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureSense(vi, channel_name, sense);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1808,7 +2036,19 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 source_mode = request->source_mode();
+      ViInt32 source_mode;
+      switch (request->source_mode_enum_case()) {
+        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceMode:
+          source_mode = (ViInt32)request->source_mode();
+          break;
+        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceModeRaw:
+          source_mode = (ViInt32)request->source_mode_raw();
+          break;
+        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mode was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureSourceMode(vi, source_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1912,7 +2152,19 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 internal_reference = request->internal_reference();
+      ViInt32 internal_reference;
+      switch (request->internal_reference_enum_case()) {
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::kInternalReference:
+          internal_reference = (ViInt32)request->internal_reference();
+          break;
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::kInternalReferenceRaw:
+          internal_reference = (ViInt32)request->internal_reference_raw();
+          break;
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::INTERNAL_REFERENCE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for internal_reference was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConnectInternalReference(vi, internal_reference);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3171,7 +3423,19 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 trigger = request->trigger();
+      ViInt32 trigger;
+      switch (request->trigger_enum_case()) {
+        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTrigger:
+          trigger = (ViInt32)request->trigger();
+          break;
+        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTriggerRaw:
+          trigger = (ViInt32)request->trigger_raw();
+          break;
+        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
+          break;
+      }
+
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3390,7 +3654,19 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 event_id = request->event_id();
+      ViInt32 event_id;
+      switch (request->event_id_enum_case()) {
+        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventId:
+          event_id = (ViInt32)request->event_id();
+          break;
+        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventIdRaw:
+          event_id = (ViInt32)request->event_id_raw();
+          break;
+        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event_id was not specified or out of range");
+          break;
+      }
+
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitForEvent(vi, event_id, timeout);
       response->set_status(status);

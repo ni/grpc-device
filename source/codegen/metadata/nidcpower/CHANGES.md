@@ -37,6 +37,31 @@ The following function, not originally in the base metadata, was newly added fro
 The following function was tagged with `'codegen_method': 'private'`, because this API is not exposed in `nidcpower.h`.
 - `ParseChannelCount`
 
+`enum` tag was added to parameters on following functions.
+- `edge` parameter in `ConfigureDigitalEdgeMeasureTriggerWithChannels`
+- `edge` parameter in `ConfigureDigitalEdgePulseTriggerWithChannels`
+- `edge` parameter in `ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels`
+- `edge` parameter in `ConfigureDigitalEdgeShutdownTriggerWithChannels`
+- `edge` parameter in `ConfigureDigitalEdgeSourceTriggerWithChannels`
+- `edge` parameter in `ConfigureDigitalEdgeStartTriggerWithChannels`
+- `sourceMode` parameter in `ConfigureSourceModeWithChannels`
+- `signal` parameter in `ExportSignalWithChannels`
+- `trigger` parameter in `SendSoftwareEdgeTriggerWithChannels`
+- `eventId` parameter in `WaitForEventWithChannels`
+- `internalReference` parameter in `CalAdjustInternalReference`
+- `behavior` parameter in `ConfigureCurrentLimit`
+- `edge` parameter in `ConfigureDigitalEdgeMeasureTrigger`
+- `edge` parameter in `ConfigureDigitalEdgePulseTrigger`
+- `edge` parameter in `ConfigureDigitalEdgeSequenceAdvanceTrigger`
+- `edge` parameter in `ConfigureDigitalEdgeSourceTrigger`
+- `edge` parameter in `ConfigureDigitalEdgeStartTrigger`
+- `function` parameter in `ConfigureOutputFunction`
+- `sense` parameter in `ConfigureSense`
+- `sourceMode` parameter in `ConfigureSourceMode`
+- `internalReference` parameter in `ConnectInternalReference`
+- `trigger` parameter in `SendSoftwareEdgeTrigger`
+- `eventId` parameter in `WaitForEvent`
+
 ## attributes.py
 
 The documentation and lv_property values were removed from all the attributes.
@@ -55,3 +80,11 @@ The following attributes were added :
 - NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_MEASURE_TRIGGER_EDGE
 - NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_PULSE_TRIGGER_EDGE
 - NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SHUTDOWN_TRIGGER_EDGE
+
+`enum` tag was added to following attributes:
+- NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_AUTORANGE
+
+## enums.py
+
+Following enums were defined :
+- InternalReference

@@ -206,7 +206,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   }
 
-  void configure_output_function(const char* channel_name, ViInt32 function)
+  void configure_output_function(const char* channel_name, dcpower::OutputFunction function)
   {
     ::grpc::ClientContext context;
     dcpower::ConfigureOutputFunctionRequest request;
@@ -462,7 +462,7 @@ TEST_F(NiDCPowerDriverApiTest, ConfigureOutputFunctionAndVoltageLevel_Configures
 {
   const char* channel_name = "0";
   ViReal64 expected_voltage_level = 3.0;
-  ViInt32 expected_output_function_value = dcpower::OutputFunction::OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_VOLTAGE;
+  auto expected_output_function_value = dcpower::OutputFunction::OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_VOLTAGE;
   configure_output_function(channel_name, expected_output_function_value);
   configure_voltage_level(channel_name, expected_voltage_level);
 
@@ -476,7 +476,7 @@ TEST_F(NiDCPowerDriverApiTest, ConfigureOutputFunctionAndCurrentLevel_Configures
 {
   const char* channel_name = "0";
   ViReal64 expected_current_level = 3.0;
-  ViInt32 expected_output_function_value = dcpower::OutputFunction::OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_CURRENT;
+  auto expected_output_function_value = dcpower::OutputFunction::OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_CURRENT;
   configure_output_function(channel_name, expected_output_function_value);
   configure_current_level(channel_name, expected_current_level);
 

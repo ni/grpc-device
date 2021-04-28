@@ -260,6 +260,7 @@ attributes = {
     1150015: {
         'access': 'read-write',
         'channel_based': True,
+        'enum': 'AutoZero',
         'name': 'VOLTAGE_LEVEL_AUTORANGE',
         'python_type': 'bool',
         'resettable': False,
