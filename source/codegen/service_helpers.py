@@ -24,6 +24,27 @@ def create_args(parameters):
         result = f'{result}{parameter_name}, '
     return result[:-2]
 
+def create_args_without_first_parameter(parameters):
+    result = ''
+    is_first_parameter = True
+    for parameter in parameters:
+      if is_first_parameter:
+        is_first_parameter = False
+        continue
+      parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+      is_array = common_helpers.is_array(parameter['type'])
+      is_output = common_helpers.is_output_parameter(parameter)
+      if common_helpers.is_output_parameter(parameter) and is_string_arg(parameter):
+        type_without_brackets = common_helpers.get_underlying_type_name(parameter['type'])
+        result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
+      else:
+        if is_array and common_helpers.is_struct(parameter):
+          parameter_name = parameter_name + ".data()"
+        elif not is_array and is_output:
+          result = f'{result}&'
+        result = f'{result}{parameter_name}, '
+    return result[:-2]
+
 def create_args_for_ivi_dance(parameters):
     result = ''
     for parameter in parameters:

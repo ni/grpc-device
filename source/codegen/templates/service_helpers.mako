@@ -69,7 +69,7 @@ ${initialize_output_params(output_parameters)}\
 % if function_name == config['close_function']:
       session_repository_->remove_session(${service_helpers.create_args(parameters)});
 % elif service_helpers.is_custom_close_method(function_data):
-      auto cleanup_lambda = [&](uint32_t id) { library_->${function_name}(${service_helpers.create_args(parameters)}); };
+      auto cleanup_lambda = [&](uint32_t id) { library_->${function_name}(id, ${service_helpers.create_args_without_first_parameter(parameters)}); };
       session_repository_->update_cleanup_func(${session_parameter}, cleanup_lambda);
       session_repository_->remove_session(${session_parameter});
 % else:
