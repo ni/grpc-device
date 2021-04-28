@@ -233,6 +233,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectClkTerminals_Returns
   EXPECT_EQ(VI_SUCCESS, viStatus);
 
   grpcStatus = call_DisconnectClkTerminals(srcTerminal, destTerminal, &viStatus);
+
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
@@ -247,6 +248,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectNotConnectedClkTermi
 
   auto notConnectedSrcTerminal = NISYNC_VAL_CLKIN;
   grpcStatus = call_DisconnectClkTerminals(notConnectedSrcTerminal, destTerminal, &viStatus);
+
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
   call_DisconnectClkTerminals(srcTerminal, destTerminal, &viStatus);
