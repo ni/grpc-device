@@ -406,8 +406,9 @@ namespace nidmm_grpc {
           break;
       }
 
-      auto status = library_->CloseExtCal(vi, action);
-      response->set_status(status);
+      auto cleanup_lambda = [&](uint32_t id) { library_->CloseExtCal(vi, action); };
+      session_repository_->update_cleanup_func(vi, cleanup_lambda);
+      session_repository_->remove_session(vi);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

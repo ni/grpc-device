@@ -181,9 +181,10 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenClose_SessionIsClosed)
     NiFakeMockLibrary library;
     nifake_grpc::NiFakeService service(&library, &session_repository);
     std::string session_name = "sessionName";
+    ViInt32 action = 1;
     EXPECT_CALL(library, InitExtCal)
         .WillOnce(DoAll(SetArgPointee<2>(kTestViSession), Return(kDriverSuccess)));
-    EXPECT_CALL(library, CloseExtCal(kTestViSession, 0))
+    EXPECT_CALL(library, CloseExtCal(kTestViSession, action))
         .WillOnce(Return(kDriverSuccess));
 
     ::grpc::ServerContext context;
@@ -197,6 +198,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenClose_SessionIsClosed)
     EXPECT_EQ(kTestViSession, session_repository.access_session(0, session_name));
     nifake_grpc::CloseExtCalRequest close_request;
     close_request.mutable_vi()->set_id(session.id());
+    close_request.set_action(action);
     nifake_grpc::CloseExtCalResponse close_response;
     ::grpc::Status close_status = service.CloseExtCal(&context, &close_request, &close_response);
 

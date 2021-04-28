@@ -330,7 +330,8 @@ functions = {
         ],
         'returns': 'ViStatus',
     },
-    "CloseExtCal": {       
+    "CloseExtCal": {
+        "custom_close_method": True,
         "parameters": [
         {
             "name": "vi",

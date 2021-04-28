@@ -2392,7 +2392,7 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
-    'CloseExtCal': { 
+    'CloseExtCal': {
         'codegen_method': 'public',
         'custom_close_method': True,
         'parameters': [
