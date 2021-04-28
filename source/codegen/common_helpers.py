@@ -107,6 +107,3 @@ def get_ivi_dance_params(parameters):
 
 def is_init_method(function_data):
   return function_data.get('init_method', False)
-
-def is_close_method(function_data):
-  return function_data.get('close_method', False)

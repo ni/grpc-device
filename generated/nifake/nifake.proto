@@ -42,6 +42,7 @@ service NiFake {
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
+  rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc MultipleArrayTypes(MultipleArrayTypesRequest) returns (MultipleArrayTypesResponse);
   rpc MultipleArraysSameSize(MultipleArraysSameSizeRequest) returns (MultipleArraysSameSizeResponse);
   rpc OneInputFunction(OneInputFunctionRequest) returns (OneInputFunctionResponse);
@@ -58,6 +59,7 @@ service NiFake {
   rpc Use64BitNumber(Use64BitNumberRequest) returns (Use64BitNumberResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
 }
 
 enum NiFakeAttributes {
@@ -378,6 +380,17 @@ message InitWithOptionsResponse {
   nidevice_grpc.Session vi = 2;
 }
 
+message InitExtCalRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  string calibration_password = 3;
+}
+
+message InitExtCalResponse {
+  int32 status = 1;
+  nidevice_grpc.Session vi = 2;
+}
+
 message MultipleArrayTypesRequest {
   nidevice_grpc.Session vi = 1;
   sint32 output_array_size = 2;
@@ -556,6 +569,15 @@ message CloseRequest {
 }
 
 message CloseResponse {
+  int32 status = 1;
+}
+
+message CloseExtCalRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 action = 2;
+}
+
+message CloseExtCalResponse {
   int32 status = 1;
 }
 

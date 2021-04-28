@@ -19,6 +19,7 @@ class SessionRepository {
 
   int add_session(const std::string& session_name, InitFunc init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
   uint32_t access_session(uint32_t session_id, const std::string& session_name);
+  void update_cleanup_func(uint32_t id, CleanupSessionFunc cleanup_func);
   void remove_session(uint32_t id);
 
   bool reserve(

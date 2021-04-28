@@ -62,11 +62,16 @@ ${set_response_values(output_parameters)}\
 <%
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+  session_parameter = parameters[0]['name']
 %>\
 ${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
-% if common_helpers.is_close_method(function_data):
+% if function_name == config['close_function']:
       session_repository_->remove_session(${service_helpers.create_args(parameters)});
+% elif service_helpers.is_custom_close_method(function_data):
+      auto cleanup_lambda = [&](uint32_t id) { library_->${function_name}(${service_helpers.create_args(parameters)}); };
+      session_repository_->update_cleanup_func(${session_parameter}, cleanup_lambda);
+      session_repository_->remove_session(${session_parameter});
 % else:
       auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);
