@@ -75,6 +75,6 @@ with the session_repository.
 
 `'enum'` key added to function parameters that make use enums but had their enums missing, after adding those respective enums to `enums.py`.
 
-The following function was tagged with `'custom_close_method': True,` to ensure it's generated service handlers removes the session from
-session_repository.
+The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
+the registered session from session_repository.
 - `CloseExtCal`
