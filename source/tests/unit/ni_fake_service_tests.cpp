@@ -140,8 +140,8 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalAndResetServer_SessionIsClosed)
     bool reset_status = session_repository.reset_server();
 
     EXPECT_TRUE(reset_status);
-    EXPECT_NE(kTestViSession, session_repository.access_session(session.id(), ""));
     EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
+    EXPECT_EQ(0, session_repository.access_session(0, session_name));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
@@ -204,8 +204,8 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenCloseExtCal_SessionIsClosed
 
     EXPECT_TRUE(close_status.ok());
     EXPECT_EQ(kDriverSuccess, close_response.status());
-    EXPECT_NE(kTestViSession, session_repository.access_session(session.id(), ""));
     EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
+    EXPECT_EQ(0, session_repository.access_session(0, session_name));
 }
 
 // Error logic tests using GetABoolean
