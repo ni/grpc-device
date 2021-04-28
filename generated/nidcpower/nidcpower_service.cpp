@@ -1193,7 +1193,19 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 action = request->action();
+      ViInt32 action;
+      switch (request->action_enum_case()) {
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::kAction:
+          action = (ViInt32)request->action();
+          break;
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::kActionRaw:
+          action = (ViInt32)request->action_raw();
+          break;
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::ACTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
+          break;
+      }
+
       auto status = library_->CloseExtCal(vi, action);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3003,7 +3015,7 @@ namespace nidcpower_grpc {
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->CloseExtCal(id, NIDCPOWER_VAL_CANCEL); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
