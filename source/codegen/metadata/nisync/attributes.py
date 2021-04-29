@@ -273,15 +273,6 @@ attributes = {
     1150905: {
         'name': 'GPS_STATUS'
     },
-    1150803: {
-        'name': 'TIMEREF_CLK_ADJ_OFFSET'
-    },
-    1150906: {
-        'name': 'GPS_UTC_OFFSET'
-    },
-    1151000: {
-        'name': 'IRIG_TAI_OFFSET'
-    },
     1151100: {
         'name': '8021AS_PORT_STATE'
     },

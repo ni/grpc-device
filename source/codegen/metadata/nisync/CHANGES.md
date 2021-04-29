@@ -22,3 +22,8 @@ The following function parameters were changed to generate the correct parameter
 ```
 
 Renamed parameter `terminalName` to `activeItem` in `GetAttribute*` and `SetAttribute*` functions.
+
+Removed the following deprecated attributes.
+- TIMEREF_CLK_ADJ_OFFSET
+- GPS_UTC_OFFSET
+- IRIG_TAI_OFFSET
