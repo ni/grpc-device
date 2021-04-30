@@ -87,7 +87,6 @@ void SessionRepository::remove_session(uint32_t id)
     if (named_it != named_sessions_.end()) {
       named_sessions_.erase(named_it);
     }
-    cleanup_session(it->second);
     sessions_.erase(it);
   }
 }
