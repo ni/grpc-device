@@ -10,7 +10,7 @@ The following function parameters were changes to camel case so the generated na
 - `idQuery` parameter in `init`
 
 The following function parameters were changed to generate the correct parameter type.
-- `value` paramter in `GetAttributeViString`
+- `value` parameter in `GetAttributeViString`
 ```
             "direction": "out",
             "name": "value",
