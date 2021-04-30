@@ -62,6 +62,7 @@ The following function was tagged with `'codegen_method': 'private'`, because th
 - `internalReference` parameter in `ConnectInternalReference`
 - `trigger` parameter in `SendSoftwareEdgeTrigger`
 - `eventId` parameter in `WaitForEvent`
+- `powerlineFrequency` parameter in `ConfigurePowerLineFrequency`
 
 ## attributes.py
 
@@ -84,6 +85,7 @@ The following attributes were added :
 
 `enum` tag was added to following attributes:
 - NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_AUTORANGE
+- NIDCPOWER_ATTRIBUTE_POWER_LINE_FREQUENCY
 
 ## enums.py
 
@@ -91,3 +93,4 @@ Following enums were defined :
 - InternalReference
 - NIDCPOWER_VAL_CANCEL
 - NIDCPOWER_VAL_COMMIT
+- PowerLineFrequencies
