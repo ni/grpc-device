@@ -8,3 +8,22 @@ with the session_repository.
 
 The following function parameters were changes to camel case so the generated name would be snake case.
 - `idQuery` parameter in `init`
+
+The following function parameters were changed to generate the correct parameter type.
+- `value` parameter in `GetAttributeViString`
+```
+            "direction": "out",
+            "name": "value",
+            'size': {
+                'mechanism': 'ivi-dance',
+                'value': 'bufferSize'
+            },
+            'type': 'ViChar[]'
+```
+
+Renamed parameter `terminalName` to `activeItem` in `GetAttribute*` and `SetAttribute*` functions.
+
+Removed the following deprecated attributes.
+- TIMEREF_CLK_ADJ_OFFSET
+- GPS_UTC_OFFSET
+- IRIG_TAI_OFFSET

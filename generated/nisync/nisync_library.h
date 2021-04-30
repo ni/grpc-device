@@ -27,6 +27,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus DisconnectSWTrigFromTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   ViStatus ConnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge);
   ViStatus DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
+  ViStatus GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
+  ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
+  ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
+  ViStatus SetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value);
 
  private:
   using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
@@ -38,6 +42,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using DisconnectSWTrigFromTerminalPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   using ConnectTrigTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge);
   using DisconnectTrigTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
+  using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
+  using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
+  using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
+  using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value);
 
   typedef struct FunctionPointers {
     initPtr init;
@@ -49,6 +57,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
     DisconnectSWTrigFromTerminalPtr DisconnectSWTrigFromTerminal;
     ConnectTrigTerminalsPtr ConnectTrigTerminals;
     DisconnectTrigTerminalsPtr DisconnectTrigTerminals;
+    GetAttributeViInt32Ptr GetAttributeViInt32;
+    SetAttributeViInt32Ptr SetAttributeViInt32;
+    GetAttributeViStringPtr GetAttributeViString;
+    SetAttributeViStringPtr SetAttributeViString;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

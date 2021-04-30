@@ -30,6 +30,10 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   function_pointers_.DisconnectSWTrigFromTerminal = reinterpret_cast<DisconnectSWTrigFromTerminalPtr>(shared_library_.get_function_pointer("niSync_DisconnectSWTrigFromTerminal"));
   function_pointers_.ConnectTrigTerminals = reinterpret_cast<ConnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_ConnectTrigTerminals"));
   function_pointers_.DisconnectTrigTerminals = reinterpret_cast<DisconnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_DisconnectTrigTerminals"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_GetAttributeViInt32"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_SetAttributeViInt32"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_GetAttributeViString"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_SetAttributeViString"));
 }
 
 NiSyncLibrary::~NiSyncLibrary()
@@ -148,6 +152,54 @@ ViStatus NiSyncLibrary::DisconnectTrigTerminals(ViSession vi, ViConstString srcT
   return niSync_DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
 #else
   return function_pointers_.DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
+#endif
+}
+
+ViStatus NiSyncLibrary::GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value)
+{
+  if (!function_pointers_.GetAttributeViInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViInt32.");
+  }
+#if defined(_MSC_VER)
+  return niSync_GetAttributeViInt32(vi, activeItem, attribute, value);
+#else
+  return function_pointers_.GetAttributeViInt32(vi, activeItem, attribute, value);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value)
+{
+  if (!function_pointers_.SetAttributeViInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViInt32.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetAttributeViInt32(vi, activeItem, attribute, value);
+#else
+  return function_pointers_.SetAttributeViInt32(vi, activeItem, attribute, value);
+#endif
+}
+
+ViStatus NiSyncLibrary::GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[])
+{
+  if (!function_pointers_.GetAttributeViString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViString.");
+  }
+#if defined(_MSC_VER)
+  return niSync_GetAttributeViString(vi, activeItem, attribute, bufferSize, value);
+#else
+  return function_pointers_.GetAttributeViString(vi, activeItem, attribute, bufferSize, value);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value)
+{
+  if (!function_pointers_.SetAttributeViString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViString.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetAttributeViString(vi, activeItem, attribute, value);
+#else
+  return function_pointers_.SetAttributeViString(vi, activeItem, attribute, value);
 #endif
 }
 
