@@ -62,7 +62,6 @@ ${set_response_values(output_parameters)}\
 <%
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
-  session_parameter = parameters[0]['name']
 %>\
 ${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
