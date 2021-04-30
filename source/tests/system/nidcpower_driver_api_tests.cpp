@@ -538,6 +538,20 @@ TEST_F(NiDCPowerDriverApiTest, VoltageLevelConfiguredAndExportedToBuffer_ResetAn
   EXPECT_EQ(expected_output_function, actual_output_function);
 }
 
+TEST_F(NiDCPowerDriverApiTest, CalSelfCalibrate_CompletesSuccessfully)
+{
+  const char* channel_name = "";
+  ::grpc::ClientContext context;
+  dcpower::CalSelfCalibrateRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_name(channel_name);
+  dcpower::CalSelfCalibrateResponse response;
+  ::grpc::Status status = GetStub()->CalSelfCalibrate(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
