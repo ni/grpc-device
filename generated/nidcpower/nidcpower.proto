@@ -380,6 +380,12 @@ enum ComplianceLimitSymmetry {
   COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_ASYMMETRIC = 1;
 }
 
+enum PowerLineFrequencies {
+  POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
+  POWER_LINE_FREQUENCIES_NIDCPOWER_VAL_50_HERTZ = 50;
+  POWER_LINE_FREQUENCIES_NIDCPOWER_VAL_60_HERTZ = 60;
+}
+
 enum CurrentLimitBehavior {
   option allow_alias = true;
   CURRENT_LIMIT_BEHAVIOR_UNSPECIFIED = 0;
@@ -1217,7 +1223,10 @@ message ConfigureOutputResistanceResponse {
 
 message ConfigurePowerLineFrequencyRequest {
   nidevice_grpc.Session vi = 1;
-  double powerline_frequency = 2;
+  oneof powerline_frequency_enum {
+    PowerLineFrequencies powerline_frequency = 2;
+    double powerline_frequency_raw = 3;
+  }
 }
 
 message ConfigurePowerLineFrequencyResponse {

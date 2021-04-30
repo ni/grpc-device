@@ -1648,7 +1648,19 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViReal64 powerline_frequency = request->powerline_frequency();
+      ViReal64 powerline_frequency;
+      switch (request->powerline_frequency_enum_case()) {
+        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequency:
+          powerline_frequency = (ViReal64)request->powerline_frequency();
+          break;
+        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequencyRaw:
+          powerline_frequency = (ViReal64)request->powerline_frequency_raw();
+          break;
+        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::POWERLINE_FREQUENCY_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for powerline_frequency was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigurePowerLineFrequency(vi, powerline_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
