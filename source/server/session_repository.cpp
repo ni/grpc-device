@@ -65,17 +65,6 @@ uint32_t SessionRepository::access_session(uint32_t session_id, const std::strin
   return 0;
 }
 
-// Updates cleanup_func of a session by ID.
-// To update cleanup_func of a session by name, use access_session to get the session ID.
-void SessionRepository::update_cleanup_func(uint32_t id, CleanupSessionFunc new_cleanup_func)
-{
-  std::unique_lock<std::shared_mutex> lock(repository_lock_);
-  auto it = sessions_.find(id);
-  if (it != sessions_.end()) {
-    it->second->cleanup_func = new_cleanup_func;
-  }
-}
-
 // Removes a session by ID.
 // To remove a session by name, use access_session to get the session ID.
 void SessionRepository::remove_session(uint32_t id)
