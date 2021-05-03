@@ -126,7 +126,7 @@ jobs:
 
     - name: Upload Windows Server Binaries Artifact
       uses: actions/upload-artifact@v2
-      if: "(runner.os == 'Windows')"
+      if: "(github.ref == 'refs/heads/main') && (runner.os == 'Windows')"
       with:
         name: ni-grpc-device-server-windows
         path: |
