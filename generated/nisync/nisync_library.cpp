@@ -30,6 +30,7 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   function_pointers_.DisconnectSWTrigFromTerminal = reinterpret_cast<DisconnectSWTrigFromTerminalPtr>(shared_library_.get_function_pointer("niSync_DisconnectSWTrigFromTerminal"));
   function_pointers_.ConnectTrigTerminals = reinterpret_cast<ConnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_ConnectTrigTerminals"));
   function_pointers_.DisconnectTrigTerminals = reinterpret_cast<DisconnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_DisconnectTrigTerminals"));
+  function_pointers_.MeasureFrequencyEx = reinterpret_cast<MeasureFrequencyExPtr>(shared_library_.get_function_pointer("niSync_MeasureFrequencyEx"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_GetAttributeViInt32"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_SetAttributeViInt32"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_GetAttributeViString"));
@@ -152,6 +153,18 @@ ViStatus NiSyncLibrary::DisconnectTrigTerminals(ViSession vi, ViConstString srcT
   return niSync_DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
 #else
   return function_pointers_.DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
+#endif
+}
+
+ViStatus NiSyncLibrary::MeasureFrequencyEx(ViSession vi, ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDuration, ViReal64* frequency, ViReal64* frequencyError)
+{
+  if (!function_pointers_.MeasureFrequencyEx) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_MeasureFrequencyEx.");
+  }
+#if defined(_MSC_VER)
+  return niSync_MeasureFrequencyEx(vi, srcTerminal, duration, decimationCount, actualDuration, frequency, frequencyError);
+#else
+  return function_pointers_.MeasureFrequencyEx(vi, srcTerminal, duration, decimationCount, actualDuration, frequency, frequencyError);
 #endif
 }
 
