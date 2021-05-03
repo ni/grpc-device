@@ -249,6 +249,23 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
+  ::grpc::Status call_MeasureFrequencyEx(ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDurationOut, ViReal64* frequencyOut, ViReal64* frequencyErrorOut, ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::MeasureFrequencyExRequest request;
+    nisync::MeasureFrequencyExResponse response;
+    request.set_src_terminal(srcTerminal);
+    request.set_duration(duration);
+    request.set_decimation_count(decimationCount);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->MeasureFrequencyEx(&clientContext, request, &response);
+    *actualDurationOut = response.actual_duration();
+    *frequencyOut = response.frequency();
+    *frequencyErrorOut = response.frequency_error();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
 private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
@@ -538,6 +555,19 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViString_ReturnsValue)
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
   EXPECT_STREQ(expectedValue, value.c_str());
+}
+
+TEST_F(NiSyncDriverApiTest, MeasureFrequencyEx_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  ViConstString srcTerminal = NISYNC_VAL_PFI0;
+  ViReal64 duration = 1; // duration is in seconds
+  ViUInt32 decimationCount = 0; // ignored for 6674
+  ViReal64 actualDuration, frequency, frequencyError;
+  auto grpcStatus = call_MeasureFrequencyEx(srcTerminal, duration, decimationCount, &actualDuration, &frequency, &frequencyError, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 }  // namespace system
