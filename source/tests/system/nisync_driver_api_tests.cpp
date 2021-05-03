@@ -557,17 +557,34 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViString_ReturnsValue)
   EXPECT_STREQ(expectedValue, value.c_str());
 }
 
-TEST_F(NiSyncDriverApiTest, MeasureFrequencyEx_ReturnsSuccess)
+TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsNoFrequency)
 {
   ViStatus viStatus;
   ViConstString srcTerminal = NISYNC_VAL_PFI0;
-  ViReal64 duration = 1; // duration is in seconds
+  ViReal64 duration = 0.1; // duration is in seconds
   ViUInt32 decimationCount = 0; // ignored for 6674
   ViReal64 actualDuration, frequency, frequencyError;
   auto grpcStatus = call_MeasureFrequencyEx(srcTerminal, duration, decimationCount, &actualDuration, &frequency, &frequencyError, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_EQ(0, actualDuration);
+  EXPECT_EQ(0, frequency);
+}
+
+TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsFrequency)
+{
+  ViStatus viStatus;
+  ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
+  ViReal64 duration = 0.1; // duration is in seconds
+  ViUInt32 decimationCount = 0; // ignored for 6674
+  ViReal64 actualDuration, frequency, frequencyError;
+  auto grpcStatus = call_MeasureFrequencyEx(srcTerminal, duration, decimationCount, &actualDuration, &frequency, &frequencyError, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_GT(actualDuration, 0);  
+  EXPECT_GT(frequency, 0);
 }
 
 }  // namespace system
