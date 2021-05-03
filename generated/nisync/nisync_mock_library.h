@@ -30,6 +30,10 @@ class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value), (override));
+  MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean* value), (override));
+  MOCK_METHOD(ViStatus, SetAttributeViBoolean, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean value), (override));
+  MOCK_METHOD(ViStatus, GetAttributeViReal64, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64* value), (override));
+  MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64 value), (override));
 };
 
 }  // namespace unit

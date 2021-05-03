@@ -31,6 +31,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
   ViStatus SetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value);
+  ViStatus GetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean* value);
+  ViStatus SetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean value);
+  ViStatus GetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64* value);
+  ViStatus SetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64 value);
 
  private:
   using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
@@ -46,6 +50,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
   using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value);
+  using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean* value);
+  using SetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean value);
+  using GetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64* value);
+  using SetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64 value);
 
   typedef struct FunctionPointers {
     initPtr init;
@@ -61,6 +69,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
     SetAttributeViInt32Ptr SetAttributeViInt32;
     GetAttributeViStringPtr GetAttributeViString;
     SetAttributeViStringPtr SetAttributeViString;
+    GetAttributeViBooleanPtr GetAttributeViBoolean;
+    SetAttributeViBooleanPtr SetAttributeViBoolean;
+    GetAttributeViReal64Ptr GetAttributeViReal64;
+    SetAttributeViReal64Ptr SetAttributeViReal64;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;
