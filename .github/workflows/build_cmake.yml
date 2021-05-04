@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 'releases/**'
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
@@ -109,7 +110,7 @@ jobs:
         endif()
 
     - name: Tar Linux Server Binaries
-      if: "(github.ref == 'refs/heads/main') && (runner.os == 'Linux')"
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       run: >-
         tar -cvf ni-grpc-device-server-linux-glibc2_23.tar
         -C ${GITHUB_WORKSPACE}/build
@@ -118,8 +119,18 @@ jobs:
 
     - name: Upload Linux Server Binaries Artifact
       uses: actions/upload-artifact@v2
-      if: "(github.ref == 'refs/heads/main') && (runner.os == 'Linux')"
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
         name: ni-grpc-device-server-linux-glibc2_23
         path: ni-grpc-device-server-linux-glibc2_23.tar
+        retention-days: 5
+
+    - name: Upload Windows Server Binaries Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
+      with:
+        name: ni-grpc-device-server-windows
+        path: |
+          build/Release/ni_grpc_device_server.exe
+          build/Release/server_config.json
         retention-days: 5
