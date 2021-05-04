@@ -34,6 +34,10 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_SetAttributeViInt32"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_GetAttributeViString"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_SetAttributeViString"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSync_GetAttributeViBoolean"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSync_SetAttributeViBoolean"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSync_GetAttributeViReal64"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSync_SetAttributeViReal64"));
 }
 
 NiSyncLibrary::~NiSyncLibrary()
@@ -200,6 +204,54 @@ ViStatus NiSyncLibrary::SetAttributeViString(ViSession vi, ViConstString activeI
   return niSync_SetAttributeViString(vi, activeItem, attribute, value);
 #else
   return function_pointers_.SetAttributeViString(vi, activeItem, attribute, value);
+#endif
+}
+
+ViStatus NiSyncLibrary::GetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean* value)
+{
+  if (!function_pointers_.GetAttributeViBoolean) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViBoolean.");
+  }
+#if defined(_MSC_VER)
+  return niSync_GetAttributeViBoolean(vi, activeItem, attribute, value);
+#else
+  return function_pointers_.GetAttributeViBoolean(vi, activeItem, attribute, value);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean value)
+{
+  if (!function_pointers_.SetAttributeViBoolean) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViBoolean.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetAttributeViBoolean(vi, activeItem, attribute, value);
+#else
+  return function_pointers_.SetAttributeViBoolean(vi, activeItem, attribute, value);
+#endif
+}
+
+ViStatus NiSyncLibrary::GetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64* value)
+{
+  if (!function_pointers_.GetAttributeViReal64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViReal64.");
+  }
+#if defined(_MSC_VER)
+  return niSync_GetAttributeViReal64(vi, activeItem, attribute, value);
+#else
+  return function_pointers_.GetAttributeViReal64(vi, activeItem, attribute, value);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64 value)
+{
+  if (!function_pointers_.SetAttributeViReal64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViReal64.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetAttributeViReal64(vi, activeItem, attribute, value);
+#else
+  return function_pointers_.SetAttributeViReal64(vi, activeItem, attribute, value);
 #endif
 }
 
