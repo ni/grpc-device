@@ -16,6 +16,35 @@ functions = {
         ],
         "returns": "ViStatus",
     },
+    'RevisionQuery':{
+        'cname' : 'niSync_revision_query',
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'driverRevision',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'fixed',
+                    'value':256
+                }
+            },
+            {
+                'name':'firmwareRevision',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'fixed',
+                    'value':256
+                }
+            }
+        ],
+        'returns':'ViStatus'
+    },
     "SendSoftwareTrigger": {
         "parameters": [
             {

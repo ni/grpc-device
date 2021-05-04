@@ -20,6 +20,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus close(ViSession vi);
+  ViStatus RevisionQuery(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256]);
   ViStatus SendSoftwareTrigger(ViSession vi, ViConstString srcTerminal);
   ViStatus ConnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   ViStatus DisconnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
@@ -40,6 +41,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
  private:
   using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using closePtr = ViStatus (*)(ViSession vi);
+  using RevisionQueryPtr = ViStatus (*)(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256]);
   using SendSoftwareTriggerPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal);
   using ConnectClkTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   using DisconnectClkTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
@@ -60,6 +62,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   typedef struct FunctionPointers {
     initPtr init;
     closePtr close;
+    RevisionQueryPtr RevisionQuery;
     SendSoftwareTriggerPtr SendSoftwareTrigger;
     ConnectClkTerminalsPtr ConnectClkTerminals;
     DisconnectClkTerminalsPtr DisconnectClkTerminals;
