@@ -564,7 +564,14 @@ TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsN
   ViReal64 duration = 0.1; // duration is in seconds
   ViUInt32 decimationCount = 0; // ignored for 6674
   ViReal64 actualDuration, frequency, frequencyError;
-  auto grpcStatus = call_MeasureFrequencyEx(srcTerminal, duration, decimationCount, &actualDuration, &frequency, &frequencyError, &viStatus);
+  auto grpcStatus = call_MeasureFrequencyEx(
+     srcTerminal, 
+     duration, 
+     decimationCount, 
+     &actualDuration, 
+     &frequency, 
+     &frequencyError, 
+     &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
@@ -579,7 +586,14 @@ TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsF
   ViReal64 duration = 0.1; // duration is in seconds
   ViUInt32 decimationCount = 0; // ignored for 6674
   ViReal64 actualDuration, frequency, frequencyError;
-  auto grpcStatus = call_MeasureFrequencyEx(srcTerminal, duration, decimationCount, &actualDuration, &frequency, &frequencyError, &viStatus);
+  auto grpcStatus = call_MeasureFrequencyEx(
+     srcTerminal, 
+     duration, 
+     decimationCount, 
+     &actualDuration, 
+     &frequency, 
+     &frequencyError, 
+     &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
