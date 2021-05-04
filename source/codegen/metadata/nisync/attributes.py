@@ -6,6 +6,9 @@ attributes = {
     1150001: {
         'name': 'SERIAL_NUM'
     },
+    1150002: {
+        'name': 'MODEL_CODE'
+    },
     1150100: {
         'name': 'PFI0_THRESHOLD'
     },

@@ -29,6 +29,10 @@ class NiSyncLibraryInterface {
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value) = 0;
+  virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean* value) = 0;
+  virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean value) = 0;
+  virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64* value) = 0;
+  virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64 value) = 0;
 };
 
 }  // namespace nisync_grpc

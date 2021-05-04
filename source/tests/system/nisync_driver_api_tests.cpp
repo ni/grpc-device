@@ -248,6 +248,62 @@ class NiSyncDriverApiTest : public ::testing::Test {
     *viStatusOut = response.status();
     return grpcStatus;
   }
+ 
+  ::grpc::Status call_SetAttributeViBoolean(ViConstString activeItem, ViAttr attribute, ViBoolean value, ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetAttributeViBooleanRequest request;
+    nisync::SetAttributeViBooleanResponse response;
+    request.set_active_item(activeItem);
+    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_value(value);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetAttributeViBoolean(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_GetAttributeViBoolean(ViConstString activeItem, ViAttr attribute, ViBoolean* valueOut, ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::GetAttributeViBooleanRequest request;
+    nisync::GetAttributeViBooleanResponse response;
+    request.set_active_item(activeItem);
+    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->GetAttributeViBoolean(&clientContext, request, &response);
+    *valueOut = response.value();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_SetAttributeViReal64(ViConstString activeItem, ViAttr attribute, ViReal64 value, ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetAttributeViReal64Request request;
+    nisync::SetAttributeViReal64Response response;
+    request.set_active_item(activeItem);
+    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_value(value);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetAttributeViReal64(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_GetAttributeViReal64(ViConstString activeItem, ViAttr attribute, ViReal64* valueOut, ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::GetAttributeViReal64Request request;
+    nisync::GetAttributeViReal64Response response;
+    request.set_active_item(activeItem);
+    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->GetAttributeViReal64(&clientContext, request, &response);
+    *valueOut = response.value();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
 
   ::grpc::Status call_MeasureFrequencyEx(
      ViConstString srcTerminal,
@@ -564,49 +620,43 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViString_ReturnsValue)
   EXPECT_STREQ(expectedValue, value.c_str());
 }
 
-TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsNoFrequency)
+TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViBoolean_ReturnsValue)
 {
   ViStatus viStatus;
-  ViConstString srcTerminal = NISYNC_VAL_PFI0;
-  ViReal64 duration = 0.1; // duration is in seconds
-  ViUInt32 decimationCount = 0; // ignored for 6674
-  ViReal64 actualDuration, frequency, frequencyError;
-  auto grpcStatus = call_MeasureFrequencyEx(
-     srcTerminal, 
-     duration, 
-     decimationCount, 
-     &actualDuration, 
-     &frequency, 
-     &frequencyError, 
-     &viStatus);
+  auto activeItem = "";
+  ViAttr attribute = NISYNC_ATTR_CLKIN_ATTENUATION_DISABLE;
+  ViBoolean expectedValue = VI_TRUE;
+  auto grpcStatus = call_SetAttributeViBoolean(activeItem, attribute, expectedValue, &viStatus);
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+
+  ViBoolean value;
+  grpcStatus = call_GetAttributeViBoolean(activeItem, attribute, &value, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  EXPECT_EQ(0, actualDuration);
-  EXPECT_EQ(0, frequency);
+  EXPECT_EQ(expectedValue, value);
 }
 
-TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsFrequency)
+TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViReal64_ReturnsValue)
 {
   ViStatus viStatus;
-  ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
-  ViReal64 duration = 0.1; // duration is in seconds
-  ViUInt32 decimationCount = 0; // ignored for 6674
-  ViReal64 actualDuration, frequency, frequencyError;
-  auto grpcStatus = call_MeasureFrequencyEx(
-     srcTerminal, 
-     duration, 
-     decimationCount, 
-     &actualDuration, 
-     &frequency, 
-     &frequencyError, 
-     &viStatus);
+  auto activeItem = "";
+  ViAttr attribute = NISYNC_ATTR_PFI0_THRESHOLD;
+  ViReal64 expectedValue = 2.3;
+  auto grpcStatus = call_SetAttributeViReal64(activeItem, attribute, expectedValue, &viStatus);
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+
+  ViReal64 value;
+  grpcStatus = call_GetAttributeViReal64(activeItem, attribute, &value, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  EXPECT_GT(actualDuration, 0);  
-  EXPECT_GT(frequency, 0);
+  EXPECT_DOUBLE_EQ(expectedValue, value);
 }
+
+
 
 }  // namespace system
 }  // namespace tests

@@ -335,4 +335,104 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "GetAttributeViBoolean": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "activeItem",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "attribute",
+                "type": "ViAttr"
+            },
+            {
+                "direction": "out",
+                "name": "value",
+                "type": "ViBoolean"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetAttributeViBoolean": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "activeItem",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "attribute",
+                "type": "ViAttr"
+            },
+            {
+                "direction": "in",
+                "name": "value",
+                "type": "ViBoolean"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetAttributeViReal64": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "activeItem",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "attribute",
+                "type": "ViAttr"
+            },
+            {
+                "direction": "out",
+                "name": "value",
+                "type": "ViReal64"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetAttributeViReal64": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "activeItem",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "attribute",
+                "type": "ViAttr"
+            },
+            {
+                "direction": "in",
+                "name": "value",
+                "type": "ViReal64"
+            }
+        ],
+        "returns": "ViStatus"
+    },
 }
