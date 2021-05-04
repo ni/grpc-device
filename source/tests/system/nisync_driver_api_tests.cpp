@@ -305,6 +305,30 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
+  ::grpc::Status call_MeasureFrequencyEx(
+     ViConstString srcTerminal,
+     ViReal64 duration,
+     ViUInt32 decimationCount,
+     ViReal64* actualDurationOut,
+     ViReal64* frequencyOut,
+     ViReal64* frequencyErrorOut,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::MeasureFrequencyExRequest request;
+    nisync::MeasureFrequencyExResponse response;
+    request.set_src_terminal(srcTerminal);
+    request.set_duration(duration);
+    request.set_decimation_count(decimationCount);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->MeasureFrequencyEx(&clientContext, request, &response);
+    *actualDurationOut = response.actual_duration();
+    *frequencyOut = response.frequency();
+    *frequencyErrorOut = response.frequency_error();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
 private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
@@ -632,7 +656,49 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViReal64_ReturnsValue)
   EXPECT_DOUBLE_EQ(expectedValue, value);
 }
 
+TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsNoFrequency)
+{
+  ViStatus viStatus;
+  ViConstString srcTerminal = NISYNC_VAL_PFI0;
+  ViReal64 duration = 0.1; // duration is in seconds
+  ViUInt32 decimationCount = 0; // ignored for 6674
+  ViReal64 actualDuration, frequency, frequencyError;
+  auto grpcStatus = call_MeasureFrequencyEx(
+     srcTerminal, 
+     duration, 
+     decimationCount, 
+     &actualDuration, 
+     &frequency, 
+     &frequencyError, 
+     &viStatus);
 
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_EQ(0, actualDuration);
+  EXPECT_EQ(0, frequency);
+}
+
+TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsFrequency)
+{
+  ViStatus viStatus;
+  ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
+  ViReal64 duration = 0.1; // duration is in seconds
+  ViUInt32 decimationCount = 0; // ignored for 6674
+  ViReal64 actualDuration, frequency, frequencyError;
+  auto grpcStatus = call_MeasureFrequencyEx(
+     srcTerminal, 
+     duration, 
+     decimationCount, 
+     &actualDuration, 
+     &frequency, 
+     &frequencyError, 
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_GT(actualDuration, 0);  
+  EXPECT_GT(frequency, 0);
+}
 
 }  // namespace system
 }  // namespace tests

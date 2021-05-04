@@ -186,6 +186,46 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "MeasureFrequencyEx": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "srcTerminal",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "duration",
+                "type": "ViReal64"
+            },
+            {
+                "direction": "in",
+                "name": "decimationCount",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "out",
+                "name": "actualDuration",
+                "type": "ViReal64"
+            },
+            {
+                "direction": "out",
+                "name": "frequency",
+                "type": "ViReal64"
+            },
+            {
+                "direction": "out",
+                "name": "frequencyError",
+                "type": "ViReal64"
+            }
+        ],
+        "returns": "ViStatus"
+    },    
     "GetAttributeViInt32": {
         "parameters": [
             {

@@ -27,6 +27,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus DisconnectSWTrigFromTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   ViStatus ConnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge);
   ViStatus DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
+  ViStatus MeasureFrequencyEx(ViSession vi, ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDuration, ViReal64* frequency, ViReal64* frequencyError);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
@@ -46,6 +47,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using DisconnectSWTrigFromTerminalPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   using ConnectTrigTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge);
   using DisconnectTrigTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
+  using MeasureFrequencyExPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDuration, ViReal64* frequency, ViReal64* frequencyError);
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
   using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
@@ -65,6 +67,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
     DisconnectSWTrigFromTerminalPtr DisconnectSWTrigFromTerminal;
     ConnectTrigTerminalsPtr ConnectTrigTerminals;
     DisconnectTrigTerminalsPtr DisconnectTrigTerminals;
+    MeasureFrequencyExPtr MeasureFrequencyEx;
     GetAttributeViInt32Ptr GetAttributeViInt32;
     SetAttributeViInt32Ptr SetAttributeViInt32;
     GetAttributeViStringPtr GetAttributeViString;

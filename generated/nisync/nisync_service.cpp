@@ -228,6 +228,36 @@ namespace nisync_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::MeasureFrequencyEx(::grpc::ServerContext* context, const MeasureFrequencyExRequest* request, MeasureFrequencyExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString src_terminal = request->src_terminal().c_str();
+      ViReal64 duration = request->duration();
+      ViUInt32 decimation_count = request->decimation_count();
+      ViReal64 actual_duration {};
+      ViReal64 frequency {};
+      ViReal64 frequency_error {};
+      auto status = library_->MeasureFrequencyEx(vi, src_terminal, duration, decimation_count, &actual_duration, &frequency, &frequency_error);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_actual_duration(actual_duration);
+        response->set_frequency(frequency);
+        response->set_frequency_error(frequency_error);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiSyncService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
