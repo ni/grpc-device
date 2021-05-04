@@ -135,7 +135,7 @@ jobs:
         endif()
 
     - name: Tar Build Files
-      if: "github.ref == 'refs/heads/main'"
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       run: >-
         tar -cvf NILinuxRealTime-x86_64.tar
         -C ${GITHUB_WORKSPACE}/build
