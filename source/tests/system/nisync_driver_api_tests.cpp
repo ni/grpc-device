@@ -83,6 +83,20 @@ class NiSyncDriverApiTest : public ::testing::Test {
     EXPECT_EQ(VI_SUCCESS, response.status());
   }
 
+  ::grpc::Status call_RevisionQuery(std::string* driverRevision, std::string* firmwareRevision, ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::RevisionQueryRequest request;
+    nisync::RevisionQueryResponse response;
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->RevisionQuery(&clientContext, request, &response);
+    *driverRevision = response.driver_revision();
+    *firmwareRevision = response.firmware_revision();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+
   ::grpc::Status call_SendSoftwareTrigger(ViConstString srcTerminal, ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
@@ -338,6 +352,17 @@ private:
   std::unique_ptr<nisync::NiSyncService> nisync_service_;
   std::unique_ptr<::grpc::Server> server_;
 };
+
+TEST_F(NiSyncDriverApiTest, RevisionQuery)
+{
+  ViStatus viStatus;
+  std::string driverRevision, firmwareRevision;
+  auto grpcStatus = call_RevisionQuery(&driverRevision, &firmwareRevision, &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_FALSE(driverRevision.empty());
+  EXPECT_FALSE(firmwareRevision.empty());
+}
 
 TEST_F(NiSyncDriverApiTest, ConnectClkTerminals_ReturnsSuccess)
 {
