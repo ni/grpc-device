@@ -249,7 +249,14 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
-  ::grpc::Status call_MeasureFrequencyEx(ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDurationOut, ViReal64* frequencyOut, ViReal64* frequencyErrorOut, ViStatus* viStatusOut)
+  ::grpc::Status call_MeasureFrequencyEx(
+     ViConstString srcTerminal,
+     ViReal64 duration,
+     ViUInt32 decimationCount,
+     ViReal64* actualDurationOut,
+     ViReal64* frequencyOut,
+     ViReal64* frequencyErrorOut,
+     ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::MeasureFrequencyExRequest request;
