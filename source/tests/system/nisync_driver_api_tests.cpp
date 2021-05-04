@@ -353,7 +353,7 @@ private:
   std::unique_ptr<::grpc::Server> server_;
 };
 
-TEST_F(NiSyncDriverApiTest, RevisionQuery)
+TEST_F(NiSyncDriverApiTest, RevisionQuery_ReturnsNonEmptyRevisions)
 {
   ViStatus viStatus;
   std::string driverRevision, firmwareRevision;
