@@ -31,8 +31,12 @@ Metadata for following attributes added:
 - `'MEAS_DEST_SLOPE'`
 - `'LATENCY'`
 - `'SHUNT_VALUE'`
+- `'CONFIG_PRODUCT_NUMBER'`
 
-`'enum'` tag adding to the following attributes:
+`'enum'` tags added to following attributes:
+- `'BUFFER_SIZE'`
+- `'LATENCY'`
+- `'SETTLE_TIME'`
 - `'APERTURE_TIME'`
 - `'OFFSET_COMP_OHMS'`
 - `'DC_BIAS'`
@@ -48,16 +52,22 @@ All occurrences of the following keys were removed along with their values:
 Enums with more than 2 consecutive uppercase letters in their name (as abbreviations) have been changed to the letters other than first letter in the abbreviation to lowercase. eg. DCBias to DcBias, ADCCalibration to AdcCalibration, etc. 
 
 Metadata for following enums added:
-- `'ApertureTime'`
+- `'BufferSize'`
 - `'CalibrationCloseAction'`
 - `'CalibrationType'`
 - `'CompensatedOhms'`
+- `'ControlCommit'`
+- `'ApertureTime'`
 - `'Configuration4022'`
 - `'DcBias'`
+- `'Latency'`
 - `'MiscCalibration'`
 - `'PowerLineFrequencies'`
 - `'Range'`
+- `'SettleTime'`
 - `'TriggerDelays'`
+
+`'NIDMM_VAL_FIXED'` (from nimi-python) changed to `'NIDMM_VAL_TEMP_REF_JUNC_FIXED'` in the `'ThermocoupleReferenceJunctionType'` to match the documentation and the header file
 
 
 # Changes in metadata from the base metadata
@@ -95,4 +105,4 @@ with the session_repository.
 - `'type`' parameter of function `'CalAdjustMisc'`
 - `'powerLineFrequencyHz`' parameter of function `'ConfigurePowerLineFrequency'`
 - `'triggerDelay`' parameter of function `'ConfigureTrigger'`
-
+- `controlAction` parameter of function `'Control'`

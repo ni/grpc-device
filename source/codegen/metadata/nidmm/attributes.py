@@ -185,6 +185,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'MEAS_DEST_SLOPE',
+        "enum": "MeasurementDestinationSlope",
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -199,6 +200,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'SAMPLE_TRIGGER_SLOPE',
+        'enum': 'SampleTrigSlope',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -268,6 +270,7 @@ attributes = {
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
         'name': 'SETTLE_TIME',
+        'enum': 'SettleTime',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -290,6 +293,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'LATENCY',
+        'enum': 'Latency',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -297,6 +301,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'BUFFER_SIZE',
+        'enum': 'BufferSize',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -376,7 +381,7 @@ attributes = {
     1150061: {
         'access': 'read only',
         'channel_based': False,
-        'name': 'INSTRUMENT_PRODUCT_ID',
+        'name': 'CONFIG_PRODUCT_NUMBER',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -627,6 +632,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'TRIGGER_SLOPE',
+        'enum': 'TriggerSlope',
         'resettable': False,
         'type': 'ViInt32'
     }
