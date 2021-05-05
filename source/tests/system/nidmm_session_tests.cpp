@@ -12,7 +12,7 @@ namespace dmm = nidmm_grpc;
 const int kViErrorRsrcNFound = -1074118656;
 const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.";
 const char* kResourceName = "FakeDevice";
-const char* kOptionsString = "Simulate=1, DriverSetup=Model:4065; BoardType:PCI";
+const char* kOptionsString = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe";
 const char* kSessionName = "SessionName";
 const char* kInvalidRsrc = "";
 
