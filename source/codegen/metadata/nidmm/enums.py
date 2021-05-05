@@ -109,6 +109,14 @@ enums = {
             }
         ]
     },
+    'BufferSize': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_BUFFER_SIZE_AUTO',
+                'value': -1
+            }
+        ]
+    },
     'CableCompensationType': {
         'values': [
             {
@@ -186,6 +194,14 @@ enums = {
             {
                 'name': 'NIDMM_4022_CONFIG_DISCONNECT_AGND',
                 'value': 8
+            }
+        ]
+    },
+    'ControlCommit': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_CONTROL_COMMIT',
+                'value': 0
             }
         ]
     },
@@ -282,6 +298,14 @@ enums = {
             {
                 'name': 'NIDMM_VAL_INDUCTANCE',
                 'value': 1006
+            }
+        ]
+    },
+    'Latency': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_LATENCY_AUTO',
+                'value': -1
             }
         ]
     },
@@ -593,6 +617,14 @@ enums = {
             }
         ]
     },
+    'SettleTime': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_SETTLE_TIME_AUTO',
+                'value': -1
+            }
+        ]
+    },
     'ThermistorType': {
         'values': [
             {
@@ -616,7 +648,7 @@ enums = {
     'ThermocoupleReferenceJunctionType': {
         'values': [
             {
-                'name': 'NIDMM_VAL_FIXED',
+                'name': 'NIDMM_VAL_TEMP_REF_JUNC_FIXED',
                 'value': 2
             }
         ]
