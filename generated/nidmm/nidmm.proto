@@ -230,6 +230,18 @@ enum AcquisitionStatus {
   ACQUISITION_STATUS_NIDMM_VAL_NO_ACQUISITION_IN_PROGRESS = 4;
 }
 
+enum ApertureTime {
+  APERTURE_TIME_UNSPECIFIED = 0;
+  APERTURE_TIME_NIDMM_VAL_APERTURE_TIME_AUTO = -1;
+  APERTURE_TIME_NIDMM_VAL_1_PLC = 1;
+  APERTURE_TIME_NIDMM_VAL_5_PLC = 5;
+  APERTURE_TIME_NIDMM_VAL_6_PLC = 6;
+  APERTURE_TIME_NIDMM_VAL_10_PLC = 10;
+  APERTURE_TIME_NIDMM_VAL_12_PLC = 12;
+  APERTURE_TIME_NIDMM_VAL_100_PLC = 100;
+  APERTURE_TIME_NIDMM_VAL_120_PLC = 120;
+}
+
 enum ApertureTimeUnits {
   option allow_alias = true;
   APERTURE_TIME_UNITS_UNSPECIFIED = 0;
@@ -274,6 +286,16 @@ enum CompensatedOhms {
   COMPENSATED_OHMS_UNSPECIFIED = 0;
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_OFF = 0;
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_ON = 1;
+}
+
+enum Configuration4022 {
+  option allow_alias = true;
+  CONFIGURATION4022_UNSPECIFIED = 0;
+  CONFIGURATION4022_NIDMM_4022_CONFIG_GUARD = 0;
+  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_100_NANOAMP = 2;
+  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_10_MICROAMP = 3;
+  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_1_MILLIAMP = 7;
+  CONFIGURATION4022_NIDMM_4022_CONFIG_DISCONNECT_AGND = 8;
 }
 
 enum DcBias {
@@ -370,6 +392,12 @@ enum OperationMode {
   OPERATION_MODE_NIDMM_VAL_WAVEFORM_MODE = 1;
 }
 
+enum PowerLineFrequencies {
+  POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
+  POWER_LINE_FREQUENCIES_NIDMM_VAL_50_HERTZ = 50;
+  POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ = 60;
+}
+
 enum Range {
   RANGE_UNSPECIFIED = 0;
   RANGE_NIDMM_VAL_AUTO_RANGE_ON = -1;
@@ -442,6 +470,12 @@ enum TransducerType {
   TRANSDUCER_TYPE_NIDMM_VAL_4_WIRE_RTD = 4;
 }
 
+enum TriggerDelays {
+  TRIGGER_DELAYS_UNSPECIFIED = 0;
+  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON = -1;
+  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_OFF = -2;
+}
+
 enum TriggerSource {
   TRIGGER_SOURCE_UNSPECIFIED = 0;
   TRIGGER_SOURCE_NIDMM_VAL_IMMEDIATE = 1;
@@ -469,7 +503,10 @@ enum WaveformCoupling {
 
 message Control4022Request {
   string resource_name = 1;
-  sint32 configuration = 2;
+  oneof configuration_enum {
+    Configuration4022 configuration = 2;
+    sint32 configuration_raw = 3;
+  }
 }
 
 message Control4022Response {
@@ -773,7 +810,10 @@ message ConfigureMultiPointResponse {
 
 message ConfigureOffsetCompOhmsRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 offset_comp_ohms = 2;
+  oneof offset_comp_ohms_enum {
+    CompensatedOhms offset_comp_ohms = 2;
+    sint32 offset_comp_ohms_raw = 3;
+  }
 }
 
 message ConfigureOffsetCompOhmsResponse {
@@ -792,7 +832,10 @@ message ConfigureOpenCableCompValuesResponse {
 
 message ConfigurePowerLineFrequencyRequest {
   nidevice_grpc.Session vi = 1;
-  double power_line_frequency_hz = 2;
+  oneof power_line_frequency_hz_enum {
+    PowerLineFrequencies power_line_frequency_hz = 2;
+    double power_line_frequency_hz_raw = 3;
+  }
 }
 
 message ConfigurePowerLineFrequencyResponse {
@@ -893,7 +936,10 @@ message ConfigureTriggerRequest {
     TriggerSource trigger_source = 2;
     sint32 trigger_source_raw = 3;
   }
-  double trigger_delay = 4;
+  oneof trigger_delay_enum {
+    TriggerDelays trigger_delay = 4;
+    double trigger_delay_raw = 5;
+  }
 }
 
 message ConfigureTriggerResponse {
@@ -1008,9 +1054,10 @@ message GetApertureTimeInfoRequest {
 
 message GetApertureTimeInfoResponse {
   int32 status = 1;
-  double aperture_time = 2;
-  ApertureTimeUnits aperture_time_units = 3;
-  sint32 aperture_time_units_raw = 4;
+  ApertureTime aperture_time = 2;
+  double aperture_time_raw = 3;
+  ApertureTimeUnits aperture_time_units = 4;
+  sint32 aperture_time_units_raw = 5;
 }
 
 message GetAttributeViBooleanRequest {
