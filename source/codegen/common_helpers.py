@@ -34,7 +34,7 @@ def is_unsupported_struct(parameter):
 def is_unsupported_scalar_array(parameter):
   if not is_array(parameter['type']):
     return False
-  return is_enum(parameter) or get_underlying_type_name(parameter['type']) in {'ViInt16'}
+  return is_enum(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
 
 def camel_to_snake(camelString):
   '''Returns a snake_string for a given camelString.'''

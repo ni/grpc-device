@@ -10,13 +10,13 @@ class DriverErrorException : public std::runtime_error{
 
   public:
     DriverErrorException(int status) : std::runtime_error(""), status_(status) { }
-    int status()
+    int status() const
     {
       return status_;
     }
 };
 
-void CheckStatus(int status)
+static void CheckStatus(int status)
 {
   if (status != 0) {
     throw DriverErrorException(status);
@@ -49,7 +49,7 @@ void CheckStatus(int status)
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    catch (DriverErrorException& ex) {
+    catch (const DriverErrorException& ex) {
       response->set_status(ex.status());
       return ::grpc::Status::OK;
     }
