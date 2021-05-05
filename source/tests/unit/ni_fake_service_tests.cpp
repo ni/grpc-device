@@ -541,10 +541,9 @@ TEST(NiFakeServiceTests, NiFakeService_BoolArrayInputFunction_CallsBoolArrayInpu
   nifake_grpc::BoolArrayInputFunctionRequest request;
   request.mutable_vi()->set_id(session_id);
   request.set_number_of_elements(number_of_elements);
-  bool input_array[] = { false, true, true };
-  for (bool item : input_array) {
-    request.add_an_array(item);
-  }
+  request.add_an_array(false);
+  request.add_an_array(true);
+  request.add_an_array(true);
   nifake_grpc::BoolArrayInputFunctionResponse response;
   ::grpc::Status status = service.BoolArrayInputFunction(&context, &request, &response);
 
