@@ -23,6 +23,7 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.init = reinterpret_cast<initPtr>(shared_library_.get_function_pointer("niSync_init"));
   function_pointers_.close = reinterpret_cast<closePtr>(shared_library_.get_function_pointer("niSync_close"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niSync_revision_query"));
   function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_.get_function_pointer("niSync_SendSoftwareTrigger"));
   function_pointers_.ConnectClkTerminals = reinterpret_cast<ConnectClkTerminalsPtr>(shared_library_.get_function_pointer("niSync_ConnectClkTerminals"));
   function_pointers_.DisconnectClkTerminals = reinterpret_cast<DisconnectClkTerminalsPtr>(shared_library_.get_function_pointer("niSync_DisconnectClkTerminals"));
@@ -73,6 +74,18 @@ ViStatus NiSyncLibrary::close(ViSession vi)
   return niSync_close(vi);
 #else
   return function_pointers_.close(vi);
+#endif
+}
+
+ViStatus NiSyncLibrary::RevisionQuery(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256])
+{
+  if (!function_pointers_.RevisionQuery) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_revision_query.");
+  }
+#if defined(_MSC_VER)
+  return niSync_revision_query(vi, driverRevision, firmwareRevision);
+#else
+  return function_pointers_.RevisionQuery(vi, driverRevision, firmwareRevision);
 #endif
 }
 
