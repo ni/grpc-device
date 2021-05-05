@@ -44,7 +44,7 @@ MAXPTSTOREAD        = 1000
 config_range        = 10.0
 resolution          = 5.5
 measurementType     = nidmm_types.Function.FUNCTION_NIDMM_VAL_DC_VOLTS
-powerlineFreq       = 60.0
+powerlineFreq       = nidmm_types.PowerLineFrequencies.POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ
 
 # Read in cmd args
 if len(sys.argv) >= 2:

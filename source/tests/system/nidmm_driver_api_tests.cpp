@@ -348,7 +348,7 @@ TEST_F(NiDmmDriverApiTest, ConfiguredTrigger_ConfiguresSuccessfully)
   dmm::ConfigureTriggerRequest request;
   request.mutable_vi()->set_id(GetSessionId());
   request.set_trigger_source(dmm::TriggerSource::TRIGGER_SOURCE_NIDMM_VAL_SOFTWARE_TRIG);
-  request.set_trigger_delay(-1);
+  request.set_trigger_delay(dmm::TriggerDelays::TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON);
   dmm::ConfigureTriggerResponse response;
   ::grpc::Status status = GetStub()->ConfigureTrigger(&context, request, &response); 
 
