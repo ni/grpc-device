@@ -63,7 +63,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
           ::grpc::ClientContext context;
           dmm::InitWithOptionsRequest request;
           request.set_resource_name("SimulatedDMM");
-          request.set_option_string("Simulate=1, DriverSetup=Model:4071; BoardType:PXI");
+          request.set_option_string("Simulate=1, DriverSetup=Model:4080; BoardType:PXIe");
           request.set_session_name("");
           request.set_reset_device(false);
           request.set_id_query(false);
