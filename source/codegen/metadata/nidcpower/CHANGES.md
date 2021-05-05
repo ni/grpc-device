@@ -1,4 +1,4 @@
-# Changes in metadata from the base metadata
+# Changes in metadata from the nimi-python metadata
 
 ## config.py
 
@@ -10,6 +10,39 @@ The following metadata was added:
 
 The following function name was capitalised:
 - 'close_function': 'Close'
+
+## attributes.py
+
+The documentation and lv_property values were removed from all the attributes.
+
+The following attributes were added : 
+- NIDCPOWER_ATTRIBUTE_RANGE_CHECK
+- NIDCPOWER_ATTRIBUTE_CACHE
+- NIDCPOWER_ATTRIBUTE_RECORD_COERCIONS
+- NIDCPOWER_ATTRIBUTE_INTERCHANGE_CHECK
+- NIDCPOWER_ATTRIBUTE_GROUP_CAPABILITIES
+- NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION
+- NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION
+- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_START_TRIGGER_EDGE
+- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SEQUENCE_ADVANCE_TRIGGER_EDGE
+- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SOURCE_TRIGGER_EDGE
+- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_MEASURE_TRIGGER_EDGE
+- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_PULSE_TRIGGER_EDGE
+- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SHUTDOWN_TRIGGER_EDGE
+
+`enum` tag was added to following attributes:
+- NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_AUTORANGE
+- NIDCPOWER_ATTRIBUTE_POWER_LINE_FREQUENCY
+
+## enums.py
+
+Following enums were defined :
+- InternalReference
+- NIDCPOWER_VAL_CANCEL
+- NIDCPOWER_VAL_COMMIT
+- PowerLineFrequencies
+
+# Changes in metadata from from the base metadata
 
 ## functions.py
 
@@ -63,34 +96,3 @@ The following function was tagged with `'codegen_method': 'private'`, because th
 - `trigger` parameter in `SendSoftwareEdgeTrigger`
 - `eventId` parameter in `WaitForEvent`
 - `powerlineFrequency` parameter in `ConfigurePowerLineFrequency`
-
-## attributes.py
-
-The documentation and lv_property values were removed from all the attributes.
-
-The following attributes were added : 
-- NIDCPOWER_ATTRIBUTE_RANGE_CHECK
-- NIDCPOWER_ATTRIBUTE_CACHE
-- NIDCPOWER_ATTRIBUTE_RECORD_COERCIONS
-- NIDCPOWER_ATTRIBUTE_INTERCHANGE_CHECK
-- NIDCPOWER_ATTRIBUTE_GROUP_CAPABILITIES
-- NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION
-- NIDCPOWER_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION
-- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_START_TRIGGER_EDGE
-- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SEQUENCE_ADVANCE_TRIGGER_EDGE
-- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SOURCE_TRIGGER_EDGE
-- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_MEASURE_TRIGGER_EDGE
-- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_PULSE_TRIGGER_EDGE
-- NIDCPOWER_ATTRIBUTE_DIGITAL_EDGE_SHUTDOWN_TRIGGER_EDGE
-
-`enum` tag was added to following attributes:
-- NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_AUTORANGE
-- NIDCPOWER_ATTRIBUTE_POWER_LINE_FREQUENCY
-
-## enums.py
-
-Following enums were defined :
-- InternalReference
-- NIDCPOWER_VAL_CANCEL
-- NIDCPOWER_VAL_COMMIT
-- PowerLineFrequencies
