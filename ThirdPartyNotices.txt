@@ -1,7 +1,7 @@
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 Do Not Translate or Localize
 
-grpc-device uses third party material from the projects listed below.
+NI gRPC Device Server uses third party material from the projects listed below.
 
 ****** gRPC (https://github.com/grpc/grpc) ******
 
