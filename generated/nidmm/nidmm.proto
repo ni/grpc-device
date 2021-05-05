@@ -176,7 +176,7 @@ enum NiDmmAttributes {
   NIDMM_ATTRIBUTE_DC_BIAS = 1150053;
   NIDMM_ATTRIBUTE_SERIAL_NUMBER = 1150054;
   NIDMM_ATTRIBUTE_LC_NUMBER_MEAS_TO_AVERAGE = 1150055;
-  NIDMM_ATTRIBUTE_INSTRUMENT_PRODUCT_ID = 1150061;
+  NIDMM_ATTRIBUTE_CONFIG_PRODUCT_NUMBER = 1150061;
   NIDMM_ATTRIBUTE_TEMP_RTD_TYPE = 1150120;
   NIDMM_ATTRIBUTE_TEMP_RTD_A = 1150121;
   NIDMM_ATTRIBUTE_TEMP_RTD_B = 1150122;
@@ -258,6 +258,11 @@ enum AutoZero {
   AUTO_ZERO_NIDMM_VAL_AUTO_ZERO_ONCE = 2;
 }
 
+enum BufferSize {
+  BUFFER_SIZE_UNSPECIFIED = 0;
+  BUFFER_SIZE_NIDMM_VAL_BUFFER_SIZE_AUTO = -1;
+}
+
 enum CableCompensationType {
   option allow_alias = true;
   CABLE_COMPENSATION_TYPE_UNSPECIFIED = 0;
@@ -298,6 +303,12 @@ enum Configuration4022 {
   CONFIGURATION4022_NIDMM_4022_CONFIG_DISCONNECT_AGND = 8;
 }
 
+enum ControlCommit {
+  option allow_alias = true;
+  CONTROL_COMMIT_UNSPECIFIED = 0;
+  CONTROL_COMMIT_NIDMM_VAL_CONTROL_COMMIT = 0;
+}
+
 enum DcBias {
   option allow_alias = true;
   DC_BIAS_UNSPECIFIED = 0;
@@ -333,6 +344,11 @@ enum Function {
   FUNCTION_NIDMM_VAL_INDUCTANCE = 1006;
 }
 
+enum Latency {
+  LATENCY_UNSPECIFIED = 0;
+  LATENCY_NIDMM_VAL_LATENCY_AUTO = -1;
+}
+
 enum LcCalculationModel {
   option allow_alias = true;
   LC_CALCULATION_MODEL_UNSPECIFIED = 0;
@@ -366,6 +382,13 @@ enum MeasurementCompleteDest {
   MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG6 = 117;
   MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG7 = 118;
   MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_LBR_TRIG0 = 1003;
+}
+
+enum MeasurementDestinationSlope {
+  option allow_alias = true;
+  MEASUREMENT_DESTINATION_SLOPE_UNSPECIFIED = 0;
+  MEASUREMENT_DESTINATION_SLOPE_NIDMM_VAL_POSITIVE = 0;
+  MEASUREMENT_DESTINATION_SLOPE_NIDMM_VAL_NEGATIVE = 1;
 }
 
 enum MiscCalibration {
@@ -417,6 +440,13 @@ enum RtdType {
   RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3928 = 6;
 }
 
+enum SampleTrigSlope {
+  option allow_alias = true;
+  SAMPLE_TRIG_SLOPE_UNSPECIFIED = 0;
+  SAMPLE_TRIG_SLOPE_NIDMM_VAL_POSITIVE = 0;
+  SAMPLE_TRIG_SLOPE_NIDMM_VAL_NEGATIVE = 1;
+}
+
 enum SampleTrigger {
   SAMPLE_TRIGGER_UNSPECIFIED = 0;
   SAMPLE_TRIGGER_NIDMM_VAL_IMMEDIATE = 1;
@@ -436,6 +466,11 @@ enum SampleTrigger {
   SAMPLE_TRIGGER_NIDMM_VAL_LBR_TRIG1 = 1004;
 }
 
+enum SettleTime {
+  SETTLE_TIME_UNSPECIFIED = 0;
+  SETTLE_TIME_NIDMM_VAL_SETTLE_TIME_AUTO = -1;
+}
+
 enum ThermistorType {
   option allow_alias = true;
   THERMISTOR_TYPE_UNSPECIFIED = 0;
@@ -447,7 +482,7 @@ enum ThermistorType {
 
 enum ThermocoupleReferenceJunctionType {
   THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_UNSPECIFIED = 0;
-  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_NIDMM_VAL_FIXED = 2;
+  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_NIDMM_VAL_TEMP_REF_JUNC_FIXED = 2;
 }
 
 enum ThermocoupleType {
@@ -474,6 +509,13 @@ enum TriggerDelays {
   TRIGGER_DELAYS_UNSPECIFIED = 0;
   TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON = -1;
   TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_OFF = -2;
+}
+
+enum TriggerSlope {
+  option allow_alias = true;
+  TRIGGER_SLOPE_UNSPECIFIED = 0;
+  TRIGGER_SLOPE_NIDMM_VAL_POSITIVE = 0;
+  TRIGGER_SLOPE_NIDMM_VAL_NEGATIVE = 1;
 }
 
 enum TriggerSource {
@@ -878,7 +920,10 @@ message ConfigureRTDTypeResponse {
 
 message ConfigureSampleTriggerSlopeRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 sample_trigger_slope = 2;
+  oneof sample_trigger_slope_enum {
+    SampleTrigSlope sample_trigger_slope = 2;
+    sint32 sample_trigger_slope_raw = 3;
+  }
 }
 
 message ConfigureSampleTriggerSlopeResponse {
@@ -948,7 +993,10 @@ message ConfigureTriggerResponse {
 
 message ConfigureTriggerSlopeRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 trigger_slope = 2;
+  oneof trigger_slope_enum {
+    TriggerSlope trigger_slope = 2;
+    sint32 trigger_slope_raw = 3;
+  }
 }
 
 message ConfigureTriggerSlopeResponse {
@@ -981,7 +1029,10 @@ message ConfigureWaveformCouplingResponse {
 
 message ControlRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 control_action = 2;
+  oneof control_action_enum {
+    ControlCommit control_action = 2;
+    sint32 control_action_raw = 3;
+  }
 }
 
 message ControlResponse {

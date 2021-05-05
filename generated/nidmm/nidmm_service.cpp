@@ -882,7 +882,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 sample_trigger_slope = request->sample_trigger_slope();
+      ViInt32 sample_trigger_slope;
+      switch (request->sample_trigger_slope_enum_case()) {
+        case nidmm_grpc::ConfigureSampleTriggerSlopeRequest::SampleTriggerSlopeEnumCase::kSampleTriggerSlope:
+          sample_trigger_slope = (ViInt32)request->sample_trigger_slope();
+          break;
+        case nidmm_grpc::ConfigureSampleTriggerSlopeRequest::SampleTriggerSlopeEnumCase::kSampleTriggerSlopeRaw:
+          sample_trigger_slope = (ViInt32)request->sample_trigger_slope_raw();
+          break;
+        case nidmm_grpc::ConfigureSampleTriggerSlopeRequest::SampleTriggerSlopeEnumCase::SAMPLE_TRIGGER_SLOPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_trigger_slope was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureSampleTriggerSlope(vi, sample_trigger_slope);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1054,7 +1066,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 trigger_slope = request->trigger_slope();
+      ViInt32 trigger_slope;
+      switch (request->trigger_slope_enum_case()) {
+        case nidmm_grpc::ConfigureTriggerSlopeRequest::TriggerSlopeEnumCase::kTriggerSlope:
+          trigger_slope = (ViInt32)request->trigger_slope();
+          break;
+        case nidmm_grpc::ConfigureTriggerSlopeRequest::TriggerSlopeEnumCase::kTriggerSlopeRaw:
+          trigger_slope = (ViInt32)request->trigger_slope_raw();
+          break;
+        case nidmm_grpc::ConfigureTriggerSlopeRequest::TriggerSlopeEnumCase::TRIGGER_SLOPE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_slope was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureTriggerSlope(vi, trigger_slope);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1129,7 +1153,19 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 control_action = request->control_action();
+      ViInt32 control_action;
+      switch (request->control_action_enum_case()) {
+        case nidmm_grpc::ControlRequest::ControlActionEnumCase::kControlAction:
+          control_action = (ViInt32)request->control_action();
+          break;
+        case nidmm_grpc::ControlRequest::ControlActionEnumCase::kControlActionRaw:
+          control_action = (ViInt32)request->control_action_raw();
+          break;
+        case nidmm_grpc::ControlRequest::ControlActionEnumCase::CONTROL_ACTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for control_action was not specified or out of range");
+          break;
+      }
+
       auto status = library_->Control(vi, control_action);
       response->set_status(status);
       return ::grpc::Status::OK;
