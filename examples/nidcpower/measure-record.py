@@ -28,18 +28,20 @@ import nidcpower_pb2_grpc as grpc_nidcpower
 import matplotlib.pyplot as plt
 import keyword
 import numpy as np
+import math
 
 server_address = "localhost"
 server_port = "31763"
 session_name = "NI-DCPower-Session"
 
-# Resource name, channel name and options for a simulated 4147 client. Change them according to NI-DCpower model.
+# Resource name, channel name and options for a simulated 4147 client. Change them according to NI-DCPower model.
 resource = "SimulatedDCPower"
 options = "Simulate=1,DriverSetup=Model:4147;BoardType:PXIe"
 channels = "0"
 
 # Parameters
-record_length = 100
+record_length = 10
+buffer_multiplier = 10
 voltage_level = 5.0
 
 # Read in cmd args
@@ -65,7 +67,7 @@ def ThrowOnError (vi, error_code):
         error_code = error_code
         )
     error_message_response = client.ErrorMessage(error_message_request)
-    raise Exception (error_message_response)
+    raise Exception (error_message_response.error_message)
 
 # Create the communication channel for the remote host and create connections to the NI-DCPower and session services.
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
@@ -155,6 +157,10 @@ try :
 
     print("\nReading values in loop. CTRL+C or Close window to stop.\n")
 
+    # Create a buffer for fetching the values.
+    y_axis = [0] * (record_length * buffer_multiplier)
+    x_start = 0
+
     try:
         while not closed:
             # Clear the plot and setup the axis.
@@ -166,31 +172,49 @@ try :
             fetch_multiple_response = client.FetchMultiple(nidcpower_types.FetchMultipleRequest(
                 vi = vi,
                 channel_name = channels,
-                timeout = get_measure_record_delta_time.attribute_value,
+                timeout = 5,
                 count = record_length
             ))
             CheckForError(vi, fetch_multiple_response.status)
-            y_axis = fetch_multiple_response.voltage_measurements
+            
+            # Append the fetched values in the buffer.
+            y_axis.extend(fetch_multiple_response.voltage_measurements)
+            y_axis = y_axis[record_length:]
+            
+            # Updating the precision of the fetched values.
+            y_axis_new = []
+            for value in y_axis:
+                if (value < voltage_level):
+                    y_axis_new.append(math.floor(value * 100) / 100)
+                else:
+                    y_axis_new.append(math.ceil(value * 100) / 100)
 
+            # Plotting
+            y_axis = y_axis_new
+            x_axis = np.arange(start = x_start, stop = x_start + record_length * buffer_multiplier, step = 1)
+            x_start = x_start + record_length
             plt.plot(x_axis, y_axis)
             plt.pause(0.001)
-
-            record_length += 50
-            x_axis = np.arange(start=1, stop=record_length+1, step=1)
             time.sleep(0.1)
             
     except KeyboardInterrupt:
         pass
 
-    print(f"Effective measurement rate : {1/get_measure_record_delta_time.attribute_value}")
-
-    # close the session.
-    CheckForError(vi, (client.Close(nidcpower_types.CloseRequest(
-        vi = vi
-        ))).status)
+    print(f"Effective measurement rate : {1 / get_measure_record_delta_time.attribute_value}")
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
         error_message = f"Failed to connect to server on {server_address}"
-    print(f"{error_message}") 
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
+    elif rpc_error.code() == grpc.StatusCode.NOT_FOUND:
+        error_message = "The requested function/entity was not found"
+    print(f"{error_message}")
+
+finally:
+    if('vi' in vars() and vi.id != 0):
+        # close the session.
+        CheckForError(vi, (client.Close(nidcpower_types.CloseRequest(
+            vi = vi
+        ))).status)
