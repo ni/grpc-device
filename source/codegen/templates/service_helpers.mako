@@ -67,11 +67,9 @@ ${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
 % if function_name == config['close_function'] or service_helpers.is_custom_close_method(function_data):
       session_repository_->remove_session(${service_helpers.create_args(parameters[:1])});
-      library_->${function_name}(${service_helpers.create_args(parameters)});
-% else:
+% endif
       auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);
-% endif
 % if output_parameters:
       if (status == 0) {
 ${set_response_values(output_parameters=output_parameters)}\

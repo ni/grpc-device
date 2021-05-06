@@ -1134,7 +1134,8 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi);
-      library_->close(vi);
+      auto status = library_->close(vi);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1154,7 +1155,8 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 action = request->action();
       session_repository_->remove_session(vi);
-      library_->CloseExtCal(vi, action);
+      auto status = library_->CloseExtCal(vi, action);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

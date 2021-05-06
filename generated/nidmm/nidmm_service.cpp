@@ -376,7 +376,8 @@ namespace nidmm_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi);
-      library_->Close(vi);
+      auto status = library_->Close(vi);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -408,7 +409,8 @@ namespace nidmm_grpc {
       }
 
       session_repository_->remove_session(vi);
-      library_->CloseExtCal(vi, action);
+      auto status = library_->CloseExtCal(vi, action);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
