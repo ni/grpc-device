@@ -27,6 +27,14 @@ service NiSync {
   rpc ConnectTrigTerminals(ConnectTrigTerminalsRequest) returns (ConnectTrigTerminalsResponse);
   rpc DisconnectTrigTerminals(DisconnectTrigTerminalsRequest) returns (DisconnectTrigTerminalsResponse);
   rpc MeasureFrequencyEx(MeasureFrequencyExRequest) returns (MeasureFrequencyExResponse);
+  rpc SetTime(SetTimeRequest) returns (SetTimeResponse);
+  rpc GetTime(GetTimeRequest) returns (GetTimeResponse);
+  rpc SetTimeReferenceFreeRunning(SetTimeReferenceFreeRunningRequest) returns (SetTimeReferenceFreeRunningResponse);
+  rpc SetTimeReferenceGPS(SetTimeReferenceGPSRequest) returns (SetTimeReferenceGPSResponse);
+  rpc SetTimeReferenceIRIG(SetTimeReferenceIRIGRequest) returns (SetTimeReferenceIRIGResponse);
+  rpc SetTimeReferencePPS(SetTimeReferencePPSRequest) returns (SetTimeReferencePPSResponse);
+  rpc SetTimeReference1588OrdinaryClock(SetTimeReference1588OrdinaryClockRequest) returns (SetTimeReference1588OrdinaryClockResponse);
+  rpc SetTimeReference8021AS(SetTimeReference8021ASRequest) returns (SetTimeReference8021ASResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
@@ -267,6 +275,84 @@ message MeasureFrequencyExResponse {
   double actual_duration = 2;
   double frequency = 3;
   double frequency_error = 4;
+}
+
+message SetTimeRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 time_source = 2;
+  uint32 time_seconds = 3;
+  uint32 time_nanoseconds = 4;
+  uint32 time_fractional_nanoseconds = 5;
+}
+
+message SetTimeResponse {
+  int32 status = 1;
+}
+
+message GetTimeRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetTimeResponse {
+  int32 status = 1;
+  uint32 time_seconds = 2;
+  uint32 time_nanoseconds = 3;
+  uint32 time_fractional_nanoseconds = 4;
+}
+
+message SetTimeReferenceFreeRunningRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SetTimeReferenceFreeRunningResponse {
+  int32 status = 1;
+}
+
+message SetTimeReferenceGPSRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SetTimeReferenceGPSResponse {
+  int32 status = 1;
+}
+
+message SetTimeReferenceIRIGRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 irig_type = 2;
+  string terminal_name = 3;
+}
+
+message SetTimeReferenceIRIGResponse {
+  int32 status = 1;
+}
+
+message SetTimeReferencePPSRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal_name = 2;
+  bool use_manual_time = 3;
+  uint32 initial_time_seconds = 4;
+  uint32 initial_time_nanoseconds = 5;
+  uint32 initial_time_fractional_nanoseconds = 6;
+}
+
+message SetTimeReferencePPSResponse {
+  int32 status = 1;
+}
+
+message SetTimeReference1588OrdinaryClockRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SetTimeReference1588OrdinaryClockResponse {
+  int32 status = 1;
+}
+
+message SetTimeReference8021ASRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SetTimeReference8021ASResponse {
+  int32 status = 1;
 }
 
 message GetAttributeViInt32Request {
