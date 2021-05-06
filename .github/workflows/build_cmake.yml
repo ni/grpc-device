@@ -116,6 +116,9 @@ jobs:
         -C ${GITHUB_WORKSPACE}/build
         ni_grpc_device_server
         server_config.json
+        -C ${GITHUB_WORKSPACE}
+        LICENSE
+        ThirdPartyNotices.txt
 
     - name: Upload Linux Server Binaries Artifact
       uses: actions/upload-artifact@v2
@@ -133,4 +136,6 @@ jobs:
         path: |
           build/Release/ni_grpc_device_server.exe
           build/Release/server_config.json
+          LICENSE
+          ThirdPartyNotices.txt
         retention-days: 5

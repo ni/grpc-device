@@ -134,8 +134,8 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
-    - name: Tar Build Files
-      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+    - name: Tar Development Build Files
+      if: ${{ github.ref == 'refs/heads/main' }}
       run: >-
         tar -cvf NILinuxRealTime-x86_64.tar
         -C ${GITHUB_WORKSPACE}/build
@@ -147,6 +147,20 @@ jobs:
         SystemTestsRunner
         test_mutual_tls_config.json
         UnitTestsRunner
+        -C ${GITHUB_WORKSPACE}
+        LICENSE
+        ThirdPartyNotices.txt
+
+    - name: Tar Release Build Files
+      if: ${{ startsWith(github.ref, 'refs/heads/releases') }}
+      run: >-
+        tar -cvf NILinuxRealTime-x86_64.tar
+        -C ${GITHUB_WORKSPACE}/build
+        ni_grpc_device_server
+        server_config.json
+        -C ${GITHUB_WORKSPACE}
+        LICENSE
+        ThirdPartyNotices.txt
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
