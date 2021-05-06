@@ -38,9 +38,16 @@ The following attributes were added :
 
 Following enums were defined :
 - InternalReference
-- NIDCPOWER_VAL_CANCEL
-- NIDCPOWER_VAL_COMMIT
+- CalibrationCloseAction
 - PowerLineFrequencies
+- In 'OutputStates' : Following were added
+    - NIDCPOWER_VAL_OUTPUT_OVER_VOLTAGE
+    - NIDCPOWER_VAL_OUTPUT_OVER_CURRENT
+    - NIDCPOWER_VAL_OUTPUT_UNREGULATED
+- In 'PowerAllocationMode' : Following were renamed
+    - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_DISABLED to NIDCPOWER_VAL_DISABLED
+    - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC to NIDCPOWER_VAL_AUTOMATIC
+    - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL to NIDCPOWER_VAL_MANUAL
 
 # Changes in metadata from from the base metadata
 
