@@ -58,16 +58,16 @@ class NiDmmDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kDMMDriverApiSuccess, error_status) << get_error_message(error_status);
   }
 
-        void initialize_driver_session()
-        {
-          ::grpc::ClientContext context;
-          dmm::InitWithOptionsRequest request;
-          request.set_resource_name("SimulatedDMM");
-          request.set_option_string("Simulate=1, DriverSetup=Model:4080; BoardType:PXIe");
-          request.set_session_name("");
-          request.set_reset_device(false);
-          request.set_id_query(false);
-          dmm::InitWithOptionsResponse response;
+  void initialize_driver_session()
+  {
+    ::grpc::ClientContext context;
+    dmm::InitWithOptionsRequest request;
+    request.set_resource_name("SimulatedDMM");
+    request.set_option_string("Simulate=1, DriverSetup=Model:4080; BoardType:PXIe");
+    request.set_session_name("");
+    request.set_reset_device(false);
+    request.set_id_query(false);
+    dmm::InitWithOptionsResponse response;
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
