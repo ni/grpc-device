@@ -41,6 +41,42 @@ enums = {
             }
         ]
     },
+    'ApertureTime': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_APERTURE_TIME_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'NIDMM_VAL_1_PLC',
+                'value': 1
+            },
+            {
+                'name': 'NIDMM_VAL_5_PLC',
+                'value': 5
+            },
+            {
+                'name': 'NIDMM_VAL_6_PLC',
+                'value': 6
+            },
+            {
+                'name': 'NIDMM_VAL_10_PLC',
+                'value': 10
+            },
+            {
+                'name': 'NIDMM_VAL_12_PLC',
+                'value': 12
+            },
+            {
+                'name': 'NIDMM_VAL_100_PLC',
+                'value': 100
+            },
+            {
+                'name': 'NIDMM_VAL_120_PLC',
+                'value': 120
+            }
+        ]
+    },
     'ApertureTimeUnits': {
         'values': [
             {
@@ -70,6 +106,14 @@ enums = {
             {
                 'name': 'NIDMM_VAL_AUTO_ZERO_ONCE',
                 'value': 2
+            }
+        ]
+    },
+    'BufferSize': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_BUFFER_SIZE_AUTO',
+                'value': -1
             }
         ]
     },
@@ -126,6 +170,38 @@ enums = {
             {
                 'name': 'NIDMM_VAL_OFFSET_COMP_OHMS_ON',
                 'value': 1
+            }
+        ]
+    },
+    'Configuration4022': {
+        'values': [
+            {
+                'name': 'NIDMM_4022_CONFIG_GUARD',
+                'value': 0
+            },
+            {
+                'name': 'NIDMM_4022_CONFIG_CURRENT_100_NANOAMP',
+                'value': 2
+            },
+            {
+                'name': 'NIDMM_4022_CONFIG_CURRENT_10_MICROAMP',
+                'value': 3
+            },
+            {
+                'name': 'NIDMM_4022_CONFIG_CURRENT_1_MILLIAMP',
+                'value': 7
+            },
+            {
+                'name': 'NIDMM_4022_CONFIG_DISCONNECT_AGND',
+                'value': 8
+            }
+        ]
+    },
+    'ControlCommit': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_CONTROL_COMMIT',
+                'value': 0
             }
         ]
     },
@@ -222,6 +298,14 @@ enums = {
             {
                 'name': 'NIDMM_VAL_INDUCTANCE',
                 'value': 1006
+            }
+        ]
+    },
+    'Latency': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_LATENCY_AUTO',
+                'value': -1
             }
         ]
     },
@@ -397,6 +481,18 @@ enums = {
             }
         ]
     },
+    'PowerLineFrequencies': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_50_HERTZ',
+                'value': 50
+            },
+            {
+                'name': 'NIDMM_VAL_60_HERTZ',
+                'value': 60
+            }
+        ]
+    },
     'Range': {
         'values': [
             {
@@ -521,6 +617,14 @@ enums = {
             }
         ]
     },
+    'SettleTime': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_SETTLE_TIME_AUTO',
+                'value': -1
+            }
+        ]
+    },
     'ThermistorType': {
         'values': [
             {
@@ -544,7 +648,7 @@ enums = {
     'ThermocoupleReferenceJunctionType': {
         'values': [
             {
-                'name': 'NIDMM_VAL_FIXED',
+                'name': 'NIDMM_VAL_TEMP_REF_JUNC_FIXED',
                 'value': 2
             }
         ]
@@ -602,6 +706,18 @@ enums = {
             {
                 'name': 'NIDMM_VAL_4_WIRE_RTD',
                 'value': 4
+            }
+        ]
+    },
+    'TriggerDelays': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_AUTO_DELAY_ON',
+                'value': -1
+            },
+            {
+                'name': 'NIDMM_VAL_AUTO_DELAY_OFF',
+                'value': -2
             }
         ]
     },

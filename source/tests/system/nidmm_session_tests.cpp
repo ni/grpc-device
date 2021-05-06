@@ -14,7 +14,7 @@ const int kInvalidDmmSession = -1074130544;
 const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.";
 const char* kInvalidDmmSessionMessage = "The session handle is not valid.";
 const char* kResourceName = "FakeDevice";
-const char* kOptionsString = "Simulate=1, DriverSetup=Model:4065; BoardType:PCI";
+const char* kOptionsString = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe";
 const char* kSessionName = "SessionName";
 const char* kInvalidRsrc = "";
 

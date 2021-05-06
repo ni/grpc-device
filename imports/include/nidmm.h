@@ -1,7 +1,7 @@
 /*****************************************************************************
  *                            N I - D M M
  *----------------------------------------------------------------------------
- *    Copyright (c) National Instruments 2021.  All Rights Reserved.
+ *    Copyright (c) National Instruments 2020.  All Rights Reserved.
  *----------------------------------------------------------------------------
  *
  * Title:       nidmm.h
@@ -39,7 +39,7 @@ extern "C" {
    /******************************************************************************/
 
    #define NIDMM_MAJOR_VERSION                 20
-   #define NIDMM_MINOR_VERSION                 7
+   #define NIDMM_MINOR_VERSION                 1
 
    #define NIDMM_CLASS_SPEC_MAJOR_VERSION      4
    #define NIDMM_CLASS_SPEC_MINOR_VERSION      1

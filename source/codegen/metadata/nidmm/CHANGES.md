@@ -31,8 +31,18 @@ Metadata for following attributes added:
 - `'MEAS_DEST_SLOPE'`
 - `'LATENCY'`
 - `'SHUNT_VALUE'`
+- `'CONFIG_PRODUCT_NUMBER'`
 
-`'enum'` key added to attributes that make use enums but had their enums missing, after adding those respective enums to `enums.py`.
+`'enum'` tags added to following attributes:
+- `'BUFFER_SIZE'`
+- `'LATENCY'`
+- `'SETTLE_TIME'`
+- `'APERTURE_TIME'`
+- `'OFFSET_COMP_OHMS'`
+- `'DC_BIAS'`
+- `'POWERLINE_FREQ'`
+- `'RANGE'`
+- `'TRIGGER_DELAY'`
 
 ## enums.py
 
@@ -42,12 +52,25 @@ All occurrences of the following keys were removed along with their values:
 Enums with more than 2 consecutive uppercase letters in their name (as abbreviations) have been changed to the letters other than first letter in the abbreviation to lowercase. eg. DCBias to DcBias, ADCCalibration to AdcCalibration, etc. 
 
 Metadata for following enums added:
+- `'BufferSize'`
 - `'CalibrationCloseAction'`
 - `'CalibrationType'`
 - `'CompensatedOhms'`
+- `'ControlCommit'`
+- `'ApertureTime'`
+- `'Configuration4022'`
 - `'DcBias'`
+- `'Latency'`
 - `'MiscCalibration'`
+- `'PowerLineFrequencies'`
 - `'Range'`
+- `'SettleTime'`
+- `'TriggerDelays'`
+
+`'NIDMM_VAL_FIXED'` (from nimi-python) changed to `'NIDMM_VAL_TEMP_REF_JUNC_FIXED'` in the `'ThermocoupleReferenceJunctionType'` to match the documentation and the header file
+
+
+# Changes in metadata from the base metadata
 
 ## functions.py
 
@@ -73,7 +96,16 @@ with the session_repository.
 - `InitWithOptions`
 - `InitExtCal` : Added a 'custom_close' tag to this function, since this API has a corresponding close function called 'CloseExtCal'
 
-`'enum'` key added to function parameters that make use enums but had their enums missing, after adding those respective enums to `enums.py`.
+`'enum'` tag added to the following functions:
+- `'apertureTime`' parameter of function `'GetApertureTimeInfo'`
+- `'action`' parameter of function `'CloseExtCal'`
+- `'calType`' parameter of function `'CalibrationType'`
+- `'offsetCompOhms`' parameter of function `'ConfigureOffsetCompOhms'`
+- `'configuration`' parameter of function `'Control4022'`
+- `'type`' parameter of function `'CalAdjustMisc'`
+- `'powerLineFrequencyHz`' parameter of function `'ConfigurePowerLineFrequency'`
+- `'triggerDelay`' parameter of function `'ConfigureTrigger'`
+- `controlAction` parameter of function `'Control'`
 
 The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
 the registered session from session_repository.

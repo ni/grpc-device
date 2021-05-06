@@ -29,6 +29,7 @@ import nidmm_pb2_grpc as grpc_nidmm
 import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
 import matplotlib.pyplot as plt
+import numpy as np
 import keyword
 
 server_address = "localhost"
@@ -37,14 +38,14 @@ session_name = "NI-DMM-Session"
 
 # Resource name and options for a simulated 4065 client. Change them according to the NI-DMM model.
 resource = "SimulatedDMM"
-options = "Simulate=1, DriverSetup=Model:4065; BoardType:PCI"
+options = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe"
 
 # parameters
 MAXPTSTOREAD        = 1000
 config_range        = 10.0
 resolution          = 5.5
 measurementType     = nidmm_types.Function.FUNCTION_NIDMM_VAL_DC_VOLTS
-powerlineFreq       = 60.0
+powerlineFreq       = nidmm_types.PowerLineFrequencies.POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -170,7 +171,10 @@ try:
                 ))
                 CheckForError(vi, fetch_multipoints_response.status)
                 num_pts_read = fetch_multipoints_response.actual_number_of_points
-                measurements = fetch_multipoints_response.reading_array
+                measurements = np.array(fetch_multipoints_response.reading_array)
+                
+                # retain data to 2 decimals
+                measurements = np.floor(measurements * 100) / 100.0
 
                 # Update the plot with the new measurements
                 plt.plot(measurements)
@@ -193,15 +197,20 @@ try:
     average = sum_measurements/num_measurements
     print(f'Average = {average}')
 
-    # Close NI-DMM session
-    close_session_response = nidmm_client.Close(nidmm_types.CloseRequest(
-        vi = vi
-    ))
-    CheckForError(vi, close_session_response.status)
-
 # If NI-DMM API throws an exception, print the error message  
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
         error_message = f"Failed to connect to server on {server_address}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
+    elif rpc_error.code() == grpc.StatusCode.NOT_FOUND:
+        error_message = "The requested function/entity was not found"
     print(f"{error_message}") 
+finally:
+    if('vi' in vars() and vi.id != 0):
+        # Close NI-DMM session
+        close_session_response = nidmm_client.Close(nidmm_types.CloseRequest(
+            vi = vi
+        ))
+        CheckForError(vi, close_session_response.status)
