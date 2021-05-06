@@ -38,6 +38,8 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     type = 'sint32'
   if 'ViInt64' in type:
     type = 'int64'
+  if 'ViUInt16' in type:
+    type = 'uint32'
   if 'ViUInt32' in type:
     type = 'uint32'
   if 'ViUInt64' in type:
