@@ -137,7 +137,7 @@ jobs:
     - name: Tar Development Build Files
       if: ${{ github.ref == 'refs/heads/main' }}
       run: >-
-        tar -cvf NILinuxRealTime-x86_64.tar
+        tar -cvzf ni-grpc-device-server-ni-linux-rt-x64.tar.gz
         -C ${GITHUB_WORKSPACE}/build
         certs/
         ni_grpc_device_server
@@ -154,7 +154,7 @@ jobs:
     - name: Tar Release Build Files
       if: ${{ startsWith(github.ref, 'refs/heads/releases') }}
       run: >-
-        tar -cvf NILinuxRealTime-x86_64.tar
+        tar -cvzf ni-grpc-device-server-ni-linux-rt-x64.tar.gz
         -C ${GITHUB_WORKSPACE}/build
         ni_grpc_device_server
         server_config.json
@@ -166,6 +166,6 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       with:
-        name: NILinuxRealTime-x86_64
-        path: NILinuxRealTime-x86_64.tar
+        name: ni-grpc-device-server-ni-linux-rt-x64
+        path: ni-grpc-device-server-ni-linux-rt-x64.tar.gz
         retention-days: 5

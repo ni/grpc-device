@@ -112,7 +112,7 @@ jobs:
     - name: Tar Linux Server Binaries
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       run: >-
-        tar -cvf ni-grpc-device-server-linux-glibc2_23.tar
+        tar -cvzf ni-grpc-device-server-linux-glibc2_23-x64.tar.gz
         -C ${GITHUB_WORKSPACE}/build
         ni_grpc_device_server
         server_config.json
@@ -124,15 +124,15 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
-        name: ni-grpc-device-server-linux-glibc2_23
-        path: ni-grpc-device-server-linux-glibc2_23.tar
+        name: ni-grpc-device-server-linux-glibc2_23-x64
+        path: ni-grpc-device-server-linux-glibc2_23-x64.tar.gz
         retention-days: 5
 
     - name: Upload Windows Server Binaries Artifact
       uses: actions/upload-artifact@v2
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
-        name: ni-grpc-device-server-windows
+        name: ni-grpc-device-server-windows-x64
         path: |
           build/Release/ni_grpc_device_server.exe
           build/Release/server_config.json
