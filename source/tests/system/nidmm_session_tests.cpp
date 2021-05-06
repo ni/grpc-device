@@ -18,7 +18,7 @@ const char* kOptionsString = "Simulate=1, DriverSetup=Model:4065; BoardType:PCI"
 const char* kSessionName = "SessionName";
 const char* kInvalidRsrc = "";
 
-class NiDmmSessionTest : public ::testing::Test{
+class NiDmmSessionTest : public ::testing::Test {
  protected:
   NiDmmSessionTest()
   {
@@ -166,6 +166,6 @@ TEST_F(NiDmmSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage
   EXPECT_STREQ(kViErrorResourceNotFoundMessage, error_response.error_message().c_str());
 }
 
-} // namespace system
-} // namespace tests 
-} // namespace ni
+}  // namespace system
+}  // namespace tests
+}  // namespace ni

@@ -215,7 +215,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  private:
+ private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
@@ -267,7 +267,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
   niswitch::SetAttributeViReal64Response response;
 
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   ViReal64 get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
@@ -320,7 +320,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchChannelsAreUnconnected_CanConnectIsCalled_
   const niswitch::PathCapability expected_value = niswitch::PathCapability::PATH_CAPABILITY_NISWITCH_VAL_PATH_AVAILABLE;
 
   int get_path_capability = can_connect(firstChannelName, secondChannelName);
-    
+
   EXPECT_EQ(expected_value, get_path_capability);
 }
 
