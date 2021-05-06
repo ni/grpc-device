@@ -32,6 +32,14 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConnectTrigTerminals = reinterpret_cast<ConnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_ConnectTrigTerminals"));
   function_pointers_.DisconnectTrigTerminals = reinterpret_cast<DisconnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_DisconnectTrigTerminals"));
   function_pointers_.MeasureFrequencyEx = reinterpret_cast<MeasureFrequencyExPtr>(shared_library_.get_function_pointer("niSync_MeasureFrequencyEx"));
+  function_pointers_.SetTime = reinterpret_cast<SetTimePtr>(shared_library_.get_function_pointer("niSync_SetTime"));
+  function_pointers_.GetTime = reinterpret_cast<GetTimePtr>(shared_library_.get_function_pointer("niSync_GetTime"));
+  function_pointers_.SetTimeReferenceFreeRunning = reinterpret_cast<SetTimeReferenceFreeRunningPtr>(shared_library_.get_function_pointer("niSync_SetTimeReferenceFreeRunning"));
+  function_pointers_.SetTimeReferenceGPS = reinterpret_cast<SetTimeReferenceGPSPtr>(shared_library_.get_function_pointer("niSync_SetTimeReferenceGPS"));
+  function_pointers_.SetTimeReferenceIRIG = reinterpret_cast<SetTimeReferenceIRIGPtr>(shared_library_.get_function_pointer("niSync_SetTimeReferenceIRIG"));
+  function_pointers_.SetTimeReferencePPS = reinterpret_cast<SetTimeReferencePPSPtr>(shared_library_.get_function_pointer("niSync_SetTimeReferencePPS"));
+  function_pointers_.SetTimeReference1588OrdinaryClock = reinterpret_cast<SetTimeReference1588OrdinaryClockPtr>(shared_library_.get_function_pointer("niSync_SetTimeReference1588OrdinaryClock"));
+  function_pointers_.SetTimeReference8021AS = reinterpret_cast<SetTimeReference8021ASPtr>(shared_library_.get_function_pointer("niSync_SetTimeReference8021AS"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_GetAttributeViInt32"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_SetAttributeViInt32"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_GetAttributeViString"));
@@ -182,6 +190,102 @@ ViStatus NiSyncLibrary::MeasureFrequencyEx(ViSession vi, ViConstString srcTermin
   return niSync_MeasureFrequencyEx(vi, srcTerminal, duration, decimationCount, actualDuration, frequency, frequencyError);
 #else
   return function_pointers_.MeasureFrequencyEx(vi, srcTerminal, duration, decimationCount, actualDuration, frequency, frequencyError);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetTime(ViSession vi, ViInt32 timeSource, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds)
+{
+  if (!function_pointers_.SetTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTime.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetTime(vi, timeSource, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
+#else
+  return function_pointers_.SetTime(vi, timeSource, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
+#endif
+}
+
+ViStatus NiSyncLibrary::GetTime(ViSession vi, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds)
+{
+  if (!function_pointers_.GetTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetTime.");
+  }
+#if defined(_MSC_VER)
+  return niSync_GetTime(vi, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
+#else
+  return function_pointers_.GetTime(vi, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetTimeReferenceFreeRunning(ViSession vi)
+{
+  if (!function_pointers_.SetTimeReferenceFreeRunning) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferenceFreeRunning.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetTimeReferenceFreeRunning(vi);
+#else
+  return function_pointers_.SetTimeReferenceFreeRunning(vi);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetTimeReferenceGPS(ViSession vi)
+{
+  if (!function_pointers_.SetTimeReferenceGPS) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferenceGPS.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetTimeReferenceGPS(vi);
+#else
+  return function_pointers_.SetTimeReferenceGPS(vi);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetTimeReferenceIRIG(ViSession vi, ViInt32 irigType, ViConstString terminalName)
+{
+  if (!function_pointers_.SetTimeReferenceIRIG) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferenceIRIG.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetTimeReferenceIRIG(vi, irigType, terminalName);
+#else
+  return function_pointers_.SetTimeReferenceIRIG(vi, irigType, terminalName);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetTimeReferencePPS(ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds)
+{
+  if (!function_pointers_.SetTimeReferencePPS) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferencePPS.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetTimeReferencePPS(vi, terminalName, useManualTime, initialTimeSeconds, initialTimeNanoseconds, initialTimeFractionalNanoseconds);
+#else
+  return function_pointers_.SetTimeReferencePPS(vi, terminalName, useManualTime, initialTimeSeconds, initialTimeNanoseconds, initialTimeFractionalNanoseconds);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetTimeReference1588OrdinaryClock(ViSession vi)
+{
+  if (!function_pointers_.SetTimeReference1588OrdinaryClock) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReference1588OrdinaryClock.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetTimeReference1588OrdinaryClock(vi);
+#else
+  return function_pointers_.SetTimeReference1588OrdinaryClock(vi);
+#endif
+}
+
+ViStatus NiSyncLibrary::SetTimeReference8021AS(ViSession vi)
+{
+  if (!function_pointers_.SetTimeReference8021AS) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReference8021AS.");
+  }
+#if defined(_MSC_VER)
+  return niSync_SetTimeReference8021AS(vi);
+#else
+  return function_pointers_.SetTimeReference8021AS(vi);
 #endif
 }
 
