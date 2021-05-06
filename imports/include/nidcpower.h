@@ -1,7 +1,7 @@
 /****************************************************************************
  *              National Instruments DC Power Supplies and SMUs
  *--------------------------------------------------------------------------*
- *      Copyright (c) National Instruments 2021.  All Rights Reserved.      *
+ *      Copyright (c) National Instruments 2020.  All Rights Reserved.      *
  *--------------------------------------------------------------------------*
  *
  * Title:    nidcpower.h
@@ -32,7 +32,7 @@ extern "C" {
 /*                   Instrument Driver Revision Information                   */
 /******************************************************************************/
 #define NIDCPOWER_MAJOR_VERSION               20     /* Instrument driver major version   */
-#define NIDCPOWER_MINOR_VERSION                7     /* Instrument driver minor version   */
+#define NIDCPOWER_MINOR_VERSION                6     /* Instrument driver minor version   */
 #define NIDCPOWER_UPDATE_VERSION               0     /* Instrument driver update version  */
 
 #define NIDCPOWER_CLASS_SPEC_MAJOR_VERSION     3     /* Class specification major version */
@@ -264,32 +264,6 @@ extern "C" {
 #define NIDCPOWER_ATTR_POWER_SOURCE_IN_USE                                  NIDCPOWER_ATTR_BASE + 1L                          /* ViInt32   device  read-only */
 #define NIDCPOWER_ATTR_AUXILIARY_POWER_SOURCE_AVAILABLE                     NIDCPOWER_ATTR_BASE + 2L                          /* ViBoolean device  read-only */
 
-/*- LCR-Related Configuration -*/
-#define NIDCPOWER_ATTR_INSTRUMENT_MODE                                      NIDCPOWER_ATTR_BASE + 208L                        /* ViInt32   multi-channel */
-#define NIDCPOWER_ATTR_LCR_STIMULUS_FUNCTION                                NIDCPOWER_ATTR_BASE + 209L                        /* ViInt32   multi-channel */
-#define NIDCPOWER_ATTR_LCR_FREQUENCY                                        NIDCPOWER_ATTR_BASE + 210L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_VOLTAGE_AMPLITUDE                                NIDCPOWER_ATTR_BASE + 211L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_CURRENT_AMPLITUDE                                NIDCPOWER_ATTR_BASE + 212L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_DC_BIAS_SOURCE                                   NIDCPOWER_ATTR_BASE + 213L                        /* ViInt32   multi-channel */
-#define NIDCPOWER_ATTR_LCR_DC_BIAS_VOLTAGE_LEVEL                            NIDCPOWER_ATTR_BASE + 214L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_DC_BIAS_CURRENT_LEVEL                            NIDCPOWER_ATTR_BASE + 215L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_IMPEDANCE_AUTO_RANGE                             NIDCPOWER_ATTR_BASE + 216L                        /* ViInt32   multi-channel */
-#define NIDCPOWER_ATTR_LCR_IMPEDANCE_RANGE                                  NIDCPOWER_ATTR_BASE + 217L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_MEASUREMENT_TIME                                 NIDCPOWER_ATTR_BASE + 218L                        /* ViInt32   multi-channel */
-#define NIDCPOWER_ATTR_OPEN_COMPENSATION_ENABLED                            NIDCPOWER_ATTR_BASE + 220L                        /* ViBoolean multi-channel */
-#define NIDCPOWER_ATTR_SHORT_COMPENSATION_ENABLED                           NIDCPOWER_ATTR_BASE + 221L                        /* ViBoolean multi-channel */
-#define NIDCPOWER_ATTR_LOAD_COMPENSATION_ENABLED                            NIDCPOWER_ATTR_BASE + 222L                        /* ViBoolean multi-channel */
-#define NIDCPOWER_ATTR_COMPENSATION_DATA_SOURCE                             NIDCPOWER_ATTR_BASE + 223L                        /* ViInt32   multi-channel */
-#define NIDCPOWER_ATTR_LCR_OPEN_CONDUCTANCE                                 NIDCPOWER_ATTR_BASE + 261L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_OPEN_SUSCEPTANCE                                 NIDCPOWER_ATTR_BASE + 262L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_SHORT_RESISTANCE                                 NIDCPOWER_ATTR_BASE + 263L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_SHORT_REACTANCE                                  NIDCPOWER_ATTR_BASE + 264L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_MEASURED_LOAD_RESISTANCE                         NIDCPOWER_ATTR_BASE + 268L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_MEASURED_LOAD_REACTANCE                          NIDCPOWER_ATTR_BASE + 269L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_ACTUAL_LOAD_RESISTANCE                           NIDCPOWER_ATTR_BASE + 270L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_ACTUAL_LOAD_REACTANCE                            NIDCPOWER_ATTR_BASE + 271L                        /* ViReal64  multi-channel */
-#define NIDCPOWER_ATTR_LCR_CABLE_LENGTH                                     NIDCPOWER_ATTR_BASE + 278L                        /* ViReal64  multi-channel */
-
 /******************************************************************************/
 /*                          Attribute Value Defines                           */
 /******************************************************************************/
@@ -297,57 +271,57 @@ extern "C" {
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_CURRENT_LIMIT_BEHAVIOR -*/
-#define NIDCPOWER_VAL_CURRENT_REGULATE                              IVIDCPWR_VAL_CURRENT_REGULATE
-#define NIDCPOWER_VAL_CURRENT_TRIP                                  IVIDCPWR_VAL_CURRENT_TRIP
+#define NIDCPOWER_VAL_CURRENT_REGULATE                      IVIDCPWR_VAL_CURRENT_REGULATE
+#define NIDCPOWER_VAL_CURRENT_TRIP                          IVIDCPWR_VAL_CURRENT_TRIP
 
 /*- Defined values for RangeType parameter of function -*/
 /*-   ConfigureOutputRange -*/
-#define NIDCPOWER_VAL_RANGE_CURRENT                                 IVIDCPWR_VAL_RANGE_CURRENT
-#define NIDCPOWER_VAL_RANGE_VOLTAGE                                 IVIDCPWR_VAL_RANGE_VOLTAGE
+#define NIDCPOWER_VAL_RANGE_CURRENT                         IVIDCPWR_VAL_RANGE_CURRENT
+#define NIDCPOWER_VAL_RANGE_VOLTAGE                         IVIDCPWR_VAL_RANGE_VOLTAGE
 
 /*- Defined values for OutputState parameter of function -*/
 /*-   QueryOutputState -*/
-#define NIDCPOWER_VAL_OUTPUT_CONSTANT_VOLTAGE                       IVIDCPWR_VAL_OUTPUT_CONSTANT_VOLTAGE
-#define NIDCPOWER_VAL_OUTPUT_CONSTANT_CURRENT                       IVIDCPWR_VAL_OUTPUT_CONSTANT_CURRENT
-#define NIDCPOWER_VAL_OUTPUT_OVER_VOLTAGE                           IVIDCPWR_VAL_OUTPUT_OVER_VOLTAGE
-#define NIDCPOWER_VAL_OUTPUT_OVER_CURRENT                           IVIDCPWR_VAL_OUTPUT_OVER_CURRENT
-#define NIDCPOWER_VAL_OUTPUT_UNREGULATED                            IVIDCPWR_VAL_OUTPUT_UNREGULATED
+#define NIDCPOWER_VAL_OUTPUT_CONSTANT_VOLTAGE               IVIDCPWR_VAL_OUTPUT_CONSTANT_VOLTAGE
+#define NIDCPOWER_VAL_OUTPUT_CONSTANT_CURRENT               IVIDCPWR_VAL_OUTPUT_CONSTANT_CURRENT
+#define NIDCPOWER_VAL_OUTPUT_OVER_VOLTAGE                   IVIDCPWR_VAL_OUTPUT_OVER_VOLTAGE
+#define NIDCPOWER_VAL_OUTPUT_OVER_CURRENT                   IVIDCPWR_VAL_OUTPUT_OVER_CURRENT
+#define NIDCPOWER_VAL_OUTPUT_UNREGULATED                    IVIDCPWR_VAL_OUTPUT_UNREGULATED
 
 /*- Defined values for MeasurementType parameter of function -*/
 /*-   Measure -*/
-#define NIDCPOWER_VAL_MEASURE_CURRENT                               IVIDCPWR_VAL_MEASURE_CURRENT
-#define NIDCPOWER_VAL_MEASURE_VOLTAGE                               IVIDCPWR_VAL_MEASURE_VOLTAGE
+#define NIDCPOWER_VAL_MEASURE_CURRENT                       IVIDCPWR_VAL_MEASURE_CURRENT
+#define NIDCPOWER_VAL_MEASURE_VOLTAGE                       IVIDCPWR_VAL_MEASURE_VOLTAGE
 
 /*- Defined values for Action parameter of function -*/
 /*-   CloseExtCal -*/
-#define NIDCPOWER_VAL_CANCEL                                        (NIDCPOWER_VAL_BASE + 1L)
-#define NIDCPOWER_VAL_COMMIT                                        (NIDCPOWER_VAL_BASE + 2L)
+#define NIDCPOWER_VAL_CANCEL                                (NIDCPOWER_VAL_BASE + 1L)
+#define NIDCPOWER_VAL_COMMIT                                (NIDCPOWER_VAL_BASE + 2L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_POWER_SOURCE -*/
 /*-   NIDCPOWER_ATTR_POWER_SOURCE_IN_USE -*/
-#define NIDCPOWER_VAL_INTERNAL                                      (NIDCPOWER_VAL_BASE + 3L)
-#define NIDCPOWER_VAL_AUXILIARY                                     (NIDCPOWER_VAL_BASE + 4L)
-#define NIDCPOWER_VAL_AUTOMATIC                                     (NIDCPOWER_VAL_BASE + 5L)
+#define NIDCPOWER_VAL_INTERNAL                              (NIDCPOWER_VAL_BASE + 3L)
+#define NIDCPOWER_VAL_AUXILIARY                             (NIDCPOWER_VAL_BASE + 4L)
+#define NIDCPOWER_VAL_AUTOMATIC                             (NIDCPOWER_VAL_BASE + 5L)
 
 /*- Defined values for OutputFunction parameter of function -*/
 /*-   ConfigureOutputFunction -*/
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_OUTPUT_FUNCTION -*/
-#define NIDCPOWER_VAL_DC_VOLTAGE                                    (NIDCPOWER_VAL_BASE + 6L)
-#define NIDCPOWER_VAL_DC_CURRENT                                    (NIDCPOWER_VAL_BASE + 7L)
-#define NIDCPOWER_VAL_PULSE_VOLTAGE                                 (NIDCPOWER_VAL_BASE + 49L)
-#define NIDCPOWER_VAL_PULSE_CURRENT                                 (NIDCPOWER_VAL_BASE + 50L)
+#define NIDCPOWER_VAL_DC_VOLTAGE                            (NIDCPOWER_VAL_BASE + 6L)
+#define NIDCPOWER_VAL_DC_CURRENT                            (NIDCPOWER_VAL_BASE + 7L)
+#define NIDCPOWER_VAL_PULSE_VOLTAGE                         (NIDCPOWER_VAL_BASE + 49L)
+#define NIDCPOWER_VAL_PULSE_CURRENT                         (NIDCPOWER_VAL_BASE + 50L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_SENSE -*/
-#define NIDCPOWER_VAL_LOCAL                                         (NIDCPOWER_VAL_BASE + 8L)
-#define NIDCPOWER_VAL_REMOTE                                        (NIDCPOWER_VAL_BASE + 9L)
+#define NIDCPOWER_VAL_LOCAL                                 (NIDCPOWER_VAL_BASE + 8L)
+#define NIDCPOWER_VAL_REMOTE                                (NIDCPOWER_VAL_BASE + 9L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_OUTPUT_CAPACITANCE -*/
-#define NIDCPOWER_VAL_LOW                                           (NIDCPOWER_VAL_BASE + 10L)
-#define NIDCPOWER_VAL_HIGH                                          (NIDCPOWER_VAL_BASE + 11L)
+#define NIDCPOWER_VAL_LOW                                   (NIDCPOWER_VAL_BASE + 10L)
+#define NIDCPOWER_VAL_HIGH                                  (NIDCPOWER_VAL_BASE + 11L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_START_TRIGGER_TYPE -*/
@@ -356,9 +330,9 @@ extern "C" {
 /*-   NIDCPOWER_ATTR_SEQUENCE_ADVANCE_TRIGGER_TYPE -*/
 /*-   NIDCPOWER_ATTR_PULSE_TRIGGER_TYPE -*/
 /*-   NIDCPOWER_ATTR_SHUTDOWN_TRIGGER_TYPE -*/
-#define NIDCPOWER_VAL_NONE                                          (NIDCPOWER_VAL_BASE + 12L)
-#define NIDCPOWER_VAL_DIGITAL_EDGE                                  (NIDCPOWER_VAL_BASE + 14L)
-#define NIDCPOWER_VAL_SOFTWARE_EDGE                                 (NIDCPOWER_VAL_BASE + 15L)
+#define NIDCPOWER_VAL_NONE                                  (NIDCPOWER_VAL_BASE + 12L)
+#define NIDCPOWER_VAL_DIGITAL_EDGE                          (NIDCPOWER_VAL_BASE + 14L)
+#define NIDCPOWER_VAL_SOFTWARE_EDGE                         (NIDCPOWER_VAL_BASE + 15L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_DIGITAL_EDGE_START_TRIGGER_EDGE -*/
@@ -367,8 +341,8 @@ extern "C" {
 /*-   NIDCPOWER_ATTR_DIGITAL_EDGE_SEQUENCE_ADVANCE_TRIGGER_EDGE -*/
 /*-   NIDCPOWER_ATTR_DIGITAL_EDGE_PULSE_TRIGGER_EDGE -*/
 /*-   NIDCPOWER_ATTR_DIGITAL_EDGE_SHUTDOWN_TRIGGER_EDGE -*/
-#define NIDCPOWER_VAL_RISING                                        (NIDCPOWER_VAL_BASE + 16L)
-#define NIDCPOWER_VAL_FALLING                                       (NIDCPOWER_VAL_BASE + 17L)
+#define NIDCPOWER_VAL_RISING                                (NIDCPOWER_VAL_BASE + 16L)
+#define NIDCPOWER_VAL_FALLING                               (NIDCPOWER_VAL_BASE + 17L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_SOURCE_COMPLETE_EVENT_PULSE_POLARITY -*/
@@ -377,13 +351,13 @@ extern "C" {
 /*-   NIDCPOWER_ATTR_SEQUENCE_ENGINE_DONE_EVENT_PULSE_POLARITY -*/
 /*-   NIDCPOWER_ATTR_PULSE_COMPLETE_EVENT_PULSE_POLARITY -*/
 /*-   NIDCPOWER_ATTR_READY_FOR_PULSE_TRIGGER_EVENT_PULSE_POLARITY -*/
-#define NIDCPOWER_VAL_ACTIVE_HIGH                                   (NIDCPOWER_VAL_BASE + 18L)
-#define NIDCPOWER_VAL_ACTIVE_LOW                                    (NIDCPOWER_VAL_BASE + 19L)
+#define NIDCPOWER_VAL_ACTIVE_HIGH                           (NIDCPOWER_VAL_BASE + 18L)
+#define NIDCPOWER_VAL_ACTIVE_LOW                            (NIDCPOWER_VAL_BASE + 19L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_SOURCE_MODE -*/
-#define NIDCPOWER_VAL_SINGLE_POINT                                  (NIDCPOWER_VAL_BASE + 20L)
-#define NIDCPOWER_VAL_SEQUENCE                                      (NIDCPOWER_VAL_BASE + 21L)
+#define NIDCPOWER_VAL_SINGLE_POINT                          (NIDCPOWER_VAL_BASE + 20L)
+#define NIDCPOWER_VAL_SEQUENCE                              (NIDCPOWER_VAL_BASE + 21L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_VOLTAGE_LEVEL_AUTORANGE -*/
@@ -392,225 +366,96 @@ extern "C" {
 /*-   NIDCPOWER_ATTR_VOLTAGE_LIMIT_AUTORANGE -*/
 /*-   NIDCPOWER_ATTR_AUTO_ZERO -*/
 /*-   NIDCPOWER_ATTR_AUTORANGE -*/
-#define NIDCPOWER_VAL_OFF                                           (0L)
-#define NIDCPOWER_VAL_ONCE                                          (NIDCPOWER_VAL_BASE + 24L)
-#define NIDCPOWER_VAL_ON                                            (1L)
+#define NIDCPOWER_VAL_OFF                                   (0L)
+#define NIDCPOWER_VAL_ONCE                                  (NIDCPOWER_VAL_BASE + 24L)
+#define NIDCPOWER_VAL_ON                                    (1L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_MEASURE_WHEN -*/
-#define NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE           (NIDCPOWER_VAL_BASE + 25L)
-#define NIDCPOWER_VAL_ON_DEMAND                                     (NIDCPOWER_VAL_BASE + 26L)
-#define NIDCPOWER_VAL_ON_MEASURE_TRIGGER                            (NIDCPOWER_VAL_BASE + 27L)
+#define NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE   (NIDCPOWER_VAL_BASE + 25L)
+#define NIDCPOWER_VAL_ON_DEMAND                             (NIDCPOWER_VAL_BASE + 26L)
+#define NIDCPOWER_VAL_ON_MEASURE_TRIGGER                    (NIDCPOWER_VAL_BASE + 27L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_POWER_LINE_FREQUENCY -*/
-#define NIDCPOWER_VAL_50_HERTZ                                      (50.0)
-#define NIDCPOWER_VAL_60_HERTZ                                      (60.0)
+#define NIDCPOWER_VAL_50_HERTZ                              (50.0)
+#define NIDCPOWER_VAL_60_HERTZ                              (60.0)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_APERTURE_TIME_UNITS -*/
 /*-   NIDCPOWER_ATTR_AUTORANGE_MINIMUM_APERTURE_TIME_UNITS -*/
-#define NIDCPOWER_VAL_SECONDS                                       (NIDCPOWER_VAL_BASE + 28L)
-#define NIDCPOWER_VAL_POWER_LINE_CYCLES                             (NIDCPOWER_VAL_BASE + 29L)
+#define NIDCPOWER_VAL_SECONDS                               (NIDCPOWER_VAL_BASE + 28L)
+#define NIDCPOWER_VAL_POWER_LINE_CYCLES                     (NIDCPOWER_VAL_BASE + 29L)
 
 /*- Defined values for Signal parameter of function -*/
 /*-   ExportSignal -*/
-#define NIDCPOWER_VAL_SOURCE_COMPLETE_EVENT                         (NIDCPOWER_VAL_BASE + 30L)
-#define NIDCPOWER_VAL_MEASURE_COMPLETE_EVENT                        (NIDCPOWER_VAL_BASE + 31L)
-#define NIDCPOWER_VAL_SEQUENCE_ITERATION_COMPLETE_EVENT             (NIDCPOWER_VAL_BASE + 32L)
-#define NIDCPOWER_VAL_SEQUENCE_ENGINE_DONE_EVENT                    (NIDCPOWER_VAL_BASE + 33L)
-#define NIDCPOWER_VAL_PULSE_COMPLETE_EVENT                          (NIDCPOWER_VAL_BASE + 51L)
-#define NIDCPOWER_VAL_READY_FOR_PULSE_TRIGGER_EVENT                 (NIDCPOWER_VAL_BASE + 52L)
-#define NIDCPOWER_VAL_START_TRIGGER                                 (NIDCPOWER_VAL_BASE + 34L)
-#define NIDCPOWER_VAL_SOURCE_TRIGGER                                (NIDCPOWER_VAL_BASE + 35L)
-#define NIDCPOWER_VAL_MEASURE_TRIGGER                               (NIDCPOWER_VAL_BASE + 36L)
-#define NIDCPOWER_VAL_SEQUENCE_ADVANCE_TRIGGER                      (NIDCPOWER_VAL_BASE + 37L)
-#define NIDCPOWER_VAL_PULSE_TRIGGER                                 (NIDCPOWER_VAL_BASE + 53L)
-#define NIDCPOWER_VAL_SHUTDOWN_TRIGGER                              (NIDCPOWER_VAL_BASE + 118L)
+#define NIDCPOWER_VAL_SOURCE_COMPLETE_EVENT                 (NIDCPOWER_VAL_BASE + 30L)
+#define NIDCPOWER_VAL_MEASURE_COMPLETE_EVENT                (NIDCPOWER_VAL_BASE + 31L)
+#define NIDCPOWER_VAL_SEQUENCE_ITERATION_COMPLETE_EVENT     (NIDCPOWER_VAL_BASE + 32L)
+#define NIDCPOWER_VAL_SEQUENCE_ENGINE_DONE_EVENT            (NIDCPOWER_VAL_BASE + 33L)
+#define NIDCPOWER_VAL_PULSE_COMPLETE_EVENT                  (NIDCPOWER_VAL_BASE + 51L)
+#define NIDCPOWER_VAL_READY_FOR_PULSE_TRIGGER_EVENT         (NIDCPOWER_VAL_BASE + 52L)
+#define NIDCPOWER_VAL_START_TRIGGER                         (NIDCPOWER_VAL_BASE + 34L)
+#define NIDCPOWER_VAL_SOURCE_TRIGGER                        (NIDCPOWER_VAL_BASE + 35L)
+#define NIDCPOWER_VAL_MEASURE_TRIGGER                       (NIDCPOWER_VAL_BASE + 36L)
+#define NIDCPOWER_VAL_SEQUENCE_ADVANCE_TRIGGER              (NIDCPOWER_VAL_BASE + 37L)
+#define NIDCPOWER_VAL_PULSE_TRIGGER                         (NIDCPOWER_VAL_BASE + 53L)
+#define NIDCPOWER_VAL_SHUTDOWN_TRIGGER                      (NIDCPOWER_VAL_BASE + 118L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_TRANSIENT_RESPONSE -*/
-#define NIDCPOWER_VAL_NORMAL                                        (NIDCPOWER_VAL_BASE + 38L)
-#define NIDCPOWER_VAL_FAST                                          (NIDCPOWER_VAL_BASE + 39L)
-#define NIDCPOWER_VAL_SLOW                                          (NIDCPOWER_VAL_BASE + 41L)
-#define NIDCPOWER_VAL_CUSTOM                                        (NIDCPOWER_VAL_BASE + 42L)
+#define NIDCPOWER_VAL_NORMAL                                (NIDCPOWER_VAL_BASE + 38L)
+#define NIDCPOWER_VAL_FAST                                  (NIDCPOWER_VAL_BASE + 39L)
+#define NIDCPOWER_VAL_SLOW                                  (NIDCPOWER_VAL_BASE + 41L)
+#define NIDCPOWER_VAL_CUSTOM                                (NIDCPOWER_VAL_BASE + 42L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_DC_NOISE_REJECTION -*/
-#define NIDCPOWER_VAL_DC_NOISE_REJECTION_NORMAL                     (NIDCPOWER_VAL_BASE + 44L)
-#define NIDCPOWER_VAL_DC_NOISE_REJECTION_SECOND_ORDER               (NIDCPOWER_VAL_BASE + 43L)
+#define NIDCPOWER_VAL_DC_NOISE_REJECTION_NORMAL             (NIDCPOWER_VAL_BASE + 44L)
+#define NIDCPOWER_VAL_DC_NOISE_REJECTION_SECOND_ORDER       (NIDCPOWER_VAL_BASE + 43L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_SELF_CALIBRATION_PERSISTENCE -*/
-#define NIDCPOWER_VAL_KEEP_IN_MEMORY                                (NIDCPOWER_VAL_BASE + 45L)
-#define NIDCPOWER_VAL_WRITE_TO_EEPROM                               (NIDCPOWER_VAL_BASE + 46L)
+#define NIDCPOWER_VAL_KEEP_IN_MEMORY                        (NIDCPOWER_VAL_BASE + 45L)
+#define NIDCPOWER_VAL_WRITE_TO_EEPROM                       (NIDCPOWER_VAL_BASE + 46L)
 
 /*- Defined values for InternalReference parameter of function -*/
 /*-   ConnectInternalReference, CalAdjustInternalReference -*/
-#define NIDCPOWER_VAL_INTERNAL_REFERENCE_5V                         (NIDCPOWER_VAL_BASE + 54L)
-#define NIDCPOWER_VAL_INTERNAL_REFERENCE_100KOHM                    (NIDCPOWER_VAL_BASE + 55L)
-#define NIDCPOWER_VAL_INTERNAL_REFERENCE_GROUND                     (NIDCPOWER_VAL_BASE + 56L)
-#define NIDCPOWER_VAL_INTERNAL_REFERENCE_NONE                       (NIDCPOWER_VAL_BASE + 57L)
+#define NIDCPOWER_VAL_INTERNAL_REFERENCE_5V                 (NIDCPOWER_VAL_BASE + 54L)
+#define NIDCPOWER_VAL_INTERNAL_REFERENCE_100KOHM            (NIDCPOWER_VAL_BASE + 55L)
+#define NIDCPOWER_VAL_INTERNAL_REFERENCE_GROUND             (NIDCPOWER_VAL_BASE + 56L)
+#define NIDCPOWER_VAL_INTERNAL_REFERENCE_NONE               (NIDCPOWER_VAL_BASE + 57L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_COMPLIANCE_LIMIT_SYMMETRY -*/
-#define NIDCPOWER_VAL_COMPLIANCE_LIMIT_SYMMETRY_SYMMETRIC           (0L)
-#define NIDCPOWER_VAL_COMPLIANCE_LIMIT_SYMMETRY_ASYMMETRIC          (1L)
+#define NIDCPOWER_VAL_COMPLIANCE_LIMIT_SYMMETRY_SYMMETRIC   (0L)
+#define NIDCPOWER_VAL_COMPLIANCE_LIMIT_SYMMETRY_ASYMMETRIC  (1L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_POWER_ALLOCATION_MODE -*/
-#define NIDCPOWER_VAL_POWER_ALLOCATION_MODE_DISABLED                (NIDCPOWER_VAL_BASE + 58L)
-#define NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC               (NIDCPOWER_VAL_BASE + 59L)
-#define NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL                  (NIDCPOWER_VAL_BASE + 60L)
-
-/*- Defined values for attributes -*/
-/*-   NIDCPOWER_ATTR_INSTRUMENT_MODE -*/
-#define NIDCPOWER_VAL_SMU_PS                                        (NIDCPOWER_VAL_BASE + 61L)
-#define NIDCPOWER_VAL_LCR                                           (NIDCPOWER_VAL_BASE + 62L)
-
-/*- Defined values for attributes -*/
-/*-   NIDCPOWER_ATTR_LCR_STIMULUS_FUNCTION -*/
-#define NIDCPOWER_VAL_AC_VOLTAGE                                    (NIDCPOWER_VAL_BASE + 63L)
-#define NIDCPOWER_VAL_AC_CURRENT                                    (NIDCPOWER_VAL_BASE + 64L)
-
-/*- Defined values for attributes -*/
-/*-   NIDCPOWER_ATTR_LCR_DC_BIAS_SOURCE -*/
-#define NIDCPOWER_VAL_DC_BIAS_OFF                                   (NIDCPOWER_VAL_BASE + 65L)
-#define NIDCPOWER_VAL_DC_BIAS_VOLTAGE                               (NIDCPOWER_VAL_BASE + 66L)
-#define NIDCPOWER_VAL_DC_BIAS_CURRENT                               (NIDCPOWER_VAL_BASE + 67L)
-
-/*- Defined values for attributes -*/
-/*-   NIDCPOWER_ATTR_LCR_IMPEDANCE_AUTO_RANGE -*/
-#define NIDCPOWER_VAL_AUTO_RANGE_OFF                                (NIDCPOWER_VAL_BASE + 68L)
-#define NIDCPOWER_VAL_AUTO_RANGE_ONCE                               (NIDCPOWER_VAL_BASE + 69L)
-#define NIDCPOWER_VAL_AUTO_RANGE_ON                                 (NIDCPOWER_VAL_BASE + 70L)
-
-/*- Defined values for attributes -*/
-/*-   NIDCPOWER_ATTR_LCR_MEASUREMENT_TIME -*/
-#define NIDCPOWER_VAL_TIME_SHORT                                    (NIDCPOWER_VAL_BASE + 71L)
-#define NIDCPOWER_VAL_TIME_MEDIUM                                   (NIDCPOWER_VAL_BASE + 72L)
-#define NIDCPOWER_VAL_TIME_LONG                                     (NIDCPOWER_VAL_BASE + 73L)
-
-/*- Defined values for attributes -*/
-/*-   NIDCPOWER_ATTR_COMPENSATION_DATA_SOURCE -*/
-#define NIDCPOWER_VAL_ONBOARD_STORAGE                               (NIDCPOWER_VAL_BASE + 74L)
-#define NIDCPOWER_VAL_AS_CONFIGURED                                 (NIDCPOWER_VAL_BASE + 75L)
-
-/*- Defined values for LCRMeasurementParameter values -*/
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_CP                  (NIDCPOWER_VAL_BASE + 76L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_CS                  (NIDCPOWER_VAL_BASE + 77L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_LP                  (NIDCPOWER_VAL_BASE + 78L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_LS                  (NIDCPOWER_VAL_BASE + 79L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_RP                  (NIDCPOWER_VAL_BASE + 80L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_RS                  (NIDCPOWER_VAL_BASE + 81L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Z_REAL              (NIDCPOWER_VAL_BASE + 82L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Z_IMAGINARY         (NIDCPOWER_VAL_BASE + 83L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Z_MAGNITUDE         (NIDCPOWER_VAL_BASE + 84L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Z_PHASE             (NIDCPOWER_VAL_BASE + 85L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Y_REAL              (NIDCPOWER_VAL_BASE + 86L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Y_IMAGINARY         (NIDCPOWER_VAL_BASE + 87L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Y_MAGNITUDE         (NIDCPOWER_VAL_BASE + 88L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_Y_PHASE             (NIDCPOWER_VAL_BASE + 89L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_DISSIPATION_FACTOR  (NIDCPOWER_VAL_BASE + 90L)
-#define NIDCPOWER_VAL_LCR_MEASUREMENT_PARAMETER_QUALITY_FACTOR      (NIDCPOWER_VAL_BASE + 91L)
+#define NIDCPOWER_VAL_POWER_ALLOCATION_MODE_DISABLED        (NIDCPOWER_VAL_BASE + 58L)
+#define NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC       (NIDCPOWER_VAL_BASE + 59L)
+#define NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL          (NIDCPOWER_VAL_BASE + 60L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_AUTORANGE_BEHAVIOR -*/
-#define NIDCPOWER_VAL_RANGE_UP_TO_LIMIT_THEN_DOWN                   (NIDCPOWER_VAL_BASE + 107L)
-#define NIDCPOWER_VAL_RANGE_UP                                      (NIDCPOWER_VAL_BASE + 108L)
-#define NIDCPOWER_VAL_RANGE_UP_AND_DOWN                             (NIDCPOWER_VAL_BASE + 109L)
+#define NIDCPOWER_VAL_RANGE_UP_TO_LIMIT_THEN_DOWN           (NIDCPOWER_VAL_BASE + 107L)
+#define NIDCPOWER_VAL_RANGE_UP                              (NIDCPOWER_VAL_BASE + 108L)
+#define NIDCPOWER_VAL_RANGE_UP_AND_DOWN                     (NIDCPOWER_VAL_BASE + 109L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_AUTORANGE_APERTURE_TIME_MODE -*/
-#define NIDCPOWER_VAL_APERTURE_TIME_AUTO                            (NIDCPOWER_VAL_BASE + 110L)
-#define NIDCPOWER_VAL_APERTURE_TIME_CUSTOM                          (NIDCPOWER_VAL_BASE + 111L)
+#define NIDCPOWER_VAL_APERTURE_TIME_AUTO                    (NIDCPOWER_VAL_BASE + 110L)
+#define NIDCPOWER_VAL_APERTURE_TIME_CUSTOM                  (NIDCPOWER_VAL_BASE + 111L)
 
 /*- Defined values for attributes -*/
 /*-   NIDCPOWER_ATTR_AUTORANGE_THRESHOLD_MODE -*/
-#define NIDCPOWER_VAL_THRESHOLD_MODE_NORMAL                         (NIDCPOWER_VAL_BASE + 112L)
-#define NIDCPOWER_VAL_THRESHOLD_MODE_FAST_STEP                      (NIDCPOWER_VAL_BASE + 113L)
-#define NIDCPOWER_VAL_THRESHOLD_MODE_HIGH_HYSTERESIS                (NIDCPOWER_VAL_BASE + 114L)
-#define NIDCPOWER_VAL_THRESHOLD_MODE_MEDIUM_HYSTERESIS              (NIDCPOWER_VAL_BASE + 115L)
-#define NIDCPOWER_VAL_THRESHOLD_MODE_HOLD                           (NIDCPOWER_VAL_BASE + 116L)
+#define NIDCPOWER_VAL_THRESHOLD_MODE_NORMAL                 (NIDCPOWER_VAL_BASE + 112L)
+#define NIDCPOWER_VAL_THRESHOLD_MODE_FAST_STEP              (NIDCPOWER_VAL_BASE + 113L)
+#define NIDCPOWER_VAL_THRESHOLD_MODE_HIGH_HYSTERESIS        (NIDCPOWER_VAL_BASE + 114L)
+#define NIDCPOWER_VAL_THRESHOLD_MODE_MEDIUM_HYSTERESIS      (NIDCPOWER_VAL_BASE + 115L)
+#define NIDCPOWER_VAL_THRESHOLD_MODE_HOLD                   (NIDCPOWER_VAL_BASE + 116L)
 
-/******************************************************************************/
-/*                    Instrument Driver Type Declarations                     */
-/******************************************************************************/
-
-#if !defined(_NIComplexNumber)
-#define _NIComplexNumber
-   typedef struct NIComplexNumber_struct
-   {
-      ViReal64 real;
-      ViReal64 imaginary;
-   } NIComplexNumber;
-#endif // !defined(_NIComplexNumber)
-
-#pragma pack(push,8)
-   typedef struct NILCRMeasurement_struct
-   {
-      // DcBias values
-      ViReal64 Vdc;
-      ViReal64 Idc;
-
-      // Stimulus frequency
-      ViReal64 stimulusFrequency;
-
-      // Raw measurements
-      NIComplexNumber ACVoltage;
-      NIComplexNumber ACCurrent;
-
-      // Z values
-      NIComplexNumber Z;
-      ViReal64 ZMagnitude;
-      ViReal64 ZPhase; // degrees
-
-      // Y values
-      NIComplexNumber Y;
-      ViReal64 YMagnitude;
-      ViReal64 YPhase; // degrees
-
-      // Series model values
-      ViReal64 Ls;
-      ViReal64 Cs;
-      ViReal64 Rs;
-
-      // Parallel model values
-      ViReal64 Lp;
-      ViReal64 Cp;
-      ViReal64 Rp;
-
-      // Dissipation factor & Q factor
-      ViReal64 D;
-      ViReal64 Q;
-
-      // Measurement metadata
-      ViUInt16 measurementMode;
-      ViBoolean dcInCompliance;
-      ViBoolean acInCompliance;
-
-      // Reserved for future use
-      ViUInt16 rfu0;
-      ViReal64 rfu1;
-      ViReal64 rfu2;
-      ViReal64 rfu3;
-      ViReal64 rfu4;
-      ViReal64 rfu5;
-      ViReal64 rfu6;
-      ViReal64 rfu7;
-   } NILCRMeasurement;
-#pragma pack(pop)
-
-#pragma pack(push,8)
-   typedef struct NILoadCompensationSpot_struct
-   {
-      ViReal64 frequency;
-      ViInt32 primaryType;
-      ViInt32 secondaryType;
-      ViReal64 primaryReference;
-      ViReal64 secondaryReference;
-   } NILoadCompensationSpot;
-#pragma pack(pop)
 
 /******************************************************************************/
 /*                  Instrument Driver Function Declarations                   */
@@ -851,20 +696,6 @@ extern "C" {
       ViReal64 currentMeasurements[],
       ViBoolean inCompliance[],
       ViInt32* actualCount);
-
-   ViStatus _VI_FUNC niDCPower_MeasureMultipleLCR(
-      ViSession vi,
-      ViConstString channelName,
-      NILCRMeasurement measurements[]);
-
-   ViStatus _VI_FUNC niDCPower_FetchMultipleLCR(
-      ViSession vi,
-      ViConstString channelName,
-      ViReal64 timeout,
-      ViInt32 sampleCount,
-      NILCRMeasurement measurements[],
-      ViInt32* actualSampleCount);
-
    ViStatus _VI_FUNC niDCPower_QueryInCompliance(
       ViSession vi,
       ViConstString channelName,
@@ -1388,40 +1219,6 @@ extern "C" {
       ViSession vi,
       ViInt32 size,
       ViAddr configuration);
-
-   /*- LCR Compensation functions -*/
-   ViStatus _VI_FUNC niDCPower_PerformOpenCompensation(
-      ViSession vi,
-      ViConstString channelName,
-      ViInt32 numFrequencies,
-      const ViReal64 additionalFrequencies[],
-      ViBoolean writeToOnboardStorage,
-      ViInt32 size,
-      ViAddr compensationData);
-
-   ViStatus _VI_FUNC niDCPower_PerformShortCompensation(
-      ViSession vi,
-      ViConstString channelName,
-      ViInt32 numFrequencies,
-      const ViReal64 additionalFrequencies[],
-      ViBoolean writeToOnboardStorage,
-      ViInt32 size,
-      ViAddr compensationData);
-
-   ViStatus _VI_FUNC niDCPower_PerformLoadCompensation(
-      ViSession vi,
-      ViConstString channelName,
-      ViInt32 numCompensationSpots,
-      const NILoadCompensationSpot compensationSpots[],
-      ViBoolean writeToOnboardStorage,
-      ViInt32 size,
-      ViAddr compensationData);
-
-   ViStatus _VI_FUNC niDCPower_ConfigureLCRCompensation(
-      ViSession vi,
-      ViConstString channelName,
-      ViInt32 compensationDataSize,
-      const ViAddr compensationData);
 
 #include "nidcpowerObsolete.h"
 
