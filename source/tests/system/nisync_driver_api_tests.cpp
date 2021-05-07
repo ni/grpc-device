@@ -847,7 +847,6 @@ TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsF
 TEST_F(NiSyncDriverApiTest, SetTimeWithValidTimeSource_ReturnsSuccess)
 {
   ViStatus viStatus;
-  ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
   ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
   auto grpcStatus = call_SetTime(
      NISYNC_VAL_INIT_TIME_SRC_SYSTEM_CLK,
@@ -863,7 +862,6 @@ TEST_F(NiSyncDriverApiTest, SetTimeWithValidTimeSource_ReturnsSuccess)
 TEST_F(NiSyncDriverApiTest, SetTimeWithInvalidTimeSource_ReturnsError)
 {
   ViStatus viStatus;
-  ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
   ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
   auto grpcStatus = call_SetTime(
      NISYNC_VAL_INIT_TIME_SRC_SYSTEM_CLK + 5000,
@@ -914,9 +912,8 @@ TEST_F(NiSyncDriverApiTest, SetTimeReferenceGPS_ReturnsSuccess)
 TEST_F(NiSyncDriverApiTest, SetTimeReferenceIRIG_ReturnsSuccess)
 {
   ViStatus viStatus;
-  ViInt32 irigType = NISYNC_VAL_IRIG_TYPE_IRIGB_DC;
   auto grpcStatus = call_SetTimeReferenceIRIG(
-     irigType, 
+     NISYNC_VAL_IRIG_TYPE_IRIGB_DC, // irigType
      NISYNC_VAL_PFI0, // terminalName
      &viStatus);
 
@@ -927,9 +924,8 @@ TEST_F(NiSyncDriverApiTest, SetTimeReferenceIRIG_ReturnsSuccess)
 TEST_F(NiSyncDriverApiTest, SetTimeReferenceIRIGWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
-  ViInt32 irigType = NISYNC_VAL_IRIG_TYPE_IRIGB_DC;
   auto grpcStatus = call_SetTimeReferenceIRIG(
-     irigType, 
+     NISYNC_VAL_IRIG_TYPE_IRIGB_DC, // irigType
      NISYNC_VAL_GND, // terminalName
      &viStatus);
 
@@ -940,12 +936,10 @@ TEST_F(NiSyncDriverApiTest, SetTimeReferenceIRIGWithInvalidTerminal_ReturnsError
 TEST_F(NiSyncDriverApiTest, SetTimeReferencePPS_ReturnsSuccess)
 {
   ViStatus viStatus;
-  ViConstString terminalName = NISYNC_VAL_PFI1;
-  ViBoolean useManualTime = VI_TRUE;
   ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
   auto grpcStatus = call_SetTimeReferencePPS(
-     terminalName,
-     useManualTime,
+     NISYNC_VAL_PFI1, // terminalName
+     VI_TRUE, // useManualTime
      initialTimeSeconds,
      initialTimeNanoseconds,
      0, // initialTimeFractionalNanoseconds, ignored
@@ -958,12 +952,10 @@ TEST_F(NiSyncDriverApiTest, SetTimeReferencePPS_ReturnsSuccess)
 TEST_F(NiSyncDriverApiTest, SetTimeReferencePPSWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
-  ViConstString terminalName = NISYNC_VAL_GND;
-  ViBoolean useManualTime = VI_TRUE;
   ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
   auto grpcStatus = call_SetTimeReferencePPS(
-     terminalName,
-     useManualTime,
+     NISYNC_VAL_GND, // terminalName
+     VI_TRUE, // useManualTime
      initialTimeSeconds,
      initialTimeNanoseconds,
      0, // initialTimeFractionalNanoseconds, ignored
@@ -984,7 +976,7 @@ TEST_F(NiSyncDriverApiTest, SetTimeReference1588OrdinaryClock_ReturnsSuccess)
 
 TEST_F(NiSyncDriverApiTest, SetTimeReference8021AS_ReturnsSuccess)
 {
-  // This test is expected to be failing for now. See bug:
+  // This test is expected to be failing for now. See azdo bug:1450416
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReference8021AS(&viStatus);
 
