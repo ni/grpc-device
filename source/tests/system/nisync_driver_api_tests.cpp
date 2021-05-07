@@ -976,7 +976,7 @@ TEST_F(NiSyncDriverApiTest, SetTimeReference1588OrdinaryClock_ReturnsSuccess)
 
 TEST_F(NiSyncDriverApiTest, SetTimeReference8021AS_ReturnsSuccess)
 {
-  // This test is expected to be failing for now. See azdo bug:1450416
+  // SetTimeReference8021AS is only supported in LinuxRT targets.
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReference8021AS(&viStatus);
 
