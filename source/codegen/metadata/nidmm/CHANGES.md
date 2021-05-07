@@ -106,3 +106,7 @@ with the session_repository.
 - `'powerLineFrequencyHz`' parameter of function `'ConfigurePowerLineFrequency'`
 - `'triggerDelay`' parameter of function `'ConfigureTrigger'`
 - `controlAction` parameter of function `'Control'`
+
+The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
+the registered session from session_repository.
+- `CloseExtCal`
