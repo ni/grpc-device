@@ -343,6 +343,125 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
+  ::grpc::Status call_SetTime(
+     ViInt32 timeSource,
+     ViUInt32 timeSeconds,
+     ViUInt32 timeNanoseconds,
+     ViUInt16 timeFractionalNanoseconds,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetTimeRequest request;
+    nisync::SetTimeResponse response;
+    request.set_time_source(timeSource);
+    request.set_time_seconds(timeSeconds);
+    request.set_time_nanoseconds(timeNanoseconds);
+    request.set_time_fractional_nanoseconds(timeFractionalNanoseconds);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetTime(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_GetTime(
+     ViUInt32* timeSeconds,
+     ViUInt32* timeNanoseconds,
+     ViUInt16* timeFractionalNanoseconds,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::GetTimeRequest request;
+    nisync::GetTimeResponse response;
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->GetTime(&clientContext, request, &response);
+    *timeSeconds = response.time_seconds();
+    *timeNanoseconds = response.time_nanoseconds();
+    *timeFractionalNanoseconds = response.time_fractional_nanoseconds();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_SetTimeReferenceFreeRunning(ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetTimeReferenceFreeRunningRequest request;
+    nisync::SetTimeReferenceFreeRunningResponse response;
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetTimeReferenceFreeRunning(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_SetTimeReferenceGPS(ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetTimeReferenceGPSRequest request;
+    nisync::SetTimeReferenceGPSResponse response;
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetTimeReferenceGPS(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_SetTimeReferenceIRIG(
+     ViInt32 irigType,
+     ViConstString terminalName,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetTimeReferenceIRIGRequest request;
+    nisync::SetTimeReferenceIRIGResponse response;
+    request.set_irig_type(irigType);
+    request.set_terminal_name(terminalName);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetTimeReferenceIRIG(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_SetTimeReferencePPS(
+     ViConstString terminalName,
+     ViBoolean useManualTime,
+     ViUInt32 initialTimeSeconds,
+     ViUInt32 initialTimeNanoseconds,
+     ViUInt16 initialTimeFractionalNanoseconds,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetTimeReferencePPSRequest request;
+    nisync::SetTimeReferencePPSResponse response;
+    request.set_terminal_name(terminalName);
+    request.set_use_manual_time(useManualTime);
+    request.set_initial_time_seconds(initialTimeSeconds);
+    request.set_initial_time_nanoseconds(initialTimeNanoseconds);
+    request.set_initial_time_fractional_nanoseconds(initialTimeFractionalNanoseconds);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetTimeReferencePPS(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_SetTimeReference1588OrdinaryClock(ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetTimeReference1588OrdinaryClockRequest request;
+    nisync::SetTimeReference1588OrdinaryClockResponse response;
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetTimeReference1588OrdinaryClock(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_SetTimeReference8021AS(ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::SetTimeReference8021ASRequest request;
+    nisync::SetTimeReference8021ASResponse response;
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->SetTimeReference8021AS(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
 private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
@@ -689,12 +808,12 @@ TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsN
   ViUInt32 decimationCount = 0; // ignored for 6674
   ViReal64 actualDuration, frequency, frequencyError;
   auto grpcStatus = call_MeasureFrequencyEx(
-     srcTerminal, 
-     duration, 
-     decimationCount, 
-     &actualDuration, 
-     &frequency, 
-     &frequencyError, 
+     srcTerminal,
+     duration,
+     decimationCount,
+     &actualDuration,
+     &frequency,
+     &frequencyError,
      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
@@ -711,18 +830,166 @@ TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsF
   ViUInt32 decimationCount = 0; // ignored for 6674
   ViReal64 actualDuration, frequency, frequencyError;
   auto grpcStatus = call_MeasureFrequencyEx(
-     srcTerminal, 
-     duration, 
-     decimationCount, 
-     &actualDuration, 
-     &frequency, 
-     &frequencyError, 
+     srcTerminal,
+     duration,
+     decimationCount,
+     &actualDuration,
+     &frequency,
+     &frequencyError,
      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
   EXPECT_GT(actualDuration, 0);  
   EXPECT_GT(frequency, 0);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeWithValidTimeSource_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
+  ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
+  auto grpcStatus = call_SetTime(
+     NISYNC_VAL_INIT_TIME_SRC_SYSTEM_CLK,
+     timeSeconds,
+     timeNanoseconds,
+     0, // timeFractionalNanoseconds, ignored
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeWithInvalidTimeSource_ReturnsError)
+{
+  ViStatus viStatus;
+  ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
+  ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
+  auto grpcStatus = call_SetTime(
+     NISYNC_VAL_INIT_TIME_SRC_SYSTEM_CLK + 5000,
+     timeSeconds,
+     timeNanoseconds,
+     0, // timeFractionalNanoseconds, ignored
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_ERROR_INV_PARAMETER, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, GetTime_ReturnsTime)
+{
+  ViStatus viStatus;
+  ViUInt32 timeSeconds, timeNanoseconds;
+  ViUInt16 timeFractionalNanoseconds;
+  auto grpcStatus = call_GetTime(
+     &timeSeconds, 
+     &timeNanoseconds, 
+     &timeFractionalNanoseconds, // ignored
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_GT(timeSeconds, (ViUInt32)0);  
+  EXPECT_GT(timeNanoseconds, (ViUInt32)0);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReferenceFreeRunning_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  auto grpcStatus = call_SetTimeReferenceFreeRunning(&viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReferenceGPS_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  auto grpcStatus = call_SetTimeReferenceGPS(&viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReferenceIRIG_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  ViInt32 irigType = NISYNC_VAL_IRIG_TYPE_IRIGB_DC;
+  auto grpcStatus = call_SetTimeReferenceIRIG(
+     irigType, 
+     NISYNC_VAL_PFI0, // terminalName
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReferenceIRIGWithInvalidTerminal_ReturnsError)
+{
+  ViStatus viStatus;
+  ViInt32 irigType = NISYNC_VAL_IRIG_TYPE_IRIGB_DC;
+  auto grpcStatus = call_SetTimeReferenceIRIG(
+     irigType, 
+     NISYNC_VAL_GND, // terminalName
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReferencePPS_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  ViConstString terminalName = NISYNC_VAL_PFI1;
+  ViBoolean useManualTime = VI_TRUE;
+  ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
+  auto grpcStatus = call_SetTimeReferencePPS(
+     terminalName,
+     useManualTime,
+     initialTimeSeconds,
+     initialTimeNanoseconds,
+     0, // initialTimeFractionalNanoseconds, ignored
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReferencePPSWithInvalidTerminal_ReturnsError)
+{
+  ViStatus viStatus;
+  ViConstString terminalName = NISYNC_VAL_GND;
+  ViBoolean useManualTime = VI_TRUE;
+  ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
+  auto grpcStatus = call_SetTimeReferencePPS(
+     terminalName,
+     useManualTime,
+     initialTimeSeconds,
+     initialTimeNanoseconds,
+     0, // initialTimeFractionalNanoseconds, ignored
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReference1588OrdinaryClock_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  auto grpcStatus = call_SetTimeReference1588OrdinaryClock(&viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, SetTimeReference8021AS_ReturnsSuccess)
+{
+  // This test is expected to be failing for now. See bug:
+  ViStatus viStatus;
+  auto grpcStatus = call_SetTimeReference8021AS(&viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 }  // namespace system
