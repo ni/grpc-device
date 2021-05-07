@@ -9,8 +9,8 @@ namespace system {
 
 namespace dcpower = nidcpower_grpc;
 
-const int kTestViErrorRsrcNotFound = -1074134944;
-const char* kTestViErrorRsrcNotFoundMessage = "IVI: (Hex 0xBFFA0060) Insufficient location information or resource not present in the system.";
+const int kInvalidRsrc = -1074118656;
+const char* kViErrorResourceNotFoundMessage = "Device was not recognized.  The device is not supported with this driver or version.";
 const char* kTestRsrc = "FakeDevice";
 const char* kOptionsString = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";
 const char* kTestSession = "SessionName";
@@ -56,7 +56,21 @@ class NiDCPowerSessionTest : public ::testing::Test {
     return status;
   }
 
- private:
+  ::grpc::Status call_initialize_with_channels(const char* resource_name, const char* option_string, const char* session_name, dcpower::InitializeWithChannelsResponse* response)
+  {
+    ::grpc::ClientContext context;
+    dcpower::InitializeWithChannelsRequest request;
+    request.set_resource_name(resource_name);
+    request.set_option_string(option_string);
+    request.set_session_name(session_name);
+    request.set_reset(false);
+    request.set_channels("");
+
+    ::grpc::Status status = GetStub()->InitializeWithChannels(&context, request, response);
+    return status;
+  }
+
+private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<dcpower::NiDCPower::Stub> nidcpower_stub_;
   std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
@@ -87,11 +101,11 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
-  dcpower::InitializeWithIndependentChannelsResponse response;
-  ::grpc::Status status = call_initialize_with_independent_channels(kTestInvalidRsrc, "", "", &response);
+  dcpower::InitializeWithChannelsResponse response;
+  ::grpc::Status status = call_initialize_with_channels(kTestInvalidRsrc, "", "", &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kTestViErrorRsrcNotFound, response.status());
+  EXPECT_EQ(kInvalidRsrc, response.status());
   EXPECT_EQ(0, response.vi().id());
 }
 
@@ -128,20 +142,20 @@ TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_NoErrorReported)
 
 TEST_F(NiDCPowerSessionTest, ErrorFromDriver_ErrorMessage_ReturnsUserErrorMessage)
 {
-  dcpower::InitializeWithIndependentChannelsResponse initialize_response;
-  call_initialize_with_independent_channels(kTestInvalidRsrc, "", "", &initialize_response);
-  EXPECT_EQ(kTestViErrorRsrcNotFound, initialize_response.status());
+  dcpower::InitializeWithChannelsResponse initialize_response;
+  call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
+  EXPECT_EQ(kInvalidRsrc, initialize_response.status());
 
   nidevice_grpc::Session session = initialize_response.vi();
   ::grpc::ClientContext context;
   dcpower::ErrorMessageRequest error_request;
   error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kTestViErrorRsrcNotFound);
+  error_request.set_error_code(kInvalidRsrc);
   dcpower::ErrorMessageResponse error_response;
   ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kTestViErrorRsrcNotFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kViErrorResourceNotFoundMessage, error_response.error_message().c_str());
 }
 
 }  // namespace system
