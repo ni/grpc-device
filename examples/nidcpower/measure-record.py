@@ -75,28 +75,34 @@ client = grpc_nidcpower.NiDCPowerStub(channel)
 
 try :
     # Initialize the session.
-    initialize_with_independent_channels_response = client.InitializeWithIndependentChannels(nidcpower_types.InitializeWithIndependentChannelsRequest(
+    initialize_with_channels_response = client.InitializeWithChannels(nidcpower_types.InitializeWithChannelsRequest(
         session_name = session_name,
         resource_name = resource,
+        channels = channels,
         reset = False,
         option_string = options
     ))
-    vi = initialize_with_independent_channels_response.vi
-    CheckForError(vi, initialize_with_independent_channels_response.status)
+    vi = initialize_with_channels_response.vi
+    CheckForError(vi, initialize_with_channels_response.status)
 
     # Specify when the measure unit should acquire measurements.
     configure_measure_when = client.SetAttributeViInt32(nidcpower_types.SetAttributeViInt32Request(
         vi = vi,
-        channel_name = channels,
         attribute_id = nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
         attribute_value = nidcpower_types.MeasureWhen.MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE
     ))
     CheckForError(vi, configure_measure_when.status)
 
+    # set the voltage level.
+    configure_voltage_level = client.ConfigureVoltageLevel(nidcpower_types.ConfigureVoltageLevelRequest(
+        vi = vi,
+        level = voltage_level
+    ))
+    CheckForError(vi, configure_voltage_level.status)
+
     # Sspecify how many measurements compose a measure record.
     configure_measure_record_length = client.SetAttributeViInt32(nidcpower_types.SetAttributeViInt32Request(
         vi = vi,
-        channel_name = channels,
         attribute_id = nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH,
         attribute_value = record_length
     ))
@@ -105,41 +111,29 @@ try :
     # Specify whether to take continuous measurements. Set it to False for continuous measurement.
     configure_measure_record_length_is_finite = client.SetAttributeViBoolean(nidcpower_types.SetAttributeViBooleanRequest(
         vi = vi,
-        channel_name = channels,
         attribute_id = nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE,
         attribute_value = False
     ))
     CheckForError(vi, configure_measure_record_length_is_finite.status)
 
-    # set the voltage level.
-    configure_voltage_level = client.ConfigureVoltageLevel(nidcpower_types.ConfigureVoltageLevelRequest(
-        vi = vi,
-        channel_name = channels,
-        level = voltage_level
-    ))
-    CheckForError(vi, configure_voltage_level.status)
-
     # commit the session.
-    commit_with_channels = client.CommitWithChannels(nidcpower_types.CommitWithChannelsRequest(
+    commit_response = client.Commit(nidcpower_types.CommitRequest(
         vi = vi,
-        channel_name = channels
     ))
-    CheckForError(vi, commit_with_channels.status)
+    CheckForError(vi, commit_response.status)
 
     # get measure_record_delta_time.
     get_measure_record_delta_time = client.GetAttributeViReal64(nidcpower_types.GetAttributeViReal64Request(
        vi = vi,
-       channel_name = channels,
        attribute_id =  nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_DELTA_TIME
     ))
     CheckForError(vi, get_measure_record_delta_time.status)
 
     # initiate the session.
-    initiate_with_channels = client.InitiateWithChannels(nidcpower_types.InitiateWithChannelsRequest(
+    initiate_response = client.Initiate(nidcpower_types.InitiateRequest(
         vi = vi,
-        channel_name = channels
     ))
-    CheckForError(vi, initiate_with_channels.status)
+    CheckForError(vi, initiate_response.status)
 
     # Setup a plot to draw the captured waveform.
     fig = plt.figure("Waveform Graph")
@@ -152,8 +146,6 @@ try :
         global closed
         closed = True
     fig.canvas.mpl_connect('close_event', on_close)
-
-    x_axis = np.arange(start=1, stop=record_length+1, step=1)
 
     print("\nReading values in loop. CTRL+C or Close window to stop.\n")
 
@@ -171,8 +163,7 @@ try :
 
             fetch_multiple_response = client.FetchMultiple(nidcpower_types.FetchMultipleRequest(
                 vi = vi,
-                channel_name = channels,
-                timeout = 5,
+                timeout = 10,
                 count = record_length
             ))
             CheckForError(vi, fetch_multiple_response.status)
