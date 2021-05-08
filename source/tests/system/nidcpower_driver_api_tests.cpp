@@ -118,7 +118,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     dcpower::GetAttributeViBooleanResponse response;
 
     ::grpc::Status status = GetStub()->GetAttributeViBoolean(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
     return response.attribute_value();
@@ -134,7 +134,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     dcpower::GetAttributeViInt32Response response;
 
     ::grpc::Status status = GetStub()->GetAttributeViInt32(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
     return response.attribute_value();
@@ -150,7 +150,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     dcpower::GetAttributeViInt64Response response;
 
     ::grpc::Status status = GetStub()->GetAttributeViInt64(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
     return response.attribute_value();
@@ -166,7 +166,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     dcpower::GetAttributeViReal64Response response;
 
     ::grpc::Status status = GetStub()->GetAttributeViReal64(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
     return response.attribute_value();
@@ -182,13 +182,13 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     dcpower::GetAttributeViStringResponse response;
 
     ::grpc::Status status = GetStub()->GetAttributeViString(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
     return response.attribute_value();
   }
 
-  void set_int32_attribute(const char* channel_list, dcpower::NiDCPowerAttributes attribute_id, dcpower::MeasureWhen attribute_value )
+  void set_int32_attribute(const char* channel_list, dcpower::NiDCPowerAttributes attribute_id, dcpower::MeasureWhen attribute_value)
   {
     ::grpc::ClientContext context;
     const dcpower::NiDCPowerAttributes attribute_to_set = attribute_id;
@@ -201,7 +201,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     dcpower::SetAttributeViInt32Response response;
 
     ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   }
@@ -244,9 +244,9 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     request.set_channel_name(channel_name);
     request.set_level(level);
     dcpower::ConfigureCurrentLevelResponse response;
-    
+
     ::grpc::Status status = GetStub()->ConfigureCurrentLevel(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   }
@@ -357,7 +357,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt32_GetAttributeViInt32ReturnsSam
   request.set_attribute_value(expected_value);
   dcpower::SetAttributeViInt32Response response;
   ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
@@ -367,13 +367,12 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt32_GetAttributeViInt32ReturnsSam
 TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsSameValue)
 {
   const char* channel_name = "0";
-  // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set to 'MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE' 
+  // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set to 'MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE'
   // before setting attribute 'NIDCPOWER_ATTRIBUTE_SOURCE_DELAY'.
   set_int32_attribute(
-    channel_name, 
-    dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN, 
-    dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE
-    );
+      channel_name,
+      dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
+      dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE);
   const dcpower::NiDCPowerAttributes attribute_to_set = dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_SOURCE_DELAY;
   const ViReal64 expected_value = 2.516;
   ::grpc::ClientContext context;
@@ -384,7 +383,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsS
   request.set_attribute_value(expected_value);
   dcpower::SetAttributeViReal64Response response;
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   ViReal64 get_attribute_value_sourcedelay = get_real64_attribute(channel_name, attribute_to_set);
@@ -394,13 +393,12 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsS
 TEST_F(NiDCPowerDriverApiTest, SetAttributeViBoolean_GetAttributeViBooleanReturnsSameValue)
 {
   const char* channel_name = "0";
-  // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set to 'MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE' 
+  // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set to 'MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE'
   // before setting attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE'.
   set_int32_attribute(
-    channel_name, 
-    dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN, 
-    dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE
-    );
+      channel_name,
+      dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
+      dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE);
   const dcpower::NiDCPowerAttributes attribute_to_set = dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE;
   const ViBoolean expected_value = true;
   ::grpc::ClientContext context;
@@ -411,7 +409,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViBoolean_GetAttributeViBooleanReturn
   request.set_attribute_value(expected_value);
   dcpower::SetAttributeViBooleanResponse response;
   ::grpc::Status status = GetStub()->SetAttributeViBoolean(&context, request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   ViBoolean get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
@@ -431,7 +429,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViString_GetAttributeViStringReturnsS
   request.set_attribute_value(expected_value);
   dcpower::SetAttributeViStringResponse response;
   ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
@@ -451,7 +449,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt64_GetAttributeViInt64ReturnsSam
   request.set_attribute_value(expected_value);
   dcpower::SetAttributeViInt64Response response;
   ::grpc::Status status = GetStub()->SetAttributeViInt64(&context, request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   ViInt64 get_attribute_value = get_int64_attribute(channel_name, attribute_to_set);
@@ -488,13 +486,12 @@ TEST_F(NiDCPowerDriverApiTest, ConfigureOutputFunctionAndCurrentLevel_Configures
 
 TEST_F(NiDCPowerDriverApiTest, SetMeasureWhenAndInitiate_MeasureMultiple_ReturnsSuccess)
 {
-  const char* channel_name = ""; // all channels in session
+  const char* channel_name = "";  // all channels in session
   // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set to On Demand before calling MeasureMultiple
   set_int32_attribute(
-    channel_name,
-    dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
-    dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_ON_DEMAND
-  );
+      channel_name,
+      dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
+      dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_ON_DEMAND);
   initiate();
 
   dcpower::MeasureMultipleResponse response;
@@ -508,10 +505,9 @@ TEST_F(NiDCPowerDriverApiTest, SetMeasureWhenAndInitiate_FetchMultiple_FetchesSu
   const char* channel_name = "0";
   // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set before calling FetchMultiple
   set_int32_attribute(
-    channel_name, 
-    dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN, 
-    dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE
-    );
+      channel_name,
+      dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
+      dcpower::MeasureWhen::MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE);
   initiate();
 
   dcpower::FetchMultipleResponse response;
