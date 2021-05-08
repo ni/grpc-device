@@ -64,6 +64,10 @@ The following functions were tagged with 'init_method': True, to ensure their ge
 - InitExtCal : 
     - Also added a 'custom_close' tag to this function, since this API has a corresponding close function called 'CloseExtCal'
 
+The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
+the registered session from session_repository.
+- `CloseExtCal`
+
 The following functions were tagged with their corresponding c_names:
 - reset
 - self_test

@@ -111,3 +111,6 @@ def get_cname(functions, method_name, c_function_prefix):
 
 def is_private_method(function_data):
   return function_data.get('codegen_method', '') == 'private'
+
+def is_custom_close_method(function_data):
+  return function_data.get('custom_close_method', False)
