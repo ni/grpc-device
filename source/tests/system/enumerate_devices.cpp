@@ -1,6 +1,5 @@
 #include "enumerate_devices.h"
 
-#include <optional>
 #include <stdexcept>
 
 #include <server/session_utilities_service.h>
@@ -12,9 +11,11 @@ namespace system {
 
 const google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> EnumerateDevices(bool clear_cache)
 {
-  static std::optional<google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties>> devices_cache;
-  if (!devices_cache || clear_cache) {
-    devices_cache.reset();
+  static bool devices_are_cached = false;
+  static google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> devices_cache;
+
+  if (!devices_are_cached || clear_cache) {
+    devices_are_cached = false;
 
     ::nidevice_grpc::SessionUtilities::Stub stub(DeviceServerInterface::Singleton()->InProcessChannel());
 
@@ -27,9 +28,10 @@ const google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> Enumer
     }
 
     devices_cache = response.devices();
+    devices_are_cached = true;
   }
 
-  return devices_cache.value();
+  return devices_cache;
 }
 
 }  // namespace system
