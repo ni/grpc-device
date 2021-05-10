@@ -405,6 +405,126 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "CreateFutureTimeEvent": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "terminalName",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "outputLevel",
+                "type": "ViInt32"
+            },
+            {
+                "direction": "in",
+                "name": "timeSeconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "timeNanoseconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "timeFractionalNanoseconds",
+                "type": "ViUInt16"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "ClearFutureTimeEvents": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "terminalName",
+                "type": "ViConstString"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "CreateClock": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "terminalName",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "highTicks",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "lowTicks",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "startTimeSeconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "startTimeNanoseconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "startTimeFractionalNanoseconds",
+                "type": "ViUInt16"
+            },
+            {
+                "direction": "in",
+                "name": "stopTimeSeconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "stopTimeNanoseconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "stopTimeFractionalNanoseconds",
+                "type": "ViUInt16"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "ClearClock": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "terminalName",
+                "type": "ViConstString"
+            }
+        ],
+        "returns": "ViStatus"
+    },
     "GetAttributeViInt32": {
         "parameters": [
             {
