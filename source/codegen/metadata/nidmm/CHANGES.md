@@ -32,6 +32,7 @@ Metadata for following attributes added:
 - `'LATENCY'`
 - `'SHUNT_VALUE'`
 - `'CONFIG_PRODUCT_NUMBER'`
+- `'RECORD_COERCIONS'`
 
 `'enum'` tags added to following attributes:
 - `'BUFFER_SIZE'`
@@ -43,6 +44,13 @@ Metadata for following attributes added:
 - `'POWERLINE_FREQ'`
 - `'RANGE'`
 - `'TRIGGER_DELAY'`
+- `'FREQ_VOLTAGE_RANGE'`
+- `'SAMPLE_INTERVAL'`
+- `'TRIGGER_COUNT'`
+- `'SAMPLE_COUNT'`
+
+`'FREQ_VOLTAGE_AUTO_RANGE'` (from nimi-python) changed to `'FREQ_VOLTAGE_AUTO_RANGE_VALUE'` to match the nidmm.h
+
 
 ## enums.py
 
@@ -66,6 +74,11 @@ Metadata for following enums added:
 - `'Range'`
 - `'SettleTime'`
 - `'TriggerDelays'`
+- `'FrequencyVoltageRange'`
+- `'SampleInterval'`
+- `'TriggerCount'`
+- `'SampleCount'`
+- `'TimeLimit'`
 
 `'NIDMM_VAL_FIXED'` (from nimi-python) changed to `'NIDMM_VAL_TEMP_REF_JUNC_FIXED'` in the `'ThermocoupleReferenceJunctionType'` to match the documentation and the header file
 
@@ -97,15 +110,25 @@ with the session_repository.
 - `InitExtCal` : Added a 'custom_close' tag to this function, since this API has a corresponding close function called 'CloseExtCal'
 
 `'enum'` tag added to the following functions:
-- `'apertureTime`' parameter of function `'GetApertureTimeInfo'`
-- `'action`' parameter of function `'CloseExtCal'`
-- `'calType`' parameter of function `'CalibrationType'`
-- `'offsetCompOhms`' parameter of function `'ConfigureOffsetCompOhms'`
-- `'configuration`' parameter of function `'Control4022'`
-- `'type`' parameter of function `'CalAdjustMisc'`
-- `'powerLineFrequencyHz`' parameter of function `'ConfigurePowerLineFrequency'`
-- `'triggerDelay`' parameter of function `'ConfigureTrigger'`
-- `controlAction` parameter of function `'Control'`
+- `'apertureTime'` parameter of function `'GetApertureTimeInfo'`
+- `'action'` parameter of function `'CloseExtCal'`
+- `'calType'` parameter of function `'CalibrationType'`
+- `'offsetCompOhms'` parameter of function `'ConfigureOffsetCompOhms'`
+- `'configuration'` parameter of function `'Control4022'`
+- `'type'` parameter of function `'CalAdjustMisc'`
+- `'powerLineFrequencyHz'` parameter of function `'ConfigurePowerLineFrequency'`
+- `'triggerDelay'` parameter of function `'ConfigureTrigger'`
+- `'controlAction'` parameter of function `'Control'`
+- `'voltageRange'` parameter of function `'ConfigureFrequencyVoltageRange'`
+- `'sampleInterval'` parameter of function `'ConfigureMultiPoint'`
+- `'triggerCount'` parameter of function `'ConfigureMultiPoint'`
+- `'sampleCount'` parameter of function `'ConfigureMultiPoint'`
+- `'maximumTime'` parameter of function `'Fetch'`
+- `'maximumTime'` parameter of function `'FetchMultiPoint'`
+- `'maximumTime'` parameter of function `'FetchWaveform'`
+- `'maximumTime'` parameter of function `'Read'`
+- `'maximumTime'` parameter of function `'ReadMultiPoint'`
+- `'maximumTime'` parameter of function `'ReadWaveform'`
 
 The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
 the registered session from session_repository.

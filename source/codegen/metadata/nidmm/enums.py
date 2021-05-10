@@ -237,6 +237,18 @@ enums = {
             }
         ]
     },
+    'FrequencyVoltageRange': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_AUTO_RANGE_ON',
+                'value': -1
+            },
+            {
+                'name': 'NIDMM_VAL_AUTO_RANGE_OFF',
+                'value': -2
+            }
+        ]
+    },
     'Function': {
         'values': [
             {
@@ -541,6 +553,22 @@ enums = {
             }
         ]
     },
+    'SampleCount': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_SAMPLE_COUNT_INFINITE',
+                'value': 0
+            }
+        ]
+    },
+    'SampleInterval': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_AUTO_DELAY',
+                'value': -1
+            }
+        ]
+    },
     'SampleTrigSlope': {
         'values': [
             {
@@ -689,6 +717,14 @@ enums = {
             }
         ]
     },
+    'TimeLimit': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_TIME_LIMIT_AUTO',
+                'value': -1
+            }
+        ]
+    },
     'TransducerType': {
         'values': [
             {
@@ -706,6 +742,14 @@ enums = {
             {
                 'name': 'NIDMM_VAL_4_WIRE_RTD',
                 'value': 4
+            }
+        ]
+    },
+    'TriggerCount': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_TRIG_COUNT_INFINITE',
+                'value': 0
             }
         ]
     },

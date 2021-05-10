@@ -361,7 +361,7 @@ TEST_F(NiDmmDriverApiTest, AcquireMeasurement_CompletesSuccesfully)
   ::grpc::ClientContext context;
   dmm::ReadRequest request;
   request.mutable_vi()->set_id(GetSessionId());
-  request.set_maximum_time(1000);
+  request.set_maximum_time_raw(1000);
   dmm::ReadResponse response;
   ::grpc::Status status = GetStub()->Read(&context, request, &response);
 

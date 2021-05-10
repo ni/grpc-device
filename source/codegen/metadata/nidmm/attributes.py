@@ -30,7 +30,7 @@ attributes = {
     1050006: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'READ_COERCIONS',
+        'name': 'RECORD_COERCIONS',
         'resettable': False,
         'type': 'ViBoolean'
     },
@@ -308,7 +308,7 @@ attributes = {
     1150044: {
         'access': 'read only',
         'channel_based': False,
-        'name': 'FREQ_VOLTAGE_AUTO_RANGE',
+        'name': 'FREQ_VOLTAGE_AUTO_RANGE_VALUE',
         'resettable': False,
         'type': 'ViReal64'
     },
@@ -509,6 +509,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'FREQ_VOLTAGE_RANGE',
+        'enum': 'FrequencyVoltageRange',
         'resettable': False,
         'type': 'ViReal64'
     },
@@ -554,6 +555,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'SAMPLE_COUNT',
+        'enum': 'SampleCount',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -570,6 +572,7 @@ attributes = {
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
         'name': 'SAMPLE_INTERVAL',
+        'enum': 'SampleInterval',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -578,6 +581,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'TRIGGER_COUNT',
+        'enum': 'TiggerCount',
         'resettable': False,
         'type': 'ViInt32'
     },
