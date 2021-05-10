@@ -128,7 +128,7 @@ enum NiDmmAttributes {
   NIDMM_ATTRIBUTE_QUERY_INSTRUMENT_STATUS = 1050003;
   NIDMM_ATTRIBUTE_CACHE = 1050004;
   NIDMM_ATTRIBUTE_SIMULATE = 1050005;
-  NIDMM_ATTRIBUTE_READ_COERCIONS = 1050006;
+  NIDMM_ATTRIBUTE_RECORD_COERCIONS = 1050006;
   NIDMM_ATTRIBUTE_DRIVER_SETUP = 1050007;
   NIDMM_ATTRIBUTE_INTERCHANGE_CHECK = 1050021;
   NIDMM_ATTRIBUTE_CHANNEL_COUNT = 1050203;
@@ -166,7 +166,7 @@ enum NiDmmAttributes {
   NIDMM_ATTRIBUTE_NUMBER_OF_AVERAGES = 1150032;
   NIDMM_ATTRIBUTE_LATENCY = 1150034;
   NIDMM_ATTRIBUTE_BUFFER_SIZE = 1150037;
-  NIDMM_ATTRIBUTE_FREQ_VOLTAGE_AUTO_RANGE = 1150044;
+  NIDMM_ATTRIBUTE_FREQ_VOLTAGE_AUTO_RANGE_VALUE = 1150044;
   NIDMM_ATTRIBUTE_CABLE_COMP_TYPE = 1150045;
   NIDMM_ATTRIBUTE_SHORT_CABLE_COMP_REACTANCE = 1150046;
   NIDMM_ATTRIBUTE_SHORT_CABLE_COMP_RESISTANCE = 1150047;
@@ -325,6 +325,12 @@ enum DcNoiseRejection {
   DC_NOISE_REJECTION_NIDMM_VAL_DCNR_HIGH_ORDER = 2;
 }
 
+enum FrequencyVoltageRange {
+  FREQUENCY_VOLTAGE_RANGE_UNSPECIFIED = 0;
+  FREQUENCY_VOLTAGE_RANGE_NIDMM_VAL_AUTO_RANGE_ON = -1;
+  FREQUENCY_VOLTAGE_RANGE_NIDMM_VAL_AUTO_RANGE_OFF = -2;
+}
+
 enum Function {
   FUNCTION_UNSPECIFIED = 0;
   FUNCTION_NIDMM_VAL_DC_VOLTS = 1;
@@ -440,6 +446,17 @@ enum RtdType {
   RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3928 = 6;
 }
 
+enum SampleCount {
+  option allow_alias = true;
+  SAMPLE_COUNT_UNSPECIFIED = 0;
+  SAMPLE_COUNT_NIDMM_VAL_SAMPLE_COUNT_INFINITE = 0;
+}
+
+enum SampleInterval {
+  SAMPLE_INTERVAL_UNSPECIFIED = 0;
+  SAMPLE_INTERVAL_NIDMM_VAL_AUTO_DELAY = -1;
+}
+
 enum SampleTrigSlope {
   option allow_alias = true;
   SAMPLE_TRIG_SLOPE_UNSPECIFIED = 0;
@@ -497,12 +514,23 @@ enum ThermocoupleType {
   THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_T = 11;
 }
 
+enum TimeLimit {
+  TIME_LIMIT_UNSPECIFIED = 0;
+  TIME_LIMIT_NIDMM_VAL_TIME_LIMIT_AUTO = -1;
+}
+
 enum TransducerType {
   TRANSDUCER_TYPE_UNSPECIFIED = 0;
   TRANSDUCER_TYPE_NIDMM_VAL_THERMOCOUPLE = 1;
   TRANSDUCER_TYPE_NIDMM_VAL_THERMISTOR = 2;
   TRANSDUCER_TYPE_NIDMM_VAL_2_WIRE_RTD = 3;
   TRANSDUCER_TYPE_NIDMM_VAL_4_WIRE_RTD = 4;
+}
+
+enum TriggerCount {
+  option allow_alias = true;
+  TRIGGER_COUNT_UNSPECIFIED = 0;
+  TRIGGER_COUNT_NIDMM_VAL_TRIG_COUNT_INFINITE = 0;
 }
 
 enum TriggerDelays {
@@ -782,7 +810,10 @@ message ConfigureFixedRefJunctionResponse {
 
 message ConfigureFrequencyVoltageRangeRequest {
   nidevice_grpc.Session vi = 1;
-  double voltage_range = 2;
+  oneof voltage_range_enum {
+    FrequencyVoltageRange voltage_range = 2;
+    double voltage_range_raw = 3;
+  }
 }
 
 message ConfigureFrequencyVoltageRangeResponse {
@@ -837,13 +868,22 @@ message ConfigureMeasurementDigitsResponse {
 
 message ConfigureMultiPointRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 trigger_count = 2;
-  sint32 sample_count = 3;
-  oneof sample_trigger_enum {
-    SampleTrigger sample_trigger = 4;
-    sint32 sample_trigger_raw = 5;
+  oneof trigger_count_enum {
+    TriggerCount trigger_count = 2;
+    sint32 trigger_count_raw = 3;
   }
-  double sample_interval = 6;
+  oneof sample_count_enum {
+    SampleCount sample_count = 4;
+    sint32 sample_count_raw = 5;
+  }
+  oneof sample_trigger_enum {
+    SampleTrigger sample_trigger = 6;
+    sint32 sample_trigger_raw = 7;
+  }
+  oneof sample_interval_enum {
+    SampleInterval sample_interval = 8;
+    double sample_interval_raw = 9;
+  }
 }
 
 message ConfigureMultiPointResponse {
@@ -1067,7 +1107,10 @@ message ExportAttributeConfigurationFileResponse {
 
 message FetchRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
+  oneof maximum_time_enum {
+    TimeLimit maximum_time = 2;
+    sint32 maximum_time_raw = 3;
+  }
 }
 
 message FetchResponse {
@@ -1077,8 +1120,11 @@ message FetchResponse {
 
 message FetchMultiPointRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
+  oneof maximum_time_enum {
+    TimeLimit maximum_time = 2;
+    sint32 maximum_time_raw = 3;
+  }
+  sint32 array_size = 4;
 }
 
 message FetchMultiPointResponse {
@@ -1089,8 +1135,11 @@ message FetchMultiPointResponse {
 
 message FetchWaveformRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
+  oneof maximum_time_enum {
+    TimeLimit maximum_time = 2;
+    sint32 maximum_time_raw = 3;
+  }
+  sint32 array_size = 4;
 }
 
 message FetchWaveformResponse {
@@ -1443,7 +1492,10 @@ message PerformShortCableCompResponse {
 
 message ReadRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
+  oneof maximum_time_enum {
+    TimeLimit maximum_time = 2;
+    sint32 maximum_time_raw = 3;
+  }
 }
 
 message ReadResponse {
@@ -1453,8 +1505,11 @@ message ReadResponse {
 
 message ReadMultiPointRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
+  oneof maximum_time_enum {
+    TimeLimit maximum_time = 2;
+    sint32 maximum_time_raw = 3;
+  }
+  sint32 array_size = 4;
 }
 
 message ReadMultiPointResponse {
@@ -1476,8 +1531,11 @@ message ReadStatusResponse {
 
 message ReadWaveformRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 maximum_time = 2;
-  sint32 array_size = 3;
+  oneof maximum_time_enum {
+    TimeLimit maximum_time = 2;
+    sint32 maximum_time_raw = 3;
+  }
+  sint32 array_size = 4;
 }
 
 message ReadWaveformResponse {

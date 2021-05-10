@@ -36,7 +36,7 @@ server_address = "localhost"
 server_port = "31763"
 session_name = "NI-DMM-Session"
 
-# Resource name and options for a simulated 4065 client. Change them according to the NI-DMM model.
+# Resource name and options for a simulated 4080 client. Change them according to the NI-DMM model.
 resource = "SimulatedDMM"
 options = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe"
 
@@ -100,10 +100,10 @@ try:
     # Configure a multipoint acquisition
     config_multipoint_response = nidmm_client.ConfigureMultiPoint(nidmm_types.ConfigureMultiPointRequest(
         vi = vi,
-        trigger_count = 1,
-        sample_count = 0,
+        trigger_count_raw = 1,
+        sample_count = nidmm_types.SampleCount.SAMPLE_COUNT_NIDMM_VAL_SAMPLE_COUNT_INFINITE,
         sample_trigger = nidmm_types.SampleTrigger.SAMPLE_TRIGGER_NIDMM_VAL_IMMEDIATE,
-        sample_interval = 0.0
+        sample_interval_raw = 0.0
     ))
     CheckForError(vi, config_multipoint_response.status)
 
