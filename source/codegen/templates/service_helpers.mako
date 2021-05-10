@@ -169,7 +169,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
 % elif c_type == 'ViBoolean[]':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
-      std::transform(${parameter_name}_request.begin(), ${parameter_name}_request.end(), std::back_inserter(${parameter_name}), [](auto x) { return (${c_type_underlying_type})x; });
+      std::transform(${parameter_name}_request.begin(), ${parameter_name}_request.end(), std::back_inserter(${parameter_name}), [](auto x) { return x ? VI_TRUE : VI_FALSE; });
 % elif 'enum' in parameter:
 <%
 PascalFieldName = common_helpers.snake_to_pascal(field_name)
