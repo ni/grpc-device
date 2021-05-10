@@ -1,3 +1,6 @@
+#ifndef NIDEVICE_GRPC_SESSION_UTILITIES_SERVICE
+#define NIDEVICE_GRPC_SESSION_UTILITIES_SERVICE
+
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
@@ -24,3 +27,5 @@ class SessionUtilitiesService final : public SessionUtilities::Service {
 };
 
 }  // namespace nidevice_grpc
+
+#endif  // NIDEVICE_GRPC_SESSION_UTILITIES_SERVICE
