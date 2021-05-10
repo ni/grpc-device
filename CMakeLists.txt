@@ -308,6 +308,7 @@ add_custom_command(
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/system/device_server.cpp"
+    "source/tests/system/enumerate_devices.cpp"
     "source/tests/system/session_utilities_service_tests.cpp"
     "source/tests/system/nidcpower_driver_api_tests.cpp"
     "source/tests/system/nidcpower_session_tests.cpp"
