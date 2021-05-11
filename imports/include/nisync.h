@@ -817,8 +817,8 @@ ViStatus _VI_FUNC niSync_Get1588Time(ViSession vi,
 /****************************************************************************
  *------------------------ Error And Completion Codes ----------------------*
  ****************************************************************************/
-#define NISYNC_WARN_BASE                        0x3FFA4000
-#define NISYNC_ERROR_BASE                       0xBFFA4000 /* IVI_SPECIFIC_PUBLIC_ATTR_BASE */
+#define NISYNC_WARN_BASE                        (ViStatus)(0x3FFA4000)
+#define NISYNC_ERROR_BASE                       (ViStatus)(0xBFFA4000) /* IVI_SPECIFIC_PUBLIC_ATTR_BASE */
 
 // NISYNC_WARN_BASE + 6x is reserved for calibration warnings.
 #define NISYNC_WARN_CAL_UNCALIBRATED            (NISYNC_WARN_BASE + 60)
