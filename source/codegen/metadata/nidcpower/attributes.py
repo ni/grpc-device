@@ -269,6 +269,7 @@ attributes = {
     1150016: {
         'access': 'read-write',
         'channel_based': True,
+        'enum': 'AutoZero',
         'name': 'CURRENT_LIMIT_AUTORANGE',
         'python_type': 'bool',
         'resettable': False,
@@ -277,6 +278,7 @@ attributes = {
     1150017: {
         'access': 'read-write',
         'channel_based': True,
+        'enum': 'AutoZero',
         'name': 'CURRENT_LEVEL_AUTORANGE',
         'python_type': 'bool',
         'resettable': False,
@@ -285,6 +287,7 @@ attributes = {
     1150018: {
         'access': 'read-write',
         'channel_based': True,
+        'enum': 'AutoZero',
         'name': 'VOLTAGE_LIMIT_AUTORANGE',
         'python_type': 'bool',
         'resettable': False,
@@ -1036,6 +1039,7 @@ attributes = {
     1150244: {
         'access': 'read-write',
         'channel_based': True,
+        'enum': 'AutoZero',
         'name': 'AUTORANGE',
         'python_type': 'bool',
         'resettable': False,
@@ -1149,6 +1153,7 @@ attributes = {
     1250004: {
         'access': 'read-write',
         'channel_based': True,
+        'enum': 'CurrentLimitBehavior',
         'name': 'CURRENT_LIMIT_BEHAVIOR',
         'resettable': False,
         'type': 'ViInt32'
