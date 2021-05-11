@@ -33,6 +33,11 @@ The following attributes were added :
 `enum` tag was added to following attributes:
 - NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL_AUTORANGE
 - NIDCPOWER_ATTRIBUTE_POWER_LINE_FREQUENCY
+- NIDCPOWER_ATTR_CURRENT_LIMIT_BEHAVIOR
+- NIDCPOWER_ATTR_CURRENT_LIMIT_AUTORANGE
+- NIDCPOWER_ATTR_CURRENT_LEVEL_AUTORANGE
+- NIDCPOWER_ATTR_VOLTAGE_LIMIT_AUTORANGE
+- NIDCPOWER_ATTR_AUTORANGE
 
 ## enums.py
 
@@ -49,7 +54,7 @@ Following enums were defined :
     - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC to NIDCPOWER_VAL_AUTOMATIC
     - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL to NIDCPOWER_VAL_MANUAL
 
-# Changes in metadata from from the base metadata
+# Changes in metadata from the base metadata
 
 ## functions.py
 
