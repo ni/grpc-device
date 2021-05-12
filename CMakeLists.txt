@@ -198,6 +198,8 @@ target_link_libraries(ni_grpc_device_server
    nlohmann_json::nlohmann_json
    )
 
+set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
+
 if(WIN32)
   target_link_libraries(ni_grpc_device_server Delayimp nidcpower nidmm niScope niswitch nisync)
   set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
