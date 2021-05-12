@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "niscope/niscope_library.h"
+#include "device_server.h"
 #include "niscope/niscope_service.h"
 
 namespace ni {
@@ -21,24 +21,10 @@ const char* kInvalidResourceName = "";
 class NiScopeSessionTest : public ::testing::Test {
  protected:
   NiScopeSessionTest()
-  {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
-    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
-    builder.RegisterService(niscope_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
-  }
+      : niscope_stub_(scope::NiScope::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
+  {}
 
   virtual ~NiScopeSessionTest() {}
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    niscope_stub_ = scope::NiScope::NewStub(channel_);
-  }
 
   std::unique_ptr<scope::NiScope::Stub>& GetStub()
   {
@@ -77,12 +63,7 @@ class NiScopeSessionTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
-  std::unique_ptr<scope::NiScopeService> niscope_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "nidcpower/nidcpower_library.h"
+#include "device_server.h"
 #include "nidcpower/nidcpower_service.h"
 
 namespace ni {
@@ -21,24 +21,10 @@ const char* kTestInvalidRsrc = "";
 class NiDCPowerSessionTest : public ::testing::Test {
  protected:
   NiDCPowerSessionTest()
-  {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    nidcpower_library_ = std::make_unique<dcpower::NiDCPowerLibrary>();
-    nidcpower_service_ = std::make_unique<dcpower::NiDCPowerService>(nidcpower_library_.get(), session_repository_.get());
-    builder.RegisterService(nidcpower_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
-  }
+      : nidcpower_stub_(dcpower::NiDCPower::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
+  {}
 
   virtual ~NiDCPowerSessionTest() {}
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    nidcpower_stub_ = dcpower::NiDCPower::NewStub(channel_);
-  }
 
   std::unique_ptr<dcpower::NiDCPower::Stub>& GetStub()
   {
@@ -90,12 +76,7 @@ class NiDCPowerSessionTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<dcpower::NiDCPower::Stub> nidcpower_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<dcpower::NiDCPowerLibrary> nidcpower_library_;
-  std::unique_ptr<dcpower::NiDCPowerService> nidcpower_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
