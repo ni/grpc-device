@@ -131,7 +131,7 @@ try:
     fig = plt.gcf()
     fig.show()
     fig.canvas.draw()
-    fig.canvas.set_window_title('Measurements')
+    fig.canvas.manager.set_window_title('Measurements')
 
     # Handle closing of plot window
     closed = False
