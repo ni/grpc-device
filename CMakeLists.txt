@@ -56,7 +56,9 @@ include_directories(
   "./imports/include"
   "./source"
 )
-link_directories("./imports/lib/win64")
+if(WIN32)
+  link_directories("./imports/lib/win64")
+endif()
 
 #----------------------------------------------------------------------
 # Get list of NI Driver APIs and directories to generate from
