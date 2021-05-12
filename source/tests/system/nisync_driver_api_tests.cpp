@@ -543,6 +543,20 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
+  ::grpc::Status call_GetTimeReferenceNames(
+     std::string* valueOut,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::GetTimeReferenceNamesRequest request;
+    request.mutable_vi()->set_id(driver_session_->id());
+    nisync::GetTimeReferenceNamesResponse response;
+    auto grpcStatus = GetStub()->GetTimeReferenceNames(&clientContext, request, &response);
+    *valueOut = response.time_reference_names();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
 private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
@@ -1216,6 +1230,19 @@ TEST_F(NiSyncDriverApiTest, DISABLED_ClearClockNotReserved_ReturnsError)
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
+}
+
+TEST_F(NiSyncDriverApiTest, DISABLED_GetTimeReferenceNames_ReturnsSuccess)
+{
+  ViStatus viStatus;
+  std::string timeReferenceNames;
+  auto grpcStatus = call_GetTimeReferenceNames(
+     &timeReferenceNames,
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_GT(timeReferenceNames.length(), 0);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 }  // namespace system
