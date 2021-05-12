@@ -40,7 +40,7 @@ class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
   MOCK_METHOD(ViStatus, ClearFutureTimeEvents, (ViSession vi, ViConstString terminalName), (override));
   MOCK_METHOD(ViStatus, CreateClock, (ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds), (override));
   MOCK_METHOD(ViStatus, ClearClock, (ViSession vi, ViConstString terminalName), (override));
-  MOCK_METHOD(ViStatus, GetTimeReferenceNames, (ViSession vi, ViUInt32 bufferSize, ViChar* timeReferenceNames), (override));
+  MOCK_METHOD(ViStatus, GetTimeReferenceNames, (ViSession vi, ViUInt32 bufferSize, ViChar timeReferenceNames[]), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]), (override));

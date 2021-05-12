@@ -342,7 +342,7 @@ ViStatus NiSyncLibrary::ClearClock(ViSession vi, ViConstString terminalName)
 #endif
 }
 
-ViStatus NiSyncLibrary::GetTimeReferenceNames(ViSession vi, ViUInt32 bufferSize, ViChar* timeReferenceNames)
+ViStatus NiSyncLibrary::GetTimeReferenceNames(ViSession vi, ViUInt32 bufferSize, ViChar timeReferenceNames[])
 {
   if (!function_pointers_.GetTimeReferenceNames) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetTimeReferenceNames.");

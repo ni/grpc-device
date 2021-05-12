@@ -556,9 +556,16 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViUInt32 buffer_size = request->buffer_size();
-      ViChar time_reference_names {};
-      auto status = library_->GetTimeReferenceNames(vi, buffer_size, &time_reference_names);
+
+      auto status = library_->GetTimeReferenceNames(vi, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViUInt32 buffer_size = status;
+
+      std::string time_reference_names(buffer_size, '\0');
+      status = library_->GetTimeReferenceNames(vi, buffer_size, (ViChar*)time_reference_names.data());
       response->set_status(status);
       if (status == 0) {
         response->set_time_reference_names(time_reference_names);

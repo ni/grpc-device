@@ -41,7 +41,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus ClearFutureTimeEvents(ViSession vi, ViConstString terminalName);
   ViStatus CreateClock(ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds);
   ViStatus ClearClock(ViSession vi, ViConstString terminalName);
-  ViStatus GetTimeReferenceNames(ViSession vi, ViUInt32 bufferSize, ViChar* timeReferenceNames);
+  ViStatus GetTimeReferenceNames(ViSession vi, ViUInt32 bufferSize, ViChar timeReferenceNames[]);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
@@ -75,7 +75,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using ClearFutureTimeEventsPtr = ViStatus (*)(ViSession vi, ViConstString terminalName);
   using CreateClockPtr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds);
   using ClearClockPtr = ViStatus (*)(ViSession vi, ViConstString terminalName);
-  using GetTimeReferenceNamesPtr = ViStatus (*)(ViSession vi, ViUInt32 bufferSize, ViChar* timeReferenceNames);
+  using GetTimeReferenceNamesPtr = ViStatus (*)(ViSession vi, ViUInt32 bufferSize, ViChar timeReferenceNames[]);
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
   using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
