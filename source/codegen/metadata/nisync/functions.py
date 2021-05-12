@@ -254,7 +254,157 @@ functions = {
             }
         ],
         "returns": "ViStatus"
-    },    
+    },
+    "SetTime": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "timeSource",
+                "type": "ViInt32"
+            },
+            {
+                "direction": "in",
+                "name": "timeSeconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "timeNanoseconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "timeFractionalNanoseconds",
+                "type": "ViUInt16"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "GetTime": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "out",
+                "name": "timeSeconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "out",
+                "name": "timeNanoseconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "out",
+                "name": "timeFractionalNanoseconds",
+                "type": "ViUInt16"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetTimeReferenceFreeRunning": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetTimeReferenceGPS": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetTimeReferenceIRIG": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "irigType",
+                "type": "ViInt32"
+            },
+            {
+                "direction": "in",
+                "name": "terminalName",
+                "type": "ViConstString"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetTimeReferencePPS": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "terminalName",
+                "type": "ViConstString"
+            },
+            {
+                "direction": "in",
+                "name": "useManualTime",
+                "type": "ViBoolean"
+            },
+            {
+                "direction": "in",
+                "name": "initialTimeSeconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "initialTimeNanoseconds",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "in",
+                "name": "initialTimeFractionalNanoseconds",
+                "type": "ViUInt16"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetTimeReference1588OrdinaryClock": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            }
+        ],
+        "returns": "ViStatus"
+    },
+    "SetTimeReference8021AS": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            }
+        ],
+        "returns": "ViStatus"
+    },
     "GetAttributeViInt32": {
         "parameters": [
             {

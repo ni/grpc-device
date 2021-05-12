@@ -35,6 +35,14 @@ public:
   ::grpc::Status ConnectTrigTerminals(::grpc::ServerContext* context, const ConnectTrigTerminalsRequest* request, ConnectTrigTerminalsResponse* response) override;
   ::grpc::Status DisconnectTrigTerminals(::grpc::ServerContext* context, const DisconnectTrigTerminalsRequest* request, DisconnectTrigTerminalsResponse* response) override;
   ::grpc::Status MeasureFrequencyEx(::grpc::ServerContext* context, const MeasureFrequencyExRequest* request, MeasureFrequencyExResponse* response) override;
+  ::grpc::Status SetTime(::grpc::ServerContext* context, const SetTimeRequest* request, SetTimeResponse* response) override;
+  ::grpc::Status GetTime(::grpc::ServerContext* context, const GetTimeRequest* request, GetTimeResponse* response) override;
+  ::grpc::Status SetTimeReferenceFreeRunning(::grpc::ServerContext* context, const SetTimeReferenceFreeRunningRequest* request, SetTimeReferenceFreeRunningResponse* response) override;
+  ::grpc::Status SetTimeReferenceGPS(::grpc::ServerContext* context, const SetTimeReferenceGPSRequest* request, SetTimeReferenceGPSResponse* response) override;
+  ::grpc::Status SetTimeReferenceIRIG(::grpc::ServerContext* context, const SetTimeReferenceIRIGRequest* request, SetTimeReferenceIRIGResponse* response) override;
+  ::grpc::Status SetTimeReferencePPS(::grpc::ServerContext* context, const SetTimeReferencePPSRequest* request, SetTimeReferencePPSResponse* response) override;
+  ::grpc::Status SetTimeReference1588OrdinaryClock(::grpc::ServerContext* context, const SetTimeReference1588OrdinaryClockRequest* request, SetTimeReference1588OrdinaryClockResponse* response) override;
+  ::grpc::Status SetTimeReference8021AS(::grpc::ServerContext* context, const SetTimeReference8021ASRequest* request, SetTimeReference8021ASResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;

@@ -26,6 +26,14 @@ class NiSyncLibraryInterface {
   virtual ViStatus ConnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge) = 0;
   virtual ViStatus DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal) = 0;
   virtual ViStatus MeasureFrequencyEx(ViSession vi, ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDuration, ViReal64* frequency, ViReal64* frequencyError) = 0;
+  virtual ViStatus SetTime(ViSession vi, ViInt32 timeSource, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds) = 0;
+  virtual ViStatus GetTime(ViSession vi, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds) = 0;
+  virtual ViStatus SetTimeReferenceFreeRunning(ViSession vi) = 0;
+  virtual ViStatus SetTimeReferenceGPS(ViSession vi) = 0;
+  virtual ViStatus SetTimeReferenceIRIG(ViSession vi, ViInt32 irigType, ViConstString terminalName) = 0;
+  virtual ViStatus SetTimeReferencePPS(ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds) = 0;
+  virtual ViStatus SetTimeReference1588OrdinaryClock(ViSession vi) = 0;
+  virtual ViStatus SetTimeReference8021AS(ViSession vi) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]) = 0;

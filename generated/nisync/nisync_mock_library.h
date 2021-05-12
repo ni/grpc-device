@@ -28,6 +28,14 @@ class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
   MOCK_METHOD(ViStatus, ConnectTrigTerminals, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge), (override));
   MOCK_METHOD(ViStatus, DisconnectTrigTerminals, (ViSession vi, ViConstString srcTerminal, ViConstString destTerminal), (override));
   MOCK_METHOD(ViStatus, MeasureFrequencyEx, (ViSession vi, ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDuration, ViReal64* frequency, ViReal64* frequencyError), (override));
+  MOCK_METHOD(ViStatus, SetTime, (ViSession vi, ViInt32 timeSource, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds), (override));
+  MOCK_METHOD(ViStatus, GetTime, (ViSession vi, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds), (override));
+  MOCK_METHOD(ViStatus, SetTimeReferenceFreeRunning, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, SetTimeReferenceGPS, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, SetTimeReferenceIRIG, (ViSession vi, ViInt32 irigType, ViConstString terminalName), (override));
+  MOCK_METHOD(ViStatus, SetTimeReferencePPS, (ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds), (override));
+  MOCK_METHOD(ViStatus, SetTimeReference1588OrdinaryClock, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, SetTimeReference8021AS, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]), (override));
