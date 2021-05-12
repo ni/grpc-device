@@ -543,6 +543,19 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
+  ViUInt32 GetCurrentBoardTimeSeconds()
+  {
+    ViStatus viStatus;
+    ViUInt32 timeSeconds = 0, timeNanoseconds;
+    ViUInt16 timeFractionalNanoseconds;
+    auto grpcStatus = call_GetTime(
+      &timeSeconds,
+      &timeNanoseconds, // ignored
+      &timeFractionalNanoseconds, // ignored
+      &viStatus);
+    return timeSeconds;
+  }
+
 private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
@@ -1067,52 +1080,31 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReference8021AS_ReturnsSuccess)
 
 TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearFutureTimeEvent_ReturnsSuccess)
 {
-  ViStatus viStatus;
-
-  ViUInt32 timeSeconds, timeNanoseconds;
-  ViUInt16 timeFractionalNanoseconds;
-  auto grpcStatus = call_GetTime(
-     &timeSeconds,
-     &timeNanoseconds,
-     &timeFractionalNanoseconds, // ignored
-     &viStatus);
-  ASSERT_TRUE(grpcStatus.ok());
-
-  timeSeconds += 30;
-  grpcStatus = call_CreateFutureTimeEvent(
+  ViStatus viStatusCreate;
+  ViUInt32 timeSeconds = GetCurrentBoardTimeSeconds() + 30;
+  auto grpcStatusCreate = call_CreateFutureTimeEvent(
      NISYNC_VAL_PFI1, // terminalName
      NISYNC_VAL_LEVEL_LOW, // outputLevel
      timeSeconds,
      0, // timeNanoseconds, ignored
      0, // timeFractionalNanoseconds, ignored
-     &viStatus);
+     &viStatusCreate);
+  EXPECT_TRUE(grpcStatusCreate.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusCreate);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_SUCCESS, viStatus);
-
-  grpcStatus = call_ClearFutureTimeEvents(
+  ViStatus viStatusClear;
+  auto grpcStatusClear = call_ClearFutureTimeEvents(
      NISYNC_VAL_PFI1,
-     &viStatus);
-
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_SUCCESS, viStatus);
+     &viStatusClear);
+  EXPECT_TRUE(grpcStatusClear.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusClear);
 }
 
 TEST_F(NiSyncDriverApiTest, DISABLED_CreateFutureTimeEventWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
-
-  ViUInt32 timeSeconds, timeNanoseconds;
-  ViUInt16 timeFractionalNanoseconds;
-  auto grpcStatus = call_GetTime(
-     &timeSeconds,
-     &timeNanoseconds,
-     &timeFractionalNanoseconds, // ignored
-     &viStatus);
-  ASSERT_TRUE(grpcStatus.ok());
-
-  timeSeconds += 30;
-  grpcStatus = call_CreateFutureTimeEvent(
+  ViUInt32 timeSeconds = GetCurrentBoardTimeSeconds() + 30;
+  auto grpcStatus = call_CreateFutureTimeEvent(
      NISYNC_VAL_GND, // terminalName
      NISYNC_VAL_LEVEL_LOW, // outputLevel
      timeSeconds,
@@ -1137,21 +1129,11 @@ TEST_F(NiSyncDriverApiTest, DISABLED_ClearFutureTimeEventsNotReserved_ReturnsErr
 
 TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearClock_ReturnsSuccess)
 {
-  ViStatus viStatus;
-
-  ViUInt32 timeSeconds, timeNanoseconds;
-  ViUInt16 timeFractionalNanoseconds;
-  auto grpcStatus = call_GetTime(
-     &timeSeconds,
-     &timeNanoseconds,
-     &timeFractionalNanoseconds, // ignored
-     &viStatus);
-  ASSERT_TRUE(grpcStatus.ok());
-
+  ViStatus viStatusCreate;
   ViUInt32 highTicks = 50, lowTicks = 50;
-  ViUInt32 startTimeSeconds = timeSeconds + 30;
+  ViUInt32 startTimeSeconds = GetCurrentBoardTimeSeconds() + 30;
   ViUInt32 stopTimeSeconds = startTimeSeconds + 30;
-  grpcStatus = call_CreateClock(
+  auto grpcStatusCreate = call_CreateClock(
      NISYNC_VAL_PFI1, // terminalName
      highTicks,
      lowTicks,
@@ -1161,37 +1143,26 @@ TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearClock_ReturnsSuccess)
      stopTimeSeconds,
      0, // stopTimeNanoseconds, ignored
      0, // stopTimeFractionalNanoseconds, ignored
-     &viStatus);
+     &viStatusCreate);
+  EXPECT_TRUE(grpcStatusCreate.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusCreate);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_SUCCESS, viStatus);
-
-  grpcStatus = call_ClearClock(
+  ViStatus viStatusClear;
+  auto grpcStatusClear = call_ClearClock(
      NISYNC_VAL_PFI1,
-     &viStatus);
-
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_SUCCESS, viStatus);
+     &viStatusClear);
+  EXPECT_TRUE(grpcStatusClear.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusClear);
 
 }
 
 TEST_F(NiSyncDriverApiTest, DISABLED_CreateClockWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
-
-  ViUInt32 timeSeconds, timeNanoseconds;
-  ViUInt16 timeFractionalNanoseconds;
-  auto grpcStatus = call_GetTime(
-     &timeSeconds,
-     &timeNanoseconds,
-     &timeFractionalNanoseconds, // ignored
-     &viStatus);
-  ASSERT_TRUE(grpcStatus.ok());
-
   ViUInt32 highTicks = 50, lowTicks = 50;
-  ViUInt32 startTimeSeconds = timeSeconds + 30;
+  ViUInt32 startTimeSeconds = GetCurrentBoardTimeSeconds() + 30;
   ViUInt32 stopTimeSeconds = startTimeSeconds + 30;
-  grpcStatus = call_CreateClock(
+  auto grpcStatus = call_CreateClock(
      NISYNC_VAL_GND, // terminalName
      highTicks,
      lowTicks,
