@@ -9,12 +9,12 @@ namespace system {
 
 namespace dmm = nidmm_grpc;
 
-const int kViErrorRsrcNFound = -1074118656;
+const int kViErrorDmmRsrcNFound = -1074118656;
 const int kInvalidDmmSession = -1074130544;
-const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.";
-const char* kInvalidDmmSessionMessage = "The session handle is not valid.";
+const char* kViErrorDmmRsrcNFoundMessage = "Device was not recognized. The device is not supported with this driver or version.";
+const char* kInvalidDmmSessionMessage = "IVI: (Hex 0xBFFA1190) The session handle is not valid.";
 const char* kResourceName = "FakeDevice";
-const char* kOptionsString = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe";
+const char* kDmmOptionsString = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe";
 const char* kSessionName = "SessionName";
 const char* kInvalidRsrc = "";
 
@@ -62,7 +62,7 @@ class NiDmmSessionTest : public ::testing::Test {
   std::string get_error_message(int error_status)
   {
     dmm::InitWithOptionsResponse init_response;
-    call_init_with_options(kResourceName, kOptionsString, kSessionName, &init_response);
+    call_init_with_options(kResourceName, kDmmOptionsString, kSessionName, &init_response);
     nidevice_grpc::Session session = init_response.vi();
 
     ::grpc::ClientContext context;
@@ -88,7 +88,7 @@ class NiDmmSessionTest : public ::testing::Test {
 TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
   dmm::InitWithOptionsResponse response;
-  ::grpc::Status status = call_init_with_options(kResourceName, kOptionsString, kSessionName, &response);
+  ::grpc::Status status = call_init_with_options(kResourceName, kDmmOptionsString, kSessionName, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -98,7 +98,7 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriver
 TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
 {
   dmm::InitWithOptionsResponse response;
-  ::grpc::Status status = call_init_with_options(kResourceName, kOptionsString, "", &response);
+  ::grpc::Status status = call_init_with_options(kResourceName, kDmmOptionsString, "", &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -111,14 +111,14 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   ::grpc::Status status = call_init_with_options(kInvalidRsrc, "", "", &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kViErrorRsrcNFound, response.status());
+  EXPECT_EQ(kViErrorDmmRsrcNFound, response.status());
   EXPECT_EQ(0, response.vi().id());
 }
 
 TEST_F(NiDmmSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   dmm::InitWithOptionsResponse init_response;
-  call_init_with_options(kResourceName, kOptionsString, kSessionName, &init_response);
+  call_init_with_options(kResourceName, kDmmOptionsString, kSessionName, &init_response);
   nidevice_grpc::Session session = init_response.vi();
 
   ::grpc::ClientContext context;
@@ -152,18 +152,18 @@ TEST_F(NiDmmSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage
 {
   dmm::InitWithOptionsResponse init_response;
   call_init_with_options(kInvalidRsrc, "", "", &init_response);
-  EXPECT_EQ(kViErrorRsrcNFound, init_response.status());
+  EXPECT_EQ(kViErrorDmmRsrcNFound, init_response.status());
 
   nidevice_grpc::Session session = init_response.vi();
   ::grpc::ClientContext context;
   dmm::GetErrorMessageRequest error_request;
   error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kViErrorRsrcNFound);
+  error_request.set_error_code(kViErrorDmmRsrcNFound);
   dmm::GetErrorMessageResponse error_response;
   ::grpc::Status status = GetStub()->GetErrorMessage(&context, error_request, &error_response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kViErrorResourceNotFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, error_response.error_message().c_str());
 }
 
 }  // namespace system
