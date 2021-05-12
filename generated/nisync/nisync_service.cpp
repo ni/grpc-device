@@ -548,6 +548,30 @@ namespace nisync_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::GetTimeReferenceNames(::grpc::ServerContext* context, const GetTimeReferenceNamesRequest* request, GetTimeReferenceNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViUInt32 buffer_size = request->buffer_size();
+      ViChar time_reference_names {};
+      auto status = library_->GetTimeReferenceNames(vi, buffer_size, &time_reference_names);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_time_reference_names(time_reference_names);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiSyncService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {

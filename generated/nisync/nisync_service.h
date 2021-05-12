@@ -47,6 +47,7 @@ public:
   ::grpc::Status ClearFutureTimeEvents(::grpc::ServerContext* context, const ClearFutureTimeEventsRequest* request, ClearFutureTimeEventsResponse* response) override;
   ::grpc::Status CreateClock(::grpc::ServerContext* context, const CreateClockRequest* request, CreateClockResponse* response) override;
   ::grpc::Status ClearClock(::grpc::ServerContext* context, const ClearClockRequest* request, ClearClockResponse* response) override;
+  ::grpc::Status GetTimeReferenceNames(::grpc::ServerContext* context, const GetTimeReferenceNamesRequest* request, GetTimeReferenceNamesResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;

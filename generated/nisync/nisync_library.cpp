@@ -44,6 +44,7 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   function_pointers_.ClearFutureTimeEvents = reinterpret_cast<ClearFutureTimeEventsPtr>(shared_library_.get_function_pointer("niSync_ClearFutureTimeEvents"));
   function_pointers_.CreateClock = reinterpret_cast<CreateClockPtr>(shared_library_.get_function_pointer("niSync_CreateClock"));
   function_pointers_.ClearClock = reinterpret_cast<ClearClockPtr>(shared_library_.get_function_pointer("niSync_ClearClock"));
+  function_pointers_.GetTimeReferenceNames = reinterpret_cast<GetTimeReferenceNamesPtr>(shared_library_.get_function_pointer("niSync_GetTimeReferenceNames"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_GetAttributeViInt32"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_SetAttributeViInt32"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_GetAttributeViString"));
@@ -338,6 +339,18 @@ ViStatus NiSyncLibrary::ClearClock(ViSession vi, ViConstString terminalName)
   return niSync_ClearClock(vi, terminalName);
 #else
   return function_pointers_.ClearClock(vi, terminalName);
+#endif
+}
+
+ViStatus NiSyncLibrary::GetTimeReferenceNames(ViSession vi, ViUInt32 bufferSize, ViChar* timeReferenceNames)
+{
+  if (!function_pointers_.GetTimeReferenceNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetTimeReferenceNames.");
+  }
+#if defined(_MSC_VER)
+  return niSync_GetTimeReferenceNames(vi, bufferSize, timeReferenceNames);
+#else
+  return function_pointers_.GetTimeReferenceNames(vi, bufferSize, timeReferenceNames);
 #endif
 }
 
