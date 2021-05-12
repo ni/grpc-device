@@ -540,7 +540,11 @@ functions = {
             {
                 "direction": "out",
                 "name": "timeReferenceNames",
-                "type": "ViChar"
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
             }
         ],
         "returns": "ViStatus"

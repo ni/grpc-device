@@ -410,12 +410,11 @@ message ClearClockResponse {
 
 message GetTimeReferenceNamesRequest {
   nidevice_grpc.Session vi = 1;
-  uint32 buffer_size = 2;
 }
 
 message GetTimeReferenceNamesResponse {
   int32 status = 1;
-  uint32 time_reference_names = 2;
+  string time_reference_names = 2;
 }
 
 message GetAttributeViInt32Request {
