@@ -1065,7 +1065,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReference8021AS_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, CreateClearFutureTimeEvent_ReturnsSuccess)
+TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearFutureTimeEvent_ReturnsSuccess)
 {
   ViStatus viStatus;
 
@@ -1098,7 +1098,7 @@ TEST_F(NiSyncDriverApiTest, CreateClearFutureTimeEvent_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, CreateFutureTimeEventWithInvalidTerminal_ReturnsError)
+TEST_F(NiSyncDriverApiTest, DISABLED_CreateFutureTimeEventWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
 
@@ -1124,7 +1124,7 @@ TEST_F(NiSyncDriverApiTest, CreateFutureTimeEventWithInvalidTerminal_ReturnsErro
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ClearFutureTimeEventsNotReserved_ReturnsError)
+TEST_F(NiSyncDriverApiTest, DISABLED_ClearFutureTimeEventsNotReserved_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_ClearFutureTimeEvents(
@@ -1135,7 +1135,7 @@ TEST_F(NiSyncDriverApiTest, ClearFutureTimeEventsNotReserved_ReturnsError)
   EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, CreateClearClock_ReturnsSuccess)
+TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearClock_ReturnsSuccess)
 {
   ViStatus viStatus;
 
@@ -1175,7 +1175,7 @@ TEST_F(NiSyncDriverApiTest, CreateClearClock_ReturnsSuccess)
 
 }
 
-TEST_F(NiSyncDriverApiTest, CreateClockWithInvalidTerminal_ReturnsError)
+TEST_F(NiSyncDriverApiTest, DISABLED_CreateClockWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
 
@@ -1207,7 +1207,7 @@ TEST_F(NiSyncDriverApiTest, CreateClockWithInvalidTerminal_ReturnsError)
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ClearClockNotReserved_ReturnsError)
+TEST_F(NiSyncDriverApiTest, DISABLED_ClearClockNotReserved_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_ClearClock(
