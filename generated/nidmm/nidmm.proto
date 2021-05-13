@@ -1154,10 +1154,9 @@ message GetApertureTimeInfoRequest {
 
 message GetApertureTimeInfoResponse {
   int32 status = 1;
-  ApertureTime aperture_time = 2;
-  double aperture_time_raw = 3;
-  ApertureTimeUnits aperture_time_units = 4;
-  sint32 aperture_time_units_raw = 5;
+  double aperture_time = 2;
+  ApertureTimeUnits aperture_time_units = 3;
+  sint32 aperture_time_units_raw = 4;
 }
 
 message GetAttributeViBooleanRequest {
