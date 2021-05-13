@@ -553,6 +553,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
       &timeNanoseconds, // ignored
       &timeFractionalNanoseconds, // ignored
       &viStatus);
+    EXPECT_TRUE(grpcStatus.ok());
+    EXPECT_EQ(VI_SUCCESS, viStatus);
     return timeSeconds;
   }
 
