@@ -1042,7 +1042,6 @@ functions = {
             "name": "apertureTime",
             "direction": "out",
             "type": "ViReal64",
-            "enum": "ApertureTime"
         },
         {
             "name": "apertureTimeUnits",
