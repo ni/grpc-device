@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "nidcpower/nidcpower_library.h"
+#include "device_server.h"
 #include "nidcpower/nidcpower_service.h"
 
 namespace ni {
@@ -14,15 +14,10 @@ const int kdcpowerDriverApiSuccess = 0;
 class NiDCPowerDriverApiTest : public ::testing::Test {
  protected:
   NiDCPowerDriverApiTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        nidcpower_stub_(dcpower::NiDCPower::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    nidcpower_library_ = std::make_unique<dcpower::NiDCPowerLibrary>();
-    nidcpower_service_ = std::make_unique<dcpower::NiDCPowerService>(nidcpower_library_.get(), session_repository_.get());
-    builder.RegisterService(nidcpower_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStub();
+    device_server_->ResetServer();
   }
 
   virtual ~NiDCPowerDriverApiTest() {}
@@ -35,12 +30,6 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   void TearDown() override
   {
     close_driver_session();
-  }
-
-  void ResetStub()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    nidcpower_stub_ = dcpower::NiDCPower::NewStub(channel_);
   }
 
   std::unique_ptr<dcpower::NiDCPower::Stub>& GetStub()
@@ -309,13 +298,9 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<dcpower::NiDCPower::Stub> nidcpower_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<dcpower::NiDCPowerLibrary> nidcpower_library_;
-  std::unique_ptr<dcpower::NiDCPowerService> nidcpower_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiDCPowerDriverApiTest, PerformSelfTest_CompletesSuccessfuly)

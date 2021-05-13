@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "nisync/nisync_library.h"
+#include "device_server.h"
 #include "nisync/nisync_service.h"
 
 namespace ni {
@@ -20,15 +20,10 @@ static const char* kInvalidTerminal = "Invalid";
 class NiSyncDriverApiTest : public ::testing::Test {
  protected:
   NiSyncDriverApiTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        nisync_stub_(nisync::NiSync::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    nisync_library_ = std::make_unique<nisync::NiSyncLibrary>();
-    nisync_service_ = std::make_unique<nisync::NiSyncService>(nisync_library_.get(), session_repository_.get());
-    builder.RegisterService(nisync_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
+    device_server_->ResetServer();
   }
 
   virtual ~NiSyncDriverApiTest() {}
@@ -41,12 +36,6 @@ class NiSyncDriverApiTest : public ::testing::Test {
   void TearDown() override
   {
     close_driver_session();
-  }
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    nisync_stub_ = nisync::NiSync::NewStub(channel_);
   }
 
   std::unique_ptr<nisync::NiSync::Stub>& GetStub()
@@ -262,7 +251,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     *viStatusOut = response.status();
     return grpcStatus;
   }
- 
+
   ::grpc::Status call_SetAttributeViBoolean(ViConstString activeItem, ViAttr attribute, ViBoolean value, ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
@@ -559,13 +548,9 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
 private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<nisync::NiSync::Stub> nisync_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<nisync::NiSyncLibrary> nisync_library_;
-  std::unique_ptr<nisync::NiSyncService> nisync_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiSyncDriverApiTest, RevisionQuery_ReturnsNonEmptyRevisions)
