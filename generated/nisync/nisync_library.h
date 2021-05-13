@@ -37,6 +37,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus SetTimeReferencePPS(ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds);
   ViStatus SetTimeReference1588OrdinaryClock(ViSession vi);
   ViStatus SetTimeReference8021AS(ViSession vi);
+  ViStatus CreateFutureTimeEvent(ViSession vi, ViConstString terminalName, ViInt32 outputLevel, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds);
+  ViStatus ClearFutureTimeEvents(ViSession vi, ViConstString terminalName);
+  ViStatus CreateClock(ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds);
+  ViStatus ClearClock(ViSession vi, ViConstString terminalName);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
@@ -66,6 +70,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using SetTimeReferencePPSPtr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds);
   using SetTimeReference1588OrdinaryClockPtr = ViStatus (*)(ViSession vi);
   using SetTimeReference8021ASPtr = ViStatus (*)(ViSession vi);
+  using CreateFutureTimeEventPtr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViInt32 outputLevel, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds);
+  using ClearFutureTimeEventsPtr = ViStatus (*)(ViSession vi, ViConstString terminalName);
+  using CreateClockPtr = ViStatus (*)(ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds);
+  using ClearClockPtr = ViStatus (*)(ViSession vi, ViConstString terminalName);
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value);
   using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
@@ -95,6 +103,10 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
     SetTimeReferencePPSPtr SetTimeReferencePPS;
     SetTimeReference1588OrdinaryClockPtr SetTimeReference1588OrdinaryClock;
     SetTimeReference8021ASPtr SetTimeReference8021AS;
+    CreateFutureTimeEventPtr CreateFutureTimeEvent;
+    ClearFutureTimeEventsPtr ClearFutureTimeEvents;
+    CreateClockPtr CreateClock;
+    ClearClockPtr ClearClock;
     GetAttributeViInt32Ptr GetAttributeViInt32;
     SetAttributeViInt32Ptr SetAttributeViInt32;
     GetAttributeViStringPtr GetAttributeViString;

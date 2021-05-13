@@ -43,6 +43,10 @@ public:
   ::grpc::Status SetTimeReferencePPS(::grpc::ServerContext* context, const SetTimeReferencePPSRequest* request, SetTimeReferencePPSResponse* response) override;
   ::grpc::Status SetTimeReference1588OrdinaryClock(::grpc::ServerContext* context, const SetTimeReference1588OrdinaryClockRequest* request, SetTimeReference1588OrdinaryClockResponse* response) override;
   ::grpc::Status SetTimeReference8021AS(::grpc::ServerContext* context, const SetTimeReference8021ASRequest* request, SetTimeReference8021ASResponse* response) override;
+  ::grpc::Status CreateFutureTimeEvent(::grpc::ServerContext* context, const CreateFutureTimeEventRequest* request, CreateFutureTimeEventResponse* response) override;
+  ::grpc::Status ClearFutureTimeEvents(::grpc::ServerContext* context, const ClearFutureTimeEventsRequest* request, ClearFutureTimeEventsResponse* response) override;
+  ::grpc::Status CreateClock(::grpc::ServerContext* context, const CreateClockRequest* request, CreateClockResponse* response) override;
+  ::grpc::Status ClearClock(::grpc::ServerContext* context, const ClearClockRequest* request, ClearClockResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;

@@ -36,6 +36,10 @@ class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
   MOCK_METHOD(ViStatus, SetTimeReferencePPS, (ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds), (override));
   MOCK_METHOD(ViStatus, SetTimeReference1588OrdinaryClock, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, SetTimeReference8021AS, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, CreateFutureTimeEvent, (ViSession vi, ViConstString terminalName, ViInt32 outputLevel, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds), (override));
+  MOCK_METHOD(ViStatus, ClearFutureTimeEvents, (ViSession vi, ViConstString terminalName), (override));
+  MOCK_METHOD(ViStatus, CreateClock, (ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds), (override));
+  MOCK_METHOD(ViStatus, ClearClock, (ViSession vi, ViConstString terminalName), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]), (override));

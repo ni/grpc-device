@@ -40,6 +40,10 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetTimeReferencePPS = reinterpret_cast<SetTimeReferencePPSPtr>(shared_library_.get_function_pointer("niSync_SetTimeReferencePPS"));
   function_pointers_.SetTimeReference1588OrdinaryClock = reinterpret_cast<SetTimeReference1588OrdinaryClockPtr>(shared_library_.get_function_pointer("niSync_SetTimeReference1588OrdinaryClock"));
   function_pointers_.SetTimeReference8021AS = reinterpret_cast<SetTimeReference8021ASPtr>(shared_library_.get_function_pointer("niSync_SetTimeReference8021AS"));
+  function_pointers_.CreateFutureTimeEvent = reinterpret_cast<CreateFutureTimeEventPtr>(shared_library_.get_function_pointer("niSync_CreateFutureTimeEvent"));
+  function_pointers_.ClearFutureTimeEvents = reinterpret_cast<ClearFutureTimeEventsPtr>(shared_library_.get_function_pointer("niSync_ClearFutureTimeEvents"));
+  function_pointers_.CreateClock = reinterpret_cast<CreateClockPtr>(shared_library_.get_function_pointer("niSync_CreateClock"));
+  function_pointers_.ClearClock = reinterpret_cast<ClearClockPtr>(shared_library_.get_function_pointer("niSync_ClearClock"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_GetAttributeViInt32"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSync_SetAttributeViInt32"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSync_GetAttributeViString"));
@@ -286,6 +290,54 @@ ViStatus NiSyncLibrary::SetTimeReference8021AS(ViSession vi)
   return niSync_SetTimeReference8021AS(vi);
 #else
   return function_pointers_.SetTimeReference8021AS(vi);
+#endif
+}
+
+ViStatus NiSyncLibrary::CreateFutureTimeEvent(ViSession vi, ViConstString terminalName, ViInt32 outputLevel, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds)
+{
+  if (!function_pointers_.CreateFutureTimeEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_CreateFutureTimeEvent.");
+  }
+#if defined(_MSC_VER)
+  return niSync_CreateFutureTimeEvent(vi, terminalName, outputLevel, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
+#else
+  return function_pointers_.CreateFutureTimeEvent(vi, terminalName, outputLevel, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
+#endif
+}
+
+ViStatus NiSyncLibrary::ClearFutureTimeEvents(ViSession vi, ViConstString terminalName)
+{
+  if (!function_pointers_.ClearFutureTimeEvents) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_ClearFutureTimeEvents.");
+  }
+#if defined(_MSC_VER)
+  return niSync_ClearFutureTimeEvents(vi, terminalName);
+#else
+  return function_pointers_.ClearFutureTimeEvents(vi, terminalName);
+#endif
+}
+
+ViStatus NiSyncLibrary::CreateClock(ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds)
+{
+  if (!function_pointers_.CreateClock) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_CreateClock.");
+  }
+#if defined(_MSC_VER)
+  return niSync_CreateClock(vi, terminalName, highTicks, lowTicks, startTimeSeconds, startTimeNanoseconds, startTimeFractionalNanoseconds, stopTimeSeconds, stopTimeNanoseconds, stopTimeFractionalNanoseconds);
+#else
+  return function_pointers_.CreateClock(vi, terminalName, highTicks, lowTicks, startTimeSeconds, startTimeNanoseconds, startTimeFractionalNanoseconds, stopTimeSeconds, stopTimeNanoseconds, stopTimeFractionalNanoseconds);
+#endif
+}
+
+ViStatus NiSyncLibrary::ClearClock(ViSession vi, ViConstString terminalName)
+{
+  if (!function_pointers_.ClearClock) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_ClearClock.");
+  }
+#if defined(_MSC_VER)
+  return niSync_ClearClock(vi, terminalName);
+#else
+  return function_pointers_.ClearClock(vi, terminalName);
 #endif
 }
 

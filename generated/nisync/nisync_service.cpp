@@ -456,6 +456,98 @@ namespace nisync_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::CreateFutureTimeEvent(::grpc::ServerContext* context, const CreateFutureTimeEventRequest* request, CreateFutureTimeEventResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString terminal_name = request->terminal_name().c_str();
+      ViInt32 output_level = request->output_level();
+      ViUInt32 time_seconds = request->time_seconds();
+      ViUInt32 time_nanoseconds = request->time_nanoseconds();
+      ViUInt16 time_fractional_nanoseconds = request->time_fractional_nanoseconds();
+      auto status = library_->CreateFutureTimeEvent(vi, terminal_name, output_level, time_seconds, time_nanoseconds, time_fractional_nanoseconds);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::ClearFutureTimeEvents(::grpc::ServerContext* context, const ClearFutureTimeEventsRequest* request, ClearFutureTimeEventsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString terminal_name = request->terminal_name().c_str();
+      auto status = library_->ClearFutureTimeEvents(vi, terminal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::CreateClock(::grpc::ServerContext* context, const CreateClockRequest* request, CreateClockResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString terminal_name = request->terminal_name().c_str();
+      ViUInt32 high_ticks = request->high_ticks();
+      ViUInt32 low_ticks = request->low_ticks();
+      ViUInt32 start_time_seconds = request->start_time_seconds();
+      ViUInt32 start_time_nanoseconds = request->start_time_nanoseconds();
+      ViUInt16 start_time_fractional_nanoseconds = request->start_time_fractional_nanoseconds();
+      ViUInt32 stop_time_seconds = request->stop_time_seconds();
+      ViUInt32 stop_time_nanoseconds = request->stop_time_nanoseconds();
+      ViUInt16 stop_time_fractional_nanoseconds = request->stop_time_fractional_nanoseconds();
+      auto status = library_->CreateClock(vi, terminal_name, high_ticks, low_ticks, start_time_seconds, start_time_nanoseconds, start_time_fractional_nanoseconds, stop_time_seconds, stop_time_nanoseconds, stop_time_fractional_nanoseconds);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiSyncService::ClearClock(::grpc::ServerContext* context, const ClearClockRequest* request, ClearClockResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString terminal_name = request->terminal_name().c_str();
+      auto status = library_->ClearClock(vi, terminal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiSyncService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {

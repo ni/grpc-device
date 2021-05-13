@@ -34,6 +34,10 @@ class NiSyncLibraryInterface {
   virtual ViStatus SetTimeReferencePPS(ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds) = 0;
   virtual ViStatus SetTimeReference1588OrdinaryClock(ViSession vi) = 0;
   virtual ViStatus SetTimeReference8021AS(ViSession vi) = 0;
+  virtual ViStatus CreateFutureTimeEvent(ViSession vi, ViConstString terminalName, ViInt32 outputLevel, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds) = 0;
+  virtual ViStatus ClearFutureTimeEvents(ViSession vi, ViConstString terminalName) = 0;
+  virtual ViStatus CreateClock(ViSession vi, ViConstString terminalName, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds) = 0;
+  virtual ViStatus ClearClock(ViSession vi, ViConstString terminalName) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[]) = 0;
