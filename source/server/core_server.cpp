@@ -1,6 +1,8 @@
 #include <mutex>
 #include <nidcpower/nidcpower_library.h>
 #include <nidcpower/nidcpower_service.h>
+#include <nidigital/nidigital_library.h>
+#include <nidigital/nidigital_service.h>
 #include <nidmm/nidmm_library.h>
 #include <nidmm/nidmm_service.h>
 #include <niscope/niscope_library.h>
@@ -78,6 +80,10 @@ static void RunServer(const ServerConfiguration& config)
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_library);
   nidevice_grpc::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
   builder.RegisterService(&core_service);
+
+  nidigital_grpc::NiDigitalLibrary nidigital_library;
+  nidigital_grpc::NiDigitalService nidigital_service(&nidigital_library, &session_repository);
+  builder.RegisterService(&nidigital_service);
 
   niscope_grpc::NiScopeLibrary niscope_library;
   niscope_grpc::NiScopeService niscope_service(&niscope_library, &session_repository);
