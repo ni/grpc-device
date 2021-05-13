@@ -19,8 +19,11 @@ static const char* kInvalidRsrcName = "InvalidName";
 class NiSyncSessionTest : public ::testing::Test {
  protected:
   NiSyncSessionTest()
-      : nisync_stub_(nisync::NiSync::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        nisync_stub_(nisync::NiSync::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~NiSyncSessionTest() {}
 
@@ -42,6 +45,7 @@ class NiSyncSessionTest : public ::testing::Test {
   }
 
  private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<nisync::NiSync::Stub> nisync_stub_;
 };
 

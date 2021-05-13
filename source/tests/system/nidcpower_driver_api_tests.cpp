@@ -14,8 +14,11 @@ const int kdcpowerDriverApiSuccess = 0;
 class NiDCPowerDriverApiTest : public ::testing::Test {
  protected:
   NiDCPowerDriverApiTest()
-      : nidcpower_stub_(dcpower::NiDCPower::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        nidcpower_stub_(dcpower::NiDCPower::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~NiDCPowerDriverApiTest() {}
 
@@ -295,6 +298,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   }
 
  private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<dcpower::NiDCPower::Stub> nidcpower_stub_;
 };

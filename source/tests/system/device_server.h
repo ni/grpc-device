@@ -14,6 +14,7 @@ namespace system {
 class DeviceServerInterface {
  public:
   virtual ~DeviceServerInterface() = 0;
+  virtual void ResetServer() = 0;
   virtual std::shared_ptr<::grpc::Channel> InProcessChannel() = 0;
 
   static DeviceServerInterface* Singleton();

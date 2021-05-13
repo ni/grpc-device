@@ -21,8 +21,11 @@ const char* kTestInvalidRsrc = "";
 class NiDCPowerSessionTest : public ::testing::Test {
  protected:
   NiDCPowerSessionTest()
-      : nidcpower_stub_(dcpower::NiDCPower::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        nidcpower_stub_(dcpower::NiDCPower::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~NiDCPowerSessionTest() {}
 
@@ -76,6 +79,7 @@ class NiDCPowerSessionTest : public ::testing::Test {
   }
 
  private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<dcpower::NiDCPower::Stub> nidcpower_stub_;
 };
 

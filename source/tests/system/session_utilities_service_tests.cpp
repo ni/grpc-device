@@ -13,8 +13,11 @@ using ::testing::Not;
 class SessionUtilitiesServiceTests : public ::testing::Test {
  protected:
   SessionUtilitiesServiceTests()
-      : stub_(nidevice_grpc::SessionUtilities::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        stub_(nidevice_grpc::SessionUtilities::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~SessionUtilitiesServiceTests() {}
 
@@ -24,6 +27,7 @@ class SessionUtilitiesServiceTests : public ::testing::Test {
   }
 
  private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::SessionUtilities::Stub> stub_;
 };
 

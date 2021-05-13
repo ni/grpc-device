@@ -20,8 +20,11 @@ const char* fourthChannelName = "b0c6";
 class NiSwitchDriverApiTest : public ::testing::Test {
  protected:
   NiSwitchDriverApiTest()
-      : niswitch_stub_(niswitch::NiSwitch::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        niswitch_stub_(niswitch::NiSwitch::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~NiSwitchDriverApiTest() {}
 
@@ -202,6 +205,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   }
 
  private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
 };

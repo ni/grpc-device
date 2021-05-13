@@ -21,8 +21,11 @@ const char* kInvalidResourceName = "";
 class NiScopeSessionTest : public ::testing::Test {
  protected:
   NiScopeSessionTest()
-      : niscope_stub_(scope::NiScope::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~NiScopeSessionTest() {}
 
@@ -63,6 +66,7 @@ class NiScopeSessionTest : public ::testing::Test {
   }
 
  private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
 };
 

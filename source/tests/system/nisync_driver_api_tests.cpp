@@ -20,8 +20,11 @@ static const char* kInvalidTerminal = "Invalid";
 class NiSyncDriverApiTest : public ::testing::Test {
  protected:
   NiSyncDriverApiTest()
-      : nisync_stub_(nisync::NiSync::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        nisync_stub_(nisync::NiSync::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~NiSyncDriverApiTest() {}
 
@@ -330,6 +333,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
 private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<nisync::NiSync::Stub> nisync_stub_;
 };

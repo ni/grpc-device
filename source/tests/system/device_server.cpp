@@ -24,6 +24,7 @@ class DeviceServer : public DeviceServerInterface {
   ~DeviceServer() override {};
 
   // DeviceServerInterface overrides
+  void ResetServer() override;
   std::shared_ptr<::grpc::Channel> InProcessChannel() override;
 
  private:
@@ -65,6 +66,11 @@ DeviceServer::DeviceServer()
   builder.RegisterService(&nisync_service_);
   builder.RegisterService(&nidcpower_service_);
   server_ = builder.BuildAndStart();
+}
+
+void DeviceServer::ResetServer()
+{
+  session_repository_.reset_server();
 }
 
 std::shared_ptr<::grpc::Channel> DeviceServer::InProcessChannel()

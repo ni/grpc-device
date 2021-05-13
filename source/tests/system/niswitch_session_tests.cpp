@@ -21,8 +21,11 @@ const char* kTopology = "2529/2-Wire Dual 4x16 Matrix";
 class NiSwitchSessionTest : public ::testing::Test {
  protected:
   NiSwitchSessionTest()
-      : niswitch_stub_(niswitch::NiSwitch::NewStub(DeviceServerInterface::Singleton()->InProcessChannel()))
-  {}
+      : device_server_(DeviceServerInterface::Singleton()),
+        niswitch_stub_(niswitch::NiSwitch::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
 
   virtual ~NiSwitchSessionTest() {}
 
@@ -63,6 +66,7 @@ class NiSwitchSessionTest : public ::testing::Test {
   }
 
  private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
 };
 
