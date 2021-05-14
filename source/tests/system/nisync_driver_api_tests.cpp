@@ -1067,39 +1067,6 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReference8021AS_ReturnsSuccess)
 
 TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearFutureTimeEvent_ReturnsSuccess)
 {
-  ViStatus viStatus;
-
-  ViUInt32 timeSeconds, timeNanoseconds;
-  ViUInt16 timeFractionalNanoseconds;
-  auto grpcStatus = call_GetTime(
-     &timeSeconds,
-     &timeNanoseconds,
-     &timeFractionalNanoseconds, // ignored
-     &viStatus);
-  ASSERT_TRUE(grpcStatus.ok());
-
-  timeSeconds += 30;
-  grpcStatus = call_CreateFutureTimeEvent(
-     NISYNC_VAL_PFI1, // terminalName
-     NISYNC_VAL_LEVEL_LOW, // outputLevel
-     timeSeconds,
-     0, // timeNanoseconds, ignored
-     0, // timeFractionalNanoseconds, ignored
-     &viStatus);
-
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_SUCCESS, viStatus);
-
-  grpcStatus = call_ClearFutureTimeEvents(
-     NISYNC_VAL_PFI1,
-     &viStatus);
-
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_SUCCESS, viStatus);
-}
-
-TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearFutureTimeEvent_ReturnsSuccess)
-{
   ViStatus viStatusCreate;
   ViUInt32 timeSeconds = GetCurrentBoardTimeSeconds() + 30;
   auto grpcStatusCreate = call_CreateFutureTimeEvent(
