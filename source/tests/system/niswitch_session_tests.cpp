@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "niswitch/niswitch_library.h"
+#include "device_server.h"
 #include "niswitch/niswitch_service.h"
 
 namespace ni {
@@ -21,24 +21,13 @@ const char* kTopology = "2529/2-Wire Dual 4x16 Matrix";
 class NiSwitchSessionTest : public ::testing::Test {
  protected:
   NiSwitchSessionTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        niswitch_stub_(niswitch::NiSwitch::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    niswitch_library_ = std::make_unique<niswitch::NiSwitchLibrary>();
-    niswitch_service_ = std::make_unique<niswitch::NiSwitchService>(niswitch_library_.get(), session_repository_.get());
-    builder.RegisterService(niswitch_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
+    device_server_->ResetServer();
   }
 
   virtual ~NiSwitchSessionTest() {}
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    niswitch_stub_ = niswitch::NiSwitch::NewStub(channel_);
-  }
 
   std::unique_ptr<niswitch::NiSwitch::Stub>& GetStub()
   {
@@ -77,12 +66,8 @@ class NiSwitchSessionTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<niswitch::NiSwitchLibrary> niswitch_library_;
-  std::unique_ptr<niswitch::NiSwitchService> niswitch_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiSwitchSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)

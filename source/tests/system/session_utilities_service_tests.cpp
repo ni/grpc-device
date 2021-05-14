@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include "device_server.h"
 #include <server/session_utilities_service.h>
-#include <server/syscfg_library.h>
 
 namespace ni {
 namespace tests {
@@ -13,25 +13,13 @@ using ::testing::Not;
 class SessionUtilitiesServiceTests : public ::testing::Test {
  protected:
   SessionUtilitiesServiceTests()
+      : device_server_(DeviceServerInterface::Singleton()),
+        stub_(nidevice_grpc::SessionUtilities::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    syscfg_library_ = std::make_unique<nidevice_grpc::SysCfgLibrary>();
-    device_enumerator_ = std::make_unique<nidevice_grpc::DeviceEnumerator>(syscfg_library_.get());
-    service_ = std::make_unique<nidevice_grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
-    builder.RegisterService(service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStub();
+    device_server_->ResetServer();
   }
 
   virtual ~SessionUtilitiesServiceTests() {}
-
-  void ResetStub()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    stub_ = nidevice_grpc::SessionUtilities::NewStub(channel_);
-  }
 
   std::unique_ptr<nidevice_grpc::SessionUtilities::Stub>& GetStub()
   {
@@ -39,13 +27,8 @@ class SessionUtilitiesServiceTests : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::SessionUtilities::Stub> stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<nidevice_grpc::SysCfgLibrary> syscfg_library_;
-  std::unique_ptr<nidevice_grpc::DeviceEnumerator> device_enumerator_;
-  std::unique_ptr<nidevice_grpc::SessionUtilitiesService> service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_ResponseContainsAtLeastOneDevice)
