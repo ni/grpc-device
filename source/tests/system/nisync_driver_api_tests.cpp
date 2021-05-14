@@ -467,7 +467,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_CreateFutureTimeEvent(
-     ViConstString terminalName,
+     ViConstString terminal,
      ViInt32 outputLevel,
      ViUInt32 timeSeconds,
      ViUInt32 timeNanoseconds,
@@ -477,7 +477,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::CreateFutureTimeEventRequest request;
     nisync::CreateFutureTimeEventResponse response;
-    request.set_terminal_name(terminalName);
+    request.set_terminal(terminal);
     request.set_output_level(outputLevel);
     request.set_time_seconds(timeSeconds);
     request.set_time_nanoseconds(timeNanoseconds);
@@ -487,15 +487,15 @@ class NiSyncDriverApiTest : public ::testing::Test {
     *viStatusOut = response.status();
     return grpcStatus;
   }
- 
+
   ::grpc::Status call_ClearFutureTimeEvents(
-     ViConstString terminalName,
+     ViConstString terminal,
      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ClearFutureTimeEventsRequest request;
     nisync::ClearFutureTimeEventsResponse response;
-    request.set_terminal_name(terminalName);
+    request.set_terminal(terminal);
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->ClearFutureTimeEvents(&clientContext, request, &response);
     *viStatusOut = response.status();
@@ -503,7 +503,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_CreateClock(
-     ViConstString terminalName,
+     ViConstString terminal,
      ViUInt32 highTicks,
      ViUInt32 lowTicks,
      ViUInt32 startTimeSeconds,
@@ -517,7 +517,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::CreateClockRequest request;
     nisync::CreateClockResponse response;
-    request.set_terminal_name(terminalName);
+    request.set_terminal(terminal);
     request.set_high_ticks(highTicks);
     request.set_low_ticks(lowTicks);
     request.set_start_time_seconds(startTimeSeconds);
@@ -533,13 +533,13 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_ClearClock(
-     ViConstString terminalName,
+     ViConstString terminal,
      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ClearClockRequest request;
     nisync::ClearClockResponse response;
-    request.set_terminal_name(terminalName);
+    request.set_terminal(terminal);
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->ClearClock(&clientContext, request, &response);
     *viStatusOut = response.status();
