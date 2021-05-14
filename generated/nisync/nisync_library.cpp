@@ -103,15 +103,15 @@ NiSyncLibrary::~NiSyncLibrary()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
-ViStatus NiSyncLibrary::init(ViRsrc resourceName, ViBoolean IDQuery, ViBoolean resetDevice, ViSession* vi)
+ViStatus NiSyncLibrary::init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
 {
   if (!function_pointers_.init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_init.");
   }
 #if defined(_MSC_VER)
-  return niSync_init(resourceName, IDQuery, resetDevice, vi);
+  return niSync_init(resourceName, idQuery, resetDevice, vi);
 #else
-  return function_pointers_.init(resourceName, IDQuery, resetDevice, vi);
+  return function_pointers_.init(resourceName, idQuery, resetDevice, vi);
 #endif
 }
 

@@ -10,7 +10,7 @@ functions = {
             },
             {
                 "direction": "in",
-                "name": "IDQuery",
+                "name": "idQuery",
                 "type": "ViBoolean",
             },
             {

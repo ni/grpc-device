@@ -18,7 +18,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   virtual ~NiSyncLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  ViStatus init(ViRsrc resourceName, ViBoolean IDQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus close(ViSession vi);
   ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus reset(ViSession vi);
@@ -89,7 +89,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus CalAdjustDDSInitialPhase(ViSession vi, ViReal64 measuredPhase, ViReal64* oldPhase);
 
  private:
-  using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean IDQuery, ViBoolean resetDevice, ViSession* vi);
+  using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using closePtr = ViStatus (*)(ViSession vi);
   using error_messagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   using resetPtr = ViStatus (*)(ViSession vi);

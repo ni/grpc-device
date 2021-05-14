@@ -32,12 +32,12 @@ namespace nisync_grpc {
     }
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViBoolean _i_d_query = request->_i_d_query();
+      ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
 
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession vi;
-        int status = library_->init(resource_name, _i_d_query, reset_device, &vi);
+        int status = library_->init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
