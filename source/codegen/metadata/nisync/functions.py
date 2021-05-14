@@ -525,6 +525,30 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    "GetTimeReferenceNames": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession"
+            },
+            {
+                "direction": "in",
+                "name": "bufferSize",
+                "type": "ViUInt32"
+            },
+            {
+                "direction": "out",
+                "name": "timeReferenceNames",
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        "returns": "ViStatus"
+    },
     "GetAttributeViInt32": {
         "parameters": [
             {
