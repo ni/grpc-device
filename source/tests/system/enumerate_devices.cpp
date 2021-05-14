@@ -27,7 +27,7 @@ const google::protobuf::RepeatedPtrField<nidevice_grpc::DeviceProperties> Enumer
       throw std::runtime_error("Failed to enumerate devices");
     }
 
-    devices_cache = response.devices();
+    devices_cache.CopyFrom(response.devices());
     devices_are_cached = true;
   }
 
