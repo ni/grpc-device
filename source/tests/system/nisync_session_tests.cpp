@@ -2,6 +2,7 @@
 
 #include "device_server.h"
 #include "nisync/nisync_service.h"
+#include "enumerate_devices.h"
 
 namespace ni {
 namespace tests {
@@ -10,19 +11,33 @@ namespace system {
 namespace nisync = nisync_grpc;
 
 static const int kSyncDeviceNotFound = -1074118634;
-// Update the value of 'kTestRsrcName' to the name of your NI-Sync device.
-static const char* kTestRsrcName = "Dev1";
 static const char* kTestSessionName = "TestSession";
 static const char* kEmptySessionName = "";
 static const char* kInvalidRsrcName = "InvalidName";
 
 class NiSyncSessionTest : public ::testing::Test {
  protected:
+  std::string test_resource_name;
+
   NiSyncSessionTest()
       : device_server_(DeviceServerInterface::Singleton()),
         nisync_stub_(nisync::NiSync::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
+  }
+
+  void SetUp() override
+  {
+    for(const auto& device : EnumerateDevices()) {
+      if ((device.model() == "NI PXI-6683H") || (device.model() == "NI PXIe-6674T")) {
+        test_resource_name = device.name();
+        break;
+      }
+    }
+
+    if (test_resource_name.empty()) {
+      GTEST_SKIP() << "No device found";
+    }
   }
 
   virtual ~NiSyncSessionTest() {}
@@ -52,7 +67,7 @@ class NiSyncSessionTest : public ::testing::Test {
 TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
   nisync::InitResponse response;
-  ::grpc::Status status = call_init(kTestRsrcName, kTestSessionName, &response);
+  ::grpc::Status status = call_init(test_resource_name.c_str(), kTestSessionName, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -62,7 +77,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
 TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
 {
   nisync::InitResponse response;
-  ::grpc::Status status = call_init(kTestRsrcName, kEmptySessionName, &response);
+  ::grpc::Status status = call_init(test_resource_name.c_str(), kEmptySessionName, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -82,7 +97,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 TEST_F(NiSyncSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   nisync::InitResponse init_response;
-  call_init(kTestRsrcName, kEmptySessionName, &init_response);
+  call_init(test_resource_name.c_str(), kEmptySessionName, &init_response);
   nidevice_grpc::Session session = init_response.vi();
   EXPECT_EQ(0, init_response.status());
 

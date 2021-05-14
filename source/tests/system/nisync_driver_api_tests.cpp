@@ -2,6 +2,7 @@
 
 #include "device_server.h"
 #include "nisync/nisync_service.h"
+#include "enumerate_devices.h"
 
 namespace ni {
 namespace tests {
@@ -10,8 +11,6 @@ namespace system {
 namespace nisync = nisync_grpc;
 
 static const ViStatus kSyncInvalidSrcTerminal = 0xBFFA4032;
-// Update the value of 'kTestRsrcName' to the name of your NI-Sync device.
-static const char* kTestRsrcName = "Dev1";
 static const char* kTestSessionName = "TestSession";
 static const char* kEmptySessionName = "";
 static const char* kInvalidRsrcName = "InvalidName";
@@ -19,6 +18,8 @@ static const char* kInvalidTerminal = "Invalid";
 
 class NiSyncDriverApiTest : public ::testing::Test {
  protected:
+  std::string test_resource_name;
+
   NiSyncDriverApiTest()
       : device_server_(DeviceServerInterface::Singleton()),
         nisync_stub_(nisync::NiSync::NewStub(device_server_->InProcessChannel()))
@@ -30,6 +31,17 @@ class NiSyncDriverApiTest : public ::testing::Test {
 
   void SetUp() override
   {
+    for(const auto& device : EnumerateDevices()) {
+      if (device.model() == "NI PXIe-6674T") {
+        test_resource_name = device.name();
+        break;
+      }
+    }
+
+    if (test_resource_name.empty()) {
+      GTEST_SKIP() << "No device found";
+    }
+
     initialize_driver_session();
   }
 
@@ -48,7 +60,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext context;
     nisync::InitRequest request;
     nisync::InitResponse response;
-    request.set_resource_name(kTestRsrcName);
+    request.set_resource_name(test_resource_name);
     request.set_session_name(kTestSessionName);
     request.set_reset_device(false);
 
@@ -61,6 +73,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
 
   void close_driver_session()
   {
+    if (!driver_session_) return;
+
     ::grpc::ClientContext context;
     nisync::CloseRequest request;
     request.mutable_vi()->set_id(driver_session_->id());
