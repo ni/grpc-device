@@ -29,10 +29,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
 
   virtual ~NiSyncDriverApiTest() {}
 
+  virtual const char* get_model_name() const = 0;
+
   void SetUp() override
   {
     for(const auto& device : EnumerateDevices()) {
-      if (device.model() == "NI PXIe-6674T") {
+      if (device.model() == get_model_name()) {
         test_resource_name = device.name();
         break;
       }
@@ -581,7 +583,21 @@ private:
   std::unique_ptr<nisync::NiSync::Stub> nisync_stub_;
 };
 
-TEST_F(NiSyncDriverApiTest, RevisionQuery_ReturnsNonEmptyRevisions)
+class NiSyncDriver6674Test : public NiSyncDriverApiTest
+{
+public:
+  NiSyncDriver6674Test() : NiSyncDriverApiTest() {}
+  virtual const char* get_model_name() const { return "NI PXIe-6674T"; }
+};
+
+class NiSyncDriver6683Test : public NiSyncDriverApiTest
+{
+public:
+  NiSyncDriver6683Test() : NiSyncDriverApiTest() {}
+  virtual const char* get_model_name() const { return "NI PXI-6683H"; }
+};
+
+TEST_F(NiSyncDriver6674Test, RevisionQuery_ReturnsNonEmptyRevisions)
 {
   ViStatus viStatus;
   std::string driverRevision, firmwareRevision;
@@ -592,7 +608,7 @@ TEST_F(NiSyncDriverApiTest, RevisionQuery_ReturnsNonEmptyRevisions)
   EXPECT_FALSE(firmwareRevision.empty());
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectClkTerminals_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, ConnectClkTerminals_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_OSCILLATOR, destTerminal = NISYNC_VAL_CLKOUT;
@@ -603,17 +619,17 @@ TEST_F(NiSyncDriverApiTest, ConnectClkTerminals_ReturnsSuccess)
   call_DisconnectClkTerminals(srcTerminal, destTerminal, &viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectInvalidClkTerminals_ReturnsInvalidSrcTerminal)
+TEST_F(NiSyncDriver6674Test, ConnectInvalidClkTerminals_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
   auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_CLKOUT;
   auto grpcStatus = call_ConnectClkTerminals(srcTerminal, destTerminal, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
+  EXPECT_EQ(NISYNC_ERROR_SRC_TERMINAL_INVALID, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectClkTerminals_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, ConnectedClkTerminals_DisconnectClkTerminals_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_OSCILLATOR, destTerminal = NISYNC_VAL_CLKOUT;
@@ -627,7 +643,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectClkTerminals_Returns
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectNotConnectedClkTerminals_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, ConnectedClkTerminals_DisconnectNotConnectedClkTerminals_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_OSCILLATOR, destTerminal = NISYNC_VAL_CLKOUT;
@@ -643,7 +659,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedClkTerminals_DisconnectNotConnectedClkTermi
   call_DisconnectClkTerminals(srcTerminal, destTerminal, &viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectSWTrigToTerminal_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, ConnectSWTrigToTerminal_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_SWTRIG_GLOBAL, destTerminal = NISYNC_VAL_PXIEDSTARC;
@@ -664,7 +680,7 @@ TEST_F(NiSyncDriverApiTest, ConnectSWTrigToTerminal_ReturnsSuccess)
   call_DisconnectSWTrigFromTerminal(srcTerminal, destTerminal, &viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTerminal)
+TEST_F(NiSyncDriver6674Test, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
   auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_PXIEDSTARC;
@@ -684,7 +700,7 @@ TEST_F(NiSyncDriverApiTest, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTerm
   EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTerminal_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTerminal_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_SWTRIG_GLOBAL, destTerminal = NISYNC_VAL_PXIEDSTARC;
@@ -708,7 +724,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTermin
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, SWTrigConnectedToTerminal_DisconnectSWTrigFromNotConnectedTerminal_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, SWTrigConnectedToTerminal_DisconnectSWTrigFromNotConnectedTerminal_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_SWTRIG_GLOBAL, destTerminal = NISYNC_VAL_PXIEDSTARC;
@@ -734,7 +750,7 @@ TEST_F(NiSyncDriverApiTest, SWTrigConnectedToTerminal_DisconnectSWTrigFromNotCon
   call_DisconnectSWTrigFromTerminal(srcTerminal, destTerminal, &viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, SendSoftwareTrigger_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, SendSoftwareTrigger_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_SWTRIG_GLOBAL;
@@ -744,17 +760,22 @@ TEST_F(NiSyncDriverApiTest, SendSoftwareTrigger_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, SendSoftwareTriggerOnInvalidTerminal_ReturnsInvalidSrcTerminal)
+TEST_F(NiSyncDriver6674Test, SendSoftwareTriggerOnInvalidTerminal_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
   auto srcTerminal = kInvalidTerminal;
   auto grpcStatus = call_SendSoftwareTrigger(srcTerminal, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
+  // Bug 1459796: 6674T SendSoftwareTrigger has different error behavior on Linux RT
+  #if defined(_MSC_VER)
+  EXPECT_EQ(NISYNC_ERROR_SRC_TERMINAL_INVALID, viStatus);
+  #else
+  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  #endif
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectTrigTerminals_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, ConnectTrigTerminals_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_PFI0, destTerminal = NISYNC_VAL_PFI1;
@@ -773,7 +794,7 @@ TEST_F(NiSyncDriverApiTest, ConnectTrigTerminals_ReturnsSuccess)
   call_DisconnectTrigTerminals(srcTerminal, destTerminal, &viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTerminal)
+TEST_F(NiSyncDriver6674Test, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
   auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_CLKOUT;
@@ -791,7 +812,7 @@ TEST_F(NiSyncDriverApiTest, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTermina
   EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, ConnectedTrigTerminals_DisconnectTrigTerminals_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, ConnectedTrigTerminals_DisconnectTrigTerminals_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_PFI0, destTerminal = NISYNC_VAL_PFI1;
@@ -813,7 +834,7 @@ TEST_F(NiSyncDriverApiTest, ConnectedTrigTerminals_DisconnectTrigTerminals_Retur
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, NotConnectedTrigTerminals_DisconnectSWTrigFromTerminal_ReturnsSuccess)
+TEST_F(NiSyncDriver6674Test, NotConnectedTrigTerminals_DisconnectSWTrigFromTerminal_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto srcTerminal = NISYNC_VAL_PFI0, destTerminal = NISYNC_VAL_PFI1;
@@ -837,7 +858,7 @@ TEST_F(NiSyncDriverApiTest, NotConnectedTrigTerminals_DisconnectSWTrigFromTermin
   call_DisconnectTrigTerminals(srcTerminal, destTerminal, &viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViInt32_ReturnsValue)
+TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViInt32_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
@@ -855,7 +876,7 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViInt32_ReturnsValue)
   EXPECT_EQ(expectedValue, value);
 }
 
-TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViString_ReturnsValue)
+TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViString_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
@@ -873,7 +894,7 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViString_ReturnsValue)
   EXPECT_STREQ(expectedValue, value.c_str());
 }
 
-TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViBoolean_ReturnsValue)
+TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViBoolean_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
@@ -891,7 +912,7 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViBoolean_ReturnsValue)
   EXPECT_EQ(expectedValue, value);
 }
 
-TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViReal64_ReturnsValue)
+TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViReal64_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
@@ -909,7 +930,7 @@ TEST_F(NiSyncDriverApiTest, AttributeSet_GetAttributeViReal64_ReturnsValue)
   EXPECT_DOUBLE_EQ(expectedValue, value);
 }
 
-TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsNoFrequency)
+TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsNoFrequency)
 {
   ViStatus viStatus;
   ViConstString srcTerminal = NISYNC_VAL_PFI0;
@@ -931,7 +952,7 @@ TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsN
   EXPECT_EQ(0, frequency);
 }
 
-TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsFrequency)
+TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsFrequency)
 {
   ViStatus viStatus;
   ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
@@ -953,8 +974,13 @@ TEST_F(NiSyncDriverApiTest, MeasureFrequencyExOnOscillatorWithFrequency_ReturnsF
   EXPECT_GT(frequency, 0);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeWithValidTimeSource_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, SetTimeWithValidTimeSource_ReturnsSuccess)
 {
+  // SetTime isn't implemented on Linux RT, yet.
+  #if defined(__GNUC__)
+  GTEST_SKIP();	
+  #endif
+
   ViStatus viStatus;
   ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
   auto grpcStatus = call_SetTime(
@@ -968,8 +994,13 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeWithValidTimeSource_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeWithInvalidTimeSource_ReturnsError)
+TEST_F(NiSyncDriver6683Test, SetTimeWithInvalidTimeSource_ReturnsError)
 {
+  // SetTime isn't implemented on Linux RT, yet.
+  #if defined(__GNUC__)
+  GTEST_SKIP();
+  #endif
+
   ViStatus viStatus;
   ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
   auto grpcStatus = call_SetTime(
@@ -983,7 +1014,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeWithInvalidTimeSource_ReturnsError)
   EXPECT_EQ(VI_ERROR_INV_PARAMETER, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_GetTime_ReturnsTime)
+TEST_F(NiSyncDriver6683Test, GetTime_ReturnsTime)
 {
   ViStatus viStatus;
   ViUInt32 timeSeconds, timeNanoseconds;
@@ -1000,7 +1031,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_GetTime_ReturnsTime)
   EXPECT_GT(timeNanoseconds, (ViUInt32)0);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceFreeRunning_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, SetTimeReferenceFreeRunning_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReferenceFreeRunning(&viStatus);
@@ -1009,7 +1040,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceFreeRunning_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceGPS_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, SetTimeReferenceGPS_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReferenceGPS(&viStatus);
@@ -1018,7 +1049,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceGPS_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceIRIG_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, SetTimeReferenceIRIG_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReferenceIRIG(
@@ -1030,7 +1061,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceIRIG_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceIRIGWithInvalidTerminal_ReturnsError)
+TEST_F(NiSyncDriver6683Test, SetTimeReferenceIRIGWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReferenceIRIG(
@@ -1039,10 +1070,15 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferenceIRIGWithInvalidTerminal_Ret
      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
+  // Bug 1459801: 6683 SetTimeReferenceIRIG has different error behavior on Linux RT
+  #if defined(_MSC_VER)
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  #else
+  EXPECT_EQ(NISYNC_ERROR_INV_PARAMETER, viStatus);
+  #endif
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferencePPS_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, SetTimeReferencePPS_ReturnsSuccess)
 {
   ViStatus viStatus;
   ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
@@ -1058,7 +1094,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferencePPS_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferencePPSWithInvalidTerminal_ReturnsError)
+TEST_F(NiSyncDriver6683Test, SetTimeReferencePPSWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
   ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
@@ -1074,7 +1110,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReferencePPSWithInvalidTerminal_Retu
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReference1588OrdinaryClock_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, SetTimeReference1588OrdinaryClock_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReference1588OrdinaryClock(&viStatus);
@@ -1083,7 +1119,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReference1588OrdinaryClock_ReturnsSu
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReference8021AS_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, SetTimeReference8021AS_ReturnsSuccess)
 {
   // SetTimeReference8021AS is only supported in LinuxRT targets.
   ViStatus viStatus;
@@ -1093,7 +1129,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_SetTimeReference8021AS_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearFutureTimeEvent_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, CreateClearFutureTimeEvent_ReturnsSuccess)
 {
   ViStatus viStatusCreate;
   ViUInt32 timeSeconds = GetCurrentBoardTimeSeconds() + 30;
@@ -1115,7 +1151,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearFutureTimeEvent_ReturnsSuccess)
   EXPECT_EQ(VI_SUCCESS, viStatusClear);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_CreateFutureTimeEventWithInvalidTerminal_ReturnsError)
+TEST_F(NiSyncDriver6683Test, CreateFutureTimeEventWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
   ViUInt32 timeSeconds = GetCurrentBoardTimeSeconds() + 30;
@@ -1131,7 +1167,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_CreateFutureTimeEventWithInvalidTerminal_Re
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_ClearFutureTimeEventsNotReserved_ReturnsError)
+TEST_F(NiSyncDriver6683Test, ClearFutureTimeEventsNotReserved_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_ClearFutureTimeEvents(
@@ -1142,7 +1178,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_ClearFutureTimeEventsNotReserved_ReturnsErr
   EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearClock_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, CreateClearClock_ReturnsSuccess)
 {
   ViStatus viStatusCreate;
   ViUInt32 highTicks = 50, lowTicks = 50;
@@ -1171,7 +1207,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_CreateClearClock_ReturnsSuccess)
 
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_CreateClockWithInvalidTerminal_ReturnsError)
+TEST_F(NiSyncDriver6683Test, CreateClockWithInvalidTerminal_ReturnsError)
 {
   ViStatus viStatus;
   ViUInt32 highTicks = 50, lowTicks = 50;
@@ -1193,7 +1229,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_CreateClockWithInvalidTerminal_ReturnsError
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_ClearClockNotReserved_ReturnsError)
+TEST_F(NiSyncDriver6683Test, ClearClockNotReserved_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_ClearClock(
@@ -1204,7 +1240,7 @@ TEST_F(NiSyncDriverApiTest, DISABLED_ClearClockNotReserved_ReturnsError)
   EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
 }
 
-TEST_F(NiSyncDriverApiTest, DISABLED_GetTimeReferenceNames_ReturnsSuccess)
+TEST_F(NiSyncDriver6683Test, GetTimeReferenceNames_ReturnsSuccess)
 {
   ViStatus viStatus;
   std::string timeReferenceNames;
