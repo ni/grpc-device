@@ -587,14 +587,14 @@ class NiSyncDriver6674Test : public NiSyncDriverApiTest
 {
 public:
   NiSyncDriver6674Test() : NiSyncDriverApiTest() {}
-  virtual const char* get_model_name() const { return "NI PXIe-6674T"; }
+  const char* get_model_name() const override { return "NI PXIe-6674T"; }
 };
 
 class NiSyncDriver6683Test : public NiSyncDriverApiTest
 {
 public:
   NiSyncDriver6683Test() : NiSyncDriverApiTest() {}
-  virtual const char* get_model_name() const { return "NI PXI-6683H"; }
+  const char* get_model_name() const override { return "NI PXI-6683H"; }
 };
 
 TEST_F(NiSyncDriver6674Test, RevisionQuery_ReturnsNonEmptyRevisions)
