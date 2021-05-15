@@ -21,6 +21,7 @@ service NiDigital {
   rpc ApplyLevelsAndTiming(ApplyLevelsAndTimingRequest) returns (ApplyLevelsAndTimingResponse);
   rpc ApplyTDROffsets(ApplyTDROffsetsRequest) returns (ApplyTDROffsetsResponse);
   rpc BurstPattern(BurstPatternRequest) returns (BurstPatternResponse);
+  rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClockGeneratorAbort(ClockGeneratorAbortRequest) returns (ClockGeneratorAbortResponse);
   rpc ClockGeneratorGenerateClock(ClockGeneratorGenerateClockRequest) returns (ClockGeneratorGenerateClockResponse);
   rpc ClockGeneratorInitiate(ClockGeneratorInitiateRequest) returns (ClockGeneratorInitiateResponse);
@@ -75,6 +76,7 @@ service NiDigital {
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
+  rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetChannelNameFromString(GetChannelNameFromStringRequest) returns (GetChannelNameFromStringResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetHistoryRAMSampleCount(GetHistoryRAMSampleCountRequest) returns (GetHistoryRAMSampleCountResponse);
@@ -110,7 +112,9 @@ service NiDigital {
   rpc ReadSequencerFlag(ReadSequencerFlagRequest) returns (ReadSequencerFlagResponse);
   rpc ReadSequencerRegister(ReadSequencerRegisterRequest) returns (ReadSequencerRegisterResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
+  rpc SelectFunction(SelectFunctionRequest) returns (SelectFunctionResponse);
   rpc SelfCalibrate(SelfCalibrateRequest) returns (SelfCalibrateResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
   rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
@@ -384,6 +388,14 @@ message BurstPatternRequest {
 }
 
 message BurstPatternResponse {
+  int32 status = 1;
+}
+
+message ClearErrorRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ClearErrorResponse {
   int32 status = 1;
 }
 
@@ -993,6 +1005,16 @@ message GetAttributeViStringResponse {
   string value = 2;
 }
 
+message GetChannelNameRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 index = 2;
+}
+
+message GetChannelNameResponse {
+  int32 status = 1;
+  string name = 2;
+}
+
 message GetChannelNameFromStringRequest {
   nidevice_grpc.Session vi = 1;
   string indices = 2;
@@ -1357,11 +1379,34 @@ message ResetResponse {
   int32 status = 1;
 }
 
+message ResetAttributeRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiDigitalAttributes attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
 message ResetDeviceRequest {
   nidevice_grpc.Session vi = 1;
 }
 
 message ResetDeviceResponse {
+  int32 status = 1;
+}
+
+message SelectFunctionRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  oneof function_enum {
+    SelectedFunction function = 3;
+    sint32 function_raw = 4;
+  }
+}
+
+message SelectFunctionResponse {
   int32 status = 1;
 }
 

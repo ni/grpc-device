@@ -134,6 +134,25 @@ namespace nidigital_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ClearError(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::ClockGeneratorAbort(::grpc::ServerContext* context, const ClockGeneratorAbortRequest* request, ClockGeneratorAbortResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1498,6 +1517,38 @@ namespace nidigital_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 index = request->index();
+
+      auto status = library_->GetChannelName(vi, index, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      ViInt32 name_buffer_size = status;
+
+      std::string name(name_buffer_size, '\0');
+      status = library_->GetChannelName(vi, index, name_buffer_size, (ViChar*)name.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_name(name);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2398,6 +2449,27 @@ namespace nidigital_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      auto status = library_->ResetAttribute(vi, channel_name, attribute_id);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2407,6 +2479,39 @@ namespace nidigital_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetDevice(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::SelectFunction(::grpc::ServerContext* context, const SelectFunctionRequest* request, SelectFunctionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_list = request->channel_list().c_str();
+      ViInt32 function;
+      switch (request->function_enum_case()) {
+        case nidigital_grpc::SelectFunctionRequest::FunctionEnumCase::kFunction:
+          function = (ViInt32)request->function();
+          break;
+        case nidigital_grpc::SelectFunctionRequest::FunctionEnumCase::kFunctionRaw:
+          function = (ViInt32)request->function_raw();
+          break;
+        case nidigital_grpc::SelectFunctionRequest::FunctionEnumCase::FUNCTION_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for function was not specified or out of range");
+          break;
+      }
+
+      auto status = library_->SelectFunction(vi, channel_list, function);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
