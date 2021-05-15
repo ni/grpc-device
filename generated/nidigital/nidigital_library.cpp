@@ -26,6 +26,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.ApplyLevelsAndTiming = reinterpret_cast<ApplyLevelsAndTimingPtr>(shared_library_.get_function_pointer("niDigital_ApplyLevelsAndTiming"));
   function_pointers_.ApplyTDROffsets = reinterpret_cast<ApplyTDROffsetsPtr>(shared_library_.get_function_pointer("niDigital_ApplyTDROffsets"));
   function_pointers_.BurstPattern = reinterpret_cast<BurstPatternPtr>(shared_library_.get_function_pointer("niDigital_BurstPattern"));
+  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDigital_ClearError"));
   function_pointers_.ClockGeneratorAbort = reinterpret_cast<ClockGeneratorAbortPtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_Abort"));
   function_pointers_.ClockGeneratorGenerateClock = reinterpret_cast<ClockGeneratorGenerateClockPtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_GenerateClock"));
   function_pointers_.ClockGeneratorInitiate = reinterpret_cast<ClockGeneratorInitiatePtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_Initiate"));
@@ -80,6 +81,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViReal64"));
   function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViSession"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViString"));
+  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niDigital_GetChannelName"));
   function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niDigital_GetChannelNameFromString"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDigital_GetError"));
   function_pointers_.GetHistoryRAMSampleCount = reinterpret_cast<GetHistoryRAMSampleCountPtr>(shared_library_.get_function_pointer("niDigital_GetHistoryRAMSampleCount"));
@@ -115,7 +117,9 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadSequencerFlag = reinterpret_cast<ReadSequencerFlagPtr>(shared_library_.get_function_pointer("niDigital_ReadSequencerFlag"));
   function_pointers_.ReadSequencerRegister = reinterpret_cast<ReadSequencerRegisterPtr>(shared_library_.get_function_pointer("niDigital_ReadSequencerRegister"));
   function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niDigital_reset"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("niDigital_ResetAttribute"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niDigital_ResetDevice"));
+  function_pointers_.SelectFunction = reinterpret_cast<SelectFunctionPtr>(shared_library_.get_function_pointer("niDigital_SelectFunction"));
   function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_.get_function_pointer("niDigital_SelfCalibrate"));
   function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niDigital_self_test"));
   function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("niDigital_SendSoftwareEdgeTrigger"));
@@ -202,6 +206,18 @@ ViStatus NiDigitalLibrary::BurstPattern(ViSession vi, ViConstString siteList, Vi
   return niDigital_BurstPattern(vi, siteList, startLabel, selectDigitalFunction, waitUntilDone, timeout);
 #else
   return function_pointers_.BurstPattern(vi, siteList, startLabel, selectDigitalFunction, waitUntilDone, timeout);
+#endif
+}
+
+ViStatus NiDigitalLibrary::ClearError(ViSession vi)
+{
+  if (!function_pointers_.ClearError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_ClearError.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_ClearError(vi);
+#else
+  return function_pointers_.ClearError(vi);
 #endif
 }
 
@@ -853,6 +869,18 @@ ViStatus NiDigitalLibrary::GetAttributeViString(ViSession vi, ViConstString chan
 #endif
 }
 
+ViStatus NiDigitalLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[])
+{
+  if (!function_pointers_.GetChannelName) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetChannelName.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetChannelName(vi, index, nameBufferSize, name);
+#else
+  return function_pointers_.GetChannelName(vi, index, nameBufferSize, name);
+#endif
+}
+
 ViStatus NiDigitalLibrary::GetChannelNameFromString(ViSession vi, ViConstString indices, ViInt32 nameBufferSize, ViChar names[])
 {
   if (!function_pointers_.GetChannelNameFromString) {
@@ -1273,6 +1301,18 @@ ViStatus NiDigitalLibrary::Reset(ViSession vi)
 #endif
 }
 
+ViStatus NiDigitalLibrary::ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId)
+{
+  if (!function_pointers_.ResetAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_ResetAttribute.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_ResetAttribute(vi, channelName, attributeId);
+#else
+  return function_pointers_.ResetAttribute(vi, channelName, attributeId);
+#endif
+}
+
 ViStatus NiDigitalLibrary::ResetDevice(ViSession vi)
 {
   if (!function_pointers_.ResetDevice) {
@@ -1282,6 +1322,18 @@ ViStatus NiDigitalLibrary::ResetDevice(ViSession vi)
   return niDigital_ResetDevice(vi);
 #else
   return function_pointers_.ResetDevice(vi);
+#endif
+}
+
+ViStatus NiDigitalLibrary::SelectFunction(ViSession vi, ViConstString channelList, ViInt32 function)
+{
+  if (!function_pointers_.SelectFunction) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_SelectFunction.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_SelectFunction(vi, channelList, function);
+#else
+  return function_pointers_.SelectFunction(vi, channelList, function);
 #endif
 }
 

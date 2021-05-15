@@ -29,6 +29,7 @@ public:
   ::grpc::Status ApplyLevelsAndTiming(::grpc::ServerContext* context, const ApplyLevelsAndTimingRequest* request, ApplyLevelsAndTimingResponse* response) override;
   ::grpc::Status ApplyTDROffsets(::grpc::ServerContext* context, const ApplyTDROffsetsRequest* request, ApplyTDROffsetsResponse* response) override;
   ::grpc::Status BurstPattern(::grpc::ServerContext* context, const BurstPatternRequest* request, BurstPatternResponse* response) override;
+  ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
   ::grpc::Status ClockGeneratorAbort(::grpc::ServerContext* context, const ClockGeneratorAbortRequest* request, ClockGeneratorAbortResponse* response) override;
   ::grpc::Status ClockGeneratorGenerateClock(::grpc::ServerContext* context, const ClockGeneratorGenerateClockRequest* request, ClockGeneratorGenerateClockResponse* response) override;
   ::grpc::Status ClockGeneratorInitiate(::grpc::ServerContext* context, const ClockGeneratorInitiateRequest* request, ClockGeneratorInitiateResponse* response) override;
@@ -83,6 +84,7 @@ public:
   ::grpc::Status GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response) override;
   ::grpc::Status GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response) override;
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;
+  ::grpc::Status GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response) override;
   ::grpc::Status GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response) override;
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetHistoryRAMSampleCount(::grpc::ServerContext* context, const GetHistoryRAMSampleCountRequest* request, GetHistoryRAMSampleCountResponse* response) override;
@@ -118,7 +120,9 @@ public:
   ::grpc::Status ReadSequencerFlag(::grpc::ServerContext* context, const ReadSequencerFlagRequest* request, ReadSequencerFlagResponse* response) override;
   ::grpc::Status ReadSequencerRegister(::grpc::ServerContext* context, const ReadSequencerRegisterRequest* request, ReadSequencerRegisterResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
+  ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
+  ::grpc::Status SelectFunction(::grpc::ServerContext* context, const SelectFunctionRequest* request, SelectFunctionResponse* response) override;
   ::grpc::Status SelfCalibrate(::grpc::ServerContext* context, const SelfCalibrateRequest* request, SelfCalibrateResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
   ::grpc::Status SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response) override;

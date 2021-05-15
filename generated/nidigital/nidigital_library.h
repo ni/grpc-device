@@ -23,6 +23,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus ApplyLevelsAndTiming(ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins);
   ViStatus ApplyTDROffsets(ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]);
   ViStatus BurstPattern(ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout);
+  ViStatus ClearError(ViSession vi);
   ViStatus ClockGeneratorAbort(ViSession vi, ViConstString channelList);
   ViStatus ClockGeneratorGenerateClock(ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction);
   ViStatus ClockGeneratorInitiate(ViSession vi, ViConstString channelList);
@@ -77,6 +78,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64* value);
   ViStatus GetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value);
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
+  ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[]);
   ViStatus GetChannelNameFromString(ViSession vi, ViConstString indices, ViInt32 nameBufferSize, ViChar names[]);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
   ViStatus GetHistoryRAMSampleCount(ViSession vi, ViConstString site, ViInt64* sampleCount);
@@ -112,7 +114,9 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus ReadSequencerFlag(ViSession vi, ViConstString flag, ViBoolean* value);
   ViStatus ReadSequencerRegister(ViSession vi, ViConstString reg, ViInt32* value);
   ViStatus Reset(ViSession vi);
+  ViStatus ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId);
   ViStatus ResetDevice(ViSession vi);
+  ViStatus SelectFunction(ViSession vi, ViConstString channelList, ViInt32 function);
   ViStatus SelfCalibrate(ViSession vi);
   ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048]);
   ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier);
@@ -136,6 +140,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using ApplyLevelsAndTimingPtr = ViStatus (*)(ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins);
   using ApplyTDROffsetsPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]);
   using BurstPatternPtr = ViStatus (*)(ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout);
+  using ClearErrorPtr = ViStatus (*)(ViSession vi);
   using ClockGeneratorAbortPtr = ViStatus (*)(ViSession vi, ViConstString channelList);
   using ClockGeneratorGenerateClockPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction);
   using ClockGeneratorInitiatePtr = ViStatus (*)(ViSession vi, ViConstString channelList);
@@ -190,6 +195,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using GetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64* value);
   using GetAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
+  using GetChannelNamePtr = ViStatus (*)(ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[]);
   using GetChannelNameFromStringPtr = ViStatus (*)(ViSession vi, ViConstString indices, ViInt32 nameBufferSize, ViChar names[]);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
   using GetHistoryRAMSampleCountPtr = ViStatus (*)(ViSession vi, ViConstString site, ViInt64* sampleCount);
@@ -225,7 +231,9 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using ReadSequencerFlagPtr = ViStatus (*)(ViSession vi, ViConstString flag, ViBoolean* value);
   using ReadSequencerRegisterPtr = ViStatus (*)(ViSession vi, ViConstString reg, ViInt32* value);
   using ResetPtr = ViStatus (*)(ViSession vi);
+  using ResetAttributePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId);
   using ResetDevicePtr = ViStatus (*)(ViSession vi);
+  using SelectFunctionPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViInt32 function);
   using SelfCalibratePtr = ViStatus (*)(ViSession vi);
   using SelfTestPtr = ViStatus (*)(ViSession vi, ViInt16* testResult, ViChar testMessage[2048]);
   using SendSoftwareEdgeTriggerPtr = ViStatus (*)(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier);
@@ -249,6 +257,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     ApplyLevelsAndTimingPtr ApplyLevelsAndTiming;
     ApplyTDROffsetsPtr ApplyTDROffsets;
     BurstPatternPtr BurstPattern;
+    ClearErrorPtr ClearError;
     ClockGeneratorAbortPtr ClockGeneratorAbort;
     ClockGeneratorGenerateClockPtr ClockGeneratorGenerateClock;
     ClockGeneratorInitiatePtr ClockGeneratorInitiate;
@@ -303,6 +312,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     GetAttributeViReal64Ptr GetAttributeViReal64;
     GetAttributeViSessionPtr GetAttributeViSession;
     GetAttributeViStringPtr GetAttributeViString;
+    GetChannelNamePtr GetChannelName;
     GetChannelNameFromStringPtr GetChannelNameFromString;
     GetErrorPtr GetError;
     GetHistoryRAMSampleCountPtr GetHistoryRAMSampleCount;
@@ -338,7 +348,9 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     ReadSequencerFlagPtr ReadSequencerFlag;
     ReadSequencerRegisterPtr ReadSequencerRegister;
     ResetPtr Reset;
+    ResetAttributePtr ResetAttribute;
     ResetDevicePtr ResetDevice;
+    SelectFunctionPtr SelectFunction;
     SelfCalibratePtr SelfCalibrate;
     SelfTestPtr SelfTest;
     SendSoftwareEdgeTriggerPtr SendSoftwareEdgeTrigger;
