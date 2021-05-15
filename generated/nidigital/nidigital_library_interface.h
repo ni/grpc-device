@@ -20,6 +20,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus ApplyLevelsAndTiming(ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins) = 0;
   virtual ViStatus ApplyTDROffsets(ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]) = 0;
   virtual ViStatus BurstPattern(ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout) = 0;
+  virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClockGeneratorAbort(ViSession vi, ViConstString channelList) = 0;
   virtual ViStatus ClockGeneratorGenerateClock(ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction) = 0;
   virtual ViStatus ClockGeneratorInitiate(ViSession vi, ViConstString channelList) = 0;
@@ -74,6 +75,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64* value) = 0;
   virtual ViStatus GetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]) = 0;
+  virtual ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[]) = 0;
   virtual ViStatus GetChannelNameFromString(ViSession vi, ViConstString indices, ViInt32 nameBufferSize, ViChar names[]) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]) = 0;
   virtual ViStatus GetHistoryRAMSampleCount(ViSession vi, ViConstString site, ViInt64* sampleCount) = 0;
@@ -109,7 +111,9 @@ class NiDigitalLibraryInterface {
   virtual ViStatus ReadSequencerFlag(ViSession vi, ViConstString flag, ViBoolean* value) = 0;
   virtual ViStatus ReadSequencerRegister(ViSession vi, ViConstString reg, ViInt32* value) = 0;
   virtual ViStatus Reset(ViSession vi) = 0;
+  virtual ViStatus ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId) = 0;
   virtual ViStatus ResetDevice(ViSession vi) = 0;
+  virtual ViStatus SelectFunction(ViSession vi, ViConstString channelList, ViInt32 function) = 0;
   virtual ViStatus SelfCalibrate(ViSession vi) = 0;
   virtual ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048]) = 0;
   virtual ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier) = 0;
