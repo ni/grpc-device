@@ -22,6 +22,7 @@ class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   MOCK_METHOD(ViStatus, ApplyLevelsAndTiming, (ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins), (override));
   MOCK_METHOD(ViStatus, ApplyTDROffsets, (ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]), (override));
   MOCK_METHOD(ViStatus, BurstPattern, (ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout), (override));
+  MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClockGeneratorAbort, (ViSession vi, ViConstString channelList), (override));
   MOCK_METHOD(ViStatus, ClockGeneratorGenerateClock, (ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction), (override));
   MOCK_METHOD(ViStatus, ClockGeneratorInitiate, (ViSession vi, ViConstString channelList), (override));
@@ -76,6 +77,7 @@ class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   MOCK_METHOD(ViStatus, GetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViSession, (ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 bufferSize, ViChar value[]), (override));
+  MOCK_METHOD(ViStatus, GetChannelName, (ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[]), (override));
   MOCK_METHOD(ViStatus, GetChannelNameFromString, (ViSession vi, ViConstString indices, ViInt32 nameBufferSize, ViChar names[]), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]), (override));
   MOCK_METHOD(ViStatus, GetHistoryRAMSampleCount, (ViSession vi, ViConstString site, ViInt64* sampleCount), (override));
@@ -111,7 +113,9 @@ class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   MOCK_METHOD(ViStatus, ReadSequencerFlag, (ViSession vi, ViConstString flag, ViBoolean* value), (override));
   MOCK_METHOD(ViStatus, ReadSequencerRegister, (ViSession vi, ViConstString reg, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, Reset, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, ResetAttribute, (ViSession vi, ViConstString channelName, ViAttr attributeId), (override));
   MOCK_METHOD(ViStatus, ResetDevice, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, SelectFunction, (ViSession vi, ViConstString channelList, ViInt32 function), (override));
   MOCK_METHOD(ViStatus, SelfCalibrate, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* testResult, ViChar testMessage[2048]), (override));
   MOCK_METHOD(ViStatus, SendSoftwareEdgeTrigger, (ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier), (override));
