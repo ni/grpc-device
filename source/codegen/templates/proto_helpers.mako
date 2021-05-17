@@ -62,34 +62,33 @@ enum ${enum_name} {
 %>\
 % for type_name in attribute_enums:
 <%
-  type_enums = attribute_enums[type_name]
-  type_enum_name = service_class_prefix + type_name + "Enum"
-  # allow alias if we have more than one enums (more than one UNSPECIFIED enum values) or
-  # the only enum we have has duplicate values
-  allos_alias_option = len(type_enums) > 1 or proto_helpers.should_allow_alias(enums[list(type_enums)[0]])
+  type_enums = sorted(attribute_enums[type_name])
+  type_enum_name = service_class_prefix + type_name[2:] + "AttributeValues"
+  value_name_type_prefix = (f"{service_class_prefix.upper()}_{type_name[2:]}_VAL").upper()
+  enums_to_create = { value_name_type_prefix + "_UNSPECIFIED": 0 }
+  for enum_name in type_enums:
+    enum_value_prefix = value_name_type_prefix + "_" + common_helpers.pascal_to_snake(enum_name)
+    enum = enums[enum_name]
+    nonint_index = 1
+    for value in enum["values"]:
+      value_name_suffix = value['name'].replace(f"{service_class_prefix.upper()}_VAL_", "")
+      value_name = f"{enum_value_prefix}_{value_name_suffix}".upper()
+      if enum.get("generate-mappings", False):
+        value_value = nonint_index
+        nonint_index = nonint_index + 1
+      else:
+        value_value = value["value"]
+      if value_name in enums_to_create:
+        raise Exception(f"Multiple definitions for `{value_name}` enum value.")
+      enums_to_create[value_name] = value_value
+  allow_alias = proto_helpers.should_allow_alias_for_dictionary(enums_to_create)
 %>\
-
-enum ${type_enum_name}{
-%   if allos_alias_option:
+enum ${type_enum_name} {
+%   if allow_alias:
   option allow_alias = true;
 %   endif
-%   for enum_name in type_enums:
-<%
-  enum_value_prefix = common_helpers.pascal_to_snake(type_enum_name + enum_name).upper()
-  enum = enums[enum_name]
-  nonint_index = 1
-%>\
-  ${enum_value_prefix}_UNSPECIFIED = 0;
-%      for value in enum["values"]:
-%        if enum.get("generate-mappings", False):
-  ${enum_value_prefix}_${value["name"]} = ${nonint_index};
-<%
-    nonint_index = nonint_index + 1
-%>\
-%        else:
-  ${enum_value_prefix}_${value["name"]} = ${value["value"]};
-%        endif
-%      endfor
+%   for enum_value_name in enums_to_create:
+  ${enum_value_name} = ${enums_to_create[enum_value_name]};
 %   endfor
 }
 
