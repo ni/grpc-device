@@ -22,11 +22,11 @@ enum ${service_class_prefix}Attributes {
 </%def>
 
 ## Define enums in the proto for each metadata enum referenced in a proto message.
-<%def name="define_enums(used_enums)">\
+<%def name="define_function_enums(function_enums)">\
 <%
   enums = data["enums"]
 %>\
-% for enum_name in (e for e in enums if e in used_enums):
+% for enum_name in (e for e in enums if e in function_enums):
 <%
   enum_value_prefix = common_helpers.pascal_to_snake(enum_name).upper()
   enum = enums[enum_name]
@@ -47,6 +47,48 @@ enum ${enum_name} {
 %     else:
   ${enum_value_prefix}_${value["name"]} = ${value["value"]};
 %     endif
+%   endfor
+}
+
+% endfor
+</%def>
+
+## Define enums in the proto per attribute type that uses enum values
+<%def name="define_attribute_values_enums(attribute_enums)">\
+<%
+  config = data["config"]
+  service_class_prefix = config["service_class_prefix"]
+  enums = data["enums"]
+%>\
+% for type_name in attribute_enums:
+<%
+  type_enum_name = service_class_prefix + type_name[2:] + "AttributeValues"
+  enum_value_type_specific_prefix = (f"{service_class_prefix.upper()}_{type_name[2:]}_VAL").upper()
+  values_to_create = { enum_value_type_specific_prefix + "_UNSPECIFIED": 0 }
+  for enum_name in sorted(attribute_enums[type_name]):
+    enum_value_prefix = enum_value_type_specific_prefix + "_" + common_helpers.pascal_to_snake(enum_name)
+    enum = enums[enum_name]
+    nonint_index = 1
+    for value in enum["values"]:
+      enum_value_suffix = value['name'].replace(f"{service_class_prefix.upper()}_VAL_", "")
+      value_name = f"{enum_value_prefix}_{enum_value_suffix}".upper()
+      if enum.get("generate-mappings", False):
+        value_value = nonint_index
+        nonint_index = nonint_index + 1
+      else:
+        value_value = value["value"]
+      if value_name in values_to_create:
+        raise Exception(f"Multiple definitions for `{value_name}` enum value.")
+      values_to_create[value_name] = value_value
+  enum_values = values_to_create.values()
+  allow_alias = len(enum_values) != len(set(enum_values))
+%>\
+enum ${type_enum_name} {
+%   if allow_alias:
+  option allow_alias = true;
+%   endif
+%   for name in values_to_create:
+  ${name} = ${values_to_create[name]};
 %   endfor
 }
 
