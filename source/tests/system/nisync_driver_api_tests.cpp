@@ -892,6 +892,7 @@ TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViString_ReturnsValue)
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
   EXPECT_STREQ(expectedValue, value.c_str());
+  EXPECT_EQ(strlen(expectedValue), value.length());
 }
 
 TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViBoolean_ReturnsValue)
