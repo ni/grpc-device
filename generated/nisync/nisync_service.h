@@ -52,6 +52,7 @@ public:
   ::grpc::Status EnableTimeStampTrigger(::grpc::ServerContext* context, const EnableTimeStampTriggerRequest* request, EnableTimeStampTriggerResponse* response) override;
   ::grpc::Status EnableTimeStampTriggerWithDecimation(::grpc::ServerContext* context, const EnableTimeStampTriggerWithDecimationRequest* request, EnableTimeStampTriggerWithDecimationResponse* response) override;
   ::grpc::Status ReadTriggerTimeStamp(::grpc::ServerContext* context, const ReadTriggerTimeStampRequest* request, ReadTriggerTimeStampResponse* response) override;
+  ::grpc::Status ReadMultipleTriggerTimeStamp(::grpc::ServerContext* context, const ReadMultipleTriggerTimeStampRequest* request, ReadMultipleTriggerTimeStampResponse* response) override;
   ::grpc::Status DisableTimeStampTrigger(::grpc::ServerContext* context, const DisableTimeStampTriggerRequest* request, DisableTimeStampTriggerResponse* response) override;
   ::grpc::Status CreateClock(::grpc::ServerContext* context, const CreateClockRequest* request, CreateClockResponse* response) override;
   ::grpc::Status ClearClock(::grpc::ServerContext* context, const ClearClockRequest* request, ClearClockResponse* response) override;

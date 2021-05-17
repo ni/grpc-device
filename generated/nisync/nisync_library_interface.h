@@ -43,6 +43,7 @@ class NiSyncLibraryInterface {
   virtual ViStatus EnableTimeStampTrigger(ViSession vi, ViConstString terminal, ViInt32 activeEdge) = 0;
   virtual ViStatus EnableTimeStampTriggerWithDecimation(ViSession vi, ViConstString terminal, ViInt32 activeEdge, ViUInt32 decimationCount) = 0;
   virtual ViStatus ReadTriggerTimeStamp(ViSession vi, ViConstString terminal, ViReal64 timeout, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds, ViInt32* detectedEdge) = 0;
+  virtual ViStatus ReadMultipleTriggerTimeStamp(ViSession vi, ViConstString terminal, ViUInt32 timestampsToRead, ViReal64 timeout, ViUInt32 timeSecondsBuffer[], ViUInt32 timeNanosecondsBuffer[], ViUInt16 timeFractionalNanosecondsBuffer[], ViInt32 detectedEdgeBuffer[], ViUInt32* timestampsRead) = 0;
   virtual ViStatus DisableTimeStampTrigger(ViSession vi, ViConstString terminal) = 0;
   virtual ViStatus CreateClock(ViSession vi, ViConstString terminal, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds) = 0;
   virtual ViStatus ClearClock(ViSession vi, ViConstString terminal) = 0;

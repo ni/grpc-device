@@ -45,6 +45,7 @@ class NiSyncMockLibrary : public nisync_grpc::NiSyncLibraryInterface {
   MOCK_METHOD(ViStatus, EnableTimeStampTrigger, (ViSession vi, ViConstString terminal, ViInt32 activeEdge), (override));
   MOCK_METHOD(ViStatus, EnableTimeStampTriggerWithDecimation, (ViSession vi, ViConstString terminal, ViInt32 activeEdge, ViUInt32 decimationCount), (override));
   MOCK_METHOD(ViStatus, ReadTriggerTimeStamp, (ViSession vi, ViConstString terminal, ViReal64 timeout, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds, ViInt32* detectedEdge), (override));
+  MOCK_METHOD(ViStatus, ReadMultipleTriggerTimeStamp, (ViSession vi, ViConstString terminal, ViUInt32 timestampsToRead, ViReal64 timeout, ViUInt32 timeSecondsBuffer[], ViUInt32 timeNanosecondsBuffer[], ViUInt16 timeFractionalNanosecondsBuffer[], ViInt32 detectedEdgeBuffer[], ViUInt32* timestampsRead), (override));
   MOCK_METHOD(ViStatus, DisableTimeStampTrigger, (ViSession vi, ViConstString terminal), (override));
   MOCK_METHOD(ViStatus, CreateClock, (ViSession vi, ViConstString terminal, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds), (override));
   MOCK_METHOD(ViStatus, ClearClock, (ViSession vi, ViConstString terminal), (override));

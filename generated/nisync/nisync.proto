@@ -44,6 +44,7 @@ service NiSync {
   rpc EnableTimeStampTrigger(EnableTimeStampTriggerRequest) returns (EnableTimeStampTriggerResponse);
   rpc EnableTimeStampTriggerWithDecimation(EnableTimeStampTriggerWithDecimationRequest) returns (EnableTimeStampTriggerWithDecimationResponse);
   rpc ReadTriggerTimeStamp(ReadTriggerTimeStampRequest) returns (ReadTriggerTimeStampResponse);
+  rpc ReadMultipleTriggerTimeStamp(ReadMultipleTriggerTimeStampRequest) returns (ReadMultipleTriggerTimeStampResponse);
   rpc DisableTimeStampTrigger(DisableTimeStampTriggerRequest) returns (DisableTimeStampTriggerResponse);
   rpc CreateClock(CreateClockRequest) returns (CreateClockResponse);
   rpc ClearClock(ClearClockRequest) returns (ClearClockResponse);
@@ -486,6 +487,22 @@ message ReadTriggerTimeStampResponse {
   uint32 time_nanoseconds = 3;
   uint32 time_fractional_nanoseconds = 4;
   sint32 detected_edge = 5;
+}
+
+message ReadMultipleTriggerTimeStampRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+  uint32 timestamps_to_read = 3;
+  double timeout = 4;
+}
+
+message ReadMultipleTriggerTimeStampResponse {
+  int32 status = 1;
+  repeated uint32 time_seconds_buffer = 2;
+  repeated uint32 time_nanoseconds_buffer = 3;
+  repeated uint32 time_fractional_nanoseconds_buffer = 4;
+  repeated sint32 detected_edge_buffer = 5;
+  uint32 timestamps_read = 6;
 }
 
 message DisableTimeStampTriggerRequest {

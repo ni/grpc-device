@@ -46,6 +46,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus EnableTimeStampTrigger(ViSession vi, ViConstString terminal, ViInt32 activeEdge);
   ViStatus EnableTimeStampTriggerWithDecimation(ViSession vi, ViConstString terminal, ViInt32 activeEdge, ViUInt32 decimationCount);
   ViStatus ReadTriggerTimeStamp(ViSession vi, ViConstString terminal, ViReal64 timeout, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds, ViInt32* detectedEdge);
+  ViStatus ReadMultipleTriggerTimeStamp(ViSession vi, ViConstString terminal, ViUInt32 timestampsToRead, ViReal64 timeout, ViUInt32 timeSecondsBuffer[], ViUInt32 timeNanosecondsBuffer[], ViUInt16 timeFractionalNanosecondsBuffer[], ViInt32 detectedEdgeBuffer[], ViUInt32* timestampsRead);
   ViStatus DisableTimeStampTrigger(ViSession vi, ViConstString terminal);
   ViStatus CreateClock(ViSession vi, ViConstString terminal, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds);
   ViStatus ClearClock(ViSession vi, ViConstString terminal);
@@ -117,6 +118,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using EnableTimeStampTriggerPtr = ViStatus (*)(ViSession vi, ViConstString terminal, ViInt32 activeEdge);
   using EnableTimeStampTriggerWithDecimationPtr = ViStatus (*)(ViSession vi, ViConstString terminal, ViInt32 activeEdge, ViUInt32 decimationCount);
   using ReadTriggerTimeStampPtr = ViStatus (*)(ViSession vi, ViConstString terminal, ViReal64 timeout, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds, ViInt32* detectedEdge);
+  using ReadMultipleTriggerTimeStampPtr = ViStatus (*)(ViSession vi, ViConstString terminal, ViUInt32 timestampsToRead, ViReal64 timeout, ViUInt32 timeSecondsBuffer[], ViUInt32 timeNanosecondsBuffer[], ViUInt16 timeFractionalNanosecondsBuffer[], ViInt32 detectedEdgeBuffer[], ViUInt32* timestampsRead);
   using DisableTimeStampTriggerPtr = ViStatus (*)(ViSession vi, ViConstString terminal);
   using CreateClockPtr = ViStatus (*)(ViSession vi, ViConstString terminal, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds);
   using ClearClockPtr = ViStatus (*)(ViSession vi, ViConstString terminal);
@@ -188,6 +190,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
     EnableTimeStampTriggerPtr EnableTimeStampTrigger;
     EnableTimeStampTriggerWithDecimationPtr EnableTimeStampTriggerWithDecimation;
     ReadTriggerTimeStampPtr ReadTriggerTimeStamp;
+    ReadMultipleTriggerTimeStampPtr ReadMultipleTriggerTimeStamp;
     DisableTimeStampTriggerPtr DisableTimeStampTrigger;
     CreateClockPtr CreateClock;
     ClearClockPtr ClearClock;
