@@ -562,6 +562,88 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
+  ::grpc::Status call_EnableTimeStampTrigger(
+     ViConstString terminal,
+     ViInt32 activeEdge,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::EnableTimeStampTriggerRequest request;
+    nisync::EnableTimeStampTriggerResponse response;
+    request.set_terminal(terminal);
+    request.set_active_edge(activeEdge);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->EnableTimeStampTrigger(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_ReadTriggerTimeStamp(
+     ViConstString terminal,
+     ViReal64 timeout,
+     ViUInt32* timeSeconds,
+     ViUInt32* timeNanoseconds,
+     ViUInt16* timeFractionalNanoseconds,
+     ViInt32* detectedEdge,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::ReadTriggerTimeStampRequest request;
+    nisync::ReadTriggerTimeStampResponse response;
+    request.set_terminal(terminal);
+    request.set_timeout(timeout);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->ReadTriggerTimeStamp(&clientContext, request, &response);
+    *timeSeconds = response.time_seconds();
+    *timeNanoseconds = response.time_nanoseconds();
+    *timeFractionalNanoseconds = response.time_fractional_nanoseconds();
+    *detectedEdge = response.detected_edge();
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_ReadMultipleTriggerTimeStamp(
+     ViConstString terminal,
+     ViReal64 timeout,
+     ViUInt32 timestampsToRead,
+     ViUInt32* timeSecondsBuffer,
+     ViUInt32* timeNanosecondsBuffer,
+     ViUInt16* timeFractionalNanosecondsBuffer,
+     ViInt32* detectedEdgeBuffer,
+     ViUInt32* timestampsRead,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::ReadMultipleTriggerTimeStampRequest request;
+    nisync::ReadMultipleTriggerTimeStampResponse response;
+    request.set_terminal(terminal);
+    request.set_timeout(timeout);
+    request.set_timestamps_to_read(timestampsToRead);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->ReadMultipleTriggerTimeStamp(&clientContext, request, &response);
+    *timestampsRead = response.timestamps_read();
+    memcpy(timeSecondsBuffer, response.time_seconds_buffer().data(), *timestampsRead);
+    memcpy(timeNanosecondsBuffer, response.time_nanoseconds_buffer().data(), *timestampsRead);
+    memcpy(timeFractionalNanosecondsBuffer, response.time_fractional_nanoseconds_buffer().data(), *timestampsRead);
+    memcpy(detectedEdgeBuffer, response.detected_edge_buffer().data(), *timestampsRead);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
+  ::grpc::Status call_DisableTimeStampTrigger(
+     ViConstString terminal,
+     ViStatus* viStatusOut)
+  {
+    ::grpc::ClientContext clientContext;
+    nisync::DisableTimeStampTriggerRequest request;
+    nisync::DisableTimeStampTriggerResponse response;
+    request.set_terminal(terminal);
+    request.mutable_vi()->set_id(driver_session_->id());
+    auto grpcStatus = GetStub()->DisableTimeStampTrigger(&clientContext, request, &response);
+    *viStatusOut = response.status();
+    return grpcStatus;
+  }
+
   ViUInt32 GetCurrentBoardTimeSeconds()
   {
     ViStatus viStatus;
