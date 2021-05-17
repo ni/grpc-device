@@ -622,10 +622,10 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->ReadMultipleTriggerTimeStamp(&clientContext, request, &response);
     *timestampsRead = response.timestamps_read();
-    memcpy(timeSecondsBuffer, response.time_seconds_buffer().data(), *timestampsRead);
-    memcpy(timeNanosecondsBuffer, response.time_nanoseconds_buffer().data(), *timestampsRead);
-    memcpy(timeFractionalNanosecondsBuffer, response.time_fractional_nanoseconds_buffer().data(), *timestampsRead);
-    memcpy(detectedEdgeBuffer, response.detected_edge_buffer().data(), *timestampsRead);
+    std::copy(response.time_seconds_buffer().begin(), response.time_seconds_buffer().end(), timeSecondsBuffer);
+    std::copy(response.time_nanoseconds_buffer().begin(), response.time_nanoseconds_buffer().end(), timeNanosecondsBuffer);
+    std::copy(response.time_fractional_nanoseconds_buffer().begin(), response.time_fractional_nanoseconds_buffer().end(), timeFractionalNanosecondsBuffer);
+    std::copy(response.detected_edge_buffer().begin(), response.detected_edge_buffer().end(), detectedEdgeBuffer);
     *viStatusOut = response.status();
     return grpcStatus;
   }
@@ -1246,7 +1246,12 @@ TEST_F(NiSyncDriver6683Test, CreateFutureTimeEventWithInvalidTerminal_ReturnsErr
      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
+  // Bug 1462752: 6683 CreateFutureTimeEvent has different error behavior on Linux RT
+  #if defined(_MSC_VER)
+  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  #else
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
+  #endif
 }
 
 TEST_F(NiSyncDriver6683Test, ClearFutureTimeEventsNotReserved_ReturnsError)
@@ -1308,7 +1313,12 @@ TEST_F(NiSyncDriver6683Test, CreateClockWithInvalidTerminal_ReturnsError)
      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
+  // Bug 1462754: 6683 CreateClock has different error behavior on Linux RT
+  #if defined(_MSC_VER)
+  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  #else
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
+  #endif
 }
 
 TEST_F(NiSyncDriver6683Test, ClearClockNotReserved_ReturnsError)
@@ -1333,6 +1343,159 @@ TEST_F(NiSyncDriver6683Test, GetTimeReferenceNames_ReturnsSuccess)
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_GT(timeReferenceNames.length(), 0);
   EXPECT_EQ(VI_SUCCESS, viStatus);
+}
+
+TEST_F(NiSyncDriver6683Test, EnableTimeStampTrigger_ReturnsSuccess)
+{
+  ViStatus viStatusEnable;
+  auto grpcStatusEnable = call_EnableTimeStampTrigger(
+     NISYNC_VAL_PFI1, // terminalName
+     NISYNC_VAL_EDGE_RISING, // activeEdge
+     &viStatusEnable);
+  EXPECT_TRUE(grpcStatusEnable.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusEnable);
+
+  ViStatus viStatusDisable;
+  auto grpcStatusDisable = call_DisableTimeStampTrigger(
+     NISYNC_VAL_PFI1,
+     &viStatusDisable);
+  EXPECT_TRUE(grpcStatusDisable.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusDisable);
+}
+
+TEST_F(NiSyncDriver6683Test, EnableTimeStampTriggerWithInvalidTerminal_ReturnsError)
+{
+  ViStatus viStatus;
+  auto grpcStatus = call_EnableTimeStampTrigger(
+     NISYNC_VAL_GND, // terminalName
+     NISYNC_VAL_EDGE_RISING, // activeEdge
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+}
+
+TEST_F(NiSyncDriver6683Test, DisableTimeStampTriggerNotReserved_ReturnsError)
+{
+  ViStatus viStatus;
+  auto grpcStatus = call_DisableTimeStampTrigger(
+     NISYNC_VAL_PFI1, // terminalName
+     &viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
+}
+
+TEST_F(NiSyncDriver6683Test, ReadTriggerTimeStamp_WhenNoTriggerOccurs_ReturnsTimeoutError)
+{
+  ViStatus viStatusEnable;
+  auto grpcStatusEnable = call_EnableTimeStampTrigger(
+     NISYNC_VAL_PFI1, // terminalName
+     NISYNC_VAL_EDGE_RISING, // activeEdge
+     &viStatusEnable);
+  EXPECT_TRUE(grpcStatusEnable.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusEnable);
+
+  ViStatus viStatusRead;
+  ViReal64 timeout = 0.1;
+  ViUInt32 timeSeconds, timeNanoseconds;
+  ViUInt16 timeFractionalNanoseconds;
+  ViInt32 detectedEdge;
+  auto grpcStatusRead = call_ReadTriggerTimeStamp(
+     NISYNC_VAL_PFI1,
+     timeout,
+     &timeSeconds,
+     &timeNanoseconds,
+     &timeFractionalNanoseconds,
+     &detectedEdge,
+     &viStatusRead);
+  EXPECT_TRUE(grpcStatusRead.ok());
+  EXPECT_EQ(NISYNC_ERROR_DRIVER_TIMEOUT, viStatusRead);
+}
+
+TEST_F(NiSyncDriver6683Test, ReadMultipleTriggerTimeStamp_WhenNoTriggerOccurs_ReturnsTimeoutError)
+{
+  ViStatus viStatusEnable;
+  auto grpcStatusEnable = call_EnableTimeStampTrigger(
+     NISYNC_VAL_PFI1, // terminalName
+     NISYNC_VAL_EDGE_RISING, // activeEdge
+     &viStatusEnable);
+  EXPECT_TRUE(grpcStatusEnable.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusEnable);
+
+  ViStatus viStatusRead;
+  ViReal64 timeout = 0.1;
+  ViUInt32 timestampsToRead = 1;
+  ViUInt32 timeSeconds, timeNanoseconds;
+  ViUInt16 timeFractionalNanoseconds;
+  ViInt32 detectedEdge;
+  ViUInt32 timestampsRead;
+  auto grpcStatusRead = call_ReadMultipleTriggerTimeStamp(
+     NISYNC_VAL_PFI1,
+     timeout,
+     timestampsToRead,
+     &timeSeconds,
+     &timeNanoseconds,
+     &timeFractionalNanoseconds,
+     &detectedEdge,
+     &timestampsRead,
+     &viStatusRead);
+  EXPECT_TRUE(grpcStatusRead.ok());
+  EXPECT_EQ(NISYNC_ERROR_DRIVER_TIMEOUT, viStatusRead);
+}
+
+TEST_F(NiSyncDriver6683Test, ReadMultipleTriggerTimeStamp_WhenFiveTriggersOccur_ReturnsFiveTimeStamps)
+{
+  auto terminal = NISYNC_VAL_PFI1;
+
+  // Ensure terminal level is low
+  ViStatus viStatusCreate;
+  auto grpcStatusCreate = call_CreateFutureTimeEvent(terminal, NISYNC_VAL_LEVEL_LOW, 0, 0, 0, &viStatusCreate);
+  ASSERT_TRUE(grpcStatusCreate.ok());
+  ASSERT_EQ(VI_SUCCESS, viStatusCreate);
+
+  // Enable timestamping on terminal
+  ViStatus viStatusEnable;
+  auto grpcStatusEnable = call_EnableTimeStampTrigger(
+     NISYNC_VAL_PFI1, // terminalName
+     NISYNC_VAL_EDGE_RISING, // activeEdge
+     &viStatusEnable);
+  ASSERT_TRUE(grpcStatusEnable.ok());
+  ASSERT_EQ(VI_SUCCESS, viStatusEnable);
+
+  // Create 5 pulses
+  for (int i = 0; i < 10; ++i) {
+    SCOPED_TRACE(::testing::Message("i=") << i);
+    const ViInt32 level = (i & 1) ? NISYNC_VAL_LEVEL_LOW : NISYNC_VAL_LEVEL_HIGH;
+    grpcStatusCreate = call_CreateFutureTimeEvent(terminal, level, 0, 0, 0, &viStatusCreate);
+    ASSERT_TRUE(grpcStatusCreate.ok());
+    ASSERT_EQ(VI_SUCCESS, viStatusCreate);
+  }
+
+  ViStatus viStatusRead;
+  ViReal64 timeout = 0.0;
+  const ViUInt32 timestampsToRead = 5;
+  ViUInt32 timeSeconds[timestampsToRead] = {}, timeNanoseconds[timestampsToRead] = {};
+  ViUInt16 timeFractionalNanoseconds[timestampsToRead] = {};
+  ViInt32 detectedEdge[timestampsToRead] = {};
+  ViUInt32 timestampsRead = 0;
+  auto grpcStatusRead = call_ReadMultipleTriggerTimeStamp(
+     NISYNC_VAL_PFI1,
+     timeout,
+     timestampsToRead,
+     timeSeconds,
+     timeNanoseconds,
+     timeFractionalNanoseconds,
+     detectedEdge,
+     &timestampsRead,
+     &viStatusRead);
+  EXPECT_TRUE(grpcStatusRead.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatusRead);
+  for (ViUInt32 i = 0; i < timestampsRead; ++i) {
+    SCOPED_TRACE(::testing::Message("i=") << i);
+    EXPECT_NE(0, timeSeconds[i]);
+    EXPECT_EQ(NISYNC_VAL_EDGE_RISING, detectedEdge[i]);
+  }
 }
 
 }  // namespace system
