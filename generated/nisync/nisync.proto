@@ -18,36 +18,73 @@ import "session.proto";
 service NiSync {
   rpc Init(InitRequest) returns (InitResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
+  rpc Reset(ResetRequest) returns (ResetResponse);
+  rpc PersistConfig(PersistConfigRequest) returns (PersistConfigResponse);
+  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
   rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
+  rpc ConnectTrigTerminals(ConnectTrigTerminalsRequest) returns (ConnectTrigTerminalsResponse);
+  rpc DisconnectTrigTerminals(DisconnectTrigTerminalsRequest) returns (DisconnectTrigTerminalsResponse);
+  rpc ConnectSWTrigToTerminal(ConnectSWTrigToTerminalRequest) returns (ConnectSWTrigToTerminalResponse);
+  rpc DisconnectSWTrigFromTerminal(DisconnectSWTrigFromTerminalRequest) returns (DisconnectSWTrigFromTerminalResponse);
   rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
   rpc ConnectClkTerminals(ConnectClkTerminalsRequest) returns (ConnectClkTerminalsResponse);
   rpc DisconnectClkTerminals(DisconnectClkTerminalsRequest) returns (DisconnectClkTerminalsResponse);
-  rpc ConnectSWTrigToTerminal(ConnectSWTrigToTerminalRequest) returns (ConnectSWTrigToTerminalResponse);
-  rpc DisconnectSWTrigFromTerminal(DisconnectSWTrigFromTerminalRequest) returns (DisconnectSWTrigFromTerminalResponse);
-  rpc ConnectTrigTerminals(ConnectTrigTerminalsRequest) returns (ConnectTrigTerminalsResponse);
-  rpc DisconnectTrigTerminals(DisconnectTrigTerminalsRequest) returns (DisconnectTrigTerminalsResponse);
+  rpc MeasureFrequency(MeasureFrequencyRequest) returns (MeasureFrequencyResponse);
   rpc MeasureFrequencyEx(MeasureFrequencyExRequest) returns (MeasureFrequencyExResponse);
+  rpc Start1588(Start1588Request) returns (Start1588Response);
+  rpc Stop1588(Stop1588Request) returns (Stop1588Response);
+  rpc Start8021AS(Start8021ASRequest) returns (Start8021ASResponse);
+  rpc Stop8021AS(Stop8021ASRequest) returns (Stop8021ASResponse);
   rpc SetTime(SetTimeRequest) returns (SetTimeResponse);
   rpc GetTime(GetTimeRequest) returns (GetTimeResponse);
+  rpc ResetFrequency(ResetFrequencyRequest) returns (ResetFrequencyResponse);
+  rpc CreateFutureTimeEvent(CreateFutureTimeEventRequest) returns (CreateFutureTimeEventResponse);
+  rpc ClearFutureTimeEvents(ClearFutureTimeEventsRequest) returns (ClearFutureTimeEventsResponse);
+  rpc EnableTimeStampTrigger(EnableTimeStampTriggerRequest) returns (EnableTimeStampTriggerResponse);
+  rpc EnableTimeStampTriggerWithDecimation(EnableTimeStampTriggerWithDecimationRequest) returns (EnableTimeStampTriggerWithDecimationResponse);
+  rpc ReadTriggerTimeStamp(ReadTriggerTimeStampRequest) returns (ReadTriggerTimeStampResponse);
+  rpc DisableTimeStampTrigger(DisableTimeStampTriggerRequest) returns (DisableTimeStampTriggerResponse);
+  rpc CreateClock(CreateClockRequest) returns (CreateClockResponse);
+  rpc ClearClock(ClearClockRequest) returns (ClearClockResponse);
   rpc SetTimeReferenceFreeRunning(SetTimeReferenceFreeRunningRequest) returns (SetTimeReferenceFreeRunningResponse);
   rpc SetTimeReferenceGPS(SetTimeReferenceGPSRequest) returns (SetTimeReferenceGPSResponse);
   rpc SetTimeReferenceIRIG(SetTimeReferenceIRIGRequest) returns (SetTimeReferenceIRIGResponse);
   rpc SetTimeReferencePPS(SetTimeReferencePPSRequest) returns (SetTimeReferencePPSResponse);
   rpc SetTimeReference1588OrdinaryClock(SetTimeReference1588OrdinaryClockRequest) returns (SetTimeReference1588OrdinaryClockResponse);
   rpc SetTimeReference8021AS(SetTimeReference8021ASRequest) returns (SetTimeReference8021ASResponse);
-  rpc CreateFutureTimeEvent(CreateFutureTimeEventRequest) returns (CreateFutureTimeEventResponse);
-  rpc ClearFutureTimeEvents(ClearFutureTimeEventsRequest) returns (ClearFutureTimeEventsResponse);
-  rpc CreateClock(CreateClockRequest) returns (CreateClockResponse);
-  rpc ClearClock(ClearClockRequest) returns (ClearClockResponse);
+  rpc EnableGPSTimestamping(EnableGPSTimestampingRequest) returns (EnableGPSTimestampingResponse);
+  rpc EnableIRIGTimestamping(EnableIRIGTimestampingRequest) returns (EnableIRIGTimestampingResponse);
+  rpc ReadLastGPSTimestamp(ReadLastGPSTimestampRequest) returns (ReadLastGPSTimestampResponse);
+  rpc ReadLastIRIGTimestamp(ReadLastIRIGTimestampRequest) returns (ReadLastIRIGTimestampResponse);
+  rpc DisableGPSTimestamping(DisableGPSTimestampingRequest) returns (DisableGPSTimestampingResponse);
+  rpc DisableIRIGTimestamping(DisableIRIGTimestampingRequest) returns (DisableIRIGTimestampingResponse);
+  rpc GetVelocity(GetVelocityRequest) returns (GetVelocityResponse);
+  rpc GetLocation(GetLocationRequest) returns (GetLocationResponse);
   rpc GetTimeReferenceNames(GetTimeReferenceNamesRequest) returns (GetTimeReferenceNamesResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
-  rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
-  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
-  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
-  rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
-  rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
+  rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
+  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
+  rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
+  rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
+  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
+  rpc GetExtCalLastDateAndTime(GetExtCalLastDateAndTimeRequest) returns (GetExtCalLastDateAndTimeResponse);
+  rpc GetExtCalLastTemp(GetExtCalLastTempRequest) returns (GetExtCalLastTempResponse);
+  rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
+  rpc ChangeExtCalPassword(ChangeExtCalPasswordRequest) returns (ChangeExtCalPasswordResponse);
+  rpc ReadCurrentTemperature(ReadCurrentTemperatureRequest) returns (ReadCurrentTemperatureResponse);
+  rpc CalGetOscillatorVoltage(CalGetOscillatorVoltageRequest) returns (CalGetOscillatorVoltageResponse);
+  rpc CalGetClk10PhaseVoltage(CalGetClk10PhaseVoltageRequest) returns (CalGetClk10PhaseVoltageResponse);
+  rpc CalGetDDSStartPulsePhaseVoltage(CalGetDDSStartPulsePhaseVoltageRequest) returns (CalGetDDSStartPulsePhaseVoltageResponse);
+  rpc CalGetDDSInitialPhase(CalGetDDSInitialPhaseRequest) returns (CalGetDDSInitialPhaseResponse);
+  rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
+  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
+  rpc CalAdjustOscillatorVoltage(CalAdjustOscillatorVoltageRequest) returns (CalAdjustOscillatorVoltageResponse);
+  rpc CalAdjustClk10PhaseVoltage(CalAdjustClk10PhaseVoltageRequest) returns (CalAdjustClk10PhaseVoltageResponse);
+  rpc CalAdjustDDSStartPulsePhaseVoltage(CalAdjustDDSStartPulsePhaseVoltageRequest) returns (CalAdjustDDSStartPulsePhaseVoltageResponse);
+  rpc CalAdjustDDSInitialPhase(CalAdjustDDSInitialPhaseRequest) returns (CalAdjustDDSInitialPhaseResponse);
 }
 
 enum NiSyncAttributes {
@@ -182,6 +219,42 @@ message CloseResponse {
   int32 status = 1;
 }
 
+message ErrorMessageRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
+message ResetRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetResponse {
+  int32 status = 1;
+}
+
+message PersistConfigRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message PersistConfigResponse {
+  int32 status = 1;
+}
+
+message SelfTestRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SelfTestResponse {
+  int32 status = 1;
+  sint32 self_test_result = 2;
+  string self_test_message = 3;
+}
+
 message RevisionQueryRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -190,6 +263,53 @@ message RevisionQueryResponse {
   int32 status = 1;
   string driver_revision = 2;
   string firmware_revision = 3;
+}
+
+message ConnectTrigTerminalsRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+  string sync_clock = 4;
+  sint32 invert = 5;
+  sint32 update_edge = 6;
+}
+
+message ConnectTrigTerminalsResponse {
+  int32 status = 1;
+}
+
+message DisconnectTrigTerminalsRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+}
+
+message DisconnectTrigTerminalsResponse {
+  int32 status = 1;
+}
+
+message ConnectSWTrigToTerminalRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+  string sync_clock = 4;
+  sint32 invert = 5;
+  sint32 update_edge = 6;
+  double delay = 7;
+}
+
+message ConnectSWTrigToTerminalResponse {
+  int32 status = 1;
+}
+
+message DisconnectSWTrigFromTerminalRequest {
+  nidevice_grpc.Session vi = 1;
+  string src_terminal = 2;
+  string dest_terminal = 3;
+}
+
+message DisconnectSWTrigFromTerminalResponse {
+  int32 status = 1;
 }
 
 message SendSoftwareTriggerRequest {
@@ -221,51 +341,17 @@ message DisconnectClkTerminalsResponse {
   int32 status = 1;
 }
 
-message ConnectSWTrigToTerminalRequest {
+message MeasureFrequencyRequest {
   nidevice_grpc.Session vi = 1;
   string src_terminal = 2;
-  string dest_terminal = 3;
-  string sync_clock = 4;
-  sint32 invert = 5;
-  sint32 update_edge = 6;
-  double delay = 7;
+  double duration = 3;
 }
 
-message ConnectSWTrigToTerminalResponse {
+message MeasureFrequencyResponse {
   int32 status = 1;
-}
-
-message DisconnectSWTrigFromTerminalRequest {
-  nidevice_grpc.Session vi = 1;
-  string src_terminal = 2;
-  string dest_terminal = 3;
-}
-
-message DisconnectSWTrigFromTerminalResponse {
-  int32 status = 1;
-}
-
-message ConnectTrigTerminalsRequest {
-  nidevice_grpc.Session vi = 1;
-  string src_terminal = 2;
-  string dest_terminal = 3;
-  string sync_clock = 4;
-  sint32 invert = 5;
-  sint32 update_edge = 6;
-}
-
-message ConnectTrigTerminalsResponse {
-  int32 status = 1;
-}
-
-message DisconnectTrigTerminalsRequest {
-  nidevice_grpc.Session vi = 1;
-  string src_terminal = 2;
-  string dest_terminal = 3;
-}
-
-message DisconnectTrigTerminalsResponse {
-  int32 status = 1;
+  double actual_duration = 2;
+  double frequency = 3;
+  double error = 4;
 }
 
 message MeasureFrequencyExRequest {
@@ -280,6 +366,38 @@ message MeasureFrequencyExResponse {
   double actual_duration = 2;
   double frequency = 3;
   double frequency_error = 4;
+}
+
+message Start1588Request {
+  nidevice_grpc.Session vi = 1;
+}
+
+message Start1588Response {
+  int32 status = 1;
+}
+
+message Stop1588Request {
+  nidevice_grpc.Session vi = 1;
+}
+
+message Stop1588Response {
+  int32 status = 1;
+}
+
+message Start8021ASRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message Start8021ASResponse {
+  int32 status = 1;
+}
+
+message Stop8021ASRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message Stop8021ASResponse {
+  int32 status = 1;
 }
 
 message SetTimeRequest {
@@ -303,6 +421,106 @@ message GetTimeResponse {
   uint32 time_seconds = 2;
   uint32 time_nanoseconds = 3;
   uint32 time_fractional_nanoseconds = 4;
+}
+
+message ResetFrequencyRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetFrequencyResponse {
+  int32 status = 1;
+}
+
+message CreateFutureTimeEventRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+  sint32 output_level = 3;
+  uint32 time_seconds = 4;
+  uint32 time_nanoseconds = 5;
+  uint32 time_fractional_nanoseconds = 6;
+}
+
+message CreateFutureTimeEventResponse {
+  int32 status = 1;
+}
+
+message ClearFutureTimeEventsRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+}
+
+message ClearFutureTimeEventsResponse {
+  int32 status = 1;
+}
+
+message EnableTimeStampTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+  sint32 active_edge = 3;
+}
+
+message EnableTimeStampTriggerResponse {
+  int32 status = 1;
+}
+
+message EnableTimeStampTriggerWithDecimationRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+  sint32 active_edge = 3;
+  uint32 decimation_count = 4;
+}
+
+message EnableTimeStampTriggerWithDecimationResponse {
+  int32 status = 1;
+}
+
+message ReadTriggerTimeStampRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+  double timeout = 3;
+}
+
+message ReadTriggerTimeStampResponse {
+  int32 status = 1;
+  uint32 time_seconds = 2;
+  uint32 time_nanoseconds = 3;
+  uint32 time_fractional_nanoseconds = 4;
+  sint32 detected_edge = 5;
+}
+
+message DisableTimeStampTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+}
+
+message DisableTimeStampTriggerResponse {
+  int32 status = 1;
+}
+
+message CreateClockRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+  uint32 high_ticks = 3;
+  uint32 low_ticks = 4;
+  uint32 start_time_seconds = 5;
+  uint32 start_time_nanoseconds = 6;
+  uint32 start_time_fractional_nanoseconds = 7;
+  uint32 stop_time_seconds = 8;
+  uint32 stop_time_nanoseconds = 9;
+  uint32 stop_time_fractional_nanoseconds = 10;
+}
+
+message CreateClockResponse {
+  int32 status = 1;
+}
+
+message ClearClockRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+}
+
+message ClearClockResponse {
+  int32 status = 1;
 }
 
 message SetTimeReferenceFreeRunningRequest {
@@ -360,52 +578,90 @@ message SetTimeReference8021ASResponse {
   int32 status = 1;
 }
 
-message CreateFutureTimeEventRequest {
+message EnableGPSTimestampingRequest {
   nidevice_grpc.Session vi = 1;
-  string terminal_name = 2;
-  sint32 output_level = 3;
-  uint32 time_seconds = 4;
-  uint32 time_nanoseconds = 5;
-  uint32 time_fractional_nanoseconds = 6;
 }
 
-message CreateFutureTimeEventResponse {
+message EnableGPSTimestampingResponse {
   int32 status = 1;
 }
 
-message ClearFutureTimeEventsRequest {
+message EnableIRIGTimestampingRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 irig_type = 2;
+  string terminal_name = 3;
+}
+
+message EnableIRIGTimestampingResponse {
+  int32 status = 1;
+}
+
+message ReadLastGPSTimestampRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ReadLastGPSTimestampResponse {
+  int32 status = 1;
+  uint32 timestamp_seconds = 2;
+  uint32 timestamp_nanoseconds = 3;
+  uint32 timestamp_fractional_nanoseconds = 4;
+  uint32 gps_seconds = 5;
+  uint32 gps_nanoseconds = 6;
+  uint32 gps_fractional_nanoseconds = 7;
+}
+
+message ReadLastIRIGTimestampRequest {
+  nidevice_grpc.Session vi = 1;
+  string terminal = 2;
+}
+
+message ReadLastIRIGTimestampResponse {
+  int32 status = 1;
+  uint32 timestamp_seconds = 2;
+  uint32 timestamp_nanoseconds = 3;
+  uint32 timestamp_fractional_nanoseconds = 4;
+  uint32 irigb_seconds = 5;
+  uint32 irigb_nanoseconds = 6;
+  uint32 irigb_fractional_nanoseconds = 7;
+}
+
+message DisableGPSTimestampingRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message DisableGPSTimestampingResponse {
+  int32 status = 1;
+}
+
+message DisableIRIGTimestampingRequest {
   nidevice_grpc.Session vi = 1;
   string terminal_name = 2;
 }
 
-message ClearFutureTimeEventsResponse {
+message DisableIRIGTimestampingResponse {
   int32 status = 1;
 }
 
-message CreateClockRequest {
+message GetVelocityRequest {
   nidevice_grpc.Session vi = 1;
-  string terminal_name = 2;
-  uint32 high_ticks = 3;
-  uint32 low_ticks = 4;
-  uint32 start_time_seconds = 5;
-  uint32 start_time_nanoseconds = 6;
-  uint32 start_time_fractional_nanoseconds = 7;
-  uint32 stop_time_seconds = 8;
-  uint32 stop_time_nanoseconds = 9;
-  uint32 stop_time_fractional_nanoseconds = 10;
 }
 
-message CreateClockResponse {
+message GetVelocityResponse {
   int32 status = 1;
+  double east_velocity = 2;
+  double north_velocity = 3;
+  double up_velocity = 4;
 }
 
-message ClearClockRequest {
+message GetLocationRequest {
   nidevice_grpc.Session vi = 1;
-  string terminal_name = 2;
 }
 
-message ClearClockResponse {
+message GetLocationResponse {
   int32 status = 1;
+  double latitude = 2;
+  double longitude = 3;
+  double altitude = 4;
 }
 
 message GetTimeReferenceNamesRequest {
@@ -428,37 +684,15 @@ message GetAttributeViInt32Response {
   sint32 value = 2;
 }
 
-message SetAttributeViInt32Request {
-  nidevice_grpc.Session vi = 1;
-  string active_item = 2;
-  NiSyncAttributes attribute = 3;
-  sint32 value = 4;
-}
-
-message SetAttributeViInt32Response {
-  int32 status = 1;
-}
-
-message GetAttributeViStringRequest {
+message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
 }
 
-message GetAttributeViStringResponse {
+message GetAttributeViReal64Response {
   int32 status = 1;
-  string value = 2;
-}
-
-message SetAttributeViStringRequest {
-  nidevice_grpc.Session vi = 1;
-  string active_item = 2;
-  NiSyncAttributes attribute = 3;
-  string value = 4;
-}
-
-message SetAttributeViStringResponse {
-  int32 status = 1;
+  double value = 2;
 }
 
 message GetAttributeViBooleanRequest {
@@ -472,26 +706,26 @@ message GetAttributeViBooleanResponse {
   bool value = 2;
 }
 
-message SetAttributeViBooleanRequest {
-  nidevice_grpc.Session vi = 1;
-  string active_item = 2;
-  NiSyncAttributes attribute = 3;
-  bool value = 4;
-}
-
-message SetAttributeViBooleanResponse {
-  int32 status = 1;
-}
-
-message GetAttributeViReal64Request {
+message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
 }
 
-message GetAttributeViReal64Response {
+message GetAttributeViStringResponse {
   int32 status = 1;
-  double value = 2;
+  string value = 2;
+}
+
+message SetAttributeViInt32Request {
+  nidevice_grpc.Session vi = 1;
+  string active_item = 2;
+  NiSyncAttributes attribute = 3;
+  sint32 value = 4;
+}
+
+message SetAttributeViInt32Response {
+  int32 status = 1;
 }
 
 message SetAttributeViReal64Request {
@@ -503,5 +737,173 @@ message SetAttributeViReal64Request {
 
 message SetAttributeViReal64Response {
   int32 status = 1;
+}
+
+message SetAttributeViBooleanRequest {
+  nidevice_grpc.Session vi = 1;
+  string active_item = 2;
+  NiSyncAttributes attribute = 3;
+  bool value = 4;
+}
+
+message SetAttributeViBooleanResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string active_item = 2;
+  NiSyncAttributes attribute = 3;
+  string value = 4;
+}
+
+message SetAttributeViStringResponse {
+  int32 status = 1;
+}
+
+message GetExtCalLastDateAndTimeRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetExtCalLastDateAndTimeResponse {
+  int32 status = 1;
+  sint32 year = 2;
+  sint32 month = 3;
+  sint32 day = 4;
+  sint32 hour = 5;
+  sint32 minute = 6;
+}
+
+message GetExtCalLastTempRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetExtCalLastTempResponse {
+  int32 status = 1;
+  double temp = 2;
+}
+
+message GetExtCalRecommendedIntervalRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetExtCalRecommendedIntervalResponse {
+  int32 status = 1;
+  sint32 months = 2;
+}
+
+message ChangeExtCalPasswordRequest {
+  nidevice_grpc.Session vi = 1;
+  string old_password = 2;
+  string new_password = 3;
+}
+
+message ChangeExtCalPasswordResponse {
+  int32 status = 1;
+}
+
+message ReadCurrentTemperatureRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ReadCurrentTemperatureResponse {
+  int32 status = 1;
+  double temperature = 2;
+}
+
+message CalGetOscillatorVoltageRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CalGetOscillatorVoltageResponse {
+  int32 status = 1;
+  double voltage = 2;
+}
+
+message CalGetClk10PhaseVoltageRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CalGetClk10PhaseVoltageResponse {
+  int32 status = 1;
+  double voltage = 2;
+}
+
+message CalGetDDSStartPulsePhaseVoltageRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CalGetDDSStartPulsePhaseVoltageResponse {
+  int32 status = 1;
+  double voltage = 2;
+}
+
+message CalGetDDSInitialPhaseRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CalGetDDSInitialPhaseResponse {
+  int32 status = 1;
+  double phase = 2;
+}
+
+message InitExtCalRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  string password = 3;
+}
+
+message InitExtCalResponse {
+  int32 status = 1;
+  nidevice_grpc.Session vi = 2;
+}
+
+message CloseExtCalRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 action = 2;
+}
+
+message CloseExtCalResponse {
+  int32 status = 1;
+}
+
+message CalAdjustOscillatorVoltageRequest {
+  nidevice_grpc.Session vi = 1;
+  double measured_voltage = 2;
+}
+
+message CalAdjustOscillatorVoltageResponse {
+  int32 status = 1;
+  double old_voltage = 2;
+}
+
+message CalAdjustClk10PhaseVoltageRequest {
+  nidevice_grpc.Session vi = 1;
+  double measured_voltage = 2;
+}
+
+message CalAdjustClk10PhaseVoltageResponse {
+  int32 status = 1;
+  double old_voltage = 2;
+}
+
+message CalAdjustDDSStartPulsePhaseVoltageRequest {
+  nidevice_grpc.Session vi = 1;
+  double measured_voltage = 2;
+}
+
+message CalAdjustDDSStartPulsePhaseVoltageResponse {
+  int32 status = 1;
+  double old_voltage = 2;
+}
+
+message CalAdjustDDSInitialPhaseRequest {
+  nidevice_grpc.Session vi = 1;
+  double measured_phase = 2;
+}
+
+message CalAdjustDDSInitialPhaseResponse {
+  int32 status = 1;
+  double old_phase = 2;
 }
 
