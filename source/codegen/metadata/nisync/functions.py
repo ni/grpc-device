@@ -617,6 +617,72 @@ functions = {
         ],
         "returns": "ViStatus",
     },
+    "ReadMultipleTriggerTimeStamp": {
+        "parameters": [
+            {
+                "direction": "in",
+                "name": "vi",
+                "type": "ViSession",
+            },
+            {
+                "direction": "in",
+                "name": "terminal",
+                "type": "ViConstString",
+            },
+            {
+                "direction": "in",
+                "name": "timestampsToRead",
+                "type": "ViUInt32",
+            },
+            {
+                "direction": "in",
+                "name": "timeout",
+                "type": "ViReal64",
+            },
+            {
+                "direction": "out",
+                "name": "timeSecondsBuffer",
+                "type": "ViUInt32[]",
+                "size": {
+                    "mechanism": "passed-in",
+                    "value": "timestampsToRead",
+                },
+            },
+            {
+                "direction": "out",
+                "name": "timeNanosecondsBuffer",
+                "type": "ViUInt32[]",
+                "size": {
+                    "mechanism": "passed-in",
+                    "value": "timestampsToRead",
+                },
+            },
+            {
+                "direction": "out",
+                "name": "timeFractionalNanosecondsBuffer",
+                "type": "ViUInt16[]",
+                "size": {
+                    "mechanism": "passed-in",
+                    "value": "timestampsToRead",
+                },
+            },
+            {
+                "direction": "out",
+                "name": "detectedEdgeBuffer",
+                "type": "ViInt32[]",
+                "size": {
+                    "mechanism": "passed-in",
+                    "value": "timestampsToRead",
+                },
+            },
+            {
+                "direction": "out",
+                "name": "timestampsRead",
+                "type": "ViUInt32",
+            },
+        ],
+        "returns": "ViStatus",
+    },
     "DisableTimeStampTrigger": {
         "parameters": [
             {
