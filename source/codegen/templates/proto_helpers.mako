@@ -22,11 +22,11 @@ enum ${service_class_prefix}Attributes {
 </%def>
 
 ## Define enums in the proto for each metadata enum referenced in a proto message.
-<%def name="define_enums(used_enums)">\
+<%def name="define_function_enums(function_enums)">\
 <%
   enums = data["enums"]
 %>\
-% for enum_name in (e for e in enums if e in used_enums):
+% for enum_name in (e for e in enums if e in function_enums):
 <%
   enum_value_prefix = common_helpers.pascal_to_snake(enum_name).upper()
   enum = enums[enum_name]
@@ -47,6 +47,49 @@ enum ${enum_name} {
 %     else:
   ${enum_value_prefix}_${value["name"]} = ${value["value"]};
 %     endif
+%   endfor
+}
+
+% endfor
+</%def>
+
+## Define enums in the proto per attribute type that uses enum values
+<%def name="define_per_type_attribute_enums(attribute_enums)">\
+<%
+  config = data["config"]
+  service_class_prefix = config["service_class_prefix"]
+  enums = data["enums"]
+%>\
+% for type_name in attribute_enums:
+<%
+  type_enums = attribute_enums[type_name]
+  type_enum_name = service_class_prefix + type_name + "Enum"
+  # allow alias if we have more than one enums (more than one UNSPECIFIED enum values) or
+  # the only enum we have has duplicate values
+  allos_alias_option = len(type_enums) > 1 or proto_helpers.should_allow_alias(enums[list(type_enums)[0]])
+%>\
+
+enum ${type_enum_name}{
+%   if allos_alias_option:
+  option allow_alias = true;
+%   endif
+%   for enum_name in type_enums:
+<%
+  enum_value_prefix = common_helpers.pascal_to_snake(type_enum_name + enum_name).upper()
+  enum = enums[enum_name]
+  nonint_index = 1
+%>\
+  ${enum_value_prefix}_UNSPECIFIED = 0;
+%      for value in enum["values"]:
+%        if enum.get("generate-mappings", False):
+  ${enum_value_prefix}_${value["name"]} = ${nonint_index};
+<%
+    nonint_index = nonint_index + 1
+%>\
+%        else:
+  ${enum_value_prefix}_${value["name"]} = ${value["value"]};
+%        endif
+%      endfor
 %   endfor
 }
 

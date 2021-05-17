@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 def is_output_parameter(parameter):
     return "out" in parameter["direction"]
 
@@ -77,17 +79,24 @@ def filter_proto_rpc_functions(functions):
   functions_for_proto = {'public', 'CustomCode'}
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
 
-def get_used_enums(functions, attributes):
-  '''Returns a set of enums used with functions or attributes.'''
-  used_enums = set()
+def get_attribute_enums(attributes):
+  '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
+  attribute_enums = defaultdict(set)
+  for attribute in attributes:
+    if("enum" in attributes[attribute]):
+      attribute_type = attributes[attribute]["type"]
+      enum_name = attributes[attribute]["enum"]
+      attribute_enums[attribute_type].add(enum_name)
+  return attribute_enums
+
+def get_function_enums(functions):
+  '''Returns a set of enums used with functions.'''
+  function_enums = set()
   for function in functions:
     for parameter in functions[function]["parameters"]:
       if "enum" in parameter:
-        used_enums.add(parameter["enum"])
-  for attribute in attributes:
-    if "enum" in attributes[attribute]:
-      used_enums.add(attributes[attribute]["enum"])
-  return used_enums
+        function_enums.add(parameter["enum"])
+  return function_enums
 
 def has_viboolean_array_param(functions):
   '''Returns True if atleast one function has parameter of type ViBoolean[]'''

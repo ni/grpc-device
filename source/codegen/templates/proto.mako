@@ -8,7 +8,8 @@ enums = data["enums"]
 functions = data["functions"]
 
 service_class_prefix = config["service_class_prefix"]
-used_enums = common_helpers.get_used_enums(functions, attributes)
+function_enums = common_helpers.get_function_enums(functions)
+attribute_enums = common_helpers.get_attribute_enums(attributes) 
 %>\
 <%namespace name="mako_helper" file="/proto_helpers.mako"/>\
 
@@ -39,7 +40,8 @@ service ${service_class_prefix} {
 
 ${mako_helper.define_attribute_enum(attributes)}\
 
-${mako_helper.define_enums(used_enums)}\
+${mako_helper.define_function_enums(function_enums)}\
+${mako_helper.define_per_type_attribute_enums(attribute_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
