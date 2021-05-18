@@ -218,10 +218,7 @@ namespace nifake_grpc {
       }
       ViInt32 size_in_bytes = status;
 
-      std::string configuration;
-      if (size_in_bytes > 0) {
-          configuration.resize(size_in_bytes-1);
-      }
+      std::string configuration(size_in_bytes, '\0');
       status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
       response->set_status(status);
       if (status == 0) {

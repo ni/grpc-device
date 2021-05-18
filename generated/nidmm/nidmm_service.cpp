@@ -1263,10 +1263,7 @@ namespace nidmm_grpc {
       }
       ViInt32 size = status;
 
-      std::string configuration;
-      if (size > 0) {
-          configuration.resize(size-1);
-      }
+      std::string configuration(size, '\0');
       status = library_->ExportAttributeConfigurationBuffer(vi, size, (ViInt8*)configuration.data());
       response->set_status(status);
       if (status == 0) {
