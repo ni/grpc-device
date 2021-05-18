@@ -981,7 +981,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   EXPECT_EQ(a_float_enum, response.a_float_enum_raw());
   EXPECT_THAT(response.an_array(), ElementsAreArray(an_array, array_size));
   EXPECT_STREQ(response.a_string().c_str(), a_string);
-  EXPECT_EQ(response.a_string().length(), string_size-1);
+  EXPECT_EQ(response.a_string().length(), string_size - 1);
 }
 
 TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
@@ -1091,7 +1091,7 @@ TEST(NiFakeServiceTests, NiFakeService_ExportAttributeConfigurationBuffer_CallsE
   NiFakeMockLibrary library;
   nifake_grpc::NiFakeService service(&library, &session_repository);
   ViInt8 config_buffer[] = {'A', 'B', 'C'};
-  ViInt32 expected_size = sizeof(config_buffer);
+  ViInt32 expected_size = 3;
   // ivi-dance call
   EXPECT_CALL(library, ExportAttributeConfigurationBuffer(kTestViSession, 0, nullptr))
       .WillOnce(Return(expected_size));
@@ -1138,7 +1138,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceStr
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_STREQ(response.a_string().c_str(), char_array);
-  EXPECT_EQ(response.a_string().length(), expected_size-1);
+  EXPECT_EQ(response.a_string().length(), expected_size - 1);
 }
 
 TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingIviDance)
@@ -1198,7 +1198,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViS
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_STREQ(response.attribute_value().c_str(), attribute_char_array);
-  EXPECT_EQ(response.attribute_value().length(), expected_size-1);
+  EXPECT_EQ(response.attribute_value().length(), expected_size - 1);
 }
 
 }  // namespace unit

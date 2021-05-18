@@ -466,7 +466,7 @@ namespace niswitch_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
-      std::string error_message(256-1, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
@@ -490,7 +490,7 @@ namespace niswitch_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 error_code {};
-      std::string error_message(256-1, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
@@ -1204,8 +1204,8 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      std::string instrument_driver_revision(256-1, '\0');
-      std::string firmware_revision(256-1, '\0');
+      std::string instrument_driver_revision(256 - 1, '\0');
+      std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
       if (status == 0) {
@@ -1355,7 +1355,7 @@ namespace niswitch_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
-      std::string self_test_message(256-1, '\0');
+      std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
