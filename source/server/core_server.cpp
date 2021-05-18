@@ -8,6 +8,8 @@
 #include <nidmm/nidmm_service.h>
 #include <nisync/nisync_library.h>
 #include <nisync/nisync_service.h>
+#include <nitclk/nitclk_library.h>
+#include <nitclk/nitclk_service.h>
 #include <nidcpower/nidcpower_library.h>
 #include <nidcpower/nidcpower_service.h>
 
@@ -69,6 +71,10 @@ static void RunServer(const std::string& config_file_path)
   nisync_grpc::NiSyncService nisync_service(&nisync_library, &session_repository);
   builder.RegisterService(&nisync_service);
 
+  nitclk_grpc::NiTClkLibrary nitclk_library;
+  nitclk_grpc::NiTClkService nitclk_service(&nitclk_library, &session_repository);
+  builder.RegisterService(&nitclk_service);
+  
   nidcpower_grpc::NiDCPowerLibrary nidcpower_library;
   nidcpower_grpc::NiDCPowerService nidcpower_service(&nidcpower_library, &session_repository);
   builder.RegisterService(&nidcpower_service);

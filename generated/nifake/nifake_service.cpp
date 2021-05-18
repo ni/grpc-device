@@ -142,7 +142,11 @@ namespace nifake_grpc {
       ViInt32 number_of_elements = request->number_of_elements();
       auto an_array_request = request->an_array();
       std::vector<ViBoolean> an_array;
-      std::transform(an_array_request.begin(), an_array_request.end(), std::back_inserter(an_array), [](auto x) { return x ? VI_TRUE : VI_FALSE; });
+      std::transform(
+        an_array_request.begin(),
+        an_array_request.end(),
+        std::back_inserter(an_array),
+        [](auto x) { return x ? VI_TRUE : VI_FALSE; });
 
       auto status = library_->BoolArrayInputFunction(vi, number_of_elements, an_array.data());
       response->set_status(status);
