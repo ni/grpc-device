@@ -57,6 +57,30 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'AcceptViUInt32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLen',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'uInt32Array',
+                'type': 'ViUInt32[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arrayLen'
+                }
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'BoolArrayOutputFunction': {
         'codegen_method': 'public',
         'documentation': {

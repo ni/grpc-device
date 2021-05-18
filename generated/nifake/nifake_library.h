@@ -20,6 +20,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus Abort(ViSession vi);
   ViStatus AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[]);
+  ViStatus AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
   ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
@@ -76,6 +77,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
  private:
   using AbortPtr = ViStatus (*)(ViSession vi);
   using AcceptListOfDurationsInSecondsPtr = ViStatus (*)(ViSession vi, ViInt32 count, ViReal64 delays[]);
+  using AcceptViUInt32ArrayPtr = ViStatus (*)(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
   using BoolArrayOutputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   using BoolArrayInputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   using DoubleAllTheNumsPtr = ViStatus (*)(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
@@ -132,6 +134,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   typedef struct FunctionPointers {
     AbortPtr Abort;
     AcceptListOfDurationsInSecondsPtr AcceptListOfDurationsInSeconds;
+    AcceptViUInt32ArrayPtr AcceptViUInt32Array;
     BoolArrayOutputFunctionPtr BoolArrayOutputFunction;
     BoolArrayInputFunctionPtr BoolArrayInputFunction;
     DoubleAllTheNumsPtr DoubleAllTheNums;
