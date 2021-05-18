@@ -466,7 +466,7 @@ namespace niswitch_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
-      std::string error_message(256, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
@@ -490,7 +490,7 @@ namespace niswitch_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 error_code {};
-      std::string error_message(256, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
@@ -599,7 +599,10 @@ namespace niswitch_grpc {
       }
       ViInt32 array_size = status;
 
-      std::string attribute_value(array_size, '\0');
+      std::string attribute_value;
+      if (array_size > 0) {
+          attribute_value.resize(array_size-1);
+      }
       status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
       response->set_status(status);
       if (status == 0) {
@@ -656,7 +659,10 @@ namespace niswitch_grpc {
       }
       ViInt32 buffer_size = status;
 
-      std::string channel_name_buffer(buffer_size, '\0');
+      std::string channel_name_buffer;
+      if (buffer_size > 0) {
+          channel_name_buffer.resize(buffer_size-1);
+      }
       status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name_buffer.data());
       response->set_status(status);
       if (status == 0) {
@@ -688,7 +694,10 @@ namespace niswitch_grpc {
       ViInt32 buffer_size = status;
 
       ViStatus code {};
-      std::string description(buffer_size, '\0');
+      std::string description;
+      if (buffer_size > 0) {
+          description.resize(buffer_size-1);
+      }
       status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
       response->set_status(status);
       if (status == 0) {
@@ -720,7 +729,10 @@ namespace niswitch_grpc {
       }
       ViInt32 buffer_size = status;
 
-      std::string coercion_record(buffer_size, '\0');
+      std::string coercion_record;
+      if (buffer_size > 0) {
+          coercion_record.resize(buffer_size-1);
+      }
       status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
       response->set_status(status);
       if (status == 0) {
@@ -751,7 +763,10 @@ namespace niswitch_grpc {
       }
       ViInt32 buffer_size = status;
 
-      std::string interchange_warning(buffer_size, '\0');
+      std::string interchange_warning;
+      if (buffer_size > 0) {
+          interchange_warning.resize(buffer_size-1);
+      }
       status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
       response->set_status(status);
       if (status == 0) {
@@ -784,7 +799,10 @@ namespace niswitch_grpc {
       }
       ViInt32 buffer_size = status;
 
-      std::string path(buffer_size, '\0');
+      std::string path;
+      if (buffer_size > 0) {
+          path.resize(buffer_size-1);
+      }
       status = library_->GetPath(vi, channel1, channel2, buffer_size, (ViChar*)path.data());
       response->set_status(status);
       if (status == 0) {
@@ -840,7 +858,10 @@ namespace niswitch_grpc {
       }
       ViInt32 relay_name_buffer_size = status;
 
-      std::string relay_name_buffer(relay_name_buffer_size, '\0');
+      std::string relay_name_buffer;
+      if (relay_name_buffer_size > 0) {
+          relay_name_buffer.resize(relay_name_buffer_size-1);
+      }
       status = library_->GetRelayName(vi, index, relay_name_buffer_size, (ViChar*)relay_name_buffer.data());
       response->set_status(status);
       if (status == 0) {
@@ -1183,8 +1204,8 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      std::string instrument_driver_revision(256, '\0');
-      std::string firmware_revision(256, '\0');
+      std::string instrument_driver_revision(256 - 1, '\0');
+      std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
       if (status == 0) {
@@ -1334,7 +1355,7 @@ namespace niswitch_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
-      std::string self_test_message(256, '\0');
+      std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {

@@ -218,8 +218,17 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 %>\
 %     if common_helpers.is_struct(parameter) or underlying_param_type == 'ViBoolean':
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
-%     elif service_helpers.is_string_arg(parameter):
+## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.
+%     elif service_helpers.is_string_arg(parameter) and parameter['type'] == 'ViInt8[]':
       std::string ${parameter_name}(${size}, '\0');
+## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
+%     elif service_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
+      std::string ${parameter_name}(${size} - 1, '\0');
+%     elif service_helpers.is_string_arg(parameter):
+      std::string ${parameter_name};
+      if (${size} > 0) {
+          ${parameter_name}.resize(${size}-1);
+      }
 %     elif underlying_param_type == 'ViAddr':
       response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());

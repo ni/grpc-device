@@ -313,7 +313,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      std::string a_string(256, '\0');
+      std::string a_string(256 - 1, '\0');
       auto status = library_->GetAStringOfFixedMaximumSize(vi, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
@@ -344,7 +344,10 @@ namespace nifake_grpc {
       }
       ViInt32 buffer_size = status;
 
-      std::string a_string(buffer_size, '\0');
+      std::string a_string;
+      if (buffer_size > 0) {
+          a_string.resize(buffer_size-1);
+      }
       status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
@@ -546,7 +549,10 @@ namespace nifake_grpc {
       }
       ViInt32 buffer_size = status;
 
-      std::string attribute_value(buffer_size, '\0');
+      std::string attribute_value;
+      if (buffer_size > 0) {
+          attribute_value.resize(buffer_size-1);
+      }
       status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
       response->set_status(status);
       if (status == 0) {
@@ -945,7 +951,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 a_number {};
-      std::string a_string(256, '\0');
+      std::string a_string(256 - 1, '\0');
       auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
@@ -1033,7 +1039,10 @@ namespace nifake_grpc {
       ViReal64 a_float_enum {};
       response->mutable_an_array()->Resize(array_size, 0);
       ViReal64* an_array = response->mutable_an_array()->mutable_data();
-      std::string a_string(string_size, '\0');
+      std::string a_string;
+      if (string_size > 0) {
+          a_string.resize(string_size-1);
+      }
       status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
       response->set_status(status);
       if (status == 0) {
