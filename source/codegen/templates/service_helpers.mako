@@ -187,12 +187,12 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${field_name} was not specified or out of range");
           break;
       }
-% elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8':
+% elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif c_type == 'ViSession':
       auto ${parameter_name}_grpc_session = ${request_snippet};
       ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
-% elif c_type == 'ViInt32[]' or c_type == 'ViAddr[]':
+% elif c_type in ['ViAddr[]', 'ViInt32[]', 'ViUInt32[]']:
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\

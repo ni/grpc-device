@@ -18,6 +18,7 @@ import "session.proto";
 service NiFake {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc AcceptListOfDurationsInSeconds(AcceptListOfDurationsInSecondsRequest) returns (AcceptListOfDurationsInSecondsResponse);
+  rpc AcceptViUInt32Array(AcceptViUInt32ArrayRequest) returns (AcceptViUInt32ArrayResponse);
   rpc BoolArrayOutputFunction(BoolArrayOutputFunctionRequest) returns (BoolArrayOutputFunctionResponse);
   rpc BoolArrayInputFunction(BoolArrayInputFunctionRequest) returns (BoolArrayInputFunctionResponse);
   rpc DoubleAllTheNums(DoubleAllTheNumsRequest) returns (DoubleAllTheNumsResponse);
@@ -130,6 +131,15 @@ message AcceptListOfDurationsInSecondsRequest {
 }
 
 message AcceptListOfDurationsInSecondsResponse {
+  int32 status = 1;
+}
+
+message AcceptViUInt32ArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  repeated uint32 u_int32_array = 2;
+}
+
+message AcceptViUInt32ArrayResponse {
   int32 status = 1;
 }
 
