@@ -44,19 +44,16 @@ functions = {
                 "type": "ViConstString"
             },
             {
-                "default_value": "None",
                 "direction": "in",
                 "name": "initialStateHighPins",
                 "type": "ViConstString",
             },
             {
-                "default_value": "None",
                 "direction": "in",
                 "name": "initialStateLowPins",
                 "type": "ViConstString",
             },
             {
-                "default_value": "None",
                 "direction": "in",
                 "name": "initialStateTristatePins",
                 "type": "ViConstString",
@@ -114,19 +111,16 @@ functions = {
                 "type": "ViConstString"
             },
             {
-                "default_value": True,
                 "direction": "in",
                 "name": "selectDigitalFunction",
                 "type": "ViBoolean"
             },
             {
-                "default_value": True,
                 "direction": "in",
                 "name": "waitUntilDone",
                 "type": "ViBoolean"
             },
             {
-                "default_value": "hightime.timedelta(seconds=10.0)",
                 "direction": "in",
                 "name": "timeout",
                 "type": "ViReal64",
@@ -180,7 +174,6 @@ functions = {
                 "type": "ViReal64"
             },
             {
-                "default_value": True,
                 "direction": "in",
                 "name": "selectDigitalFunction",
                 "type": "ViBoolean"
@@ -216,7 +209,6 @@ functions = {
             }
         ],
         "returns": "ViStatus",
-        "use_session_lock": False
     },
     "Commit": {
         "parameters": [
@@ -885,7 +877,6 @@ functions = {
                 "type": "ViConstString"
             },
             {
-                "default_value": True,
                 "direction": "in",
                 "name": "writeWaveformData",
                 "type": "ViBoolean"
@@ -1120,7 +1111,6 @@ functions = {
             }
         ],
         "returns": "ViStatus",
-        "use_session_lock": False
     },
     "ExportSignal": {
         "parameters": [
@@ -1516,7 +1506,6 @@ functions = {
             }
         ],
         "returns": "ViStatus",
-        "use_session_lock": False
     },
     "GetHistoryRAMSampleCount": {
         "parameters": [
@@ -1807,19 +1796,16 @@ functions = {
                 "type": "ViRsrc"
             },
             {
-                "default_value": False,
                 "direction": "in",
                 "name": "idQuery",
                 "type": "ViBoolean",
             },
             {
-                "default_value": False,
                 "direction": "in",
                 "name": "resetDevice",
                 "type": "ViBoolean"
             },
             {
-                "default_value": "\"\"",
                 "direction": "in",
                 "name": "optionString",
                 "type": "ViConstString",
@@ -1831,7 +1817,6 @@ functions = {
             }
         ],
         "returns": "ViStatus",
-        "use_session_lock": False
     },
     "Initiate": {
         "codegen_method": "public",
@@ -1974,7 +1959,6 @@ functions = {
         ],
         "render_in_session_base": True,
         "returns": "ViStatus",
-        "use_session_lock": False
     },
     "MapPinToChannel": {
         "parameters": [
@@ -2528,7 +2512,6 @@ functions = {
                 "type": "ViSession"
             },
             {
-                "default_value": False,
                 "direction": "in",
                 "name": "unloadKeepAlivePattern",
                 "type": "ViBoolean"
@@ -2567,7 +2550,6 @@ functions = {
         ],
         "render_in_session_base": True,
         "returns": "ViStatus",
-        "use_session_lock": False
     },
     "WaitUntilDone": {
         "parameters": [
@@ -2577,7 +2559,6 @@ functions = {
                 "type": "ViSession"
             },
             {
-                "default_value": "hightime.timedelta(seconds=10.0)",
                 "direction": "in",
                 "name": "timeout",
                 "type": "ViReal64",
