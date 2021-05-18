@@ -19,6 +19,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AcceptListOfDurationsInSeconds, (ViSession vi, ViInt32 count, ViReal64 delays[]), (override));
+  MOCK_METHOD(ViStatus, AcceptViUInt32Array, (ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]), (override));
   MOCK_METHOD(ViStatus, BoolArrayOutputFunction, (ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]), (override));
   MOCK_METHOD(ViStatus, BoolArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]), (override));
   MOCK_METHOD(ViStatus, DoubleAllTheNums, (ViSession vi, ViInt32 numberCount, ViReal64 numbers[]), (override));
