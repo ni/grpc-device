@@ -42,6 +42,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]) = 0;
   virtual ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
+  virtual ViStatus GetViUInt8(ViSession vi, ViUInt8* aUint8Number) = 0;
   virtual ViStatus GetViInt32Array(ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[]) = 0;
   virtual ViStatus GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
@@ -72,6 +73,8 @@ class NiFakeLibraryInterface {
   virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
+  virtual ViStatus ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) = 0;
+  virtual ViStatus ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) = 0;
 };
 
 }  // namespace nifake_grpc
