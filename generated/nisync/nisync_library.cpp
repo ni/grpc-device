@@ -49,6 +49,7 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   function_pointers_.EnableTimeStampTrigger = reinterpret_cast<EnableTimeStampTriggerPtr>(shared_library_.get_function_pointer("niSync_EnableTimeStampTrigger"));
   function_pointers_.EnableTimeStampTriggerWithDecimation = reinterpret_cast<EnableTimeStampTriggerWithDecimationPtr>(shared_library_.get_function_pointer("niSync_EnableTimeStampTriggerWithDecimation"));
   function_pointers_.ReadTriggerTimeStamp = reinterpret_cast<ReadTriggerTimeStampPtr>(shared_library_.get_function_pointer("niSync_ReadTriggerTimeStamp"));
+  function_pointers_.ReadMultipleTriggerTimeStamp = reinterpret_cast<ReadMultipleTriggerTimeStampPtr>(shared_library_.get_function_pointer("niSync_ReadMultipleTriggerTimeStamp"));
   function_pointers_.DisableTimeStampTrigger = reinterpret_cast<DisableTimeStampTriggerPtr>(shared_library_.get_function_pointer("niSync_DisableTimeStampTrigger"));
   function_pointers_.CreateClock = reinterpret_cast<CreateClockPtr>(shared_library_.get_function_pointer("niSync_CreateClock"));
   function_pointers_.ClearClock = reinterpret_cast<ClearClockPtr>(shared_library_.get_function_pointer("niSync_ClearClock"));
@@ -436,6 +437,18 @@ ViStatus NiSyncLibrary::ReadTriggerTimeStamp(ViSession vi, ViConstString termina
   return niSync_ReadTriggerTimeStamp(vi, terminal, timeout, timeSeconds, timeNanoseconds, timeFractionalNanoseconds, detectedEdge);
 #else
   return function_pointers_.ReadTriggerTimeStamp(vi, terminal, timeout, timeSeconds, timeNanoseconds, timeFractionalNanoseconds, detectedEdge);
+#endif
+}
+
+ViStatus NiSyncLibrary::ReadMultipleTriggerTimeStamp(ViSession vi, ViConstString terminal, ViUInt32 timestampsToRead, ViReal64 timeout, ViUInt32 timeSecondsBuffer[], ViUInt32 timeNanosecondsBuffer[], ViUInt16 timeFractionalNanosecondsBuffer[], ViInt32 detectedEdgeBuffer[], ViUInt32* timestampsRead)
+{
+  if (!function_pointers_.ReadMultipleTriggerTimeStamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSync_ReadMultipleTriggerTimeStamp.");
+  }
+#if defined(_MSC_VER)
+  return niSync_ReadMultipleTriggerTimeStamp(vi, terminal, timestampsToRead, timeout, timeSecondsBuffer, timeNanosecondsBuffer, timeFractionalNanosecondsBuffer, detectedEdgeBuffer, timestampsRead);
+#else
+  return function_pointers_.ReadMultipleTriggerTimeStamp(vi, terminal, timestampsToRead, timeout, timeSecondsBuffer, timeNanosecondsBuffer, timeFractionalNanosecondsBuffer, detectedEdgeBuffer, timestampsRead);
 #endif
 }
 
