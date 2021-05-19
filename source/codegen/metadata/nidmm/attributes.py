@@ -388,7 +388,7 @@ attributes = {
     1150120: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'RTDType',
+        'enum': 'RtdType',
         'name': 'TEMP_RTD_TYPE',
         'resettable': False,
         'type': 'ViInt32'
@@ -581,7 +581,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'name': 'TRIGGER_COUNT',
-        'enum': 'TiggerCount',
+        'enum': 'TriggerCount',
         'resettable': False,
         'type': 'ViInt32'
     },
