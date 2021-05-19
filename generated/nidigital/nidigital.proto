@@ -130,7 +130,9 @@ service NiDigital {
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteSequencerFlag(WriteSequencerFlagRequest) returns (WriteSequencerFlagResponse);
   rpc WriteSequencerRegister(WriteSequencerRegisterRequest) returns (WriteSequencerRegisterResponse);
+  rpc WriteSourceWaveformBroadcastU32(WriteSourceWaveformBroadcastU32Request) returns (WriteSourceWaveformBroadcastU32Response);
   rpc WriteSourceWaveformDataFromFileTDMS(WriteSourceWaveformDataFromFileTDMSRequest) returns (WriteSourceWaveformDataFromFileTDMSResponse);
+  rpc WriteSourceWaveformSiteUniqueU32(WriteSourceWaveformSiteUniqueU32Request) returns (WriteSourceWaveformSiteUniqueU32Response);
 }
 
 enum NiDigitalAttributes {
@@ -1563,6 +1565,16 @@ message WriteSequencerRegisterResponse {
   int32 status = 1;
 }
 
+message WriteSourceWaveformBroadcastU32Request {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  repeated uint32 waveform_data = 3;
+}
+
+message WriteSourceWaveformBroadcastU32Response {
+  int32 status = 1;
+}
+
 message WriteSourceWaveformDataFromFileTDMSRequest {
   nidevice_grpc.Session vi = 1;
   string waveform_name = 2;
@@ -1570,6 +1582,19 @@ message WriteSourceWaveformDataFromFileTDMSRequest {
 }
 
 message WriteSourceWaveformDataFromFileTDMSResponse {
+  int32 status = 1;
+}
+
+message WriteSourceWaveformSiteUniqueU32Request {
+  nidevice_grpc.Session vi = 1;
+  string site_list = 2;
+  string waveform_name = 3;
+  sint32 num_waveforms = 4;
+  sint32 samples_per_waveform = 5;
+  repeated uint32 waveform_data = 6;
+}
+
+message WriteSourceWaveformSiteUniqueU32Response {
   int32 status = 1;
 }
 

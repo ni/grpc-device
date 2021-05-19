@@ -2859,6 +2859,28 @@ namespace nidigital_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::WriteSourceWaveformBroadcastU32(::grpc::ServerContext* context, const WriteSourceWaveformBroadcastU32Request* request, WriteSourceWaveformBroadcastU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString waveform_name = request->waveform_name().c_str();
+      ViInt32 waveform_size = request->waveform_data().size();
+      auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
+      auto status = library_->WriteSourceWaveformBroadcastU32(vi, waveform_name, waveform_size, waveform_data);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::WriteSourceWaveformDataFromFileTDMS(::grpc::ServerContext* context, const WriteSourceWaveformDataFromFileTDMSRequest* request, WriteSourceWaveformDataFromFileTDMSResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2870,6 +2892,30 @@ namespace nidigital_grpc {
       ViConstString waveform_name = request->waveform_name().c_str();
       ViConstString waveform_file_path = request->waveform_file_path().c_str();
       auto status = library_->WriteSourceWaveformDataFromFileTDMS(vi, waveform_name, waveform_file_path);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString site_list = request->site_list().c_str();
+      ViConstString waveform_name = request->waveform_name().c_str();
+      ViInt32 num_waveforms = request->num_waveforms();
+      ViInt32 samples_per_waveform = request->samples_per_waveform();
+      auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
+      auto status = library_->WriteSourceWaveformSiteUniqueU32(vi, site_list, waveform_name, num_waveforms, samples_per_waveform, waveform_data);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
