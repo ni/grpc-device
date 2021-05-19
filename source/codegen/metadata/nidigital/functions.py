@@ -2606,6 +2606,35 @@ functions = {
         ],
         "returns": "ViStatus"
     },
+    'WriteSourceWaveformBroadcastU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformData',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'waveformSize'
+                },
+                'type': 'ViUInt32[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     "WriteSourceWaveformDataFromFileTDMS": {
         "parameters": [
             {
@@ -2625,5 +2654,48 @@ functions = {
             }
         ],
         "returns": "ViStatus"
+    },
+    'WriteSourceWaveformSiteUniqueU32': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'is_repeated_capability': True,
+                'repeated_capability_type': 'sites',
+                'name': 'siteList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'numWaveforms',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesPerWaveform',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformData',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 1
+                },
+                'type': 'ViUInt32[]',
+                'use_array': True
+            }
+        ],
+        'returns': 'ViStatus'
     }
 }
