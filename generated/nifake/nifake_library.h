@@ -45,6 +45,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
+  ViStatus GetViUInt8(ViSession vi, ViUInt8* aUint8Number);
   ViStatus GetViInt32Array(ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[]);
   ViStatus GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
@@ -75,6 +76,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus CloseExtCal(ViSession vi, ViInt32 action);
   ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  ViStatus ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]);
+  ViStatus ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]);
 
  private:
   using AbortPtr = ViStatus (*)(ViSession vi);
@@ -104,6 +107,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetCustomTypeArrayPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   using GetEnumValuePtr = ViStatus (*)(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
+  using GetViUInt8Ptr = ViStatus (*)(ViSession vi, ViUInt8* aUint8Number);
   using GetViInt32ArrayPtr = ViStatus (*)(ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[]);
   using GetViUInt32ArrayPtr = ViStatus (*)(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
   using ImportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
@@ -134,6 +138,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using CloseExtCalPtr = ViStatus (*)(ViSession vi, ViInt32 action);
   using error_messagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   using self_testPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  using ViUInt8ArrayInputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]);
+  using ViUInt8ArrayOutputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -163,6 +169,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetCustomTypeArrayPtr GetCustomTypeArray;
     GetEnumValuePtr GetEnumValue;
     GetErrorPtr GetError;
+    GetViUInt8Ptr GetViUInt8;
     GetViInt32ArrayPtr GetViInt32Array;
     GetViUInt32ArrayPtr GetViUInt32Array;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
@@ -193,6 +200,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     CloseExtCalPtr CloseExtCal;
     error_messagePtr error_message;
     self_testPtr self_test;
+    ViUInt8ArrayInputFunctionPtr ViUInt8ArrayInputFunction;
+    ViUInt8ArrayOutputFunctionPtr ViUInt8ArrayOutputFunction;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;
