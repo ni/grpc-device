@@ -1224,6 +1224,52 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViUInt32Array_CallsAcceptViUInt32Ar
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetViInt32Array_CallsGetViInt32Array)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  nifake_grpc::NiFakeService service(&library, &session_repository);
+  int array_len = 4;
+  std::int32_t int32_array[] = {-2147483646, -2147483645, 2147483646, 2147483647};
+  EXPECT_CALL(library, GetViInt32Array(kTestViSession, array_len, _))
+      .WillOnce(DoAll(SetArrayArgument<2>(int32_array, int32_array + array_len), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetViInt32ArrayRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_array_len(array_len);
+  nifake_grpc::GetViInt32ArrayResponse response;
+  ::grpc::Status status = service.GetViInt32Array(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.int32_array(), ElementsAreArray(int32_array, array_len));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetViUInt32Array_CallsGetViUInt32Array)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  nifake_grpc::NiFakeService service(&library, &session_repository);
+  int array_len = 4;
+  std::uint32_t uint32_array[] = {0, 1, 0xFFFFFFFE, 0xFFFFFFFF};
+  EXPECT_CALL(library, GetViUInt32Array(kTestViSession, array_len, _))
+      .WillOnce(DoAll(SetArrayArgument<2>(uint32_array, uint32_array + array_len), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetViUInt32ArrayRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_array_len(array_len);
+  nifake_grpc::GetViUInt32ArrayResponse response;
+  ::grpc::Status status = service.GetViUInt32Array(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.u_int32_array(), ElementsAreArray(uint32_array, array_len));
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
