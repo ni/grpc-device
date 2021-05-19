@@ -135,7 +135,9 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_.get_function_pointer("niDigital_WaitUntilDone"));
   function_pointers_.WriteSequencerFlag = reinterpret_cast<WriteSequencerFlagPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerFlag"));
   function_pointers_.WriteSequencerRegister = reinterpret_cast<WriteSequencerRegisterPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerRegister"));
+  function_pointers_.WriteSourceWaveformBroadcastU32 = reinterpret_cast<WriteSourceWaveformBroadcastU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformBroadcastU32"));
   function_pointers_.WriteSourceWaveformDataFromFileTDMS = reinterpret_cast<WriteSourceWaveformDataFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformDataFromFileTDMS"));
+  function_pointers_.WriteSourceWaveformSiteUniqueU32 = reinterpret_cast<WriteSourceWaveformSiteUniqueU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformSiteUniqueU32"));
 }
 
 NiDigitalLibrary::~NiDigitalLibrary()
@@ -1517,6 +1519,18 @@ ViStatus NiDigitalLibrary::WriteSequencerRegister(ViSession vi, ViConstString re
 #endif
 }
 
+ViStatus NiDigitalLibrary::WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[])
+{
+  if (!function_pointers_.WriteSourceWaveformBroadcastU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_WriteSourceWaveformBroadcastU32.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_WriteSourceWaveformBroadcastU32(vi, waveformName, waveformSize, waveformData);
+#else
+  return function_pointers_.WriteSourceWaveformBroadcastU32(vi, waveformName, waveformSize, waveformData);
+#endif
+}
+
 ViStatus NiDigitalLibrary::WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath)
 {
   if (!function_pointers_.WriteSourceWaveformDataFromFileTDMS) {
@@ -1526,6 +1540,18 @@ ViStatus NiDigitalLibrary::WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViC
   return niDigital_WriteSourceWaveformDataFromFileTDMS(vi, waveformName, waveformFilePath);
 #else
   return function_pointers_.WriteSourceWaveformDataFromFileTDMS(vi, waveformName, waveformFilePath);
+#endif
+}
+
+ViStatus NiDigitalLibrary::WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1])
+{
+  if (!function_pointers_.WriteSourceWaveformSiteUniqueU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_WriteSourceWaveformSiteUniqueU32.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_WriteSourceWaveformSiteUniqueU32(vi, siteList, waveformName, numWaveforms, samplesPerWaveform, waveformData);
+#else
+  return function_pointers_.WriteSourceWaveformSiteUniqueU32(vi, siteList, waveformName, numWaveforms, samplesPerWaveform, waveformData);
 #endif
 }
 

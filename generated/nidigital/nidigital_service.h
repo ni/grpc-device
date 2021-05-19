@@ -138,7 +138,9 @@ public:
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
   ::grpc::Status WriteSequencerFlag(::grpc::ServerContext* context, const WriteSequencerFlagRequest* request, WriteSequencerFlagResponse* response) override;
   ::grpc::Status WriteSequencerRegister(::grpc::ServerContext* context, const WriteSequencerRegisterRequest* request, WriteSequencerRegisterResponse* response) override;
+  ::grpc::Status WriteSourceWaveformBroadcastU32(::grpc::ServerContext* context, const WriteSourceWaveformBroadcastU32Request* request, WriteSourceWaveformBroadcastU32Response* response) override;
   ::grpc::Status WriteSourceWaveformDataFromFileTDMS(::grpc::ServerContext* context, const WriteSourceWaveformDataFromFileTDMSRequest* request, WriteSourceWaveformDataFromFileTDMSResponse* response) override;
+  ::grpc::Status WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response) override;
 private:
   NiDigitalLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
