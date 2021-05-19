@@ -42,6 +42,8 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]) = 0;
   virtual ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
+  virtual ViStatus GetViInt32Array(ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[]) = 0;
+  virtual ViStatus GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;

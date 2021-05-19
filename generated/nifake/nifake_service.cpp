@@ -697,6 +697,54 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetViInt32Array(::grpc::ServerContext* context, const GetViInt32ArrayRequest* request, GetViInt32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 array_len = request->array_len();
+      response->mutable_int32_array()->Resize(array_len, 0);
+      ViInt32* int32_array = reinterpret_cast<ViInt32*>(response->mutable_int32_array()->mutable_data());
+      auto status = library_->GetViInt32Array(vi, array_len, int32_array);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetViUInt32Array(::grpc::ServerContext* context, const GetViUInt32ArrayRequest* request, GetViUInt32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 array_len = request->array_len();
+      response->mutable_u_int32_array()->Resize(array_len, 0);
+      ViUInt32* u_int32_array = reinterpret_cast<ViUInt32*>(response->mutable_u_int32_array()->mutable_data());
+      auto status = library_->GetViUInt32Array(vi, array_len, u_int32_array);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
   {
     if (context->IsCancelled()) {
