@@ -42,6 +42,7 @@ service NiFake {
   rpc GetCalInterval(GetCalIntervalRequest) returns (GetCalIntervalResponse);
   rpc GetCustomTypeArray(GetCustomTypeArrayRequest) returns (GetCustomTypeArrayResponse);
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
+  rpc GetViUInt8(GetViUInt8Request) returns (GetViUInt8Response);
   rpc GetViInt32Array(GetViInt32ArrayRequest) returns (GetViInt32ArrayResponse);
   rpc GetViUInt32Array(GetViUInt32ArrayRequest) returns (GetViUInt32ArrayResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
@@ -64,6 +65,8 @@ service NiFake {
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
+  rpc ViUInt8ArrayInputFunction(ViUInt8ArrayInputFunctionRequest) returns (ViUInt8ArrayInputFunctionResponse);
+  rpc ViUInt8ArrayOutputFunction(ViUInt8ArrayOutputFunctionRequest) returns (ViUInt8ArrayOutputFunctionResponse);
 }
 
 enum NiFakeAttributes {
@@ -381,6 +384,15 @@ message GetEnumValueResponse {
   sint32 a_turtle_raw = 4;
 }
 
+message GetViUInt8Request {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetViUInt8Response {
+  int32 status = 1;
+  uint32 a_uint8_number = 2;
+}
+
 message GetViInt32ArrayRequest {
   nidevice_grpc.Session vi = 1;
   sint32 array_len = 2;
@@ -622,5 +634,25 @@ message CloseExtCalRequest {
 
 message CloseExtCalResponse {
   int32 status = 1;
+}
+
+message ViUInt8ArrayInputFunctionRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 number_of_elements = 2;
+  bytes an_array = 3;
+}
+
+message ViUInt8ArrayInputFunctionResponse {
+  int32 status = 1;
+}
+
+message ViUInt8ArrayOutputFunctionRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 number_of_elements = 2;
+}
+
+message ViUInt8ArrayOutputFunctionResponse {
+  int32 status = 1;
+  bytes an_array = 2;
 }
 
