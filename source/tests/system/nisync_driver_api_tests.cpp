@@ -1465,6 +1465,41 @@ TEST_F(NiSyncDriver6683Test, GivenNoTrigger_ReadMultipleTriggerTimeStamp_Returns
   EXPECT_EQ(NISYNC_ERROR_DRIVER_TIMEOUT, viStatusRead);
 }
 
+TEST_F(NiSyncDriver6683Test, GivenOneTrigger_ReadMultipleTriggerTimeStamp_ReturnsOneTimeStampAndTimeoutError)
+{
+  auto terminal = NISYNC_VAL_PFI1;
+  // Ensure terminal level is low before enabling timestamping
+  CreateFutureTimeEvent(terminal, NISYNC_VAL_LEVEL_LOW, 0, 0, 0);
+  EnableTimeStampTrigger(terminal, NISYNC_VAL_EDGE_RISING);
+  CreateFutureTimeEvent(terminal, NISYNC_VAL_LEVEL_HIGH, 0, 0, 0);
+  CreateFutureTimeEvent(terminal, NISYNC_VAL_LEVEL_LOW, 0, 0, 0);
+
+  ViStatus viStatusRead;
+  ViReal64 timeout = 0.0;
+  const ViUInt32 timestampsToRead = 5;
+  ViUInt32 timeSeconds[timestampsToRead] = {}, timeNanoseconds[timestampsToRead] = {};
+  ViUInt16 timeFractionalNanoseconds[timestampsToRead] = {};
+  ViInt32 detectedEdge[timestampsToRead] = {};
+  ViUInt32 timestampsRead = 0;
+  auto grpcStatusRead = call_ReadMultipleTriggerTimeStamp(
+     terminal,
+     timeout,
+     timestampsToRead,
+     timeSeconds,
+     timeNanoseconds,
+     timeFractionalNanoseconds,
+     detectedEdge,
+     &timestampsRead,
+     &viStatusRead);
+
+  const ViUInt32 expectedTimestampsRead = 1;
+  EXPECT_TRUE(grpcStatusRead.ok());
+  EXPECT_EQ(NISYNC_ERROR_DRIVER_TIMEOUT, viStatusRead);
+  EXPECT_EQ(expectedTimestampsRead, timestampsRead);
+  EXPECT_NE(0, timeSeconds[0]);
+  EXPECT_EQ(NISYNC_VAL_EDGE_RISING, detectedEdge[0]);
+}
+
 TEST_F(NiSyncDriver6683Test, GivenFiveTriggers_ReadMultipleTriggerTimeStamp_ReturnsFiveTimeStamps)
 {
   auto terminal = NISYNC_VAL_PFI1;
