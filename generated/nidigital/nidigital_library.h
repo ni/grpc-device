@@ -132,7 +132,9 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus WaitUntilDone(ViSession vi, ViReal64 timeout);
   ViStatus WriteSequencerFlag(ViSession vi, ViConstString flag, ViBoolean value);
   ViStatus WriteSequencerRegister(ViSession vi, ViConstString reg, ViInt32 value);
+  ViStatus WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]);
   ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
+  ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]);
 
  private:
   using AbortPtr = ViStatus (*)(ViSession vi);
@@ -249,7 +251,9 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using WaitUntilDonePtr = ViStatus (*)(ViSession vi, ViReal64 timeout);
   using WriteSequencerFlagPtr = ViStatus (*)(ViSession vi, ViConstString flag, ViBoolean value);
   using WriteSequencerRegisterPtr = ViStatus (*)(ViSession vi, ViConstString reg, ViInt32 value);
+  using WriteSourceWaveformBroadcastU32Ptr = ViStatus (*)(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]);
   using WriteSourceWaveformDataFromFileTDMSPtr = ViStatus (*)(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
+  using WriteSourceWaveformSiteUniqueU32Ptr = ViStatus (*)(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -366,7 +370,9 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     WaitUntilDonePtr WaitUntilDone;
     WriteSequencerFlagPtr WriteSequencerFlag;
     WriteSequencerRegisterPtr WriteSequencerRegister;
+    WriteSourceWaveformBroadcastU32Ptr WriteSourceWaveformBroadcastU32;
     WriteSourceWaveformDataFromFileTDMSPtr WriteSourceWaveformDataFromFileTDMS;
+    WriteSourceWaveformSiteUniqueU32Ptr WriteSourceWaveformSiteUniqueU32;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;
