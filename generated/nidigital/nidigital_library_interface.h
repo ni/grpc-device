@@ -20,6 +20,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus ApplyLevelsAndTiming(ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins) = 0;
   virtual ViStatus ApplyTDROffsets(ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]) = 0;
   virtual ViStatus BurstPattern(ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout) = 0;
+  virtual ViStatus BurstPatternSynchronized(ViUInt32 sessionCount, ViSession sessions[], ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClockGeneratorAbort(ViSession vi, ViConstString channelList) = 0;
   virtual ViStatus ClockGeneratorGenerateClock(ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction) = 0;
@@ -61,6 +62,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus DisableConditionalJumpTrigger(ViSession vi, ViConstString triggerIdentifier) = 0;
   virtual ViStatus DisableSites(ViSession vi, ViConstString siteList) = 0;
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
+  virtual ViStatus EnableMatchFailCombination(ViUInt32 sessionCount, ViSession sessions[], ViSession syncSession) = 0;
   virtual ViStatus EnableSites(ViSession vi, ViConstString siteList) = 0;
   virtual ViStatus EndChannelMap(ViSession vi) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
@@ -128,6 +130,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus WaitUntilDone(ViSession vi, ViReal64 timeout) = 0;
   virtual ViStatus WriteSequencerFlag(ViSession vi, ViConstString flag, ViBoolean value) = 0;
+  virtual ViStatus WriteSequencerFlagSynchronized(ViUInt32 sessionCount, ViSession sessions[], ViConstString flag, ViBoolean value) = 0;
   virtual ViStatus WriteSequencerRegister(ViSession vi, ViConstString reg, ViInt32 value) = 0;
   virtual ViStatus WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]) = 0;
   virtual ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath) = 0;

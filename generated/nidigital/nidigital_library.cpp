@@ -26,6 +26,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.ApplyLevelsAndTiming = reinterpret_cast<ApplyLevelsAndTimingPtr>(shared_library_.get_function_pointer("niDigital_ApplyLevelsAndTiming"));
   function_pointers_.ApplyTDROffsets = reinterpret_cast<ApplyTDROffsetsPtr>(shared_library_.get_function_pointer("niDigital_ApplyTDROffsets"));
   function_pointers_.BurstPattern = reinterpret_cast<BurstPatternPtr>(shared_library_.get_function_pointer("niDigital_BurstPattern"));
+  function_pointers_.BurstPatternSynchronized = reinterpret_cast<BurstPatternSynchronizedPtr>(shared_library_.get_function_pointer("niDigital_BurstPatternSynchronized"));
   function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDigital_ClearError"));
   function_pointers_.ClockGeneratorAbort = reinterpret_cast<ClockGeneratorAbortPtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_Abort"));
   function_pointers_.ClockGeneratorGenerateClock = reinterpret_cast<ClockGeneratorGenerateClockPtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_GenerateClock"));
@@ -67,6 +68,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.DisableConditionalJumpTrigger = reinterpret_cast<DisableConditionalJumpTriggerPtr>(shared_library_.get_function_pointer("niDigital_DisableConditionalJumpTrigger"));
   function_pointers_.DisableSites = reinterpret_cast<DisableSitesPtr>(shared_library_.get_function_pointer("niDigital_DisableSites"));
   function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_.get_function_pointer("niDigital_DisableStartTrigger"));
+  function_pointers_.EnableMatchFailCombination = reinterpret_cast<EnableMatchFailCombinationPtr>(shared_library_.get_function_pointer("niDigital_EnableMatchFailCombination"));
   function_pointers_.EnableSites = reinterpret_cast<EnableSitesPtr>(shared_library_.get_function_pointer("niDigital_EnableSites"));
   function_pointers_.EndChannelMap = reinterpret_cast<EndChannelMapPtr>(shared_library_.get_function_pointer("niDigital_EndChannelMap"));
   function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niDigital_error_message"));
@@ -134,6 +136,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDigital_UnlockSession"));
   function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_.get_function_pointer("niDigital_WaitUntilDone"));
   function_pointers_.WriteSequencerFlag = reinterpret_cast<WriteSequencerFlagPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerFlag"));
+  function_pointers_.WriteSequencerFlagSynchronized = reinterpret_cast<WriteSequencerFlagSynchronizedPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerFlagSynchronized"));
   function_pointers_.WriteSequencerRegister = reinterpret_cast<WriteSequencerRegisterPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerRegister"));
   function_pointers_.WriteSourceWaveformBroadcastU32 = reinterpret_cast<WriteSourceWaveformBroadcastU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformBroadcastU32"));
   function_pointers_.WriteSourceWaveformDataFromFileTDMS = reinterpret_cast<WriteSourceWaveformDataFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformDataFromFileTDMS"));
@@ -208,6 +211,18 @@ ViStatus NiDigitalLibrary::BurstPattern(ViSession vi, ViConstString siteList, Vi
   return niDigital_BurstPattern(vi, siteList, startLabel, selectDigitalFunction, waitUntilDone, timeout);
 #else
   return function_pointers_.BurstPattern(vi, siteList, startLabel, selectDigitalFunction, waitUntilDone, timeout);
+#endif
+}
+
+ViStatus NiDigitalLibrary::BurstPatternSynchronized(ViUInt32 sessionCount, ViSession sessions[], ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout)
+{
+  if (!function_pointers_.BurstPatternSynchronized) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_BurstPatternSynchronized.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_BurstPatternSynchronized(sessionCount, sessions, siteList, startLabel, selectDigitalFunction, waitUntilDone, timeout);
+#else
+  return function_pointers_.BurstPatternSynchronized(sessionCount, sessions, siteList, startLabel, selectDigitalFunction, waitUntilDone, timeout);
 #endif
 }
 
@@ -700,6 +715,18 @@ ViStatus NiDigitalLibrary::DisableStartTrigger(ViSession vi)
   return niDigital_DisableStartTrigger(vi);
 #else
   return function_pointers_.DisableStartTrigger(vi);
+#endif
+}
+
+ViStatus NiDigitalLibrary::EnableMatchFailCombination(ViUInt32 sessionCount, ViSession sessions[], ViSession syncSession)
+{
+  if (!function_pointers_.EnableMatchFailCombination) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_EnableMatchFailCombination.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_EnableMatchFailCombination(sessionCount, sessions, syncSession);
+#else
+  return function_pointers_.EnableMatchFailCombination(sessionCount, sessions, syncSession);
 #endif
 }
 
@@ -1504,6 +1531,18 @@ ViStatus NiDigitalLibrary::WriteSequencerFlag(ViSession vi, ViConstString flag, 
   return niDigital_WriteSequencerFlag(vi, flag, value);
 #else
   return function_pointers_.WriteSequencerFlag(vi, flag, value);
+#endif
+}
+
+ViStatus NiDigitalLibrary::WriteSequencerFlagSynchronized(ViUInt32 sessionCount, ViSession sessions[], ViConstString flag, ViBoolean value)
+{
+  if (!function_pointers_.WriteSequencerFlagSynchronized) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_WriteSequencerFlagSynchronized.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_WriteSequencerFlagSynchronized(sessionCount, sessions, flag, value);
+#else
+  return function_pointers_.WriteSequencerFlagSynchronized(sessionCount, sessions, flag, value);
 #endif
 }
 
