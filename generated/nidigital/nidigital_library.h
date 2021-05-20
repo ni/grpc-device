@@ -23,6 +23,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus ApplyLevelsAndTiming(ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins);
   ViStatus ApplyTDROffsets(ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]);
   ViStatus BurstPattern(ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout);
+  ViStatus BurstPatternSynchronized(ViUInt32 sessionCount, ViSession sessions[], ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout);
   ViStatus ClearError(ViSession vi);
   ViStatus ClockGeneratorAbort(ViSession vi, ViConstString channelList);
   ViStatus ClockGeneratorGenerateClock(ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction);
@@ -64,6 +65,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus DisableConditionalJumpTrigger(ViSession vi, ViConstString triggerIdentifier);
   ViStatus DisableSites(ViSession vi, ViConstString siteList);
   ViStatus DisableStartTrigger(ViSession vi);
+  ViStatus EnableMatchFailCombination(ViUInt32 sessionCount, ViSession sessions[], ViSession syncSession);
   ViStatus EnableSites(ViSession vi, ViConstString siteList);
   ViStatus EndChannelMap(ViSession vi);
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
@@ -131,6 +133,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitUntilDone(ViSession vi, ViReal64 timeout);
   ViStatus WriteSequencerFlag(ViSession vi, ViConstString flag, ViBoolean value);
+  ViStatus WriteSequencerFlagSynchronized(ViUInt32 sessionCount, ViSession sessions[], ViConstString flag, ViBoolean value);
   ViStatus WriteSequencerRegister(ViSession vi, ViConstString reg, ViInt32 value);
   ViStatus WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]);
   ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
@@ -142,6 +145,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using ApplyLevelsAndTimingPtr = ViStatus (*)(ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins);
   using ApplyTDROffsetsPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]);
   using BurstPatternPtr = ViStatus (*)(ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout);
+  using BurstPatternSynchronizedPtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout);
   using ClearErrorPtr = ViStatus (*)(ViSession vi);
   using ClockGeneratorAbortPtr = ViStatus (*)(ViSession vi, ViConstString channelList);
   using ClockGeneratorGenerateClockPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction);
@@ -183,6 +187,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using DisableConditionalJumpTriggerPtr = ViStatus (*)(ViSession vi, ViConstString triggerIdentifier);
   using DisableSitesPtr = ViStatus (*)(ViSession vi, ViConstString siteList);
   using DisableStartTriggerPtr = ViStatus (*)(ViSession vi);
+  using EnableMatchFailCombinationPtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViSession syncSession);
   using EnableSitesPtr = ViStatus (*)(ViSession vi, ViConstString siteList);
   using EndChannelMapPtr = ViStatus (*)(ViSession vi);
   using ErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
@@ -250,6 +255,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitUntilDonePtr = ViStatus (*)(ViSession vi, ViReal64 timeout);
   using WriteSequencerFlagPtr = ViStatus (*)(ViSession vi, ViConstString flag, ViBoolean value);
+  using WriteSequencerFlagSynchronizedPtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViConstString flag, ViBoolean value);
   using WriteSequencerRegisterPtr = ViStatus (*)(ViSession vi, ViConstString reg, ViInt32 value);
   using WriteSourceWaveformBroadcastU32Ptr = ViStatus (*)(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]);
   using WriteSourceWaveformDataFromFileTDMSPtr = ViStatus (*)(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
@@ -261,6 +267,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     ApplyLevelsAndTimingPtr ApplyLevelsAndTiming;
     ApplyTDROffsetsPtr ApplyTDROffsets;
     BurstPatternPtr BurstPattern;
+    BurstPatternSynchronizedPtr BurstPatternSynchronized;
     ClearErrorPtr ClearError;
     ClockGeneratorAbortPtr ClockGeneratorAbort;
     ClockGeneratorGenerateClockPtr ClockGeneratorGenerateClock;
@@ -302,6 +309,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     DisableConditionalJumpTriggerPtr DisableConditionalJumpTrigger;
     DisableSitesPtr DisableSites;
     DisableStartTriggerPtr DisableStartTrigger;
+    EnableMatchFailCombinationPtr EnableMatchFailCombination;
     EnableSitesPtr EnableSites;
     EndChannelMapPtr EndChannelMap;
     ErrorMessagePtr ErrorMessage;
@@ -369,6 +377,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     UnlockSessionPtr UnlockSession;
     WaitUntilDonePtr WaitUntilDone;
     WriteSequencerFlagPtr WriteSequencerFlag;
+    WriteSequencerFlagSynchronizedPtr WriteSequencerFlagSynchronized;
     WriteSequencerRegisterPtr WriteSequencerRegister;
     WriteSourceWaveformBroadcastU32Ptr WriteSourceWaveformBroadcastU32;
     WriteSourceWaveformDataFromFileTDMSPtr WriteSourceWaveformDataFromFileTDMS;
