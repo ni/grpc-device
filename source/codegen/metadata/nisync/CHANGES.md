@@ -9,3 +9,8 @@ Removed the following deprecated attributes.
 
 Added the following internal attribute.
 - MODEL_CODE
+
+## functions.py
+
+The following functions were tagged as 'codegen_method':'CustomCode':
+- ReadMultipleTriggerTimeStamp
