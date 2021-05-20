@@ -21,6 +21,7 @@ service NiDigital {
   rpc ApplyLevelsAndTiming(ApplyLevelsAndTimingRequest) returns (ApplyLevelsAndTimingResponse);
   rpc ApplyTDROffsets(ApplyTDROffsetsRequest) returns (ApplyTDROffsetsResponse);
   rpc BurstPattern(BurstPatternRequest) returns (BurstPatternResponse);
+  rpc BurstPatternSynchronized(BurstPatternSynchronizedRequest) returns (BurstPatternSynchronizedResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClockGeneratorAbort(ClockGeneratorAbortRequest) returns (ClockGeneratorAbortResponse);
   rpc ClockGeneratorGenerateClock(ClockGeneratorGenerateClockRequest) returns (ClockGeneratorGenerateClockResponse);
@@ -62,6 +63,7 @@ service NiDigital {
   rpc DisableConditionalJumpTrigger(DisableConditionalJumpTriggerRequest) returns (DisableConditionalJumpTriggerResponse);
   rpc DisableSites(DisableSitesRequest) returns (DisableSitesResponse);
   rpc DisableStartTrigger(DisableStartTriggerRequest) returns (DisableStartTriggerResponse);
+  rpc EnableMatchFailCombination(EnableMatchFailCombinationRequest) returns (EnableMatchFailCombinationResponse);
   rpc EnableSites(EnableSitesRequest) returns (EnableSitesResponse);
   rpc EndChannelMap(EndChannelMapRequest) returns (EndChannelMapResponse);
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
@@ -129,6 +131,7 @@ service NiDigital {
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteSequencerFlag(WriteSequencerFlagRequest) returns (WriteSequencerFlagResponse);
+  rpc WriteSequencerFlagSynchronized(WriteSequencerFlagSynchronizedRequest) returns (WriteSequencerFlagSynchronizedResponse);
   rpc WriteSequencerRegister(WriteSequencerRegisterRequest) returns (WriteSequencerRegisterResponse);
   rpc WriteSourceWaveformBroadcastU32(WriteSourceWaveformBroadcastU32Request) returns (WriteSourceWaveformBroadcastU32Response);
   rpc WriteSourceWaveformDataFromFileTDMS(WriteSourceWaveformDataFromFileTDMSRequest) returns (WriteSourceWaveformDataFromFileTDMSResponse);
@@ -390,6 +393,20 @@ message BurstPatternRequest {
 }
 
 message BurstPatternResponse {
+  int32 status = 1;
+}
+
+message BurstPatternSynchronizedRequest {
+  uint32 session_count = 1;
+  repeated nidevice_grpc.Session sessions = 2;
+  string site_list = 3;
+  string start_label = 4;
+  bool select_digital_function = 5;
+  bool wait_until_done = 6;
+  double timeout = 7;
+}
+
+message BurstPatternSynchronizedResponse {
   int32 status = 1;
 }
 
@@ -849,6 +866,16 @@ message DisableStartTriggerRequest {
 }
 
 message DisableStartTriggerResponse {
+  int32 status = 1;
+}
+
+message EnableMatchFailCombinationRequest {
+  uint32 session_count = 1;
+  repeated nidevice_grpc.Session sessions = 2;
+  nidevice_grpc.Session sync_session = 3;
+}
+
+message EnableMatchFailCombinationResponse {
   int32 status = 1;
 }
 
@@ -1552,6 +1579,17 @@ message WriteSequencerFlagRequest {
 }
 
 message WriteSequencerFlagResponse {
+  int32 status = 1;
+}
+
+message WriteSequencerFlagSynchronizedRequest {
+  uint32 session_count = 1;
+  repeated nidevice_grpc.Session sessions = 2;
+  string flag = 3;
+  bool value = 4;
+}
+
+message WriteSequencerFlagSynchronizedResponse {
   int32 status = 1;
 }
 

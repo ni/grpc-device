@@ -22,6 +22,7 @@ class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   MOCK_METHOD(ViStatus, ApplyLevelsAndTiming, (ViSession vi, ViConstString siteList, ViConstString levelsSheet, ViConstString timingSheet, ViConstString initialStateHighPins, ViConstString initialStateLowPins, ViConstString initialStateTristatePins), (override));
   MOCK_METHOD(ViStatus, ApplyTDROffsets, (ViSession vi, ViConstString channelList, ViInt32 numOffsets, ViReal64 offsets[]), (override));
   MOCK_METHOD(ViStatus, BurstPattern, (ViSession vi, ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout), (override));
+  MOCK_METHOD(ViStatus, BurstPatternSynchronized, (ViUInt32 sessionCount, ViSession sessions[], ViConstString siteList, ViConstString startLabel, ViBoolean selectDigitalFunction, ViBoolean waitUntilDone, ViReal64 timeout), (override));
   MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClockGeneratorAbort, (ViSession vi, ViConstString channelList), (override));
   MOCK_METHOD(ViStatus, ClockGeneratorGenerateClock, (ViSession vi, ViConstString channelList, ViReal64 frequency, ViBoolean selectDigitalFunction), (override));
@@ -63,6 +64,7 @@ class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   MOCK_METHOD(ViStatus, DisableConditionalJumpTrigger, (ViSession vi, ViConstString triggerIdentifier), (override));
   MOCK_METHOD(ViStatus, DisableSites, (ViSession vi, ViConstString siteList), (override));
   MOCK_METHOD(ViStatus, DisableStartTrigger, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, EnableMatchFailCombination, (ViUInt32 sessionCount, ViSession sessions[], ViSession syncSession), (override));
   MOCK_METHOD(ViStatus, EnableSites, (ViSession vi, ViConstString siteList), (override));
   MOCK_METHOD(ViStatus, EndChannelMap, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
@@ -130,6 +132,7 @@ class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, WaitUntilDone, (ViSession vi, ViReal64 timeout), (override));
   MOCK_METHOD(ViStatus, WriteSequencerFlag, (ViSession vi, ViConstString flag, ViBoolean value), (override));
+  MOCK_METHOD(ViStatus, WriteSequencerFlagSynchronized, (ViUInt32 sessionCount, ViSession sessions[], ViConstString flag, ViBoolean value), (override));
   MOCK_METHOD(ViStatus, WriteSequencerRegister, (ViSession vi, ViConstString reg, ViInt32 value), (override));
   MOCK_METHOD(ViStatus, WriteSourceWaveformBroadcastU32, (ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]), (override));
   MOCK_METHOD(ViStatus, WriteSourceWaveformDataFromFileTDMS, (ViSession vi, ViConstString waveformName, ViConstString waveformFilePath), (override));

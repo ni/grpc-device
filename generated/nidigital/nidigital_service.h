@@ -29,6 +29,7 @@ public:
   ::grpc::Status ApplyLevelsAndTiming(::grpc::ServerContext* context, const ApplyLevelsAndTimingRequest* request, ApplyLevelsAndTimingResponse* response) override;
   ::grpc::Status ApplyTDROffsets(::grpc::ServerContext* context, const ApplyTDROffsetsRequest* request, ApplyTDROffsetsResponse* response) override;
   ::grpc::Status BurstPattern(::grpc::ServerContext* context, const BurstPatternRequest* request, BurstPatternResponse* response) override;
+  ::grpc::Status BurstPatternSynchronized(::grpc::ServerContext* context, const BurstPatternSynchronizedRequest* request, BurstPatternSynchronizedResponse* response) override;
   ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
   ::grpc::Status ClockGeneratorAbort(::grpc::ServerContext* context, const ClockGeneratorAbortRequest* request, ClockGeneratorAbortResponse* response) override;
   ::grpc::Status ClockGeneratorGenerateClock(::grpc::ServerContext* context, const ClockGeneratorGenerateClockRequest* request, ClockGeneratorGenerateClockResponse* response) override;
@@ -70,6 +71,7 @@ public:
   ::grpc::Status DisableConditionalJumpTrigger(::grpc::ServerContext* context, const DisableConditionalJumpTriggerRequest* request, DisableConditionalJumpTriggerResponse* response) override;
   ::grpc::Status DisableSites(::grpc::ServerContext* context, const DisableSitesRequest* request, DisableSitesResponse* response) override;
   ::grpc::Status DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response) override;
+  ::grpc::Status EnableMatchFailCombination(::grpc::ServerContext* context, const EnableMatchFailCombinationRequest* request, EnableMatchFailCombinationResponse* response) override;
   ::grpc::Status EnableSites(::grpc::ServerContext* context, const EnableSitesRequest* request, EnableSitesResponse* response) override;
   ::grpc::Status EndChannelMap(::grpc::ServerContext* context, const EndChannelMapRequest* request, EndChannelMapResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
@@ -137,6 +139,7 @@ public:
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
   ::grpc::Status WriteSequencerFlag(::grpc::ServerContext* context, const WriteSequencerFlagRequest* request, WriteSequencerFlagResponse* response) override;
+  ::grpc::Status WriteSequencerFlagSynchronized(::grpc::ServerContext* context, const WriteSequencerFlagSynchronizedRequest* request, WriteSequencerFlagSynchronizedResponse* response) override;
   ::grpc::Status WriteSequencerRegister(::grpc::ServerContext* context, const WriteSequencerRegisterRequest* request, WriteSequencerRegisterResponse* response) override;
   ::grpc::Status WriteSourceWaveformBroadcastU32(::grpc::ServerContext* context, const WriteSourceWaveformBroadcastU32Request* request, WriteSourceWaveformBroadcastU32Response* response) override;
   ::grpc::Status WriteSourceWaveformDataFromFileTDMS(::grpc::ServerContext* context, const WriteSourceWaveformDataFromFileTDMSRequest* request, WriteSourceWaveformDataFromFileTDMSResponse* response) override;
