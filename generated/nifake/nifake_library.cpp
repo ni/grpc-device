@@ -23,6 +23,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niFake_Abort"));
   function_pointers_.AcceptListOfDurationsInSeconds = reinterpret_cast<AcceptListOfDurationsInSecondsPtr>(shared_library_.get_function_pointer("niFake_AcceptListOfDurationsInSeconds"));
+  function_pointers_.AcceptViSessionArray = reinterpret_cast<AcceptViSessionArrayPtr>(shared_library_.get_function_pointer("niFake_AcceptViSessionArray"));
   function_pointers_.AcceptViUInt32Array = reinterpret_cast<AcceptViUInt32ArrayPtr>(shared_library_.get_function_pointer("niFake_AcceptViUInt32Array"));
   function_pointers_.BoolArrayOutputFunction = reinterpret_cast<BoolArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayOutputFunction"));
   function_pointers_.BoolArrayInputFunction = reinterpret_cast<BoolArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayInputFunction"));
@@ -115,6 +116,18 @@ ViStatus NiFakeLibrary::AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 cou
   return niFake_AcceptListOfDurationsInSeconds(vi, count, delays);
 #else
   return function_pointers_.AcceptListOfDurationsInSeconds(vi, count, delays);
+#endif
+}
+
+ViStatus NiFakeLibrary::AcceptViSessionArray(ViUInt32 sessionCount, ViSession sessionArray[])
+{
+  if (!function_pointers_.AcceptViSessionArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_AcceptViSessionArray.");
+  }
+#if defined(_MSC_VER)
+  return niFake_AcceptViSessionArray(sessionCount, sessionArray);
+#else
+  return function_pointers_.AcceptViSessionArray(sessionCount, sessionArray);
 #endif
 }
 
