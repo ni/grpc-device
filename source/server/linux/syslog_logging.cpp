@@ -5,7 +5,7 @@
 namespace nidevice_grpc {
 namespace Logging {
 
-static const char* syslog_identity = "ni_grpc_server";
+static const char* syslog_identity = "ni_grpc_device_server";
 
 void setup_syslog(bool is_daemon)
 {
