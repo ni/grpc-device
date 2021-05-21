@@ -17,6 +17,7 @@ class NiFakeLibraryInterface {
 
   virtual ViStatus Abort(ViSession vi) = 0;
   virtual ViStatus AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[]) = 0;
+  virtual ViStatus AcceptViSessionArray(ViUInt32 sessionCount, ViSession sessionArray[]) = 0;
   virtual ViStatus AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) = 0;
   virtual ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;
   virtual ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;
