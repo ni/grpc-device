@@ -1425,7 +1425,7 @@ namespace nidmm_grpc {
       auto status = library_->GetApertureTimeInfo(vi, &aperture_time, &aperture_time_units);
       response->set_status(status);
       if (status == 0) {
-        response->set_aperture_time(static_cast<nidmm_grpc::ApertureTime>(aperture_time));
+        response->set_aperture_time(static_cast<nidmm_grpc::ApertureTime>(static_cast<int>(aperture_time)));
         response->set_aperture_time_raw(aperture_time);
         response->set_aperture_time_units(static_cast<nidmm_grpc::ApertureTimeUnits>(aperture_time_units));
         response->set_aperture_time_units_raw(aperture_time_units);
