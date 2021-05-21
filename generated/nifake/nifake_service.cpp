@@ -412,13 +412,29 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response)
+  ::grpc::Status NiFakeService::GetAnIviDanceWithATwistArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayRequest* request, GetAnIviDanceWithATwistArrayResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString a_string = request->a_string().c_str();
+      ViInt32 actual_size {};
+      auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      response->mutable_array_out()->Resize(actual_size, 0);
+      ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
+      status = library_->GetAnIviDanceWithATwistArray(vi, a_string, actual_size, array_out, &actual_size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_actual_size(actual_size);
+      }
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
