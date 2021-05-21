@@ -1383,6 +1383,41 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViSessionArray_CallsAcceptViSession
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+//Test for ivi-dance-with-a-twist mechanism
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIviDanceWithATwistArray)
+{
+    nidevice_grpc::SessionRepository session_repository;
+    std::uint32_t session_id = create_session(session_repository, kTestViSession);
+    NiFakeMockLibrary library;
+    nifake_grpc::NiFakeService service(&library, &session_repository);
+    const char* a_string = "abc";
+    ViInt32 array_out[] = { 1, 2, 3 };
+    ViInt32 expected_size = 3;
+    // ivi-dance-with-a-twist call
+    EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), 0, nullptr, _))
+        .WillOnce(DoAll(
+            SetArgPointee<4>(expected_size),
+            Return(kDriverSuccess)));          
+    // follow up call with size returned from ivi-dance-with-a-twist setup.
+    EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string) , expected_size, _, _))
+        .WillOnce(DoAll(
+            SetArrayArgument<3>(array_out, array_out + expected_size),
+            SetArgPointee<4>(expected_size),
+            Return(kDriverSuccess)));
+
+    ::grpc::ServerContext context;
+    nifake_grpc::GetAnIviDanceWithATwistArrayRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_a_string(a_string);
+    nifake_grpc::GetAnIviDanceWithATwistArrayResponse response;
+    ::grpc::Status status = service.GetAnIviDanceWithATwistArray(&context, &request, &response);
+
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kDriverSuccess, response.status());
+    EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_size));
+    EXPECT_EQ(response.actual_size(), expected_size);
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
