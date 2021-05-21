@@ -2986,6 +2986,39 @@ namespace nidigital_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::WriteStatic(::grpc::ServerContext* context, const WriteStaticRequest* request, WriteStaticResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_list = request->channel_list().c_str();
+      ViUInt8 state;
+      switch (request->state_enum_case()) {
+        case nidigital_grpc::WriteStaticRequest::StateEnumCase::kState:
+          state = (ViUInt8)request->state();
+          break;
+        case nidigital_grpc::WriteStaticRequest::StateEnumCase::kStateRaw:
+          state = (ViUInt8)request->state_raw();
+          break;
+        case nidigital_grpc::WriteStaticRequest::StateEnumCase::STATE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for state was not specified or out of range");
+          break;
+      }
+
+      auto status = library_->WriteStatic(vi, channel_list, state);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response)
   {
     if (context->IsCancelled()) {

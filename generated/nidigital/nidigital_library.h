@@ -137,6 +137,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   ViStatus WriteSequencerRegister(ViSession vi, ViConstString reg, ViInt32 value);
   ViStatus WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]);
   ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
+  ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state);
   ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]);
 
  private:
@@ -259,6 +260,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   using WriteSequencerRegisterPtr = ViStatus (*)(ViSession vi, ViConstString reg, ViInt32 value);
   using WriteSourceWaveformBroadcastU32Ptr = ViStatus (*)(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]);
   using WriteSourceWaveformDataFromFileTDMSPtr = ViStatus (*)(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
+  using WriteStaticPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViUInt8 state);
   using WriteSourceWaveformSiteUniqueU32Ptr = ViStatus (*)(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]);
 
   typedef struct FunctionPointers {
@@ -381,6 +383,7 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
     WriteSequencerRegisterPtr WriteSequencerRegister;
     WriteSourceWaveformBroadcastU32Ptr WriteSourceWaveformBroadcastU32;
     WriteSourceWaveformDataFromFileTDMSPtr WriteSourceWaveformDataFromFileTDMS;
+    WriteStaticPtr WriteStatic;
     WriteSourceWaveformSiteUniqueU32Ptr WriteSourceWaveformSiteUniqueU32;
   } FunctionLoadStatus;
 
