@@ -134,6 +134,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus WriteSequencerRegister(ViSession vi, ViConstString reg, ViInt32 value) = 0;
   virtual ViStatus WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]) = 0;
   virtual ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath) = 0;
+  virtual ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state) = 0;
   virtual ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]) = 0;
 };
 

@@ -135,6 +135,7 @@ service NiDigital {
   rpc WriteSequencerRegister(WriteSequencerRegisterRequest) returns (WriteSequencerRegisterResponse);
   rpc WriteSourceWaveformBroadcastU32(WriteSourceWaveformBroadcastU32Request) returns (WriteSourceWaveformBroadcastU32Response);
   rpc WriteSourceWaveformDataFromFileTDMS(WriteSourceWaveformDataFromFileTDMSRequest) returns (WriteSourceWaveformDataFromFileTDMSResponse);
+  rpc WriteStatic(WriteStaticRequest) returns (WriteStaticResponse);
   rpc WriteSourceWaveformSiteUniqueU32(WriteSourceWaveformSiteUniqueU32Request) returns (WriteSourceWaveformSiteUniqueU32Response);
 }
 
@@ -341,6 +342,14 @@ enum TriggerType {
   TRIGGER_TYPE_NIDIGITAL_VAL_NONE = 1700;
   TRIGGER_TYPE_NIDIGITAL_VAL_DIGITAL_EDGE = 1701;
   TRIGGER_TYPE_NIDIGITAL_VAL_SOFTWARE = 1702;
+}
+
+enum WriteStaticPinState {
+  option allow_alias = true;
+  WRITE_STATIC_PIN_STATE_UNSPECIFIED = 0;
+  WRITE_STATIC_PIN_STATE_NIDIGITAL_VAL_0 = 0;
+  WRITE_STATIC_PIN_STATE_NIDIGITAL_VAL_1 = 1;
+  WRITE_STATIC_PIN_STATE_NIDIGITAL_VAL_X = 5;
 }
 
 message AbortRequest {
@@ -1620,6 +1629,19 @@ message WriteSourceWaveformDataFromFileTDMSRequest {
 }
 
 message WriteSourceWaveformDataFromFileTDMSResponse {
+  int32 status = 1;
+}
+
+message WriteStaticRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  oneof state_enum {
+    WriteStaticPinState state = 3;
+    uint32 state_raw = 4;
+  }
+}
+
+message WriteStaticResponse {
   int32 status = 1;
 }
 
