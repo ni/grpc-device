@@ -25,11 +25,13 @@ void log_terminal(Level level, const char* fmt, va_list args)
 
 static log_fn_impl logger = &log_terminal;
 
-void set_logger(log_fn_impl impl) {
+void set_logger(log_fn_impl impl)
+{
   logger = impl;
 }
 
-void log(Level level, const char* fmt, ...) {
+void log(Level level, const char* fmt, ...)
+{
   va_list args;
   va_start(args, fmt);
   logger(level, fmt, args);

@@ -15,6 +15,10 @@
 #include "session_utilities_service.h"
 #include "syscfg_library.h"
 
+#if defined(__GNUC__)
+  #include "linux/syslog_logging.h"
+#endif
+
 static void RunServer(const std::string& config_file_path)
 {
   grpc::EnableDefaultHealthCheckService(true);
@@ -102,18 +106,64 @@ static void RunServer(const std::string& config_file_path)
   device_enumerator.clear_syscfg_session();
 }
 
+struct Options
+{
+  Options() :
+#if defined(__GNUC__)
+    use_syslog(false),
+#endif
+    config_file_path()
+  {
+  }
+
+#if defined(__GNUC__)
+  bool use_syslog;
+#endif
+  std::string config_file_path;
+};
+
+#if defined(__GNUC__)
+const char* usage = "Usage: ni_grpc_device_server [--help] [--use-syslog] [config-file-path]";
+#else
+const char* usage = "Usage: ni_grpc_device_server [--help] [config-file-path]";
+#endif
+
+Options parse_options(int argc, char** argv)
+{
+  Options options;
+  for (int i = 1; i < argc; ++i) {
+ #if defined(__GNUC__)
+    if (strcmp("--use-syslog", argv[i]) == 0) {
+      options.use_syslog = true;
+    }
+    else
+ #endif
+    if (strcmp("--help", argv[i]) == 0) {
+      nidevice_grpc::Logging::log(nidevice_grpc::Logging::Level_Info, usage);
+      exit(0);
+    }
+    else if (i == argc - 1) {
+      options.config_file_path = argv[i];
+    }
+    else {
+      nidevice_grpc::Logging::log(nidevice_grpc::Logging::Level_Error, usage);
+      exit(EXIT_FAILURE);
+    }
+  }
+  return options;
+}
+
 int main(int argc, char** argv)
 {
-  if (argc > 2) {
-    nidevice_grpc::Logging::log(
-      nidevice_grpc::Logging::Level_Error,
-      "Usage: ni_grpc_device_server <config-file-path>");
-    exit(EXIT_FAILURE);
+  auto options = parse_options(argc, argv);
+#if defined(__GNUC__)
+  if (options.use_syslog) {
+    // No daemon support, yet.
+    bool is_daemon = false;
+    nidevice_grpc::Logging::setup_syslog(is_daemon);
+    nidevice_grpc::Logging::set_logger(&nidevice_grpc::Logging::log_syslog);
   }
-  std::string config_file_path;
-  if (argc == 2) {
-    config_file_path = argv[1];
-  }
-  RunServer(config_file_path);
+#endif
+  RunServer(options.config_file_path);
   return 0;
 }
