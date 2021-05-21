@@ -32,7 +32,7 @@ def mark_size_params(parameters):
     """Marks the size parameters in the metadata."""
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
-        if mechanism in {'len', 'ivi-dance', 'passed-in'}:
+        if mechanism in {'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist'}:
             size_param = get_size_param(param, parameters)
             size_param['is_size_param'] = True
 
@@ -41,7 +41,7 @@ def mark_non_proto_params(parameters):
        Their values should be derived from other sources in the service handlers."""
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
-        if mechanism in {'len', 'ivi-dance'}:
+        if mechanism in {'len', 'ivi-dance', 'ivi-dance-with-a-twist'}:
             size_param = get_size_param(param, parameters)
             size_param['include_in_proto'] = False
             if mechanism == 'len':

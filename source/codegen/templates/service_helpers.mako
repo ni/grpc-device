@@ -55,6 +55,32 @@ ${set_response_values(output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
+## Generate the core method body for an ivi-dance-with_a_twist method. This should be what gets included within the try block in the service method.
+<%def name="define_ivi_dance_with_a_twist_method_body(function_name, function_data, parameters)">\
+<%
+  (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_with_a_twist_params(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+  array_output_parameters = [p for p in output_parameters if common_helpers.is_array(p['type'])]
+  scalar_output_parameters = [p for p in output_parameters if p not in array_output_parameters]
+%>\
+${initialize_input_params(function_name, non_ivi_params)}\
+${initialize_output_params(scalar_output_parameters)}\
+      auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance_with_a_twist(parameters)});
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+${initialize_output_params(array_output_parameters)}\
+      status = library_->${function_name}(${service_helpers.create_args(parameters)});
+      response->set_status(status);
+% if output_parameters:
+      if (status == 0) {
+${set_response_values(output_parameters)}\
+      }
+% endif
+      return ::grpc::Status::OK;\
+</%def>
+
 ## Generate the core method body for an ivi-dance method. This should be what gets included within the try block in the service method.
 <%def name="define_simple_method_body(function_name, function_data, parameters)">\
 <%
@@ -225,6 +251,8 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
   size = ''
   if common_helpers.get_size_mechanism(parameter) == 'fixed':
     size = parameter['size']['value']
+  elif common_helpers.get_size_mechanism(parameter) == 'ivi-dance-with-a-twist':
+    size = common_helpers.camel_to_snake(parameter['size']['value_twist'])
   else:
     size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\

@@ -541,37 +541,37 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetAnIviDanceWithATwistString': {
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'TBD'
-        },
+    'GetAnIviDanceWithATwistArray': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'vi',
+                'direction': 'in',
                 'type': 'ViSession'
             },
             {
+                'name': 'aString',
                 'direction': 'in',
+                'type': 'ViConstString'
+            },
+            {
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
+                'name': 'arrayOut',
                 'direction': 'out',
-                'name': 'aString',
+                'type': 'ViInt32[]',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'actualSize'
-                },
-                'type': 'ViChar[]'
+                }
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
-                'type': 'ViInt32',
-                'use_in_python_api': False
+                'direction': 'out',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'

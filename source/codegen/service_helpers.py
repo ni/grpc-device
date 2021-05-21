@@ -9,6 +9,10 @@ def is_string_arg(parameter):
 
 def create_args(parameters):
     result = ''
+    is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(parameters)
+    if is_twist_mechanism:
+        twist_value = common_helpers.get_twist_value(parameters)
+        twist_value_name = common_helpers.camel_to_snake(twist_value)
     for parameter in parameters:
       parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
       is_array = common_helpers.is_array(parameter['type'])
@@ -18,6 +22,8 @@ def create_args(parameters):
         result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
       elif parameter['type'] in {"ViBoolean[]", "ViSession[]"}:
         result = f'{result}{parameter_name}.data(), '
+      elif parameter.get('is_size_param', False) and is_twist_mechanism:
+        result = f'{result}{twist_value_name}, '
       else:
         if is_array and common_helpers.is_struct(parameter):
           parameter_name = parameter_name + ".data()"
@@ -35,6 +41,22 @@ def create_args_for_ivi_dance(parameters):
         result = f'{result}nullptr, '
       else:
         result = result + common_helpers.camel_to_snake(parameter['cppName']) + ', '
+    return result[:-2]
+
+def create_args_for_ivi_dance_with_a_twist(parameters):
+    result = ''
+    for parameter in parameters:
+      name = common_helpers.camel_to_snake(parameter['cppName'])
+      is_array = common_helpers.is_array(parameter['type'])
+      if parameter.get('is_size_param', False):
+        result = f'{result}0, '
+      elif common_helpers.is_output_parameter(parameter):
+          if is_array:
+              result = f'{result}nullptr, '
+          else:
+              result = result + f'&{name}' + ', '
+      else:
+        result = result + common_helpers.camel_to_snake(name) + ', '
     return result[:-2]
 
 def create_params(parameters):

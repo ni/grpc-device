@@ -33,7 +33,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetANumber(ViSession vi, ViInt16* aNumber);
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
-  ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
+  ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut);
   ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
@@ -96,7 +96,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetANumberPtr = ViStatus (*)(ViSession vi, ViInt16* aNumber);
   using GetAStringOfFixedMaximumSizePtr = ViStatus (*)(ViSession vi, ViChar aString[256]);
   using GetAnIviDanceStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
-  using GetAnIviDanceWithATwistStringPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize);
+  using GetAnIviDanceWithATwistArrayPtr = ViStatus (*)(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   using GetArraySizeForCustomCodePtr = ViStatus (*)(ViSession vi, ViInt32* sizeOut);
   using GetArrayUsingIviDancePtr = ViStatus (*)(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
   using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
@@ -159,7 +159,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetANumberPtr GetANumber;
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
     GetAnIviDanceStringPtr GetAnIviDanceString;
-    GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
+    GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
     GetArraySizeForCustomCodePtr GetArraySizeForCustomCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;
     GetAttributeViBooleanPtr GetAttributeViBoolean;

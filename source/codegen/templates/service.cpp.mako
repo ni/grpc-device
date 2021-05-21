@@ -85,6 +85,8 @@ namespace ${config["namespace_component"]}_grpc {
 ${mako_helper.define_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   elif common_helpers.has_ivi_dance_param(parameters):
 ${mako_helper.define_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+%   elif common_helpers.has_ivi_dance_with_a_twist_param(parameters):
+${mako_helper.define_ivi_dance_with_a_twist_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   else:
 ${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   endif
