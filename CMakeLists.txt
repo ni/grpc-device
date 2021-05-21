@@ -179,6 +179,7 @@ endforeach()
 add_executable(ni_grpc_device_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
+   "source/server/logging.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
    "source/server/server_security_configuration.cpp"

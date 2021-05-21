@@ -9,6 +9,7 @@
 #include <nidcpower/nidcpower_library.h>
 #include <nidcpower/nidcpower_service.h>
 
+#include "logging.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
 #include "session_utilities_service.h"
@@ -31,8 +32,9 @@ static void RunServer(const std::string& config_file_path)
     root_cert = server_config_parser.parse_root_cert();
   }
   catch (const std::exception& ex) {
-    std::cerr << "\nERROR:\n\n"
-              << ex.what() << "\n\nExiting.\n";
+    nidevice_grpc::Logging::log(
+      nidevice_grpc::Logging::Level_Error,
+      "Failed to parse config: %s", ex.what());
     exit(EXIT_FAILURE);
   }
 
@@ -71,11 +73,14 @@ static void RunServer(const std::string& config_file_path)
   auto server = builder.BuildAndStart();
 
   if (!server) {
-    std::cerr << "Server failed to start on " << server_address << std::endl;
+    nidevice_grpc::Logging::log(
+      nidevice_grpc::Logging::Level_Error,
+      "Server failed to start on %s", server_address.c_str());
     exit(EXIT_FAILURE);
   }
 
-  std::cout << "Server listening on port " << listeningPort << ". ";
+  nidevice_grpc::Logging::log(nidevice_grpc::Logging::Level_Info,
+    "Server listening on port %d", listeningPort);
 
   const char* security_description = server_security_config.is_insecure_credentials()
       ? "insecure credentials"
@@ -87,7 +92,9 @@ static void RunServer(const std::string& config_file_path)
         ? " (Server-Side TLS)"
         : " (Mutual TLS)";
   }
-  std::cout << "Security is configured with " << security_description << tls_description << "." << std::endl;
+  nidevice_grpc::Logging::log(
+    nidevice_grpc::Logging::Level_Info,
+    "Security is configured with %s%s.", security_description, tls_description);
   // This call will block until another thread shuts down the server.
   server->Wait();
   // This code is currently unreachable, but if the call to wait exits, we need to clean up the service here.
@@ -98,8 +105,9 @@ static void RunServer(const std::string& config_file_path)
 int main(int argc, char** argv)
 {
   if (argc > 2) {
-    std::cerr << "\nUsage: "
-              << "ni_grpc_device_server <config-file-path>\n\n";
+    nidevice_grpc::Logging::log(
+      nidevice_grpc::Logging::Level_Error,
+      "Usage: ni_grpc_device_server <config-file-path>");
     exit(EXIT_FAILURE);
   }
   std::string config_file_path;
