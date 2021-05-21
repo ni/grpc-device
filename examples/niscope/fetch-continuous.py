@@ -128,7 +128,7 @@ try :
         vi = vi,
         channel_list = "",
         attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_FETCH_RELATIVE_TO,
-        value = niscope_types.FetchRelativeTo.FETCH_RELATIVE_TO_NISCOPE_VAL_READ_POINTER
+        value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_VAL_FETCH_RELATIVE_TO_READ_POINTER
         ))).status)
  
     # Fetch continuously until all samples are acquired.
