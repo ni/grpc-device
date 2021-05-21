@@ -40,6 +40,16 @@ std::uint32_t create_session(nidevice_grpc::SessionRepository& session_repo, ViS
   return session_id;
 }
 
+std::uint32_t create_session(std::string session_name, nidevice_grpc::SessionRepository& session_repo, ViSession sessionToStore)
+{
+  auto init_lambda = [&]() -> std::tuple<int, uint32_t> {
+    return std::make_tuple(0, sessionToStore);
+  };
+  uint32_t session_id;
+  session_repo.add_session(session_name, init_lambda, NULL, session_id);
+  return session_id;
+}
+
 // Init and Close function tests
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresSession)
 {
@@ -1344,6 +1354,33 @@ TEST(NiFakeServiceTests, NiFakeService_GetViUInt32Array_CallsGetViUInt32Array)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_THAT(response.u_int32_array(), ElementsAreArray(uint32_array, array_len));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_AcceptViSessionArray_CallsAcceptViSessionArray)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  std::uint32_t session_id1 = create_session("session1", session_repository, 12345671);
+  std::uint32_t session_id2 = create_session("session2", session_repository, 12345672);
+  std::uint32_t session_id3 = create_session("session3", session_repository, 12345673);
+  NiFakeMockLibrary library;
+  nifake_grpc::NiFakeService service(&library, &session_repository);
+  std::uint32_t session_count = 3;
+  ViSession session_array[] = {session_id1, session_id2, session_id3};
+  EXPECT_CALL(library, AcceptViSessionArray(session_count, _))
+      .With(Args<1, 0>(ElementsAreArray(session_array)))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::AcceptViSessionArrayRequest request;
+  request.set_session_count(session_count);
+  request.add_session_array()->set_id(session_id1);
+  request.add_session_array()->set_id(session_id2);
+  request.add_session_array()->set_id(session_id3);
+  nifake_grpc::AcceptViSessionArrayResponse response;
+  ::grpc::Status status = service.AcceptViSessionArray(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
 }
 
 }  // namespace unit

@@ -86,6 +86,31 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::AcceptViSessionArray(::grpc::ServerContext* context, const AcceptViSessionArrayRequest* request, AcceptViSessionArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViUInt32 session_count = request->session_count();
+      auto session_array_request = request->session_array();
+      std::vector<ViSession> session_array;
+      std::transform(
+        session_array_request.begin(),
+        session_array_request.end(),
+        std::back_inserter(session_array),
+        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+      auto status = library_->AcceptViSessionArray(session_count, session_array.data());
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::AcceptViUInt32Array(::grpc::ServerContext* context, const AcceptViUInt32ArrayRequest* request, AcceptViUInt32ArrayResponse* response)
   {
     if (context->IsCancelled()) {

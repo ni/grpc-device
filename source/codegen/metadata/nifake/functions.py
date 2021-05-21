@@ -57,6 +57,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'AcceptViSessionArray': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sessionCount',
+                'type': 'ViUInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sessionArray',
+                'type': 'ViSession[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'sessionCount'
+                }
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'AcceptViUInt32Array': {
         'parameters': [
             {
