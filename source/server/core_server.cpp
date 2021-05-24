@@ -1,13 +1,13 @@
+#include <nidcpower/nidcpower_library.h>
+#include <nidcpower/nidcpower_service.h>
+#include <nidmm/nidmm_library.h>
+#include <nidmm/nidmm_service.h>
 #include <niscope/niscope_library.h>
 #include <niscope/niscope_service.h>
 #include <niswitch/niswitch_library.h>
 #include <niswitch/niswitch_service.h>
-#include <nidmm/nidmm_library.h>
-#include <nidmm/nidmm_service.h>
 #include <nisync/nisync_library.h>
 #include <nisync/nisync_service.h>
-#include <nidcpower/nidcpower_library.h>
-#include <nidcpower/nidcpower_service.h>
 
 #include "logging.h"
 #include "server_configuration_parser.h"
@@ -36,9 +36,9 @@ static void RunServer(const std::string& config_file_path)
     root_cert = server_config_parser.parse_root_cert();
   }
   catch (const std::exception& ex) {
-    nidevice_grpc::Logging::log(
-      nidevice_grpc::Logging::Level_Error,
-      "Failed to parse config: %s", ex.what());
+    nidevice_grpc::logging::log(
+        nidevice_grpc::logging::Level_Error,
+        "Failed to parse config: %s", ex.what());
     exit(EXIT_FAILURE);
   }
 
@@ -64,7 +64,7 @@ static void RunServer(const std::string& config_file_path)
   nidmm_grpc::NiDmmLibrary nidmm_library;
   nidmm_grpc::NiDmmService nidmm_service(&nidmm_library, &session_repository);
   builder.RegisterService(&nidmm_service);
-  
+
   nisync_grpc::NiSyncLibrary nisync_library;
   nisync_grpc::NiSyncService nisync_service(&nisync_library, &session_repository);
   builder.RegisterService(&nisync_service);
@@ -77,14 +77,13 @@ static void RunServer(const std::string& config_file_path)
   auto server = builder.BuildAndStart();
 
   if (!server) {
-    nidevice_grpc::Logging::log(
-      nidevice_grpc::Logging::Level_Error,
-      "Server failed to start on %s", server_address.c_str());
+    nidevice_grpc::logging::log(
+        nidevice_grpc::logging::Level_Error,
+        "Server failed to start on %s", server_address.c_str());
     exit(EXIT_FAILURE);
   }
 
-  nidevice_grpc::Logging::log(nidevice_grpc::Logging::Level_Info,
-    "Server listening on port %d", listeningPort);
+  nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, "Server listening on port %d", listeningPort);
 
   const char* security_description = server_security_config.is_insecure_credentials()
       ? "insecure credentials"
@@ -96,9 +95,9 @@ static void RunServer(const std::string& config_file_path)
         ? " (Server-Side TLS)"
         : " (Mutual TLS)";
   }
-  nidevice_grpc::Logging::log(
-    nidevice_grpc::Logging::Level_Info,
-    "Security is configured with %s%s.", security_description, tls_description);
+  nidevice_grpc::logging::log(
+      nidevice_grpc::logging::Level_Info,
+      "Security is configured with %s%s.", security_description, tls_description);
   // This call will block until another thread shuts down the server.
   server->Wait();
   // This code is currently unreachable, but if the call to wait exits, we need to clean up the service here.
@@ -106,13 +105,12 @@ static void RunServer(const std::string& config_file_path)
   device_enumerator.clear_syscfg_session();
 }
 
-struct Options
-{
+struct Options {
   Options() :
 #if defined(__GNUC__)
-    use_syslog(false),
+              use_syslog(false),
 #endif
-    config_file_path()
+              config_file_path()
   {
   }
 
@@ -132,21 +130,21 @@ Options parse_options(int argc, char** argv)
 {
   Options options;
   for (int i = 1; i < argc; ++i) {
- #if defined(__GNUC__)
+#if defined(__GNUC__)
     if (strcmp("--use-syslog", argv[i]) == 0) {
       options.use_syslog = true;
     }
     else
- #endif
-    if (strcmp("--help", argv[i]) == 0) {
-      nidevice_grpc::Logging::log(nidevice_grpc::Logging::Level_Info, usage);
+#endif
+    if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
+      nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, usage);
       exit(0);
     }
     else if (i == argc - 1) {
       options.config_file_path = argv[i];
     }
     else {
-      nidevice_grpc::Logging::log(nidevice_grpc::Logging::Level_Error, usage);
+      nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Error, usage);
       exit(EXIT_FAILURE);
     }
   }
@@ -160,8 +158,8 @@ int main(int argc, char** argv)
   if (options.use_syslog) {
     // No daemon support, yet.
     bool is_daemon = false;
-    nidevice_grpc::Logging::setup_syslog(is_daemon);
-    nidevice_grpc::Logging::set_logger(&nidevice_grpc::Logging::log_syslog);
+    nidevice_grpc::logging::setup_syslog(is_daemon);
+    nidevice_grpc::logging::set_logger(&nidevice_grpc::logging::log_syslog);
   }
 #endif
   RunServer(options.config_file_path);

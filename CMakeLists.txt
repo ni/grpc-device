@@ -177,14 +177,14 @@ foreach(api ${nidrivers})
 endforeach()
 
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
-  set(SOURCE_OS
+  set(OSDEP_SOURCE
     "source/server/linux/syslog_logging.cpp")
 else()
-  set(SOURCE_OS "")
+  set(OSDEP_SOURCE "")
 endif()
 
 add_executable(ni_grpc_device_server
-   ${SOURCE_OS}
+   ${OSDEP_SOURCE}
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
    "source/server/logging.cpp"

@@ -5,7 +5,7 @@
 
 namespace nidevice_grpc {
 
-namespace Logging {
+namespace logging {
 
 enum Level {
   Level_Info = 0,
@@ -15,12 +15,12 @@ enum Level {
 
 typedef void (*log_fn_impl)(Level level, const char* fmt, va_list args);
 
-
 // The logger defaults to the terminal (stdout and stderr)
 void set_logger(log_fn_impl impl);
 void log(Level level, const char* fmt, ...);
 
-} // namespace Logging
-} // namespace nidevice_grpc
+}  // namespace logging
 
-#endif // NIDEVICE_GRPC_LOGGING_H
+}  // namespace nidevice_grpc
+
+#endif  // NIDEVICE_GRPC_LOGGING_H

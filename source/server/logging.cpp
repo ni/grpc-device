@@ -4,12 +4,12 @@
 #include <iostream>
 
 namespace nidevice_grpc {
-namespace Logging {
+
+namespace logging {
 
 void log_terminal(Level level, const char* fmt, va_list args)
 {
-  switch (level)
-  {
+  switch (level) {
     case Level_Info:
     // explicit fall-through
     case Level_Warning:
@@ -38,6 +38,6 @@ void log(Level level, const char* fmt, ...)
   va_end(args);
 }
 
-} // Logging
-} // nidevice_grpc
+}  // namespace logging
 
+}  // namespace nidevice_grpc

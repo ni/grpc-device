@@ -3,7 +3,8 @@
 #include <syslog.h>
 
 namespace nidevice_grpc {
-namespace Logging {
+
+namespace logging {
 
 static const char* syslog_identity = "ni_grpc_device_server";
 
@@ -13,7 +14,8 @@ void setup_syslog(bool is_daemon)
   int syslog_facility = 0;
   if (is_daemon) {
     syslog_facility = LOG_DAEMON;
-  } else {
+  }
+  else {
     // It's OK to fall back to the console if we're not a daemon.
     syslog_options |= LOG_CONS;
     syslog_facility |= LOG_USER;
@@ -24,8 +26,7 @@ void setup_syslog(bool is_daemon)
 void log_syslog(Level level, const char* fmt, va_list args)
 {
   int priority;
-  switch (level)
-  {
+  switch (level) {
     case Level_Info:
       priority = LOG_INFO;
       break;
@@ -39,6 +40,6 @@ void log_syslog(Level level, const char* fmt, va_list args)
   vsyslog(priority, fmt, args);
 }
 
-} // Logging
-} // nidevice_grpc
+}  // namespace logging
 
+}  // namespace nidevice_grpc
