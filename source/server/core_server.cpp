@@ -145,6 +145,7 @@ struct Options {
 #if defined(__GNUC__)
               daemonize(false),
 	      use_syslog(false),
+              identity("ni_grpc_device_server"),
 #endif
               config_file_path()
   {
@@ -153,12 +154,13 @@ struct Options {
 #if defined(__GNUC__)
   bool daemonize;
   bool use_syslog;
+  std::string identity;
 #endif
   std::string config_file_path;
 };
 
 #if defined(__GNUC__)
-const char* usage = "Usage: ni_grpc_device_server [--help] [--daemonize] [--use-syslog] [config-file-path]";
+const char* usage = "Usage: ni_grpc_device_server [--help] [--daemonize] [--use-syslog] [--identity <foo>] [config-file-path]";
 #else
 const char* usage = "Usage: ni_grpc_device_server [--help] [config-file-path]";
 #endif
@@ -167,12 +169,21 @@ Options parse_options(int argc, char** argv)
 {
   Options options;
   for (int i = 1; i < argc; ++i) {
+    bool known_option = true;
 #if defined(__GNUC__)
     if (strcmp("--daemonize", argv[i]) == 0) {
       options.daemonize = true;
     }
     else if (strcmp("--use-syslog", argv[i]) == 0) {
       options.use_syslog = true;
+    }
+    else if (strcmp("--identity", argv[i]) == 0) {
+      if (i + 1 < argc) {
+        options.identity = argv[++i];
+      }
+      else {
+        known_option = false;
+      }
     }
     else
 #endif
@@ -184,6 +195,10 @@ Options parse_options(int argc, char** argv)
       options.config_file_path = argv[i];
     }
     else {
+      known_option = false;
+    }
+
+    if (!known_option) {
       nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Error, usage);
       exit(EXIT_FAILURE);
     }
@@ -205,12 +220,12 @@ int main(int argc, char** argv)
   auto config = GetConfiguration(options.config_file_path);
 #if defined(__GNUC__)
   if (options.use_syslog) {
-    nidevice_grpc::logging::setup_syslog(options.daemonize);
+    nidevice_grpc::logging::setup_syslog(options.daemonize, options.identity);
     nidevice_grpc::logging::set_logger(&nidevice_grpc::logging::log_syslog);
   }
   
   if (options.daemonize) {
-    nidevice_grpc::daemonize(&StopServer);
+    nidevice_grpc::daemonize(&StopServer, options.identity);
   }
 #endif
 

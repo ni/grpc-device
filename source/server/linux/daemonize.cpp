@@ -17,7 +17,7 @@
 namespace nidevice_grpc {
 
 static stop_callback signal_stop = NULL;
-static const char* pid_path = _PATH_VARRUN "ni_grpc_device_server.pid";
+static std::string pid_path;
 static int pid_fd = -1;
 
 void catch_close(int sig) {
@@ -45,14 +45,21 @@ void catch_close(int sig) {
   if (close(pid_fd) < 0) {
     logging::log(logging::Level_Error, "failed to close pid file: %d (%s)", errno, strerror(errno));
   }
-  if (unlink(pid_path) < 0) {
+  if (unlink(pid_path.c_str()) < 0) {
     logging::log(logging::Level_Info, "failed to unlink pid file: %d (%s)", errno, strerror(errno));
   }
   exit(EXIT_SUCCESS);
 }
 
-int create_pidfile() {
-  int fd = open(pid_path, O_RDWR|O_CREAT, 0644);
+int create_pidfile(const std::string& identity) {
+  int size = snprintf(NULL, 0, _PATH_VARRUN "%s.pid", identity.c_str());
+  pid_path.resize(size, ' ');
+  if (snprintf(&pid_path[0], size + 1, _PATH_VARRUN "%s.pid", identity.c_str()) > size) {
+    logging::log(logging::Level_Error, "creating pid path failed");
+    exit(EXIT_FAILURE);
+  }
+
+  int fd = open(pid_path.c_str(), O_RDWR|O_CREAT, 0644);
   if (fd < 0) {
     logging::log(logging::Level_Error, "creating pid file failed: %d (%s)", errno, strerror(errno));
     exit(EXIT_FAILURE);
@@ -63,10 +70,13 @@ int create_pidfile() {
     exit(EXIT_FAILURE);
   }
 
-  int size = snprintf(NULL, 0, "%ld\n", getpid());
-  std::string str(size, ' ');
-  snprintf(&str[0], size + 1, "%ld\n", getpid());
-  if (write(fd, str.c_str(), size) != size) {
+  size = snprintf(NULL, 0, "%ld\n", getpid());
+  std::string pid_str(size, ' ');
+  if (snprintf(&pid_str[0], size + 1, "%ld\n", getpid()) > size) {
+    logging::log(logging::Level_Error, "creating pid string failed");
+    exit(EXIT_FAILURE);
+  }
+  if (write(fd, pid_str.c_str(), size) != size) {
     logging::log(logging::Level_Error, "writing pid file failed: %d (%s)", errno, strerror(errno));
   }
   if (ftruncate(fd, size) < 0) {
@@ -75,7 +85,7 @@ int create_pidfile() {
   return fd;
 }
 
-void daemonize(stop_callback signal_stop_) {
+void daemonize(stop_callback signal_stop_, const std::string& identity) {
   // Fork off the parent process to get into the background
   pid_t pid = fork();
   if (pid < 0) {
@@ -144,7 +154,7 @@ void daemonize(stop_callback signal_stop_) {
   }
 
   // Now that we're fully daemonized, write our PID file and ensure we're the only daemon.
-  pid_fd = create_pidfile();
+  pid_fd = create_pidfile(identity);
 }
 
 }  // namespace nidevice_grpc
