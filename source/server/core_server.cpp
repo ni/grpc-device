@@ -210,10 +210,6 @@ int main(int argc, char** argv)
   }
   
   if (options.daemonize) {
-    if (!options.use_syslog) {
-      nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Error, "--daemonize requires --use-syslog");
-      exit(EXIT_FAILURE);
-    }
     nidevice_grpc::daemonize(&StopServer);
   }
 #endif
