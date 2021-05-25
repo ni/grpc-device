@@ -1,0 +1,152 @@
+#include "daemonize.h"
+
+#include "../logging.h"
+
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <errno.h>
+#include <fcntl.h>
+#include <paths.h>
+#include <signal.h>
+#include <string>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+namespace nidevice_grpc {
+
+static stop_callback signal_stop = NULL;
+static const char* pid_path = _PATH_VARRUN "ni_grpc_device_server.pid";
+static int pid_fd = -1;
+
+void catch_close(int sig) {
+  const char* signal_description = "?";
+  switch(sig)
+  {
+  case SIGINT:
+    signal_description = "interrupt";
+    break;
+  case SIGTERM:
+    signal_description = "terminate";
+    break;
+  case SIGHUP:
+    signal_description = "hangup";
+    break;
+  default:
+    break;
+  }
+
+  logging::log(logging::Level_Info, "handling signal: %d (%s)", sig, signal_description);
+  if (signal_stop) {
+    signal_stop();
+  }
+
+  if (close(pid_fd) < 0) {
+    logging::log(logging::Level_Error, "failed to close pid file: %d (%s)", errno, strerror(errno));
+  }
+  if (unlink(pid_path) < 0) {
+    logging::log(logging::Level_Info, "failed to unlink pid file: %d (%s)", errno, strerror(errno));
+  }
+  exit(EXIT_SUCCESS);
+}
+
+int create_pidfile() {
+  int fd = open(pid_path, O_RDWR|O_CREAT, 0644);
+  if (fd < 0) {
+    logging::log(logging::Level_Error, "creating pid file failed: %d (%s)", errno, strerror(errno));
+    exit(EXIT_FAILURE);
+  }
+  if (lockf(fd, F_TLOCK, 0) < 0) {
+    logging::log(logging::Level_Error, "locking pid file failed (likely already running): %d (%s)", errno, strerror(errno));
+    close(fd);
+    exit(EXIT_FAILURE);
+  }
+
+  int size = snprintf(NULL, 0, "%ld\n", getpid());
+  std::string str(size, ' ');
+  snprintf(&str[0], size + 1, "%ld\n", getpid());
+  if (write(fd, str.c_str(), size) != size) {
+    logging::log(logging::Level_Error, "writing pid file failed: %d (%s)", errno, strerror(errno));
+  }
+  if (ftruncate(fd, size) < 0) {
+    logging::log(logging::Level_Error, "truncating pid file failed: %d (%s)", errno, strerror(errno)); 
+  }
+  return fd;
+}
+
+void daemonize(stop_callback signal_stop_) {
+  pid_t pid;
+
+  // Fork off the parent process
+  pid = fork();
+  if (pid < 0) {
+    logging::log(logging::Level_Error, "initial fork failed: %d (%s)", errno, strerror(errno));
+    exit(EXIT_FAILURE);
+  }
+
+  // Success: Let the parent terminate
+  if (pid > 0) {
+    exit(EXIT_SUCCESS);
+  }
+
+  // Yhe child process becomes session leader
+  if (setsid() < 0) {
+    logging::log(logging::Level_Error, "setsid failed: %d (%s)", errno, strerror(errno));
+    exit(EXIT_FAILURE);
+  }
+
+  // Fork off for the second time
+  pid = fork();
+  if (pid < 0) {
+    logging::log(logging::Level_Error, "second fork failed: %d (%s)", errno, strerror(errno));
+    exit(EXIT_FAILURE);
+  }
+
+  // Success: Let the parent terminate
+  if (pid > 0) {
+    exit(EXIT_SUCCESS);
+  }
+
+  // Set new file permissions
+  umask(0);
+
+  // Change the working directory to the root directory
+  if (chdir("/") < 0) {
+    logging::log(logging::Level_Error, "chdir failed: %d (%s)", errno, strerror(errno));
+    exit(EXIT_FAILURE);
+  }
+
+  // Close all open file descriptors
+  for (int x = sysconf(_SC_OPEN_MAX); x >= 0; x--) {
+    close(x);
+  }
+
+  // Redirect standard files to /dev/null
+  if (freopen("/dev/null", "r", stdin) == NULL) {
+    logging::log(logging::Level_Error, "redirecting stdin to /dev/null: %d (%s)", errno, strerror(errno));
+  }
+  if (freopen("/dev/null", "w", stdout) == NULL) {
+    logging::log(logging::Level_Error, "redirecting stdout to /dev/null: %d (%s)", errno, strerror(errno));
+  }
+  if (freopen("/dev/null", "w", stderr) == NULL) {
+    logging::log(logging::Level_Error, "redirecting stderr to /dev/null: %d (%s)", errno, strerror(errno));
+  }
+
+  // We're fully operational, catch signals.
+  signal_stop = signal_stop_;
+  if (signal(SIGINT, catch_close) == SIG_ERR) {
+    logging::log(logging::Level_Error, "failed to register SIGINT: %d (%s)", errno, strerror(errno));
+  }
+  if (signal(SIGTERM, catch_close) == SIG_ERR) {
+    logging::log(logging::Level_Error, "failed to register SIGTERM: %d (%s)", errno, strerror(errno));
+  }
+  if (signal(SIGHUP, catch_close) == SIG_ERR) {
+    logging::log(logging::Level_Error, "failed to register SIGHUP: %d (%s)", errno, strerror(errno));
+  }
+
+  // Now that we're fully daemonized, write our PID file and ensure we're the only daemon.
+  pid_fd = create_pidfile();
+}
+
+}  // namespace nidevice_grpc
