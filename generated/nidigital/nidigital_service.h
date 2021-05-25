@@ -76,10 +76,13 @@ public:
   ::grpc::Status EndChannelMap(::grpc::ServerContext* context, const EndChannelMapRequest* request, EndChannelMapResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
+  ::grpc::Status FetchCaptureWaveformU32(::grpc::ServerContext* context, const FetchCaptureWaveformU32Request* request, FetchCaptureWaveformU32Response* response) override;
   ::grpc::Status FetchHistoryRAMCycleInformation(::grpc::ServerContext* context, const FetchHistoryRAMCycleInformationRequest* request, FetchHistoryRAMCycleInformationResponse* response) override;
+  ::grpc::Status FetchHistoryRAMCyclePinData(::grpc::ServerContext* context, const FetchHistoryRAMCyclePinDataRequest* request, FetchHistoryRAMCyclePinDataResponse* response) override;
   ::grpc::Status FetchHistoryRAMScanCycleNumber(::grpc::ServerContext* context, const FetchHistoryRAMScanCycleNumberRequest* request, FetchHistoryRAMScanCycleNumberResponse* response) override;
   ::grpc::Status FrequencyCounterConfigureMeasurementMode(::grpc::ServerContext* context, const FrequencyCounterConfigureMeasurementModeRequest* request, FrequencyCounterConfigureMeasurementModeResponse* response) override;
   ::grpc::Status FrequencyCounterConfigureMeasurementTime(::grpc::ServerContext* context, const FrequencyCounterConfigureMeasurementTimeRequest* request, FrequencyCounterConfigureMeasurementTimeResponse* response) override;
+  ::grpc::Status FrequencyCounterMeasureFrequency(::grpc::ServerContext* context, const FrequencyCounterMeasureFrequencyRequest* request, FrequencyCounterMeasureFrequencyResponse* response) override;
   ::grpc::Status GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response) override;
@@ -89,10 +92,15 @@ public:
   ::grpc::Status GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response) override;
   ::grpc::Status GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response) override;
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
+  ::grpc::Status GetFailCount(::grpc::ServerContext* context, const GetFailCountRequest* request, GetFailCountResponse* response) override;
   ::grpc::Status GetHistoryRAMSampleCount(::grpc::ServerContext* context, const GetHistoryRAMSampleCountRequest* request, GetHistoryRAMSampleCountResponse* response) override;
+  ::grpc::Status GetPatternPinIndexes(::grpc::ServerContext* context, const GetPatternPinIndexesRequest* request, GetPatternPinIndexesResponse* response) override;
   ::grpc::Status GetPatternName(::grpc::ServerContext* context, const GetPatternNameRequest* request, GetPatternNameResponse* response) override;
   ::grpc::Status GetPatternPinList(::grpc::ServerContext* context, const GetPatternPinListRequest* request, GetPatternPinListResponse* response) override;
   ::grpc::Status GetPinName(::grpc::ServerContext* context, const GetPinNameRequest* request, GetPinNameResponse* response) override;
+  ::grpc::Status GetPinResultsPinInformation(::grpc::ServerContext* context, const GetPinResultsPinInformationRequest* request, GetPinResultsPinInformationResponse* response) override;
+  ::grpc::Status GetSitePassFail(::grpc::ServerContext* context, const GetSitePassFailRequest* request, GetSitePassFailResponse* response) override;
+  ::grpc::Status GetSiteResultsSiteNumbers(::grpc::ServerContext* context, const GetSiteResultsSiteNumbersRequest* request, GetSiteResultsSiteNumbersResponse* response) override;
   ::grpc::Status GetTimeSetDriveFormat(::grpc::ServerContext* context, const GetTimeSetDriveFormatRequest* request, GetTimeSetDriveFormatResponse* response) override;
   ::grpc::Status GetTimeSetEdge(::grpc::ServerContext* context, const GetTimeSetEdgeRequest* request, GetTimeSetEdgeResponse* response) override;
   ::grpc::Status GetTimeSetEdgeMultiplier(::grpc::ServerContext* context, const GetTimeSetEdgeMultiplierRequest* request, GetTimeSetEdgeMultiplierResponse* response) override;
@@ -118,9 +126,11 @@ public:
   ::grpc::Status PPMUConfigureOutputFunction(::grpc::ServerContext* context, const PPMUConfigureOutputFunctionRequest* request, PPMUConfigureOutputFunctionResponse* response) override;
   ::grpc::Status PPMUConfigureVoltageLevel(::grpc::ServerContext* context, const PPMUConfigureVoltageLevelRequest* request, PPMUConfigureVoltageLevelResponse* response) override;
   ::grpc::Status PPMUConfigureVoltageLimits(::grpc::ServerContext* context, const PPMUConfigureVoltageLimitsRequest* request, PPMUConfigureVoltageLimitsResponse* response) override;
+  ::grpc::Status PPMUMeasure(::grpc::ServerContext* context, const PPMUMeasureRequest* request, PPMUMeasureResponse* response) override;
   ::grpc::Status PPMUSource(::grpc::ServerContext* context, const PPMUSourceRequest* request, PPMUSourceResponse* response) override;
   ::grpc::Status ReadSequencerFlag(::grpc::ServerContext* context, const ReadSequencerFlagRequest* request, ReadSequencerFlagResponse* response) override;
   ::grpc::Status ReadSequencerRegister(::grpc::ServerContext* context, const ReadSequencerRegisterRequest* request, ReadSequencerRegisterResponse* response) override;
+  ::grpc::Status ReadStatic(::grpc::ServerContext* context, const ReadStaticRequest* request, ReadStaticResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
@@ -134,6 +144,7 @@ public:
   ::grpc::Status SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response) override;
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
+  ::grpc::Status TDR(::grpc::ServerContext* context, const TDRRequest* request, TDRResponse* response) override;
   ::grpc::Status UnloadAllPatterns(::grpc::ServerContext* context, const UnloadAllPatternsRequest* request, UnloadAllPatternsResponse* response) override;
   ::grpc::Status UnloadSpecifications(::grpc::ServerContext* context, const UnloadSpecificationsRequest* request, UnloadSpecificationsResponse* response) override;
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
@@ -148,6 +159,7 @@ public:
 private:
   NiDigitalLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
+  void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 };
 
 } // namespace nidigital_grpc

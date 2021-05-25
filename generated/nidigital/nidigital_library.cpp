@@ -73,10 +73,13 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.EndChannelMap = reinterpret_cast<EndChannelMapPtr>(shared_library_.get_function_pointer("niDigital_EndChannelMap"));
   function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niDigital_error_message"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niDigital_ExportSignal"));
+  function_pointers_.FetchCaptureWaveformU32 = reinterpret_cast<FetchCaptureWaveformU32Ptr>(shared_library_.get_function_pointer("niDigital_FetchCaptureWaveformU32"));
   function_pointers_.FetchHistoryRAMCycleInformation = reinterpret_cast<FetchHistoryRAMCycleInformationPtr>(shared_library_.get_function_pointer("niDigital_FetchHistoryRAMCycleInformation"));
+  function_pointers_.FetchHistoryRAMCyclePinData = reinterpret_cast<FetchHistoryRAMCyclePinDataPtr>(shared_library_.get_function_pointer("niDigital_FetchHistoryRAMCyclePinData"));
   function_pointers_.FetchHistoryRAMScanCycleNumber = reinterpret_cast<FetchHistoryRAMScanCycleNumberPtr>(shared_library_.get_function_pointer("niDigital_FetchHistoryRAMScanCycleNumber"));
   function_pointers_.FrequencyCounterConfigureMeasurementMode = reinterpret_cast<FrequencyCounterConfigureMeasurementModePtr>(shared_library_.get_function_pointer("niDigital_FrequencyCounter_ConfigureMeasurementMode"));
   function_pointers_.FrequencyCounterConfigureMeasurementTime = reinterpret_cast<FrequencyCounterConfigureMeasurementTimePtr>(shared_library_.get_function_pointer("niDigital_FrequencyCounter_ConfigureMeasurementTime"));
+  function_pointers_.FrequencyCounterMeasureFrequency = reinterpret_cast<FrequencyCounterMeasureFrequencyPtr>(shared_library_.get_function_pointer("niDigital_FrequencyCounter_MeasureFrequency"));
   function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViBoolean"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViInt32"));
   function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViInt64"));
@@ -86,10 +89,15 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niDigital_GetChannelName"));
   function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niDigital_GetChannelNameFromString"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDigital_GetError"));
+  function_pointers_.GetFailCount = reinterpret_cast<GetFailCountPtr>(shared_library_.get_function_pointer("niDigital_GetFailCount"));
   function_pointers_.GetHistoryRAMSampleCount = reinterpret_cast<GetHistoryRAMSampleCountPtr>(shared_library_.get_function_pointer("niDigital_GetHistoryRAMSampleCount"));
+  function_pointers_.GetPatternPinIndexes = reinterpret_cast<GetPatternPinIndexesPtr>(shared_library_.get_function_pointer("niDigital_GetPatternPinIndexes"));
   function_pointers_.GetPatternName = reinterpret_cast<GetPatternNamePtr>(shared_library_.get_function_pointer("niDigital_GetPatternName"));
   function_pointers_.GetPatternPinList = reinterpret_cast<GetPatternPinListPtr>(shared_library_.get_function_pointer("niDigital_GetPatternPinList"));
   function_pointers_.GetPinName = reinterpret_cast<GetPinNamePtr>(shared_library_.get_function_pointer("niDigital_GetPinName"));
+  function_pointers_.GetPinResultsPinInformation = reinterpret_cast<GetPinResultsPinInformationPtr>(shared_library_.get_function_pointer("niDigital_GetPinResultsPinInformation"));
+  function_pointers_.GetSitePassFail = reinterpret_cast<GetSitePassFailPtr>(shared_library_.get_function_pointer("niDigital_GetSitePassFail"));
+  function_pointers_.GetSiteResultsSiteNumbers = reinterpret_cast<GetSiteResultsSiteNumbersPtr>(shared_library_.get_function_pointer("niDigital_GetSiteResultsSiteNumbers"));
   function_pointers_.GetTimeSetDriveFormat = reinterpret_cast<GetTimeSetDriveFormatPtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetDriveFormat"));
   function_pointers_.GetTimeSetEdge = reinterpret_cast<GetTimeSetEdgePtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetEdge"));
   function_pointers_.GetTimeSetEdgeMultiplier = reinterpret_cast<GetTimeSetEdgeMultiplierPtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetEdgeMultiplier"));
@@ -115,9 +123,11 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.PPMUConfigureOutputFunction = reinterpret_cast<PPMUConfigureOutputFunctionPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureOutputFunction"));
   function_pointers_.PPMUConfigureVoltageLevel = reinterpret_cast<PPMUConfigureVoltageLevelPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureVoltageLevel"));
   function_pointers_.PPMUConfigureVoltageLimits = reinterpret_cast<PPMUConfigureVoltageLimitsPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureVoltageLimits"));
+  function_pointers_.PPMUMeasure = reinterpret_cast<PPMUMeasurePtr>(shared_library_.get_function_pointer("niDigital_PPMU_Measure"));
   function_pointers_.PPMUSource = reinterpret_cast<PPMUSourcePtr>(shared_library_.get_function_pointer("niDigital_PPMU_Source"));
   function_pointers_.ReadSequencerFlag = reinterpret_cast<ReadSequencerFlagPtr>(shared_library_.get_function_pointer("niDigital_ReadSequencerFlag"));
   function_pointers_.ReadSequencerRegister = reinterpret_cast<ReadSequencerRegisterPtr>(shared_library_.get_function_pointer("niDigital_ReadSequencerRegister"));
+  function_pointers_.ReadStatic = reinterpret_cast<ReadStaticPtr>(shared_library_.get_function_pointer("niDigital_ReadStatic"));
   function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niDigital_reset"));
   function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("niDigital_ResetAttribute"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niDigital_ResetDevice"));
@@ -131,6 +141,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDigital_SetAttributeViReal64"));
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDigital_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niDigital_SetAttributeViString"));
+  function_pointers_.TDR = reinterpret_cast<TDRPtr>(shared_library_.get_function_pointer("niDigital_TDR"));
   function_pointers_.UnloadAllPatterns = reinterpret_cast<UnloadAllPatternsPtr>(shared_library_.get_function_pointer("niDigital_UnloadAllPatterns"));
   function_pointers_.UnloadSpecifications = reinterpret_cast<UnloadSpecificationsPtr>(shared_library_.get_function_pointer("niDigital_UnloadSpecifications"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDigital_UnlockSession"));
@@ -779,6 +790,18 @@ ViStatus NiDigitalLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstStr
 #endif
 }
 
+ViStatus NiDigitalLibrary::FetchCaptureWaveformU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 samplesToRead, ViReal64 timeout, ViInt32 dataBufferSize, ViUInt32 data[], ViInt32* actualNumWaveforms, ViInt32* actualSamplesPerWaveform)
+{
+  if (!function_pointers_.FetchCaptureWaveformU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_FetchCaptureWaveformU32.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_FetchCaptureWaveformU32(vi, siteList, waveformName, samplesToRead, timeout, dataBufferSize, data, actualNumWaveforms, actualSamplesPerWaveform);
+#else
+  return function_pointers_.FetchCaptureWaveformU32(vi, siteList, waveformName, samplesToRead, timeout, dataBufferSize, data, actualNumWaveforms, actualSamplesPerWaveform);
+#endif
+}
+
 ViStatus NiDigitalLibrary::FetchHistoryRAMCycleInformation(ViSession vi, ViConstString site, ViInt64 sampleIndex, ViInt32* patternIndex, ViInt32* timeSetIndex, ViInt64* vectorNumber, ViInt64* cycleNumber, ViInt32* numDutCycles)
 {
   if (!function_pointers_.FetchHistoryRAMCycleInformation) {
@@ -788,6 +811,18 @@ ViStatus NiDigitalLibrary::FetchHistoryRAMCycleInformation(ViSession vi, ViConst
   return niDigital_FetchHistoryRAMCycleInformation(vi, site, sampleIndex, patternIndex, timeSetIndex, vectorNumber, cycleNumber, numDutCycles);
 #else
   return function_pointers_.FetchHistoryRAMCycleInformation(vi, site, sampleIndex, patternIndex, timeSetIndex, vectorNumber, cycleNumber, numDutCycles);
+#endif
+}
+
+ViStatus NiDigitalLibrary::FetchHistoryRAMCyclePinData(ViSession vi, ViConstString site, ViConstString pinList, ViInt64 sampleIndex, ViInt32 dutCycleIndex, ViInt32 pinDataBufferSize, ViUInt8 expectedPinStates[], ViUInt8 actualPinStates[], ViBoolean perPinPassFail[], ViInt32* actualNumPinData)
+{
+  if (!function_pointers_.FetchHistoryRAMCyclePinData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_FetchHistoryRAMCyclePinData.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_FetchHistoryRAMCyclePinData(vi, site, pinList, sampleIndex, dutCycleIndex, pinDataBufferSize, expectedPinStates, actualPinStates, perPinPassFail, actualNumPinData);
+#else
+  return function_pointers_.FetchHistoryRAMCyclePinData(vi, site, pinList, sampleIndex, dutCycleIndex, pinDataBufferSize, expectedPinStates, actualPinStates, perPinPassFail, actualNumPinData);
 #endif
 }
 
@@ -824,6 +859,18 @@ ViStatus NiDigitalLibrary::FrequencyCounterConfigureMeasurementTime(ViSession vi
   return niDigital_FrequencyCounter_ConfigureMeasurementTime(vi, channelList, measurementTime);
 #else
   return function_pointers_.FrequencyCounterConfigureMeasurementTime(vi, channelList, measurementTime);
+#endif
+}
+
+ViStatus NiDigitalLibrary::FrequencyCounterMeasureFrequency(ViSession vi, ViConstString channelList, ViInt32 frequenciesBufferSize, ViReal64 frequencies[], ViInt32* actualNumFrequencies)
+{
+  if (!function_pointers_.FrequencyCounterMeasureFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_FrequencyCounter_MeasureFrequency.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_FrequencyCounter_MeasureFrequency(vi, channelList, frequenciesBufferSize, frequencies, actualNumFrequencies);
+#else
+  return function_pointers_.FrequencyCounterMeasureFrequency(vi, channelList, frequenciesBufferSize, frequencies, actualNumFrequencies);
 #endif
 }
 
@@ -935,6 +982,18 @@ ViStatus NiDigitalLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 e
 #endif
 }
 
+ViStatus NiDigitalLibrary::GetFailCount(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt64 failureCount[], ViInt32* actualNumRead)
+{
+  if (!function_pointers_.GetFailCount) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetFailCount.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetFailCount(vi, channelList, bufferSize, failureCount, actualNumRead);
+#else
+  return function_pointers_.GetFailCount(vi, channelList, bufferSize, failureCount, actualNumRead);
+#endif
+}
+
 ViStatus NiDigitalLibrary::GetHistoryRAMSampleCount(ViSession vi, ViConstString site, ViInt64* sampleCount)
 {
   if (!function_pointers_.GetHistoryRAMSampleCount) {
@@ -944,6 +1003,18 @@ ViStatus NiDigitalLibrary::GetHistoryRAMSampleCount(ViSession vi, ViConstString 
   return niDigital_GetHistoryRAMSampleCount(vi, site, sampleCount);
 #else
   return function_pointers_.GetHistoryRAMSampleCount(vi, site, sampleCount);
+#endif
+}
+
+ViStatus NiDigitalLibrary::GetPatternPinIndexes(ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins)
+{
+  if (!function_pointers_.GetPatternPinIndexes) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetPatternPinIndexes.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetPatternPinIndexes(vi, startLabel, pinIndexesBufferSize, pinIndexes, actualNumPins);
+#else
+  return function_pointers_.GetPatternPinIndexes(vi, startLabel, pinIndexesBufferSize, pinIndexes, actualNumPins);
 #endif
 }
 
@@ -980,6 +1051,42 @@ ViStatus NiDigitalLibrary::GetPinName(ViSession vi, ViInt32 pinIndex, ViInt32 na
   return niDigital_GetPinName(vi, pinIndex, nameBufferSize, name);
 #else
   return function_pointers_.GetPinName(vi, pinIndex, nameBufferSize, name);
+#endif
+}
+
+ViStatus NiDigitalLibrary::GetPinResultsPinInformation(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt32 pinIndexes[], ViInt32 siteNumbers[], ViInt32 channelIndexes[], ViInt32* actualNumValues)
+{
+  if (!function_pointers_.GetPinResultsPinInformation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetPinResultsPinInformation.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetPinResultsPinInformation(vi, channelList, bufferSize, pinIndexes, siteNumbers, channelIndexes, actualNumValues);
+#else
+  return function_pointers_.GetPinResultsPinInformation(vi, channelList, bufferSize, pinIndexes, siteNumbers, channelIndexes, actualNumValues);
+#endif
+}
+
+ViStatus NiDigitalLibrary::GetSitePassFail(ViSession vi, ViConstString siteList, ViInt32 passFailBufferSize, ViBoolean passFail[], ViInt32* actualNumSites)
+{
+  if (!function_pointers_.GetSitePassFail) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetSitePassFail.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetSitePassFail(vi, siteList, passFailBufferSize, passFail, actualNumSites);
+#else
+  return function_pointers_.GetSitePassFail(vi, siteList, passFailBufferSize, passFail, actualNumSites);
+#endif
+}
+
+ViStatus NiDigitalLibrary::GetSiteResultsSiteNumbers(ViSession vi, ViConstString siteList, ViInt32 siteResultType, ViInt32 siteNumbersBufferSize, ViInt32 siteNumbers[], ViInt32* actualNumSiteNumbers)
+{
+  if (!function_pointers_.GetSiteResultsSiteNumbers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetSiteResultsSiteNumbers.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetSiteResultsSiteNumbers(vi, siteList, siteResultType, siteNumbersBufferSize, siteNumbers, actualNumSiteNumbers);
+#else
+  return function_pointers_.GetSiteResultsSiteNumbers(vi, siteList, siteResultType, siteNumbersBufferSize, siteNumbers, actualNumSiteNumbers);
 #endif
 }
 
@@ -1283,6 +1390,18 @@ ViStatus NiDigitalLibrary::PPMUConfigureVoltageLimits(ViSession vi, ViConstStrin
 #endif
 }
 
+ViStatus NiDigitalLibrary::PPMUMeasure(ViSession vi, ViConstString channelList, ViInt32 measurementType, ViInt32 bufferSize, ViReal64 measurements[], ViInt32* actualNumRead)
+{
+  if (!function_pointers_.PPMUMeasure) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_PPMU_Measure.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_PPMU_Measure(vi, channelList, measurementType, bufferSize, measurements, actualNumRead);
+#else
+  return function_pointers_.PPMUMeasure(vi, channelList, measurementType, bufferSize, measurements, actualNumRead);
+#endif
+}
+
 ViStatus NiDigitalLibrary::PPMUSource(ViSession vi, ViConstString channelList)
 {
   if (!function_pointers_.PPMUSource) {
@@ -1316,6 +1435,18 @@ ViStatus NiDigitalLibrary::ReadSequencerRegister(ViSession vi, ViConstString reg
   return niDigital_ReadSequencerRegister(vi, reg, value);
 #else
   return function_pointers_.ReadSequencerRegister(vi, reg, value);
+#endif
+}
+
+ViStatus NiDigitalLibrary::ReadStatic(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViUInt8 data[], ViInt32* actualNumRead)
+{
+  if (!function_pointers_.ReadStatic) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_ReadStatic.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_ReadStatic(vi, channelList, bufferSize, data, actualNumRead);
+#else
+  return function_pointers_.ReadStatic(vi, channelList, bufferSize, data, actualNumRead);
 #endif
 }
 
@@ -1472,6 +1603,18 @@ ViStatus NiDigitalLibrary::SetAttributeViString(ViSession vi, ViConstString chan
   return niDigital_SetAttributeViString(vi, channelName, attribute, value);
 #else
   return function_pointers_.SetAttributeViString(vi, channelName, attribute, value);
+#endif
+}
+
+ViStatus NiDigitalLibrary::TDR(ViSession vi, ViConstString channelList, ViBoolean applyOffsets, ViInt32 offsetsBufferSize, ViReal64 offsets[], ViInt32* actualNumOffsets)
+{
+  if (!function_pointers_.TDR) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_TDR.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_TDR(vi, channelList, applyOffsets, offsetsBufferSize, offsets, actualNumOffsets);
+#else
+  return function_pointers_.TDR(vi, channelList, applyOffsets, offsetsBufferSize, offsets, actualNumOffsets);
 #endif
 }
 

@@ -39,6 +39,9 @@ All occurrences of the following keys were removed along with their values:
 - `'type_in_documentation'`
 - `'use_session_lock'`
 - `'default-value'`
+- `'is_repeated_capability'`
+- `'repeated_capability_type'`
+- `'python_api_converter_name'`
 
 The following functions names were made Pascal and moved to their alphabetic position:
  - `close`
@@ -72,3 +75,5 @@ with the session_repository.
 - `'PPMUSource'`
 - `'Reset'`
 - `'SelfTest'`
+- `'FrequencyCounterMeasureFrequency'`
+- `'PPMUMeasure'`
