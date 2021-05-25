@@ -4,7 +4,6 @@
 #include <iostream>
 
 namespace nidevice_grpc {
-
 namespace logging {
 
 void log_terminal(Level level, const char* fmt, va_list args)
@@ -39,5 +38,4 @@ void log(Level level, const char* fmt, ...)
 }
 
 }  // namespace logging
-
 }  // namespace nidevice_grpc

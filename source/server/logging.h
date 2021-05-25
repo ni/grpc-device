@@ -4,7 +4,6 @@
 #include <cstdarg>
 
 namespace nidevice_grpc {
-
 namespace logging {
 
 enum Level {
@@ -20,7 +19,6 @@ void set_logger(log_fn_impl impl);
 void log(Level level, const char* fmt, ...);
 
 }  // namespace logging
-
 }  // namespace nidevice_grpc
 
 #endif  // NIDEVICE_GRPC_LOGGING_H

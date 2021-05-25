@@ -3,7 +3,6 @@
 #include <syslog.h>
 
 namespace nidevice_grpc {
-
 namespace logging {
 
 static const char* syslog_identity = "ni_grpc_device_server";
@@ -41,5 +40,4 @@ void log_syslog(Level level, const char* fmt, va_list args)
 }
 
 }  // namespace logging
-
 }  // namespace nidevice_grpc
