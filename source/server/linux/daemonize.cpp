@@ -76,10 +76,8 @@ int create_pidfile() {
 }
 
 void daemonize(stop_callback signal_stop_) {
-  pid_t pid;
-
-  // Fork off the parent process
-  pid = fork();
+  // Fork off the parent process to get into the background
+  pid_t pid = fork();
   if (pid < 0) {
     logging::log(logging::Level_Error, "initial fork failed: %d (%s)", errno, strerror(errno));
     exit(EXIT_FAILURE);
@@ -90,13 +88,13 @@ void daemonize(stop_callback signal_stop_) {
     exit(EXIT_SUCCESS);
   }
 
-  // Yhe child process becomes session leader
+  // The child process becomes session leader to detach from the terminal
   if (setsid() < 0) {
     logging::log(logging::Level_Error, "setsid failed: %d (%s)", errno, strerror(errno));
     exit(EXIT_FAILURE);
   }
 
-  // Fork off for the second time
+  // Fork off for the second time to get rid of the session leader
   pid = fork();
   if (pid < 0) {
     logging::log(logging::Level_Error, "second fork failed: %d (%s)", errno, strerror(errno));
@@ -108,7 +106,7 @@ void daemonize(stop_callback signal_stop_) {
     exit(EXIT_SUCCESS);
   }
 
-  // Set new file permissions
+  // Clear umask to give daemon complete control of file permissions
   umask(0);
 
   // Change the working directory to the root directory
