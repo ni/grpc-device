@@ -144,7 +144,7 @@ struct Options {
   Options() :
 #if defined(__GNUC__)
               daemonize(false),
-	      use_syslog(false),
+              use_syslog(false),
               identity("ni_grpc_device_server"),
 #endif
               config_file_path()
