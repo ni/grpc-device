@@ -43,10 +43,10 @@ void catch_close(int sig) {
   }
 
   if (close(pid_fd) < 0) {
-    logging::log(logging::Level_Error, "failed to close pid file: %d (%s)", errno, strerror(errno));
+    logging::log(logging::Level_Warning, "failed to close pid file: %d (%s)", errno, strerror(errno));
   }
   if (unlink(pid_path.c_str()) < 0) {
-    logging::log(logging::Level_Info, "failed to unlink pid file: %d (%s)", errno, strerror(errno));
+    logging::log(logging::Level_Warning, "failed to unlink pid file: %d (%s)", errno, strerror(errno));
   }
   exit(EXIT_SUCCESS);
 }
@@ -56,6 +56,13 @@ int create_pidfile(const std::string& identity) {
   pid_path.resize(size, ' ');
   if (snprintf(&pid_path[0], size + 1, _PATH_VARRUN "%s.pid", identity.c_str()) > size) {
     logging::log(logging::Level_Error, "creating pid path failed");
+    exit(EXIT_FAILURE);
+  }
+
+  size = snprintf(NULL, 0, "%ld\n", getpid());
+  std::string pid_str(size, ' ');
+  if (snprintf(&pid_str[0], size + 1, "%ld\n", getpid()) > size) {
+    logging::log(logging::Level_Error, "creating pid string failed");
     exit(EXIT_FAILURE);
   }
 
@@ -69,18 +76,15 @@ int create_pidfile(const std::string& identity) {
     close(fd);
     exit(EXIT_FAILURE);
   }
-
-  size = snprintf(NULL, 0, "%ld\n", getpid());
-  std::string pid_str(size, ' ');
-  if (snprintf(&pid_str[0], size + 1, "%ld\n", getpid()) > size) {
-    logging::log(logging::Level_Error, "creating pid string failed");
+  if (write(fd, pid_str.c_str(), size) != pid_str.length()) {
+    logging::log(logging::Level_Error, "writing pid file failed: %d (%s)", errno, strerror(errno));
+    close(fd);
     exit(EXIT_FAILURE);
   }
-  if (write(fd, pid_str.c_str(), size) != size) {
-    logging::log(logging::Level_Error, "writing pid file failed: %d (%s)", errno, strerror(errno));
-  }
   if (ftruncate(fd, size) < 0) {
-    logging::log(logging::Level_Error, "truncating pid file failed: %d (%s)", errno, strerror(errno)); 
+    logging::log(logging::Level_Error, "truncating pid file failed: %d (%s)", errno, strerror(errno));
+    close(fd);
+    exit(EXIT_FAILURE);
   }
   return fd;
 }
