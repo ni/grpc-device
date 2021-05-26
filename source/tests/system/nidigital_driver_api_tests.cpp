@@ -231,6 +231,36 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
+  void configure_frequency_counter_measurement_time(const char* channel_list, ViReal64 value)
+  {
+    ::grpc::ClientContext context;
+    digital::FrequencyCounterConfigureMeasurementTimeRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_list(channel_list);
+    request.set_measurement_time(value);
+    digital::FrequencyCounterConfigureMeasurementTimeResponse response;
+
+    ::grpc::Status status = GetStub()->FrequencyCounterConfigureMeasurementTime(&context, request, &response);
+    
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+  }
+
+  void select_function(const char* channel_list, digital::SelectedFunction function_type)
+  {
+    ::grpc::ClientContext context;
+    digital::SelectFunctionRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_list(channel_list);
+    request.set_function(function_type);
+    digital::SelectFunctionResponse response;
+
+    ::grpc::Status status = GetStub()->SelectFunction(&context, request, &response);    
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+  }
+
  private:
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
@@ -240,6 +270,54 @@ class NiDigitalDriverApiTest : public ::testing::Test {
   std::unique_ptr<digital::NiDigitalService> nidigital_service_;
   std::unique_ptr<::grpc::Server> server_;
 };
+
+TEST_F(NiDigitalDriverApiTest, PerformReadStatic_CompletesSuccessfully)
+{
+  const char* channel_name = "";
+  ::grpc::ClientContext context;
+  select_function(channel_name, digital::SelectedFunction::SELECTED_FUNCTION_NIDIGITAL_VAL_DIGITAL);
+  digital::ReadStaticRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list(channel_name);
+  digital::ReadStaticResponse response;
+  ::grpc::Status status = GetStub()->ReadStatic(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status()); 
+}
+
+TEST_F(NiDigitalDriverApiTest, PerformWriteStatic_CompletesSuccessfully)
+{
+  const char* channel_name = "";
+  ::grpc::ClientContext context;
+  select_function(channel_name, digital::SelectedFunction::SELECTED_FUNCTION_NIDIGITAL_VAL_DIGITAL);
+  digital::WriteStaticRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list(channel_name);
+  request.set_state(digital::WriteStaticPinState::WRITE_STATIC_PIN_STATE_NIDIGITAL_VAL_0);
+  digital::WriteStaticResponse response;
+  ::grpc::Status status = GetStub()->WriteStatic(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+}
+
+TEST_F(NiDigitalDriverApiTest, PerformFrequencyCounterMeasureFrequency_CompletesSuccessfully)
+{
+  const char* channel_name = "";
+  ViReal64 measurement_time = 5.0;
+  ::grpc::ClientContext context;
+  select_function(channel_name, digital::SelectedFunction::SELECTED_FUNCTION_NIDIGITAL_VAL_DIGITAL);
+  configure_frequency_counter_measurement_time(channel_name, measurement_time);
+  digital::FrequencyCounterMeasureFrequencyRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_channel_list(channel_name);
+  digital::FrequencyCounterMeasureFrequencyResponse response;
+  ::grpc::Status status = GetStub()->FrequencyCounterMeasureFrequency(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status()); 
+}
 
 TEST_F(NiDigitalDriverApiTest, SelfTest_SelfTestCompletesSuccessfully)
 {
