@@ -89,6 +89,12 @@ public:
 private:
   NiSwitchLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
+  std::map<std::int32_t, std::int64_t> niswitchint64attributevalues_input_map_ {  };
+  std::map<std::int64_t, std::int32_t> niswitchint64attributevalues_output_map_ {  };
+  std::map<std::int32_t, double> niswitchreal64attributevalues_input_map_ {  };
+  std::map<double, std::int32_t> niswitchreal64attributevalues_output_map_ {  };
+  std::map<std::int32_t, std::string> niswitchstringattributevalues_input_map_ {  };
+  std::map<std::string, std::int32_t> niswitchstringattributevalues_output_map_ {  };
 };
 
 } // namespace niswitch_grpc

@@ -200,6 +200,18 @@ enum NiSyncAttributes {
   NISYNC_ATTRIBUTE_8021AS_AS_CAPABLE = 1151115;
 }
 
+enum NiSyncInt32AttributeValues {
+  NISYNC_INT32_UNSPECIFIED = 0;
+}
+
+enum NiSyncReal64AttributeValues {
+  NISYNC_REAL64_UNSPECIFIED = 0;
+}
+
+enum NiSyncStringAttributeValues {
+  NISYNC_STRING_UNSPECIFIED = 0;
+}
+
 message InitRequest {
   string session_name = 1;
   string resource_name = 2;
@@ -738,7 +750,10 @@ message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
-  sint32 value = 4;
+  oneof value_enum {
+    NiSyncInt32AttributeValues value = 4;
+    sint32 value_raw = 5;
+  }
 }
 
 message SetAttributeViInt32Response {
@@ -749,7 +764,10 @@ message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
-  double value = 4;
+  oneof value_enum {
+    NiSyncReal64AttributeValues value = 4;
+    double value_raw = 5;
+  }
 }
 
 message SetAttributeViReal64Response {
@@ -771,7 +789,10 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
-  string value = 4;
+  oneof value_enum {
+    NiSyncStringAttributeValues value = 4;
+    string value_raw = 5;
+  }
 }
 
 message SetAttributeViStringResponse {

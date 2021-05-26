@@ -1208,7 +1208,19 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
-      ViInt32 value = request->value();
+      ViInt32 value;
+      switch (request->value_enum_case()) {
+        case nisync_grpc::SetAttributeViInt32Request::ValueEnumCase::kValue:
+          value = (ViInt32)request->value();
+          break;
+        case nisync_grpc::SetAttributeViInt32Request::ValueEnumCase::kValueRaw:
+          value = (ViInt32)request->value_raw();
+          break;
+        case nisync_grpc::SetAttributeViInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+      }
+
       auto status = library_->SetAttributeViInt32(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1230,7 +1242,26 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value = request->value();
+      ViReal64 value;
+      switch (request->value_enum_case()) {
+        case SetAttributeViReal64Request::ValueEnumCase::kValue: {
+          auto value_imap_it = nisyncreal64attributevalues_input_map_.find(request->value());
+          if (value_imap_it == nisyncreal64attributevalues_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range.");
+          }
+          value = static_cast<ViReal64>(value_imap_it->second);
+          break;
+        }
+        case SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViReal64>(request->value_raw());
+          break;
+        } 
+        case SetAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViReal64(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1274,7 +1305,26 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
-      ViConstString value = request->value().c_str();
+      ViConstString value;
+      switch (request->value_enum_case()) {
+        case SetAttributeViStringRequest::ValueEnumCase::kValue: {
+          auto value_imap_it = nisyncstringattributevalues_input_map_.find(request->value());
+          if (value_imap_it == nisyncstringattributevalues_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range.");
+          }
+          value = const_cast<ViConstString>((value_imap_it->second).c_str());
+          break;
+        }
+        case SetAttributeViStringRequest::ValueEnumCase::kValueRaw: {
+          value = const_cast<ViConstString>((request->value_raw()).c_str());
+          break;
+        } 
+        case SetAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViString(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;

@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 def is_output_parameter(parameter):
     return "out" in parameter["direction"]
 
@@ -81,11 +79,17 @@ def filter_proto_rpc_functions(functions):
 
 def get_attribute_enums(attributes):
   '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
-  attribute_enums = defaultdict(set)
-  for attribute in attributes:
-    if("enum" in attributes[attribute]):
-      attribute_type = attributes[attribute]["type"]
-      enum_name = attributes[attribute]["enum"]
+  attribute_enums = {
+    'ViInt32': set(),
+    'ViInt64': set(),
+    'ViReal64': set(),
+    'ViString': set()
+  }
+  for attribute_name in attributes:
+    attribute = attributes[attribute_name]
+    if 'enum' in attribute:
+      attribute_type = attribute['type']
+      enum_name = attribute['enum']
       attribute_enums[attribute_type].add(enum_name)
   return attribute_enums
 
@@ -93,9 +97,9 @@ def get_function_enums(functions):
   '''Returns a set of enums used with functions.'''
   function_enums = set()
   for function in functions:
-    for parameter in functions[function]["parameters"]:
-      if "enum" in parameter:
-        function_enums.add(parameter["enum"])
+    for parameter in functions[function]['parameters']:
+      if 'enum' in parameter:
+        function_enums.add(parameter['enum'])
   return function_enums
 
 def has_viboolean_array_param(functions):

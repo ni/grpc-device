@@ -55,6 +55,8 @@ def create_param(parameter):
         return f'{type} {name}'
 
 def python_to_c(enum):
+  if(not enum["values"]):
+    return "std::int32_t"
   enum_value = enum["values"][0]["value"]
   if isinstance(enum_value, float):
     return "float"
@@ -73,6 +75,8 @@ def format_value(value):
   
 def get_input_lookup_values(enum_data):
   out_value_format= ""
+  if(not enum_data["values"]):
+    return out_value_format
   index = 1
   is_int = isinstance(enum_data["values"][0]["value"], int)
   if is_int:
@@ -85,6 +89,8 @@ def get_input_lookup_values(enum_data):
   
 def get_output_lookup_values(enum_data):
   out_value_format= ""
+  if(not enum_data["values"]):
+    return out_value_format
   index = 1
   is_int = isinstance(enum_data["values"][0]["value"], int)
   if is_int:
