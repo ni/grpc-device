@@ -3,19 +3,19 @@
 //---------------------------------------------------------------------
 // Mock of LibraryInterface for NI-Digital Pattern Driver
 //---------------------------------------------------------------------
-#ifndef NIDIGITAL_GRPC_MOCK_LIBRARY_H
-#define NIDIGITAL_GRPC_MOCK_LIBRARY_H
+#ifndef NIDIGITALPATTERN_GRPC_MOCK_LIBRARY_H
+#define NIDIGITALPATTERN_GRPC_MOCK_LIBRARY_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "nidigital_library_interface.h"
+#include "nidigitalpattern_library_interface.h"
 
 namespace ni {
 namespace tests {
 namespace unit {
 
-class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
+class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AbortKeepAlive, (ViSession vi), (override));
@@ -154,4 +154,4 @@ class NiDigitalMockLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
-#endif  // NIDIGITAL_GRPC_MOCK_LIBRARY_H
+#endif  // NIDIGITALPATTERN_GRPC_MOCK_LIBRARY_H

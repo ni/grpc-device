@@ -3,13 +3,13 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-Digital Pattern Driver
 //---------------------------------------------------------------------
-#ifndef NIDIGITAL_GRPC_LIBRARY_WRAPPER_H
-#define NIDIGITAL_GRPC_LIBRARY_WRAPPER_H
+#ifndef NIDIGITALPATTERN_GRPC_LIBRARY_WRAPPER_H
+#define NIDIGITALPATTERN_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <niDigital.h>
 
-namespace nidigital_grpc {
+namespace nidigitalpattern_grpc {
 
 class NiDigitalLibraryInterface {
  public:
@@ -149,5 +149,5 @@ class NiDigitalLibraryInterface {
   virtual ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]) = 0;
 };
 
-}  // namespace nidigital_grpc
-#endif  // NIDIGITAL_GRPC_LIBRARY_WRAPPER_H
+}  // namespace nidigitalpattern_grpc
+#endif  // NIDIGITALPATTERN_GRPC_LIBRARY_WRAPPER_H
