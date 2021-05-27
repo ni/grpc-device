@@ -54,7 +54,6 @@ def get_size_param(param, parameters):
 def add_attribute_values_enums(enums, attribute_enums, service_class_prefix):
     """Update enums metadata to add new enums that will be used by SetAttribute* APIs."""
     mapping_types = {
-        'ViInt64': 'std::int64_t',
         'ViReal64': 'double',
         'ViString': 'std::string'
     }
@@ -73,9 +72,7 @@ def add_attribute_values_enums(enums, attribute_enums, service_class_prefix):
         if not generate_mappings:
             enum_values = values_to_create.values()
             allow_alias = len(enum_values) != len(set(enum_values))
-        values = []
-        for name in values_to_create:
-            values.append({"name": name, "value": values_to_create[name]})
+        values = [{"name": name, "value": values_to_create[name]} for name in values_to_create]
         new_enum = {
             'enum-value-prefix': enum_value_prefix,
             'generate-mappings': generate_mappings,
@@ -93,7 +90,7 @@ def mark_attr_value_param_if_required(function, attribute_enums, service_class_p
         enum_type = "ViString"
     else:
         enum_type = attribute_value_param["type"]
-    if(attribute_value_param != None and enum_type in attribute_enums):
+    if attribute_value_param != None and enum_type in attribute_enums:
         attribute_value_param['enum'] = get_attribute_values_enum_name(service_class_prefix, enum_type)
 
 def get_attribute_values_enum_name(service_class_prefix, type):

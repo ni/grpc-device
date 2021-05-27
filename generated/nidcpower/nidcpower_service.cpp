@@ -3560,22 +3560,15 @@ namespace nidcpower_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value;
       switch (request->attribute_value_enum_case()) {
-        case SetAttributeViInt64Request::AttributeValueEnumCase::kAttributeValue: {
-          auto attribute_value_imap_it = nidcpowerint64attributevalues_input_map_.find(request->attribute_value());
-          if (attribute_value_imap_it == nidcpowerint64attributevalues_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range.");
-          }
-          attribute_value = static_cast<ViInt64>(attribute_value_imap_it->second);
+        case nidcpower_grpc::SetAttributeViInt64Request::AttributeValueEnumCase::kAttributeValue:
+          attribute_value = (ViInt64)request->attribute_value();
           break;
-        }
-        case SetAttributeViInt64Request::AttributeValueEnumCase::kAttributeValueRaw: {
-          attribute_value = static_cast<ViInt64>(request->attribute_value_raw());
+        case nidcpower_grpc::SetAttributeViInt64Request::AttributeValueEnumCase::kAttributeValueRaw:
+          attribute_value = (ViInt64)request->attribute_value_raw();
           break;
-        } 
-        case SetAttributeViInt64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
+        case nidcpower_grpc::SetAttributeViInt64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
           break;
-        }
       }
 
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, attribute_value);

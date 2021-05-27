@@ -97,8 +97,6 @@ public:
 private:
   NiSyncLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
-  std::map<std::int32_t, std::int64_t> nisyncint64attributevalues_input_map_ {  };
-  std::map<std::int64_t, std::int32_t> nisyncint64attributevalues_output_map_ {  };
   std::map<std::int32_t, double> nisyncreal64attributevalues_input_map_ {  };
   std::map<double, std::int32_t> nisyncreal64attributevalues_output_map_ {  };
   std::map<std::int32_t, std::string> nisyncstringattributevalues_input_map_ {  };
