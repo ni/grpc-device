@@ -3,16 +3,16 @@
 //---------------------------------------------------------------------
 // Real implementation of LibraryInterface for NI-Digital Pattern Driver
 //---------------------------------------------------------------------
-#ifndef NIDIGITAL_GRPC_LIBRARY_H
-#define NIDIGITAL_GRPC_LIBRARY_H
+#ifndef NIDIGITALPATTERN_GRPC_LIBRARY_H
+#define NIDIGITALPATTERN_GRPC_LIBRARY_H
 
-#include "nidigital_library_interface.h"
+#include "nidigitalpattern_library_interface.h"
 
 #include <server/shared_library.h>
 
-namespace nidigital_grpc {
+namespace nidigitalpattern_grpc {
 
-class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
+class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface {
  public:
   NiDigitalLibrary();
   virtual ~NiDigitalLibrary();
@@ -424,6 +424,6 @@ class NiDigitalLibrary : public nidigital_grpc::NiDigitalLibraryInterface {
   FunctionPointers function_pointers_;
 };
 
-}  // namespace nidigital_grpc
+}  // namespace nidigitalpattern_grpc
 
-#endif  // NIDIGITAL_GRPC_LIBRARY_H
+#endif  // NIDIGITALPATTERN_GRPC_LIBRARY_H

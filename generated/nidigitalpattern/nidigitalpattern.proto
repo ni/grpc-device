@@ -11,7 +11,7 @@ option java_package = "com.ni.grpc.nidigital";
 option java_outer_classname = "NiDigital";
 option csharp_namespace = "NationalInstruments.Grpc.Digital";
 
-package nidigital_grpc;
+package nidigitalpattern_grpc;
 
 import "session.proto";
 

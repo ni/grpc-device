@@ -7,7 +7,7 @@ config = {
     'service_class_prefix': 'NiDigital',
     'java_package': 'com.ni.grpc.nidigital',
     'csharp_namespace': 'NationalInstruments.Grpc.Digital',
-    'namespace_component': 'nidigital',
+    'namespace_component': 'nidigitalpattern',
     'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'Abort',
@@ -43,7 +43,7 @@ config = {
         }
     },
     'metadata_version': '2.0',
-    'module_name': 'nidigital',
+    'module_name': 'nidigitalpattern',
     'repeated_capabilities': [
         {
             'prefix': '',

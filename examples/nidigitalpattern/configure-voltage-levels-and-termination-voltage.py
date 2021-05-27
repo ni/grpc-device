@@ -30,8 +30,8 @@
 import grpc
 import sys
 import os
-import nidigital_pb2 as nidigital_types
-import nidigital_pb2_grpc as grpc_nidigital
+import nidigitalpattern_pb2 as nidigital_types
+import nidigitalpattern_pb2_grpc as grpc_nidigital
 
 server_address = "localhost"
 server_port = "31763"
@@ -41,7 +41,7 @@ session_name = "NI-Digital-Pattern-Driver-Session"
 resource = "PXI1Slot2"
 options = "Simulate=1, DriverSetup=Model:6570"
 # Provide the absolute path to the folder on the server machine containing the .pinmap, .specs, .digitiming & .digipat files.
-directory_path =  ""
+directory_path = ""
 if directory_path == "":
     print("\n Provide the absolute path to the folder on the server machine containing the .pinmap, .specs, .digitiming & .digipat files.")
     exit(1)

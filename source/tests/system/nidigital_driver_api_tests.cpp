@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 
-#include "nidigital/nidigital_library.h"
-#include "nidigital/nidigital_service.h"
+#include "nidigitalpattern/nidigitalpattern_library.h"
+#include "nidigitalpattern/nidigitalpattern_service.h"
 
 namespace ni {
 namespace tests {
 namespace system {
 
-namespace digital = nidigital_grpc;
+namespace digital = nidigitalpattern_grpc;
 
 const int kDigitalDriverApiSuccess = 0;
 
