@@ -723,6 +723,31 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetArrayViUInt8WithEnum': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLen',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'uInt8EnumArray',
+                'enum': 'Color',
+                'type': 'ViUInt8[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arrayLen'
+                }
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAttributeViBoolean': {
         'codegen_method': 'public',
         'documentation': {

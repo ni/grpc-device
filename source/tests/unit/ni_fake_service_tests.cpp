@@ -1418,6 +1418,34 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIv
     EXPECT_EQ(response.actual_size(), expected_size);
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetArrayViUInt8WithEnum_CallsGetArrayViUInt8WithEnum)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  NiFakeMockLibrary library;
+  nifake_grpc::NiFakeService service(&library, &session_repository);
+  int array_len = 3;
+  ViUInt8 uint8_array[] = {nifake_grpc::Color::COLOR_RED, nifake_grpc::Color::COLOR_BLACK, nifake_grpc::Color::COLOR_BLUE};
+  nifake_grpc::Color enum_array[] = {nifake_grpc::Color::COLOR_RED, nifake_grpc::Color::COLOR_BLACK, nifake_grpc::Color::COLOR_BLUE};
+  EXPECT_CALL(library, GetArrayViUInt8WithEnum(kTestViSession, array_len, _))
+      .WillOnce(
+        DoAll(
+          SetArrayArgument<2>(uint8_array, uint8_array + array_len), 
+          Return(kDriverSuccess)));
+  
+  ::grpc::ServerContext context;
+  nifake_grpc::GetArrayViUInt8WithEnumRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_array_len(array_len);
+  nifake_grpc::GetArrayViUInt8WithEnumResponse response;
+  ::grpc::Status status = service.GetArrayViUInt8WithEnum(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.u_int8_enum_array(), ElementsAreArray(enum_array, array_len));
+  EXPECT_EQ(std::string(uint8_array, uint8_array+array_len), response.u_int8_enum_array_raw());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
