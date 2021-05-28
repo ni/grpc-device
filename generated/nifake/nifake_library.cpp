@@ -39,6 +39,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAnIviDanceWithATwistArray = reinterpret_cast<GetAnIviDanceWithATwistArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArray"));
   function_pointers_.GetArraySizeForCustomCode = reinterpret_cast<GetArraySizeForCustomCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForCustomCode"));
   function_pointers_.GetArrayUsingIviDance = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("niFake_GetArrayUsingIviDance"));
+  function_pointers_.GetArrayViUInt8WithEnum = reinterpret_cast<GetArrayViUInt8WithEnumPtr>(shared_library_.get_function_pointer("niFake_GetArrayViUInt8WithEnum"));
   function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFake_GetAttributeViBoolean"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViInt32"));
   function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViInt64"));
@@ -308,6 +309,18 @@ ViStatus NiFakeLibrary::GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, V
   return niFake_GetArrayUsingIviDance(vi, arraySize, arrayOut);
 #else
   return function_pointers_.GetArrayUsingIviDance(vi, arraySize, arrayOut);
+#endif
+}
+
+ViStatus NiFakeLibrary::GetArrayViUInt8WithEnum(ViSession vi, ViInt32 arrayLen, ViUInt8 uInt8EnumArray[])
+{
+  if (!function_pointers_.GetArrayViUInt8WithEnum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetArrayViUInt8WithEnum.");
+  }
+#if defined(_MSC_VER)
+  return niFake_GetArrayViUInt8WithEnum(vi, arrayLen, uInt8EnumArray);
+#else
+  return function_pointers_.GetArrayViUInt8WithEnum(vi, arrayLen, uInt8EnumArray);
 #endif
 }
 

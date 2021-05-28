@@ -44,6 +44,18 @@ namespace ${config["namespace_component"]}_grpc {
       output->Add(item != VI_FALSE);
     }
   }
+
+% endif
+% if common_helpers.has_enum_array_string_out_param(functions):
+  template <typename TEnum>
+  void ${service_class_prefix}Service::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
+  {
+    for (auto item : input)
+    {
+      output->Add(item);
+    }
+  }
+
 % endif
 % if 'custom_types' in locals():
 %   for custom_type in custom_types:
