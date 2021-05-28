@@ -37,12 +37,12 @@ namespace nisync_grpc {
 
       auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
         ViSession vi;
-        int status = library_->init(resource_name, id_query, reset_device, &vi);
+        int status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -66,7 +66,7 @@ namespace nisync_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi);
-      auto status = library_->close(vi);
+      auto status = library_->Close(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -87,7 +87,7 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
       std::string error_message(256 - 1, '\0');
-      auto status = library_->error_message(vi, error_code, (ViChar*)error_message.data());
+      auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
@@ -109,7 +109,7 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->reset(vi);
+      auto status = library_->Reset(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -149,7 +149,7 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
       std::string self_test_message(256 - 1, '\0');
-      auto status = library_->self_test(vi, &self_test_result, (ViChar*)self_test_message.data());
+      auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);
@@ -174,7 +174,7 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       std::string driver_revision(256 - 1, '\0');
       std::string firmware_revision(256 - 1, '\0');
-      auto status = library_->revision_query(vi, (ViChar*)driver_revision.data(), (ViChar*)firmware_revision.data());
+      auto status = library_->RevisionQuery(vi, (ViChar*)driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
       if (status == 0) {
         response->set_driver_revision(driver_revision);
@@ -654,40 +654,6 @@ namespace nisync_grpc {
         response->set_time_nanoseconds(time_nanoseconds);
         response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
         response->set_detected_edge(detected_edge);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiSyncService::ReadMultipleTriggerTimeStamp(::grpc::ServerContext* context, const ReadMultipleTriggerTimeStampRequest* request, ReadMultipleTriggerTimeStampResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString terminal = request->terminal().c_str();
-      ViUInt32 timestamps_to_read = request->timestamps_to_read();
-      ViReal64 timeout = request->timeout();
-      response->mutable_time_seconds_buffer()->Resize(timestamps_to_read, 0);
-      ViUInt32* time_seconds_buffer = reinterpret_cast<ViUInt32*>(response->mutable_time_seconds_buffer()->mutable_data());
-      response->mutable_time_nanoseconds_buffer()->Resize(timestamps_to_read, 0);
-      ViUInt32* time_nanoseconds_buffer = reinterpret_cast<ViUInt32*>(response->mutable_time_nanoseconds_buffer()->mutable_data());
-      response->mutable_time_fractional_nanoseconds_buffer()->Resize(timestamps_to_read, 0);
-      ViUInt16* time_fractional_nanoseconds_buffer = reinterpret_cast<ViUInt16*>(response->mutable_time_fractional_nanoseconds_buffer()->mutable_data());
-      response->mutable_detected_edge_buffer()->Resize(timestamps_to_read, 0);
-      ViInt32* detected_edge_buffer = reinterpret_cast<ViInt32*>(response->mutable_detected_edge_buffer()->mutable_data());
-      ViUInt32 timestamps_read {};
-      auto status = library_->ReadMultipleTriggerTimeStamp(vi, terminal, timestamps_to_read, timeout, time_seconds_buffer, time_nanoseconds_buffer, time_fractional_nanoseconds_buffer, detected_edge_buffer, &timestamps_read);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_timestamps_read(timestamps_read);
       }
       return ::grpc::Status::OK;
     }
@@ -1549,7 +1515,7 @@ namespace nisync_grpc {
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {

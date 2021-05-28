@@ -18,13 +18,13 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   virtual ~NiSyncLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  ViStatus init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  ViStatus close(ViSession vi);
-  ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
-  ViStatus reset(ViSession vi);
+  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus Close(ViSession vi);
+  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus Reset(ViSession vi);
   ViStatus PersistConfig(ViSession vi);
-  ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
-  ViStatus revision_query(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256]);
+  ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  ViStatus RevisionQuery(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256]);
   ViStatus ConnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge);
   ViStatus DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   ViStatus ConnectSWTrigToTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay);
@@ -90,13 +90,13 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   ViStatus CalAdjustDDSInitialPhase(ViSession vi, ViReal64 measuredPhase, ViReal64* oldPhase);
 
  private:
-  using initPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  using closePtr = ViStatus (*)(ViSession vi);
-  using error_messagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
-  using resetPtr = ViStatus (*)(ViSession vi);
+  using InitPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  using ClosePtr = ViStatus (*)(ViSession vi);
+  using ErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  using ResetPtr = ViStatus (*)(ViSession vi);
   using PersistConfigPtr = ViStatus (*)(ViSession vi);
-  using self_testPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
-  using revision_queryPtr = ViStatus (*)(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256]);
+  using SelfTestPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  using RevisionQueryPtr = ViStatus (*)(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256]);
   using ConnectTrigTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge);
   using DisconnectTrigTerminalsPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal);
   using ConnectSWTrigToTerminalPtr = ViStatus (*)(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay);
@@ -162,13 +162,13 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
   using CalAdjustDDSInitialPhasePtr = ViStatus (*)(ViSession vi, ViReal64 measuredPhase, ViReal64* oldPhase);
 
   typedef struct FunctionPointers {
-    initPtr init;
-    closePtr close;
-    error_messagePtr error_message;
-    resetPtr reset;
+    InitPtr Init;
+    ClosePtr Close;
+    ErrorMessagePtr ErrorMessage;
+    ResetPtr Reset;
     PersistConfigPtr PersistConfig;
-    self_testPtr self_test;
-    revision_queryPtr revision_query;
+    SelfTestPtr SelfTest;
+    RevisionQueryPtr RevisionQuery;
     ConnectTrigTerminalsPtr ConnectTrigTerminals;
     DisconnectTrigTerminalsPtr DisconnectTrigTerminals;
     ConnectSWTrigToTerminalPtr ConnectSWTrigToTerminal;

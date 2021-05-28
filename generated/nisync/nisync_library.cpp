@@ -21,13 +21,13 @@ NiSyncLibrary::NiSyncLibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
-  function_pointers_.init = reinterpret_cast<initPtr>(shared_library_.get_function_pointer("niSync_init"));
-  function_pointers_.close = reinterpret_cast<closePtr>(shared_library_.get_function_pointer("niSync_close"));
-  function_pointers_.error_message = reinterpret_cast<error_messagePtr>(shared_library_.get_function_pointer("niSync_error_message"));
-  function_pointers_.reset = reinterpret_cast<resetPtr>(shared_library_.get_function_pointer("niSync_reset"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niSync_init"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niSync_close"));
+  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niSync_error_message"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niSync_reset"));
   function_pointers_.PersistConfig = reinterpret_cast<PersistConfigPtr>(shared_library_.get_function_pointer("niSync_PersistConfig"));
-  function_pointers_.self_test = reinterpret_cast<self_testPtr>(shared_library_.get_function_pointer("niSync_self_test"));
-  function_pointers_.revision_query = reinterpret_cast<revision_queryPtr>(shared_library_.get_function_pointer("niSync_revision_query"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niSync_self_test"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niSync_revision_query"));
   function_pointers_.ConnectTrigTerminals = reinterpret_cast<ConnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_ConnectTrigTerminals"));
   function_pointers_.DisconnectTrigTerminals = reinterpret_cast<DisconnectTrigTerminalsPtr>(shared_library_.get_function_pointer("niSync_DisconnectTrigTerminals"));
   function_pointers_.ConnectSWTrigToTerminal = reinterpret_cast<ConnectSWTrigToTerminalPtr>(shared_library_.get_function_pointer("niSync_ConnectSWTrigToTerminal"));
@@ -104,51 +104,51 @@ NiSyncLibrary::~NiSyncLibrary()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
-ViStatus NiSyncLibrary::init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
+ViStatus NiSyncLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
 {
-  if (!function_pointers_.init) {
+  if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_init.");
   }
 #if defined(_MSC_VER)
   return niSync_init(resourceName, idQuery, resetDevice, vi);
 #else
-  return function_pointers_.init(resourceName, idQuery, resetDevice, vi);
+  return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
 #endif
 }
 
-ViStatus NiSyncLibrary::close(ViSession vi)
+ViStatus NiSyncLibrary::Close(ViSession vi)
 {
-  if (!function_pointers_.close) {
+  if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_close.");
   }
 #if defined(_MSC_VER)
   return niSync_close(vi);
 #else
-  return function_pointers_.close(vi);
+  return function_pointers_.Close(vi);
 #endif
 }
 
-ViStatus NiSyncLibrary::error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
+ViStatus NiSyncLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
 {
-  if (!function_pointers_.error_message) {
+  if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_error_message.");
   }
 #if defined(_MSC_VER)
   return niSync_error_message(vi, errorCode, errorMessage);
 #else
-  return function_pointers_.error_message(vi, errorCode, errorMessage);
+  return function_pointers_.ErrorMessage(vi, errorCode, errorMessage);
 #endif
 }
 
-ViStatus NiSyncLibrary::reset(ViSession vi)
+ViStatus NiSyncLibrary::Reset(ViSession vi)
 {
-  if (!function_pointers_.reset) {
+  if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_reset.");
   }
 #if defined(_MSC_VER)
   return niSync_reset(vi);
 #else
-  return function_pointers_.reset(vi);
+  return function_pointers_.Reset(vi);
 #endif
 }
 
@@ -164,27 +164,27 @@ ViStatus NiSyncLibrary::PersistConfig(ViSession vi)
 #endif
 }
 
-ViStatus NiSyncLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
+ViStatus NiSyncLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
 {
-  if (!function_pointers_.self_test) {
+  if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_self_test.");
   }
 #if defined(_MSC_VER)
   return niSync_self_test(vi, selfTestResult, selfTestMessage);
 #else
-  return function_pointers_.self_test(vi, selfTestResult, selfTestMessage);
+  return function_pointers_.SelfTest(vi, selfTestResult, selfTestMessage);
 #endif
 }
 
-ViStatus NiSyncLibrary::revision_query(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256])
+ViStatus NiSyncLibrary::RevisionQuery(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256])
 {
-  if (!function_pointers_.revision_query) {
+  if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_revision_query.");
   }
 #if defined(_MSC_VER)
   return niSync_revision_query(vi, driverRevision, firmwareRevision);
 #else
-  return function_pointers_.revision_query(vi, driverRevision, firmwareRevision);
+  return function_pointers_.RevisionQuery(vi, driverRevision, firmwareRevision);
 #endif
 }
 

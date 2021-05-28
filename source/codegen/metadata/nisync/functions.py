@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 functions = {
-    "init": {
+    "Init": {
+        "cname": "niSync_init",
         "init_method": True,
         "parameters": [
             {
@@ -26,7 +27,8 @@ functions = {
         ],
         "returns": "ViStatus",
     },
-    "close": {
+    "Close": {
+        "cname": "niSync_close",
         "parameters": [
             {
                 "direction": "in",
@@ -36,7 +38,8 @@ functions = {
         ],
         "returns": "ViStatus",
     },
-    "error_message": {
+    "ErrorMessage": {
+        "cname": "niSync_error_message",
         "parameters": [
             {
                 "direction": "in",
@@ -60,7 +63,8 @@ functions = {
         ],
         "returns": "ViStatus",
     },
-    "reset": {
+    "Reset": {
+        "cname": "niSync_reset",
         "parameters": [
             {
                 "direction": "in",
@@ -80,7 +84,8 @@ functions = {
         ],
         "returns": "ViStatus",
     },
-    "self_test": {
+    "SelfTest": {
+        "cname": "niSync_self_test",
         "parameters": [
             {
                 "direction": "in",
@@ -104,7 +109,8 @@ functions = {
         ],
         "returns": "ViStatus",
     },
-    "revision_query": {
+    "RevisionQuery": {
+        "cname": "niSync_revision_query",
         "parameters": [
             {
                 "direction": "in",
@@ -618,6 +624,7 @@ functions = {
         "returns": "ViStatus",
     },
     "ReadMultipleTriggerTimeStamp": {
+        "codegen_method": "CustomCode",
         "parameters": [
             {
                 "direction": "in",
