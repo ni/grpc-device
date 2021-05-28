@@ -34,6 +34,7 @@ service NiFake {
   rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
   rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
+  rpc GetArrayViUInt8WithEnum(GetArrayViUInt8WithEnumRequest) returns (GetArrayViUInt8WithEnumResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
@@ -293,6 +294,17 @@ message GetArrayUsingIviDanceRequest {
 message GetArrayUsingIviDanceResponse {
   int32 status = 1;
   repeated double array_out = 2;
+}
+
+message GetArrayViUInt8WithEnumRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 array_len = 2;
+}
+
+message GetArrayViUInt8WithEnumResponse {
+  int32 status = 1;
+  repeated Color u_int8_enum_array = 2;
+  bytes u_int8_enum_array_raw = 3;
 }
 
 message GetAttributeViBooleanRequest {

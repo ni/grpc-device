@@ -36,6 +36,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut);
   ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
+  ViStatus GetArrayViUInt8WithEnum(ViSession vi, ViInt32 arrayLen, ViUInt8 uInt8EnumArray[]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
   ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue);
@@ -99,6 +100,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetAnIviDanceWithATwistArrayPtr = ViStatus (*)(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   using GetArraySizeForCustomCodePtr = ViStatus (*)(ViSession vi, ViInt32* sizeOut);
   using GetArrayUsingIviDancePtr = ViStatus (*)(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
+  using GetArrayViUInt8WithEnumPtr = ViStatus (*)(ViSession vi, ViInt32 arrayLen, ViUInt8 uInt8EnumArray[]);
   using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
   using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
   using GetAttributeViInt64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue);
@@ -162,6 +164,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
     GetArraySizeForCustomCodePtr GetArraySizeForCustomCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;
+    GetArrayViUInt8WithEnumPtr GetArrayViUInt8WithEnum;
     GetAttributeViBooleanPtr GetAttributeViBoolean;
     GetAttributeViInt32Ptr GetAttributeViInt32;
     GetAttributeViInt64Ptr GetAttributeViInt64;

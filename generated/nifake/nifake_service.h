@@ -42,6 +42,7 @@ public:
   ::grpc::Status GetAnIviDanceWithATwistArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayRequest* request, GetAnIviDanceWithATwistArrayResponse* response) override;
   ::grpc::Status GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response) override;
   ::grpc::Status GetArrayUsingIviDance(::grpc::ServerContext* context, const GetArrayUsingIviDanceRequest* request, GetArrayUsingIviDanceResponse* response) override;
+  ::grpc::Status GetArrayViUInt8WithEnum(::grpc::ServerContext* context, const GetArrayViUInt8WithEnumRequest* request, GetArrayViUInt8WithEnumResponse* response) override;
   ::grpc::Status GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response) override;
@@ -80,6 +81,8 @@ private:
   NiFakeLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
+  template <typename TEnum>
+  void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
   void Copy(const CustomStruct& input, nifake_grpc::FakeCustomStruct* output);
   void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<nifake_grpc::FakeCustomStruct>* output);
   std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };

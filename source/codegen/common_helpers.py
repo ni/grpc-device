@@ -13,6 +13,9 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
+def is_string_arg(parameter):
+  return parameter['type'] in ['ViChar[]', 'ViInt8[]', 'ViUInt8[]']
+
 def get_underlying_type_name(parameter_type):
   '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
   return parameter_type.replace("struct ","").replace('[]', '')
@@ -34,7 +37,12 @@ def is_unsupported_struct(parameter):
 def is_unsupported_scalar_array(parameter):
   if not is_array(parameter['type']):
     return False
-  return is_enum(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
+  return is_unsupported_enum_array(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
+
+def is_unsupported_enum_array(parameter):
+  if is_enum(parameter):
+    return not (is_output_parameter(parameter) and is_string_arg(parameter))
+  return False
 
 def camel_to_snake(camelString):
   '''Returns a snake_string for a given camelString.'''
@@ -107,6 +115,14 @@ def has_viboolean_array_param(functions):
   for function in functions:
     for parameter in functions[function]["parameters"]:
       if parameter['type'] == 'ViBoolean[]':
+        return True
+  return False
+
+def has_enum_array_string_out_param(functions):
+  '''Returns True if atleast one function has output parameter of type ViChar[], ViInt8[] or ViUInt8[] that uses enum'''
+  for function in functions:
+    for parameter in functions[function]["parameters"]:
+      if is_output_parameter(parameter) and is_string_arg(parameter) and is_enum(parameter):
         return True
   return False
 
