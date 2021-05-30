@@ -160,6 +160,8 @@ private:
   NiDigitalLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
+  template <typename TEnum>
+  void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
 };
 
 } // namespace nidigitalpattern_grpc
