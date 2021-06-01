@@ -7,7 +7,7 @@
 # The gRPC API is built from the C API. NI-Digital Pattern Driver Pattern documentation is installed with
 # the driver at: C:\Users\Public\Documents\National Instruments\NI-Digital-Pattern-Driver\Documentation\Digital Pattern Help.chm
 # 
-# Copy the .pinmap, .specs, .digitiming & .digipat files that come with this example to a folder on the server machine & note down the path of the folder.
+# Copy the .pinmap, .specs, .digitiming & .digipat files that come with this example to a folder on the server machine & copy-paste the path of the folder to the directory_path variable below.
 # Use the NI Digital Pattern Editor to create or modify pin or channel map files.
 # Link : https://www.ni.com/documentation/en/ni-digital/20.6/digital-pattern-editor/pin-channel-map-editor/
 # 
@@ -43,7 +43,7 @@ options = "Simulate=1, DriverSetup=Model:6570"
 # Provide the absolute path to the folder on the server machine containing the .pinmap, .specs, .digitiming & .digipat files.
 directory_path = ""
 if directory_path == "":
-    print("\n Provide the absolute path to the folder on the server machine containing the .pinmap, .specs, .digitiming & .digipat files.")
+    print("\nProvide the absolute path to the folder on the server machine containing the .pinmap, .specs, .digitiming & .digipat files to the dirctory_path variable in the source code.")
     exit(1)
 # Fixed parameters
 channelList = "PinGroup1"
