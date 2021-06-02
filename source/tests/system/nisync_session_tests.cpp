@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "nisync/nisync_library.h"
+#include "device_server.h"
 #include "nisync/nisync_service.h"
+#include "enumerate_devices.h"
 
 namespace ni {
 namespace tests {
@@ -10,33 +11,36 @@ namespace system {
 namespace nisync = nisync_grpc;
 
 static const int kSyncDeviceNotFound = -1074118634;
-// Update the value of 'kTestRsrcName' to the name of your NI-Sync device.
-static const char* kTestRsrcName = "PXI1Slot4";
 static const char* kTestSessionName = "TestSession";
 static const char* kEmptySessionName = "";
 static const char* kInvalidRsrcName = "InvalidName";
 
 class NiSyncSessionTest : public ::testing::Test {
  protected:
-  NiSyncSessionTest()
-  {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    nisync_library_ = std::make_unique<nisync::NiSyncLibrary>();
-    nisync_service_ = std::make_unique<nisync::NiSyncService>(nisync_library_.get(), session_repository_.get());
-    builder.RegisterService(nisync_service_.get());
+  std::string test_resource_name;
 
-    server_ = builder.BuildAndStart();
-    ResetStubs();
+  NiSyncSessionTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        nisync_stub_(nisync::NiSync::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
+
+  void SetUp() override
+  {
+    for(const auto& device : EnumerateDevices()) {
+      if ((device.model() == "NI PXI-6683H") || (device.model() == "NI PXIe-6674T")) {
+        test_resource_name = device.name();
+        break;
+      }
+    }
+
+    if (test_resource_name.empty()) {
+      GTEST_SKIP() << "No device found";
+    }
   }
 
   virtual ~NiSyncSessionTest() {}
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    nisync_stub_ = nisync::NiSync::NewStub(channel_);
-  }
 
   std::unique_ptr<nisync::NiSync::Stub>& GetStub()
   {
@@ -56,18 +60,14 @@ class NiSyncSessionTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<nisync::NiSync::Stub> nisync_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<nisync::NiSyncLibrary> nisync_library_;
-  std::unique_ptr<nisync::NiSyncService> nisync_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
   nisync::InitResponse response;
-  ::grpc::Status status = call_init(kTestRsrcName, kTestSessionName, &response);
+  ::grpc::Status status = call_init(test_resource_name.c_str(), kTestSessionName, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -77,7 +77,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
 TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
 {
   nisync::InitResponse response;
-  ::grpc::Status status = call_init(kTestRsrcName, kEmptySessionName, &response);
+  ::grpc::Status status = call_init(test_resource_name.c_str(), kEmptySessionName, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -97,7 +97,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 TEST_F(NiSyncSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   nisync::InitResponse init_response;
-  call_init(kTestRsrcName, kEmptySessionName, &init_response);
+  call_init(test_resource_name.c_str(), kEmptySessionName, &init_response);
   nidevice_grpc::Session session = init_response.vi();
   EXPECT_EQ(0, init_response.status());
 

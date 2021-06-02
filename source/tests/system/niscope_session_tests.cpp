@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "niscope/niscope_library.h"
+#include "device_server.h"
 #include "niscope/niscope_service.h"
 
 namespace ni {
@@ -10,7 +10,9 @@ namespace system {
 namespace scope = niscope_grpc;
 
 const int kViErrorRsrcNFound = -1073807343;
+const int kInvalidScopeSession = -1074130544;
 const char* kViErrorRsrcNFoundMessage = "VISA:  (Hex 0xBFFF0011) Insufficient location information or the device or resource is not present in the system.";
+const char* kInvalidScopeSessionMessage = "The session handle is not valid.";
 const char* kTestResourceName = "FakeDevice";
 const char* kSimulatedOptionsString = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe";
 const char* kTestSessionName = "SessionName";
@@ -19,24 +21,13 @@ const char* kInvalidResourceName = "";
 class NiScopeSessionTest : public ::testing::Test {
  protected:
   NiScopeSessionTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
-    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
-    builder.RegisterService(niscope_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
+    device_server_->ResetServer();
   }
 
   virtual ~NiScopeSessionTest() {}
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    niscope_stub_ = scope::NiScope::NewStub(channel_);
-  }
 
   std::unique_ptr<scope::NiScope::Stub>& GetStub()
   {
@@ -57,13 +48,26 @@ class NiScopeSessionTest : public ::testing::Test {
     return status;
   }
 
+  std::string get_error_message(int error_status)
+  {
+    scope::InitWithOptionsResponse init_response;
+    call_init_with_options(kTestResourceName, kSimulatedOptionsString, kTestSessionName, &init_response);
+    nidevice_grpc::Session session = init_response.vi();
+
+    ::grpc::ClientContext context;
+    scope::GetErrorMessageRequest request;
+    request.mutable_vi()->set_id(session.id());
+    request.set_error_code(error_status);
+    scope::GetErrorMessageResponse error_response;
+
+    ::grpc::Status status = GetStub()->GetErrorMessage(&context, request, &error_response);
+    EXPECT_TRUE(status.ok());
+    return error_response.error_message();
+  }
+
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
-  std::unique_ptr<scope::NiScopeService> niscope_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
@@ -112,7 +116,7 @@ TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_NoErrorReported)
+TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError)
 {
   nidevice_grpc::Session session;
   session.set_id(NULL);
@@ -124,7 +128,9 @@ TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_NoErrorReported)
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(0, response.status());
+  EXPECT_EQ(kInvalidScopeSession, response.status());
+  std::string error_message = get_error_message(response.status());
+  EXPECT_STREQ(kInvalidScopeSessionMessage, error_message.c_str());
 }
 
 TEST_F(NiScopeSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)

@@ -7,7 +7,7 @@ config = {
     "java_package": "com.ni.grpc.sync",
     "csharp_namespace": "NationalInstruments.Grpc.Sync",
     "namespace_component": "nisync",
-    "close_function": "close",
+    "close_function": "Close",
     "context_manager_name": {
         "abort_function": "Abort",
         "initiate_function": "InitiateAcquisition",

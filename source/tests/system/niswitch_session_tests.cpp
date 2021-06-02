@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "niswitch/niswitch_library.h"
+#include "device_server.h"
 #include "niswitch/niswitch_service.h"
 
 namespace ni {
@@ -10,7 +10,9 @@ namespace system {
 namespace niswitch = niswitch_grpc;
 
 const int kViErrorRsrcNotFound = -1074118654;
+const int kInvalidSwitchSession = -1074130544;
 const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.";
+const char* kInvalidSwitchSessionMessage = "The session handle is not valid.";
 const char* kTestRsrcName = "";
 const char* kTestSessName = "SessionName";
 const char* kInvalidRsrcName = "InvalidName";
@@ -19,24 +21,13 @@ const char* kTopology = "2529/2-Wire Dual 4x16 Matrix";
 class NiSwitchSessionTest : public ::testing::Test {
  protected:
   NiSwitchSessionTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        niswitch_stub_(niswitch::NiSwitch::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    niswitch_library_ = std::make_unique<niswitch::NiSwitchLibrary>();
-    niswitch_service_ = std::make_unique<niswitch::NiSwitchService>(niswitch_library_.get(), session_repository_.get());
-    builder.RegisterService(niswitch_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
+    device_server_->ResetServer();
   }
 
   virtual ~NiSwitchSessionTest() {}
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    niswitch_stub_ = niswitch::NiSwitch::NewStub(channel_);
-  }
 
   std::unique_ptr<niswitch::NiSwitch::Stub>& GetStub()
   {
@@ -57,13 +48,26 @@ class NiSwitchSessionTest : public ::testing::Test {
     return status;
   }
 
+  std::string get_error_message(int error_status)
+  {
+    niswitch::InitWithTopologyResponse init_response;
+    call_init_with_topology(kTestRsrcName, kTopology, kTestSessName, &init_response);
+    nidevice_grpc::Session session = init_response.vi();
+
+    ::grpc::ClientContext context;
+    niswitch::ErrorMessageRequest error_request;
+    error_request.mutable_vi()->set_id(session.id());
+    error_request.set_error_code(error_status);
+    niswitch::ErrorMessageResponse error_response;
+
+    ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
+    EXPECT_TRUE(status.ok());
+    return error_response.error_message();
+  }
+
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<niswitch::NiSwitchLibrary> niswitch_library_;
-  std::unique_ptr<niswitch::NiSwitchService> niswitch_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiSwitchSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
@@ -112,7 +116,7 @@ TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_NoErrorReported)
+TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError)
 {
   nidevice_grpc::Session session;
   session.set_id(NULL);
@@ -124,7 +128,9 @@ TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_NoErrorReported)
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(0, response.status());
+  EXPECT_EQ(kInvalidSwitchSession, response.status());
+  std::string error_message = get_error_message(response.status());
+  EXPECT_STREQ(kInvalidSwitchSessionMessage, error_message.c_str());
 }
 
 TEST_F(NiSwitchSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)

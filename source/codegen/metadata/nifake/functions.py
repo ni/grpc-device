@@ -94,6 +94,43 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'BoolArrayInputFunction': {
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'This function accepts an array of booleans.'
+        },
+        'parameters': [
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
+                },
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Number of elements in the array.'
+                },
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Input boolean array'
+                },
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViBoolean[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'DoubleAllTheNums': {
         'documentation': {
             'description': 'Test for buffer with converter'
@@ -1242,6 +1279,29 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'InitExtCal': {
+        'codegen_method': 'public',
+        'init_method' : True,
+        'custom_close' : 'CloseExtCal(id, 0)',
+         'parameters': [
+            {
+                'name': 'resourceName',
+                'direction': 'in',
+                'type': 'ViRsrc'
+            },
+            {
+                'name': 'calibrationPassword',
+                'direction': 'in',
+                'type': 'ViString'
+            },
+            {
+                'name': 'vi',
+                'direction': 'out',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+     },
     'LockSession': {
         'codegen_method': 'no',
         'documentation': {
@@ -2368,6 +2428,23 @@ functions = {
         'python_name': '_close',
         'returns': 'ViStatus',
         'use_session_lock': False
+    },
+    'CloseExtCal': {
+        'codegen_method': 'public',
+        'custom_close_method': True,
+        'parameters': [
+           {
+                'name': 'vi',
+                'direction': 'in',
+                'type': 'ViSession'
+           },
+           {
+                'name': 'action',
+                'direction': 'in',
+                'type': 'ViInt32'
+           }
+        ],
+        'returns': 'ViStatus'
     },
     'error_message': {
         'codegen_method': 'private',

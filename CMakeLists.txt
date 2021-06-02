@@ -3,25 +3,31 @@ cmake_minimum_required(VERSION 3.12.0)
 project(ni_grpc_device_server C CXX)
 
 #----------------------------------------------------------------------
-# Include the gRPC's cmake build
+# Use the grpc targets directly from this build, only when not cross-compiling.
 #----------------------------------------------------------------------
-add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
-
-#----------------------------------------------------------------------
-# Use the grpc targets directly from this build.
-#----------------------------------------------------------------------
-set(_PROTOBUF_LIBPROTOBUF libprotobuf)
-set(_REFLECTION grpc++_reflection)
 if(CMAKE_CROSSCOMPILING)
   find_program(_PROTOBUF_PROTOC protoc)
-else()
-  set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
-endif()
-set(_GRPC_GRPCPP grpc++)
-if(CMAKE_CROSSCOMPILING)
   find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+
+  if(NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
+    find_package(gRPC REQUIRED)
+    find_library(_REFLECTION grpc++_reflection)
+    find_library(_GRPC_GRPCPP grpc++)
+    find_library(_PROTOBUF_LIBPROTOBUF protobuf)
+  else()
+    add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
+    set(_REFLECTION grpc++_reflection)
+    set(_GRPC_GRPCPP grpc++)
+    set(_PROTOBUF_LIBPROTOBUF libprotobuf)
+  endif()
+
 else()
+  add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
+  set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
+  set(_REFLECTION grpc++_reflection)
   set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
+  set(_GRPC_GRPCPP grpc++)
+  set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 endif()
 
 #----------------------------------------------------------------------
@@ -50,7 +56,9 @@ include_directories(
   "./imports/include"
   "./source"
 )
-link_directories("./imports/lib/win64")
+if(WIN32)
+  link_directories("./imports/lib/win64")
+endif()
 
 #----------------------------------------------------------------------
 # Get list of NI Driver APIs and directories to generate from
@@ -59,7 +67,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nifake" "niscope" "niswitch" "nisync")
+set(nidrivers "nidcpower" "nidmm" "nifake" "niscope" "niswitch" "nisync")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -67,15 +75,18 @@ set(nidrivers "nifake" "niscope" "niswitch" "nisync")
 set(codegen_scripts
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
-  "${codegen_dir}/handler_helpers.py"
-  "${codegen_dir}/library_interface.h.mako"
-  "${codegen_dir}/library.cpp.mako"
-  "${codegen_dir}/library.h.mako"
-  "${codegen_dir}/mock_library.h.mako"
-  "${codegen_dir}/proto.mako"
+  "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
-  "${codegen_dir}/service.cpp.mako"
-  "${codegen_dir}/service.h.mako")
+  "${codegen_dir}/metadata_mutation.py"
+  "${codegen_dir}/templates/library_interface.h.mako"
+  "${codegen_dir}/templates/library.cpp.mako"
+  "${codegen_dir}/templates/library.h.mako"
+  "${codegen_dir}/templates/mock_library.h.mako"
+  "${codegen_dir}/templates/proto.mako"
+  "${codegen_dir}/templates/proto_helpers.mako"
+  "${codegen_dir}/templates/service.cpp.mako"
+  "${codegen_dir}/templates/service_helpers.mako"
+  "${codegen_dir}/templates/service.h.mako")
 
 # Populated in the api loop below.
 set(nidriver_service_srcs "")
@@ -168,6 +179,7 @@ endforeach()
 add_executable(ni_grpc_device_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
+   "source/server/logging.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
    "source/server/server_security_configuration.cpp"
@@ -179,6 +191,12 @@ add_executable(ni_grpc_device_server
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
 
+if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+  target_sources(ni_grpc_device_server
+    PRIVATE "source/server/linux/syslog_logging.cpp"
+    PRIVATE "source/server/linux/daemonize.cpp")
+endif()
+
 target_link_libraries(ni_grpc_device_server
    ${_REFLECTION}
    ${_GRPC_GRPCPP}
@@ -187,10 +205,12 @@ target_link_libraries(ni_grpc_device_server
    nlohmann_json::nlohmann_json
    )
 
+set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
+
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp niScope niswitch nisync)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp nidcpower nidmm niScope niswitch nisync)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -203,14 +223,17 @@ add_custom_command(
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
-# Add JSON parser
+# Add JSON parser and configure google tests
 #----------------------------------------------------------------------
-add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
-
-# Add googletest tests
-enable_testing()
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
+if(CMAKE_CROSSCOMPILING AND NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
+  find_package(nlohmann_json REQUIRED)
+  find_library(gtest REQUIRED)
+else()
+  add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
+  enable_testing()
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
+endif()
 
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
@@ -291,11 +314,18 @@ add_custom_command(
 
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/system/device_server.cpp"
+    "source/tests/system/enumerate_devices.cpp"
     "source/tests/system/session_utilities_service_tests.cpp"
+    "source/tests/system/nidcpower_driver_api_tests.cpp"
+    "source/tests/system/nidcpower_session_tests.cpp"
+    "source/tests/system/nidmm_driver_api_tests.cpp"
+    "source/tests/system/nidmm_session_tests.cpp"
     "source/tests/system/niscope_driver_api_tests.cpp"
     "source/tests/system/niscope_session_tests.cpp"
     "source/tests/system/niswitch_driver_api_tests.cpp"
     "source/tests/system/niswitch_session_tests.cpp"
+    "source/tests/system/nisync_driver_api_tests.cpp"
     "source/tests/system/nisync_session_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/session_repository.cpp"
@@ -314,9 +344,9 @@ target_link_libraries(SystemTestsRunner
     ${CMAKE_DL_LIBS})
 
 if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp niScope niswitch nisync)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+    target_link_libraries(SystemTestsRunner Delayimp nidcpower nidmm niScope niswitch nisync)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
 endif()
 
 # Hook up different google test runners to CTest

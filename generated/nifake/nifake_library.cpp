@@ -24,6 +24,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niFake_Abort"));
   function_pointers_.AcceptListOfDurationsInSeconds = reinterpret_cast<AcceptListOfDurationsInSecondsPtr>(shared_library_.get_function_pointer("niFake_AcceptListOfDurationsInSeconds"));
   function_pointers_.BoolArrayOutputFunction = reinterpret_cast<BoolArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayOutputFunction"));
+  function_pointers_.BoolArrayInputFunction = reinterpret_cast<BoolArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayInputFunction"));
   function_pointers_.DoubleAllTheNums = reinterpret_cast<DoubleAllTheNumsPtr>(shared_library_.get_function_pointer("niFake_DoubleAllTheNums"));
   function_pointers_.EnumArrayOutputFunction = reinterpret_cast<EnumArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_EnumArrayOutputFunction"));
   function_pointers_.EnumInputFunctionWithDefaults = reinterpret_cast<EnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
@@ -49,6 +50,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niFake_ImportAttributeConfigurationBuffer"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niFake_InitWithOptions"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niFake_Initiate"));
+  function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(shared_library_.get_function_pointer("niFake_InitExtCal"));
   function_pointers_.MultipleArrayTypes = reinterpret_cast<MultipleArrayTypesPtr>(shared_library_.get_function_pointer("niFake_MultipleArrayTypes"));
   function_pointers_.MultipleArraysSameSize = reinterpret_cast<MultipleArraysSameSizePtr>(shared_library_.get_function_pointer("niFake_MultipleArraysSameSize"));
   function_pointers_.OneInputFunction = reinterpret_cast<OneInputFunctionPtr>(shared_library_.get_function_pointer("niFake_OneInputFunction"));
@@ -70,6 +72,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.Use64BitNumber = reinterpret_cast<Use64BitNumberPtr>(shared_library_.get_function_pointer("niFake_Use64BitNumber"));
   function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("niFake_WriteWaveform"));
   function_pointers_.close = reinterpret_cast<closePtr>(shared_library_.get_function_pointer("niFake_close"));
+  function_pointers_.CloseExtCal = reinterpret_cast<CloseExtCalPtr>(shared_library_.get_function_pointer("niFake_CloseExtCal"));
   function_pointers_.error_message = reinterpret_cast<error_messagePtr>(shared_library_.get_function_pointer("niFake_error_message"));
   function_pointers_.self_test = reinterpret_cast<self_testPtr>(shared_library_.get_function_pointer("niFake_self_test"));
 }
@@ -118,6 +121,18 @@ ViStatus NiFakeLibrary::BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfEl
   return niFake_BoolArrayOutputFunction(vi, numberOfElements, anArray);
 #else
   return function_pointers_.BoolArrayOutputFunction(vi, numberOfElements, anArray);
+#endif
+}
+
+ViStatus NiFakeLibrary::BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[])
+{
+  if (!function_pointers_.BoolArrayInputFunction) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_BoolArrayInputFunction.");
+  }
+#if defined(_MSC_VER)
+  return niFake_BoolArrayInputFunction(vi, numberOfElements, anArray);
+#else
+  return function_pointers_.BoolArrayInputFunction(vi, numberOfElements, anArray);
 #endif
 }
 
@@ -378,11 +393,7 @@ ViStatus NiFakeLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 buff
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetError.");
   }
-#if defined(_MSC_VER)
-  return niFake_GetError(vi, errorCode, bufferSize, description);
-#else
   return function_pointers_.GetError(vi, errorCode, bufferSize, description);
-#endif
 }
 
 ViStatus NiFakeLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
@@ -414,10 +425,18 @@ ViStatus NiFakeLibrary::Initiate(ViSession vi)
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_Initiate.");
   }
-#if defined(_MSC_VER)
-  return niFake_Initiate(vi);
-#else
   return function_pointers_.Initiate(vi);
+}
+
+ViStatus NiFakeLibrary::InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi)
+{
+  if (!function_pointers_.InitExtCal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_InitExtCal.");
+  }
+#if defined(_MSC_VER)
+  return niFake_InitExtCal(resourceName, calibrationPassword, vi);
+#else
+  return function_pointers_.InitExtCal(resourceName, calibrationPassword, vi);
 #endif
 }
 
@@ -558,11 +577,7 @@ ViStatus NiFakeLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channe
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niFake_SetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiFakeLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
@@ -570,11 +585,7 @@ ViStatus NiFakeLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelN
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niFake_SetAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiFakeLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue)
@@ -582,11 +593,7 @@ ViStatus NiFakeLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelN
   if (!function_pointers_.SetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViInt64.");
   }
-#if defined(_MSC_VER)
-  return niFake_SetAttributeViInt64(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViInt64(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiFakeLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
@@ -594,11 +601,7 @@ ViStatus NiFakeLibrary::SetAttributeViReal64(ViSession vi, ViConstString channel
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niFake_SetAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiFakeLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue)
@@ -606,11 +609,7 @@ ViStatus NiFakeLibrary::SetAttributeViString(ViSession vi, ViConstString channel
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niFake_SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiFakeLibrary::StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName)
@@ -673,16 +672,24 @@ ViStatus NiFakeLibrary::close(ViSession vi)
 #endif
 }
 
+ViStatus NiFakeLibrary::CloseExtCal(ViSession vi, ViInt32 action)
+{
+  if (!function_pointers_.CloseExtCal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_CloseExtCal.");
+  }
+#if defined(_MSC_VER)
+  return niFake_CloseExtCal(vi, action);
+#else
+  return function_pointers_.CloseExtCal(vi, action);
+#endif
+}
+
 ViStatus NiFakeLibrary::error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
 {
   if (!function_pointers_.error_message) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_error_message.");
   }
-#if defined(_MSC_VER)
-  return niFake_error_message(vi, errorCode, errorMessage);
-#else
   return function_pointers_.error_message(vi, errorCode, errorMessage);
-#endif
 }
 
 ViStatus NiFakeLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
@@ -690,11 +697,7 @@ ViStatus NiFakeLibrary::self_test(ViSession vi, ViInt16* selfTestResult, ViChar 
   if (!function_pointers_.self_test) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_self_test.");
   }
-#if defined(_MSC_VER)
-  return niFake_self_test(vi, selfTestResult, selfTestMessage);
-#else
   return function_pointers_.self_test(vi, selfTestResult, selfTestMessage);
-#endif
 }
 
 }  // namespace nifake_grpc

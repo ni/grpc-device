@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "niswitch/niswitch_library.h"
+#include "device_server.h"
 #include "niswitch/niswitch_service.h"
 
 namespace ni {
@@ -20,15 +20,10 @@ const char* fourthChannelName = "b0c6";
 class NiSwitchDriverApiTest : public ::testing::Test {
  protected:
   NiSwitchDriverApiTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        niswitch_stub_(niswitch::NiSwitch::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    niswitch_library_ = std::make_unique<niswitch::NiSwitchLibrary>();
-    niswitch_service_ = std::make_unique<niswitch::NiSwitchService>(niswitch_library_.get(), session_repository_.get());
-    builder.RegisterService(niswitch_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStub();
+    device_server_->ResetServer();
   }
 
   virtual ~NiSwitchDriverApiTest() {}
@@ -41,12 +36,6 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   void TearDown() override
   {
     close_driver_session();
-  }
-
-  void ResetStub()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    niswitch_stub_ = niswitch::NiSwitch::NewStub(channel_);
   }
 
   std::unique_ptr<niswitch::NiSwitch::Stub>& GetStub()
@@ -215,14 +204,10 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+ private:
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<niswitch::NiSwitch::Stub> niswitch_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<niswitch::NiSwitchLibrary> niswitch_library_;
-  std::unique_ptr<niswitch::NiSwitchService> niswitch_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiSwitchDriverApiTest, NiSwitchSelfTest_SendRequest_SelfTestCompletesSuccessfully)
@@ -267,7 +252,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
   niswitch::SetAttributeViReal64Response response;
 
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
-  
+
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   ViReal64 get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
@@ -320,7 +305,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchChannelsAreUnconnected_CanConnectIsCalled_
   const niswitch::PathCapability expected_value = niswitch::PathCapability::PATH_CAPABILITY_NISWITCH_VAL_PATH_AVAILABLE;
 
   int get_path_capability = can_connect(firstChannelName, secondChannelName);
-    
+
   EXPECT_EQ(expected_value, get_path_capability);
 }
 

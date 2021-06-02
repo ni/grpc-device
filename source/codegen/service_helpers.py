@@ -1,33 +1,4 @@
 import common_helpers
-import proto_helpers
-
-RESERVED_WORDS = [
-    'abstract', 'as',
-    'base', 'bool', 'break','byte',
-    'case', 'catch', 'char', 'checked', 'class', 'const', 'continue',
-    'decimal', 'default', 'delegate', 'do', 'double',
-    'else', 'enum', 'event', 'explicit', 'extern',
-    'false', 'finally', 'fixed', 'float', 'for', 'foreach',
-    'goto',
-    'if', 'implicit', 'in', 'int', 'interface', 'internal', 'is',
-    'lock', 'long',
-    'namespace', 'new', 'null',
-    'object', 'operator', 'out', 'override',
-    'params', 'private', 'protected', 'public',
-    'readonly', 'ref', 'return',
-    'sbyte', 'sealed', 'short', 'sizeof', 'stackalloc', 'static', 'status', 'string', 'struct', 'switch',
-    'this', 'throw', 'true', 'try', 'typeof',
-    'uint', 'ulong', 'unchecked', 'unsafe', 'ushort', 'using',
-    'virtual', 'void', 'volatile',
-    'while'
-]
-
-def sanitize_names(parameters):
-    """Sanitizes name fields on a list of parameter objects and populates the cppname field with the sanitized value."""
-    for parameter in parameters:
-        parameter['cppName'] = parameter['name']
-        if parameter['cppName'] in RESERVED_WORDS:
-            parameter['cppName'] = parameter['cppName'] + 'Parameter'
 
 def get_include_guard_name(config, suffix):
     include_guard_name = config['namespace_component'] + "_grpc" + suffix
@@ -42,9 +13,11 @@ def create_args(parameters):
       parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
       is_array = common_helpers.is_array(parameter['type'])
       is_output = common_helpers.is_output_parameter(parameter)
-      if common_helpers.is_output_parameter(parameter) and is_string_arg(parameter):
-        type_without_brackets = parameter['type'].replace('[]', '')
+      if is_output and is_string_arg(parameter):
+        type_without_brackets = common_helpers.get_underlying_type_name(parameter['type'])
         result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
+      elif parameter['type'] == 'ViBoolean[]':
+        result = f'{result}{parameter_name}.data(), '
       else:
         if is_array and common_helpers.is_struct(parameter):
           parameter_name = parameter_name + ".data()"
@@ -132,8 +105,12 @@ def filter_proto_rpc_functions_to_generate(functions):
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_code_gen]
 
 def get_cname(functions, method_name, c_function_prefix):
-  if ('cname' in functions[method_name]):
+  if 'cname' in functions[method_name]:
     return functions[method_name]['cname']
-  else:
-    return c_function_prefix + method_name
+  return c_function_prefix + method_name
 
+def is_private_method(function_data):
+  return function_data.get('codegen_method', '') == 'private'
+
+def is_custom_close_method(function_data):
+  return function_data.get('custom_close_method', False)
