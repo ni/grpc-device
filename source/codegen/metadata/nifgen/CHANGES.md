@@ -30,3 +30,11 @@ The following functions were tagged with their corresponding CNAME tag
 - SelfTest
 
 Added value_twist attribute to the coefficientsArray parameter of GetFirFilterCoefficients function.
+
+The following functions removed as they are obsolete:
+- ConfigureGain
+- ConfigureRefClockFrequency
+- ConfigureRefClockSource
+- ConfigureTriggerSource
+- ConfigureUpdateClockSource
+- SendSoftwareTrigger

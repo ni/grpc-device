@@ -50,14 +50,11 @@ class NiFgenLibraryInterface {
   virtual ViStatus ConfigureDigitalLevelScriptTrigger(ViSession vi, ViConstString triggerId, ViConstString source, ViInt32 triggerWhen) = 0;
   virtual ViStatus ConfigureFreqList(ViSession vi, ViConstString channelName, ViInt32 frequencyListHandle, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 startPhase) = 0;
   virtual ViStatus ConfigureFrequency(ViSession vi, ViConstString channelName, ViReal64 frequency) = 0;
-  virtual ViStatus ConfigureGain(ViSession vi, ViConstString channelName, ViReal64 gain) = 0;
   virtual ViStatus ConfigureOperationMode(ViSession vi, ViConstString channelName, ViInt32 operationMode) = 0;
   virtual ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled) = 0;
   virtual ViStatus ConfigureOutputImpedance(ViSession vi, ViConstString channelName, ViReal64 impedance) = 0;
   virtual ViStatus ConfigureOutputMode(ViSession vi, ViInt32 outputMode) = 0;
   virtual ViStatus ConfigureP2pEndpointFullnessStartTrigger(ViSession vi, ViInt32 p2pEndpointFullnessLevel) = 0;
-  virtual ViStatus ConfigureRefClockFrequency(ViSession vi, ViReal64 referenceClockFrequency) = 0;
-  virtual ViStatus ConfigureRefClockSource(ViSession vi, ViInt32 referenceClockSource) = 0;
   virtual ViStatus ConfigureReferenceClock(ViSession vi, ViConstString referenceClockSource, ViReal64 referenceClockFrequency) = 0;
   virtual ViStatus ConfigureSampleClockSource(ViSession vi, ViConstString sampleClockSource) = 0;
   virtual ViStatus ConfigureSampleRate(ViSession vi, ViReal64 sampleRate) = 0;
@@ -66,8 +63,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus ConfigureStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveform, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 frequency, ViReal64 startPhase) = 0;
   virtual ViStatus ConfigureSynchronization(ViSession vi, ViConstString channelName, ViInt32 synchronizationSource) = 0;
   virtual ViStatus ConfigureTriggerMode(ViSession vi, ViConstString channelName, ViInt32 triggerMode) = 0;
-  virtual ViStatus ConfigureTriggerSource(ViSession vi, ViConstString channelName, ViInt32 triggerSource) = 0;
-  virtual ViStatus ConfigureUpdateClockSource(ViSession vi, ViInt32 updateClockSource) = 0;
   virtual ViStatus CreateArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32* sequenceHandle) = 0;
   virtual ViStatus CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle) = 0;
   virtual ViStatus CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle) = 0;
@@ -137,7 +132,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus RouteSignalOut(ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo) = 0;
   virtual ViStatus SelfCal(ViSession vi) = 0;
   virtual ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
-  virtual ViStatus SendSoftwareTrigger(ViSession vi) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
   virtual ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue) = 0;
