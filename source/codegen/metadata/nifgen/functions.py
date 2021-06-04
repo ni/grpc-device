@@ -726,26 +726,6 @@ functions = {
         ],
         'returns':'ViStatus'
     },
-    'ConfigureGain':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'channelName',
-                'direction':'in',
-                'type':'ViConstString'
-            },
-            {
-                'name':'gain',
-                'direction':'in',
-                'type':'ViReal64'
-            }
-        ],
-        'returns':'ViStatus'
-    },
     'ConfigureOperationMode':{
         'parameters':[
             {
@@ -831,36 +811,6 @@ functions = {
             },
             {
                 'name':'p2pEndpointFullnessLevel',
-                'direction':'in',
-                'type':'ViInt32'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'ConfigureRefClockFrequency':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'referenceClockFrequency',
-                'direction':'in',
-                'type':'ViReal64'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'ConfigureRefClockSource':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'referenceClockSource',
                 'direction':'in',
                 'type':'ViInt32'
             }
@@ -1017,41 +967,6 @@ functions = {
             },
             {
                 'name':'triggerMode',
-                'direction':'in',
-                'type':'ViInt32'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'ConfigureTriggerSource':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'channelName',
-                'direction':'in',
-                'type':'ViConstString'
-            },
-            {
-                'name':'triggerSource',
-                'direction':'in',
-                'type':'ViInt32'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'ConfigureUpdateClockSource':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'updateClockSource',
                 'direction':'in',
                 'type':'ViInt32'
             }
@@ -2511,16 +2426,6 @@ functions = {
                     'mechanism':'fixed',
                     'value':256
                 }
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'SendSoftwareTrigger':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
             }
         ],
         'returns':'ViStatus'

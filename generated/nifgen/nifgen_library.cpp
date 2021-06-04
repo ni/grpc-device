@@ -56,14 +56,11 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureDigitalLevelScriptTrigger = reinterpret_cast<ConfigureDigitalLevelScriptTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureDigitalLevelScriptTrigger"));
   function_pointers_.ConfigureFreqList = reinterpret_cast<ConfigureFreqListPtr>(shared_library_.get_function_pointer("niFgen_ConfigureFreqList"));
   function_pointers_.ConfigureFrequency = reinterpret_cast<ConfigureFrequencyPtr>(shared_library_.get_function_pointer("niFgen_ConfigureFrequency"));
-  function_pointers_.ConfigureGain = reinterpret_cast<ConfigureGainPtr>(shared_library_.get_function_pointer("niFgen_ConfigureGain"));
   function_pointers_.ConfigureOperationMode = reinterpret_cast<ConfigureOperationModePtr>(shared_library_.get_function_pointer("niFgen_ConfigureOperationMode"));
   function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_.get_function_pointer("niFgen_ConfigureOutputEnabled"));
   function_pointers_.ConfigureOutputImpedance = reinterpret_cast<ConfigureOutputImpedancePtr>(shared_library_.get_function_pointer("niFgen_ConfigureOutputImpedance"));
   function_pointers_.ConfigureOutputMode = reinterpret_cast<ConfigureOutputModePtr>(shared_library_.get_function_pointer("niFgen_ConfigureOutputMode"));
   function_pointers_.ConfigureP2pEndpointFullnessStartTrigger = reinterpret_cast<ConfigureP2pEndpointFullnessStartTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureP2PEndpointFullnessStartTrigger"));
-  function_pointers_.ConfigureRefClockFrequency = reinterpret_cast<ConfigureRefClockFrequencyPtr>(shared_library_.get_function_pointer("niFgen_ConfigureRefClockFrequency"));
-  function_pointers_.ConfigureRefClockSource = reinterpret_cast<ConfigureRefClockSourcePtr>(shared_library_.get_function_pointer("niFgen_ConfigureRefClockSource"));
   function_pointers_.ConfigureReferenceClock = reinterpret_cast<ConfigureReferenceClockPtr>(shared_library_.get_function_pointer("niFgen_ConfigureReferenceClock"));
   function_pointers_.ConfigureSampleClockSource = reinterpret_cast<ConfigureSampleClockSourcePtr>(shared_library_.get_function_pointer("niFgen_ConfigureSampleClockSource"));
   function_pointers_.ConfigureSampleRate = reinterpret_cast<ConfigureSampleRatePtr>(shared_library_.get_function_pointer("niFgen_ConfigureSampleRate"));
@@ -72,8 +69,6 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureStandardWaveform = reinterpret_cast<ConfigureStandardWaveformPtr>(shared_library_.get_function_pointer("niFgen_ConfigureStandardWaveform"));
   function_pointers_.ConfigureSynchronization = reinterpret_cast<ConfigureSynchronizationPtr>(shared_library_.get_function_pointer("niFgen_ConfigureSynchronization"));
   function_pointers_.ConfigureTriggerMode = reinterpret_cast<ConfigureTriggerModePtr>(shared_library_.get_function_pointer("niFgen_ConfigureTriggerMode"));
-  function_pointers_.ConfigureTriggerSource = reinterpret_cast<ConfigureTriggerSourcePtr>(shared_library_.get_function_pointer("niFgen_ConfigureTriggerSource"));
-  function_pointers_.ConfigureUpdateClockSource = reinterpret_cast<ConfigureUpdateClockSourcePtr>(shared_library_.get_function_pointer("niFgen_ConfigureUpdateClockSource"));
   function_pointers_.CreateArbSequence = reinterpret_cast<CreateArbSequencePtr>(shared_library_.get_function_pointer("niFgen_CreateArbSequence"));
   function_pointers_.CreateFreqList = reinterpret_cast<CreateFreqListPtr>(shared_library_.get_function_pointer("niFgen_CreateFreqList"));
   function_pointers_.CreateWaveformF64 = reinterpret_cast<CreateWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformF64"));
@@ -143,7 +138,6 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.RouteSignalOut = reinterpret_cast<RouteSignalOutPtr>(shared_library_.get_function_pointer("niFgen_RouteSignalOut"));
   function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_.get_function_pointer("niFgen_SelfCal"));
   function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niFgen_self_test"));
-  function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_.get_function_pointer("niFgen_SendSoftwareTrigger"));
   function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFgen_SetAttributeViBoolean"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFgen_SetAttributeViInt32"));
   function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFgen_SetAttributeViInt64"));
@@ -592,18 +586,6 @@ ViStatus NiFgenLibrary::ConfigureFrequency(ViSession vi, ViConstString channelNa
 #endif
 }
 
-ViStatus NiFgenLibrary::ConfigureGain(ViSession vi, ViConstString channelName, ViReal64 gain)
-{
-  if (!function_pointers_.ConfigureGain) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureGain.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_ConfigureGain(vi, channelName, gain);
-#else
-  return function_pointers_.ConfigureGain(vi, channelName, gain);
-#endif
-}
-
 ViStatus NiFgenLibrary::ConfigureOperationMode(ViSession vi, ViConstString channelName, ViInt32 operationMode)
 {
   if (!function_pointers_.ConfigureOperationMode) {
@@ -661,30 +643,6 @@ ViStatus NiFgenLibrary::ConfigureP2pEndpointFullnessStartTrigger(ViSession vi, V
   return niFgen_ConfigureP2PEndpointFullnessStartTrigger(vi, p2pEndpointFullnessLevel);
 #else
   return function_pointers_.ConfigureP2pEndpointFullnessStartTrigger(vi, p2pEndpointFullnessLevel);
-#endif
-}
-
-ViStatus NiFgenLibrary::ConfigureRefClockFrequency(ViSession vi, ViReal64 referenceClockFrequency)
-{
-  if (!function_pointers_.ConfigureRefClockFrequency) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureRefClockFrequency.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_ConfigureRefClockFrequency(vi, referenceClockFrequency);
-#else
-  return function_pointers_.ConfigureRefClockFrequency(vi, referenceClockFrequency);
-#endif
-}
-
-ViStatus NiFgenLibrary::ConfigureRefClockSource(ViSession vi, ViInt32 referenceClockSource)
-{
-  if (!function_pointers_.ConfigureRefClockSource) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureRefClockSource.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_ConfigureRefClockSource(vi, referenceClockSource);
-#else
-  return function_pointers_.ConfigureRefClockSource(vi, referenceClockSource);
 #endif
 }
 
@@ -781,30 +739,6 @@ ViStatus NiFgenLibrary::ConfigureTriggerMode(ViSession vi, ViConstString channel
   return niFgen_ConfigureTriggerMode(vi, channelName, triggerMode);
 #else
   return function_pointers_.ConfigureTriggerMode(vi, channelName, triggerMode);
-#endif
-}
-
-ViStatus NiFgenLibrary::ConfigureTriggerSource(ViSession vi, ViConstString channelName, ViInt32 triggerSource)
-{
-  if (!function_pointers_.ConfigureTriggerSource) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureTriggerSource.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_ConfigureTriggerSource(vi, channelName, triggerSource);
-#else
-  return function_pointers_.ConfigureTriggerSource(vi, channelName, triggerSource);
-#endif
-}
-
-ViStatus NiFgenLibrary::ConfigureUpdateClockSource(ViSession vi, ViInt32 updateClockSource)
-{
-  if (!function_pointers_.ConfigureUpdateClockSource) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureUpdateClockSource.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_ConfigureUpdateClockSource(vi, updateClockSource);
-#else
-  return function_pointers_.ConfigureUpdateClockSource(vi, updateClockSource);
 #endif
 }
 
@@ -1633,18 +1567,6 @@ ViStatus NiFgenLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar s
   return niFgen_self_test(vi, selfTestResult, selfTestMessage);
 #else
   return function_pointers_.SelfTest(vi, selfTestResult, selfTestMessage);
-#endif
-}
-
-ViStatus NiFgenLibrary::SendSoftwareTrigger(ViSession vi)
-{
-  if (!function_pointers_.SendSoftwareTrigger) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SendSoftwareTrigger.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_SendSoftwareTrigger(vi);
-#else
-  return function_pointers_.SendSoftwareTrigger(vi);
 #endif
 }
 
