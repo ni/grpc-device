@@ -85,7 +85,10 @@ functions = {
                 'type': 'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
+        'proto_values': {
+            'attribute_value': 5
+        }
     },
     'CheckAttributeViReal64': {
         'parameters': [
@@ -1130,7 +1133,10 @@ functions = {
                 'type': 'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
+        'proto_values': {
+            'attribute_value': 5
+        }
     },
     'SetAttributeViReal64': {
         'parameters': [

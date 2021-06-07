@@ -390,8 +390,8 @@ message CheckAttributeViInt32Request {
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
   oneof attribute_value_enum {
-    NiSwitchInt32AttributeValues attribute_value = 4;
-    sint32 attribute_value_raw = 5;
+    NiSwitchInt32AttributeValues attribute_value = 5;
+    sint32 attribute_value_raw = 4;
   }
 }
 
@@ -912,8 +912,8 @@ message SetAttributeViInt32Request {
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
   oneof attribute_value_enum {
-    NiSwitchInt32AttributeValues attribute_value = 4;
-    sint32 attribute_value_raw = 5;
+    NiSwitchInt32AttributeValues attribute_value = 5;
+    sint32 attribute_value_raw = 4;
   }
 }
 

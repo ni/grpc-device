@@ -910,8 +910,8 @@ message CheckAttributeViInt32Request {
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   oneof value_enum {
-    NiScopeInt32AttributeValues value = 4;
-    sint32 value_raw = 5;
+    NiScopeInt32AttributeValues value = 5;
+    sint32 value_raw = 4;
   }
 }
 
@@ -924,8 +924,8 @@ message CheckAttributeViInt64Request {
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   oneof value_enum {
-    NiScopeInt64AttributeValues value = 4;
-    int64 value_raw = 5;
+    NiScopeInt64AttributeValues value = 5;
+    int64 value_raw = 4;
   }
 }
 
@@ -938,8 +938,8 @@ message CheckAttributeViReal64Request {
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   oneof value_enum {
-    NiScopeReal64AttributeValues value = 4;
-    double value_raw = 5;
+    NiScopeReal64AttributeValues value = 5;
+    double value_raw = 4;
   }
 }
 
@@ -1804,8 +1804,8 @@ message SetAttributeViInt32Request {
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   oneof value_enum {
-    NiScopeInt32AttributeValues value = 4;
-    sint32 value_raw = 5;
+    NiScopeInt32AttributeValues value = 5;
+    sint32 value_raw = 4;
   }
 }
 
@@ -1818,8 +1818,8 @@ message SetAttributeViInt64Request {
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   oneof value_enum {
-    NiScopeInt64AttributeValues value = 4;
-    int64 value_raw = 5;
+    NiScopeInt64AttributeValues value = 5;
+    int64 value_raw = 4;
   }
 }
 
@@ -1832,8 +1832,8 @@ message SetAttributeViReal64Request {
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
   oneof value_enum {
-    NiScopeReal64AttributeValues value = 4;
-    double value_raw = 5;
+    NiScopeReal64AttributeValues value = 5;
+    double value_raw = 4;
   }
 }
 

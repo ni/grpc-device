@@ -94,3 +94,7 @@ with the session_repository.
 - `init`
 - `InitWithOptions`
 - `InitWithTopology`
+
+The following functions were given a field `proto_values`
+- `CheckAttributeViInt32`
+- `SetAttributeViInt32`

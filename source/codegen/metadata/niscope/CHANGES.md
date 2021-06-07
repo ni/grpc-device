@@ -179,6 +179,14 @@ The following functions were given a field `grpc_type`:
 - `FetchBinary8`
 - `Read`
 
+The following functions were given a field `proto_values`
+- `CheckAttributeViInt32`
+- `CheckAttributeViInt64`
+- `CheckAttributeViReal64`
+- `SetAttributeViInt32`
+- `SetAttributeViInt64`
+- `SetAttributeViReal64`
+
 The following functions were changed from `public` to `CustomCode` to indicate their service handlers won't be generated and instead
 should be implemented by hand in niscope_service.custom.cpp.
 - `Fetch`

@@ -277,7 +277,10 @@ functions = {
                 'type':'ViInt32'
             }
         ],
-        'returns':'ViStatus'
+        'returns':'ViStatus',
+        'proto_values': {
+            'value': 5
+        }
     },
     'CheckAttributeViInt64':{
         'parameters':[
@@ -302,7 +305,10 @@ functions = {
                 'type':'ViInt64'
             }
         ],
-        'returns':'ViStatus'
+        'returns':'ViStatus',
+        'proto_values': {
+            'value': 5
+        }
     },
     'CheckAttributeViReal64':{
         'parameters':[
@@ -327,7 +333,10 @@ functions = {
                 'type':'ViReal64'
             }
         ],
-        'returns':'ViStatus'
+        'returns':'ViStatus',
+        'proto_values': {
+            'value': 5
+        }
     },
     'CheckAttributeViSession':{
         'parameters':[
@@ -2488,7 +2497,10 @@ functions = {
                 'type': 'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus',
+        'proto_values': {
+            'value': 5
+        }
     },
     'SetAttributeViInt64': {
         'codegen_method': 'public',
@@ -2514,7 +2526,10 @@ functions = {
                 'type': 'ViInt64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus',
+        'proto_values': {
+            'value': 5
+        }
     },
     'SetAttributeViReal64': {
         'codegen_method': 'public',
@@ -2540,7 +2555,10 @@ functions = {
                 'type': 'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus',
+        'proto_values': {
+            'value': 5
+        }
     },
     'SetAttributeViSession':{
         'parameters':[
