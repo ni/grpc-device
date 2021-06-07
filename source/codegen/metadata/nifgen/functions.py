@@ -973,6 +973,73 @@ functions = {
         ],
         'returns':'ViStatus'
     },
+    
+    'CreateAdvancedArbSequence':{
+        'codegen_method': 'CustomCode',
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'sequenceLength',
+                'direction':'in',
+                'type':'ViInt32'
+            },
+            {
+                'name':'waveformHandlesArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
+            },
+            {
+                'name':'loopCountsArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
+            },
+            {
+                'name':'sampleCountsArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
+            },
+            {
+                'name':'markerLocationArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
+            },
+            {
+                'name':'coercedMarkersArray',
+                'direction':'out',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'custom-code',
+                    'value':'sequenceLength'
+                }
+            },
+            {
+                'name':'sequenceHandle',
+                'direction':'out',
+                'type':'ViInt32'
+            }
+        ],
+        'returns':'ViStatus'
+    },
     'CreateArbSequence':{
         'parameters':[
             {
@@ -1386,6 +1453,30 @@ functions = {
         ],
         'returns':'ViStatus'
     },
+    'ErrorHandler':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'errorCode',
+                'direction':'in',
+                'type':'ViStatus'
+            },
+            {
+                'name':'errorMessage',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'fixed',
+                    'value':256
+                }
+            }
+        ],
+        'returns':'ViStatus'
+     },
     'ErrorMessage':{
         'cname' : 'niFgen_error_message',
         'parameters':[
