@@ -61,6 +61,7 @@ service NiFake {
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
   rpc ReturnListOfDurationsInSeconds(ReturnListOfDurationsInSecondsRequest) returns (ReturnListOfDurationsInSecondsResponse);
   rpc ReturnMultipleTypes(ReturnMultipleTypesRequest) returns (ReturnMultipleTypesResponse);
+  rpc SetCustomTypeArray(SetCustomTypeArrayRequest) returns (SetCustomTypeArrayResponse);
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
   rpc TwoInputFunction(TwoInputFunctionRequest) returns (TwoInputFunctionResponse);
   rpc Use64BitNumber(Use64BitNumberRequest) returns (Use64BitNumberResponse);
@@ -606,6 +607,15 @@ message ReturnMultipleTypesResponse {
   double a_float_enum_raw = 9;
   repeated double an_array = 10;
   string a_string = 11;
+}
+
+message SetCustomTypeArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  repeated FakeCustomStruct cs = 2;
+}
+
+message SetCustomTypeArrayResponse {
+  int32 status = 1;
 }
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {

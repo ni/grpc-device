@@ -73,6 +73,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFake_SetAttributeViInt64"));
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFake_SetAttributeViReal64"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niFake_SetAttributeViString"));
+  function_pointers_.SetCustomTypeArray = reinterpret_cast<SetCustomTypeArrayPtr>(shared_library_.get_function_pointer("niFake_SetCustomTypeArray"));
   function_pointers_.StringValuedEnumInputFunctionWithDefaults = reinterpret_cast<StringValuedEnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_StringValuedEnumInputFunctionWithDefaults"));
   function_pointers_.TwoInputFunction = reinterpret_cast<TwoInputFunctionPtr>(shared_library_.get_function_pointer("niFake_TwoInputFunction"));
   function_pointers_.Use64BitNumber = reinterpret_cast<Use64BitNumberPtr>(shared_library_.get_function_pointer("niFake_Use64BitNumber"));
@@ -690,6 +691,18 @@ ViStatus NiFakeLibrary::SetAttributeViString(ViSession vi, ViConstString channel
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViString.");
   }
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
+}
+
+ViStatus NiFakeLibrary::SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[])
+{
+  if (!function_pointers_.SetCustomTypeArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetCustomTypeArray.");
+  }
+#if defined(_MSC_VER)
+  return niFake_SetCustomTypeArray(vi, numberOfElements, cs);
+#else
+  return function_pointers_.SetCustomTypeArray(vi, numberOfElements, cs);
+#endif
 }
 
 ViStatus NiFakeLibrary::StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName)
