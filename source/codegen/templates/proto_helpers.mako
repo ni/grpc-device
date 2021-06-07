@@ -30,7 +30,7 @@ enum ${service_class_prefix}Attributes {
 <%
   enum = enums[enum_name]
   enum_value_prefix = enum.get("enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper())
-  allow_alias = proto_helpers.should_allow_alias(enum)
+  allow_alias = enum.get("allow-alias", proto_helpers.should_allow_alias(enum))
   nonint_index = 1
 %>\
 enum ${enum_name} {

@@ -464,22 +464,15 @@ namespace niscope_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value;
       switch (request->value_enum_case()) {
-        case CheckAttributeViReal64Request::ValueEnumCase::kValue: {
-          auto value_imap_it = niscopereal64attributevalues_input_map_.find(request->value());
-          if (value_imap_it == niscopereal64attributevalues_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range.");
-          }
-          value = static_cast<ViReal64>(value_imap_it->second);
+        case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValue:
+          value = (ViReal64)request->value();
           break;
-        }
-        case CheckAttributeViReal64Request::ValueEnumCase::kValueRaw: {
-          value = static_cast<ViReal64>(request->value_raw());
+        case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueRaw:
+          value = (ViReal64)request->value_raw();
           break;
-        } 
-        case CheckAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+        case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
           break;
-        }
       }
 
       auto status = library_->CheckAttributeViReal64(vi, channel_list, attribute_id, value);
@@ -526,26 +519,7 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViConstString value;
-      switch (request->value_enum_case()) {
-        case CheckAttributeViStringRequest::ValueEnumCase::kValue: {
-          auto value_imap_it = niscopestringattributevalues_input_map_.find(request->value());
-          if (value_imap_it == niscopestringattributevalues_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range.");
-          }
-          value = const_cast<ViConstString>((value_imap_it->second).c_str());
-          break;
-        }
-        case CheckAttributeViStringRequest::ValueEnumCase::kValueRaw: {
-          value = const_cast<ViConstString>((request->value_raw()).c_str());
-          break;
-        } 
-        case CheckAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-          break;
-        }
-      }
-
+      ViConstString value = request->value_raw().c_str();
       auto status = library_->CheckAttributeViString(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2239,22 +2213,15 @@ namespace niscope_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value;
       switch (request->value_enum_case()) {
-        case SetAttributeViReal64Request::ValueEnumCase::kValue: {
-          auto value_imap_it = niscopereal64attributevalues_input_map_.find(request->value());
-          if (value_imap_it == niscopereal64attributevalues_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range.");
-          }
-          value = static_cast<ViReal64>(value_imap_it->second);
+        case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue:
+          value = (ViReal64)request->value();
           break;
-        }
-        case SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {
-          value = static_cast<ViReal64>(request->value_raw());
+        case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueRaw:
+          value = (ViReal64)request->value_raw();
           break;
-        } 
-        case SetAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+        case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET:
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
           break;
-        }
       }
 
       auto status = library_->SetAttributeViReal64(vi, channel_list, attribute_id, value);
@@ -2301,26 +2268,7 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViConstString value;
-      switch (request->value_enum_case()) {
-        case SetAttributeViStringRequest::ValueEnumCase::kValue: {
-          auto value_imap_it = niscopestringattributevalues_input_map_.find(request->value());
-          if (value_imap_it == niscopestringattributevalues_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range.");
-          }
-          value = const_cast<ViConstString>((value_imap_it->second).c_str());
-          break;
-        }
-        case SetAttributeViStringRequest::ValueEnumCase::kValueRaw: {
-          value = const_cast<ViConstString>((request->value_raw()).c_str());
-          break;
-        } 
-        case SetAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-          break;
-        }
-      }
-
+      ViConstString value = request->value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;

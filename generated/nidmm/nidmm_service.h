@@ -131,10 +131,6 @@ public:
 private:
   NiDmmLibraryInterface* library_;
   nidevice_grpc::SessionRepository* session_repository_;
-  std::map<std::int32_t, double> nidmmreal64attributevalues_input_map_ { {0, 0},{1, -1},{2, 1},{3, 5},{4, 6},{5, 10},{6, 12},{7, 100},{8, 120},{9, -1},{10, -2},{11, 50},{12, 60},{13, -1},{14, -2},{15, -3},{16, -1},{17, -1},{18, -1},{19, -2}, };
-  std::map<double, std::int32_t> nidmmreal64attributevalues_output_map_ { {0, 0},{-1, 1},{1, 2},{5, 3},{6, 4},{10, 5},{12, 6},{100, 7},{120, 8},{-1, 9},{-2, 10},{50, 11},{60, 12},{-1, 13},{-2, 14},{-3, 15},{-1, 16},{-1, 17},{-1, 18},{-2, 19}, };
-  std::map<std::int32_t, std::string> nidmmstringattributevalues_input_map_ {  };
-  std::map<std::string, std::int32_t> nidmmstringattributevalues_output_map_ {  };
 };
 
 } // namespace nidmm_grpc

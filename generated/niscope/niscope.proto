@@ -752,13 +752,10 @@ enum NiScopeInt64AttributeValues {
 }
 
 enum NiScopeReal64AttributeValues {
+  option allow_alias = true;
   NISCOPE_REAL64_UNSPECIFIED = 0;
-  NISCOPE_REAL64_CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_DISABLED = 1;
-  NISCOPE_REAL64_CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_ON_DEMAND = 2;
-}
-
-enum NiScopeStringAttributeValues {
-  NISCOPE_STRING_UNSPECIFIED = 0;
+  NISCOPE_REAL64_CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_DISABLED = 0;
+  NISCOPE_REAL64_CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_ON_DEMAND = 1;
 }
 
 message WaveformInfo {
@@ -965,10 +962,7 @@ message CheckAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
-  oneof value_enum {
-    NiScopeStringAttributeValues value = 4;
-    string value_raw = 5;
-  }
+  string value_raw = 4;
 }
 
 message CheckAttributeViStringResponse {
@@ -1862,10 +1856,7 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttributes attribute_id = 3;
-  oneof value_enum {
-    NiScopeStringAttributeValues value = 4;
-    string value_raw = 5;
-  }
+  string value_raw = 4;
 }
 
 message SetAttributeViStringResponse {

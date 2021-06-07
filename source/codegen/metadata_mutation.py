@@ -53,37 +53,31 @@ def get_size_param(param, parameters):
 
 def add_attribute_values_enums(enums, attribute_enums, service_class_prefix):
     """Update enums metadata to add new enums that will be used by SetAttribute* APIs."""
-    mapping_types = {
-        'ViReal64': 'double',
-        'ViString': 'std::string'
-    }
     for type_name in attribute_enums:
         values_to_create = {}
         for enum_name in sorted(attribute_enums[type_name]):
             enum = enums[enum_name]
+            if(enum.get("generate-mappings", False)):
+                continue
             for value in enum["values"]:
                 value_name = value['name'].replace(f"{service_class_prefix.upper()}_", f"{common_helpers.pascal_to_snake(enum_name).upper()}_")
                 value_value = value["value"]
                 values_to_create[value_name] = value_value
-        type_enum_name = get_attribute_values_enum_name(service_class_prefix, type_name)
+        if(not values_to_create):
+            continue
         enum_value_prefix = (f"{service_class_prefix}_{type_name[2:]}").upper()
-        generate_mappings = type_name in mapping_types
-        allow_alias = False
-        if not generate_mappings:
-            enum_values = values_to_create.values()
-            allow_alias = len(enum_values) != len(set(enum_values))
+        enum_values = values_to_create.values()
+        allow_alias = (0 in enum_values) or (len(enum_values) != len(set(enum_values)))
         values = [{"name": name, "value": values_to_create[name]} for name in values_to_create]
         new_enum = {
             'enum-value-prefix': enum_value_prefix,
-            'generate-mappings': generate_mappings,
-            'allow_alias': allow_alias,
+            'allow-alias': allow_alias,
             'values': values
         }
-        if generate_mappings:
-            new_enum['value-type'] = mapping_types[type_name]
+        type_enum_name = get_attribute_values_enum_name(service_class_prefix, type_name)
         enums.update({type_enum_name: new_enum})
     
-def mark_attr_value_param_if_required(function, attribute_enums, service_class_prefix):
+def mark_attr_value_param_if_required(function, enums, attribute_enums, service_class_prefix):
     """For SetAttribute* and CheckAttribute* APIs, update function metadata to mark attribute_value parameter as enum."""
     attribute_value_param = next((param for param in function["parameters"] if param["name"] in {"value", "attributeValue"}), None)
     if attribute_value_param["type"] == "ViConstString":
@@ -91,7 +85,13 @@ def mark_attr_value_param_if_required(function, attribute_enums, service_class_p
     else:
         enum_type = attribute_value_param["type"]
     if attribute_value_param != None and enum_type in attribute_enums:
-        attribute_value_param['enum'] = get_attribute_values_enum_name(service_class_prefix, enum_type)
+        enum_name = get_attribute_values_enum_name(service_class_prefix, enum_type)
+        if(enum_name in enums):
+            attribute_value_param['enum'] = enum_name
+        else:
+            # Ideally there must be an enum associated with this parameter for this SetAttribute* API.
+            # Since the enum is empty, users will be passing in raw values. Make it clear via naming.
+            attribute_value_param['name'] = attribute_value_param['name'] + "_raw"
 
 def get_attribute_values_enum_name(service_class_prefix, type):
     return service_class_prefix + type[2:] + "AttributeValues"

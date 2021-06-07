@@ -111,23 +111,6 @@ enum NiFakeInt32AttributeValues {
   NIFAKE_INT32_BLACK = 42;
 }
 
-enum NiFakeInt64AttributeValues {
-  NIFAKE_INT64_UNSPECIFIED = 0;
-}
-
-enum NiFakeReal64AttributeValues {
-  NIFAKE_REAL64_UNSPECIFIED = 0;
-  NIFAKE_REAL64_THREE_POINT_FIVE = 1;
-  NIFAKE_REAL64_FOUR_POINT_FIVE = 2;
-  NIFAKE_REAL64_FIVE_POINT_FIVE = 3;
-  NIFAKE_REAL64_SIX_POINT_FIVE = 4;
-  NIFAKE_REAL64_SEVEN_POINT_FIVE = 5;
-}
-
-enum NiFakeStringAttributeValues {
-  NIFAKE_STRING_UNSPECIFIED = 0;
-}
-
 message FakeCustomStruct {
   sint32 struct_int = 1;
   double struct_double = 2;

@@ -354,14 +354,6 @@ enum NiSwitchInt32AttributeValues {
   NISWITCH_INT32_WIRE_MODE_VAL_4_WIRE = 4;
 }
 
-enum NiSwitchReal64AttributeValues {
-  NISWITCH_REAL64_UNSPECIFIED = 0;
-}
-
-enum NiSwitchStringAttributeValues {
-  NISWITCH_STRING_UNSPECIFIED = 0;
-}
-
 message AbortScanRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -411,10 +403,7 @@ message CheckAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
-  oneof attribute_value_enum {
-    NiSwitchReal64AttributeValues attribute_value = 4;
-    double attribute_value_raw = 5;
-  }
+  double attribute_value_raw = 4;
 }
 
 message CheckAttributeViReal64Response {
@@ -425,10 +414,7 @@ message CheckAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
-  oneof attribute_value_enum {
-    NiSwitchStringAttributeValues attribute_value = 4;
-    string attribute_value_raw = 5;
-  }
+  string attribute_value_raw = 4;
 }
 
 message CheckAttributeViStringResponse {
@@ -939,10 +925,7 @@ message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
-  oneof attribute_value_enum {
-    NiSwitchReal64AttributeValues attribute_value = 4;
-    double attribute_value_raw = 5;
-  }
+  double attribute_value_raw = 4;
 }
 
 message SetAttributeViReal64Response {
@@ -953,10 +936,7 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiSwitchAttributes attribute_id = 3;
-  oneof attribute_value_enum {
-    NiSwitchStringAttributeValues attribute_value = 4;
-    string attribute_value_raw = 5;
-  }
+  string attribute_value_raw = 4;
 }
 
 message SetAttributeViStringResponse {

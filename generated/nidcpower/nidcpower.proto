@@ -491,18 +491,10 @@ enum NiDCPowerInt32AttributeValues {
   NIDCPOWER_INT32_TRIGGER_TYPE_VAL_SOFTWARE_EDGE = 1015;
 }
 
-enum NiDCPowerInt64AttributeValues {
-  NIDCPOWER_INT64_UNSPECIFIED = 0;
-}
-
 enum NiDCPowerReal64AttributeValues {
   NIDCPOWER_REAL64_UNSPECIFIED = 0;
-  NIDCPOWER_REAL64_POWER_LINE_FREQUENCIES_VAL_50_HERTZ = 1;
-  NIDCPOWER_REAL64_POWER_LINE_FREQUENCIES_VAL_60_HERTZ = 2;
-}
-
-enum NiDCPowerStringAttributeValues {
-  NIDCPOWER_STRING_UNSPECIFIED = 0;
+  NIDCPOWER_REAL64_POWER_LINE_FREQUENCIES_VAL_50_HERTZ = 50;
+  NIDCPOWER_REAL64_POWER_LINE_FREQUENCIES_VAL_60_HERTZ = 60;
 }
 
 message AbortWithChannelsRequest {
@@ -1995,10 +1987,7 @@ message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDCPowerAttributes attribute_id = 3;
-  oneof attribute_value_enum {
-    NiDCPowerInt64AttributeValues attribute_value = 4;
-    int64 attribute_value_raw = 5;
-  }
+  int64 attribute_value_raw = 4;
 }
 
 message SetAttributeViInt64Response {
@@ -2034,10 +2023,7 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDCPowerAttributes attribute_id = 3;
-  oneof attribute_value_enum {
-    NiDCPowerStringAttributeValues attribute_value = 4;
-    string attribute_value_raw = 5;
-  }
+  string attribute_value_raw = 4;
 }
 
 message SetAttributeViStringResponse {

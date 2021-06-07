@@ -125,10 +125,6 @@ private:
   void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexNumber>* output);
   void Copy(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output);
   void Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexInt32>* output);
-  std::map<std::int32_t, double> niscopereal64attributevalues_input_map_ { {0, 0},{1, 0},{2, 1}, };
-  std::map<double, std::int32_t> niscopereal64attributevalues_output_map_ { {0, 0},{0, 1},{1, 2}, };
-  std::map<std::int32_t, std::string> niscopestringattributevalues_input_map_ {  };
-  std::map<std::string, std::int32_t> niscopestringattributevalues_output_map_ {  };
 };
 
 } // namespace niscope_grpc
