@@ -70,6 +70,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  ViStatus SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName);
   ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString);
   ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output);
@@ -134,6 +135,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using SetAttributeViInt64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
   using SetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  using SetCustomTypeArrayPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   using StringValuedEnumInputFunctionWithDefaultsPtr = ViStatus (*)(ViSession vi, ViConstString aMobileOSName);
   using TwoInputFunctionPtr = ViStatus (*)(ViSession vi, ViReal64 aNumber, ViString aString);
   using Use64BitNumberPtr = ViStatus (*)(ViSession vi, ViInt64 input, ViInt64* output);
@@ -198,6 +200,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     SetAttributeViInt64Ptr SetAttributeViInt64;
     SetAttributeViReal64Ptr SetAttributeViReal64;
     SetAttributeViStringPtr SetAttributeViString;
+    SetCustomTypeArrayPtr SetCustomTypeArray;
     StringValuedEnumInputFunctionWithDefaultsPtr StringValuedEnumInputFunctionWithDefaults;
     TwoInputFunctionPtr TwoInputFunction;
     Use64BitNumberPtr Use64BitNumber;
