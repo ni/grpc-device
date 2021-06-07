@@ -54,6 +54,23 @@ namespace nifake_grpc {
     }
   }
 
+   CustomStruct NiFakeService::ConvertMessage(const nifake_grpc::FakeCustomStruct& input) 
+  {
+    CustomStruct* output = new CustomStruct();  
+    output->structInt = input.struct_int();
+    output->structDouble = input.struct_double();
+    return *output;
+  }
+
+  void NiFakeService::Copy(const google::protobuf::RepeatedPtrField<nifake_grpc::FakeCustomStruct>& input, std::vector<CustomStruct>* output)
+  {
+    std::transform(
+        input.begin(),
+        input.end(),
+        std::back_inserter(*output),
+        [&](nifake_grpc::FakeCustomStruct x) { return ConvertMessage(x); });
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
