@@ -875,7 +875,19 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 output_mode = request->output_mode();
+      ViInt32 output_mode;
+      switch (request->output_mode_enum_case()) {
+        case nifgen_grpc::ConfigureOutputModeRequest::OutputModeEnumCase::kOutputMode:
+          output_mode = (ViInt32)request->output_mode();
+          break;
+        case nifgen_grpc::ConfigureOutputModeRequest::OutputModeEnumCase::kOutputModeRaw:
+          output_mode = (ViInt32)request->output_mode_raw();
+          break;
+        case nifgen_grpc::ConfigureOutputModeRequest::OutputModeEnumCase::OUTPUT_MODE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_mode was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureOutputMode(vi, output_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
