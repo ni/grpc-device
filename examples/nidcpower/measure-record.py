@@ -89,7 +89,7 @@ try :
     configure_measure_when = client.SetAttributeViInt32(nidcpower_types.SetAttributeViInt32Request(
         vi = vi,
         attribute_id = nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
-        attribute_value = nidcpower_types.MeasureWhen.MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE
+        attribute_value = nidcpower_types.NiDCPowerInt32AttributeValues.NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE
     ))
     CheckForError(vi, configure_measure_when.status)
 

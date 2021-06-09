@@ -348,7 +348,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt32Attribute_SendRequest_GetViInt32At
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
-  request.set_value(expected_value);
+  request.set_value_raw(expected_value);
   scope::SetAttributeViInt32Response response;
 
   ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
@@ -371,7 +371,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt64At
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
-  request.set_value(expected_value);
+  request.set_value_raw(expected_value);
   scope::SetAttributeViInt64Response response;
 
   ::grpc::Status status = GetStub()->SetAttributeViInt64(&context, request, &response);
@@ -392,7 +392,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViReal64Attribute_SendRequest_GetViReal64
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
-  request.set_value(expected_value);
+  request.set_value_raw(expected_value);
   scope::SetAttributeViReal64Response response;
 
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
@@ -413,7 +413,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViStringAttribute_SendRequest_GetViString
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
-  request.set_value(expected_value);
+  request.set_value_raw(expected_value);
   scope::SetAttributeViStringResponse response;
 
   ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
