@@ -69,12 +69,12 @@ def CheckForError (vi, status) :
 
 # Converts an error code returned by NI-FGEN into a user-readable string.
 def ThrowOnError (vi, error_code):
-    error_message_request = nifgen_types.ErrorMessageRequest(
+    error_handler_request = nifgen_types.ErrorHandlerRequest(
         vi = vi,
         error_code = error_code
     )
-    error_message_response = nifgen_service.ErrorMessage(error_message_request)
-    raise Exception (error_message_response.error_message)
+    error_handler_response = nifgen_service.ErrorHandler(error_handler_request)
+    raise Exception (error_handler_response.error_message)
 
 try:
     # Initalize NI-FGEN session
