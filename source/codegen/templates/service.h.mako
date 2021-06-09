@@ -7,7 +7,6 @@ enums = data['enums']
 config = data['config']
 functions = data['functions']
 
-used_enums = common_helpers.get_used_enums(functions, attributes)
 enums_to_map = [e for e in enums if e in enums and enums[e].get("generate-mappings", False)]
 service_class_prefix = config["service_class_prefix"]
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")

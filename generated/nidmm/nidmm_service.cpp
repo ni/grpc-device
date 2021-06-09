@@ -262,7 +262,19 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViInt32 attribute_value = request->attribute_value();
+      ViInt32 attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nidmm_grpc::CheckAttributeViInt32Request::AttributeValueEnumCase::kAttributeValue:
+          attribute_value = (ViInt32)request->attribute_value();
+          break;
+        case nidmm_grpc::CheckAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw:
+          attribute_value = (ViInt32)request->attribute_value_raw();
+          break;
+        case nidmm_grpc::CheckAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+      }
+
       auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -284,7 +296,19 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViReal64 attribute_value = request->attribute_value();
+      ViReal64 attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nidmm_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue:
+          attribute_value = (ViReal64)request->attribute_value();
+          break;
+        case nidmm_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw:
+          attribute_value = (ViReal64)request->attribute_value_raw();
+          break;
+        case nidmm_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+      }
+
       auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -329,7 +353,7 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViString attribute_value = (ViString)request->attribute_value().c_str();
+      ViString attribute_value = (ViString)request->attribute_value_raw().c_str();
       auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, attribute_value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2660,7 +2684,19 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViInt32 attribute_value = request->attribute_value();
+      ViInt32 attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nidmm_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValue:
+          attribute_value = (ViInt32)request->attribute_value();
+          break;
+        case nidmm_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw:
+          attribute_value = (ViInt32)request->attribute_value_raw();
+          break;
+        case nidmm_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+      }
+
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2682,7 +2718,19 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViReal64 attribute_value = request->attribute_value();
+      ViReal64 attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nidmm_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue:
+          attribute_value = (ViReal64)request->attribute_value();
+          break;
+        case nidmm_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw:
+          attribute_value = (ViReal64)request->attribute_value_raw();
+          break;
+        case nidmm_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+      }
+
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2727,7 +2775,7 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViString attribute_value = (ViString)request->attribute_value().c_str();
+      ViString attribute_value = (ViString)request->attribute_value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
       response->set_status(status);
       return ::grpc::Status::OK;

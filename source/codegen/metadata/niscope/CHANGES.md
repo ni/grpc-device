@@ -65,8 +65,7 @@ The following metadata was added:
 - `'csharp_namespace': 'NationalInstruments.Grpc.Scope'`
 - `'namespace_component': 'niscope'`
 
-The fields of the custom waveform-info struct were added to `'custom_types'` in place of the `'ctypes_type'`,
-`'file_name'`, and `'python_name'`. A  `'grpc_name'` field was also added which was the snake case version of the name field.
+The fields of the custom waveform-info struct were added to `'custom_types'` in place of the `'ctypes_type'`, `'file_name'`, and `'python_name'`. A  `'grpc_name'` field was also added which was the snake case version of the name field.
 
 Two structs were added
 - `'NIComplexNumber_struct'`
@@ -179,8 +178,15 @@ The following functions were given a field `grpc_type`:
 - `FetchBinary8`
 - `Read`
 
-The following functions were changed from `public` to `CustomCode` to indicate their service handlers won't be generated and instead
-should be implemented by hand in niscope_service.custom.cpp.
+The following functions were given a field `grpc_field_number` and `grpc_raw_field_number` on `value` parameter to customize field number assigned to them in proto file.
+- `CheckAttributeViInt32`
+- `CheckAttributeViInt64`
+- `CheckAttributeViReal64`
+- `SetAttributeViInt32`
+- `SetAttributeViInt64`
+- `SetAttributeViReal64`
+
+The following functions were changed from `public` to `CustomCode` to indicate their service handlers won't be generated and instead should be implemented by hand in niscope_service.custom.cpp.
 - `Fetch`
 - `FetchArrayMeasurement`
 - `FetchBinary16`
@@ -193,11 +199,9 @@ should be implemented by hand in niscope_service.custom.cpp.
 - `GetScalingCoefficients`
 - `ReadMeasurement`
 
-Instances of `python-code` used for the `size` mechanism were updated to `custom-code` to reflect their implementations will be handled
-in the custom service handler implementations.
+Instances of `python-code` used for the `size` mechanism were updated to `custom-code` to reflect their implementations will be handled in the custom service handler implementations.
 
-The following functions were tagged with `'init_method': True` to ensure their generated service handlers register the new session
-with the session_repository.
+The following functions were tagged with `'init_method': True` to ensure their generated service handlers register the new session with the session_repository.
 - `Init`
 - `InitWithOptions`
 
