@@ -77,9 +77,9 @@ def filter_proto_rpc_functions(functions):
   functions_for_proto = {'public', 'CustomCode'}
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
 
-def get_attribute_enums(attributes):
+def get_attribute_enums_by_type(attributes):
   '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
-  attribute_enums = {
+  attribute_enums_by_type = {
     'ViInt32': set(),
     'ViInt64': set(),
     'ViReal64': set(),
@@ -90,8 +90,8 @@ def get_attribute_enums(attributes):
     if 'enum' in attribute:
       attribute_type = attribute['type']
       enum_name = attribute['enum']
-      attribute_enums[attribute_type].add(enum_name)
-  return attribute_enums
+      attribute_enums_by_type[attribute_type].add(enum_name)
+  return attribute_enums_by_type
 
 def get_function_enums(functions):
   '''Returns a set of enums used with functions.'''

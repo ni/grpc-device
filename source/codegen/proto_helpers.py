@@ -77,3 +77,12 @@ def filter_parameters_for_grpc_fields(parameters):
   """Filter out the parameters that shouldn't be represented by a field on a grpc message.
      For example, get rid of any parameters whose values should be determined from another parameter."""
   return [p for p in parameters if p.get('include_in_proto', True)]
+
+def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
+  field_name_key = f"grpc{field_name_suffix}_field_number"
+  if field_name_key in parameter:
+    field_number = parameter[field_name_key]
+  else:
+    field_number = next(i for i in range(1, 100) if i not in used_indexes)
+  used_indexes.append(field_number)
+  return field_number

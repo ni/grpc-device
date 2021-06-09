@@ -51,18 +51,17 @@ def get_size_param(param, parameters):
     named_params = { p['name'] : p for p in parameters }
     return named_params.get(param['size']['value'], None)
 
-def add_attribute_values_enums(enums, attribute_enums, service_class_prefix):
+def add_attribute_values_enums(enums, attribute_enums_by_type, service_class_prefix):
     """Update enums metadata to add new enums that will be used by SetAttribute* APIs."""
-    for type_name in attribute_enums:
+    for type_name in attribute_enums_by_type:
         values_to_create = {}
-        for enum_name in sorted(attribute_enums[type_name]):
+        for enum_name in sorted(attribute_enums_by_type[type_name]):
             enum = enums[enum_name]
-            if(enum.get("generate-mappings", False)):
+            if enum.get("generate-mappings", False):
                 continue
             for value in enum["values"]:
                 value_name = value['name'].replace(f"{service_class_prefix.upper()}_", f"{common_helpers.pascal_to_snake(enum_name).upper()}_")
-                value_value = value["value"]
-                values_to_create[value_name] = value_value
+                values_to_create[value_name] = value["value"]
         if(not values_to_create):
             continue
         enum_value_prefix = (f"{service_class_prefix}_{type_name[2:]}").upper()
@@ -77,14 +76,14 @@ def add_attribute_values_enums(enums, attribute_enums, service_class_prefix):
         type_enum_name = get_attribute_values_enum_name(service_class_prefix, type_name)
         enums.update({type_enum_name: new_enum})
     
-def mark_attr_value_param_if_required(function, enums, attribute_enums, service_class_prefix):
+def mark_attr_value_param_if_required(function, enums, attribute_enums_by_type, service_class_prefix):
     """For SetAttribute* and CheckAttribute* APIs, update function metadata to mark attribute_value parameter as enum."""
     attribute_value_param = next((param for param in function["parameters"] if param["name"] in {"value", "attributeValue"}), None)
     if attribute_value_param["type"] == "ViConstString":
         enum_type = "ViString"
     else:
         enum_type = attribute_value_param["type"]
-    if attribute_value_param != None and enum_type in attribute_enums:
+    if attribute_value_param != None and enum_type in attribute_enums_by_type:
         enum_name = get_attribute_values_enum_name(service_class_prefix, enum_type)
         if(enum_name in enums):
             attribute_value_param['enum'] = enum_name

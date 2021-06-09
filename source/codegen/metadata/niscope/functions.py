@@ -274,13 +274,12 @@ functions = {
             {
                 'name':'value',
                 'direction':'in',
-                'type':'ViInt32'
+                'type':'ViInt32',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
-        'returns':'ViStatus',
-        'proto_values': {
-            'value': 5
-        }
+        'returns':'ViStatus'
     },
     'CheckAttributeViInt64':{
         'parameters':[
@@ -302,13 +301,12 @@ functions = {
             {
                 'name':'value',
                 'direction':'in',
-                'type':'ViInt64'
+                'type':'ViInt64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
-        'returns':'ViStatus',
-        'proto_values': {
-            'value': 5
-        }
+        'returns':'ViStatus'
     },
     'CheckAttributeViReal64':{
         'parameters':[
@@ -330,13 +328,12 @@ functions = {
             {
                 'name':'value',
                 'direction':'in',
-                'type':'ViReal64'
+                'type':'ViReal64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
-        'returns':'ViStatus',
-        'proto_values': {
-            'value': 5
-        }
+        'returns':'ViStatus'
     },
     'CheckAttributeViSession':{
         'parameters':[
@@ -2494,13 +2491,12 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'ViInt32'
+                'type': 'ViInt32',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
-        'returns':'ViStatus',
-        'proto_values': {
-            'value': 5
-        }
+        'returns': 'ViStatus'
     },
     'SetAttributeViInt64': {
         'codegen_method': 'public',
@@ -2523,13 +2519,12 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'ViInt64'
+                'type': 'ViInt64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
-        'returns':'ViStatus',
-        'proto_values': {
-            'value': 5
-        }
+        'returns': 'ViStatus'
     },
     'SetAttributeViReal64': {
         'codegen_method': 'public',
@@ -2552,13 +2547,12 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'ViReal64'
+                'type': 'ViReal64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
-        'returns':'ViStatus',
-        'proto_values': {
-            'value': 5
-        }
+        'returns': 'ViStatus'
     },
     'SetAttributeViSession':{
         'parameters':[

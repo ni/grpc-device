@@ -49,10 +49,9 @@ ${mako_helper.insert_custom_template_if_found()}\
     session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
     input_parameters.insert(0, session_name_param)
   output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
-  proto_values = functions[function].get("proto_values", {})
 %>\
-${mako_helper.define_request_message(function, input_parameters, proto_values)}\
+${mako_helper.define_request_message(function, input_parameters)}\
 
-${mako_helper.define_response_message(function, output_parameters, proto_values)}\
+${mako_helper.define_response_message(function, output_parameters)}\
 
 % endfor
