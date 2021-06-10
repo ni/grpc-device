@@ -119,7 +119,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  void set_int32_attribute(const char* channel_name, digital::NiDigitalAttributes attribute, ViInt32 value)
+  void set_int32_attribute(const char* channel_name, digital::NiDigitalAttributes attribute, digital::NiDigitalInt32AttributeValues value)
   {
     ::grpc::ClientContext context;
     digital::SetAttributeViInt32Request request;
@@ -142,7 +142,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     request.mutable_vi()->set_id(GetSessionId());
     request.set_channel_name(channel_name);
     request.set_attribute(attribute);
-    request.set_value(value);
+    request.set_value_raw(value);
     digital::SetAttributeViInt64Response response;
 
     ::grpc::Status status = GetStub()->SetAttributeViInt64(&context, request, &response);
@@ -158,7 +158,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     request.mutable_vi()->set_id(GetSessionId());
     request.set_channel_name(channel_name);
     request.set_attribute(attribute);
-    request.set_value(value);
+    request.set_value_raw(value);
     digital::SetAttributeViStringResponse response;
     
     ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
@@ -349,7 +349,7 @@ TEST_F(NiDigitalDriverApiTest, SetViInt32Attribute_GetViInt32Attribute_ValueMatc
 {
   const char* channel_name = "";
   const digital::NiDigitalAttributes attribute_to_set = digital::NiDigitalAttributes::NIDIGITAL_ATTRIBUTE_SELECTED_FUNCTION;
-  const ViInt32 expected_value = digital::SelectedFunction::SELECTED_FUNCTION_NIDIGITAL_VAL_PPMU;
+  auto expected_value = digital::NiDigitalInt32AttributeValues::NIDIGITAL_INT32_SELECTED_FUNCTION_VAL_PPMU;
   set_int32_attribute(channel_name, attribute_to_set, expected_value);
 
   ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
@@ -431,7 +431,7 @@ TEST_F(NiDigitalDriverApiTest, ConfigureSoftwareEdgeStartTrigger_StartTriggerTyp
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   int start_trigger_type = get_int32_attribute("", digital::NIDIGITAL_ATTRIBUTE_START_TRIGGER_TYPE);
-  EXPECT_EQ(digital::TriggerType::TRIGGER_TYPE_NIDIGITAL_VAL_SOFTWARE, start_trigger_type);
+  EXPECT_EQ(digital::NiDigitalInt32AttributeValues::NIDIGITAL_INT32_TRIGGER_TYPE_VAL_SOFTWARE, start_trigger_type);
 }
 
 TEST_F(NiDigitalDriverApiTest, ConfigureStartLabel_StartLabelConfigured)
