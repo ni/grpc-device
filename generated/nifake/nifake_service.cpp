@@ -955,7 +955,27 @@ namespace nifake_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 output_array_size = request->output_array_size();
+      ViInt32 input_array_sizes = request->input_array_of_integers().size();
+      auto input_array_of_floats = const_cast<ViReal64*>(request->input_array_of_floats().data());
+      auto input_array_of_integers_request = request->input_array_of_integers();
+      std::vector<ViInt16> input_array_of_integers;
+      std::transform(
+        input_array_of_integers_request.begin(),
+        input_array_of_integers_request.end(),
+        std::back_inserter(input_array_of_integers),
+        [](auto x) { return (ViInt16)x; }); 
+      response->mutable_output_array()->Resize(output_array_size, 0);
+      ViReal64* output_array = response->mutable_output_array()->mutable_data();
+      response->mutable_output_array_of_fixed_length()->Resize(3, 0);
+      ViReal64* output_array_of_fixed_length = response->mutable_output_array_of_fixed_length()->mutable_data();
+      auto status = library_->MultipleArrayTypes(vi, output_array_size, output_array, output_array_of_fixed_length, input_array_sizes, input_array_of_floats, input_array_of_integers.data());
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1468,6 +1488,33 @@ namespace nifake_grpc {
       if (status == 0) {
         response->set_an_array(an_array);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ViInt16ArrayInputFunction(::grpc::ServerContext* context, const ViInt16ArrayInputFunctionRequest* request, ViInt16ArrayInputFunctionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_elements = request->an_array().size();
+      auto an_array_request = request->an_array();
+      std::vector<ViInt16> an_array;
+      std::transform(
+        an_array_request.begin(),
+        an_array_request.end(),
+        std::back_inserter(an_array),
+        [](auto x) { return (ViInt16)x; }); 
+      auto status = library_->ViInt16ArrayInputFunction(vi, number_of_elements, an_array.data());
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
