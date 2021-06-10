@@ -128,7 +128,7 @@ message SetAttributeViReal64Request {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
   NiTClkAttributes attribute_id = 3;
-  double value = 4;
+  double value_raw = 4;
 }
 
 message SetAttributeViReal64Response {
@@ -150,7 +150,7 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
   NiTClkAttributes attribute_id = 3;
-  string value = 4;
+  string value_raw = 4;
 }
 
 message SetAttributeViStringResponse {

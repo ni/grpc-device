@@ -117,7 +117,7 @@ try:
         # Configure Acquisition Type
         acquisition_type_result = scope_service.ConfigureAcquisition(niscope_types.ConfigureAcquisitionRequest(
             vi = session,
-            acquisition_type = niscope_types.AcquisitionType.ACQUISITION_TYPE_NISCOPE_VAL_NORMAL
+            acquisition_type = 0 # NISCOPE_VAL_NORMAL
             ))
         CheckForError(scope_service, session, acquisition_type_result.status)
 
