@@ -152,7 +152,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
     request.mutable_session()->set_id(GetScopeSessionId());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
-    request.set_value(attribute_value);
+    request.set_value_raw(attribute_value);
     tclk::SetAttributeViReal64Response response;
 
     ::grpc::Status status = GetTClkStub()->SetAttributeViReal64(&context, request, &response);
@@ -184,7 +184,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
     request.mutable_session()->set_id(GetScopeSessionId());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
-    request.set_value(attribute_value);
+    request.set_value_raw(attribute_value);
     tclk::SetAttributeViStringResponse response;
 
     ::grpc::Status status = GetTClkStub()->SetAttributeViString(&context, request, &response);
