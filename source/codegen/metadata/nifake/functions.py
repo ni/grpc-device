@@ -2704,5 +2704,30 @@ functions = {
             }
         ],
         'returns': 'ViStatus'
+    },
+    'ViInt16ArrayInputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViInt16[]'
+            }
+        ],
+        'returns': 'ViStatus'
     }
 }

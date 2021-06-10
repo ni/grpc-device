@@ -80,6 +80,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
   MOCK_METHOD(ViStatus, ViUInt8ArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]), (override));
   MOCK_METHOD(ViStatus, ViUInt8ArrayOutputFunction, (ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]), (override));
+  MOCK_METHOD(ViStatus, ViInt16ArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]), (override));
 };
 
 }  // namespace unit
