@@ -70,7 +70,8 @@ service NiFgen {
   rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
   rpc CreateWaveformFromFileF64(CreateWaveformFromFileF64Request) returns (CreateWaveformFromFileF64Response);
-  rpc CreateWaveformFromFileHWS(CreateWaveformFromFileHWSRequest) returns (CreateWaveformFromFileHWSResponse);
+  rpc CreateWaveformFromFileHws(CreateWaveformFromFileHwsRequest) returns (CreateWaveformFromFileHwsResponse);
+  rpc CreateWaveformI16(CreateWaveformI16Request) returns (CreateWaveformI16Response);
   rpc CreateWaveformFromFileI16(CreateWaveformFromFileI16Request) returns (CreateWaveformFromFileI16Response);
   rpc DefineUserStandardWaveform(DefineUserStandardWaveformRequest) returns (DefineUserStandardWaveformResponse);
   rpc DeleteNamedWaveform(DeleteNamedWaveformRequest) returns (DeleteNamedWaveformResponse);
@@ -154,8 +155,11 @@ service NiFgen {
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteBinary16AnalogStaticValue(WriteBinary16AnalogStaticValueRequest) returns (WriteBinary16AnalogStaticValueResponse);
+  rpc WriteBinary16Waveform(WriteBinary16WaveformRequest) returns (WriteBinary16WaveformResponse);
   rpc WriteComplexBinary16Waveform(WriteComplexBinary16WaveformRequest) returns (WriteComplexBinary16WaveformResponse);
   rpc WriteNamedWaveformF64(WriteNamedWaveformF64Request) returns (WriteNamedWaveformF64Response);
+  rpc WriteNamedWaveformI16(WriteNamedWaveformI16Request) returns (WriteNamedWaveformI16Response);
+  rpc WriteP2PEndpointI16(WriteP2PEndpointI16Request) returns (WriteP2PEndpointI16Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
   rpc WriteWaveformComplexF64(WriteWaveformComplexF64Request) returns (WriteWaveformComplexF64Response);
@@ -1012,6 +1016,17 @@ message CreateWaveformFromFileHWSResponse {
   sint32 waveform_handle = 2;
 }
 
+message CreateWaveformI16Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated sint32 waveform_data_array = 3;
+}
+
+message CreateWaveformI16Response {
+  int32 status = 1;
+  sint32 waveform_handle = 2;
+}
+
 message CreateWaveformFromFileI16Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1846,6 +1861,17 @@ message WriteBinary16AnalogStaticValueResponse {
   int32 status = 1;
 }
 
+message WriteBinary16WaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  sint32 waveform_handle = 3;
+  repeated sint32 data = 4;
+}
+
+message WriteBinary16WaveformResponse {
+  int32 status = 1;
+}
+
 message WriteComplexBinary16WaveformRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1865,6 +1891,27 @@ message WriteNamedWaveformF64Request {
 }
 
 message WriteNamedWaveformF64Response {
+  int32 status = 1;
+}
+
+message WriteNamedWaveformI16Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string waveform_name = 3;
+  repeated sint32 data = 4;
+}
+
+message WriteNamedWaveformI16Response {
+  int32 status = 1;
+}
+
+message WriteP2PEndpointI16Request {
+  nidevice_grpc.Session vi = 1;
+  string endpoint_name = 2;
+  repeated sint32 endpoint_data = 3;
+}
+
+message WriteP2PEndpointI16Response {
   int32 status = 1;
 }
 

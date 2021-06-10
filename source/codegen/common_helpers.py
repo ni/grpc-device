@@ -48,9 +48,7 @@ def is_unsupported_size_mechanism(parameter):
   return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', None}
 
 def is_unsupported_scalar_array(parameter):
-  if not is_array(parameter['type']):
-    return False
-  return is_unsupported_enum_array(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
+  return is_array(parameter['type']) and is_unsupported_enum_array(parameter)
 
 def is_unsupported_enum_array(parameter):
   if is_enum(parameter):
