@@ -67,7 +67,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, CreateWaveformComplexF64, (ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct waveformDataArray[], ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformF64, (ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformFromFileF64, (ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle), (override));
-  MOCK_METHOD(ViStatus, CreateWaveformFromFileHws, (ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle), (override));
+  MOCK_METHOD(ViStatus, CreateWaveformFromFileHWS, (ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformI16, (ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformFromFileI16, (ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, DefineUserStandardWaveform, (ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[]), (override));
