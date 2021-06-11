@@ -28,9 +28,6 @@ public:
   ::grpc::Status AdjustSampleClockRelativeDelay(::grpc::ServerContext* context, const AdjustSampleClockRelativeDelayRequest* request, AdjustSampleClockRelativeDelayResponse* response) override;
   ::grpc::Status AllocateNamedWaveform(::grpc::ServerContext* context, const AllocateNamedWaveformRequest* request, AllocateNamedWaveformResponse* response) override;
   ::grpc::Status AllocateWaveform(::grpc::ServerContext* context, const AllocateWaveformRequest* request, AllocateWaveformResponse* response) override;
-  ::grpc::Status CalAdjustDirectPathOutputImpedance(::grpc::ServerContext* context, const CalAdjustDirectPathOutputImpedanceRequest* request, CalAdjustDirectPathOutputImpedanceResponse* response) override;
-  ::grpc::Status CalAdjustMainPathOutputImpedance(::grpc::ServerContext* context, const CalAdjustMainPathOutputImpedanceRequest* request, CalAdjustMainPathOutputImpedanceResponse* response) override;
-  ::grpc::Status CalAdjustOscillatorFrequency(::grpc::ServerContext* context, const CalAdjustOscillatorFrequencyRequest* request, CalAdjustOscillatorFrequencyResponse* response) override;
   ::grpc::Status ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
   ::grpc::Status CheckAttributeViInt32(::grpc::ServerContext* context, const CheckAttributeViInt32Request* request, CheckAttributeViInt32Response* response) override;
@@ -46,7 +43,6 @@ public:
   ::grpc::Status ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response) override;
   ::grpc::Status ClearUserStandardWaveform(::grpc::ServerContext* context, const ClearUserStandardWaveformRequest* request, ClearUserStandardWaveformResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
-  ::grpc::Status CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response) override;
   ::grpc::Status Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response) override;
   ::grpc::Status ConfigureAmplitude(::grpc::ServerContext* context, const ConfigureAmplitudeRequest* request, ConfigureAmplitudeResponse* response) override;
   ::grpc::Status ConfigureArbSequence(::grpc::ServerContext* context, const ConfigureArbSequenceRequest* request, ConfigureArbSequenceResponse* response) override;
@@ -123,13 +119,8 @@ public:
   ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
-  ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
   ::grpc::Status InitializeWithChannels(::grpc::ServerContext* context, const InitializeWithChannelsRequest* request, InitializeWithChannelsResponse* response) override;
-  ::grpc::Status InitializeAnalogOutputCalibration(::grpc::ServerContext* context, const InitializeAnalogOutputCalibrationRequest* request, InitializeAnalogOutputCalibrationResponse* response) override;
-  ::grpc::Status InitializeCalADCCalibration(::grpc::ServerContext* context, const InitializeCalADCCalibrationRequest* request, InitializeCalADCCalibrationResponse* response) override;
-  ::grpc::Status InitializeFlatnessCalibration(::grpc::ServerContext* context, const InitializeFlatnessCalibrationRequest* request, InitializeFlatnessCalibrationResponse* response) override;
-  ::grpc::Status InitializeOscillatorFrequencyCalibration(::grpc::ServerContext* context, const InitializeOscillatorFrequencyCalibrationRequest* request, InitializeOscillatorFrequencyCalibrationResponse* response) override;
   ::grpc::Status InitiateGeneration(::grpc::ServerContext* context, const InitiateGenerationRequest* request, InitiateGenerationResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status IsDone(::grpc::ServerContext* context, const IsDoneRequest* request, IsDoneResponse* response) override;
@@ -138,7 +129,6 @@ public:
   ::grpc::Status QueryArbSeqCapabilities(::grpc::ServerContext* context, const QueryArbSeqCapabilitiesRequest* request, QueryArbSeqCapabilitiesResponse* response) override;
   ::grpc::Status QueryArbWfmCapabilities(::grpc::ServerContext* context, const QueryArbWfmCapabilitiesRequest* request, QueryArbWfmCapabilitiesResponse* response) override;
   ::grpc::Status QueryFreqListCapabilities(::grpc::ServerContext* context, const QueryFreqListCapabilitiesRequest* request, QueryFreqListCapabilitiesResponse* response) override;
-  ::grpc::Status ReadCalADC(::grpc::ServerContext* context, const ReadCalADCRequest* request, ReadCalADCResponse* response) override;
   ::grpc::Status ReadCurrentTemperature(::grpc::ServerContext* context, const ReadCurrentTemperatureRequest* request, ReadCurrentTemperatureResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
@@ -162,7 +152,6 @@ public:
   ::grpc::Status SetWaveformNextWritePosition(::grpc::ServerContext* context, const SetWaveformNextWritePositionRequest* request, SetWaveformNextWritePositionResponse* response) override;
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
-  ::grpc::Status WriteBinary16AnalogStaticValue(::grpc::ServerContext* context, const WriteBinary16AnalogStaticValueRequest* request, WriteBinary16AnalogStaticValueResponse* response) override;
   ::grpc::Status WriteBinary16Waveform(::grpc::ServerContext* context, const WriteBinary16WaveformRequest* request, WriteBinary16WaveformResponse* response) override;
   ::grpc::Status WriteComplexBinary16Waveform(::grpc::ServerContext* context, const WriteComplexBinary16WaveformRequest* request, WriteComplexBinary16WaveformResponse* response) override;
   ::grpc::Status WriteNamedWaveformF64(::grpc::ServerContext* context, const WriteNamedWaveformF64Request* request, WriteNamedWaveformF64Response* response) override;

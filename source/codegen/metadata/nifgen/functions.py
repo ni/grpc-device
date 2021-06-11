@@ -74,96 +74,6 @@ functions = {
         ],
         'returns':'ViStatus'
     },
-    'CalAdjustDirectPathOutputImpedance':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'channelName',
-                'direction':'in',
-                'type':'ViConstString'
-            },
-            {
-                'name':'configuration',
-                'direction':'in',
-                'type':'ViInt32'
-            },
-            {
-                'name':'loadImpedance',
-                'direction':'in',
-                'type':'ViReal64'
-            },
-            {
-                'name':'measuredSourceVoltage',
-                'direction':'in',
-                'type':'ViReal64'
-            },
-            {
-                'name':'measuredVoltageAcrossLoad',
-                'direction':'in',
-                'type':'ViReal64'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'CalAdjustMainPathOutputImpedance':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'channelName',
-                'direction':'in',
-                'type':'ViConstString'
-            },
-            {
-                'name':'configuration',
-                'direction':'in',
-                'type':'ViInt32'
-            },
-            {
-                'name':'loadImpedance',
-                'direction':'in',
-                'type':'ViReal64'
-            },
-            {
-                'name':'measuredSourceVoltage',
-                'direction':'in',
-                'type':'ViReal64'
-            },
-            {
-                'name':'measuredVoltageAcrossLoad',
-                'direction':'in',
-                'type':'ViReal64'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'CalAdjustOscillatorFrequency':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'desiredFrequency',
-                'direction':'in',
-                'type':'ViReal64'
-            },
-            {
-                'name':'measuredFrequency',
-                'direction':'in',
-                'type':'ViReal64'
-            }
-        ],
-        'returns':'ViStatus'
-    },
     'ChangeExtCalPassword':{
         'parameters':[
             {
@@ -431,22 +341,6 @@ functions = {
                 'name':'vi',
                 'direction':'in',
                 'type':'ViSession'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'CloseExtCal':{
-        'custom_close_method': True,
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'action',
-                'direction':'in',
-                'type':'ViInt32'
             }
         ],
         'returns':'ViStatus'
@@ -2225,28 +2119,6 @@ functions = {
         ],
         'returns': 'ViStatus',
     },
-    'InitExtCal':{
-        'init_method' : True,
-        'custom_close': 'CloseExtCal(id, NIFGEN_VAL_EXT_CAL_ABORT)',
-        'parameters':[
-            {
-                'name':'resourceName',
-                'direction':'in',
-                'type':'ViRsrc'
-            },
-            {
-                'name':'password',
-                'direction':'in',
-                'type':'ViConstString'
-            },
-            {
-                'name':'vi',
-                'direction':'out',
-                'type':'ViSession'
-            }
-        ],
-        'returns':'ViStatus'
-    },
     'InitWithOptions':{
         'init_method' : True,
         'parameters':[
@@ -2304,46 +2176,6 @@ functions = {
             {
                 'name':'vi',
                 'direction':'out',
-                'type':'ViSession'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'InitializeAnalogOutputCalibration':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'InitializeCalADCCalibration':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'InitializeFlatnessCalibration':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'InitializeOscillatorFrequencyCalibration':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
                 'type':'ViSession'
             }
         ],
@@ -2508,31 +2340,6 @@ functions = {
             },
             {
                 'name':'frequencyListDurationQuantum',
-                'direction':'out',
-                'type':'ViReal64'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'ReadCalADC':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'numberOfReadsToAverage',
-                'direction':'in',
-                'type':'ViInt32'
-            },
-            {
-                'name':'returnCalibratedValue',
-                'direction':'in',
-                'type':'ViBoolean'
-            },
-            {
-                'name':'calAdcValue',
                 'direction':'out',
                 'type':'ViReal64'
             }
@@ -2988,26 +2795,6 @@ functions = {
                 'name':'maxTime',
                 'direction':'in',
                 'type':'ViInt32'
-            }
-        ],
-        'returns':'ViStatus'
-    },
-    'WriteBinary16AnalogStaticValue':{
-        'parameters':[
-            {
-                'name':'vi',
-                'direction':'in',
-                'type':'ViSession'
-            },
-            {
-                'name':'channelName',
-                'direction':'in',
-                'type':'ViConstString'
-            },
-            {
-                'name':'value',
-                'direction':'in',
-                'type':'ViInt16'
             }
         ],
         'returns':'ViStatus'

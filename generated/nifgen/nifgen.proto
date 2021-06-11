@@ -20,9 +20,6 @@ service NiFgen {
   rpc AdjustSampleClockRelativeDelay(AdjustSampleClockRelativeDelayRequest) returns (AdjustSampleClockRelativeDelayResponse);
   rpc AllocateNamedWaveform(AllocateNamedWaveformRequest) returns (AllocateNamedWaveformResponse);
   rpc AllocateWaveform(AllocateWaveformRequest) returns (AllocateWaveformResponse);
-  rpc CalAdjustDirectPathOutputImpedance(CalAdjustDirectPathOutputImpedanceRequest) returns (CalAdjustDirectPathOutputImpedanceResponse);
-  rpc CalAdjustMainPathOutputImpedance(CalAdjustMainPathOutputImpedanceRequest) returns (CalAdjustMainPathOutputImpedanceResponse);
-  rpc CalAdjustOscillatorFrequency(CalAdjustOscillatorFrequencyRequest) returns (CalAdjustOscillatorFrequencyResponse);
   rpc ChangeExtCalPassword(ChangeExtCalPasswordRequest) returns (ChangeExtCalPasswordResponse);
   rpc CheckAttributeViBoolean(CheckAttributeViBooleanRequest) returns (CheckAttributeViBooleanResponse);
   rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
@@ -38,7 +35,6 @@ service NiFgen {
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc ClearUserStandardWaveform(ClearUserStandardWaveformRequest) returns (ClearUserStandardWaveformResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc ConfigureAmplitude(ConfigureAmplitudeRequest) returns (ConfigureAmplitudeResponse);
   rpc ConfigureArbSequence(ConfigureArbSequenceRequest) returns (ConfigureArbSequenceResponse);
@@ -115,13 +111,8 @@ service NiFgen {
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc Init(InitRequest) returns (InitResponse);
-  rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitializeWithChannels(InitializeWithChannelsRequest) returns (InitializeWithChannelsResponse);
-  rpc InitializeAnalogOutputCalibration(InitializeAnalogOutputCalibrationRequest) returns (InitializeAnalogOutputCalibrationResponse);
-  rpc InitializeCalADCCalibration(InitializeCalADCCalibrationRequest) returns (InitializeCalADCCalibrationResponse);
-  rpc InitializeFlatnessCalibration(InitializeFlatnessCalibrationRequest) returns (InitializeFlatnessCalibrationResponse);
-  rpc InitializeOscillatorFrequencyCalibration(InitializeOscillatorFrequencyCalibrationRequest) returns (InitializeOscillatorFrequencyCalibrationResponse);
   rpc InitiateGeneration(InitiateGenerationRequest) returns (InitiateGenerationResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
@@ -130,7 +121,6 @@ service NiFgen {
   rpc QueryArbSeqCapabilities(QueryArbSeqCapabilitiesRequest) returns (QueryArbSeqCapabilitiesResponse);
   rpc QueryArbWfmCapabilities(QueryArbWfmCapabilitiesRequest) returns (QueryArbWfmCapabilitiesResponse);
   rpc QueryFreqListCapabilities(QueryFreqListCapabilitiesRequest) returns (QueryFreqListCapabilitiesResponse);
-  rpc ReadCalADC(ReadCalADCRequest) returns (ReadCalADCResponse);
   rpc ReadCurrentTemperature(ReadCurrentTemperatureRequest) returns (ReadCurrentTemperatureResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
@@ -154,7 +144,6 @@ service NiFgen {
   rpc SetWaveformNextWritePosition(SetWaveformNextWritePositionRequest) returns (SetWaveformNextWritePositionResponse);
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
-  rpc WriteBinary16AnalogStaticValue(WriteBinary16AnalogStaticValueRequest) returns (WriteBinary16AnalogStaticValueResponse);
   rpc WriteBinary16Waveform(WriteBinary16WaveformRequest) returns (WriteBinary16WaveformResponse);
   rpc WriteComplexBinary16Waveform(WriteComplexBinary16WaveformRequest) returns (WriteComplexBinary16WaveformResponse);
   rpc WriteNamedWaveformF64(WriteNamedWaveformF64Request) returns (WriteNamedWaveformF64Response);
@@ -773,42 +762,6 @@ message AllocateWaveformResponse {
   sint32 waveform_handle = 2;
 }
 
-message CalAdjustDirectPathOutputImpedanceRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  sint32 configuration = 3;
-  double load_impedance = 4;
-  double measured_source_voltage = 5;
-  double measured_voltage_across_load = 6;
-}
-
-message CalAdjustDirectPathOutputImpedanceResponse {
-  int32 status = 1;
-}
-
-message CalAdjustMainPathOutputImpedanceRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  sint32 configuration = 3;
-  double load_impedance = 4;
-  double measured_source_voltage = 5;
-  double measured_voltage_across_load = 6;
-}
-
-message CalAdjustMainPathOutputImpedanceResponse {
-  int32 status = 1;
-}
-
-message CalAdjustOscillatorFrequencyRequest {
-  nidevice_grpc.Session vi = 1;
-  double desired_frequency = 2;
-  double measured_frequency = 3;
-}
-
-message CalAdjustOscillatorFrequencyResponse {
-  int32 status = 1;
-}
-
 message ChangeExtCalPasswordRequest {
   nidevice_grpc.Session vi = 1;
   string old_password = 2;
@@ -950,15 +903,6 @@ message CloseRequest {
 }
 
 message CloseResponse {
-  int32 status = 1;
-}
-
-message CloseExtCalRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 action = 2;
-}
-
-message CloseExtCalResponse {
   int32 status = 1;
 }
 
@@ -1300,7 +1244,7 @@ message CreateWaveformFromFileF64Response {
   sint32 waveform_handle = 2;
 }
 
-message CreateWaveformFromFileHWSRequest {
+message CreateWaveformFromFileHwsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string file_name = 3;
@@ -1308,7 +1252,7 @@ message CreateWaveformFromFileHWSRequest {
   bool use_gain_and_offset_from_waveform = 5;
 }
 
-message CreateWaveformFromFileHWSResponse {
+message CreateWaveformFromFileHwsResponse {
   int32 status = 1;
   sint32 waveform_handle = 2;
 }
@@ -1753,17 +1697,6 @@ message InitResponse {
   nidevice_grpc.Session vi = 2;
 }
 
-message InitExtCalRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  string password = 3;
-}
-
-message InitExtCalResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
 message InitWithOptionsRequest {
   string session_name = 1;
   string resource_name = 2;
@@ -1788,38 +1721,6 @@ message InitializeWithChannelsRequest {
 message InitializeWithChannelsResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
-}
-
-message InitializeAnalogOutputCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message InitializeAnalogOutputCalibrationResponse {
-  int32 status = 1;
-}
-
-message InitializeCalADCCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message InitializeCalADCCalibrationResponse {
-  int32 status = 1;
-}
-
-message InitializeFlatnessCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message InitializeFlatnessCalibrationResponse {
-  int32 status = 1;
-}
-
-message InitializeOscillatorFrequencyCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message InitializeOscillatorFrequencyCalibrationResponse {
-  int32 status = 1;
 }
 
 message InitiateGenerationRequest {
@@ -1901,17 +1802,6 @@ message QueryFreqListCapabilitiesResponse {
   double minimum_frequency_list_duration = 5;
   double maximum_frequency_list_duration = 6;
   double frequency_list_duration_quantum = 7;
-}
-
-message ReadCalADCRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 number_of_reads_to_average = 2;
-  bool return_calibrated_value = 3;
-}
-
-message ReadCalADCResponse {
-  int32 status = 1;
-  double cal_adc_value = 2;
 }
 
 message ReadCurrentTemperatureRequest {
@@ -2145,16 +2035,6 @@ message WaitUntilDoneRequest {
 }
 
 message WaitUntilDoneResponse {
-  int32 status = 1;
-}
-
-message WriteBinary16AnalogStaticValueRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  sint32 value = 3;
-}
-
-message WriteBinary16AnalogStaticValueResponse {
   int32 status = 1;
 }
 
