@@ -68,7 +68,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus CreateWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct waveformDataArray[], ViInt32* waveformHandle);
   ViStatus CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle);
   ViStatus CreateWaveformFromFileF64(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
-  ViStatus CreateWaveformFromFileHws(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle);
+  ViStatus CreateWaveformFromFileHWS(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle);
   ViStatus CreateWaveformI16(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle);
   ViStatus CreateWaveformFromFileI16(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
   ViStatus DefineUserStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[]);
@@ -208,7 +208,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using CreateWaveformComplexF64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct waveformDataArray[], ViInt32* waveformHandle);
   using CreateWaveformF64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle);
   using CreateWaveformFromFileF64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
-  using CreateWaveformFromFileHwsPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle);
+  using CreateWaveformFromFileHWSPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle);
   using CreateWaveformI16Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle);
   using CreateWaveformFromFileI16Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
   using DefineUserStandardWaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[]);
@@ -348,7 +348,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     CreateWaveformComplexF64Ptr CreateWaveformComplexF64;
     CreateWaveformF64Ptr CreateWaveformF64;
     CreateWaveformFromFileF64Ptr CreateWaveformFromFileF64;
-    CreateWaveformFromFileHwsPtr CreateWaveformFromFileHws;
+    CreateWaveformFromFileHWSPtr CreateWaveformFromFileHWS;
     CreateWaveformI16Ptr CreateWaveformI16;
     CreateWaveformFromFileI16Ptr CreateWaveformFromFileI16;
     DefineUserStandardWaveformPtr DefineUserStandardWaveform;
