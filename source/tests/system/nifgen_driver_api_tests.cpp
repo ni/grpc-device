@@ -9,7 +9,7 @@ namespace system {
 
 namespace fgen = nifgen_grpc;
 
-const int kfgenDriverApiSuccess = 0;
+const int kFgenDriverApiSuccess = 0;
 
 class NiFgenDriverApiTest : public ::testing::Test {
  protected:
@@ -53,13 +53,18 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return driver_session_->id();
   }
 
+  void expect_api_success(int error_status)
+  {
+    EXPECT_EQ(kFgenDriverApiSuccess, error_status) << get_error_message(error_status);
+  }
+
   void initialize_driver_session()
   {
     ::grpc::ClientContext context;
     fgen::InitializeWithChannelsRequest request;
     request.set_channel_name("");
     request.set_resource_name("FakeDevice");
-    request.set_option_string("Simulate=1, DriverSetup=Model:5421;BoardType:PXI");
+    request.set_option_string("Simulate=1, DriverSetup=Model:5441;BoardType:PXI");
     request.set_reset_device(false);
     fgen::InitializeWithChannelsResponse response;
 
@@ -67,7 +72,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
     ASSERT_TRUE(status.ok());
-    ASSERT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
   void initiate()
@@ -80,7 +85,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->InitiateGeneration(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
   void close_driver_session()
@@ -93,7 +98,22 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
+  }
+
+  std::string get_error_message(int error_status)
+  {
+    ::grpc::ClientContext context;
+    fgen::ErrorHandlerRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_error_code(error_status);
+    fgen::ErrorHandlerResponse response;
+    ::grpc::Status status = GetStub()->ErrorHandler(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kFgenDriverApiSuccess, response.status());
+
+    return response.error_message();
   }
 
   ViBoolean get_bool_attribute(const char* channel_list, fgen::NiFgenAttributes attribute_id)
@@ -108,7 +128,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->GetAttributeViBoolean(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response.attribute_value();
   }
 
@@ -124,7 +144,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->GetAttributeViInt32(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response.attribute_value();
   }
 
@@ -140,7 +160,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->GetAttributeViInt64(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response.attribute_value();
   }
 
@@ -156,7 +176,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->GetAttributeViReal64(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response.attribute_value();
   }
 
@@ -172,7 +192,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->GetAttributeViString(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response.attribute_value();
   }
 
@@ -188,8 +208,24 @@ class NiFgenDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
 
+     EXPECT_TRUE(status.ok());
+     expect_api_success(response.status());
+  }
+
+  void set_bool_attribute(const char* channel_name, fgen::NiFgenAttributes attribute, ViBoolean value)
+  {
+    ::grpc::ClientContext context;
+    fgen::SetAttributeViBooleanRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_name(channel_name);
+    request.set_attribute_id(attribute);
+    request.set_attribute_value(value);
+    fgen::SetAttributeViBooleanResponse response;
+
+    ::grpc::Status status = GetStub()->SetAttributeViBoolean(&context, request, &response);
+
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
   void configure_trigger_mode(const char* channel_name, fgen::TriggerMode trigger_mode)
@@ -204,7 +240,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->ConfigureTriggerMode(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
   fgen::ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer()
@@ -217,7 +253,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->ExportAttributeConfigurationBuffer(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response;
   }
 
@@ -233,7 +269,20 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->ImportAttributeConfigurationBuffer(&context, import_request, &import_response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, import_response.status());
+    expect_api_success(import_response.status());
+  }
+
+  void reset()
+  {
+    ::grpc::ClientContext context;
+    fgen::ResetRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    fgen::ResetResponse response;
+
+    ::grpc::Status status = GetStub()->Reset(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
   }
 
   void configure_output_mode(const char* channel_name, fgen::OutputMode output_mode)
@@ -247,7 +296,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->ConfigureOutputMode(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
   }
 
   ViInt32 create_arb_waveform(const char* channel_name)
@@ -265,7 +314,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::Status status = GetStub()->CreateWaveformF64(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
-    EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+    expect_api_success(response.status());
     return response.waveform_handle();
   }
 
@@ -280,6 +329,75 @@ class NiFgenDriverApiTest : public ::testing::Test {
     fgen::CreateAdvancedArbSequenceResponse response;
 
     ::grpc::Status status = GetStub()->CreateAdvancedArbSequence(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    return response.status();
+  }
+
+  void allocate_named_waveform(std::string channel_name, std::string waveform_name, int waveform_size)
+  {
+    ::grpc::ClientContext context;
+    fgen::AllocateNamedWaveformRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_name(channel_name);
+    request.set_waveform_name(waveform_name);
+    request.set_waveform_size(waveform_size);
+    fgen::AllocateNamedWaveformResponse response;
+
+    ::grpc::Status status = GetStub()->AllocateNamedWaveform(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+  }
+
+  ViStatus write_named_waveform_f64(std::string channel_name, std::string waveform_name, int waveform_size, double waveform[])
+  {
+    ::grpc::ClientContext context;
+    fgen::WriteNamedWaveformF64Request request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_name(channel_name);
+    request.set_waveform_name(waveform_name);
+    request.mutable_data()->CopyFrom(google::protobuf::RepeatedField<double>(waveform, waveform + waveform_size));
+    fgen::WriteNamedWaveformF64Response response;
+
+    ::grpc::Status status = GetStub()->WriteNamedWaveformF64(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    return response.status();
+  }
+
+  ViInt32 allocate_waveform(std::string channel_name, int waveform_size)
+  {
+    ::grpc::ClientContext context;
+    fgen::AllocateWaveformRequest request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_name(channel_name);
+    request.set_waveform_size(waveform_size);
+    fgen::AllocateWaveformResponse response;
+
+    ::grpc::Status status = GetStub()->AllocateWaveform(&context, request, &response);
+
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
+    return response.waveform_handle();
+  }
+
+  ViStatus write_waveform_complexf64(std::string channel_name, int waveform_size, int waveform_handle, NIComplexNumber waveform[])
+  {
+    ::grpc::ClientContext context;
+    fgen::WriteWaveformComplexF64Request request;
+    request.mutable_vi()->set_id(GetSessionId());
+    request.set_channel_name(channel_name);
+    request.set_waveform_handle(waveform_handle);
+    for (int i = 0; i < waveform_size; i++)
+    {
+      request.mutable_data()->Add();
+      request.mutable_data(i)->set_imaginary(waveform[i].imaginary);
+      request.mutable_data(i)->set_real(waveform[i].real);
+    }
+    fgen::WriteWaveformComplexF64Response response;
+
+    ::grpc::Status status = GetStub()->WriteWaveformComplexF64(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
     return response.status();
@@ -304,7 +422,7 @@ TEST_F(NiFgenDriverApiTest, PerformSelfTest_CompletesSuccessfuly)
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+  expect_api_success(response.status());
   EXPECT_EQ(0, response.self_test_result());
   EXPECT_LT(0, response.self_test_message().size());
 }
@@ -318,7 +436,7 @@ TEST_F(NiFgenDriverApiTest, PerformReset_CompletesSuccessfuly)
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+  expect_api_success(response.status());
 }
 
 TEST_F(NiFgenDriverApiTest, SetAttributeViInt32_GetAttributeViInt32_ValueMatches)
@@ -335,7 +453,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViInt32_GetAttributeViInt32_ValueMatches
   fgen::SetAttributeViInt32Response response;
   ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+  expect_api_success(response.status());
 
   ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
 
@@ -356,7 +474,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViReal64_GetAttributeViReal64_ValueMatch
   fgen::SetAttributeViReal64Response response;
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+  expect_api_success(response.status());
 
   ViReal64 get_attribute_value_sourcedelay = get_real64_attribute(channel_name, attribute_to_set);
 
@@ -368,16 +486,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViBoolean_GetAttributeViBoolean_ValueMat
   const char* channel_name = "0";
   const fgen::NiFgenAttributes attribute_to_set = fgen::NiFgenAttributes::NIFGEN_ATTRIBUTE_OUTPUT_ENABLED;
   const ViBoolean expected_value = true;
-  ::grpc::ClientContext context;
-  fgen::SetAttributeViBooleanRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
-  request.set_channel_name(channel_name);
-  request.set_attribute_id(attribute_to_set);
-  request.set_attribute_value(expected_value);
-  fgen::SetAttributeViBooleanResponse response;
-  ::grpc::Status status = GetStub()->SetAttributeViBoolean(&context, request, &response);
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+  set_bool_attribute(channel_name, attribute_to_set, expected_value);
 
   ViBoolean get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
 
@@ -398,7 +507,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViString_GetAttributeViString_ValueMatch
   fgen::SetAttributeViStringResponse response;
   ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+  expect_api_success(response.status());
 
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
 
@@ -426,7 +535,64 @@ TEST_F(NiFgenDriverApiTest, ResetInterchangeCheck_ResetsSuccessfully)
   ::grpc::Status status = GetStub()->ResetInterchangeCheck(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+  expect_api_success(response.status());
+}
+
+TEST_F(NiFgenDriverApiTest, SendSoftwareEdgeTrigger_TriggersSuccessfully)
+{
+  ::grpc::ClientContext context;
+  fgen::SendSoftwareEdgeTriggerRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  request.set_trigger(fgen::Trigger::TRIGGER_NIFGEN_VAL_SCRIPT_TRIGGER);
+  request.set_trigger_id("ScriptTrigger0");
+  fgen::SendSoftwareEdgeTriggerResponse response;
+  ::grpc::Status status = GetStub()->SendSoftwareEdgeTrigger(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+}
+
+TEST_F(NiFgenDriverApiTest, AllocateNamedWaveform_WriteNamedWaveformF64_WaveformWrittenSuccessfully)
+{
+  std::string channel_name = "0";
+  std::string waveform_name = "TestWaveform";
+  int waveform_size = 5;
+  configure_output_mode(channel_name.c_str(), fgen::OutputMode::OUTPUT_MODE_NIFGEN_VAL_OUTPUT_SCRIPT);
+  allocate_named_waveform(channel_name, waveform_name, waveform_size);  
+  
+  double waveform[] = {1.55, 40.4, 21.6, 0.7, 15.89};
+  ViStatus status = write_named_waveform_f64(channel_name, waveform_name, waveform_size, waveform);
+  
+  expect_api_success(status);
+}
+
+TEST_F(NiFgenDriverApiTest, ExportTriggerMode_ResetAndImportConfiguration_TriggerModeConfigurationIsImported)
+{
+  const char* channel_name = "0";
+  fgen::TriggerMode expected_trigger_mode  = fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_SINGLE;
+  configure_trigger_mode(channel_name, expected_trigger_mode );
+  auto exported_configuration_response = export_attribute_configuration_buffer();
+
+  reset();
+  import_attribute_configuration_buffer(exported_configuration_response);
+
+  double set_trigger_mode = get_int32_attribute(channel_name, fgen::NiFgenAttributes::NIFGEN_ATTRIBUTE_TRIGGER_MODE);
+  EXPECT_EQ(expected_trigger_mode, set_trigger_mode);
+}
+
+TEST_F(NiFgenDriverApiTest, AllocateWaveform_WriteWaveformComplexF64_WaveformWrittenSuccessfully)
+{
+  std::string channel_name = "0";
+  int waveform_size = 1;
+  configure_output_mode(channel_name.c_str(), fgen::OutputMode::OUTPUT_MODE_NIFGEN_VAL_OUTPUT_SEQ);
+  int waveform_handle = allocate_waveform(channel_name, waveform_size);  
+
+  NIComplexNumber waveform[] = {{1.55, 2.3}, {40.4, -20.4}, {21.6, 112.4}, {0.7, -100.3}, 15.89};
+  set_bool_attribute(channel_name.c_str(), fgen::NiFgenAttributes::NIFGEN_ATTRIBUTE_OSP_ENABLED, true);
+  set_int32_attribute(channel_name.c_str(), fgen::NiFgenAttributes::NIFGEN_ATTRIBUTE_OSP_DATA_PROCESSING_MODE, fgen::DataProcessingMode::DATA_PROCESSING_MODE_NIFGEN_VAL_OSP_COMPLEX);
+  ViStatus status = write_waveform_complexf64(channel_name, waveform_size, waveform_handle, waveform);
+
+  expect_api_success(status);
 }
 
 TEST_F(NiFgenDriverApiTest, OutputModeConfiguredToSeq_CreateAdvancedArbSequenceForArbitraryWaveform_CreatesSuccessfully)
@@ -441,7 +607,7 @@ TEST_F(NiFgenDriverApiTest, OutputModeConfiguredToSeq_CreateAdvancedArbSequenceF
   waveform_handles_array[0] = create_arb_waveform(channel_name);
   int status = create_advanced_arb_sequence(sequence_length, waveform_handles_array, loop_counts_array, marker_location_array);
 
-  EXPECT_EQ(kfgenDriverApiSuccess, status);
+  expect_api_success(status);
 }
 
 }  // namespace system
