@@ -294,7 +294,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViString': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'documentation': {
             'description': '\nThis function queries the value of an NI-TClk ViString attribute. You\nmust provide a ViChar array to serve as a buffer for the value. You pass\nthe number of bytes in the buffer as bufSize. If the current value of\nthe attribute, including the terminating NULL byte, is larger than the\nsize you indicate in bufSize, the function copies bufSize minus 1 bytes\ninto the buffer, places an ASCII NULL byte at the end of the buffer, and\nreturns the array size that you must pass to get the entire value. For\nexample, if the value is "123456" and bufSize is 4, the function places\n"123" into the buffer and returns 7. If you want to call\nniTClk_GetAttributeViString just to get the required array size, pass 0\nfor bufSize and VI_NULL for the value.\n'
         },

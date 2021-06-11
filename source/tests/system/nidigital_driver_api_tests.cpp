@@ -447,7 +447,7 @@ TEST_F(NiDigitalDriverApiTest, ConfigureStartLabel_StartLabelConfigured)
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   std::string actual_start_label = get_string_attribute("", digital::NIDIGITAL_ATTRIBUTE_START_LABEL);
-  EXPECT_EQ(start_label, actual_start_label.substr(0, actual_start_label.size()-1));  // substring taken to remove the \0 at the end
+  EXPECT_EQ(start_label, actual_start_label);
 }
 
 }  // namespace system

@@ -126,39 +126,6 @@ namespace nitclk_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-
-      auto status = library_->GetAttributeViString(session, channel_name, attribute_id, 0, nullptr);
-      if (status < 0) {
-        response->set_status(status);
-        return ::grpc::Status::OK;
-      }
-      ViInt32 buf_size = status;
-
-      std::string value(buf_size, '\0');
-      status = library_->GetAttributeViString(session, channel_name, attribute_id, buf_size, (ViChar*)value.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiTClkService::GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response)
   {
     if (context->IsCancelled()) {
@@ -173,7 +140,10 @@ namespace nitclk_grpc {
       }
       ViUInt32 error_string_size = status;
 
-      std::string error_string(error_string_size, '\0');
+      std::string error_string;
+      if (error_string_size > 0) {
+          error_string.resize(error_string_size-1);
+      }
       status = library_->GetExtendedErrorInfo((ViChar*)error_string.data(), error_string_size);
       response->set_status(status);
       if (status == 0) {
