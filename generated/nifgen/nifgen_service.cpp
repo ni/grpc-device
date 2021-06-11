@@ -660,7 +660,19 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 clock_mode = request->clock_mode();
+      ViInt32 clock_mode;
+      switch (request->clock_mode_enum_case()) {
+        case nifgen_grpc::ConfigureClockModeRequest::ClockModeEnumCase::kClockMode:
+          clock_mode = (ViInt32)request->clock_mode();
+          break;
+        case nifgen_grpc::ConfigureClockModeRequest::ClockModeEnumCase::kClockModeRaw:
+          clock_mode = (ViInt32)request->clock_mode_raw();
+          break;
+        case nifgen_grpc::ConfigureClockModeRequest::ClockModeEnumCase::CLOCK_MODE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clock_mode was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ConfigureClockMode(vi, clock_mode);
       response->set_status(status);
       return ::grpc::Status::OK;

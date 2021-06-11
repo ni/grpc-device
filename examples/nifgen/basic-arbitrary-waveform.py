@@ -96,7 +96,7 @@ try:
     # Configure output mode
     config_out_resp = nifgen_service.ConfigureOutputMode(nifgen_types.ConfigureOutputModeRequest(
         vi = vi,
-        output_mode = 1
+        output_mode = nifgen_types.OutputMode.OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB
     ))
     CheckForError(vi, config_out_resp.status)
 
@@ -122,7 +122,7 @@ try:
     # Configure clockmode to VAL_HIGH_RESOLUTION
     config_clckmode_resp = nifgen_service.ConfigureClockMode(nifgen_types.ConfigureClockModeRequest(
         vi = vi,
-        clock_mode = 0
+        clock_mode = nifgen_types.ClockMode.CLOCK_MODE_NIFGEN_VAL_HIGH_RESOLUTION
     ))
     CheckForError(vi, config_clckmode_resp.status)
 
