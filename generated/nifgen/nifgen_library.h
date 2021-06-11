@@ -22,9 +22,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 adjustmentTime);
   ViStatus AllocateNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize);
   ViStatus AllocateWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt32* waveformHandle);
-  ViStatus CalAdjustDirectPathOutputImpedance(ViSession vi, ViConstString channelName, ViInt32 configuration, ViReal64 loadImpedance, ViReal64 measuredSourceVoltage, ViReal64 measuredVoltageAcrossLoad);
-  ViStatus CalAdjustMainPathOutputImpedance(ViSession vi, ViConstString channelName, ViInt32 configuration, ViReal64 loadImpedance, ViReal64 measuredSourceVoltage, ViReal64 measuredVoltageAcrossLoad);
-  ViStatus CalAdjustOscillatorFrequency(ViSession vi, ViReal64 desiredFrequency, ViReal64 measuredFrequency);
   ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword);
   ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
@@ -40,7 +37,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus ClearInterchangeWarnings(ViSession vi);
   ViStatus ClearUserStandardWaveform(ViSession vi, ViConstString channelName);
   ViStatus Close(ViSession vi);
-  ViStatus CloseExtCal(ViSession vi, ViInt32 action);
   ViStatus Commit(ViSession vi);
   ViStatus ConfigureAmplitude(ViSession vi, ViConstString channelName, ViReal64 amplitude);
   ViStatus ConfigureArbSequence(ViSession vi, ViConstString channelName, ViInt32 sequenceHandle, ViReal64 gain, ViReal64 offset);
@@ -117,13 +113,8 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi);
   ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
-  ViStatus InitializeAnalogOutputCalibration(ViSession vi);
-  ViStatus InitializeCalADCCalibration(ViSession vi);
-  ViStatus InitializeFlatnessCalibration(ViSession vi);
-  ViStatus InitializeOscillatorFrequencyCalibration(ViSession vi);
   ViStatus InitiateGeneration(ViSession vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
   ViStatus IsDone(ViSession vi, ViBoolean* done);
@@ -132,7 +123,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus QueryArbSeqCapabilities(ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount);
   ViStatus QueryArbWfmCapabilities(ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize);
   ViStatus QueryFreqListCapabilities(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum);
-  ViStatus ReadCalADC(ViSession vi, ViInt32 numberOfReadsToAverage, ViBoolean returnCalibratedValue, ViReal64* calAdcValue);
   ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature);
   ViStatus Reset(ViSession vi);
   ViStatus ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId);
@@ -156,7 +146,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus SetWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitUntilDone(ViSession vi, ViInt32 maxTime);
-  ViStatus WriteBinary16AnalogStaticValue(ViSession vi, ViConstString channelName, ViInt16 value);
   ViStatus WriteBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViInt16 data[]);
   ViStatus WriteComplexBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, NIComplexI16_struct data[]);
   ViStatus WriteNamedWaveformF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[]);
@@ -173,9 +162,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using AdjustSampleClockRelativeDelayPtr = ViStatus (*)(ViSession vi, ViReal64 adjustmentTime);
   using AllocateNamedWaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize);
   using AllocateWaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt32* waveformHandle);
-  using CalAdjustDirectPathOutputImpedancePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 configuration, ViReal64 loadImpedance, ViReal64 measuredSourceVoltage, ViReal64 measuredVoltageAcrossLoad);
-  using CalAdjustMainPathOutputImpedancePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 configuration, ViReal64 loadImpedance, ViReal64 measuredSourceVoltage, ViReal64 measuredVoltageAcrossLoad);
-  using CalAdjustOscillatorFrequencyPtr = ViStatus (*)(ViSession vi, ViReal64 desiredFrequency, ViReal64 measuredFrequency);
   using ChangeExtCalPasswordPtr = ViStatus (*)(ViSession vi, ViConstString oldPassword, ViConstString newPassword);
   using CheckAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   using CheckAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
@@ -191,7 +177,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using ClearInterchangeWarningsPtr = ViStatus (*)(ViSession vi);
   using ClearUserStandardWaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName);
   using ClosePtr = ViStatus (*)(ViSession vi);
-  using CloseExtCalPtr = ViStatus (*)(ViSession vi, ViInt32 action);
   using CommitPtr = ViStatus (*)(ViSession vi);
   using ConfigureAmplitudePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViReal64 amplitude);
   using ConfigureArbSequencePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 sequenceHandle, ViReal64 gain, ViReal64 offset);
@@ -268,13 +253,8 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using ImportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]);
   using ImportAttributeConfigurationFilePtr = ViStatus (*)(ViSession vi, ViConstString filePath);
   using InitPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  using InitExtCalPtr = ViStatus (*)(ViRsrc resourceName, ViConstString password, ViSession* vi);
   using InitWithOptionsPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   using InitializeWithChannelsPtr = ViStatus (*)(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
-  using InitializeAnalogOutputCalibrationPtr = ViStatus (*)(ViSession vi);
-  using InitializeCalADCCalibrationPtr = ViStatus (*)(ViSession vi);
-  using InitializeFlatnessCalibrationPtr = ViStatus (*)(ViSession vi);
-  using InitializeOscillatorFrequencyCalibrationPtr = ViStatus (*)(ViSession vi);
   using InitiateGenerationPtr = ViStatus (*)(ViSession vi);
   using InvalidateAllAttributesPtr = ViStatus (*)(ViSession vi);
   using IsDonePtr = ViStatus (*)(ViSession vi, ViBoolean* done);
@@ -283,7 +263,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using QueryArbSeqCapabilitiesPtr = ViStatus (*)(ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount);
   using QueryArbWfmCapabilitiesPtr = ViStatus (*)(ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize);
   using QueryFreqListCapabilitiesPtr = ViStatus (*)(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum);
-  using ReadCalADCPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfReadsToAverage, ViBoolean returnCalibratedValue, ViReal64* calAdcValue);
   using ReadCurrentTemperaturePtr = ViStatus (*)(ViSession vi, ViReal64* temperature);
   using ResetPtr = ViStatus (*)(ViSession vi);
   using ResetAttributePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId);
@@ -307,7 +286,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using SetWaveformNextWritePositionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset);
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitUntilDonePtr = ViStatus (*)(ViSession vi, ViInt32 maxTime);
-  using WriteBinary16AnalogStaticValuePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt16 value);
   using WriteBinary16WaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViInt16 data[]);
   using WriteComplexBinary16WaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, NIComplexI16_struct data[]);
   using WriteNamedWaveformF64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[]);
@@ -324,9 +302,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     AdjustSampleClockRelativeDelayPtr AdjustSampleClockRelativeDelay;
     AllocateNamedWaveformPtr AllocateNamedWaveform;
     AllocateWaveformPtr AllocateWaveform;
-    CalAdjustDirectPathOutputImpedancePtr CalAdjustDirectPathOutputImpedance;
-    CalAdjustMainPathOutputImpedancePtr CalAdjustMainPathOutputImpedance;
-    CalAdjustOscillatorFrequencyPtr CalAdjustOscillatorFrequency;
     ChangeExtCalPasswordPtr ChangeExtCalPassword;
     CheckAttributeViBooleanPtr CheckAttributeViBoolean;
     CheckAttributeViInt32Ptr CheckAttributeViInt32;
@@ -342,7 +317,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     ClearInterchangeWarningsPtr ClearInterchangeWarnings;
     ClearUserStandardWaveformPtr ClearUserStandardWaveform;
     ClosePtr Close;
-    CloseExtCalPtr CloseExtCal;
     CommitPtr Commit;
     ConfigureAmplitudePtr ConfigureAmplitude;
     ConfigureArbSequencePtr ConfigureArbSequence;
@@ -419,13 +393,8 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
     InitPtr Init;
-    InitExtCalPtr InitExtCal;
     InitWithOptionsPtr InitWithOptions;
     InitializeWithChannelsPtr InitializeWithChannels;
-    InitializeAnalogOutputCalibrationPtr InitializeAnalogOutputCalibration;
-    InitializeCalADCCalibrationPtr InitializeCalADCCalibration;
-    InitializeFlatnessCalibrationPtr InitializeFlatnessCalibration;
-    InitializeOscillatorFrequencyCalibrationPtr InitializeOscillatorFrequencyCalibration;
     InitiateGenerationPtr InitiateGeneration;
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsDonePtr IsDone;
@@ -434,7 +403,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     QueryArbSeqCapabilitiesPtr QueryArbSeqCapabilities;
     QueryArbWfmCapabilitiesPtr QueryArbWfmCapabilities;
     QueryFreqListCapabilitiesPtr QueryFreqListCapabilities;
-    ReadCalADCPtr ReadCalADC;
     ReadCurrentTemperaturePtr ReadCurrentTemperature;
     ResetPtr Reset;
     ResetAttributePtr ResetAttribute;
@@ -458,7 +426,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     SetWaveformNextWritePositionPtr SetWaveformNextWritePosition;
     UnlockSessionPtr UnlockSession;
     WaitUntilDonePtr WaitUntilDone;
-    WriteBinary16AnalogStaticValuePtr WriteBinary16AnalogStaticValue;
     WriteBinary16WaveformPtr WriteBinary16Waveform;
     WriteComplexBinary16WaveformPtr WriteComplexBinary16Waveform;
     WriteNamedWaveformF64Ptr WriteNamedWaveformF64;

@@ -19,9 +19,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 adjustmentTime) = 0;
   virtual ViStatus AllocateNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize) = 0;
   virtual ViStatus AllocateWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt32* waveformHandle) = 0;
-  virtual ViStatus CalAdjustDirectPathOutputImpedance(ViSession vi, ViConstString channelName, ViInt32 configuration, ViReal64 loadImpedance, ViReal64 measuredSourceVoltage, ViReal64 measuredVoltageAcrossLoad) = 0;
-  virtual ViStatus CalAdjustMainPathOutputImpedance(ViSession vi, ViConstString channelName, ViInt32 configuration, ViReal64 loadImpedance, ViReal64 measuredSourceVoltage, ViReal64 measuredVoltageAcrossLoad) = 0;
-  virtual ViStatus CalAdjustOscillatorFrequency(ViSession vi, ViReal64 desiredFrequency, ViReal64 measuredFrequency) = 0;
   virtual ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword) = 0;
   virtual ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
@@ -37,7 +34,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
   virtual ViStatus ClearUserStandardWaveform(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus Close(ViSession vi) = 0;
-  virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus ConfigureAmplitude(ViSession vi, ViConstString channelName, ViReal64 amplitude) = 0;
   virtual ViStatus ConfigureArbSequence(ViSession vi, ViConstString channelName, ViInt32 sequenceHandle, ViReal64 gain, ViReal64 offset) = 0;
@@ -114,13 +110,8 @@ class NiFgenLibraryInterface {
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
-  virtual ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi) = 0;
   virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
-  virtual ViStatus InitializeAnalogOutputCalibration(ViSession vi) = 0;
-  virtual ViStatus InitializeCalADCCalibration(ViSession vi) = 0;
-  virtual ViStatus InitializeFlatnessCalibration(ViSession vi) = 0;
-  virtual ViStatus InitializeOscillatorFrequencyCalibration(ViSession vi) = 0;
   virtual ViStatus InitiateGeneration(ViSession vi) = 0;
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
   virtual ViStatus IsDone(ViSession vi, ViBoolean* done) = 0;
@@ -129,7 +120,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus QueryArbSeqCapabilities(ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount) = 0;
   virtual ViStatus QueryArbWfmCapabilities(ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize) = 0;
   virtual ViStatus QueryFreqListCapabilities(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum) = 0;
-  virtual ViStatus ReadCalADC(ViSession vi, ViInt32 numberOfReadsToAverage, ViBoolean returnCalibratedValue, ViReal64* calAdcValue) = 0;
   virtual ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature) = 0;
   virtual ViStatus Reset(ViSession vi) = 0;
   virtual ViStatus ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId) = 0;
@@ -153,7 +143,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus SetWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset) = 0;
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus WaitUntilDone(ViSession vi, ViInt32 maxTime) = 0;
-  virtual ViStatus WriteBinary16AnalogStaticValue(ViSession vi, ViConstString channelName, ViInt16 value) = 0;
   virtual ViStatus WriteBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViInt16 data[]) = 0;
   virtual ViStatus WriteComplexBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, NIComplexI16_struct data[]) = 0;
   virtual ViStatus WriteNamedWaveformF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[]) = 0;
