@@ -50,6 +50,25 @@ The following functions removed as they are obsolete:
 - ConfigureUpdateClockSource
 - SendSoftwareTrigger
 
+The following Calibration functions were removed as we are not supporting them in gRPC :
+- `'InitExtCal'`
+- `'CloseExtCal'`
+- `'InitializeAnalogOutputCalibration'`
+- `'WriteBinary16AnalogStaticValue'`
+- `'CalAdjustMainPathPreAmpOffset'`
+- `'CalAdjustMainPathPreAmpGain'`
+- `'CalAdjustMainPathPostAmpGainAndOffset'`
+- `'CalAdjustDirectPathGain'`
+- `'CalAdjustMainPathOutputImpedance'`
+- `'CalAdjustDirectPathOutputImpedance'`
+- `'InitializeOscillatorFrequencyCalibration'`
+- `'CalAdjustOscillatorFrequency'`
+- `'InitializeCalADCCalibration'`
+- `'CalAdjustAdc'`
+- `'ReadCalADC'`
+- `'InitializeFlatnessCalibration'`
+- `'CalAdjustFlatness'`
+
 ## attributes.py
 
 Following attributes missing in attributes.hapigen, taken from constants.hapigen:
