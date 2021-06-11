@@ -99,7 +99,7 @@ try:
         # Configure output mode
         config_out_resp = nifgen_service.ConfigureOutputMode(nifgen_types.ConfigureOutputModeRequest(
             vi = vi,
-            output_mode = 1
+            output_mode = nifgen_types.OutputMode.OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB
         ))
         
         # Configure sample rate
