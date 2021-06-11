@@ -74,7 +74,7 @@ public:
   ::grpc::Status CreateWaveformComplexF64(::grpc::ServerContext* context, const CreateWaveformComplexF64Request* request, CreateWaveformComplexF64Response* response) override;
   ::grpc::Status CreateWaveformF64(::grpc::ServerContext* context, const CreateWaveformF64Request* request, CreateWaveformF64Response* response) override;
   ::grpc::Status CreateWaveformFromFileF64(::grpc::ServerContext* context, const CreateWaveformFromFileF64Request* request, CreateWaveformFromFileF64Response* response) override;
-  ::grpc::Status CreateWaveformFromFileHws(::grpc::ServerContext* context, const CreateWaveformFromFileHwsRequest* request, CreateWaveformFromFileHwsResponse* response) override;
+  ::grpc::Status CreateWaveformFromFileHWS(::grpc::ServerContext* context, const CreateWaveformFromFileHWSRequest* request, CreateWaveformFromFileHWSResponse* response) override;
   ::grpc::Status CreateWaveformI16(::grpc::ServerContext* context, const CreateWaveformI16Request* request, CreateWaveformI16Response* response) override;
   ::grpc::Status CreateWaveformFromFileI16(::grpc::ServerContext* context, const CreateWaveformFromFileI16Request* request, CreateWaveformFromFileI16Response* response) override;
   ::grpc::Status DefineUserStandardWaveform(::grpc::ServerContext* context, const DefineUserStandardWaveformRequest* request, DefineUserStandardWaveformResponse* response) override;
