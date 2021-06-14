@@ -280,43 +280,6 @@ attributes = {
         'resettable': True,
         'type': 'ViInt32'
     },
-    1150223: {
-        'access': 'read-write',
-        'name': 'GAIN_DAC_VALUE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150224: {
-        'access': 'read-write',
-        'name': 'OFFSET_DAC_VALUE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150225: {
-        'access': 'read-write',
-        'name': 'OSCILLATOR_FREQ_DAC_VALUE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150227: {
-        'access': 'read-write',
-        'enum': 'CalAdcInput',
-        'name': 'CAL_ADC_INPUT',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
-    1150228: {
-        'access': 'read-write',
-        'name': 'PRE_AMPLIFIER_ATTENUATION',
-        'resettable': True,
-        'type': 'ViReal64'
-    },
-    1150229: {
-        'access': 'read-write',
-        'name': 'POST_AMPLIFIER_ATTENUATION',
-        'resettable': True,
-        'type': 'ViReal64'
-    },
     1150230: {
         'access': 'read-write',
         'name': 'EXPORTED_SAMPLE_CLOCK_TIMEBASE_DIVISOR',
