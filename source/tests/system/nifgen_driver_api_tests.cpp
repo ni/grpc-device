@@ -208,8 +208,8 @@ class NiFgenDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
 
-     EXPECT_TRUE(status.ok());
-     expect_api_success(response.status());
+    EXPECT_TRUE(status.ok());
+    expect_api_success(response.status());
   }
 
   void set_bool_attribute(const char* channel_name, fgen::NiFgenAttributes attribute, ViBoolean value)
@@ -303,7 +303,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::CreateWaveformF64Request request;
-    const ViReal64 waveform_data_array[] = { 1, 0, 0, 1 };
+    const ViReal64 waveform_data_array[] = {1, 0, 0, 1};
     request.mutable_vi()->set_id(GetSessionId());
     request.set_channel_name(channel_name);
     for (ViReal64 waveform_data : waveform_data_array) {
@@ -389,8 +389,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     request.mutable_vi()->set_id(GetSessionId());
     request.set_channel_name(channel_name);
     request.set_waveform_handle(waveform_handle);
-    for (int i = 0; i < waveform_size; i++)
-    {
+    for (int i = 0; i < waveform_size; i++) {
       request.mutable_data()->Add();
       request.mutable_data(i)->set_imaginary(waveform[i].imaginary);
       request.mutable_data(i)->set_real(waveform[i].real);
@@ -558,19 +557,19 @@ TEST_F(NiFgenDriverApiTest, AllocateNamedWaveform_WriteNamedWaveformF64_Waveform
   std::string waveform_name = "TestWaveform";
   int waveform_size = 5;
   configure_output_mode(channel_name.c_str(), fgen::OutputMode::OUTPUT_MODE_NIFGEN_VAL_OUTPUT_SCRIPT);
-  allocate_named_waveform(channel_name, waveform_name, waveform_size);  
-  
+  allocate_named_waveform(channel_name, waveform_name, waveform_size);
+
   double waveform[] = {1.55, 40.4, 21.6, 0.7, 15.89};
   ViStatus status = write_named_waveform_f64(channel_name, waveform_name, waveform_size, waveform);
-  
+
   expect_api_success(status);
 }
 
 TEST_F(NiFgenDriverApiTest, ExportTriggerMode_ResetAndImportConfiguration_TriggerModeConfigurationIsImported)
 {
   const char* channel_name = "0";
-  fgen::TriggerMode expected_trigger_mode  = fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_SINGLE;
-  configure_trigger_mode(channel_name, expected_trigger_mode );
+  fgen::TriggerMode expected_trigger_mode = fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_SINGLE;
+  configure_trigger_mode(channel_name, expected_trigger_mode);
   auto exported_configuration_response = export_attribute_configuration_buffer();
 
   reset();
@@ -585,7 +584,7 @@ TEST_F(NiFgenDriverApiTest, AllocateWaveform_WriteWaveformComplexF64_WaveformWri
   std::string channel_name = "0";
   int waveform_size = 1;
   configure_output_mode(channel_name.c_str(), fgen::OutputMode::OUTPUT_MODE_NIFGEN_VAL_OUTPUT_SEQ);
-  int waveform_handle = allocate_waveform(channel_name, waveform_size);  
+  int waveform_handle = allocate_waveform(channel_name, waveform_size);
 
   NIComplexNumber waveform[] = {{1.55, 2.3}, {40.4, -20.4}, {21.6, 112.4}, {0.7, -100.3}, 15.89};
   set_bool_attribute(channel_name.c_str(), fgen::NiFgenAttributes::NIFGEN_ATTRIBUTE_OSP_ENABLED, true);
