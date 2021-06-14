@@ -772,15 +772,15 @@ ViStatus NiFgenLibrary::CreateWaveformFromFileF64(ViSession vi, ViConstString ch
 #endif
 }
 
-ViStatus NiFgenLibrary::CreateWaveformFromFileHws(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle)
+ViStatus NiFgenLibrary::CreateWaveformFromFileHWS(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle)
 {
-  if (!function_pointers_.CreateWaveformFromFileHws) {
+  if (!function_pointers_.CreateWaveformFromFileHWS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformFromFileHWS.");
   }
 #if defined(_MSC_VER)
   return niFgen_CreateWaveformFromFileHWS(vi, channelName, fileName, useRateFromWaveform, useGainAndOffsetFromWaveform, waveformHandle);
 #else
-  return function_pointers_.CreateWaveformFromFileHws(vi, channelName, fileName, useRateFromWaveform, useGainAndOffsetFromWaveform, waveformHandle);
+  return function_pointers_.CreateWaveformFromFileHWS(vi, channelName, fileName, useRateFromWaveform, useGainAndOffsetFromWaveform, waveformHandle);
 #endif
 }
 
