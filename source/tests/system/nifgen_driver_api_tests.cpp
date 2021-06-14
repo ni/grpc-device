@@ -29,6 +29,9 @@ class NiFgenDriverApiTest : public ::testing::Test {
 
   void SetUp() override
   {
+#ifndef WIN32
+    GTEST_SKIP() << "Fgen is not supported on Linux.";
+#endif
     initialize_driver_session();
   }
 
@@ -90,6 +93,10 @@ class NiFgenDriverApiTest : public ::testing::Test {
 
   void close_driver_session()
   {
+    if (!driver_session_) {
+      return;
+    }
+
     ::grpc::ClientContext context;
     fgen::CloseRequest request;
     request.mutable_vi()->set_id(driver_session_->id());
