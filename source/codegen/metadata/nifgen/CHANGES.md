@@ -72,10 +72,18 @@ The following Calibration functions were removed as we are not supporting them i
 ## attributes.py
 
 Following attributes missing in attributes.hapigen, taken from constants.hapigen:
-- BURST_COUNT
-- CHANNEL_COUNT
+- `BURST_COUNT`
+- `CHANNEL_COUNT`
 
 Following enum values removed because the enums of string type are not supported in grpc:
 - `SampleClockSource` from `SAMPLE_CLOCK_SOURCE`
 - `ReferenceClockSource` from `REFERENCE_CLOCK_SOURCE`
 - `SampleClockTimebaseSource` from `SAMPLE_CLOCK_TIMEBASE_SOURCE`
+
+Following attributes removed as Calibrations is no longer supported for gRPC:
+- `CAL_ADC_INPUT`
+- `GAIN_DAC_VALUE`
+- `OFFSET_DAC_VALUE`
+- `OSCILLATOR_FREQ_DAC_VALUE`
+- `POST_AMPLIFIER_ATTENUATION`
+- `PRE_AMPLIFIER_ATTENUATION`
