@@ -263,6 +263,10 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
         if(${iterator_name} != ${map_name}.end()) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
         }
+%     elif parameter['type'] == 'ViReal64':
+        if(${parameter_name} == (int)${parameter_name}) {
+          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
+        }
 %     else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %     endif
