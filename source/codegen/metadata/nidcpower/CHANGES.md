@@ -42,8 +42,6 @@ The following attributes were added :
 ## enums.py
 
 Following enums were defined :
-- InternalReference
-- CalibrationCloseAction
 - PowerLineFrequencies
 - In 'OutputStates' : Following were added
     - NIDCPOWER_VAL_OUTPUT_OVER_VOLTAGE
@@ -53,6 +51,29 @@ Following enums were defined :
     - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_DISABLED to NIDCPOWER_VAL_DISABLED
     - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC to NIDCPOWER_VAL_AUTOMATIC
     - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL to NIDCPOWER_VAL_MANUAL
+
+The following enums were removed :
+- InternalReference
+- CalibrationCloseAction
+
+## functions.py
+
+Following calibration functions were removed from the metadata :
+- ChangeExtCalPassword
+- GetCalUserDefinedInfoMaxSize
+- SetCalUserDefinedInfo
+- GetCalUserDefinedInfo
+- InitExtCal
+- CloseExtCal
+- CalAdjustVoltageLevel
+- CalAdjustVoltageMeasurement
+- CalAdjustCurrentLimit
+- CalAdjustCurrentMeasurement
+- CalAdjustOutputResistance
+- CalAdjustResidualVoltageOffset
+- CalAdjustResidualCurrentOffset
+- ConnectInternalReference
+- CalAdjustInternalReference
 
 # Changes in metadata from the base metadata
 
