@@ -82,6 +82,10 @@ Metadata for following enums added:
 
 `'NIDMM_VAL_FIXED'` (from nimi-python) changed to `'NIDMM_VAL_TEMP_REF_JUNC_FIXED'` in the `'ThermocoupleReferenceJunctionType'` to match the documentation and the header file
 
+Following calibration enums removed:
+- `'CalibrationCloseAction'`
+- `'LcCalibration'`
+- `'MiscCalibration'`
 
 # Changes in metadata from the base metadata
 
@@ -133,3 +137,19 @@ with the session_repository.
 The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
 the registered session from session_repository.
 - `CloseExtCal`
+
+Following calibration functions removed:
+- `'CalAdjustGain'`
+- `'CalAdjustACFilter'`
+- `'CalAdjustLC'`
+- `'CalAdjustLinearization'`
+- `'CalAdjustMisc'`
+- `'CalAdjustOffset'`
+- `'CloseExtCal'`
+- `'GetCalCount'`
+- `'GetCalUserDefinedInfo'`
+- `'GetCalUserDefinedInfoMaxSize'`
+- `'InitExtCal'`
+- `'RestoreLastExtCalConstants'`
+- `'SetCalPassword'`
+- `'SetCalUserDefinedInfo'`
