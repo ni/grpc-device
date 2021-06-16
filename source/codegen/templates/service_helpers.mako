@@ -184,7 +184,6 @@ enum_request_snippet = f'{iterator_name}->second'
 ## Initialize an input parameter for an API call.
 <%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
-  config = data['config']
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
   request_snippet = f'request->{field_name}()'
