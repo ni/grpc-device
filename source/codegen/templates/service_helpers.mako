@@ -88,11 +88,8 @@ ${initialize_input_param(function_name, parameter)}
 
 ## Initialize an input parameter for an API call.
 <%def name="initialize_input_param(function_name, parameter)">\
-<%
-  enums = data['enums']
-%>\
 % if common_helpers.is_enum(parameter):
-${initialize_enum_input_param(function_name, parameter, enums)}\
+${initialize_enum_input_param(function_name, parameter)}\
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
 % else:
@@ -101,9 +98,10 @@ ${initialize_standard_input_param(function_name, parameter)}\
 </%def>
 
 ## Initialize an enum input parameter for an API call.
-<%def name="initialize_enum_input_param(function_name, parameter, enums)">\
+<%def name="initialize_enum_input_param(function_name, parameter)">\
 <%
   config = data['config']
+  enums = data['enums']
   namespace_prefix = config["namespace_component"] + "_grpc::"
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
@@ -133,16 +131,18 @@ enum_request_snippet = f'{iterator_name}->second'
 % endif
           break;
         }
-        case ${one_of_case_prefix}::k${pascal_field_name}Raw:
+        case ${one_of_case_prefix}::k${pascal_field_name}Raw: {
 % if parameter['type'] in ["ViConstString", "ViString"]:
           ${parameter_name} = const_cast<${parameter['type']}>(${raw_request_snippet}.c_str());
 % else:
           ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
           break;
-        case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET:
+        }
+        case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range");
           break;
+        }
       }
 </%def>
 

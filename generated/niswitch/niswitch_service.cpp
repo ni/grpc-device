@@ -108,12 +108,14 @@ namespace niswitch_grpc {
           attribute_value = static_cast<ViInt32>(request->attribute_value());
           break;
         }
-        case niswitch_grpc::CheckAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw:
+        case niswitch_grpc::CheckAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw: {
           attribute_value = static_cast<ViInt32>(request->attribute_value_raw());
           break;
-        case niswitch_grpc::CheckAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::CheckAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
@@ -286,12 +288,14 @@ namespace niswitch_grpc {
           scan_mode = static_cast<ViInt32>(request->scan_mode());
           break;
         }
-        case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::kScanModeRaw:
+        case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::kScanModeRaw: {
           scan_mode = static_cast<ViInt32>(request->scan_mode_raw());
           break;
-        case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::SCAN_MODE_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::SCAN_MODE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_mode was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureScanList(vi, scanlist, scan_mode);
@@ -320,12 +324,14 @@ namespace niswitch_grpc {
           trigger_input = static_cast<ViInt32>(request->trigger_input());
           break;
         }
-        case niswitch_grpc::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInputRaw:
+        case niswitch_grpc::ConfigureScanTriggerRequest::TriggerInputEnumCase::kTriggerInputRaw: {
           trigger_input = static_cast<ViInt32>(request->trigger_input_raw());
           break;
-        case niswitch_grpc::ConfigureScanTriggerRequest::TriggerInputEnumCase::TRIGGER_INPUT_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::ConfigureScanTriggerRequest::TriggerInputEnumCase::TRIGGER_INPUT_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input was not specified or out of range");
           break;
+        }
       }
 
       ViInt32 scan_advanced_output;
@@ -334,12 +340,14 @@ namespace niswitch_grpc {
           scan_advanced_output = static_cast<ViInt32>(request->scan_advanced_output());
           break;
         }
-        case niswitch_grpc::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutputRaw:
+        case niswitch_grpc::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::kScanAdvancedOutputRaw: {
           scan_advanced_output = static_cast<ViInt32>(request->scan_advanced_output_raw());
           break;
-        case niswitch_grpc::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::SCAN_ADVANCED_OUTPUT_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::ConfigureScanTriggerRequest::ScanAdvancedOutputEnumCase::SCAN_ADVANCED_OUTPUT_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureScanTrigger(vi, scan_delay, trigger_input, scan_advanced_output);
@@ -1137,12 +1145,14 @@ namespace niswitch_grpc {
           relay_action = static_cast<ViInt32>(request->relay_action());
           break;
         }
-        case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::kRelayActionRaw:
+        case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::kRelayActionRaw: {
           relay_action = static_cast<ViInt32>(request->relay_action_raw());
           break;
-        case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::RELAY_ACTION_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::RELAY_ACTION_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for relay_action was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->RelayControl(vi, relay_name, relay_action);
@@ -1252,12 +1262,14 @@ namespace niswitch_grpc {
           scan_advanced_output_connector = static_cast<ViInt32>(request->scan_advanced_output_connector());
           break;
         }
-        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnectorRaw:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::kScanAdvancedOutputConnectorRaw: {
           scan_advanced_output_connector = static_cast<ViInt32>(request->scan_advanced_output_connector_raw());
           break;
-        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::SCAN_ADVANCED_OUTPUT_CONNECTOR_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputConnectorEnumCase::SCAN_ADVANCED_OUTPUT_CONNECTOR_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_connector was not specified or out of range");
           break;
+        }
       }
 
       ViInt32 scan_advanced_output_bus_line;
@@ -1266,12 +1278,14 @@ namespace niswitch_grpc {
           scan_advanced_output_bus_line = static_cast<ViInt32>(request->scan_advanced_output_bus_line());
           break;
         }
-        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLineRaw:
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::kScanAdvancedOutputBusLineRaw: {
           scan_advanced_output_bus_line = static_cast<ViInt32>(request->scan_advanced_output_bus_line_raw());
           break;
-        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::SCAN_ADVANCED_OUTPUT_BUS_LINE_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::RouteScanAdvancedOutputRequest::ScanAdvancedOutputBusLineEnumCase::SCAN_ADVANCED_OUTPUT_BUS_LINE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for scan_advanced_output_bus_line was not specified or out of range");
           break;
+        }
       }
 
       ViBoolean invert = request->invert();
@@ -1300,12 +1314,14 @@ namespace niswitch_grpc {
           trigger_input_connector = static_cast<ViInt32>(request->trigger_input_connector());
           break;
         }
-        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnectorRaw:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::kTriggerInputConnectorRaw: {
           trigger_input_connector = static_cast<ViInt32>(request->trigger_input_connector_raw());
           break;
-        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::TRIGGER_INPUT_CONNECTOR_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputConnectorEnumCase::TRIGGER_INPUT_CONNECTOR_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_connector was not specified or out of range");
           break;
+        }
       }
 
       ViInt32 trigger_input_bus_line;
@@ -1314,12 +1330,14 @@ namespace niswitch_grpc {
           trigger_input_bus_line = static_cast<ViInt32>(request->trigger_input_bus_line());
           break;
         }
-        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLineRaw:
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::kTriggerInputBusLineRaw: {
           trigger_input_bus_line = static_cast<ViInt32>(request->trigger_input_bus_line_raw());
           break;
-        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::TRIGGER_INPUT_BUS_LINE_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::RouteTriggerInputRequest::TriggerInputBusLineEnumCase::TRIGGER_INPUT_BUS_LINE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_input_bus_line was not specified or out of range");
           break;
+        }
       }
 
       ViBoolean invert = request->invert();
@@ -1349,12 +1367,14 @@ namespace niswitch_grpc {
           initiation = static_cast<ViInt16>(request->initiation());
           break;
         }
-        case niswitch_grpc::ScanRequest::InitiationEnumCase::kInitiationRaw:
+        case niswitch_grpc::ScanRequest::InitiationEnumCase::kInitiationRaw: {
           initiation = static_cast<ViInt16>(request->initiation_raw());
           break;
-        case niswitch_grpc::ScanRequest::InitiationEnumCase::INITIATION_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::ScanRequest::InitiationEnumCase::INITIATION_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for initiation was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->Scan(vi, scanlist, initiation);
@@ -1450,12 +1470,14 @@ namespace niswitch_grpc {
           attribute_value = static_cast<ViInt32>(request->attribute_value());
           break;
         }
-        case niswitch_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw:
+        case niswitch_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw: {
           attribute_value = static_cast<ViInt32>(request->attribute_value_raw());
           break;
-        case niswitch_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+        }
+        case niswitch_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
