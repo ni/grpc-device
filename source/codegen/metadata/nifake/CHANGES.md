@@ -7,6 +7,24 @@ The following functions, not originally in nimi-python metadata, were newly adde
 - `'CloseExtCal'`
 - `'BoolArrayInputFunction'`
 	- This function allows testing of ViBoolean[] input parameter
+- `'GetViUInt8'`
+	- This function allows testing of ViUInt8 parameter
+- `'ViUInt8ArrayInputFunction'`
+	- This function allows testing of ViUInt8[] input parameter
+- `'ViUInt8ArrayOutputFunction'`
+	- This function allows testing of ViUInt8[] output parameter
+- `'AcceptViUInt32Array'`
+	- This function allows testing of ViUInt32[] input parameter
+- `'GetViInt32Array'`
+	- This function allows testing of ViInt32[] output parameter
+- `'GetViUInt32Array'`
+	- This function allows testing of ViUInt32[] output parameter
+- `'AcceptViSessionArray'`
+	- This function allows testing of ViSession[] input parameter
+- `'GetArrayViUInt8WithEnum'`
+  - This function allows testing of ViUInt8[] output parameters that use enum
+- Changed `'GetAnIviDanceWithATwistString'` to `'GetAnIviDanceWithATwistArray'` and updated the parameters
+    -  This function allows testing of ivi-dance-with-a-twist mechanism
  
 The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
 with the session_repository.

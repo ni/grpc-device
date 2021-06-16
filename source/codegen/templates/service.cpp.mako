@@ -44,6 +44,18 @@ namespace ${config["namespace_component"]}_grpc {
       output->Add(item != VI_FALSE);
     }
   }
+
+% endif
+% if common_helpers.has_enum_array_string_out_param(functions):
+  template <typename TEnum>
+  void ${service_class_prefix}Service::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
+  {
+    for (auto item : input)
+    {
+      output->Add(item);
+    }
+  }
+
 % endif
 % if 'custom_types' in locals():
 %   for custom_type in custom_types:
@@ -85,6 +97,8 @@ namespace ${config["namespace_component"]}_grpc {
 ${mako_helper.define_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   elif common_helpers.has_ivi_dance_param(parameters):
 ${mako_helper.define_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+%   elif common_helpers.has_ivi_dance_with_a_twist_param(parameters):
+${mako_helper.define_ivi_dance_with_a_twist_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   else:
 ${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   endif

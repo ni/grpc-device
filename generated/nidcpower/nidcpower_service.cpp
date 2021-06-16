@@ -29,6 +29,7 @@ namespace nidcpower_grpc {
       output->Add(item != VI_FALSE);
     }
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::AbortWithChannels(::grpc::ServerContext* context, const AbortWithChannelsRequest* request, AbortWithChannelsResponse* response)

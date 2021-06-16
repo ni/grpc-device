@@ -13,6 +13,9 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
+def is_string_arg(parameter):
+  return parameter['type'] in ['ViChar[]', 'ViInt8[]', 'ViUInt8[]']
+
 def get_underlying_type_name(parameter_type):
   '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
   return parameter_type.replace("struct ","").replace('[]', '')
@@ -26,7 +29,7 @@ def is_unsupported_parameter(parameter):
       or is_unsupported_scalar_array(parameter)
 
 def is_unsupported_size_mechanism(parameter):
-  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', None}
+  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', None}
 
 def is_unsupported_struct(parameter):
   return is_struct(parameter) and is_input_parameter(parameter)
@@ -34,7 +37,12 @@ def is_unsupported_struct(parameter):
 def is_unsupported_scalar_array(parameter):
   if not is_array(parameter['type']):
     return False
-  return is_enum(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
+  return is_unsupported_enum_array(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
+
+def is_unsupported_enum_array(parameter):
+  if is_enum(parameter):
+    return not (is_output_parameter(parameter) and is_string_arg(parameter))
+  return False
 
 def camel_to_snake(camelString):
   '''Returns a snake_string for a given camelString.'''
@@ -110,6 +118,14 @@ def has_viboolean_array_param(functions):
         return True
   return False
 
+def has_enum_array_string_out_param(functions):
+  '''Returns True if atleast one function has output parameter of type ViChar[], ViInt8[] or ViUInt8[] that uses enum'''
+  for function in functions:
+    for parameter in functions[function]["parameters"]:
+      if is_output_parameter(parameter) and is_string_arg(parameter) and is_enum(parameter):
+        return True
+  return False
+
 def get_size_mechanism(parameter):
   size = parameter.get('size', {})
   return size.get('mechanism', None)
@@ -122,6 +138,24 @@ def has_ivi_dance_param(parameters):
 
 def get_ivi_dance_params(parameters):
   array_param = next((p for p in parameters if is_ivi_dance_array_param(p)), None)
+  size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
+  other_params = (p for p in parameters if p != array_param and p != size_param)
+  return (size_param, array_param, other_params)
+
+def get_twist_value(parameters):
+  for p in parameters:
+      if is_array(p['type']):
+        size = p.get('size', {})
+        return size.get('value_twist', None)
+
+def is_ivi_dance_array_with_a_twist_param(parameter):
+  return get_size_mechanism(parameter) == 'ivi-dance-with-a-twist'
+
+def has_ivi_dance_with_a_twist_param(parameters):
+  return any(is_ivi_dance_array_with_a_twist_param(p) for p in parameters)
+
+def get_ivi_dance_with_a_twist_params(parameters):
+  array_param = next((p for p in parameters if is_ivi_dance_array_with_a_twist_param(p)), None)
   size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
   other_params = (p for p in parameters if p != array_param and p != size_param)
   return (size_param, array_param, other_params)

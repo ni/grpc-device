@@ -67,7 +67,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidcpower" "nidmm" "nifake" "niscope" "niswitch" "nisync")
+set(nidrivers "nidcpower" "nidigitalpattern" "nidmm" "nifake" "niscope" "niswitch" "nisync" "nitclk")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -208,9 +208,9 @@ target_link_libraries(ni_grpc_device_server
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp nidcpower nidmm niScope niswitch nisync)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp nidcpower niDigital nidmm niScope niswitch nisync niTClk)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -319,6 +319,8 @@ add_executable(SystemTestsRunner
     "source/tests/system/session_utilities_service_tests.cpp"
     "source/tests/system/nidcpower_driver_api_tests.cpp"
     "source/tests/system/nidcpower_session_tests.cpp"
+    "source/tests/system/nidigital_driver_api_tests.cpp"
+    "source/tests/system/nidigital_session_tests.cpp"
     "source/tests/system/nidmm_driver_api_tests.cpp"
     "source/tests/system/nidmm_session_tests.cpp"
     "source/tests/system/niscope_driver_api_tests.cpp"
@@ -327,6 +329,7 @@ add_executable(SystemTestsRunner
     "source/tests/system/niswitch_session_tests.cpp"
     "source/tests/system/nisync_driver_api_tests.cpp"
     "source/tests/system/nisync_session_tests.cpp"
+    "source/tests/system/nitclk_driver_api_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/session_repository.cpp"
     "source/server/semaphore.cpp"
@@ -344,9 +347,9 @@ target_link_libraries(SystemTestsRunner
     ${CMAKE_DL_LIBS})
 
 if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp nidcpower nidmm niScope niswitch nisync)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nidcpower.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll")
+    target_link_libraries(SystemTestsRunner Delayimp nidcpower niDigital nidmm niScope niswitch nisync niTClk)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
 endif()
 
 # Hook up different google test runners to CTest
