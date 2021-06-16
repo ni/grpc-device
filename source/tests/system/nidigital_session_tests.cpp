@@ -39,7 +39,6 @@ class NiDigitalSessionTest : public ::testing::Test {
 #endif
   }
 
-
   void ResetStubs()
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
