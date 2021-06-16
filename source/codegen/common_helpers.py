@@ -8,7 +8,7 @@ def is_array(dataType):
   return dataType.endswith("[]")
 
 def is_enum(parameter):
-  return "enum" in parameter
+  return "enum" in parameter or "mapped-enum" in parameter
 
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
@@ -108,6 +108,8 @@ def get_function_enums(functions):
     for parameter in functions[function]['parameters']:
       if 'enum' in parameter:
         function_enums.add(parameter['enum'])
+      if 'mapped-enum' in parameter:
+        function_enums.add(parameter['mapped-enum'])
   return function_enums
 
 def has_viboolean_array_param(functions):

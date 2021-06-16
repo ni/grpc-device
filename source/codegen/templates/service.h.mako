@@ -7,7 +7,8 @@ enums = data['enums']
 config = data['config']
 functions = data['functions']
 
-enums_to_map = [e for e in enums if e in enums and enums[e].get("generate-mappings", False)]
+function_enums = common_helpers.get_function_enums(functions)
+enums_to_map = [e for e in function_enums if enums[e].get("generate-mappings", False)]
 service_class_prefix = config["service_class_prefix"]
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = config["namespace_component"] + "_grpc::"
@@ -66,9 +67,10 @@ private:
 % for enum in enums_to_map:
 <%
   enum_value = service_helpers.python_to_c(enums[enum])
+  map_prefix = enum[:-len("Mapped")] if enum.endswith("Mapped") else enum
 %>\
-  std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
-  std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
+  std::map<std::int32_t, ${enum_value}> ${map_prefix.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
+  std::map<${enum_value}, std::int32_t> ${map_prefix.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
 % endfor
 };
 

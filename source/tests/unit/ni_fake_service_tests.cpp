@@ -761,7 +761,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   std::int64_t an_int_64 = 42;
   nifake_grpc::Turtle an_int_enum = nifake_grpc::Turtle::TURTLE_MICHELANGELO;
   double a_float = 4.2;
-  nifake_grpc::FloatEnum a_float_enum = nifake_grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE;
+  nifake_grpc::FloatEnumMapped a_float_enum = nifake_grpc::FloatEnumMapped::FLOAT_ENUM_SIX_POINT_FIVE;
   float expected_float_enum_value = 6.5;
   std::int32_t expected_string_size = 12;
   char a_string[] = "Hello There!";
@@ -788,7 +788,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   request.set_an_int64(an_int_64);
   request.set_an_int_enum(an_int_enum);
   request.set_a_float(a_float);
-  request.set_a_float_enum(a_float_enum);
+  request.set_a_float_enum_mapped(a_float_enum);
   request.set_a_string(a_string);
   nifake_grpc::ParametersAreMultipleTypesResponse response;
   ::grpc::Status status = service.ParametersAreMultipleTypes(&context, &request, &response);
@@ -988,7 +988,7 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
   EXPECT_EQ(an_int_enum, response.an_int_enum());
   EXPECT_EQ(an_int_enum, response.an_int_enum_raw());
   EXPECT_EQ(a_float, response.a_float());
-  EXPECT_EQ(nifake_grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE, response.a_float_enum());
+  EXPECT_EQ(nifake_grpc::FloatEnumMapped::FLOAT_ENUM_SIX_POINT_FIVE, response.a_float_enum_mapped());
   EXPECT_EQ(a_float_enum, response.a_float_enum_raw());
   EXPECT_THAT(response.an_array(), ElementsAreArray(an_array, array_size));
   EXPECT_STREQ(response.a_string().c_str(), a_string);
@@ -1057,14 +1057,14 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library;
   nifake_grpc::NiFakeService service(&library, &session_repository);
-  nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_O_S_NAMES_UNSPECIFIED;
+  nifake_grpc::MobileOSNamesMapped a_mobile_o_s_name = nifake_grpc::MOBILE_O_S_NAMES_MAPPED_UNSPECIFIED;
   EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults)
       .Times(0);
 
   ::grpc::ServerContext context;
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
   request.mutable_vi()->set_id(session_id);
-  request.set_a_mobile_o_s_name(a_mobile_o_s_name);
+  request.set_a_mobile_o_s_name_mapped(a_mobile_o_s_name);
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsResponse response;
   ::grpc::Status status = service.StringValuedEnumInputFunctionWithDefaults(&context, &request, &response);
 
@@ -1078,7 +1078,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   std::uint32_t session_id = create_session(session_repository, kTestViSession);
   NiFakeMockLibrary library;
   nifake_grpc::NiFakeService service(&library, &session_repository);
-  nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_O_S_NAMES_ANDROID;
+  nifake_grpc::MobileOSNamesMapped a_mobile_o_s_name = nifake_grpc::MOBILE_O_S_NAMES_ANDROID;
   const char* expected_enum_value = NIFAKE_VAL_ANDROID;
   EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults(kTestViSession, Pointee(*expected_enum_value)))
       .WillOnce(Return(kDriverSuccess));
@@ -1086,7 +1086,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   ::grpc::ServerContext context;
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
   request.mutable_vi()->set_id(session_id);
-  request.set_a_mobile_o_s_name(a_mobile_o_s_name);
+  request.set_a_mobile_o_s_name_mapped(a_mobile_o_s_name);
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsResponse response;
   ::grpc::Status status = service.StringValuedEnumInputFunctionWithDefaults(&context, &request, &response);
 

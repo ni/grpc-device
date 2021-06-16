@@ -30,6 +30,8 @@ enum ${service_class_prefix}Attributes {
 <%
   enum = enums[enum_name]
   enum_value_prefix = enum.get("enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper())
+  is_mapped_enum = enum.get("generate-mappings", False)
+  enum_name = f"{enum_name}Mapped" if (is_mapped_enum and not enum_name.endswith("Mapped")) else enum_name
   allow_alias = enum.get("allow-alias", proto_helpers.should_allow_alias(enum))
   nonint_index = 1
 %>\
@@ -37,9 +39,13 @@ enum ${enum_name} {
 %   if allow_alias == True:
   option allow_alias = true;
 %   endif
+%   if is_mapped_enum:
+  ${enum_value_prefix}_MAPPED_UNSPECIFIED = 0;
+%   else:
   ${enum_value_prefix}_UNSPECIFIED = 0;
+%   endif
 %   for value in enum["values"]:
-%     if enum.get("generate-mappings", False):
+%     if is_mapped_enum:
   ${enum_value_prefix}_${value["name"]} = ${nonint_index};
 <%
     nonint_index = nonint_index + 1
@@ -79,23 +85,38 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 % for parameter in input_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter["name"])
-  grpc_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
+  is_array = common_helpers.is_array(parameter["type"])
   if 'grpc_type' in parameter:
     parameter_type = parameter['grpc_type']
   else:
-    parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
+    parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
 %>\
 %   if common_helpers.is_enum(parameter):
 <%
-  is_array = common_helpers.is_array(parameter["type"])
-  non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
+  enum_parameter_type = None
+  mapped_type = None
+  if parameter.get('enum', None):
+    enum_parameter_type = f"repeated {parameter['enum']}" if is_array else parameter['enum']
+    grpc_enum_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
+  if parameter.get('mapped-enum', None):
+    mapped_type = f"repeated {parameter['mapped-enum']}" if is_array else parameter['mapped-enum']
+    mapped_type = mapped_type if mapped_type.endswith('Mapped') else f'{mapped_type}Mapped'
+    grpc_mapped_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_mapped")
   grpc_raw_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_raw")
 %>\
   oneof ${parameter_name}_enum {
-    ${parameter_type} ${parameter_name} = ${grpc_field_number};
-    ${non_enum_type} ${parameter_name}_raw = ${grpc_raw_field_number};
+%   if enum_parameter_type:
+    ${enum_parameter_type} ${parameter_name} = ${grpc_enum_field_number};
+%   endif
+%   if mapped_type:
+    ${mapped_type} ${parameter_name}_mapped = ${grpc_mapped_field_number};
+%   endif
+    ${parameter_type} ${parameter_name}_raw = ${grpc_raw_field_number};
   }
 %   else:
+<%
+  grpc_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
+%>\
   ${parameter_type} ${parameter_name} = ${grpc_field_number};
 %   endif
 % endfor
@@ -114,21 +135,36 @@ message ${common_helpers.snake_to_pascal(function)}Response {
 % for parameter in output_parameters:
 <%
   parameter_name = common_helpers.camel_to_snake(parameter["name"])
-  grpc_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
+  is_array = common_helpers.is_array(parameter["type"])
   if "grpc_type" in parameter:
     parameter_type = parameter["grpc_type"]
   else:
-    parameter_type = proto_helpers.determine_function_parameter_type(parameter, service_class_prefix)
+    parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
 %>\
 %   if common_helpers.is_enum(parameter):
 <%
-  is_array = common_helpers.is_array(parameter["type"])
-  non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
+  enum_parameter_type = None
+  mapped_type = None
+  if parameter.get('enum', None):
+    enum_parameter_type = f"repeated {parameter['enum']}" if is_array else parameter['enum']
+    grpc_enum_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
+  if parameter.get('mapped-enum', None):
+    mapped_type = f"repeated {parameter['mapped-enum']}" if is_array else parameter['mapped-enum']
+    mapped_type = mapped_type if mapped_type.endswith('Mapped') else f'{mapped_type}Mapped'
+    grpc_mapped_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_mapped")
   grpc_raw_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_raw")
 %>\
-  ${parameter_type} ${parameter_name} = ${grpc_field_number};
-  ${non_enum_type} ${parameter_name}_raw = ${grpc_raw_field_number};
+%   if enum_parameter_type:
+  ${enum_parameter_type} ${parameter_name} = ${grpc_enum_field_number};
+%   endif
+%   if mapped_type:
+    ${mapped_type} ${parameter_name}_mapped = ${grpc_mapped_field_number};
+%   endif
+  ${parameter_type} ${parameter_name}_raw = ${grpc_raw_field_number};
 %   else:
+<%
+  grpc_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
+%>\
   ${parameter_type} ${parameter_name} = ${grpc_field_number};
 %   endif
 % endfor

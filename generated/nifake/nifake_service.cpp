@@ -1021,10 +1021,10 @@ namespace nifake_grpc {
       ViReal64 a_float = request->a_float();
       ViReal64 a_float_enum;
       switch (request->a_float_enum_enum_case()) {
-        case nifake_grpc::ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::kAFloatEnum: {
-          auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum());
+        case nifake_grpc::ParametersAreMultipleTypesRequest::AFloatEnumEnumCase::kAFloatEnumMapped: {
+          auto a_float_enum_imap_it = floatenum_input_map_.find(request->a_float_enum_mapped());
           if (a_float_enum_imap_it == floatenum_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum_mapped was not specified or out of range.");
           }
           a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
           break;
@@ -1232,7 +1232,7 @@ namespace nifake_grpc {
         response->set_a_float(a_float);
         auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
         if(a_float_enum_omap_it != floatenum_output_map_.end()) {
-          response->set_a_float_enum(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
+          response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnumMapped>(a_float_enum_omap_it->second));
         }
         response->set_a_float_enum_raw(a_float_enum);
         response->set_a_string(a_string);
@@ -1256,10 +1256,10 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString a_mobile_o_s_name;
       switch (request->a_mobile_o_s_name_enum_case()) {
-        case nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::kAMobileOSName: {
-          auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name());
+        case nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::kAMobileOSNameMapped: {
+          auto a_mobile_o_s_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_o_s_name_mapped());
           if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name_mapped was not specified or out of range.");
           }
           a_mobile_o_s_name = const_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
           break;

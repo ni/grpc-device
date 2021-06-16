@@ -132,31 +132,45 @@ ${initialize_standard_input_param(function_name, parameter)}\
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
   pascal_field_name = common_helpers.snake_to_pascal(field_name)
-  map_name = parameter["enum"].lower() + "_input_map_"
-  mapped_enum_iterator_name = field_name + "_imap_it"
   one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{pascal_field_name}EnumCase'
-  enum_request_snippet = f'request->{field_name}()'
+  has_mapped_enum = 'mapped-enum' in parameter
+  has_unmapped_enum = 'enum' in parameter
+  if has_mapped_enum:
+    mapped_enum_name = parameter["mapped-enum"]
+    map_name_prefix = mapped_enum_name[:-len("Mapped")] if mapped_enum_name.endswith("Mapped") else mapped_enum_name
+    map_name = map_name_prefix.lower() + "_input_map_"
+    mapped_enum_iterator_name = field_name + "_imap_it"
+    mapped_request_snippet = f'request->{field_name}_mapped()'
+  if has_unmapped_enum:
+    enum_request_snippet = f'request->{field_name}()'
   raw_request_snippet = f'request->{field_name}_raw()'
 %>\
       ${parameter['type']} ${parameter_name};
       switch (request->${field_name}_enum_case()) {
+% if has_unmapped_enum:
         case ${one_of_case_prefix}::k${pascal_field_name}: {
-% if enums[parameter["enum"]].get("generate-mappings", False):
-          auto ${mapped_enum_iterator_name} = ${map_name}.find(${enum_request_snippet});
-          if (${mapped_enum_iterator_name} == ${map_name}.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
-          }
-<%
-  enum_request_snippet = f'{mapped_enum_iterator_name}->second'
-%>\
-% endif
-% if parameter['type'] in ["ViConstString", "ViString"]:
+%   if parameter['type'] in ["ViConstString", "ViString"]:
           ${parameter_name} = const_cast<${parameter['type']}>((${enum_request_snippet}).c_str());
-% else:
+%   else:
           ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
-% endif
+%   endif
           break;
         }
+% endif
+% if has_mapped_enum:
+        case ${one_of_case_prefix}::k${pascal_field_name}Mapped: {
+          auto ${mapped_enum_iterator_name} = ${map_name}.find(${mapped_request_snippet});
+          if (${mapped_enum_iterator_name} == ${map_name}.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name}_mapped was not specified or out of range.");
+          }
+%   if parameter['type'] in ["ViConstString", "ViString"]:
+          ${parameter_name} = const_cast<${parameter['type']}>((${f'{mapped_enum_iterator_name}->second'}).c_str());
+%   else:
+          ${parameter_name} = static_cast<${parameter['type']}>(${f'{mapped_enum_iterator_name}->second'});
+%   endif
+          break;
+        }
+% endif
         case ${one_of_case_prefix}::k${pascal_field_name}Raw: {
 % if parameter['type'] in ["ViConstString", "ViString"]:
           ${parameter_name} = const_cast<${parameter['type']}>(${raw_request_snippet}.c_str());
@@ -282,23 +296,31 @@ ${initialize_standard_input_param(function_name, parameter)}\
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
 %   if common_helpers.is_enum(parameter) == True:
-%     if enums[parameter["enum"]].get("generate-mappings", False):
 <%
-  map_name = parameter["enum"].lower() + "_output_map_"
-  mapped_enum_iterator_name = parameter_name + "_omap_it"
+  has_mapped_enum = 'mapped-enum' in parameter
+  has_unmapped_enum = 'enum' in parameter
+  if has_mapped_enum:
+    mapped_enum_name = parameter["mapped-enum"]
+    mapped_enum_type = mapped_enum_name[:-len("Mapped")] if mapped_enum_name.endswith("Mapped") else mapped_enum_name
+    map_name = mapped_enum_type.lower() + "_output_map_"
+    mapped_enum_iterator_name = parameter_name + "_omap_it"
 %>\
+%     if has_mapped_enum:
         auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
         if(${mapped_enum_iterator_name} != ${map_name}.end()) {
-          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${mapped_enum_iterator_name}->second));
+          response->set_${parameter_name}_mapped(static_cast<${namespace_prefix}${mapped_enum_type}Mapped>(${mapped_enum_iterator_name}->second));
         }
-%     elif common_helpers.is_array(parameter['type']) and common_helpers.is_string_arg(parameter):
+%     endif
+%     if has_unmapped_enum:
+%       if common_helpers.is_array(parameter['type']) and common_helpers.is_string_arg(parameter):
         CopyBytesToEnums(${parameter_name}, response->mutable_${parameter_name}());
-%     elif parameter['type'] == 'ViReal64':
+%       elif parameter['type'] == 'ViReal64':
         if(${parameter_name} == (int)${parameter_name}) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
         }
-%     else:
+%       else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+%       endif
 %     endif
         response->set_${parameter_name}_raw(${parameter_name});
 %   elif common_helpers.is_array(parameter['type']):

@@ -61,16 +61,6 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
 
   return "repeated " + type if add_repeated else type
 
-def determine_function_parameter_type(parameter, driver_name_pascal):
-  is_array = common_helpers.is_array(parameter["type"])
-  if common_helpers.is_enum(parameter) :
-    parameter_type = parameter["enum"]
-    if is_array :
-      parameter_type = "repeated " + parameter_type
-  else:
-    parameter_type = get_grpc_type_from_ivi(parameter["type"], is_array, driver_name_pascal)
-  return parameter_type
-
 def should_allow_alias(enums):
   if enums.get("generate-mappings", False):
     return False
