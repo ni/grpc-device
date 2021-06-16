@@ -326,7 +326,19 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 sequence_handle = request->sequence_handle();
+      ViInt32 sequence_handle;
+      switch (request->sequence_handle_enum_case()) {
+        case nifgen_grpc::ClearArbSequenceRequest::SequenceHandleEnumCase::kSequenceHandle:
+          sequence_handle = (ViInt32)request->sequence_handle();
+          break;
+        case nifgen_grpc::ClearArbSequenceRequest::SequenceHandleEnumCase::kSequenceHandleRaw:
+          sequence_handle = (ViInt32)request->sequence_handle_raw();
+          break;
+        case nifgen_grpc::ClearArbSequenceRequest::SequenceHandleEnumCase::SEQUENCE_HANDLE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sequence_handle was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ClearArbSequence(vi, sequence_handle);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -346,7 +358,19 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 waveform_handle = request->waveform_handle();
+      ViInt32 waveform_handle;
+      switch (request->waveform_handle_enum_case()) {
+        case nifgen_grpc::ClearArbWaveformRequest::WaveformHandleEnumCase::kWaveformHandle:
+          waveform_handle = (ViInt32)request->waveform_handle();
+          break;
+        case nifgen_grpc::ClearArbWaveformRequest::WaveformHandleEnumCase::kWaveformHandleRaw:
+          waveform_handle = (ViInt32)request->waveform_handle_raw();
+          break;
+        case nifgen_grpc::ClearArbWaveformRequest::WaveformHandleEnumCase::WAVEFORM_HANDLE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for waveform_handle was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ClearArbWaveform(vi, waveform_handle);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -385,7 +409,19 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 frequency_list_handle = request->frequency_list_handle();
+      ViInt32 frequency_list_handle;
+      switch (request->frequency_list_handle_enum_case()) {
+        case nifgen_grpc::ClearFreqListRequest::FrequencyListHandleEnumCase::kFrequencyListHandle:
+          frequency_list_handle = (ViInt32)request->frequency_list_handle();
+          break;
+        case nifgen_grpc::ClearFreqListRequest::FrequencyListHandleEnumCase::kFrequencyListHandleRaw:
+          frequency_list_handle = (ViInt32)request->frequency_list_handle_raw();
+          break;
+        case nifgen_grpc::ClearFreqListRequest::FrequencyListHandleEnumCase::FREQUENCY_LIST_HANDLE_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_list_handle was not specified or out of range");
+          break;
+      }
+
       auto status = library_->ClearFreqList(vi, frequency_list_handle);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1649,7 +1685,19 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 signal = request->signal();
+      ViInt32 signal;
+      switch (request->signal_enum_case()) {
+        case nifgen_grpc::ExportSignalRequest::SignalEnumCase::kSignal:
+          signal = (ViInt32)request->signal();
+          break;
+        case nifgen_grpc::ExportSignalRequest::SignalEnumCase::kSignalRaw:
+          signal = (ViInt32)request->signal_raw();
+          break;
+        case nifgen_grpc::ExportSignalRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
+          break;
+      }
+
       ViConstString signal_identifier = request->signal_identifier().c_str();
       ViConstString output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
@@ -2731,8 +2779,32 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 route_signal_from = request->route_signal_from();
-      ViInt32 route_signal_to = request->route_signal_to();
+      ViInt32 route_signal_from;
+      switch (request->route_signal_from_enum_case()) {
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalFromEnumCase::kRouteSignalFrom:
+          route_signal_from = (ViInt32)request->route_signal_from();
+          break;
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalFromEnumCase::kRouteSignalFromRaw:
+          route_signal_from = (ViInt32)request->route_signal_from_raw();
+          break;
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalFromEnumCase::ROUTE_SIGNAL_FROM_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for route_signal_from was not specified or out of range");
+          break;
+      }
+
+      ViInt32 route_signal_to;
+      switch (request->route_signal_to_enum_case()) {
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalToEnumCase::kRouteSignalTo:
+          route_signal_to = (ViInt32)request->route_signal_to();
+          break;
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalToEnumCase::kRouteSignalToRaw:
+          route_signal_to = (ViInt32)request->route_signal_to_raw();
+          break;
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalToEnumCase::ROUTE_SIGNAL_TO_ENUM_NOT_SET:
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for route_signal_to was not specified or out of range");
+          break;
+      }
+
       auto status = library_->RouteSignalOut(vi, channel_name, route_signal_from, route_signal_to);
       response->set_status(status);
       return ::grpc::Status::OK;

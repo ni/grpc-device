@@ -202,6 +202,7 @@ attributes = {
     1150208: {
         'access': 'read-write',
         'name': 'FREQ_LIST_HANDLE',
+        'enum': 'FrequencyListHandle',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -269,6 +270,7 @@ attributes = {
     },
     1150220: {
         'access': 'read-write',
+        'enum': 'LoadImpedance',
         'name': 'LOAD_IMPEDANCE',
         'resettable': True,
         'type': 'ViReal64'
@@ -521,7 +523,8 @@ attributes = {
         'access': 'read-write',
         'name': 'OSP_OVERFLOW_STATUS',
         'resettable': True,
-        'type': 'ViInt32'
+        'type': 'ViInt32',
+        'enum': 'OspOverflowStatus'
     },
     1150270: {
         'access': 'read-write',
@@ -1079,7 +1082,7 @@ attributes = {
     },
     1150399: {
         'access': 'read-write',
-        'enum': 'P2pAddressType',
+        'enum': 'AddressType',
         'name': 'P2P_DATA_TRANSFER_PERMISSION_ADDRESS_TYPE',
         'resettable': False,
         'type': 'ViInt32'
@@ -1098,7 +1101,7 @@ attributes = {
     },
     1150402: {
         'access': 'read-write',
-        'enum': 'P2pAddressType',
+        'enum': 'AddressType',
         'name': 'P2P_ENDPOINT_WINDOW_ADDRESS_TYPE',
         'resettable': False,
         'type': 'ViInt32'
@@ -1117,7 +1120,7 @@ attributes = {
     },
     1150406: {
         'access': 'read-write',
-        'enum': 'P2pAddressType',
+        'enum': 'AddressType',
         'name': 'P2P_DONE_NOTIFICATION_ADDRESS_TYPE',
         'resettable': False,
         'type': 'ViInt32'
@@ -1179,6 +1182,7 @@ attributes = {
     },
     1250004: {
         'access': 'read-write',
+        'enum': 'OutputImpedance',
         'name': 'OUTPUT_IMPEDANCE',
         'resettable': True,
         'type': 'ViReal64'
@@ -1223,6 +1227,7 @@ attributes = {
     1250201: {
         'access': 'read-write',
         'name': 'ARB_WAVEFORM_HANDLE',
+        'enum': 'ArbitraryWaveformHandle',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -1240,6 +1245,7 @@ attributes = {
     },
     1250204: {
         'access': 'read-write',
+        'enum': 'SampleRate',
         'name': 'ARB_SAMPLE_RATE',
         'resettable': True,
         'type': 'ViReal64'
@@ -1271,6 +1277,7 @@ attributes = {
     1250211: {
         'access': 'read-write',
         'name': 'ARB_SEQUENCE_HANDLE',
+        'enum': 'ArbitrarySequenceHandle',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -1307,6 +1314,7 @@ attributes = {
     },
     1250350: {
         'name': 'BURST_COUNT',
-        'type': 'ViInt32'
+        'type': 'ViInt32',
+        'enum': 'BurstCount'
     }
 }
