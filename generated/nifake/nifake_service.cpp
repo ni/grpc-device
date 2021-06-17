@@ -1026,7 +1026,6 @@ namespace nifake_grpc {
           if (a_float_enum_imap_it == floatenum_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_float_enum was not specified or out of range.");
           }
-
           a_float_enum = static_cast<ViReal64>(a_float_enum_imap_it->second);
           break;
         }
@@ -1262,7 +1261,6 @@ namespace nifake_grpc {
           if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
           }
-
           a_mobile_o_s_name = const_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
           break;
         }
