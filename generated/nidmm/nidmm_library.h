@@ -20,12 +20,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus Control4022(ViRsrc resourceName, ViInt32 configuration);
   ViStatus Abort(ViSession vi);
-  ViStatus CalAdjustGain(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue);
-  ViStatus CalAdjustACFilter(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 frequency, ViReal64 expectedValue);
-  ViStatus CalAdjustLC(ViSession vi, ViInt32 type);
-  ViStatus CalAdjustLinearization(ViSession vi, ViInt32 function, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue);
-  ViStatus CalAdjustMisc(ViSession vi, ViInt32 type);
-  ViStatus CalAdjustOffset(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance);
   ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
   ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
@@ -34,7 +28,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus ClearError(ViSession vi);
   ViStatus ClearInterchangeWarnings(ViSession vi);
   ViStatus Close(ViSession vi);
-  ViStatus CloseExtCal(ViSession vi, ViInt32 action);
   ViStatus ConfigureACBandwidth(ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz);
   ViStatus ConfigureADCCalibration(ViSession vi, ViInt32 adcCalibration);
   ViStatus ConfigureAutoZeroMode(ViSession vi, ViInt32 autoZeroMode);
@@ -76,10 +69,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]);
   ViStatus GetAutoRangeValue(ViSession vi, ViReal64* actualRange);
-  ViStatus GetCalCount(ViSession vi, ViInt32 calType, ViInt32* count);
   ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute);
-  ViStatus GetCalUserDefinedInfo(ViSession vi, ViInt32 bufferSize, ViChar info[256]);
-  ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize);
   ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[]);
   ViStatus GetDevTemp(ViSession vi, ViString options, ViReal64* temperature);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
@@ -95,7 +85,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
-  ViStatus InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
   ViStatus IsOverRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange);
   ViStatus IsUnderRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange);
@@ -109,7 +98,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus Reset(ViSession vi);
   ViStatus ResetInterchangeCheck(ViSession vi);
   ViStatus ResetWithDefaults(ViSession vi);
-  ViStatus RestoreLastExtCalConstants(ViSession vi);
   ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
   ViStatus SelfCal(ViSession vi);
   ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
@@ -119,19 +107,11 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
-  ViStatus SetCalPassword(ViSession vi, ViString oldPassword, ViString newPassword);
-  ViStatus SetCalUserDefinedInfo(ViSession vi, ViString info);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
 
  private:
   using Control4022Ptr = ViStatus (*)(ViRsrc resourceName, ViInt32 configuration);
   using AbortPtr = ViStatus (*)(ViSession vi);
-  using CalAdjustGainPtr = ViStatus (*)(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue);
-  using CalAdjustACFilterPtr = ViStatus (*)(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 frequency, ViReal64 expectedValue);
-  using CalAdjustLCPtr = ViStatus (*)(ViSession vi, ViInt32 type);
-  using CalAdjustLinearizationPtr = ViStatus (*)(ViSession vi, ViInt32 function, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue);
-  using CalAdjustMiscPtr = ViStatus (*)(ViSession vi, ViInt32 type);
-  using CalAdjustOffsetPtr = ViStatus (*)(ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance);
   using CheckAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   using CheckAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
   using CheckAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
@@ -140,7 +120,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using ClearErrorPtr = ViStatus (*)(ViSession vi);
   using ClearInterchangeWarningsPtr = ViStatus (*)(ViSession vi);
   using ClosePtr = ViStatus (*)(ViSession vi);
-  using CloseExtCalPtr = ViStatus (*)(ViSession vi, ViInt32 action);
   using ConfigureACBandwidthPtr = ViStatus (*)(ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz);
   using ConfigureADCCalibrationPtr = ViStatus (*)(ViSession vi, ViInt32 adcCalibration);
   using ConfigureAutoZeroModePtr = ViStatus (*)(ViSession vi, ViInt32 autoZeroMode);
@@ -182,10 +161,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using GetAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]);
   using GetAutoRangeValuePtr = ViStatus (*)(ViSession vi, ViReal64* actualRange);
-  using GetCalCountPtr = ViStatus (*)(ViSession vi, ViInt32 calType, ViInt32* count);
   using GetCalDateAndTimePtr = ViStatus (*)(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute);
-  using GetCalUserDefinedInfoPtr = ViStatus (*)(ViSession vi, ViInt32 bufferSize, ViChar info[256]);
-  using GetCalUserDefinedInfoMaxSizePtr = ViStatus (*)(ViSession vi, ViInt32* infoSize);
   using GetChannelNamePtr = ViStatus (*)(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[]);
   using GetDevTempPtr = ViStatus (*)(ViSession vi, ViString options, ViReal64* temperature);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
@@ -201,7 +177,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using InitPtr = ViStatus (*)(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   using InitWithOptionsPtr = ViStatus (*)(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   using InitiatePtr = ViStatus (*)(ViSession vi);
-  using InitExtCalPtr = ViStatus (*)(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi);
   using InvalidateAllAttributesPtr = ViStatus (*)(ViSession vi);
   using IsOverRangePtr = ViStatus (*)(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange);
   using IsUnderRangePtr = ViStatus (*)(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange);
@@ -215,7 +190,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using ResetPtr = ViStatus (*)(ViSession vi);
   using ResetInterchangeCheckPtr = ViStatus (*)(ViSession vi);
   using ResetWithDefaultsPtr = ViStatus (*)(ViSession vi);
-  using RestoreLastExtCalConstantsPtr = ViStatus (*)(ViSession vi);
   using RevisionQueryPtr = ViStatus (*)(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
   using SelfCalPtr = ViStatus (*)(ViSession vi);
   using SelfTestPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
@@ -225,19 +199,11 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using SetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   using SetAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
-  using SetCalPasswordPtr = ViStatus (*)(ViSession vi, ViString oldPassword, ViString newPassword);
-  using SetCalUserDefinedInfoPtr = ViStatus (*)(ViSession vi, ViString info);
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
     Control4022Ptr Control4022;
     AbortPtr Abort;
-    CalAdjustGainPtr CalAdjustGain;
-    CalAdjustACFilterPtr CalAdjustACFilter;
-    CalAdjustLCPtr CalAdjustLC;
-    CalAdjustLinearizationPtr CalAdjustLinearization;
-    CalAdjustMiscPtr CalAdjustMisc;
-    CalAdjustOffsetPtr CalAdjustOffset;
     CheckAttributeViBooleanPtr CheckAttributeViBoolean;
     CheckAttributeViInt32Ptr CheckAttributeViInt32;
     CheckAttributeViReal64Ptr CheckAttributeViReal64;
@@ -246,7 +212,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     ClearErrorPtr ClearError;
     ClearInterchangeWarningsPtr ClearInterchangeWarnings;
     ClosePtr Close;
-    CloseExtCalPtr CloseExtCal;
     ConfigureACBandwidthPtr ConfigureACBandwidth;
     ConfigureADCCalibrationPtr ConfigureADCCalibration;
     ConfigureAutoZeroModePtr ConfigureAutoZeroMode;
@@ -288,10 +253,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     GetAttributeViSessionPtr GetAttributeViSession;
     GetAttributeViStringPtr GetAttributeViString;
     GetAutoRangeValuePtr GetAutoRangeValue;
-    GetCalCountPtr GetCalCount;
     GetCalDateAndTimePtr GetCalDateAndTime;
-    GetCalUserDefinedInfoPtr GetCalUserDefinedInfo;
-    GetCalUserDefinedInfoMaxSizePtr GetCalUserDefinedInfoMaxSize;
     GetChannelNamePtr GetChannelName;
     GetDevTempPtr GetDevTemp;
     GetErrorPtr GetError;
@@ -307,7 +269,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     InitPtr Init;
     InitWithOptionsPtr InitWithOptions;
     InitiatePtr Initiate;
-    InitExtCalPtr InitExtCal;
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsOverRangePtr IsOverRange;
     IsUnderRangePtr IsUnderRange;
@@ -321,7 +282,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     ResetPtr Reset;
     ResetInterchangeCheckPtr ResetInterchangeCheck;
     ResetWithDefaultsPtr ResetWithDefaults;
-    RestoreLastExtCalConstantsPtr RestoreLastExtCalConstants;
     RevisionQueryPtr RevisionQuery;
     SelfCalPtr SelfCal;
     SelfTestPtr SelfTest;
@@ -331,8 +291,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     SetAttributeViReal64Ptr SetAttributeViReal64;
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
-    SetCalPasswordPtr SetCalPassword;
-    SetCalUserDefinedInfoPtr SetCalUserDefinedInfo;
     UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
