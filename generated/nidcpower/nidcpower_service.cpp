@@ -84,15 +84,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeMeasureTriggerWithChannels(vi, channel_name, input_terminal, edge);
@@ -118,15 +121,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgePulseTriggerWithChannels(vi, channel_name, input_terminal, edge);
@@ -152,15 +158,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels(vi, channel_name, input_terminal, edge);
@@ -186,15 +195,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeShutdownTriggerWithChannels(vi, channel_name, input_terminal, edge);
@@ -220,15 +232,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeSourceTriggerWithChannels(vi, channel_name, input_terminal, edge);
@@ -254,15 +269,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeStartTriggerWithChannels(vi, channel_name, input_terminal, edge);
@@ -429,15 +447,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 source_mode;
       switch (request->source_mode_enum_case()) {
-        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceMode:
-          source_mode = (ViInt32)request->source_mode();
+        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceMode: {
+          source_mode = static_cast<ViInt32>(request->source_mode());
           break;
-        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceModeRaw:
-          source_mode = (ViInt32)request->source_mode_raw();
+        }
+        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceModeRaw: {
+          source_mode = static_cast<ViInt32>(request->source_mode_raw());
           break;
-        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mode was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureSourceModeWithChannels(vi, channel_name, source_mode);
@@ -696,15 +717,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 signal;
       switch (request->signal_enum_case()) {
-        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignal:
-          signal = (ViInt32)request->signal();
+        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignal: {
+          signal = static_cast<ViInt32>(request->signal());
           break;
-        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignalRaw:
-          signal = (ViInt32)request->signal_raw();
+        }
+        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignalRaw: {
+          signal = static_cast<ViInt32>(request->signal_raw());
           break;
-        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
           break;
+        }
       }
 
       ViConstString signal_identifier = request->signal_identifier().c_str();
@@ -822,15 +846,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 trigger;
       switch (request->trigger_enum_case()) {
-        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTrigger:
-          trigger = (ViInt32)request->trigger();
+        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTrigger: {
+          trigger = static_cast<ViInt32>(request->trigger());
           break;
-        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTriggerRaw:
-          trigger = (ViInt32)request->trigger_raw();
+        }
+        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTriggerRaw: {
+          trigger = static_cast<ViInt32>(request->trigger_raw());
           break;
-        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->SendSoftwareEdgeTriggerWithChannels(vi, channel_name, trigger);
@@ -855,15 +882,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 event_id;
       switch (request->event_id_enum_case()) {
-        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventId:
-          event_id = (ViInt32)request->event_id();
+        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventId: {
+          event_id = static_cast<ViInt32>(request->event_id());
           break;
-        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventIdRaw:
-          event_id = (ViInt32)request->event_id_raw();
+        }
+        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventIdRaw: {
+          event_id = static_cast<ViInt32>(request->event_id_raw());
           break;
-        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event_id was not specified or out of range");
           break;
+        }
       }
 
       ViReal64 timeout = request->timeout();
@@ -887,6 +917,201 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustCurrentLimit(::grpc::ServerContext* context, const CalAdjustCurrentLimitRequest* request, CalAdjustCurrentLimitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto requested_outputs = const_cast<ViReal64*>(request->requested_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustCurrentLimit(vi, channel_name, range, number_of_measurements, requested_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustCurrentMeasurement(::grpc::ServerContext* context, const CalAdjustCurrentMeasurementRequest* request, CalAdjustCurrentMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto reported_outputs = const_cast<ViReal64*>(request->reported_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustCurrentMeasurement(vi, channel_name, range, number_of_measurements, reported_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustInternalReference(::grpc::ServerContext* context, const CalAdjustInternalReferenceRequest* request, CalAdjustInternalReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 internal_reference;
+      switch (request->internal_reference_enum_case()) {
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::kInternalReference: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference());
+          break;
+        }
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::kInternalReferenceRaw: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference_raw());
+          break;
+        }
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::INTERNAL_REFERENCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for internal_reference was not specified or out of range");
+          break;
+        }
+      }
+
+      ViReal64 adjusted_internal_reference = request->adjusted_internal_reference();
+      auto status = library_->CalAdjustInternalReference(vi, internal_reference, adjusted_internal_reference);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustOutputResistance(::grpc::ServerContext* context, const CalAdjustOutputResistanceRequest* request, CalAdjustOutputResistanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto requested_outputs = const_cast<ViReal64*>(request->requested_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustOutputResistance(vi, channel_name, number_of_measurements, requested_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustResidualCurrentOffset(::grpc::ServerContext* context, const CalAdjustResidualCurrentOffsetRequest* request, CalAdjustResidualCurrentOffsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      auto status = library_->CalAdjustResidualCurrentOffset(vi, channel_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustResidualVoltageOffset(::grpc::ServerContext* context, const CalAdjustResidualVoltageOffsetRequest* request, CalAdjustResidualVoltageOffsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      auto status = library_->CalAdjustResidualVoltageOffset(vi, channel_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustVoltageLevel(::grpc::ServerContext* context, const CalAdjustVoltageLevelRequest* request, CalAdjustVoltageLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto requested_outputs = const_cast<ViReal64*>(request->requested_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustVoltageLevel(vi, channel_name, range, number_of_measurements, requested_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustVoltageMeasurement(::grpc::ServerContext* context, const CalAdjustVoltageMeasurementRequest* request, CalAdjustVoltageMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto reported_outputs = const_cast<ViReal64*>(request->reported_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustVoltageMeasurement(vi, channel_name, range, number_of_measurements, reported_outputs, measured_outputs);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -975,6 +1200,42 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 action;
+      switch (request->action_enum_case()) {
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::kAction: {
+          action = static_cast<ViInt32>(request->action());
+          break;
+        }
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::kActionRaw: {
+          action = static_cast<ViInt32>(request->action_raw());
+          break;
+        }
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::ACTION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
+          break;
+        }
+      }
+
+      session_repository_->remove_session(vi);
+      auto status = library_->CloseExtCal(vi, action);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1006,15 +1267,18 @@ namespace nidcpower_grpc {
       ViReal64 aperture_time = request->aperture_time();
       ViInt32 units;
       switch (request->units_enum_case()) {
-        case nidcpower_grpc::ConfigureApertureTimeRequest::UnitsEnumCase::kUnits:
-          units = (ViInt32)request->units();
+        case nidcpower_grpc::ConfigureApertureTimeRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<ViInt32>(request->units());
           break;
-        case nidcpower_grpc::ConfigureApertureTimeRequest::UnitsEnumCase::kUnitsRaw:
-          units = (ViInt32)request->units_raw();
+        }
+        case nidcpower_grpc::ConfigureApertureTimeRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<ViInt32>(request->units_raw());
           break;
-        case nidcpower_grpc::ConfigureApertureTimeRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureApertureTimeRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureApertureTime(vi, channel_name, aperture_time, units);
@@ -1039,15 +1303,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 auto_zero;
       switch (request->auto_zero_enum_case()) {
-        case nidcpower_grpc::ConfigureAutoZeroRequest::AutoZeroEnumCase::kAutoZero:
-          auto_zero = (ViInt32)request->auto_zero();
+        case nidcpower_grpc::ConfigureAutoZeroRequest::AutoZeroEnumCase::kAutoZero: {
+          auto_zero = static_cast<ViInt32>(request->auto_zero());
           break;
-        case nidcpower_grpc::ConfigureAutoZeroRequest::AutoZeroEnumCase::kAutoZeroRaw:
-          auto_zero = (ViInt32)request->auto_zero_raw();
+        }
+        case nidcpower_grpc::ConfigureAutoZeroRequest::AutoZeroEnumCase::kAutoZeroRaw: {
+          auto_zero = static_cast<ViInt32>(request->auto_zero_raw());
           break;
-        case nidcpower_grpc::ConfigureAutoZeroRequest::AutoZeroEnumCase::AUTO_ZERO_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureAutoZeroRequest::AutoZeroEnumCase::AUTO_ZERO_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_zero was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureAutoZero(vi, channel_name, auto_zero);
@@ -1114,15 +1381,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 behavior;
       switch (request->behavior_enum_case()) {
-        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehavior:
-          behavior = (ViInt32)request->behavior();
+        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehavior: {
+          behavior = static_cast<ViInt32>(request->behavior());
           break;
-        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehaviorRaw:
-          behavior = (ViInt32)request->behavior_raw();
+        }
+        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehaviorRaw: {
+          behavior = static_cast<ViInt32>(request->behavior_raw());
           break;
-        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::BEHAVIOR_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::BEHAVIOR_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for behavior was not specified or out of range");
           break;
+        }
       }
 
       ViReal64 limit = request->limit();
@@ -1169,15 +1439,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeMeasureTrigger(vi, input_terminal, edge);
@@ -1202,15 +1475,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgePulseTrigger(vi, input_terminal, edge);
@@ -1235,15 +1511,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTrigger(vi, input_terminal, edge);
@@ -1268,15 +1547,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeSourceTrigger(vi, input_terminal, edge);
@@ -1301,15 +1583,18 @@ namespace nidcpower_grpc {
       ViConstString input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdge:
-          edge = (ViInt32)request->edge();
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdgeRaw:
-          edge = (ViInt32)request->edge_raw();
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
           break;
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, input_terminal, edge);
@@ -1355,15 +1640,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 function;
       switch (request->function_enum_case()) {
-        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::kFunction:
-          function = (ViInt32)request->function();
+        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::kFunction: {
+          function = static_cast<ViInt32>(request->function());
           break;
-        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::kFunctionRaw:
-          function = (ViInt32)request->function_raw();
+        }
+        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::kFunctionRaw: {
+          function = static_cast<ViInt32>(request->function_raw());
           break;
-        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::FUNCTION_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::FUNCTION_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for function was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureOutputFunction(vi, channel_name, function);
@@ -1408,15 +1696,18 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViReal64 powerline_frequency;
       switch (request->powerline_frequency_enum_case()) {
-        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequency:
-          powerline_frequency = (ViReal64)request->powerline_frequency();
+        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequency: {
+          powerline_frequency = static_cast<ViReal64>(request->powerline_frequency());
           break;
-        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequencyRaw:
-          powerline_frequency = (ViReal64)request->powerline_frequency_raw();
+        }
+        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequencyRaw: {
+          powerline_frequency = static_cast<ViReal64>(request->powerline_frequency_raw());
           break;
-        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::POWERLINE_FREQUENCY_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::POWERLINE_FREQUENCY_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for powerline_frequency was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigurePowerLineFrequency(vi, powerline_frequency);
@@ -1693,15 +1984,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 sense;
       switch (request->sense_enum_case()) {
-        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSense:
-          sense = (ViInt32)request->sense();
+        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSense: {
+          sense = static_cast<ViInt32>(request->sense());
           break;
-        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSenseRaw:
-          sense = (ViInt32)request->sense_raw();
+        }
+        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSenseRaw: {
+          sense = static_cast<ViInt32>(request->sense_raw());
           break;
-        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::SENSE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::SENSE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sense was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureSense(vi, channel_name, sense);
@@ -1820,15 +2114,18 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 source_mode;
       switch (request->source_mode_enum_case()) {
-        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceMode:
-          source_mode = (ViInt32)request->source_mode();
+        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceMode: {
+          source_mode = static_cast<ViInt32>(request->source_mode());
           break;
-        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceModeRaw:
-          source_mode = (ViInt32)request->source_mode_raw();
+        }
+        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceModeRaw: {
+          source_mode = static_cast<ViInt32>(request->source_mode_raw());
           break;
-        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mode was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->ConfigureSourceMode(vi, source_mode);
@@ -1916,6 +2213,41 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigureVoltageLimitRange(vi, channel_name, range);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ConnectInternalReference(::grpc::ServerContext* context, const ConnectInternalReferenceRequest* request, ConnectInternalReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 internal_reference;
+      switch (request->internal_reference_enum_case()) {
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::kInternalReference: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference());
+          break;
+        }
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::kInternalReferenceRaw: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference_raw());
+          break;
+        }
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::INTERNAL_REFERENCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for internal_reference was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConnectInternalReference(vi, internal_reference);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2146,15 +2478,18 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 signal;
       switch (request->signal_enum_case()) {
-        case nidcpower_grpc::ExportSignalRequest::SignalEnumCase::kSignal:
-          signal = (ViInt32)request->signal();
+        case nidcpower_grpc::ExportSignalRequest::SignalEnumCase::kSignal: {
+          signal = static_cast<ViInt32>(request->signal());
           break;
-        case nidcpower_grpc::ExportSignalRequest::SignalEnumCase::kSignalRaw:
-          signal = (ViInt32)request->signal_raw();
+        }
+        case nidcpower_grpc::ExportSignalRequest::SignalEnumCase::kSignalRaw: {
+          signal = static_cast<ViInt32>(request->signal_raw());
           break;
-        case nidcpower_grpc::ExportSignalRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::ExportSignalRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
           break;
+        }
       }
 
       ViConstString signal_identifier = request->signal_identifier().c_str();
@@ -2795,15 +3130,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 measurement_type;
       switch (request->measurement_type_enum_case()) {
-        case nidcpower_grpc::MeasureRequest::MeasurementTypeEnumCase::kMeasurementType:
-          measurement_type = (ViInt32)request->measurement_type();
+        case nidcpower_grpc::MeasureRequest::MeasurementTypeEnumCase::kMeasurementType: {
+          measurement_type = static_cast<ViInt32>(request->measurement_type());
           break;
-        case nidcpower_grpc::MeasureRequest::MeasurementTypeEnumCase::kMeasurementTypeRaw:
-          measurement_type = (ViInt32)request->measurement_type_raw();
+        }
+        case nidcpower_grpc::MeasureRequest::MeasurementTypeEnumCase::kMeasurementTypeRaw: {
+          measurement_type = static_cast<ViInt32>(request->measurement_type_raw());
           break;
-        case nidcpower_grpc::MeasureRequest::MeasurementTypeEnumCase::MEASUREMENT_TYPE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::MeasureRequest::MeasurementTypeEnumCase::MEASUREMENT_TYPE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurement_type was not specified or out of range");
           break;
+        }
       }
 
       ViReal64 measurement {};
@@ -2931,15 +3269,18 @@ namespace nidcpower_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 output_state;
       switch (request->output_state_enum_case()) {
-        case nidcpower_grpc::QueryOutputStateRequest::OutputStateEnumCase::kOutputState:
-          output_state = (ViInt32)request->output_state();
+        case nidcpower_grpc::QueryOutputStateRequest::OutputStateEnumCase::kOutputState: {
+          output_state = static_cast<ViInt32>(request->output_state());
           break;
-        case nidcpower_grpc::QueryOutputStateRequest::OutputStateEnumCase::kOutputStateRaw:
-          output_state = (ViInt32)request->output_state_raw();
+        }
+        case nidcpower_grpc::QueryOutputStateRequest::OutputStateEnumCase::kOutputStateRaw: {
+          output_state = static_cast<ViInt32>(request->output_state_raw());
           break;
-        case nidcpower_grpc::QueryOutputStateRequest::OutputStateEnumCase::OUTPUT_STATE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::QueryOutputStateRequest::OutputStateEnumCase::OUTPUT_STATE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_state was not specified or out of range");
           break;
+        }
       }
 
       ViBoolean in_state {};
@@ -3116,15 +3457,18 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 trigger;
       switch (request->trigger_enum_case()) {
-        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTrigger:
-          trigger = (ViInt32)request->trigger();
+        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTrigger: {
+          trigger = static_cast<ViInt32>(request->trigger());
           break;
-        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTriggerRaw:
-          trigger = (ViInt32)request->trigger_raw();
+        }
+        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTriggerRaw: {
+          trigger = static_cast<ViInt32>(request->trigger_raw());
           break;
-        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger);
@@ -3172,15 +3516,18 @@ namespace nidcpower_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
       switch (request->attribute_value_enum_case()) {
-        case nidcpower_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValue:
-          attribute_value = (ViInt32)request->attribute_value();
+        case nidcpower_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValue: {
+          attribute_value = static_cast<ViInt32>(request->attribute_value());
           break;
-        case nidcpower_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw:
-          attribute_value = (ViInt32)request->attribute_value_raw();
+        }
+        case nidcpower_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::kAttributeValueRaw: {
+          attribute_value = static_cast<ViInt32>(request->attribute_value_raw());
           break;
-        case nidcpower_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::SetAttributeViInt32Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
@@ -3228,15 +3575,18 @@ namespace nidcpower_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value;
       switch (request->attribute_value_enum_case()) {
-        case nidcpower_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue:
-          attribute_value = (ViReal64)request->attribute_value();
+        case nidcpower_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue: {
+          attribute_value = static_cast<ViReal64>(request->attribute_value());
           break;
-        case nidcpower_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw:
-          attribute_value = (ViReal64)request->attribute_value_raw();
+        }
+        case nidcpower_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw: {
+          attribute_value = static_cast<ViReal64>(request->attribute_value_raw());
           break;
-        case nidcpower_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
           break;
+        }
       }
 
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
@@ -3351,15 +3701,18 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 event_id;
       switch (request->event_id_enum_case()) {
-        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventId:
-          event_id = (ViInt32)request->event_id();
+        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventId: {
+          event_id = static_cast<ViInt32>(request->event_id());
           break;
-        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventIdRaw:
-          event_id = (ViInt32)request->event_id_raw();
+        }
+        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventIdRaw: {
+          event_id = static_cast<ViInt32>(request->event_id_raw());
           break;
-        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET:
+        }
+        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event_id was not specified or out of range");
           break;
+        }
       }
 
       ViReal64 timeout = request->timeout();

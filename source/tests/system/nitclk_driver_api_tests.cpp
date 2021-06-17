@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "niscope/niscope_library.h"
+#include "device_server.h"
 #include "niscope/niscope_service.h"
-#include "nitclk/nitclk_library.h"
 #include "nitclk/nitclk_service.h"
 
 namespace ni {
@@ -18,18 +17,11 @@ const int kTClkDriverApiSuccess = 0;
 class NiTClkDriverApiTest : public ::testing::Test {
  protected:
   NiTClkDriverApiTest()
+    : device_server_(DeviceServerInterface::Singleton()),
+      nitclk_stub_(tclk::NiTClk::NewStub(device_server_->InProcessChannel())),
+      niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    niscope_library_ = std::make_unique<scope::NiScopeLibrary>();
-    niscope_service_ = std::make_unique<scope::NiScopeService>(niscope_library_.get(), session_repository_.get());
-    nitclk_library_ = std::make_unique<tclk::NiTClkLibrary>();
-    nitclk_service_ = std::make_unique<tclk::NiTClkService>(nitclk_library_.get(), session_repository_.get());
-    builder.RegisterService(niscope_service_.get());
-    builder.RegisterService(nitclk_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
+    device_server_->ResetServer();
   }
 
   virtual ~NiTClkDriverApiTest() {}
@@ -42,13 +34,6 @@ class NiTClkDriverApiTest : public ::testing::Test {
   void TearDown() override
   {
     close_scope_session();
-  }
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    niscope_stub_ = scope::NiScope::NewStub(channel_);
-    nitclk_stub_ = tclk::NiTClk::NewStub(channel_);
   }
 
   std::unique_ptr<scope::NiScope::Stub>& GetScopeStub()
@@ -194,16 +179,10 @@ class NiTClkDriverApiTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> scope_session_;
   std::unique_ptr<scope::NiScope::Stub> niscope_stub_;
   std::unique_ptr<tclk::NiTClk::Stub> nitclk_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<scope::NiScopeLibrary> niscope_library_;
-  std::unique_ptr<scope::NiScopeService> niscope_service_;
-  std::unique_ptr<tclk::NiTClkLibrary> nitclk_library_;
-  std::unique_ptr<tclk::NiTClkService> nitclk_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiTClkDriverApiTest, ConfigureForHomogeneousTriggers_ReturnsStatusAsSuccessful)
