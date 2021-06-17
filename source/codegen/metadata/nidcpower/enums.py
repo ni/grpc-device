@@ -126,18 +126,6 @@ enums = {
             }
         ]
     },
-    'CalibrationCloseAction': {
-        'values':[
-            {
-                'name': 'NIDCPOWER_VAL_CANCEL',
-                'value': 1001
-            },
-            {
-                'name': 'NIDCPOWER_VAL_COMMIT',
-                'value': 1002
-            }
-        ]
-    },
     'ComplianceLimitSymmetry': {
         'values': [
             {
@@ -329,26 +317,6 @@ enums = {
                 },
                 'name': 'NIDCPOWER_VAL_SHUTDOWN_TRIGGER',
                 'value': 1118
-            }
-        ]
-    },
-    'InternalReference': {
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_5V',
-                'value': 1054
-            },
-            {
-                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_100KOHM',
-                'value': 1055
-            },
-            {
-                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_GROUND',
-                'value': 1056
-            },
-            {
-                'name': 'NIDCPOWER_VAL_INTERNAL_REFERENCE_NONE',
-                'value': 1057
             }
         ]
     },

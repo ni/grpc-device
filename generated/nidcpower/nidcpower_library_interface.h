@@ -50,20 +50,10 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus SendSoftwareEdgeTriggerWithChannels(ViSession vi, ViConstString channelName, ViInt32 trigger) = 0;
   virtual ViStatus WaitForEventWithChannels(ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout) = 0;
   virtual ViStatus Abort(ViSession vi) = 0;
-  virtual ViStatus CalAdjustCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 range, ViUInt32 numberOfMeasurements, ViReal64 requestedOutputs[], ViReal64 measuredOutputs[]) = 0;
-  virtual ViStatus CalAdjustCurrentMeasurement(ViSession vi, ViConstString channelName, ViReal64 range, ViUInt32 numberOfMeasurements, ViReal64 reportedOutputs[], ViReal64 measuredOutputs[]) = 0;
-  virtual ViStatus CalAdjustInternalReference(ViSession vi, ViInt32 internalReference, ViReal64 adjustedInternalReference) = 0;
-  virtual ViStatus CalAdjustOutputResistance(ViSession vi, ViConstString channelName, ViUInt32 numberOfMeasurements, ViReal64 requestedOutputs[], ViReal64 measuredOutputs[]) = 0;
-  virtual ViStatus CalAdjustResidualCurrentOffset(ViSession vi, ViConstString channelName) = 0;
-  virtual ViStatus CalAdjustResidualVoltageOffset(ViSession vi, ViConstString channelName) = 0;
-  virtual ViStatus CalAdjustVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 range, ViUInt32 numberOfMeasurements, ViReal64 requestedOutputs[], ViReal64 measuredOutputs[]) = 0;
-  virtual ViStatus CalAdjustVoltageMeasurement(ViSession vi, ViConstString channelName, ViReal64 range, ViUInt32 numberOfMeasurements, ViReal64 reportedOutputs[], ViReal64 measuredOutputs[]) = 0;
   virtual ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName) = 0;
-  virtual ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
   virtual ViStatus Close(ViSession vi) = 0;
-  virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus ConfigureApertureTime(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units) = 0;
   virtual ViStatus ConfigureAutoZero(ViSession vi, ViConstString channelName, ViInt32 autoZero) = 0;
@@ -103,7 +93,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureVoltageLevelRange(ViSession vi, ViConstString channelName, ViReal64 range) = 0;
   virtual ViStatus ConfigureVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit) = 0;
   virtual ViStatus ConfigureVoltageLimitRange(ViSession vi, ViConstString channelName, ViReal64 range) = 0;
-  virtual ViStatus ConnectInternalReference(ViSession vi, ViInt32 internalReference) = 0;
   virtual ViStatus CreateAdvancedSequenceStep(ViSession vi, ViBoolean setAsActiveStep) = 0;
   virtual ViStatus DeleteAdvancedSequence(ViSession vi, ViConstString sequenceName) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
@@ -122,8 +111,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue) = 0;
   virtual ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]) = 0;
-  virtual ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[256]) = 0;
-  virtual ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize) = 0;
   virtual ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelName[]) = 0;
   virtual ViStatus GetChannelNameFromString(ViSession vi, ViConstString index, ViInt32 bufferSize, ViChar channelName[]) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]) = 0;
@@ -136,7 +123,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
-  virtual ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi) = 0;
   virtual ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
   virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
@@ -162,7 +148,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue) = 0;
-  virtual ViStatus SetCalUserDefinedInfo(ViSession vi, ViConstString info) = 0;
   virtual ViStatus SetSequence(ViSession vi, ViConstString channelName, ViReal64 values[], ViReal64 sourceDelays[], ViUInt32 size) = 0;
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout) = 0;

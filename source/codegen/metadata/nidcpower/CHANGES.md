@@ -42,8 +42,6 @@ The following attributes were added :
 ## enums.py
 
 Following enums were defined :
-- InternalReference
-- CalibrationCloseAction
 - PowerLineFrequencies
 - In 'OutputStates' : Following were added
     - NIDCPOWER_VAL_OUTPUT_OVER_VOLTAGE
@@ -58,6 +56,23 @@ Following enums were defined :
 
 ## functions.py
 
+The Following calibration functions were removed from the metadata :
+- ChangeExtCalPassword
+- GetCalUserDefinedInfoMaxSize
+- SetCalUserDefinedInfo
+- GetCalUserDefinedInfo
+- InitExtCal
+- CloseExtCal
+- CalAdjustVoltageLevel
+- CalAdjustVoltageMeasurement
+- CalAdjustCurrentLimit
+- CalAdjustCurrentMeasurement
+- CalAdjustOutputResistance
+- CalAdjustResidualVoltageOffset
+- CalAdjustResidualCurrentOffset
+- ConnectInternalReference
+- CalAdjustInternalReference
+
 The following functions were tagged as 'codegen_method':'CustomCode':
 - MeasureMultiple
 
@@ -66,12 +81,6 @@ For MeasureMultiple function, the value field 'size':'number_of_channels' was ad
 The following functions were tagged with 'init_method': True, to ensure their generated service handler registers the new session with the session_repository:
 - InitializeWithIndependentChannels
 - InitializeWithChannels
-- InitExtCal : 
-    - Also added a 'custom_close' tag to this function, since this API has a corresponding close function called 'CloseExtCal'
-
-The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
-the registered session from session_repository.
-- `CloseExtCal`
 
 The following functions were tagged with their corresponding c_names:
 - reset
@@ -98,7 +107,6 @@ The following function was tagged with `'codegen_method': 'private'`, because th
 - `signal` parameter in `ExportSignalWithChannels`
 - `trigger` parameter in `SendSoftwareEdgeTriggerWithChannels`
 - `eventId` parameter in `WaitForEventWithChannels`
-- `internalReference` parameter in `CalAdjustInternalReference`
 - `behavior` parameter in `ConfigureCurrentLimit`
 - `edge` parameter in `ConfigureDigitalEdgeMeasureTrigger`
 - `edge` parameter in `ConfigureDigitalEdgePulseTrigger`
@@ -108,7 +116,6 @@ The following function was tagged with `'codegen_method': 'private'`, because th
 - `function` parameter in `ConfigureOutputFunction`
 - `sense` parameter in `ConfigureSense`
 - `sourceMode` parameter in `ConfigureSourceMode`
-- `internalReference` parameter in `ConnectInternalReference`
 - `trigger` parameter in `SendSoftwareEdgeTrigger`
 - `eventId` parameter in `WaitForEvent`
 - `powerlineFrequency` parameter in `ConfigurePowerLineFrequency`
