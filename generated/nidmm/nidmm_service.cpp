@@ -78,167 +78,6 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::CalAdjustGain(::grpc::ServerContext* context, const CalAdjustGainRequest* request, CalAdjustGainResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 mode = request->mode();
-      ViReal64 range = request->range();
-      ViReal64 input_resistance = request->input_resistance();
-      ViReal64 expected_value = request->expected_value();
-      auto status = library_->CalAdjustGain(vi, mode, range, input_resistance, expected_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::CalAdjustACFilter(::grpc::ServerContext* context, const CalAdjustACFilterRequest* request, CalAdjustACFilterResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 mode = request->mode();
-      ViReal64 range = request->range();
-      ViReal64 frequency = request->frequency();
-      ViReal64 expected_value = request->expected_value();
-      auto status = library_->CalAdjustACFilter(vi, mode, range, frequency, expected_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::CalAdjustLC(::grpc::ServerContext* context, const CalAdjustLCRequest* request, CalAdjustLCResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 type;
-      switch (request->type_enum_case()) {
-        case nidmm_grpc::CalAdjustLCRequest::TypeEnumCase::kType: {
-          type = static_cast<ViInt32>(request->type());
-          break;
-        }
-        case nidmm_grpc::CalAdjustLCRequest::TypeEnumCase::kTypeRaw: {
-          type = static_cast<ViInt32>(request->type_raw());
-          break;
-        }
-        case nidmm_grpc::CalAdjustLCRequest::TypeEnumCase::TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for type was not specified or out of range");
-          break;
-        }
-      }
-
-      auto status = library_->CalAdjustLC(vi, type);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::CalAdjustLinearization(::grpc::ServerContext* context, const CalAdjustLinearizationRequest* request, CalAdjustLinearizationResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 function = request->function();
-      ViReal64 range = request->range();
-      ViReal64 input_resistance = request->input_resistance();
-      ViReal64 expected_value = request->expected_value();
-      auto status = library_->CalAdjustLinearization(vi, function, range, input_resistance, expected_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::CalAdjustMisc(::grpc::ServerContext* context, const CalAdjustMiscRequest* request, CalAdjustMiscResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 type;
-      switch (request->type_enum_case()) {
-        case nidmm_grpc::CalAdjustMiscRequest::TypeEnumCase::kType: {
-          type = static_cast<ViInt32>(request->type());
-          break;
-        }
-        case nidmm_grpc::CalAdjustMiscRequest::TypeEnumCase::kTypeRaw: {
-          type = static_cast<ViInt32>(request->type_raw());
-          break;
-        }
-        case nidmm_grpc::CalAdjustMiscRequest::TypeEnumCase::TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for type was not specified or out of range");
-          break;
-        }
-      }
-
-      auto status = library_->CalAdjustMisc(vi, type);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::CalAdjustOffset(::grpc::ServerContext* context, const CalAdjustOffsetRequest* request, CalAdjustOffsetResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 mode = request->mode();
-      ViReal64 range = request->range();
-      ViReal64 input_resistance = request->input_resistance();
-      auto status = library_->CalAdjustOffset(vi, mode, range, input_resistance);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -428,42 +267,6 @@ namespace nidmm_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi);
       auto status = library_->Close(vi);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 action;
-      switch (request->action_enum_case()) {
-        case nidmm_grpc::CloseExtCalRequest::ActionEnumCase::kAction: {
-          action = static_cast<ViInt32>(request->action());
-          break;
-        }
-        case nidmm_grpc::CloseExtCalRequest::ActionEnumCase::kActionRaw: {
-          action = static_cast<ViInt32>(request->action_raw());
-          break;
-        }
-        case nidmm_grpc::CloseExtCalRequest::ActionEnumCase::ACTION_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
-          break;
-        }
-      }
-
-      session_repository_->remove_session(vi);
-      auto status = library_->CloseExtCal(vi, action);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1705,45 +1508,6 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::GetCalCount(::grpc::ServerContext* context, const GetCalCountRequest* request, GetCalCountResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 cal_type;
-      switch (request->cal_type_enum_case()) {
-        case nidmm_grpc::GetCalCountRequest::CalTypeEnumCase::kCalType: {
-          cal_type = static_cast<ViInt32>(request->cal_type());
-          break;
-        }
-        case nidmm_grpc::GetCalCountRequest::CalTypeEnumCase::kCalTypeRaw: {
-          cal_type = static_cast<ViInt32>(request->cal_type_raw());
-          break;
-        }
-        case nidmm_grpc::GetCalCountRequest::CalTypeEnumCase::CAL_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cal_type was not specified or out of range");
-          break;
-        }
-      }
-
-      ViInt32 count {};
-      auto status = library_->GetCalCount(vi, cal_type, &count);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_count(count);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::GetCalDateAndTime(::grpc::ServerContext* context, const GetCalDateAndTimeRequest* request, GetCalDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1781,53 +1545,6 @@ namespace nidmm_grpc {
         response->set_year(year);
         response->set_hour(hour);
         response->set_minute(minute);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::GetCalUserDefinedInfo(::grpc::ServerContext* context, const GetCalUserDefinedInfoRequest* request, GetCalUserDefinedInfoResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 buffer_size = request->buffer_size();
-      std::string info(256 - 1, '\0');
-      auto status = library_->GetCalUserDefinedInfo(vi, buffer_size, (ViChar*)info.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_info(info);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::GetCalUserDefinedInfoMaxSize(::grpc::ServerContext* context, const GetCalUserDefinedInfoMaxSizeRequest* request, GetCalUserDefinedInfoMaxSizeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 info_size {};
-      auto status = library_->GetCalUserDefinedInfoMaxSize(vi, &info_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_info_size(info_size);
       }
       return ::grpc::Status::OK;
     }
@@ -2269,37 +1986,6 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViString calibration_password = (ViString)request->calibration_password().c_str();
-
-      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
-        ViSession vi;
-        int status = library_->InitExtCal(resource_name, calibration_password, &vi);
-        return std::make_tuple(status, vi);
-      };
-      uint32_t session_id = 0;
-      const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->CloseExtCal(id, NIDMM_EXTCAL_ACTION_ABORT); };
-      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status == 0) {
-        response->mutable_vi()->set_id(session_id);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2646,25 +2332,6 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::RestoreLastExtCalConstants(::grpc::ServerContext* context, const RestoreLastExtCalConstantsRequest* request, RestoreLastExtCalConstantsResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->RestoreLastExtCalConstants(vi);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2884,47 +2551,6 @@ namespace nidmm_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViString attribute_value = (ViString)request->attribute_value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::SetCalPassword(::grpc::ServerContext* context, const SetCalPasswordRequest* request, SetCalPasswordResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViString old_password = (ViString)request->old_password().c_str();
-      ViString new_password = (ViString)request->new_password().c_str();
-      auto status = library_->SetCalPassword(vi, old_password, new_password);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViString info = (ViString)request->info().c_str();
-      auto status = library_->SetCalUserDefinedInfo(vi, info);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
