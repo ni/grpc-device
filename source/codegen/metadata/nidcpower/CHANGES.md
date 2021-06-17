@@ -52,13 +52,11 @@ Following enums were defined :
     - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC to NIDCPOWER_VAL_AUTOMATIC
     - NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL to NIDCPOWER_VAL_MANUAL
 
-The following enums were removed :
-- InternalReference
-- CalibrationCloseAction
+# Changes in metadata from the base metadata
 
 ## functions.py
 
-Following calibration functions were removed from the metadata :
+The Following calibration functions were removed from the metadata :
 - ChangeExtCalPassword
 - GetCalUserDefinedInfoMaxSize
 - SetCalUserDefinedInfo
@@ -74,10 +72,6 @@ Following calibration functions were removed from the metadata :
 - CalAdjustResidualCurrentOffset
 - ConnectInternalReference
 - CalAdjustInternalReference
-
-# Changes in metadata from the base metadata
-
-## functions.py
 
 The following functions were tagged as 'codegen_method':'CustomCode':
 - MeasureMultiple
