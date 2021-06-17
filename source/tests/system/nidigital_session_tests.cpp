@@ -27,6 +27,13 @@ class NiDigitalSessionTest : public ::testing::Test {
 
   virtual ~NiDigitalSessionTest() {}
 
+  void SetUp() override
+  {
+#ifndef WIN32
+    GTEST_SKIP() << "Digital pattern is not supported on Linux.";
+#endif
+  }
+
   std::unique_ptr<digital::NiDigital::Stub>& GetStub()
   {
     return nidigital_stub_;
