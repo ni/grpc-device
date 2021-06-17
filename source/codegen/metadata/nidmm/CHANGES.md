@@ -61,7 +61,6 @@ Enums with more than 2 consecutive uppercase letters in their name (as abbreviat
 
 Metadata for following enums added:
 - `'BufferSize'`
-- `'CalibrationCloseAction'`
 - `'CalibrationType'`
 - `'CompensatedOhms'`
 - `'ControlCommit'`
@@ -69,7 +68,6 @@ Metadata for following enums added:
 - `'Configuration4022'`
 - `'DcBias'`
 - `'Latency'`
-- `'MiscCalibration'`
 - `'PowerLineFrequencies'`
 - `'Range'`
 - `'SettleTime'`
@@ -82,6 +80,10 @@ Metadata for following enums added:
 
 `'NIDMM_VAL_FIXED'` (from nimi-python) changed to `'NIDMM_VAL_TEMP_REF_JUNC_FIXED'` in the `'ThermocoupleReferenceJunctionType'` to match the documentation and the header file
 
+Following calibration enums removed:
+- `'CalibrationCloseAction'`
+- `'LcCalibration'`
+- `'MiscCalibration'`
 
 # Changes in metadata from the base metadata
 
@@ -111,11 +113,9 @@ with the session_repository.
 
 `'enum'` tag added to the following functions:
 - `'apertureTime'` parameter of function `'GetApertureTimeInfo'`
-- `'action'` parameter of function `'CloseExtCal'`
 - `'calType'` parameter of function `'CalibrationType'`
 - `'offsetCompOhms'` parameter of function `'ConfigureOffsetCompOhms'`
 - `'configuration'` parameter of function `'Control4022'`
-- `'type'` parameter of function `'CalAdjustMisc'`
 - `'powerLineFrequencyHz'` parameter of function `'ConfigurePowerLineFrequency'`
 - `'triggerDelay'` parameter of function `'ConfigureTrigger'`
 - `'controlAction'` parameter of function `'Control'`
@@ -130,6 +130,18 @@ with the session_repository.
 - `'maximumTime'` parameter of function `'ReadMultiPoint'`
 - `'maximumTime'` parameter of function `'ReadWaveform'`
 
-The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
-the registered session from session_repository.
-- `CloseExtCal`
+Following calibration functions removed:
+- `'CalAdjustGain'`
+- `'CalAdjustACFilter'`
+- `'CalAdjustLC'`
+- `'CalAdjustLinearization'`
+- `'CalAdjustMisc'`
+- `'CalAdjustOffset'`
+- `'CloseExtCal'`
+- `'GetCalCount'`
+- `'GetCalUserDefinedInfo'`
+- `'GetCalUserDefinedInfoMaxSize'`
+- `'InitExtCal'`
+- `'RestoreLastExtCalConstants'`
+- `'SetCalPassword'`
+- `'SetCalUserDefinedInfo'`

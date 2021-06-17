@@ -19,12 +19,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Control4022, (ViRsrc resourceName, ViInt32 configuration), (override));
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, CalAdjustGain, (ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue), (override));
-  MOCK_METHOD(ViStatus, CalAdjustACFilter, (ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 frequency, ViReal64 expectedValue), (override));
-  MOCK_METHOD(ViStatus, CalAdjustLC, (ViSession vi, ViInt32 type), (override));
-  MOCK_METHOD(ViStatus, CalAdjustLinearization, (ViSession vi, ViInt32 function, ViReal64 range, ViReal64 inputResistance, ViReal64 expectedValue), (override));
-  MOCK_METHOD(ViStatus, CalAdjustMisc, (ViSession vi, ViInt32 type), (override));
-  MOCK_METHOD(ViStatus, CalAdjustOffset, (ViSession vi, ViInt32 mode, ViReal64 range, ViReal64 inputResistance), (override));
   MOCK_METHOD(ViStatus, CheckAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue), (override));
   MOCK_METHOD(ViStatus, CheckAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue), (override));
   MOCK_METHOD(ViStatus, CheckAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
@@ -33,7 +27,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClearInterchangeWarnings, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
   MOCK_METHOD(ViStatus, ConfigureACBandwidth, (ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz), (override));
   MOCK_METHOD(ViStatus, ConfigureADCCalibration, (ViSession vi, ViInt32 adcCalibration), (override));
   MOCK_METHOD(ViStatus, ConfigureAutoZeroMode, (ViSession vi, ViInt32 autoZeroMode), (override));
@@ -75,10 +68,7 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, GetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]), (override));
   MOCK_METHOD(ViStatus, GetAutoRangeValue, (ViSession vi, ViReal64* actualRange), (override));
-  MOCK_METHOD(ViStatus, GetCalCount, (ViSession vi, ViInt32 calType, ViInt32* count), (override));
   MOCK_METHOD(ViStatus, GetCalDateAndTime, (ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute), (override));
-  MOCK_METHOD(ViStatus, GetCalUserDefinedInfo, (ViSession vi, ViInt32 bufferSize, ViChar info[256]), (override));
-  MOCK_METHOD(ViStatus, GetCalUserDefinedInfoMaxSize, (ViSession vi, ViInt32* infoSize), (override));
   MOCK_METHOD(ViStatus, GetChannelName, (ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[]), (override));
   MOCK_METHOD(ViStatus, GetDevTemp, (ViSession vi, ViString options, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]), (override));
@@ -94,7 +84,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, InitExtCal, (ViRsrc resourceName, ViString calibrationPassword, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsOverRange, (ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange), (override));
   MOCK_METHOD(ViStatus, IsUnderRange, (ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange), (override));
@@ -108,7 +97,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, Reset, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetInterchangeCheck, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetWithDefaults, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, RestoreLastExtCalConstants, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, RevisionQuery, (ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]), (override));
   MOCK_METHOD(ViStatus, SelfCal, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
@@ -118,8 +106,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue), (override));
-  MOCK_METHOD(ViStatus, SetCalPassword, (ViSession vi, ViString oldPassword, ViString newPassword), (override));
-  MOCK_METHOD(ViStatus, SetCalUserDefinedInfo, (ViSession vi, ViString info), (override));
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
 };
 

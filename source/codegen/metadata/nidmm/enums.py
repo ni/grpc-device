@@ -149,18 +149,6 @@ enums = {
             }
         ]
     },
-    'CalibrationCloseAction': {
-        'values': [
-            {
-                'name': 'NIDMM_EXTCAL_ACTION_ABORT',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_EXTCAL_ACTION_SAVE',
-                'value': 1
-            }
-        ]
-    },
     'CompensatedOhms': {
         'values': [
             {
@@ -337,38 +325,6 @@ enums = {
             }
         ]
     },
-    'LcCalibration': {
-        'values': [
-            {
-                'name': 'NIDMM_EXTCAL_LC_OPEN',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_EXTCAL_LC_SHORT',
-                'value': 1
-            },
-            {
-                'name': 'NIDMM_EXTCAL_LC_25OHM',
-                'value': 2
-            },
-            {
-                'name': 'NIDMM_EXTCAL_LC_1KOHM',
-                'value': 3
-            },
-            {
-                'name': 'NIDMM_EXTCAL_LC_5KOHM',
-                'value': 4
-            },
-            {
-                'name': 'NIDMM_EXTCAL_LC_100KOHM',
-                'value': 5
-            },
-            {
-                'name': 'NIDMM_EXTCAL_LC_125OHM',
-                'value': 6
-            }
-        ]
-    },
     'MeasurementCompleteDest': {
         'values': [
             {
@@ -426,58 +382,6 @@ enums = {
             {
                 'name': 'NIDMM_VAL_NEGATIVE',
                 'value': 1
-            }
-        ]
-    },
-    'MiscCalibration': {
-        'values': [
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_VREF',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_RREF',
-                'value': 1
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_ZINT',
-                'value': 2
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_2WIRELEAKAGE',
-                'value': 3
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_4WIRELEAKAGE',
-                'value': 4
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_SECTION',
-                'value': 5
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_VREF_DC_VOLTAGE',
-                'value': 6
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_VREF_DC_CURRENT',
-                'value': 7
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_VREF_AC_VOLTAGE',
-                'value': 8
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_VREF_AC_CURRENT',
-                'value': 9
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_VREF_RESISTANCE',
-                'value': 10
-            },
-            {
-                'name': 'NIDMM_EXTCAL_MISCCAL_VOLTAGE_AC_FILTER',
-                'value': 11
             }
         ]
     },
