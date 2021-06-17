@@ -133,7 +133,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
   field_name = common_helpers.camel_to_snake(parameter["name"])
   pascal_field_name = common_helpers.snake_to_pascal(field_name)
   map_name = parameter["enum"].lower() + "_input_map_"
-  iterator_name = field_name + "_imap_it"
+  mapped_enum_iterator_name = field_name + "_imap_it"
   one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{pascal_field_name}EnumCase'
   enum_request_snippet = f'request->{field_name}()'
   raw_request_snippet = f'request->{field_name}_raw()'
@@ -142,13 +142,13 @@ ${initialize_standard_input_param(function_name, parameter)}\
       switch (request->${field_name}_enum_case()) {
         case ${one_of_case_prefix}::k${pascal_field_name}: {
 % if enums[parameter["enum"]].get("generate-mappings", False):
-          auto ${iterator_name} = ${map_name}.find(${enum_request_snippet});
-          if (${iterator_name} == ${map_name}.end()) {
+          auto ${mapped_enum_iterator_name} = ${map_name}.find(${enum_request_snippet});
+          if (${mapped_enum_iterator_name} == ${map_name}.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
           }
 <%
-enum_request_snippet = f'{iterator_name}->second'
-%>
+  enum_request_snippet = f'{mapped_enum_iterator_name}->second'
+%>\
 % endif
 % if parameter['type'] in ["ViConstString", "ViString"]:
           ${parameter_name} = const_cast<${parameter['type']}>((${enum_request_snippet}).c_str());
@@ -285,11 +285,11 @@ enum_request_snippet = f'{iterator_name}->second'
 %     if enums[parameter["enum"]].get("generate-mappings", False):
 <%
   map_name = parameter["enum"].lower() + "_output_map_"
-  iterator_name = parameter_name + "_omap_it"
+  mapped_enum_iterator_name = parameter_name + "_omap_it"
 %>\
-        auto ${iterator_name} = ${map_name}.find(${parameter_name});
-        if(${iterator_name} != ${map_name}.end()) {
-          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
+        auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
+        if(${mapped_enum_iterator_name} != ${map_name}.end()) {
+          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${mapped_enum_iterator_name}->second));
         }
 %     elif common_helpers.is_array(parameter['type']) and common_helpers.is_string_arg(parameter):
         CopyBytesToEnums(${parameter_name}, response->mutable_${parameter_name}());
