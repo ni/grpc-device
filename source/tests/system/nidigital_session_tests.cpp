@@ -47,8 +47,8 @@ class NiDigitalSessionTest : public ::testing::Test {
   }
 
  private:
-   DeviceServerInterface* device_server_;
-   std::unique_ptr<digital::NiDigital::Stub> nidigital_stub_;
+  DeviceServerInterface* device_server_;
+  std::unique_ptr<digital::NiDigital::Stub> nidigital_stub_;
 };
 
 TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
