@@ -41,7 +41,7 @@ session_name = "NI-Digital-Pattern-Driver-Session"
 resource = "PXI1Slot2"
 options = "Simulate=1, DriverSetup=Model:6570"
 # Provide the absolute path to the folder on the server machine containing the .pinmap, .specs, .digitiming & .digipat files.
-directory_path = ""
+directory_path = r""
 if directory_path == "":
     print("\nProvide the absolute path to the folder on the server machine containing the .pinmap, .specs, .digitiming & .digipat files to the dirctory_path variable in the source code.")
     exit(1)
