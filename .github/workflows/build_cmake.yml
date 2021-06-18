@@ -144,7 +144,7 @@ jobs:
     name: Trigger CI
     needs: build
     runs-on: windows-latest
-    if: ${{ startsWith(github.ref, 'refs/heads/main') }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
     - name: Trigger CI
       uses: Azure/pipelines@v1

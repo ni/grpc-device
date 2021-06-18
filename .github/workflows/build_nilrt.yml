@@ -172,7 +172,7 @@ jobs:
 
     - name: Trigger CI
       uses: Azure/pipelines@v1
-      if: ${{ startsWith(github.ref, 'refs/heads/main') }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc-device-main-linux-rt'
