@@ -116,6 +116,7 @@ jobs:
         -C ${GITHUB_WORKSPACE}/build
         ni_grpc_device_server
         server_config.json
+        SystemTestsRunner
         -C ${GITHUB_WORKSPACE}
         LICENSE
         ThirdPartyNotices.txt
@@ -136,6 +137,7 @@ jobs:
         path: |
           build/Release/ni_grpc_device_server.exe
           build/Release/server_config.json
+          build/Release/SystemTestsRunner.exe
           LICENSE
           ThirdPartyNotices.txt
         retention-days: 5
