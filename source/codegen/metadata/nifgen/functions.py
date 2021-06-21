@@ -845,7 +845,8 @@ functions = {
             {
                 'name':'triggerMode',
                 'direction':'in',
-                'type':'ViInt32'
+                'type':'ViInt32',
+                'enum':'TriggerMode'
             }
         ],
         'returns':'ViStatus'
