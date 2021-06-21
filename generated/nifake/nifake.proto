@@ -611,7 +611,7 @@ message ReturnMultipleTypesResponse {
   Turtle an_int_enum = 5;
   sint32 an_int_enum_raw = 6;
   double a_float = 7;
-    FloatEnumMapped a_float_enum_mapped = 8;
+  FloatEnumMapped a_float_enum_mapped = 8;
   double a_float_enum_raw = 9;
   repeated double an_array = 10;
   string a_string = 11;

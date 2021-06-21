@@ -158,7 +158,7 @@ message ${common_helpers.snake_to_pascal(function)}Response {
   ${enum_parameter_type} ${parameter_name} = ${grpc_enum_field_number};
 %   endif
 %   if mapped_type:
-    ${mapped_type} ${parameter_name}_mapped = ${grpc_mapped_field_number};
+  ${mapped_type} ${parameter_name}_mapped = ${grpc_mapped_field_number};
 %   endif
   ${parameter_type} ${parameter_name}_raw = ${grpc_raw_field_number};
 %   else:
