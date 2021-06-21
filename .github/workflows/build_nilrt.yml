@@ -134,16 +134,34 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
-    - name: Tar Development Build Files
-      if: ${{ github.ref == 'refs/heads/main' }}
+    - name: Tar Server Build Files
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       run: >-
         tar -cvzf ni-grpc-device-server-ni-linux-rt-x64.tar.gz
         -C ${GITHUB_WORKSPACE}/build
-        certs/
         ni_grpc_device_server
+        server_config.json
+        SystemTestsRunner
+        -C ${GITHUB_WORKSPACE}
+        LICENSE
+        ThirdPartyNotices.txt
+
+    - name: Upload Server Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      with:
+        name: ni-grpc-device-server-ni-linux-rt-x64
+        path: ni-grpc-device-server-ni-linux-rt-x64.tar.gz
+        retention-days: 5
+
+    - name: Tar Test Build Files
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      run: >-
+        tar -cvzf ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
+        -C ${GITHUB_WORKSPACE}/build
+        certs/
         IntegrationTestsRunner
         libTestApi.so
-        server_config.json
         SystemTestsRunner
         test_mutual_tls_config.json
         UnitTestsRunner
@@ -151,22 +169,11 @@ jobs:
         LICENSE
         ThirdPartyNotices.txt
 
-    - name: Tar Release Build Files
-      if: ${{ startsWith(github.ref, 'refs/heads/releases') }}
-      run: >-
-        tar -cvzf ni-grpc-device-server-ni-linux-rt-x64.tar.gz
-        -C ${GITHUB_WORKSPACE}/build
-        ni_grpc_device_server
-        server_config.json
-        SystemTestsRunner
-        -C ${GITHUB_WORKSPACE}
-        LICENSE
-        ThirdPartyNotices.txt
-
-    - name: Upload Artifact
+    - name: Upload Tests Artifact
       uses: actions/upload-artifact@v2
       if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       with:
-        name: ni-grpc-device-server-ni-linux-rt-x64
-        path: ni-grpc-device-server-ni-linux-rt-x64.tar.gz
+        name: ni-grpc-device-tests-ni-linux-rt-x64
+        path: ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
         retention-days: 5
+
