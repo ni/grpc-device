@@ -2313,7 +2313,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetCustomTypeArray': {
-        'codegen_method': 'no',
         'documentation': {
             'description': 'This function takes an array of custom types.'
         },
@@ -2344,7 +2343,8 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfElements'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2701,6 +2701,31 @@ functions = {
                     'value': 'numberOfElements'
                 },
                 'type': 'ViUInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ViInt16ArrayInputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViInt16[]'
             }
         ],
         'returns': 'ViStatus'

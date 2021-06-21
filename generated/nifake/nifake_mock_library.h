@@ -69,6 +69,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViInt64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue), (override));
+  MOCK_METHOD(ViStatus, SetCustomTypeArray, (ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]), (override));
   MOCK_METHOD(ViStatus, StringValuedEnumInputFunctionWithDefaults, (ViSession vi, ViConstString aMobileOSName), (override));
   MOCK_METHOD(ViStatus, TwoInputFunction, (ViSession vi, ViReal64 aNumber, ViString aString), (override));
   MOCK_METHOD(ViStatus, Use64BitNumber, (ViSession vi, ViInt64 input, ViInt64* output), (override));
@@ -79,6 +80,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, self_test, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
   MOCK_METHOD(ViStatus, ViUInt8ArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]), (override));
   MOCK_METHOD(ViStatus, ViUInt8ArrayOutputFunction, (ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]), (override));
+  MOCK_METHOD(ViStatus, ViInt16ArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]), (override));
 };
 
 }  // namespace unit
