@@ -176,3 +176,18 @@ jobs:
         path: ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
         retention-days: 5
 
+    - name: Trigger Main CI
+      uses: Azure/pipelines@v1
+      if: ${{ github.ref == 'refs/heads/main' }}
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
+        azure-pipeline-name: 'ni-central-grpc-device-main-linux-rt'
+        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+
+    - name: Trigger Release CI
+      uses: Azure/pipelines@v1
+      if: ${{ startsWith(github.ref, 'refs/heads/releases') }}
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
+        azure-pipeline-name: 'ni-central-grpc-device-release-linux-rt'
+        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
