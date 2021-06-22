@@ -137,7 +137,6 @@ try :
 
     try:
         while current_pos < total_samples:
-
             # We fetch each channel at a time so we don't have to de-interleave afterwards.
             # We do not keep the wfm_info returned from fetch.
             for channel_name, waveform in zip(channel_list, waveforms):

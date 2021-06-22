@@ -51,11 +51,11 @@ def CheckForError (vi, status) :
         ThrowOnError (vi, status)
 
 def ThrowOnError (vi, error_code):
-    error_message_request = niscope_types.ErrorMessageRequest(
+    error_message_request = niscope_types.GetErrorMessageRequest(
         vi = vi,
         error_code = error_code
         )
-    error_message_response = scope_service.ErrorMessage(error_message_request)
+    error_message_response = scope_service.GetErrorMessage(error_message_request)
     raise Exception (error_message_response.error_message)
 
 # Read in cmd args
