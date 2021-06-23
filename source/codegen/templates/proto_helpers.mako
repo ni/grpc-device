@@ -60,44 +60,18 @@ ${lookup.get_template(custom_template).render()}
 <%
   config = data["config"]
   service_class_prefix = config["service_class_prefix"]
-  used_indexes = []
+  request_parameters = proto_helpers.get_request_message_parameters(input_parameters, service_class_prefix)
 %>\
 message ${common_helpers.snake_to_pascal(function)}Request {
-% for parameter in input_parameters:
-<%
-  parameter_name = common_helpers.camel_to_snake(parameter["name"])
-  is_array = common_helpers.is_array(parameter["type"])
-  if 'grpc_type' in parameter:
-    parameter_type = parameter['grpc_type']
-  else:
-    parameter_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
-%>\
-%   if common_helpers.is_enum(parameter):
-<%
-  enum_parameter_type = None
-  mapped_type = None
-  if parameter.get('enum', None):
-    enum_parameter_type = f"repeated {parameter['enum']}" if is_array else parameter['enum']
-    grpc_enum_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
-  if parameter.get('mapped-enum', None):
-    mapped_type = f"repeated {parameter['mapped-enum']}" if is_array else parameter['mapped-enum']
-    grpc_mapped_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_mapped")
-  grpc_raw_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_raw")
-%>\
-  oneof ${parameter_name}_enum {
-%   if enum_parameter_type:
-    ${enum_parameter_type} ${parameter_name} = ${grpc_enum_field_number};
-%   endif
-%   if mapped_type:
-    ${mapped_type} ${parameter_name}_mapped = ${grpc_mapped_field_number};
-%   endif
-    ${parameter_type} ${parameter_name}_raw = ${grpc_raw_field_number};
+% for parameter in request_parameters:
+%   if parameter.get("use_oneof", False):
+  oneof ${parameter["name"]} {
+%     for oneof_parameter in parameter["parameters"]:
+    ${oneof_parameter["type"]} ${oneof_parameter["name"]} = ${oneof_parameter["grpc_field_number"]};
+%     endfor
   }
 %   else:
-<%
-  grpc_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
-%>\
-  ${parameter_type} ${parameter_name} = ${grpc_field_number};
+  ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
 %   endif
 % endfor
 }
