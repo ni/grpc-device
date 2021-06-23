@@ -450,6 +450,7 @@ enum RouteSignalFrom {
   ROUTE_SIGNAL_FROM_NIFGEN_VAL_SYNCHRONIZATION = 1007;
   ROUTE_SIGNAL_FROM_NIFGEN_VAL_SOFTWARE_TRIG = 2;
   ROUTE_SIGNAL_FROM_NIFGEN_VAL_REF_OUT = 1008;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_CLOCK_OUT = 1009;
   ROUTE_SIGNAL_FROM_NIFGEN_VAL_PXI_STAR = 131;
   ROUTE_SIGNAL_FROM_NIFGEN_VAL_PFI_0 = 1011;
   ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_0 = 141;
@@ -483,6 +484,14 @@ enum Trigger {
   TRIGGER_UNSPECIFIED = 0;
   TRIGGER_NIFGEN_VAL_START_TRIGGER = 1004;
   TRIGGER_NIFGEN_VAL_SCRIPT_TRIGGER = 103;
+}
+
+enum TriggerMode {
+  TRIGGER_MODE_UNSPECIFIED = 0;
+  TRIGGER_MODE_NIFGEN_VAL_SINGLE = 1;
+  TRIGGER_MODE_NIFGEN_VAL_CONTINUOUS = 2;
+  TRIGGER_MODE_NIFGEN_VAL_STEPPED = 3;
+  TRIGGER_MODE_NIFGEN_VAL_BURST = 4;
 }
 
 enum Waveform {
@@ -1133,7 +1142,10 @@ message ConfigureSynchronizationResponse {
 message ConfigureTriggerModeRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 trigger_mode = 3;
+  oneof trigger_mode_enum {
+    TriggerMode trigger_mode = 3;
+    sint32 trigger_mode_raw = 4;
+  }
 }
 
 message ConfigureTriggerModeResponse {
