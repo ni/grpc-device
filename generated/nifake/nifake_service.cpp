@@ -1232,7 +1232,7 @@ namespace nifake_grpc {
         response->set_a_float(a_float);
         auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
         if(a_float_enum_omap_it != floatenum_output_map_.end()) {
-          response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnumMapped>(a_float_enum_omap_it->second));
+          response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
         }
         response->set_a_float_enum_raw(a_float_enum);
         response->set_a_string(a_string);

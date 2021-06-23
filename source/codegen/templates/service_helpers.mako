@@ -136,9 +136,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
   has_mapped_enum = 'mapped-enum' in parameter
   has_unmapped_enum = 'enum' in parameter
   if has_mapped_enum:
-    mapped_enum_name = parameter["mapped-enum"]
-    map_name_prefix = mapped_enum_name[:-len("Mapped")] if mapped_enum_name.endswith("Mapped") else mapped_enum_name
-    map_name = map_name_prefix.lower() + "_input_map_"
+    map_name = parameter["mapped-enum"].lower() + "_input_map_"
     mapped_enum_iterator_name = field_name + "_imap_it"
     mapped_request_snippet = f'request->{field_name}_mapped()'
   if has_unmapped_enum:
@@ -301,14 +299,13 @@ ${initialize_standard_input_param(function_name, parameter)}\
   has_unmapped_enum = 'enum' in parameter
   if has_mapped_enum:
     mapped_enum_name = parameter["mapped-enum"]
-    mapped_enum_type = mapped_enum_name[:-len("Mapped")] if mapped_enum_name.endswith("Mapped") else mapped_enum_name
-    map_name = mapped_enum_type.lower() + "_output_map_"
+    map_name = mapped_enum_name.lower() + "_output_map_"
     mapped_enum_iterator_name = parameter_name + "_omap_it"
 %>\
 %     if has_mapped_enum:
         auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
         if(${mapped_enum_iterator_name} != ${map_name}.end()) {
-          response->set_${parameter_name}_mapped(static_cast<${namespace_prefix}${mapped_enum_type}Mapped>(${mapped_enum_iterator_name}->second));
+          response->set_${parameter_name}_mapped(static_cast<${namespace_prefix}${mapped_enum_name}>(${mapped_enum_iterator_name}->second));
         }
 %     endif
 %     if has_unmapped_enum:

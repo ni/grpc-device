@@ -67,10 +67,9 @@ private:
 % for enum in enums_to_map:
 <%
   enum_value = service_helpers.python_to_c(enums[enum])
-  map_prefix = enum[:-len("Mapped")] if enum.endswith("Mapped") else enum
 %>\
-  std::map<std::int32_t, ${enum_value}> ${map_prefix.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
-  std::map<${enum_value}, std::int32_t> ${map_prefix.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
+  std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
+  std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
 % endfor
 };
 
