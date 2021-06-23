@@ -14,32 +14,32 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  # build:
-  #   name: ${{ matrix.config.name }}
-  #   runs-on: ${{ matrix.config.os }}
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       config:
-  #       - {
-  #           name: "Windows Build", artifact: "Windows.tar.xz",
-  #           os: windows-latest,
-  #           build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-  #           cmake_platform: "-A x64"
-  #         }
-  #       - {
-  #           name: "Ubuntu Build", artifact: "Linux.tar.xz",
-  #           os: ubuntu-16.04,
-  #           build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-  #           cmake_platform: ""
-  #         }
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Windows Build", artifact: "Windows.tar.xz",
+            os: windows-latest,
+            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
+            cmake_platform: "-A x64"
+          }
+        - {
+            name: "Ubuntu Build", artifact: "Linux.tar.xz",
+            os: ubuntu-16.04,
+            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
+            cmake_platform: ""
+          }
 
-  #   steps:
-  #   - name: Cancel Build(s)
-  #     uses: styfle/cancel-workflow-action@0.7.0
-  #     if: "github.ref != 'refs/heads/main'"
-  #     with:
-  #       access_token: ${{ github.token }}
+    steps:
+    - name: Cancel Build(s)
+      uses: styfle/cancel-workflow-action@0.7.0
+      if: "github.ref != 'refs/heads/main'"
+      with:
+        access_token: ${{ github.token }}
 
   #   - name: Checkout Repo
   #     uses: actions/checkout@v2

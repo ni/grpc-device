@@ -28,6 +28,10 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
+    - name: Print Repository
+      run: |
+        echo GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
+
     # - name: Setup python3
     #   uses: actions/setup-python@v2
     #   with:
