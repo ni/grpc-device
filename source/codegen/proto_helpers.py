@@ -44,6 +44,12 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     type = 'uint32'
   if 'ViUInt64' in type:
     type = 'uint64'
+  if 'ViUInt8' in type:
+    if is_array == True:
+      type = "bytes"
+      add_repeated = False
+    else:
+      type = 'uint32'
   if 'ViStatus' in type:
     type = 'sint32'
   if 'ViAddr' in type:
@@ -77,3 +83,12 @@ def filter_parameters_for_grpc_fields(parameters):
   """Filter out the parameters that shouldn't be represented by a field on a grpc message.
      For example, get rid of any parameters whose values should be determined from another parameter."""
   return [p for p in parameters if p.get('include_in_proto', True)]
+
+def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
+  field_name_key = f"grpc{field_name_suffix}_field_number"
+  if field_name_key in parameter:
+    field_number = parameter[field_name_key]
+  else:
+    field_number = next(i for i in range(1, 100) if i not in used_indexes)
+  used_indexes.append(field_number)
+  return field_number

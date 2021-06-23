@@ -7,13 +7,13 @@ enums = data['enums']
 config = data['config']
 functions = data['functions']
 
-used_enums = common_helpers.get_used_enums(functions, attributes)
 enums_to_map = [e for e in enums if e in enums and enums[e].get("generate-mappings", False)]
 service_class_prefix = config["service_class_prefix"]
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = config["namespace_component"] + "_grpc::"
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
+(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
 %>\
 
 //---------------------------------------------------------------------
@@ -54,10 +54,20 @@ private:
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 % endif
+% if common_helpers.has_enum_array_string_out_param(functions):
+  template <typename TEnum>
+  void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
+% endif
 % if 'custom_types' in locals():
 %   for custom_type in custom_types:
+	% if custom_type["name"] in output_custom_types:
   void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
   void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
+	% endif
+	% if custom_type["name"] in input_custom_types:
+  ${custom_type["name"]} ConvertMessage(const ${namespace_prefix}${custom_type["grpc_name"]}& input);
+  void Copy(const google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>& input, std::vector<${custom_type["name"]}>* output);
+	%endif
 %   endfor
 % endif
 % for enum in enums_to_map:

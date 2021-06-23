@@ -10,6 +10,7 @@ namespace_prefix = config["namespace_component"] + "_grpc::"
 module_name = config["module_name"]
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
+(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
 
@@ -44,9 +45,22 @@ namespace ${config["namespace_component"]}_grpc {
       output->Add(item != VI_FALSE);
     }
   }
+
+% endif
+% if common_helpers.has_enum_array_string_out_param(functions):
+  template <typename TEnum>
+  void ${service_class_prefix}Service::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
+  {
+    for (auto item : input)
+    {
+      output->Add(item);
+    }
+  }
+
 % endif
 % if 'custom_types' in locals():
 %   for custom_type in custom_types:
+% if custom_type["name"] in output_custom_types:
   void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
   {
 %     for field in custom_type["fields"]: 
@@ -63,6 +77,27 @@ namespace ${config["namespace_component"]}_grpc {
     }
   }
 
+% endif
+% if custom_type["name"] in input_custom_types:
+   ${custom_type["name"]} ${service_class_prefix}Service::ConvertMessage(const ${namespace_prefix}${custom_type["grpc_name"]}& input) 
+  {
+    ${custom_type["name"]}* output = new ${custom_type["name"]}();  
+%     for field in custom_type["fields"]: 
+    output->${common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))} = input.${common_helpers.camel_to_snake(field["name"])}();
+%     endfor
+    return *output;
+  }
+
+  void ${service_class_prefix}Service::Copy(const google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>& input, std::vector<${custom_type["name"]}>* output)
+  {
+    std::transform(
+        input.begin(),
+        input.end(),
+        std::back_inserter(*output),
+        [&](${namespace_prefix}${custom_type["grpc_name"]} x) { return ConvertMessage(x); });
+  }
+
+% endif
 %   endfor
 % endif
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
@@ -85,6 +120,8 @@ namespace ${config["namespace_component"]}_grpc {
 ${mako_helper.define_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   elif common_helpers.has_ivi_dance_param(parameters):
 ${mako_helper.define_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+%   elif common_helpers.has_ivi_dance_with_a_twist_param(parameters):
+${mako_helper.define_ivi_dance_with_a_twist_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   else:
 ${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   endif

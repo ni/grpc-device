@@ -55,6 +55,32 @@ ${set_response_values(output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
+## Generate the core method body for an ivi-dance-with_a_twist method. This should be what gets included within the try block in the service method.
+<%def name="define_ivi_dance_with_a_twist_method_body(function_name, function_data, parameters)">\
+<%
+  (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_with_a_twist_params(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+  array_output_parameters = [p for p in output_parameters if common_helpers.is_array(p['type'])]
+  scalar_output_parameters = [p for p in output_parameters if p not in array_output_parameters]
+%>\
+${initialize_input_params(function_name, non_ivi_params)}\
+${initialize_output_params(scalar_output_parameters)}\
+      auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance_with_a_twist(parameters)});
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+${initialize_output_params(array_output_parameters)}\
+      status = library_->${function_name}(${service_helpers.create_args(parameters)});
+      response->set_status(status);
+% if output_parameters:
+      if (status == 0) {
+${set_response_values(output_parameters)}\
+      }
+% endif
+      return ::grpc::Status::OK;\
+</%def>
+
 ## Generate the core method body for an ivi-dance method. This should be what gets included within the try block in the service method.
 <%def name="define_simple_method_body(function_name, function_data, parameters)">\
 <%
@@ -88,10 +114,7 @@ ${initialize_input_param(function_name, parameter)}
 
 ## Initialize an input parameter for an API call.
 <%def name="initialize_input_param(function_name, parameter)">\
-<%
-  enums = data['enums']
-%>\
-% if common_helpers.is_enum(parameter) and enums[parameter["enum"]].get("generate-mappings", False):
+% if common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}\
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
@@ -103,36 +126,46 @@ ${initialize_standard_input_param(function_name, parameter)}\
 ## Initialize an enum input parameter for an API call.
 <%def name="initialize_enum_input_param(function_name, parameter)">\
 <%
+  config = data['config']
+  enums = data['enums']
+  namespace_prefix = config["namespace_component"] + "_grpc::"
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  pascal_parameter_name = common_helpers.snake_to_pascal(parameter_name)
+  field_name = common_helpers.camel_to_snake(parameter["name"])
+  pascal_field_name = common_helpers.snake_to_pascal(field_name)
   map_name = parameter["enum"].lower() + "_input_map_"
-  iterator_name = parameter_name + "_imap_it"
-  enum_type_prefix = function_name + "Request::" + pascal_parameter_name + "EnumCase::"
-  param_all_caps_snake = parameter_name.upper()
+  mapped_enum_iterator_name = field_name + "_imap_it"
+  one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{pascal_field_name}EnumCase'
+  enum_request_snippet = f'request->{field_name}()'
+  raw_request_snippet = f'request->{field_name}_raw()'
 %>\
       ${parameter['type']} ${parameter_name};
-      switch (request->${parameter_name}_enum_case()) {
-        case ${enum_type_prefix}k${pascal_parameter_name}: {
-          auto ${iterator_name} = ${map_name}.find(request->${parameter_name}());
-          if (${iterator_name} == ${map_name}.end()) {
+      switch (request->${field_name}_enum_case()) {
+        case ${one_of_case_prefix}::k${pascal_field_name}: {
+% if enums[parameter["enum"]].get("generate-mappings", False):
+          auto ${mapped_enum_iterator_name} = ${map_name}.find(${enum_request_snippet});
+          if (${mapped_enum_iterator_name} == ${map_name}.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
           }
-% if parameter['type'] == "ViConstString":
-          ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
+<%
+  enum_request_snippet = f'{mapped_enum_iterator_name}->second'
+%>\
+% endif
+% if parameter['type'] in ["ViConstString", "ViString"]:
+          ${parameter_name} = const_cast<${parameter['type']}>((${enum_request_snippet}).c_str());
 % else:
-          ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
+          ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
 % endif
           break;
         }
-        case ${enum_type_prefix}k${pascal_parameter_name}Raw: {
-% if parameter['type'] == "ViConstString":
-          ${parameter_name} = static_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
+        case ${one_of_case_prefix}::k${pascal_field_name}Raw: {
+% if parameter['type'] in ["ViConstString", "ViString"]:
+          ${parameter_name} = const_cast<${parameter['type']}>(${raw_request_snippet}.c_str());
 % else:
-          ${parameter_name} = static_cast<${parameter['type']}>(request->${parameter_name}_raw());
+          ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
           break;
-        } 
-        case ${enum_type_prefix}${param_all_caps_snake}_ENUM_NOT_SET: {
+        }
+        case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range");
           break;
         }
@@ -151,10 +184,8 @@ ${initialize_standard_input_param(function_name, parameter)}\
 ## Initialize an input parameter for an API call.
 <%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
-  config = data['config']
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["name"])
-  namespace_prefix = config["namespace_component"] + "_grpc::"
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
   c_type_pointer = c_type.replace('[]','*')
@@ -164,35 +195,42 @@ ${initialize_standard_input_param(function_name, parameter)}\
       ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
 % elif c_type == 'ViString' or c_type == 'ViRsrc':
       ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
-% elif c_type == 'ViInt8[]' or c_type == 'ViChar[]':
-      ${c_type_pointer} ${parameter_name} = (${c_type[:-2]}*)${request_snippet}.c_str();\
+% elif common_helpers.is_string_arg(parameter):
+      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
+% elif c_type == 'ViSession[]':
+      auto ${parameter_name}_request = ${request_snippet};
+      std::vector<${c_type_underlying_type}> ${parameter_name};
+      std::transform(
+        ${parameter_name}_request.begin(),
+        ${parameter_name}_request.end(),
+        std::back_inserter(${parameter_name}),
+        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); \
 % elif c_type == 'ViBoolean[]':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
-      std::transform(${parameter_name}_request.begin(), ${parameter_name}_request.end(), std::back_inserter(${parameter_name}), [](auto x) { return x ? VI_TRUE : VI_FALSE; });
-% elif 'enum' in parameter:
-<%
-PascalFieldName = common_helpers.snake_to_pascal(field_name)
-one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldName}EnumCase'
-%>\
-      ${c_type} ${parameter_name};
-      switch (request->${field_name}_enum_case()) {
-        case ${one_of_case_prefix}::k${PascalFieldName}:
-          ${parameter_name} = (${c_type})${request_snippet};
-          break;
-        case ${one_of_case_prefix}::k${PascalFieldName}Raw:
-          ${parameter_name} = (${c_type})request->${field_name}_raw();
-          break;
-        case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET:
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${field_name} was not specified or out of range");
-          break;
-      }
-% elif c_type == 'ViChar' or c_type == 'ViInt16' or c_type == 'ViInt8':
+      std::transform(
+        ${parameter_name}_request.begin(),
+        ${parameter_name}_request.end(),
+        std::back_inserter(${parameter_name}),
+        [](auto x) { return x ? VI_TRUE : VI_FALSE; });
+% elif c_type == 'ViInt16[]':
+      auto ${parameter_name}_request = ${request_snippet};
+      std::vector<${c_type_underlying_type}> ${parameter_name};
+      std::transform(
+        ${parameter_name}_request.begin(),
+        ${parameter_name}_request.end(),
+        std::back_inserter(${parameter_name}),
+        [](auto x) { return (${c_type_underlying_type})x; }); \
+ % elif common_helpers.is_struct(parameter) and common_helpers.is_array(c_type):
+      auto ${parameter_name}_request = ${request_snippet};
+      std::vector<${c_type_underlying_type}> ${parameter_name};
+      Copy(${parameter_name}_request, &${parameter_name});\
+% elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif c_type == 'ViSession':
       auto ${parameter_name}_grpc_session = ${request_snippet};
       ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
-% elif c_type == 'ViInt32[]' or c_type == 'ViAddr[]':
+% elif c_type in ['ViAddr[]', 'ViInt32[]', 'ViUInt32[]']:
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
@@ -213,18 +251,20 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
   size = ''
   if common_helpers.get_size_mechanism(parameter) == 'fixed':
     size = parameter['size']['value']
+  elif common_helpers.get_size_mechanism(parameter) == 'ivi-dance-with-a-twist':
+    size = common_helpers.camel_to_snake(parameter['size']['value_twist'])
   else:
     size = common_helpers.camel_to_snake(parameter['size']['value'])
 %>\
 %     if common_helpers.is_struct(parameter) or underlying_param_type == 'ViBoolean':
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 ## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.
-%     elif parameter['type'] == 'ViInt8[]':
+%     elif parameter['type'] in ['ViInt8[]', 'ViUInt8[]']:
       std::string ${parameter_name}(${size}, '\0');
 ## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
-%     elif service_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
+%     elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
       std::string ${parameter_name}(${size} - 1, '\0');
-%     elif service_helpers.is_string_arg(parameter):
+%     elif common_helpers.is_string_arg(parameter):
       std::string ${parameter_name};
       if (${size} > 0) {
           ${parameter_name}.resize(${size}-1);
@@ -257,18 +297,24 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 %     if enums[parameter["enum"]].get("generate-mappings", False):
 <%
   map_name = parameter["enum"].lower() + "_output_map_"
-  iterator_name = parameter_name + "_omap_it"
+  mapped_enum_iterator_name = parameter_name + "_omap_it"
 %>\
-        auto ${iterator_name} = ${map_name}.find(${parameter_name});
-        if(${iterator_name} != ${map_name}.end()) {
-          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
+        auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
+        if(${mapped_enum_iterator_name} != ${map_name}.end()) {
+          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${mapped_enum_iterator_name}->second));
+        }
+%     elif common_helpers.is_array(parameter['type']) and common_helpers.is_string_arg(parameter):
+        CopyBytesToEnums(${parameter_name}, response->mutable_${parameter_name}());
+%     elif parameter['type'] == 'ViReal64':
+        if(${parameter_name} == (int)${parameter_name}) {
+          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
         }
 %     else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %     endif
         response->set_${parameter_name}_raw(${parameter_name});
 %   elif common_helpers.is_array(parameter['type']):
-%     if service_helpers.is_string_arg(parameter):
+%     if common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
 %     elif common_helpers.is_struct(parameter) or parameter['type'] == 'ViBoolean[]':
         Copy(${parameter_name}, response->mutable_${parameter_name}());

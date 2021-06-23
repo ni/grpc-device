@@ -251,7 +251,7 @@ TEST_F(NiDmmDriverApiTest, SetViReal64Attribute_GetViReal64Attribute_ValueMatche
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
-  request.set_attribute_value(expected_value);
+  request.set_attribute_value_raw(expected_value);
   dmm::SetAttributeViReal64Response response;
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
   ViReal64 get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
@@ -271,7 +271,7 @@ TEST_F(NiDmmDriverApiTest, SetViInt32Attribute_GetViInt32Attribute_ValueMatchesS
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
-  request.set_attribute_value(expected_value);
+  request.set_attribute_value_raw(expected_value);
   dmm::SetAttributeViInt32Response response;
   ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
   ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);

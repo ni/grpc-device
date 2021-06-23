@@ -248,7 +248,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
-  request.set_attribute_value(expected_value);
+  request.set_attribute_value_raw(expected_value);
   niswitch::SetAttributeViReal64Response response;
 
   ::grpc::Status status = GetStub()->SetAttributeViReal64(&context, request, &response);
@@ -269,7 +269,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStri
   request.mutable_vi()->set_id(GetSessionId());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
-  request.set_attribute_value(expected_value);
+  request.set_attribute_value_raw(expected_value);
   niswitch::SetAttributeViStringResponse response;
 
   ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);

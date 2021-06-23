@@ -57,6 +57,50 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'AcceptViSessionArray': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sessionCount',
+                'type': 'ViUInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sessionArray',
+                'type': 'ViSession[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'sessionCount'
+                }
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'AcceptViUInt32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLen',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'uInt32Array',
+                'type': 'ViUInt32[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arrayLen'
+                }
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'BoolArrayOutputFunction': {
         'codegen_method': 'public',
         'documentation': {
@@ -497,37 +541,37 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetAnIviDanceWithATwistString': {
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'TBD'
-        },
+    'GetAnIviDanceWithATwistArray': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'vi',
+                'direction': 'in',
                 'type': 'ViSession'
             },
             {
+                'name': 'aString',
                 'direction': 'in',
+                'type': 'ViConstString'
+            },
+            {
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
+                'name': 'arrayOut',
                 'direction': 'out',
-                'name': 'aString',
+                'type': 'ViInt32[]',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'actualSize'
-                },
-                'type': 'ViChar[]'
+                }
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
-                'type': 'ViInt32',
-                'use_in_python_api': False
+                'direction': 'out',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -675,6 +719,31 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetArrayViUInt8WithEnum': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLen',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'uInt8EnumArray',
+                'enum': 'Color',
+                'type': 'ViUInt8[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arrayLen'
+                }
             }
         ],
         'returns': 'ViStatus'
@@ -1151,6 +1220,70 @@ functions = {
         ],
         'returns': 'ViStatus',
         'use_session_lock': False
+    },
+    'GetViUInt8': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'aUint8Number',
+                'type': 'ViUInt8'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetViInt32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLen',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'int32Array',
+                'type': 'ViInt32[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arrayLen'
+                }
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetViUInt32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLen',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'uInt32Array',
+                'type': 'ViUInt32[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arrayLen'
+                }
+            }
+        ],
+        'returns': 'ViStatus'
     },
     'ImportAttributeConfigurationBuffer': {
         'documentation': {
@@ -2180,7 +2313,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetCustomTypeArray': {
-        'codegen_method': 'no',
         'documentation': {
             'description': 'This function takes an array of custom types.'
         },
@@ -2211,7 +2343,8 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfElements'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2518,6 +2651,81 @@ functions = {
                     'value': 256
                 },
                 'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ViUInt8ArrayInputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViUInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ViUInt8ArrayOutputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViUInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ViInt16ArrayInputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViInt16[]'
             }
         ],
         'returns': 'ViStatus'

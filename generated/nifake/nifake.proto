@@ -18,6 +18,8 @@ import "session.proto";
 service NiFake {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc AcceptListOfDurationsInSeconds(AcceptListOfDurationsInSecondsRequest) returns (AcceptListOfDurationsInSecondsResponse);
+  rpc AcceptViSessionArray(AcceptViSessionArrayRequest) returns (AcceptViSessionArrayResponse);
+  rpc AcceptViUInt32Array(AcceptViUInt32ArrayRequest) returns (AcceptViUInt32ArrayResponse);
   rpc BoolArrayOutputFunction(BoolArrayOutputFunctionRequest) returns (BoolArrayOutputFunctionResponse);
   rpc BoolArrayInputFunction(BoolArrayInputFunctionRequest) returns (BoolArrayInputFunctionResponse);
   rpc DoubleAllTheNums(DoubleAllTheNumsRequest) returns (DoubleAllTheNumsResponse);
@@ -29,9 +31,10 @@ service NiFake {
   rpc GetANumber(GetANumberRequest) returns (GetANumberResponse);
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
-  rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
+  rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
   rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
+  rpc GetArrayViUInt8WithEnum(GetArrayViUInt8WithEnumRequest) returns (GetArrayViUInt8WithEnumResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
@@ -41,6 +44,9 @@ service NiFake {
   rpc GetCalInterval(GetCalIntervalRequest) returns (GetCalIntervalResponse);
   rpc GetCustomTypeArray(GetCustomTypeArrayRequest) returns (GetCustomTypeArrayResponse);
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
+  rpc GetViUInt8(GetViUInt8Request) returns (GetViUInt8Response);
+  rpc GetViInt32Array(GetViInt32ArrayRequest) returns (GetViInt32ArrayResponse);
+  rpc GetViUInt32Array(GetViUInt32ArrayRequest) returns (GetViUInt32ArrayResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
@@ -55,12 +61,16 @@ service NiFake {
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
   rpc ReturnListOfDurationsInSeconds(ReturnListOfDurationsInSecondsRequest) returns (ReturnListOfDurationsInSecondsResponse);
   rpc ReturnMultipleTypes(ReturnMultipleTypesRequest) returns (ReturnMultipleTypesResponse);
+  rpc SetCustomTypeArray(SetCustomTypeArrayRequest) returns (SetCustomTypeArrayResponse);
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
   rpc TwoInputFunction(TwoInputFunctionRequest) returns (TwoInputFunctionResponse);
   rpc Use64BitNumber(Use64BitNumberRequest) returns (Use64BitNumberResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
+  rpc ViUInt8ArrayInputFunction(ViUInt8ArrayInputFunctionRequest) returns (ViUInt8ArrayInputFunctionResponse);
+  rpc ViUInt8ArrayOutputFunction(ViUInt8ArrayOutputFunctionRequest) returns (ViUInt8ArrayOutputFunctionResponse);
+  rpc ViInt16ArrayInputFunction(ViInt16ArrayInputFunctionRequest) returns (ViInt16ArrayInputFunctionResponse);
 }
 
 enum NiFakeAttributes {
@@ -111,6 +121,14 @@ enum Turtle {
   TURTLE_MICHELANGELO = 3;
 }
 
+enum NiFakeInt32AttributeValues {
+  NIFAKE_INT32_UNSPECIFIED = 0;
+  NIFAKE_INT32_RED = 1;
+  NIFAKE_INT32_BLUE = 2;
+  NIFAKE_INT32_YELLOW = 5;
+  NIFAKE_INT32_BLACK = 42;
+}
+
 message FakeCustomStruct {
   sint32 struct_int = 1;
   double struct_double = 2;
@@ -130,6 +148,24 @@ message AcceptListOfDurationsInSecondsRequest {
 }
 
 message AcceptListOfDurationsInSecondsResponse {
+  int32 status = 1;
+}
+
+message AcceptViSessionArrayRequest {
+  uint32 session_count = 1;
+  repeated nidevice_grpc.Session session_array = 2;
+}
+
+message AcceptViSessionArrayResponse {
+  int32 status = 1;
+}
+
+message AcceptViUInt32ArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  repeated uint32 u_int32_array = 2;
+}
+
+message AcceptViUInt32ArrayResponse {
   int32 status = 1;
 }
 
@@ -241,14 +277,14 @@ message GetAnIviDanceStringResponse {
   string a_string = 2;
 }
 
-message GetAnIviDanceWithATwistStringRequest {
+message GetAnIviDanceWithATwistArrayRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 buffer_size = 2;
+  string a_string = 2;
 }
 
-message GetAnIviDanceWithATwistStringResponse {
+message GetAnIviDanceWithATwistArrayResponse {
   int32 status = 1;
-  string a_string = 2;
+  repeated sint32 array_out = 2;
   sint32 actual_size = 3;
 }
 
@@ -268,6 +304,17 @@ message GetArrayUsingIviDanceRequest {
 message GetArrayUsingIviDanceResponse {
   int32 status = 1;
   repeated double array_out = 2;
+}
+
+message GetArrayViUInt8WithEnumRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 array_len = 2;
+}
+
+message GetArrayViUInt8WithEnumResponse {
+  int32 status = 1;
+  repeated Color u_int8_enum_array = 2;
+  bytes u_int8_enum_array_raw = 3;
 }
 
 message GetAttributeViBooleanRequest {
@@ -367,6 +414,35 @@ message GetEnumValueResponse {
   sint32 a_quantity = 2;
   Turtle a_turtle = 3;
   sint32 a_turtle_raw = 4;
+}
+
+message GetViUInt8Request {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetViUInt8Response {
+  int32 status = 1;
+  uint32 a_uint8_number = 2;
+}
+
+message GetViInt32ArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 array_len = 2;
+}
+
+message GetViInt32ArrayResponse {
+  int32 status = 1;
+  repeated sint32 int32_array = 2;
+}
+
+message GetViUInt32ArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 array_len = 2;
+}
+
+message GetViUInt32ArrayResponse {
+  int32 status = 1;
+  repeated uint32 u_int32_array = 2;
 }
 
 message ImportAttributeConfigurationBufferRequest {
@@ -534,6 +610,15 @@ message ReturnMultipleTypesResponse {
   string a_string = 11;
 }
 
+message SetCustomTypeArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  repeated FakeCustomStruct cs = 2;
+}
+
+message SetCustomTypeArrayResponse {
+  int32 status = 1;
+}
+
 message StringValuedEnumInputFunctionWithDefaultsRequest {
   nidevice_grpc.Session vi = 1;
   oneof a_mobile_o_s_name_enum {
@@ -589,6 +674,35 @@ message CloseExtCalRequest {
 }
 
 message CloseExtCalResponse {
+  int32 status = 1;
+}
+
+message ViUInt8ArrayInputFunctionRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 number_of_elements = 2;
+  bytes an_array = 3;
+}
+
+message ViUInt8ArrayInputFunctionResponse {
+  int32 status = 1;
+}
+
+message ViUInt8ArrayOutputFunctionRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 number_of_elements = 2;
+}
+
+message ViUInt8ArrayOutputFunctionResponse {
+  int32 status = 1;
+  bytes an_array = 2;
+}
+
+message ViInt16ArrayInputFunctionRequest {
+  nidevice_grpc.Session vi = 1;
+  repeated sint32 an_array = 2;
+}
+
+message ViInt16ArrayInputFunctionResponse {
   int32 status = 1;
 }
 

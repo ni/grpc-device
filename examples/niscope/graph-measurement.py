@@ -99,7 +99,7 @@ CheckStatus(scope_service, vi, config_result)
 result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
     vi = vi,
     attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
-    value = niscope_types.TriggerType.TRIGGER_TYPE_NISCOPE_VAL_EDGE_TRIGGER
+    value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER
 ))
 CheckStatus(scope_service, vi, result)
 
@@ -117,7 +117,7 @@ result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Requ
     vi = vi,
     channel_list = channels,
     attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-    value = niscope_types.RefLevelUnits.REF_LEVEL_UNITS_NISCOPE_VAL_PERCENTAGE
+    value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
 ))
 CheckStatus(scope_service, vi, result)
 

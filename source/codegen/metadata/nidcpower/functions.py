@@ -709,267 +709,6 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'CalAdjustCurrentLimit': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'range',
-        'direction': 'in',
-        'type': 'ViReal64'
-      },
-      {
-        'name': 'numberOfMeasurements',
-        'direction': 'in',
-        'type': 'ViUInt32'
-      },
-      {
-        'name': 'requestedOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      },
-      {
-        'name': 'measuredOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'CalAdjustCurrentMeasurement': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'range',
-        'direction': 'in',
-        'type': 'ViReal64'
-      },
-      {
-        'name': 'numberOfMeasurements',
-        'direction': 'in',
-        'type': 'ViUInt32'
-      },
-      {
-        'name': 'reportedOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      },
-      {
-        'name': 'measuredOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'CalAdjustInternalReference': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'internalReference',
-        'direction': 'in',
-        'type': 'ViInt32',
-        'enum': 'InternalReference'
-      },
-      {
-        'name': 'adjustedInternalReference',
-        'direction': 'in',
-        'type': 'ViReal64'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'CalAdjustOutputResistance': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'numberOfMeasurements',
-        'direction': 'in',
-        'type': 'ViUInt32'
-      },
-      {
-        'name': 'requestedOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      },
-      {
-        'name': 'measuredOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'CalAdjustResidualCurrentOffset': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'CalAdjustResidualVoltageOffset': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'CalAdjustVoltageLevel': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'range',
-        'direction': 'in',
-        'type': 'ViReal64'
-      },
-      {
-        'name': 'numberOfMeasurements',
-        'direction': 'in',
-        'type': 'ViUInt32'
-      },
-      {
-        'name': 'requestedOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      },
-      {
-        'name': 'measuredOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'CalAdjustVoltageMeasurement': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'range',
-        'direction': 'in',
-        'type': 'ViReal64'
-      },
-      {
-        'name': 'numberOfMeasurements',
-        'direction': 'in',
-        'type': 'ViUInt32'
-      },
-      {
-        'name': 'reportedOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      },
-      {
-        'name': 'measuredOutputs',
-        'direction': 'in',
-        'type': 'ViReal64[]',
-        'size': {
-          'mechanism': 'len',
-          'value': 'numberOfMeasurements'
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
   'CalSelfCalibrate': {
     'parameters': [
       {
@@ -979,26 +718,6 @@ functions = {
       },
       {
         'name': 'channelName',
-        'direction': 'in',
-        'type': 'ViConstString'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'ChangeExtCalPassword': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'oldPassword',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'newPassword',
         'direction': 'in',
         'type': 'ViConstString'
       }
@@ -1036,23 +755,6 @@ functions = {
      ],
      'returns': 'ViStatus'
    },
-  'CloseExtCal': {
-    'custom_close_method': True,
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'action',
-        'direction': 'in',
-        'enum': 'CalibrationCloseAction',
-        'type': 'ViInt32'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
   'Commit': {
     'parameters': [
       {
@@ -1785,22 +1487,6 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'ConnectInternalReference': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'internalReference',
-        'direction': 'in',
-        'type': 'ViInt32',
-        'enum': 'InternalReference'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
   'CreateAdvancedSequenceStep': {
     'parameters': [
       {
@@ -2187,40 +1873,6 @@ functions = {
     ],
     'returns': 'ViStatus'
   },
-  'GetCalUserDefinedInfo': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'info',
-        'direction': 'out',
-        'type': 'ViChar[]',
-        'size': {
-          'mechanism': 'fixed',
-          'value': 256
-        }
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'GetCalUserDefinedInfoMaxSize': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'infoSize',
-        'direction': 'out',
-        'type': 'ViInt32'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
   'GetChannelName': {
     'parameters': [
       {
@@ -2506,28 +2158,6 @@ functions = {
         'name': 'filePath',
         'direction': 'in',
         'type': 'ViConstString'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'InitExtCal': {
-    'init_method' : True,
-    'custom_close': 'CloseExtCal(id, NIDCPOWER_VAL_CANCEL)',
-    'parameters': [
-      {
-        'name': 'resourceName',
-        'direction': 'in',
-        'type': 'ViRsrc'
-      },
-      {
-        'name': 'password',
-        'direction': 'in',
-        'type': 'ViConstString'
-      },
-      {
-        'name': 'vi',
-        'direction': 'out',
-        'type': 'ViSession'
       }
     ],
     'returns': 'ViStatus'
@@ -3060,21 +2690,6 @@ functions = {
       },
       {
         'name': 'attributeValue',
-        'direction': 'in',
-        'type': 'ViConstString'
-      }
-    ],
-    'returns': 'ViStatus'
-  },
-  'SetCalUserDefinedInfo': {
-    'parameters': [
-      {
-        'name': 'vi',
-        'direction': 'in',
-        'type': 'ViSession'
-      },
-      {
-        'name': 'info',
         'direction': 'in',
         'type': 'ViConstString'
       }

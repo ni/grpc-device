@@ -18,12 +18,6 @@ import "session.proto";
 service NiDmm {
   rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Abort(AbortRequest) returns (AbortResponse);
-  rpc CalAdjustGain(CalAdjustGainRequest) returns (CalAdjustGainResponse);
-  rpc CalAdjustACFilter(CalAdjustACFilterRequest) returns (CalAdjustACFilterResponse);
-  rpc CalAdjustLC(CalAdjustLCRequest) returns (CalAdjustLCResponse);
-  rpc CalAdjustLinearization(CalAdjustLinearizationRequest) returns (CalAdjustLinearizationResponse);
-  rpc CalAdjustMisc(CalAdjustMiscRequest) returns (CalAdjustMiscResponse);
-  rpc CalAdjustOffset(CalAdjustOffsetRequest) returns (CalAdjustOffsetResponse);
   rpc CheckAttributeViBoolean(CheckAttributeViBooleanRequest) returns (CheckAttributeViBooleanResponse);
   rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
   rpc CheckAttributeViReal64(CheckAttributeViReal64Request) returns (CheckAttributeViReal64Response);
@@ -32,7 +26,6 @@ service NiDmm {
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc ConfigureACBandwidth(ConfigureACBandwidthRequest) returns (ConfigureACBandwidthResponse);
   rpc ConfigureADCCalibration(ConfigureADCCalibrationRequest) returns (ConfigureADCCalibrationResponse);
   rpc ConfigureAutoZeroMode(ConfigureAutoZeroModeRequest) returns (ConfigureAutoZeroModeResponse);
@@ -74,10 +67,7 @@ service NiDmm {
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetAutoRangeValue(GetAutoRangeValueRequest) returns (GetAutoRangeValueResponse);
-  rpc GetCalCount(GetCalCountRequest) returns (GetCalCountResponse);
   rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
-  rpc GetCalUserDefinedInfo(GetCalUserDefinedInfoRequest) returns (GetCalUserDefinedInfoResponse);
-  rpc GetCalUserDefinedInfoMaxSize(GetCalUserDefinedInfoMaxSizeRequest) returns (GetCalUserDefinedInfoMaxSizeResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetDevTemp(GetDevTempRequest) returns (GetDevTempResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
@@ -93,7 +83,6 @@ service NiDmm {
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
-  rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsOverRange(IsOverRangeRequest) returns (IsOverRangeResponse);
   rpc IsUnderRange(IsUnderRangeRequest) returns (IsUnderRangeResponse);
@@ -107,7 +96,6 @@ service NiDmm {
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
-  rpc RestoreLastExtCalConstants(RestoreLastExtCalConstantsRequest) returns (RestoreLastExtCalConstantsResponse);
   rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
   rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
@@ -117,8 +105,6 @@ service NiDmm {
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
-  rpc SetCalPassword(SetCalPasswordRequest) returns (SetCalPasswordResponse);
-  rpc SetCalUserDefinedInfo(SetCalUserDefinedInfoRequest) returns (SetCalUserDefinedInfoResponse);
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
 }
 
@@ -212,14 +198,6 @@ enum NiDmmAttributes {
   NIDMM_ATTRIBUTE_TRIGGER_SLOPE = 1250334;
 }
 
-enum AdcCalibration {
-  option allow_alias = true;
-  ADC_CALIBRATION_UNSPECIFIED = 0;
-  ADC_CALIBRATION_NIDMM_VAL_ADC_CALIBRATION_AUTO = -1;
-  ADC_CALIBRATION_NIDMM_VAL_ADC_CALIBRATION_OFF = 0;
-  ADC_CALIBRATION_NIDMM_VAL_ADC_CALIBRATION_ON = 1;
-}
-
 enum AcquisitionStatus {
   option allow_alias = true;
   ACQUISITION_STATUS_UNSPECIFIED = 0;
@@ -249,41 +227,11 @@ enum ApertureTimeUnits {
   APERTURE_TIME_UNITS_NIDMM_VAL_POWER_LINE_CYCLES = 1;
 }
 
-enum AutoZero {
-  option allow_alias = true;
-  AUTO_ZERO_UNSPECIFIED = 0;
-  AUTO_ZERO_NIDMM_VAL_AUTO_ZERO_AUTO = -1;
-  AUTO_ZERO_NIDMM_VAL_AUTO_ZERO_OFF = 0;
-  AUTO_ZERO_NIDMM_VAL_AUTO_ZERO_ON = 1;
-  AUTO_ZERO_NIDMM_VAL_AUTO_ZERO_ONCE = 2;
-}
-
-enum BufferSize {
-  BUFFER_SIZE_UNSPECIFIED = 0;
-  BUFFER_SIZE_NIDMM_VAL_BUFFER_SIZE_AUTO = -1;
-}
-
-enum CableCompensationType {
-  option allow_alias = true;
-  CABLE_COMPENSATION_TYPE_UNSPECIFIED = 0;
-  CABLE_COMPENSATION_TYPE_NIDMM_VAL_CABLE_COMP_NONE = 0;
-  CABLE_COMPENSATION_TYPE_NIDMM_VAL_CABLE_COMP_OPEN = 1;
-  CABLE_COMPENSATION_TYPE_NIDMM_VAL_CABLE_COMP_SHORT = 2;
-  CABLE_COMPENSATION_TYPE_NIDMM_VAL_CABLE_COMP_OPEN_AND_SHORT = 3;
-}
-
 enum CalibrationType {
   option allow_alias = true;
   CALIBRATION_TYPE_UNSPECIFIED = 0;
   CALIBRATION_TYPE_NIDMM_VAL_INTERNAL_AREA = 0;
   CALIBRATION_TYPE_NIDMM_VAL_EXTERNAL_AREA = 1;
-}
-
-enum CalibrationCloseAction {
-  option allow_alias = true;
-  CALIBRATION_CLOSE_ACTION_UNSPECIFIED = 0;
-  CALIBRATION_CLOSE_ACTION_NIDMM_EXTCAL_ACTION_ABORT = 0;
-  CALIBRATION_CLOSE_ACTION_NIDMM_EXTCAL_ACTION_SAVE = 1;
 }
 
 enum CompensatedOhms {
@@ -307,22 +255,6 @@ enum ControlCommit {
   option allow_alias = true;
   CONTROL_COMMIT_UNSPECIFIED = 0;
   CONTROL_COMMIT_NIDMM_VAL_CONTROL_COMMIT = 0;
-}
-
-enum DcBias {
-  option allow_alias = true;
-  DC_BIAS_UNSPECIFIED = 0;
-  DC_BIAS_NIDMM_VAL_DC_BIAS_OFF = 0;
-  DC_BIAS_NIDMM_VAL_DC_BIAS_ON = 1;
-}
-
-enum DcNoiseRejection {
-  option allow_alias = true;
-  DC_NOISE_REJECTION_UNSPECIFIED = 0;
-  DC_NOISE_REJECTION_NIDMM_VAL_DCNR_AUTO = -1;
-  DC_NOISE_REJECTION_NIDMM_VAL_DCNR_NORMAL = 0;
-  DC_NOISE_REJECTION_NIDMM_VAL_DCNR_SECOND_ORDER = 1;
-  DC_NOISE_REJECTION_NIDMM_VAL_DCNR_HIGH_ORDER = 2;
 }
 
 enum FrequencyVoltageRange {
@@ -350,88 +282,10 @@ enum Function {
   FUNCTION_NIDMM_VAL_INDUCTANCE = 1006;
 }
 
-enum Latency {
-  LATENCY_UNSPECIFIED = 0;
-  LATENCY_NIDMM_VAL_LATENCY_AUTO = -1;
-}
-
-enum LcCalculationModel {
-  option allow_alias = true;
-  LC_CALCULATION_MODEL_UNSPECIFIED = 0;
-  LC_CALCULATION_MODEL_NIDMM_VAL_CALC_MODEL_AUTO = -1;
-  LC_CALCULATION_MODEL_NIDMM_VAL_CALC_MODEL_SERIES = 0;
-  LC_CALCULATION_MODEL_NIDMM_VAL_CALC_MODEL_PARALLEL = 1;
-}
-
-enum LcCalibration {
-  option allow_alias = true;
-  LC_CALIBRATION_UNSPECIFIED = 0;
-  LC_CALIBRATION_NIDMM_EXTCAL_LC_OPEN = 0;
-  LC_CALIBRATION_NIDMM_EXTCAL_LC_SHORT = 1;
-  LC_CALIBRATION_NIDMM_EXTCAL_LC_25OHM = 2;
-  LC_CALIBRATION_NIDMM_EXTCAL_LC_1KOHM = 3;
-  LC_CALIBRATION_NIDMM_EXTCAL_LC_5KOHM = 4;
-  LC_CALIBRATION_NIDMM_EXTCAL_LC_100KOHM = 5;
-  LC_CALIBRATION_NIDMM_EXTCAL_LC_125OHM = 6;
-}
-
-enum MeasurementCompleteDest {
-  MEASUREMENT_COMPLETE_DEST_UNSPECIFIED = 0;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_NONE = -1;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_EXTERNAL = 2;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG0 = 111;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG1 = 112;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG2 = 113;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG3 = 114;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG4 = 115;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG5 = 116;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG6 = 117;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_PXI_TRIG7 = 118;
-  MEASUREMENT_COMPLETE_DEST_NIDMM_VAL_LBR_TRIG0 = 1003;
-}
-
-enum MeasurementDestinationSlope {
-  option allow_alias = true;
-  MEASUREMENT_DESTINATION_SLOPE_UNSPECIFIED = 0;
-  MEASUREMENT_DESTINATION_SLOPE_NIDMM_VAL_POSITIVE = 0;
-  MEASUREMENT_DESTINATION_SLOPE_NIDMM_VAL_NEGATIVE = 1;
-}
-
-enum MiscCalibration {
-  option allow_alias = true;
-  MISC_CALIBRATION_UNSPECIFIED = 0;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_VREF = 0;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_RREF = 1;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_ZINT = 2;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_2WIRELEAKAGE = 3;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_4WIRELEAKAGE = 4;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_SECTION = 5;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_VREF_DC_VOLTAGE = 6;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_VREF_DC_CURRENT = 7;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_VREF_AC_VOLTAGE = 8;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_VREF_AC_CURRENT = 9;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_VREF_RESISTANCE = 10;
-  MISC_CALIBRATION_NIDMM_EXTCAL_MISCCAL_VOLTAGE_AC_FILTER = 11;
-}
-
-enum OperationMode {
-  option allow_alias = true;
-  OPERATION_MODE_UNSPECIFIED = 0;
-  OPERATION_MODE_NIDMM_VAL_IVIDMM_MODE = 0;
-  OPERATION_MODE_NIDMM_VAL_WAVEFORM_MODE = 1;
-}
-
 enum PowerLineFrequencies {
   POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
   POWER_LINE_FREQUENCIES_NIDMM_VAL_50_HERTZ = 50;
   POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ = 60;
-}
-
-enum Range {
-  RANGE_UNSPECIFIED = 0;
-  RANGE_NIDMM_VAL_AUTO_RANGE_ON = -1;
-  RANGE_NIDMM_VAL_AUTO_RANGE_OFF = -2;
-  RANGE_NIDMM_VAL_AUTO_RANGE_ONCE = -3;
 }
 
 enum RtdType {
@@ -483,20 +337,6 @@ enum SampleTrigger {
   SAMPLE_TRIGGER_NIDMM_VAL_LBR_TRIG1 = 1004;
 }
 
-enum SettleTime {
-  SETTLE_TIME_UNSPECIFIED = 0;
-  SETTLE_TIME_NIDMM_VAL_SETTLE_TIME_AUTO = -1;
-}
-
-enum ThermistorType {
-  option allow_alias = true;
-  THERMISTOR_TYPE_UNSPECIFIED = 0;
-  THERMISTOR_TYPE_NIDMM_VAL_TEMP_THERMISTOR_CUSTOM = 0;
-  THERMISTOR_TYPE_NIDMM_VAL_TEMP_THERMISTOR_44004 = 1;
-  THERMISTOR_TYPE_NIDMM_VAL_TEMP_THERMISTOR_44006 = 2;
-  THERMISTOR_TYPE_NIDMM_VAL_TEMP_THERMISTOR_44007 = 3;
-}
-
 enum ThermocoupleReferenceJunctionType {
   THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_UNSPECIFIED = 0;
   THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_NIDMM_VAL_TEMP_REF_JUNC_FIXED = 2;
@@ -517,14 +357,6 @@ enum ThermocoupleType {
 enum TimeLimit {
   TIME_LIMIT_UNSPECIFIED = 0;
   TIME_LIMIT_NIDMM_VAL_TIME_LIMIT_AUTO = -1;
-}
-
-enum TransducerType {
-  TRANSDUCER_TYPE_UNSPECIFIED = 0;
-  TRANSDUCER_TYPE_NIDMM_VAL_THERMOCOUPLE = 1;
-  TRANSDUCER_TYPE_NIDMM_VAL_THERMISTOR = 2;
-  TRANSDUCER_TYPE_NIDMM_VAL_2_WIRE_RTD = 3;
-  TRANSDUCER_TYPE_NIDMM_VAL_4_WIRE_RTD = 4;
 }
 
 enum TriggerCount {
@@ -564,11 +396,150 @@ enum TriggerSource {
   TRIGGER_SOURCE_NIDMM_VAL_LBR_TRIG1 = 1004;
 }
 
-enum WaveformCoupling {
+enum NiDmmInt32AttributeValues {
   option allow_alias = true;
-  WAVEFORM_COUPLING_UNSPECIFIED = 0;
-  WAVEFORM_COUPLING_NIDMM_VAL_WAVEFORM_COUPLING_AC = 0;
-  WAVEFORM_COUPLING_NIDMM_VAL_WAVEFORM_COUPLING_DC = 1;
+  NIDMM_INT32_UNSPECIFIED = 0;
+  NIDMM_INT32_ADC_CALIBRATION_VAL_ADC_CALIBRATION_AUTO = -1;
+  NIDMM_INT32_ADC_CALIBRATION_VAL_ADC_CALIBRATION_OFF = 0;
+  NIDMM_INT32_ADC_CALIBRATION_VAL_ADC_CALIBRATION_ON = 1;
+  NIDMM_INT32_APERTURE_TIME_UNITS_VAL_SECONDS = 0;
+  NIDMM_INT32_APERTURE_TIME_UNITS_VAL_POWER_LINE_CYCLES = 1;
+  NIDMM_INT32_AUTO_ZERO_VAL_AUTO_ZERO_AUTO = -1;
+  NIDMM_INT32_AUTO_ZERO_VAL_AUTO_ZERO_OFF = 0;
+  NIDMM_INT32_AUTO_ZERO_VAL_AUTO_ZERO_ON = 1;
+  NIDMM_INT32_AUTO_ZERO_VAL_AUTO_ZERO_ONCE = 2;
+  NIDMM_INT32_BUFFER_SIZE_VAL_BUFFER_SIZE_AUTO = -1;
+  NIDMM_INT32_CABLE_COMPENSATION_TYPE_VAL_CABLE_COMP_NONE = 0;
+  NIDMM_INT32_CABLE_COMPENSATION_TYPE_VAL_CABLE_COMP_OPEN = 1;
+  NIDMM_INT32_CABLE_COMPENSATION_TYPE_VAL_CABLE_COMP_SHORT = 2;
+  NIDMM_INT32_CABLE_COMPENSATION_TYPE_VAL_CABLE_COMP_OPEN_AND_SHORT = 3;
+  NIDMM_INT32_COMPENSATED_OHMS_VAL_OFFSET_COMP_OHMS_OFF = 0;
+  NIDMM_INT32_COMPENSATED_OHMS_VAL_OFFSET_COMP_OHMS_ON = 1;
+  NIDMM_INT32_DC_BIAS_VAL_DC_BIAS_OFF = 0;
+  NIDMM_INT32_DC_BIAS_VAL_DC_BIAS_ON = 1;
+  NIDMM_INT32_DC_NOISE_REJECTION_VAL_DCNR_AUTO = -1;
+  NIDMM_INT32_DC_NOISE_REJECTION_VAL_DCNR_NORMAL = 0;
+  NIDMM_INT32_DC_NOISE_REJECTION_VAL_DCNR_SECOND_ORDER = 1;
+  NIDMM_INT32_DC_NOISE_REJECTION_VAL_DCNR_HIGH_ORDER = 2;
+  NIDMM_INT32_FUNCTION_VAL_DC_VOLTS = 1;
+  NIDMM_INT32_FUNCTION_VAL_AC_VOLTS = 2;
+  NIDMM_INT32_FUNCTION_VAL_DC_CURRENT = 3;
+  NIDMM_INT32_FUNCTION_VAL_AC_CURRENT = 4;
+  NIDMM_INT32_FUNCTION_VAL_2_WIRE_RES = 5;
+  NIDMM_INT32_FUNCTION_VAL_4_WIRE_RES = 101;
+  NIDMM_INT32_FUNCTION_VAL_FREQ = 104;
+  NIDMM_INT32_FUNCTION_VAL_PERIOD = 105;
+  NIDMM_INT32_FUNCTION_VAL_TEMPERATURE = 108;
+  NIDMM_INT32_FUNCTION_VAL_AC_VOLTS_DC_COUPLED = 1001;
+  NIDMM_INT32_FUNCTION_VAL_DIODE = 1002;
+  NIDMM_INT32_FUNCTION_VAL_WAVEFORM_VOLTAGE = 1003;
+  NIDMM_INT32_FUNCTION_VAL_WAVEFORM_CURRENT = 1004;
+  NIDMM_INT32_FUNCTION_VAL_CAPACITANCE = 1005;
+  NIDMM_INT32_FUNCTION_VAL_INDUCTANCE = 1006;
+  NIDMM_INT32_LATENCY_VAL_LATENCY_AUTO = -1;
+  NIDMM_INT32_LC_CALCULATION_MODEL_VAL_CALC_MODEL_AUTO = -1;
+  NIDMM_INT32_LC_CALCULATION_MODEL_VAL_CALC_MODEL_SERIES = 0;
+  NIDMM_INT32_LC_CALCULATION_MODEL_VAL_CALC_MODEL_PARALLEL = 1;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_NONE = -1;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_EXTERNAL = 2;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG0 = 111;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG1 = 112;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG2 = 113;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG3 = 114;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG4 = 115;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG5 = 116;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG6 = 117;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_PXI_TRIG7 = 118;
+  NIDMM_INT32_MEASUREMENT_COMPLETE_DEST_VAL_LBR_TRIG0 = 1003;
+  NIDMM_INT32_MEASUREMENT_DESTINATION_SLOPE_VAL_POSITIVE = 0;
+  NIDMM_INT32_MEASUREMENT_DESTINATION_SLOPE_VAL_NEGATIVE = 1;
+  NIDMM_INT32_OPERATION_MODE_VAL_IVIDMM_MODE = 0;
+  NIDMM_INT32_OPERATION_MODE_VAL_WAVEFORM_MODE = 1;
+  NIDMM_INT32_RTD_TYPE_VAL_TEMP_RTD_CUSTOM = 0;
+  NIDMM_INT32_RTD_TYPE_VAL_TEMP_RTD_PT3750 = 1;
+  NIDMM_INT32_RTD_TYPE_VAL_TEMP_RTD_PT3851 = 2;
+  NIDMM_INT32_RTD_TYPE_VAL_TEMP_RTD_PT3911 = 3;
+  NIDMM_INT32_RTD_TYPE_VAL_TEMP_RTD_PT3916 = 4;
+  NIDMM_INT32_RTD_TYPE_VAL_TEMP_RTD_PT3920 = 5;
+  NIDMM_INT32_RTD_TYPE_VAL_TEMP_RTD_PT3928 = 6;
+  NIDMM_INT32_SAMPLE_COUNT_VAL_SAMPLE_COUNT_INFINITE = 0;
+  NIDMM_INT32_SAMPLE_TRIG_SLOPE_VAL_POSITIVE = 0;
+  NIDMM_INT32_SAMPLE_TRIG_SLOPE_VAL_NEGATIVE = 1;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_IMMEDIATE = 1;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_EXTERNAL = 2;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_SOFTWARE_TRIG = 3;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_INTERVAL = 10;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG0 = 111;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG1 = 112;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG2 = 113;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG3 = 114;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG4 = 115;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG5 = 116;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG6 = 117;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_TRIG7 = 118;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_PXI_STAR = 131;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_AUX_TRIG1 = 1001;
+  NIDMM_INT32_SAMPLE_TRIGGER_VAL_LBR_TRIG1 = 1004;
+  NIDMM_INT32_THERMISTOR_TYPE_VAL_TEMP_THERMISTOR_CUSTOM = 0;
+  NIDMM_INT32_THERMISTOR_TYPE_VAL_TEMP_THERMISTOR_44004 = 1;
+  NIDMM_INT32_THERMISTOR_TYPE_VAL_TEMP_THERMISTOR_44006 = 2;
+  NIDMM_INT32_THERMISTOR_TYPE_VAL_TEMP_THERMISTOR_44007 = 3;
+  NIDMM_INT32_THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_VAL_TEMP_REF_JUNC_FIXED = 2;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_B = 1;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_E = 4;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_J = 6;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_K = 7;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_N = 8;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_R = 9;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_S = 10;
+  NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_T = 11;
+  NIDMM_INT32_TRANSDUCER_TYPE_VAL_THERMOCOUPLE = 1;
+  NIDMM_INT32_TRANSDUCER_TYPE_VAL_THERMISTOR = 2;
+  NIDMM_INT32_TRANSDUCER_TYPE_VAL_2_WIRE_RTD = 3;
+  NIDMM_INT32_TRANSDUCER_TYPE_VAL_4_WIRE_RTD = 4;
+  NIDMM_INT32_TRIGGER_COUNT_VAL_TRIG_COUNT_INFINITE = 0;
+  NIDMM_INT32_TRIGGER_SLOPE_VAL_POSITIVE = 0;
+  NIDMM_INT32_TRIGGER_SLOPE_VAL_NEGATIVE = 1;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_IMMEDIATE = 1;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_EXTERNAL = 2;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_SOFTWARE_TRIG = 3;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG0 = 111;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG1 = 112;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG2 = 113;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG3 = 114;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG4 = 115;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG5 = 116;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG6 = 117;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_TRIG7 = 118;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_PXI_STAR = 131;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_AUX_TRIG1 = 1001;
+  NIDMM_INT32_TRIGGER_SOURCE_VAL_LBR_TRIG1 = 1004;
+  NIDMM_INT32_WAVEFORM_COUPLING_VAL_WAVEFORM_COUPLING_AC = 0;
+  NIDMM_INT32_WAVEFORM_COUPLING_VAL_WAVEFORM_COUPLING_DC = 1;
+}
+
+enum NiDmmReal64AttributeValues {
+  option allow_alias = true;
+  NIDMM_REAL64_UNSPECIFIED = 0;
+  NIDMM_REAL64_APERTURE_TIME_VAL_APERTURE_TIME_AUTO = -1;
+  NIDMM_REAL64_APERTURE_TIME_VAL_1_PLC = 1;
+  NIDMM_REAL64_APERTURE_TIME_VAL_5_PLC = 5;
+  NIDMM_REAL64_APERTURE_TIME_VAL_6_PLC = 6;
+  NIDMM_REAL64_APERTURE_TIME_VAL_10_PLC = 10;
+  NIDMM_REAL64_APERTURE_TIME_VAL_12_PLC = 12;
+  NIDMM_REAL64_APERTURE_TIME_VAL_100_PLC = 100;
+  NIDMM_REAL64_APERTURE_TIME_VAL_120_PLC = 120;
+  NIDMM_REAL64_FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_ON = -1;
+  NIDMM_REAL64_FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_OFF = -2;
+  NIDMM_REAL64_POWER_LINE_FREQUENCIES_VAL_50_HERTZ = 50;
+  NIDMM_REAL64_POWER_LINE_FREQUENCIES_VAL_60_HERTZ = 60;
+  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_ON = -1;
+  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_OFF = -2;
+  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_ONCE = -3;
+  NIDMM_REAL64_SAMPLE_INTERVAL_VAL_AUTO_DELAY = -1;
+  NIDMM_REAL64_SETTLE_TIME_VAL_SETTLE_TIME_AUTO = -1;
+  NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_ON = -1;
+  NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF = -2;
 }
 
 message Control4022Request {
@@ -591,77 +562,6 @@ message AbortResponse {
   int32 status = 1;
 }
 
-message CalAdjustGainRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 mode = 2;
-  double range = 3;
-  double input_resistance = 4;
-  double expected_value = 5;
-}
-
-message CalAdjustGainResponse {
-  int32 status = 1;
-}
-
-message CalAdjustACFilterRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 mode = 2;
-  double range = 3;
-  double frequency = 4;
-  double expected_value = 5;
-}
-
-message CalAdjustACFilterResponse {
-  int32 status = 1;
-}
-
-message CalAdjustLCRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof type_enum {
-    LcCalibration type = 2;
-    sint32 type_raw = 3;
-  }
-}
-
-message CalAdjustLCResponse {
-  int32 status = 1;
-}
-
-message CalAdjustLinearizationRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 function = 2;
-  double range = 3;
-  double input_resistance = 4;
-  double expected_value = 5;
-}
-
-message CalAdjustLinearizationResponse {
-  int32 status = 1;
-}
-
-message CalAdjustMiscRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof type_enum {
-    MiscCalibration type = 2;
-    sint32 type_raw = 3;
-  }
-}
-
-message CalAdjustMiscResponse {
-  int32 status = 1;
-}
-
-message CalAdjustOffsetRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 mode = 2;
-  double range = 3;
-  double input_resistance = 4;
-}
-
-message CalAdjustOffsetResponse {
-  int32 status = 1;
-}
-
 message CheckAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -677,7 +577,10 @@ message CheckAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDmmAttributes attribute_id = 3;
-  sint32 attribute_value = 4;
+  oneof attribute_value_enum {
+    NiDmmInt32AttributeValues attribute_value = 4;
+    sint32 attribute_value_raw = 5;
+  }
 }
 
 message CheckAttributeViInt32Response {
@@ -688,7 +591,10 @@ message CheckAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDmmAttributes attribute_id = 3;
-  double attribute_value = 4;
+  oneof attribute_value_enum {
+    NiDmmReal64AttributeValues attribute_value = 4;
+    double attribute_value_raw = 5;
+  }
 }
 
 message CheckAttributeViReal64Response {
@@ -710,7 +616,7 @@ message CheckAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDmmAttributes attribute_id = 3;
-  string attribute_value = 4;
+  string attribute_value_raw = 4;
 }
 
 message CheckAttributeViStringResponse {
@@ -738,18 +644,6 @@ message CloseRequest {
 }
 
 message CloseResponse {
-  int32 status = 1;
-}
-
-message CloseExtCalRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof action_enum {
-    CalibrationCloseAction action = 2;
-    sint32 action_raw = 3;
-  }
-}
-
-message CloseExtCalResponse {
   int32 status = 1;
 }
 
@@ -1224,19 +1118,6 @@ message GetAutoRangeValueResponse {
   double actual_range = 2;
 }
 
-message GetCalCountRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof cal_type_enum {
-    CalibrationType cal_type = 2;
-    sint32 cal_type_raw = 3;
-  }
-}
-
-message GetCalCountResponse {
-  int32 status = 1;
-  sint32 count = 2;
-}
-
 message GetCalDateAndTimeRequest {
   nidevice_grpc.Session vi = 1;
   oneof cal_type_enum {
@@ -1252,25 +1133,6 @@ message GetCalDateAndTimeResponse {
   sint32 year = 4;
   sint32 hour = 5;
   sint32 minute = 6;
-}
-
-message GetCalUserDefinedInfoRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 buffer_size = 2;
-}
-
-message GetCalUserDefinedInfoResponse {
-  int32 status = 1;
-  string info = 2;
-}
-
-message GetCalUserDefinedInfoMaxSizeRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetCalUserDefinedInfoMaxSizeResponse {
-  int32 status = 1;
-  sint32 info_size = 2;
 }
 
 message GetChannelNameRequest {
@@ -1422,17 +1284,6 @@ message InitiateResponse {
   int32 status = 1;
 }
 
-message InitExtCalRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  string calibration_password = 3;
-}
-
-message InitExtCalResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
 message InvalidateAllAttributesRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1568,14 +1419,6 @@ message ResetWithDefaultsResponse {
   int32 status = 1;
 }
 
-message RestoreLastExtCalConstantsRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message RestoreLastExtCalConstantsResponse {
-  int32 status = 1;
-}
-
 message RevisionQueryRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1627,7 +1470,10 @@ message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDmmAttributes attribute_id = 3;
-  sint32 attribute_value = 4;
+  oneof attribute_value_enum {
+    NiDmmInt32AttributeValues attribute_value = 4;
+    sint32 attribute_value_raw = 5;
+  }
 }
 
 message SetAttributeViInt32Response {
@@ -1638,7 +1484,10 @@ message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDmmAttributes attribute_id = 3;
-  double attribute_value = 4;
+  oneof attribute_value_enum {
+    NiDmmReal64AttributeValues attribute_value = 4;
+    double attribute_value_raw = 5;
+  }
 }
 
 message SetAttributeViReal64Response {
@@ -1660,29 +1509,10 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDmmAttributes attribute_id = 3;
-  string attribute_value = 4;
+  string attribute_value_raw = 4;
 }
 
 message SetAttributeViStringResponse {
-  int32 status = 1;
-}
-
-message SetCalPasswordRequest {
-  nidevice_grpc.Session vi = 1;
-  string old_password = 2;
-  string new_password = 3;
-}
-
-message SetCalPasswordResponse {
-  int32 status = 1;
-}
-
-message SetCalUserDefinedInfoRequest {
-  nidevice_grpc.Session vi = 1;
-  string info = 2;
-}
-
-message SetCalUserDefinedInfoResponse {
   int32 status = 1;
 }
 

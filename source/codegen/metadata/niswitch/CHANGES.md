@@ -89,8 +89,11 @@ The following functions names were made Pascal and moved to their alphabetic pos
  - `error_query`
  - `revision_query`
  
-The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session
-with the session_repository.
+The following functions were tagged with `'init_method': True,` to ensure their generated service handlers register the new session with the session_repository.
 - `init`
 - `InitWithOptions`
 - `InitWithTopology`
+
+The following functions were given a field `grpc_field_number` and `grpc_raw_field_number` on `attribute_value` parameter to customize field number assigned to them in proto file.
+- `CheckAttributeViInt32`
+- `SetAttributeViInt32`

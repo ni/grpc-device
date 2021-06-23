@@ -22,15 +22,15 @@ enum ${service_class_prefix}Attributes {
 </%def>
 
 ## Define enums in the proto for each metadata enum referenced in a proto message.
-<%def name="define_enums(used_enums)">\
+<%def name="define_function_enums(function_enums)">\
 <%
   enums = data["enums"]
 %>\
-% for enum_name in (e for e in enums if e in used_enums):
+% for enum_name in (e for e in enums if e in function_enums):
 <%
-  enum_value_prefix = common_helpers.pascal_to_snake(enum_name).upper()
   enum = enums[enum_name]
-  allow_alias = proto_helpers.should_allow_alias(enum)
+  enum_value_prefix = enum.get("enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper())
+  allow_alias = enum.get("allow-alias", proto_helpers.should_allow_alias(enum))
   nonint_index = 1
 %>\
 enum ${enum_name} {
@@ -73,12 +73,13 @@ ${lookup.get_template(custom_template).render()}
 <%
   config = data["config"]
   service_class_prefix = config["service_class_prefix"]
-  index = 0
+  used_indexes = []
 %>\
 message ${common_helpers.snake_to_pascal(function)}Request {
 % for parameter in input_parameters:
 <%
-  index  = index + 1
+  parameter_name = common_helpers.camel_to_snake(parameter["name"])
+  grpc_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
   if 'grpc_type' in parameter:
     parameter_type = parameter['grpc_type']
   else:
@@ -86,17 +87,16 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 %>\
 %   if common_helpers.is_enum(parameter):
 <%
-  index = index + 1
   is_array = common_helpers.is_array(parameter["type"])
   non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
-  parameter_name = common_helpers.camel_to_snake(parameter["name"])
+  grpc_raw_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_raw")
 %>\
   oneof ${parameter_name}_enum {
-    ${parameter_type} ${parameter_name} = ${index-1};
-    ${non_enum_type} ${parameter_name}_raw = ${index};
+    ${parameter_type} ${parameter_name} = ${grpc_field_number};
+    ${non_enum_type} ${parameter_name}_raw = ${grpc_raw_field_number};
   }
 %   else:
-  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
+  ${parameter_type} ${parameter_name} = ${grpc_field_number};
 %   endif
 % endfor
 }
@@ -107,13 +107,14 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 <%
   config = data["config"]
   service_class_prefix = config["service_class_prefix"]
-  index = 1
+  used_indexes = [1]
 %>\
 message ${common_helpers.snake_to_pascal(function)}Response {
   int32 status = 1;
 % for parameter in output_parameters:
 <%
-  index = index + 1
+  parameter_name = common_helpers.camel_to_snake(parameter["name"])
+  grpc_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes)
   if "grpc_type" in parameter:
     parameter_type = parameter["grpc_type"]
   else:
@@ -121,14 +122,14 @@ message ${common_helpers.snake_to_pascal(function)}Response {
 %>\
 %   if common_helpers.is_enum(parameter):
 <%
-  index = index + 1
   is_array = common_helpers.is_array(parameter["type"])
   non_enum_type = proto_helpers.get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
+  grpc_raw_field_number = proto_helpers.generate_parameter_field_number(parameter, used_indexes, "_raw")
 %>\
-  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index-1};
-  ${non_enum_type} ${common_helpers.camel_to_snake(parameter["name"])}_raw = ${index};
+  ${parameter_type} ${parameter_name} = ${grpc_field_number};
+  ${non_enum_type} ${parameter_name}_raw = ${grpc_raw_field_number};
 %   else:
-  ${parameter_type} ${common_helpers.camel_to_snake(parameter["name"])} = ${index};
+  ${parameter_type} ${parameter_name} = ${grpc_field_number};
 %   endif
 % endfor
 }

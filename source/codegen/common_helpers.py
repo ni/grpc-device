@@ -13,6 +13,22 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
+def get_input_and_output_custom_types(functions):
+  '''Returns a set of custom types used by input and output parameters separately.'''
+  input_custom_types = set()
+  output_custom_types = set()
+  for function in functions:
+    struct_array_params = [p for p in functions[function]["parameters"] if is_struct(p) and is_array(p["type"])]
+    for parameter in struct_array_params:
+        if is_input_parameter(parameter):
+            input_custom_types.add(get_underlying_type_name(parameter["type"]))
+        elif is_output_parameter(parameter):
+            output_custom_types.add(get_underlying_type_name(parameter["type"]))
+  return (input_custom_types, output_custom_types)
+
+def is_string_arg(parameter):
+  return parameter['type'] in ['ViChar[]', 'ViInt8[]', 'ViUInt8[]']
+
 def get_underlying_type_name(parameter_type):
   '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
   return parameter_type.replace("struct ","").replace('[]', '')
@@ -22,19 +38,18 @@ def has_unsupported_parameter(function):
 
 def is_unsupported_parameter(parameter):
   return is_unsupported_size_mechanism(parameter) \
-      or is_unsupported_struct(parameter) \
       or is_unsupported_scalar_array(parameter)
 
 def is_unsupported_size_mechanism(parameter):
-  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', None}
-
-def is_unsupported_struct(parameter):
-  return is_struct(parameter) and is_input_parameter(parameter)
+  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', None}
 
 def is_unsupported_scalar_array(parameter):
-  if not is_array(parameter['type']):
-    return False
-  return is_enum(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
+  return is_array(parameter['type']) and is_unsupported_enum_array(parameter)
+
+def is_unsupported_enum_array(parameter):
+  if is_enum(parameter):
+    return not (is_output_parameter(parameter) and is_string_arg(parameter))
+  return False
 
 def camel_to_snake(camelString):
   '''Returns a snake_string for a given camelString.'''
@@ -77,23 +92,44 @@ def filter_proto_rpc_functions(functions):
   functions_for_proto = {'public', 'CustomCode'}
   return [name for name, function in functions.items() if function.get('codegen_method', 'public') in functions_for_proto]
 
-def get_used_enums(functions, attributes):
-  '''Returns a set of enums used with functions or attributes.'''
-  used_enums = set()
+def get_attribute_enums_by_type(attributes):
+  '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
+  attribute_enums_by_type = {
+    'ViInt32': set(),
+    'ViInt64': set(),
+    'ViReal64': set(),
+    'ViString': set()
+  }
+  for attribute_name in attributes:
+    attribute = attributes[attribute_name]
+    if 'enum' in attribute:
+      attribute_type = attribute['type']
+      enum_name = attribute['enum']
+      attribute_enums_by_type[attribute_type].add(enum_name)
+  return attribute_enums_by_type
+
+def get_function_enums(functions):
+  '''Returns a set of enums used with functions.'''
+  function_enums = set()
   for function in functions:
-    for parameter in functions[function]["parameters"]:
-      if "enum" in parameter:
-        used_enums.add(parameter["enum"])
-  for attribute in attributes:
-    if "enum" in attributes[attribute]:
-      used_enums.add(attributes[attribute]["enum"])
-  return used_enums
+    for parameter in functions[function]['parameters']:
+      if 'enum' in parameter:
+        function_enums.add(parameter['enum'])
+  return function_enums
 
 def has_viboolean_array_param(functions):
   '''Returns True if atleast one function has parameter of type ViBoolean[]'''
   for function in functions:
     for parameter in functions[function]["parameters"]:
       if parameter['type'] == 'ViBoolean[]':
+        return True
+  return False
+
+def has_enum_array_string_out_param(functions):
+  '''Returns True if atleast one function has output parameter of type ViChar[], ViInt8[] or ViUInt8[] that uses enum'''
+  for function in functions:
+    for parameter in functions[function]["parameters"]:
+      if is_output_parameter(parameter) and is_string_arg(parameter) and is_enum(parameter):
         return True
   return False
 
@@ -109,6 +145,24 @@ def has_ivi_dance_param(parameters):
 
 def get_ivi_dance_params(parameters):
   array_param = next((p for p in parameters if is_ivi_dance_array_param(p)), None)
+  size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
+  other_params = (p for p in parameters if p != array_param and p != size_param)
+  return (size_param, array_param, other_params)
+
+def get_twist_value(parameters):
+  for p in parameters:
+      if is_array(p['type']):
+        size = p.get('size', {})
+        return size.get('value_twist', None)
+
+def is_ivi_dance_array_with_a_twist_param(parameter):
+  return get_size_mechanism(parameter) == 'ivi-dance-with-a-twist'
+
+def has_ivi_dance_with_a_twist_param(parameters):
+  return any(is_ivi_dance_array_with_a_twist_param(p) for p in parameters)
+
+def get_ivi_dance_with_a_twist_params(parameters):
+  array_param = next((p for p in parameters if is_ivi_dance_array_with_a_twist_param(p)), None)
   size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
   other_params = (p for p in parameters if p != array_param and p != size_param)
   return (size_param, array_param, other_params)

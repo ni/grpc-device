@@ -738,7 +738,7 @@ message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
-  sint32 value = 4;
+  sint32 value_raw = 4;
 }
 
 message SetAttributeViInt32Response {
@@ -749,7 +749,7 @@ message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
-  double value = 4;
+  double value_raw = 4;
 }
 
 message SetAttributeViReal64Response {
@@ -771,7 +771,7 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
   NiSyncAttributes attribute = 3;
-  string value = 4;
+  string value_raw = 4;
 }
 
 message SetAttributeViStringResponse {

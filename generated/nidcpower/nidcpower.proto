@@ -51,20 +51,10 @@ service NiDCPower {
   rpc SendSoftwareEdgeTriggerWithChannels(SendSoftwareEdgeTriggerWithChannelsRequest) returns (SendSoftwareEdgeTriggerWithChannelsResponse);
   rpc WaitForEventWithChannels(WaitForEventWithChannelsRequest) returns (WaitForEventWithChannelsResponse);
   rpc Abort(AbortRequest) returns (AbortResponse);
-  rpc CalAdjustCurrentLimit(CalAdjustCurrentLimitRequest) returns (CalAdjustCurrentLimitResponse);
-  rpc CalAdjustCurrentMeasurement(CalAdjustCurrentMeasurementRequest) returns (CalAdjustCurrentMeasurementResponse);
-  rpc CalAdjustInternalReference(CalAdjustInternalReferenceRequest) returns (CalAdjustInternalReferenceResponse);
-  rpc CalAdjustOutputResistance(CalAdjustOutputResistanceRequest) returns (CalAdjustOutputResistanceResponse);
-  rpc CalAdjustResidualCurrentOffset(CalAdjustResidualCurrentOffsetRequest) returns (CalAdjustResidualCurrentOffsetResponse);
-  rpc CalAdjustResidualVoltageOffset(CalAdjustResidualVoltageOffsetRequest) returns (CalAdjustResidualVoltageOffsetResponse);
-  rpc CalAdjustVoltageLevel(CalAdjustVoltageLevelRequest) returns (CalAdjustVoltageLevelResponse);
-  rpc CalAdjustVoltageMeasurement(CalAdjustVoltageMeasurementRequest) returns (CalAdjustVoltageMeasurementResponse);
   rpc CalSelfCalibrate(CalSelfCalibrateRequest) returns (CalSelfCalibrateResponse);
-  rpc ChangeExtCalPassword(ChangeExtCalPasswordRequest) returns (ChangeExtCalPasswordResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc ConfigureApertureTime(ConfigureApertureTimeRequest) returns (ConfigureApertureTimeResponse);
   rpc ConfigureAutoZero(ConfigureAutoZeroRequest) returns (ConfigureAutoZeroResponse);
@@ -104,7 +94,6 @@ service NiDCPower {
   rpc ConfigureVoltageLevelRange(ConfigureVoltageLevelRangeRequest) returns (ConfigureVoltageLevelRangeResponse);
   rpc ConfigureVoltageLimit(ConfigureVoltageLimitRequest) returns (ConfigureVoltageLimitResponse);
   rpc ConfigureVoltageLimitRange(ConfigureVoltageLimitRangeRequest) returns (ConfigureVoltageLimitRangeResponse);
-  rpc ConnectInternalReference(ConnectInternalReferenceRequest) returns (ConnectInternalReferenceResponse);
   rpc CreateAdvancedSequenceStep(CreateAdvancedSequenceStepRequest) returns (CreateAdvancedSequenceStepResponse);
   rpc DeleteAdvancedSequence(DeleteAdvancedSequenceRequest) returns (DeleteAdvancedSequenceResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
@@ -123,8 +112,6 @@ service NiDCPower {
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
-  rpc GetCalUserDefinedInfo(GetCalUserDefinedInfoRequest) returns (GetCalUserDefinedInfoResponse);
-  rpc GetCalUserDefinedInfoMaxSize(GetCalUserDefinedInfoMaxSizeRequest) returns (GetCalUserDefinedInfoMaxSizeResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetChannelNameFromString(GetChannelNameFromStringRequest) returns (GetChannelNameFromStringResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
@@ -137,7 +124,6 @@ service NiDCPower {
   rpc GetSelfCalLastTemp(GetSelfCalLastTempRequest) returns (GetSelfCalLastTempResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
-  rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitializeWithChannels(InitializeWithChannelsRequest) returns (InitializeWithChannelsResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
@@ -162,7 +148,6 @@ service NiDCPower {
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
-  rpc SetCalUserDefinedInfo(SetCalUserDefinedInfoRequest) returns (SetCalUserDefinedInfoResponse);
   rpc SetSequence(SetSequenceRequest) returns (SetSequenceResponse);
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitForEvent(WaitForEventRequest) returns (WaitForEventResponse);
@@ -345,41 +330,6 @@ enum AutoZero {
   AUTO_ZERO_NIDCPOWER_VAL_ONCE = 1024;
 }
 
-enum AutorangeApertureTimeMode {
-  AUTORANGE_APERTURE_TIME_MODE_UNSPECIFIED = 0;
-  AUTORANGE_APERTURE_TIME_MODE_NIDCPOWER_VAL_APERTURE_TIME_AUTO = 1110;
-  AUTORANGE_APERTURE_TIME_MODE_NIDCPOWER_VAL_APERTURE_TIME_CUSTOM = 1111;
-}
-
-enum AutorangeBehavior {
-  AUTORANGE_BEHAVIOR_UNSPECIFIED = 0;
-  AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP_TO_LIMIT_THEN_DOWN = 1107;
-  AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP = 1108;
-  AUTORANGE_BEHAVIOR_NIDCPOWER_VAL_RANGE_UP_AND_DOWN = 1109;
-}
-
-enum AutorangeThresholdMode {
-  AUTORANGE_THRESHOLD_MODE_UNSPECIFIED = 0;
-  AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_NORMAL = 1112;
-  AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_FAST_STEP = 1113;
-  AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_HIGH_HYSTERESIS = 1114;
-  AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_MEDIUM_HYSTERESIS = 1115;
-  AUTORANGE_THRESHOLD_MODE_NIDCPOWER_VAL_THRESHOLD_MODE_HOLD = 1116;
-}
-
-enum CalibrationCloseAction {
-  CALIBRATION_CLOSE_ACTION_UNSPECIFIED = 0;
-  CALIBRATION_CLOSE_ACTION_NIDCPOWER_VAL_CANCEL = 1001;
-  CALIBRATION_CLOSE_ACTION_NIDCPOWER_VAL_COMMIT = 1002;
-}
-
-enum ComplianceLimitSymmetry {
-  option allow_alias = true;
-  COMPLIANCE_LIMIT_SYMMETRY_UNSPECIFIED = 0;
-  COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_SYMMETRIC = 0;
-  COMPLIANCE_LIMIT_SYMMETRY_NIDCPOWER_VAL_ASYMMETRIC = 1;
-}
-
 enum PowerLineFrequencies {
   POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
   POWER_LINE_FREQUENCIES_NIDCPOWER_VAL_50_HERTZ = 50;
@@ -391,12 +341,6 @@ enum CurrentLimitBehavior {
   CURRENT_LIMIT_BEHAVIOR_UNSPECIFIED = 0;
   CURRENT_LIMIT_BEHAVIOR_NIDCPOWER_VAL_CURRENT_REGULATE = 0;
   CURRENT_LIMIT_BEHAVIOR_NIDCPOWER_VAL_CURRENT_TRIP = 1;
-}
-
-enum DCNoiseRejection {
-  D_C_NOISE_REJECTION_UNSPECIFIED = 0;
-  D_C_NOISE_REJECTION_NIDCPOWER_VAL_DC_NOISE_REJECTION_SECOND_ORDER = 1043;
-  D_C_NOISE_REJECTION_NIDCPOWER_VAL_DC_NOISE_REJECTION_NORMAL = 1044;
 }
 
 enum DigitalEdge {
@@ -421,32 +365,11 @@ enum ExportSignal {
   EXPORT_SIGNAL_NIDCPOWER_VAL_SHUTDOWN_TRIGGER = 1118;
 }
 
-enum InternalReference {
-  INTERNAL_REFERENCE_UNSPECIFIED = 0;
-  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_5V = 1054;
-  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_100KOHM = 1055;
-  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_GROUND = 1056;
-  INTERNAL_REFERENCE_NIDCPOWER_VAL_INTERNAL_REFERENCE_NONE = 1057;
-}
-
-enum MeasureWhen {
-  MEASURE_WHEN_UNSPECIFIED = 0;
-  MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE = 1025;
-  MEASURE_WHEN_NIDCPOWER_VAL_ON_DEMAND = 1026;
-  MEASURE_WHEN_NIDCPOWER_VAL_ON_MEASURE_TRIGGER = 1027;
-}
-
 enum MeasurementTypes {
   option allow_alias = true;
   MEASUREMENT_TYPES_UNSPECIFIED = 0;
   MEASUREMENT_TYPES_NIDCPOWER_VAL_MEASURE_CURRENT = 0;
   MEASUREMENT_TYPES_NIDCPOWER_VAL_MEASURE_VOLTAGE = 1;
-}
-
-enum OutputCapacitance {
-  OUTPUT_CAPACITANCE_UNSPECIFIED = 0;
-  OUTPUT_CAPACITANCE_NIDCPOWER_VAL_LOW = 1010;
-  OUTPUT_CAPACITANCE_NIDCPOWER_VAL_HIGH = 1011;
 }
 
 enum OutputFunction {
@@ -467,38 +390,6 @@ enum OutputStates {
   OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_UNREGULATED = 4;
 }
 
-enum Polarity {
-  POLARITY_UNSPECIFIED = 0;
-  POLARITY_NIDCPOWER_VAL_ACTIVE_HIGH = 1018;
-  POLARITY_NIDCPOWER_VAL_ACTIVE_LOW = 1019;
-}
-
-enum PowerAllocationMode {
-  POWER_ALLOCATION_MODE_UNSPECIFIED = 0;
-  POWER_ALLOCATION_MODE_NIDCPOWER_VAL_DISABLED = 1058;
-  POWER_ALLOCATION_MODE_NIDCPOWER_VAL_AUTOMATIC = 1059;
-  POWER_ALLOCATION_MODE_NIDCPOWER_VAL_MANUAL = 1060;
-}
-
-enum PowerSource {
-  POWER_SOURCE_UNSPECIFIED = 0;
-  POWER_SOURCE_NIDCPOWER_VAL_INTERNAL = 1003;
-  POWER_SOURCE_NIDCPOWER_VAL_AUXILIARY = 1004;
-  POWER_SOURCE_NIDCPOWER_VAL_AUTOMATIC = 1005;
-}
-
-enum PowerSourceInUse {
-  POWER_SOURCE_IN_USE_UNSPECIFIED = 0;
-  POWER_SOURCE_IN_USE_NIDCPOWER_VAL_INTERNAL = 1003;
-  POWER_SOURCE_IN_USE_NIDCPOWER_VAL_AUXILIARY = 1004;
-}
-
-enum SelfCalibrationPersistence {
-  SELF_CALIBRATION_PERSISTENCE_UNSPECIFIED = 0;
-  SELF_CALIBRATION_PERSISTENCE_NIDCPOWER_VAL_KEEP_IN_MEMORY = 1045;
-  SELF_CALIBRATION_PERSISTENCE_NIDCPOWER_VAL_WRITE_TO_EEPROM = 1046;
-}
-
 enum Sense {
   SENSE_UNSPECIFIED = 0;
   SENSE_NIDCPOWER_VAL_LOCAL = 1008;
@@ -511,19 +402,70 @@ enum SourceMode {
   SOURCE_MODE_NIDCPOWER_VAL_SEQUENCE = 1021;
 }
 
-enum TransientResponse {
-  TRANSIENT_RESPONSE_UNSPECIFIED = 0;
-  TRANSIENT_RESPONSE_NIDCPOWER_VAL_NORMAL = 1038;
-  TRANSIENT_RESPONSE_NIDCPOWER_VAL_FAST = 1039;
-  TRANSIENT_RESPONSE_NIDCPOWER_VAL_SLOW = 1041;
-  TRANSIENT_RESPONSE_NIDCPOWER_VAL_CUSTOM = 1042;
+enum NiDCPowerInt32AttributeValues {
+  option allow_alias = true;
+  NIDCPOWER_INT32_UNSPECIFIED = 0;
+  NIDCPOWER_INT32_APERTURE_TIME_UNITS_VAL_SECONDS = 1028;
+  NIDCPOWER_INT32_APERTURE_TIME_UNITS_VAL_POWER_LINE_CYCLES = 1029;
+  NIDCPOWER_INT32_AUTO_ZERO_VAL_OFF = 0;
+  NIDCPOWER_INT32_AUTO_ZERO_VAL_ON = 1;
+  NIDCPOWER_INT32_AUTO_ZERO_VAL_ONCE = 1024;
+  NIDCPOWER_INT32_AUTORANGE_APERTURE_TIME_MODE_VAL_APERTURE_TIME_AUTO = 1110;
+  NIDCPOWER_INT32_AUTORANGE_APERTURE_TIME_MODE_VAL_APERTURE_TIME_CUSTOM = 1111;
+  NIDCPOWER_INT32_AUTORANGE_BEHAVIOR_VAL_RANGE_UP_TO_LIMIT_THEN_DOWN = 1107;
+  NIDCPOWER_INT32_AUTORANGE_BEHAVIOR_VAL_RANGE_UP = 1108;
+  NIDCPOWER_INT32_AUTORANGE_BEHAVIOR_VAL_RANGE_UP_AND_DOWN = 1109;
+  NIDCPOWER_INT32_AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_NORMAL = 1112;
+  NIDCPOWER_INT32_AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_FAST_STEP = 1113;
+  NIDCPOWER_INT32_AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_HIGH_HYSTERESIS = 1114;
+  NIDCPOWER_INT32_AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_MEDIUM_HYSTERESIS = 1115;
+  NIDCPOWER_INT32_AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_HOLD = 1116;
+  NIDCPOWER_INT32_COMPLIANCE_LIMIT_SYMMETRY_VAL_SYMMETRIC = 0;
+  NIDCPOWER_INT32_COMPLIANCE_LIMIT_SYMMETRY_VAL_ASYMMETRIC = 1;
+  NIDCPOWER_INT32_CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_REGULATE = 0;
+  NIDCPOWER_INT32_CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_TRIP = 1;
+  NIDCPOWER_INT32_D_C_NOISE_REJECTION_VAL_DC_NOISE_REJECTION_SECOND_ORDER = 1043;
+  NIDCPOWER_INT32_D_C_NOISE_REJECTION_VAL_DC_NOISE_REJECTION_NORMAL = 1044;
+  NIDCPOWER_INT32_DIGITAL_EDGE_VAL_RISING = 1016;
+  NIDCPOWER_INT32_DIGITAL_EDGE_VAL_FALLING = 1017;
+  NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE = 1025;
+  NIDCPOWER_INT32_MEASURE_WHEN_VAL_ON_DEMAND = 1026;
+  NIDCPOWER_INT32_MEASURE_WHEN_VAL_ON_MEASURE_TRIGGER = 1027;
+  NIDCPOWER_INT32_OUTPUT_CAPACITANCE_VAL_LOW = 1010;
+  NIDCPOWER_INT32_OUTPUT_CAPACITANCE_VAL_HIGH = 1011;
+  NIDCPOWER_INT32_OUTPUT_FUNCTION_VAL_DC_VOLTAGE = 1006;
+  NIDCPOWER_INT32_OUTPUT_FUNCTION_VAL_DC_CURRENT = 1007;
+  NIDCPOWER_INT32_OUTPUT_FUNCTION_VAL_PULSE_VOLTAGE = 1049;
+  NIDCPOWER_INT32_OUTPUT_FUNCTION_VAL_PULSE_CURRENT = 1050;
+  NIDCPOWER_INT32_POLARITY_VAL_ACTIVE_HIGH = 1018;
+  NIDCPOWER_INT32_POLARITY_VAL_ACTIVE_LOW = 1019;
+  NIDCPOWER_INT32_POWER_ALLOCATION_MODE_VAL_DISABLED = 1058;
+  NIDCPOWER_INT32_POWER_ALLOCATION_MODE_VAL_AUTOMATIC = 1059;
+  NIDCPOWER_INT32_POWER_ALLOCATION_MODE_VAL_MANUAL = 1060;
+  NIDCPOWER_INT32_POWER_SOURCE_VAL_INTERNAL = 1003;
+  NIDCPOWER_INT32_POWER_SOURCE_VAL_AUXILIARY = 1004;
+  NIDCPOWER_INT32_POWER_SOURCE_VAL_AUTOMATIC = 1005;
+  NIDCPOWER_INT32_POWER_SOURCE_IN_USE_VAL_INTERNAL = 1003;
+  NIDCPOWER_INT32_POWER_SOURCE_IN_USE_VAL_AUXILIARY = 1004;
+  NIDCPOWER_INT32_SELF_CALIBRATION_PERSISTENCE_VAL_KEEP_IN_MEMORY = 1045;
+  NIDCPOWER_INT32_SELF_CALIBRATION_PERSISTENCE_VAL_WRITE_TO_EEPROM = 1046;
+  NIDCPOWER_INT32_SENSE_VAL_LOCAL = 1008;
+  NIDCPOWER_INT32_SENSE_VAL_REMOTE = 1009;
+  NIDCPOWER_INT32_SOURCE_MODE_VAL_SINGLE_POINT = 1020;
+  NIDCPOWER_INT32_SOURCE_MODE_VAL_SEQUENCE = 1021;
+  NIDCPOWER_INT32_TRANSIENT_RESPONSE_VAL_NORMAL = 1038;
+  NIDCPOWER_INT32_TRANSIENT_RESPONSE_VAL_FAST = 1039;
+  NIDCPOWER_INT32_TRANSIENT_RESPONSE_VAL_SLOW = 1041;
+  NIDCPOWER_INT32_TRANSIENT_RESPONSE_VAL_CUSTOM = 1042;
+  NIDCPOWER_INT32_TRIGGER_TYPE_VAL_NONE = 1012;
+  NIDCPOWER_INT32_TRIGGER_TYPE_VAL_DIGITAL_EDGE = 1014;
+  NIDCPOWER_INT32_TRIGGER_TYPE_VAL_SOFTWARE_EDGE = 1015;
 }
 
-enum TriggerType {
-  TRIGGER_TYPE_UNSPECIFIED = 0;
-  TRIGGER_TYPE_NIDCPOWER_VAL_NONE = 1012;
-  TRIGGER_TYPE_NIDCPOWER_VAL_DIGITAL_EDGE = 1014;
-  TRIGGER_TYPE_NIDCPOWER_VAL_SOFTWARE_EDGE = 1015;
+enum NiDCPowerReal64AttributeValues {
+  NIDCPOWER_REAL64_UNSPECIFIED = 0;
+  NIDCPOWER_REAL64_POWER_LINE_FREQUENCIES_VAL_50_HERTZ = 50;
+  NIDCPOWER_REAL64_POWER_LINE_FREQUENCIES_VAL_60_HERTZ = 60;
 }
 
 message AbortWithChannelsRequest {
@@ -902,112 +844,12 @@ message AbortResponse {
   int32 status = 1;
 }
 
-message CalAdjustCurrentLimitRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  double range = 3;
-  repeated double requested_outputs = 4;
-  repeated double measured_outputs = 5;
-}
-
-message CalAdjustCurrentLimitResponse {
-  int32 status = 1;
-}
-
-message CalAdjustCurrentMeasurementRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  double range = 3;
-  repeated double reported_outputs = 4;
-  repeated double measured_outputs = 5;
-}
-
-message CalAdjustCurrentMeasurementResponse {
-  int32 status = 1;
-}
-
-message CalAdjustInternalReferenceRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof internal_reference_enum {
-    InternalReference internal_reference = 2;
-    sint32 internal_reference_raw = 3;
-  }
-  double adjusted_internal_reference = 4;
-}
-
-message CalAdjustInternalReferenceResponse {
-  int32 status = 1;
-}
-
-message CalAdjustOutputResistanceRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  repeated double requested_outputs = 3;
-  repeated double measured_outputs = 4;
-}
-
-message CalAdjustOutputResistanceResponse {
-  int32 status = 1;
-}
-
-message CalAdjustResidualCurrentOffsetRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-}
-
-message CalAdjustResidualCurrentOffsetResponse {
-  int32 status = 1;
-}
-
-message CalAdjustResidualVoltageOffsetRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-}
-
-message CalAdjustResidualVoltageOffsetResponse {
-  int32 status = 1;
-}
-
-message CalAdjustVoltageLevelRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  double range = 3;
-  repeated double requested_outputs = 4;
-  repeated double measured_outputs = 5;
-}
-
-message CalAdjustVoltageLevelResponse {
-  int32 status = 1;
-}
-
-message CalAdjustVoltageMeasurementRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  double range = 3;
-  repeated double reported_outputs = 4;
-  repeated double measured_outputs = 5;
-}
-
-message CalAdjustVoltageMeasurementResponse {
-  int32 status = 1;
-}
-
 message CalSelfCalibrateRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
 }
 
 message CalSelfCalibrateResponse {
-  int32 status = 1;
-}
-
-message ChangeExtCalPasswordRequest {
-  nidevice_grpc.Session vi = 1;
-  string old_password = 2;
-  string new_password = 3;
-}
-
-message ChangeExtCalPasswordResponse {
   int32 status = 1;
 }
 
@@ -1032,18 +874,6 @@ message CloseRequest {
 }
 
 message CloseResponse {
-  int32 status = 1;
-}
-
-message CloseExtCalRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof action_enum {
-    CalibrationCloseAction action = 2;
-    sint32 action_raw = 3;
-  }
-}
-
-message CloseExtCalResponse {
   int32 status = 1;
 }
 
@@ -1461,18 +1291,6 @@ message ConfigureVoltageLimitRangeResponse {
   int32 status = 1;
 }
 
-message ConnectInternalReferenceRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof internal_reference_enum {
-    InternalReference internal_reference = 2;
-    sint32 internal_reference_raw = 3;
-  }
-}
-
-message ConnectInternalReferenceResponse {
-  int32 status = 1;
-}
-
 message CreateAdvancedSequenceStepRequest {
   nidevice_grpc.Session vi = 1;
   bool set_as_active_step = 2;
@@ -1654,24 +1472,6 @@ message GetAttributeViStringResponse {
   string attribute_value = 2;
 }
 
-message GetCalUserDefinedInfoRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetCalUserDefinedInfoResponse {
-  int32 status = 1;
-  string info = 2;
-}
-
-message GetCalUserDefinedInfoMaxSizeRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetCalUserDefinedInfoMaxSizeResponse {
-  int32 status = 1;
-  sint32 info_size = 2;
-}
-
 message GetChannelNameRequest {
   nidevice_grpc.Session vi = 1;
   sint32 index = 2;
@@ -1789,17 +1589,6 @@ message ImportAttributeConfigurationFileRequest {
 
 message ImportAttributeConfigurationFileResponse {
   int32 status = 1;
-}
-
-message InitExtCalRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  string password = 3;
-}
-
-message InitExtCalResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
 }
 
 message InitializeWithChannelsRequest {
@@ -2002,7 +1791,10 @@ message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDCPowerAttributes attribute_id = 3;
-  sint32 attribute_value = 4;
+  oneof attribute_value_enum {
+    NiDCPowerInt32AttributeValues attribute_value = 4;
+    sint32 attribute_value_raw = 5;
+  }
 }
 
 message SetAttributeViInt32Response {
@@ -2013,7 +1805,7 @@ message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDCPowerAttributes attribute_id = 3;
-  int64 attribute_value = 4;
+  int64 attribute_value_raw = 4;
 }
 
 message SetAttributeViInt64Response {
@@ -2024,7 +1816,10 @@ message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDCPowerAttributes attribute_id = 3;
-  double attribute_value = 4;
+  oneof attribute_value_enum {
+    NiDCPowerReal64AttributeValues attribute_value = 4;
+    double attribute_value_raw = 5;
+  }
 }
 
 message SetAttributeViReal64Response {
@@ -2046,19 +1841,10 @@ message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   NiDCPowerAttributes attribute_id = 3;
-  string attribute_value = 4;
+  string attribute_value_raw = 4;
 }
 
 message SetAttributeViStringResponse {
-  int32 status = 1;
-}
-
-message SetCalUserDefinedInfoRequest {
-  nidevice_grpc.Session vi = 1;
-  string info = 2;
-}
-
-message SetCalUserDefinedInfoResponse {
   int32 status = 1;
 }
 

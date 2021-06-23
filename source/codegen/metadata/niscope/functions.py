@@ -274,7 +274,9 @@ functions = {
             {
                 'name':'value',
                 'direction':'in',
-                'type':'ViInt32'
+                'type':'ViInt32',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns':'ViStatus'
@@ -299,7 +301,9 @@ functions = {
             {
                 'name':'value',
                 'direction':'in',
-                'type':'ViInt64'
+                'type':'ViInt64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns':'ViStatus'
@@ -324,7 +328,9 @@ functions = {
             {
                 'name':'value',
                 'direction':'in',
-                'type':'ViReal64'
+                'type':'ViReal64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns':'ViStatus'
@@ -2485,7 +2491,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'ViInt32'
+                'type': 'ViInt32',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns': 'ViStatus'
@@ -2511,7 +2519,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'ViInt64'
+                'type': 'ViInt64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns': 'ViStatus'
@@ -2537,7 +2547,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'ViReal64'
+                'type': 'ViReal64',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns': 'ViStatus'
