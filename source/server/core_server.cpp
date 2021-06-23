@@ -133,16 +133,15 @@ Options parse_options(int argc, char** argv)
 {
   Options options;
   for (int i = 1; i < argc; ++i) {
-#if defined(__GNUC__)
-    if (strcmp("--use-syslog", argv[i]) == 0) {
-      options.use_syslog = true;
-    }
-    else
-#endif
-        if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
+    if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
       nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, usage);
       exit(0);
     }
+#if defined(__GNUC__)
+    else if (strcmp("--use-syslog", argv[i]) == 0) {
+      options.use_syslog = true;
+    }
+#endif
     else if (i == argc - 1) {
       options.config_file_path = argv[i];
     }
