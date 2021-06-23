@@ -50,6 +50,7 @@ jobs:
       run: |
         git submodule update --init --recursive
         echo "::set-output name=grpc-commit::$(git rev-parse --short @:./third_party/grpc)"
+        echo GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
 
     - name: Cache Host OS gRPC Support
       uses: actions/cache@v2
@@ -178,7 +179,7 @@ jobs:
 
     - name: Trigger Main CI
       uses: Azure/pipelines@v1
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc-device-main-linux-rt'
@@ -186,7 +187,7 @@ jobs:
 
     - name: Trigger Release CI
       uses: Azure/pipelines@v1
-      if: ${{ startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc-device-release-linux-rt'

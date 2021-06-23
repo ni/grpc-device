@@ -183,7 +183,7 @@ jobs:
     name: Trigger Main CI
     needs: build
     runs-on: windows-latest
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
     steps:
     - name: Trigger Main CI
       uses: Azure/pipelines@v1
@@ -196,7 +196,7 @@ jobs:
     name: Trigger Release CI
     needs: build
     runs-on: windows-latest
-    if: ${{ startsWith(github.ref, 'refs/heads/releases') }}
+    if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
     steps:
     - name: Trigger Release CI
       uses: Azure/pipelines@v1
