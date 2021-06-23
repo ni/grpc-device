@@ -25,33 +25,15 @@ enum ${service_class_prefix}Attributes {
 <%def name="define_function_enums(function_enums)">\
 <%
   enums = data["enums"]
+  enum_definitions = proto_helpers.get_enum_definitions(function_enums, enums)
 %>\
-% for enum_name in (e for e in enums if e in function_enums):
-<%
-  enum = enums[enum_name]
-  enum_value_prefix = enum.get("enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper())
-  is_mapped_enum = enum.get("generate-mappings", False)
-  allow_alias = enum.get("allow-alias", proto_helpers.should_allow_alias(enum))
-  nonint_index = 1
-%>\
+% for enum_name in enum_definitions:
 enum ${enum_name} {
-%   if allow_alias == True:
+%   if enum_definitions[enum_name]["allow_alias"]:
   option allow_alias = true;
 %   endif
-%   if enum_name.endswith("AttributeValuesMapped"):
-  ${enum_value_prefix}_MAPPED_UNSPECIFIED = 0;
-%   else:
-  ${enum_value_prefix}_UNSPECIFIED = 0;
-%   endif
-%   for value in enum["values"]:
-%     if is_mapped_enum:
-  ${enum_value_prefix}_${value["name"]} = ${nonint_index};
-<%
-    nonint_index = nonint_index + 1
-%>\
-%     else:
-  ${enum_value_prefix}_${value["name"]} = ${value["value"]};
-%     endif
+%   for value in enum_definitions[enum_name]["values"]:
+  ${value["name"]} = ${value["value"]};
 %   endfor
 }
 
