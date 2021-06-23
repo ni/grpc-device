@@ -179,6 +179,7 @@ endforeach()
 add_executable(ni_grpc_device_server
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
+   "source/server/feature_toggles.cpp"
    "source/server/logging.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
@@ -273,6 +274,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
     "source/server/device_enumerator.cpp"
+    "source/server/feature_toggles.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
     "source/server/server_security_configuration.cpp"
