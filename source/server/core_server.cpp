@@ -9,6 +9,7 @@
 #include <nisync/nisync_library.h>
 #include <nisync/nisync_service.h>
 
+#include "feature_toggles.h"
 #include "logging.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
@@ -25,6 +26,7 @@ static void RunServer(const std::string& config_file_path)
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
 
   std::string server_address, server_cert, server_key, root_cert;
+  nidevice_grpc::FeatureToggles feature_toggles;
 
   try {
     nidevice_grpc::ServerConfigurationParser server_config_parser = config_file_path.empty()
@@ -34,6 +36,7 @@ static void RunServer(const std::string& config_file_path)
     server_cert = server_config_parser.parse_server_cert();
     server_key = server_config_parser.parse_server_key();
     root_cert = server_config_parser.parse_root_cert();
+    feature_toggles = server_config_parser.parse_feature_toggles();
   }
   catch (const std::exception& ex) {
     nidevice_grpc::logging::log(
@@ -136,7 +139,7 @@ Options parse_options(int argc, char** argv)
     }
     else
 #endif
-    if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
+        if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
       nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, usage);
       exit(0);
     }
