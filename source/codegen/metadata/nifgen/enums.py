@@ -674,6 +674,10 @@ enums = {
                 'value': 1008
             },
             {
+                'name': 'NIFGEN_VAL_CLOCK_OUT',
+                'value': 1009
+            },
+            {
                 'name': 'NIFGEN_VAL_PXI_STAR',
                 'value': 131
             },

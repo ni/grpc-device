@@ -33,10 +33,6 @@ def get_underlying_type_name(parameter_type):
   '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
   return parameter_type.replace("struct ","").replace('[]', '')
 
-def get_underlying_grpc_type_name(parameter_type):
-  '''Strip away information from type name like repeated for arrays, leaving just the underlying type name.'''
-  return parameter_type.replace("repeated ","")
-
 def has_unsupported_parameter(function):
   return any(is_unsupported_parameter(p) for p in function['parameters'])
 

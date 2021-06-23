@@ -235,7 +235,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  void configure_trigger_mode(const char* channel_name, ViInt32 trigger_mode)
+  void configure_trigger_mode(const char* channel_name, fgen::TriggerMode trigger_mode)
   {
     ::grpc::ClientContext context;
     fgen::ConfigureTriggerModeRequest request;
@@ -524,7 +524,7 @@ TEST_F(NiFgenDriverApiTest, ConfigureTriggerMode_ConfiguresSuccessfully)
 {
   const char* channel_name = "0";
   ViInt32 expected_value = 2; // NIFGEN_VAL_CONTINUOUS
-  configure_trigger_mode(channel_name, expected_value);
+  configure_trigger_mode(channel_name, fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_CONTINUOUS);
 
   ViInt32 actual_trigger_mode = get_int32_attribute(channel_name, fgen::NiFgenAttributes::NIFGEN_ATTRIBUTE_TRIGGER_MODE);
   EXPECT_EQ(expected_value, actual_trigger_mode);
@@ -576,7 +576,7 @@ TEST_F(NiFgenDriverApiTest, ExportTriggerMode_ResetAndImportConfiguration_Trigge
 {
   const char* channel_name = "0";
   ViInt32 expected_trigger_mode = 1; // NIFGEN_VAL_SINGLE
-  configure_trigger_mode(channel_name, expected_trigger_mode);
+  configure_trigger_mode(channel_name, fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_SINGLE);
   auto exported_configuration_response = export_attribute_configuration_buffer();
 
   reset();
