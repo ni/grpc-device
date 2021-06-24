@@ -59,7 +59,7 @@ def ThrowOnError (vi, error_code):
         error_code = error_code
         )
     error_message_response = niscope_client.GetErrorMessage(error_message_request)
-    raise Exception (error_message_response)
+    raise Exception (error_message_response.error_message)
 
 # Read in cmd args
 if len(sys.argv) >= 2:
