@@ -13,6 +13,8 @@
 #include <nidcpower/nidcpower_service.h>
 #include <nidigitalpattern/nidigitalpattern_library.h>
 #include <nidigitalpattern/nidigitalpattern_service.h>
+#include <nifgen/nifgen_library.h>
+#include <nifgen/nifgen_service.h>
 #include <nitclk/nitclk_library.h>
 #include <nitclk/nitclk_service.h>
 
@@ -46,6 +48,8 @@ class DeviceServer : public DeviceServerInterface {
   nidcpower_grpc::NiDCPowerService nidcpower_service_;
   nidigitalpattern_grpc::NiDigitalLibrary nidigital_library_;
   nidigitalpattern_grpc::NiDigitalService nidigital_service_;
+  nifgen_grpc::NiFgenLibrary nifgen_library_;
+  nifgen_grpc::NiFgenService nifgen_service_;
   nitclk_grpc::NiTClkLibrary nitclk_library_;
   nitclk_grpc::NiTClkService nitclk_service_;
 
@@ -68,6 +72,8 @@ DeviceServer::DeviceServer()
       nidcpower_service_(&nidcpower_library_, &session_repository_),
       nidigital_library_(),
       nidigital_service_(&nidigital_library_, &session_repository_),
+      nifgen_library_(),
+      nifgen_service_(&nifgen_library_, &session_repository_),
       nitclk_library_(),
       nitclk_service_(&nitclk_library_, &session_repository_)
 {
@@ -78,6 +84,7 @@ DeviceServer::DeviceServer()
   builder.RegisterService(&nisync_service_);
   builder.RegisterService(&nidcpower_service_);
   builder.RegisterService(&nidigital_service_);
+  builder.RegisterService(&nifgen_service_);
   builder.RegisterService(&nitclk_service_);
   server_ = builder.BuildAndStart();
 }

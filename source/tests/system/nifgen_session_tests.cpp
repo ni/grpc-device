@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "nifgen/nifgen_library.h"
+#include "device_server.h"
 #include "nifgen/nifgen_service.h"
 
 namespace ni {
@@ -21,15 +21,10 @@ const char* kTestInvalidFgenRsrc = "";
 class NiFgenSessionTest : public ::testing::Test {
  protected:
   NiFgenSessionTest()
+    : device_server_(DeviceServerInterface::Singleton()),
+      nifgen_stub_(fgen::NiFgen::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    nifgen_library_ = std::make_unique<fgen::NiFgenLibrary>();
-    nifgen_service_ = std::make_unique<fgen::NiFgenService>(nifgen_library_.get(), session_repository_.get());
-    builder.RegisterService(nifgen_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStubs();
+    device_server_->ResetServer();
   }
 
   virtual ~NiFgenSessionTest() {}
@@ -39,12 +34,6 @@ class NiFgenSessionTest : public ::testing::Test {
 #ifndef WIN32
     GTEST_SKIP() << "Fgen is not supported on Linux.";
 #endif
-  }
-
-  void ResetStubs()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    nifgen_stub_ = fgen::NiFgen::NewStub(channel_);
   }
 
   std::unique_ptr<fgen::NiFgen::Stub>& GetStub()
@@ -84,12 +73,8 @@ class NiFgenSessionTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
-  std::unique_ptr<fgen::NiFgen::Stub> nifgen_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<fgen::NiFgenLibrary> nifgen_library_;
-  std::unique_ptr<fgen::NiFgenService> nifgen_service_;
-  std::unique_ptr<::grpc::Server> server_;
+   DeviceServerInterface* device_server_;
+   std::unique_ptr<fgen::NiFgen::Stub> nifgen_stub_;
 };
 
 TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
