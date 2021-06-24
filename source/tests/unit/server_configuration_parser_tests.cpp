@@ -357,6 +357,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMissingRootCertFile_ParseRoot
     EXPECT_THAT(ex.what(), testing::HasSubstr(nidevice_grpc::kFileNotFoundMessage));
   }
 }
+
 TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_FeatureIsEnabled)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
