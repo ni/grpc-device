@@ -133,3 +133,4 @@ def is_private_method(function_data):
 
 def is_custom_close_method(function_data):
   return function_data.get('custom_close_method', False)
+  

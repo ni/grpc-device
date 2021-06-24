@@ -60,7 +60,7 @@ ${lookup.get_template(custom_template).render()}
 <%
   config = data["config"]
   service_class_prefix = config["service_class_prefix"]
-  request_parameters = proto_helpers.get_message_parameters(input_parameters, service_class_prefix, is_request_message = True)
+  request_parameters = proto_helpers.get_message_parameter_definitions(input_parameters, service_class_prefix, is_request_message = True)
 %>\
 message ${common_helpers.snake_to_pascal(function)}Request {
 % for parameter in request_parameters:
@@ -82,7 +82,7 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 <%
   config = data["config"]
   service_class_prefix = config["service_class_prefix"]
-  response_parameters = proto_helpers.get_message_parameters(output_parameters, service_class_prefix, is_request_message = False)
+  response_parameters = proto_helpers.get_message_parameter_definitions(output_parameters, service_class_prefix, is_request_message = False)
 %>\
 message ${common_helpers.snake_to_pascal(function)}Response {
 % for parameter in response_parameters:
