@@ -8,6 +8,8 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
+
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
   nidevice_grpc::ServerConfigurationParser server_config_parser;
@@ -370,10 +372,10 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureTo
 
   auto features = server_config_parser.parse_feature_toggles();
 
-  EXPECT_TRUE(features.is_enabled("feature"));
+  EXPECT_EQ(FeatureState::kEnabled, features.get_feature_state("feature"));
 }
 
-TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_SomeOtherFeatureIsDisabled)
+TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_SomeOtherFeatureIsUnspecified)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
@@ -385,7 +387,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureTo
 
   auto features = server_config_parser.parse_feature_toggles();
 
-  EXPECT_FALSE(features.is_enabled("someOtherFeature"));
+  EXPECT_EQ(FeatureState::kUnspecified, features.get_feature_state("someOtherFeature"));
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithDisabledFeature_ParseFeatureToggles_FeatureIsDisabled)
@@ -400,7 +402,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithDisabledFeature_ParseFeatureT
 
   auto features = server_config_parser.parse_feature_toggles();
 
-  EXPECT_FALSE(features.is_enabled("feature"));
+  EXPECT_EQ(FeatureState::kDisabled, features.get_feature_state("feature"));
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithMultipleFeaturesWithDifferentEnabledState_ParseFeatureToggles_FeaturesAreEnabledAndDisabled)
@@ -418,11 +420,11 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMultipleFeaturesWithDifferent
 
   auto features = server_config_parser.parse_feature_toggles();
 
-  EXPECT_FALSE(features.is_enabled("feature1"));
-  EXPECT_TRUE(features.is_enabled("feature2"));
-  EXPECT_FALSE(features.is_enabled("feature3"));
-  EXPECT_TRUE(features.is_enabled("feature4"));
-  EXPECT_FALSE(features.is_enabled("someOtherFeature"));
+  EXPECT_EQ(FeatureState::kDisabled, features.get_feature_state("feature1"));
+  EXPECT_EQ(FeatureState::kEnabled, features.get_feature_state("feature2"));
+  EXPECT_EQ(FeatureState::kDisabled, features.get_feature_state("feature3"));
+  EXPECT_EQ(FeatureState::kEnabled, features.get_feature_state("feature4"));
+  EXPECT_EQ(FeatureState::kUnspecified, features.get_feature_state("someOtherFeature"));
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithInvalidFeatureToggleValue_ParseFeatureToggles_ThrowsInvalidFeatureToggleException)
@@ -464,7 +466,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNoFeatureToggles_ParseFeature
 
   auto features = server_config_parser.parse_feature_toggles();
 
-  EXPECT_FALSE(features.is_enabled("dummy_feature"));
+  EXPECT_EQ(FeatureState::kUnspecified, features.get_feature_state("dummy_feature"));
 }
 }  // namespace unit
 }  // namespace tests
