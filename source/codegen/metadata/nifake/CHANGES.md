@@ -34,3 +34,5 @@ with the session_repository.
 The following function was tagged with `'custom_close_method': True,` to ensure that the generated service handler of this function removes
 the registered session from session_repository.
 - `CloseExtCal`
+
+Added `'grpc_type'` to `'SetCustomTypeArray'` since the API uses CustomStruct.

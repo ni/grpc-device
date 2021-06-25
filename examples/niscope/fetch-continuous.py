@@ -57,7 +57,7 @@ def ThrowOnError (vi, error_code):
         error_code = error_code
         )
     error_message_response = client.GetErrorMessage(error_message_request)
-    raise Exception (error_message_response)
+    raise Exception (error_message_response.error_message)
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -134,30 +134,39 @@ try :
     # Fetch continuously until all samples are acquired.
     current_pos = 0
     samples_per_fetch = 100
-    while current_pos < total_samples:
 
-        # We fetch each channel at a time so we don't have to de-interleave afterwards.
-        # We do not keep the wfm_info returned from fetch.
-        for channel_name, waveform in zip(channel_list, waveforms):
-            fetch_response = client.Fetch(niscope_types.FetchRequest(
-                vi = vi,
-                channel_list = channel_name,
-                timeout = 500000,
-                num_samples = samples_per_fetch
-                ))
-            CheckForError(vi, fetch_response.status)
-            waveform[current_pos : current_pos + samples_per_fetch] = fetch_response.waveform
-            print(f'Fetching channel {channel_name}\'s waveform for indices {current_pos} to {current_pos + samples_per_fetch - 1}')
-        print()
-        current_pos += samples_per_fetch
-
-    # Close session to NI-SCOPE module.
-    CheckForError(vi, (client.Close(niscope_types.CloseRequest(
-        vi = vi
-        ))).status)
-    channel.close()
+    try:
+        while current_pos < total_samples:
+            # We fetch each channel at a time so we don't have to de-interleave afterwards.
+            # We do not keep the wfm_info returned from fetch.
+            for channel_name, waveform in zip(channel_list, waveforms):
+                fetch_response = client.Fetch(niscope_types.FetchRequest(
+                    vi = vi,
+                    channel_list = channel_name,
+                    timeout = 500000,
+                    num_samples = samples_per_fetch
+                    ))
+                CheckForError(vi, fetch_response.status)
+                waveform[current_pos : current_pos + samples_per_fetch] = fetch_response.waveform
+                print(f'Fetching channel {channel_name}\'s waveform for indices {current_pos} to {current_pos + samples_per_fetch - 1}')
+            print()
+            current_pos += samples_per_fetch
+            
+    except KeyboardInterrupt:
+        pass
 
 # If NI-SCOPE API throws an exception, print the error message.
-except grpc.RpcError as e:
-    error_message = e.details()
-    print(error_message)
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
+    print(f"{error_message}")
+
+finally:
+    if('vi' in vars() and vi.id != 0):
+        # close the session.
+        CheckForError(vi, (client.Close(niscope_types.CloseRequest(
+            vi = vi
+        ))).status)

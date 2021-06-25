@@ -13,6 +13,19 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
+def get_input_and_output_custom_types(functions):
+  '''Returns a set of custom types used by input and output parameters separately.'''
+  input_custom_types = set()
+  output_custom_types = set()
+  for function in functions:
+    struct_array_params = [p for p in functions[function]["parameters"] if is_struct(p) and is_array(p["type"])]
+    for parameter in struct_array_params:
+        if is_input_parameter(parameter):
+            input_custom_types.add(get_underlying_type_name(parameter["type"]))
+        elif is_output_parameter(parameter):
+            output_custom_types.add(get_underlying_type_name(parameter["type"]))
+  return (input_custom_types, output_custom_types)
+
 def is_string_arg(parameter):
   return parameter['type'] in ['ViChar[]', 'ViInt8[]', 'ViUInt8[]']
 
@@ -25,19 +38,13 @@ def has_unsupported_parameter(function):
 
 def is_unsupported_parameter(parameter):
   return is_unsupported_size_mechanism(parameter) \
-      or is_unsupported_struct(parameter) \
       or is_unsupported_scalar_array(parameter)
 
 def is_unsupported_size_mechanism(parameter):
   return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', None}
 
-def is_unsupported_struct(parameter):
-  return is_struct(parameter) and is_input_parameter(parameter)
-
 def is_unsupported_scalar_array(parameter):
-  if not is_array(parameter['type']):
-    return False
-  return is_unsupported_enum_array(parameter) or get_underlying_type_name(parameter['type']) == 'ViInt16'
+  return is_array(parameter['type']) and is_unsupported_enum_array(parameter)
 
 def is_unsupported_enum_array(parameter):
   if is_enum(parameter):

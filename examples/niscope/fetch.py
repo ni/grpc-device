@@ -54,7 +54,7 @@ def ThrowOnError (vi, error_code):
         error_code = error_code
         )
     error_message_response = client.GetErrorMessage(error_message_request)
-    raise Exception (error_message_response)
+    raise Exception (error_message_response.error_message)
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -122,13 +122,18 @@ try :
         print(f'Waveform {i} information:')
         print(f'{waveforms[i]}\n')
 
-    # Close session to NI-SCOPE module.
-    CheckForError(vi, (client.Close(niscope_types.CloseRequest(
-        vi = vi
-        ))).status)
-    channel.close()
-
 # If NI-SCOPE API throws an exception, print the error message.
-except grpc.RpcError as e:
-    error_message = e.details()
-    print(error_message)
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
+    print(f"{error_message}")
+
+finally:
+    if('vi' in vars() and vi.id != 0):
+        # close the session.
+        CheckForError(vi, (client.Close(niscope_types.CloseRequest(
+            vi = vi
+        ))).status)
