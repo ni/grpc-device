@@ -145,6 +145,75 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::CalAdjustDirectPathOutputImpedance(::grpc::ServerContext* context, const CalAdjustDirectPathOutputImpedanceRequest* request, CalAdjustDirectPathOutputImpedanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViInt32 configuration = request->configuration();
+      ViReal64 load_impedance = request->load_impedance();
+      ViReal64 measured_source_voltage = request->measured_source_voltage();
+      ViReal64 measured_voltage_across_load = request->measured_voltage_across_load();
+      auto status = library_->CalAdjustDirectPathOutputImpedance(vi, channel_name, configuration, load_impedance, measured_source_voltage, measured_voltage_across_load);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::CalAdjustMainPathOutputImpedance(::grpc::ServerContext* context, const CalAdjustMainPathOutputImpedanceRequest* request, CalAdjustMainPathOutputImpedanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViInt32 configuration = request->configuration();
+      ViReal64 load_impedance = request->load_impedance();
+      ViReal64 measured_source_voltage = request->measured_source_voltage();
+      ViReal64 measured_voltage_across_load = request->measured_voltage_across_load();
+      auto status = library_->CalAdjustMainPathOutputImpedance(vi, channel_name, configuration, load_impedance, measured_source_voltage, measured_voltage_across_load);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::CalAdjustOscillatorFrequency(::grpc::ServerContext* context, const CalAdjustOscillatorFrequencyRequest* request, CalAdjustOscillatorFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 desired_frequency = request->desired_frequency();
+      ViReal64 measured_frequency = request->measured_frequency();
+      auto status = library_->CalAdjustOscillatorFrequency(vi, desired_frequency, measured_frequency);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response)
   {
     if (context->IsCancelled()) {
@@ -446,6 +515,27 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi);
       auto status = library_->Close(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 action = request->action();
+      session_repository_->remove_session(vi);
+      auto status = library_->CloseExtCal(vi, action);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2297,6 +2387,37 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViConstString password = request->password().c_str();
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->InitExtCal(resource_name, password, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->CloseExtCal(id, NIFGEN_VAL_EXT_CAL_ABORT); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_vi()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2354,6 +2475,82 @@ namespace nifgen_grpc {
       if (status == 0) {
         response->mutable_vi()->set_id(session_id);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::InitializeAnalogOutputCalibration(::grpc::ServerContext* context, const InitializeAnalogOutputCalibrationRequest* request, InitializeAnalogOutputCalibrationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->InitializeAnalogOutputCalibration(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::InitializeCalADCCalibration(::grpc::ServerContext* context, const InitializeCalADCCalibrationRequest* request, InitializeCalADCCalibrationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->InitializeCalADCCalibration(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::InitializeFlatnessCalibration(::grpc::ServerContext* context, const InitializeFlatnessCalibrationRequest* request, InitializeFlatnessCalibrationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->InitializeFlatnessCalibration(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::InitializeOscillatorFrequencyCalibration(::grpc::ServerContext* context, const InitializeOscillatorFrequencyCalibrationRequest* request, InitializeOscillatorFrequencyCalibrationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->InitializeOscillatorFrequencyCalibration(vi);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2548,6 +2745,31 @@ namespace nifgen_grpc {
         response->set_minimum_frequency_list_duration(minimum_frequency_list_duration);
         response->set_maximum_frequency_list_duration(maximum_frequency_list_duration);
         response->set_frequency_list_duration_quantum(frequency_list_duration_quantum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::ReadCalADC(::grpc::ServerContext* context, const ReadCalADCRequest* request, ReadCalADCResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_reads_to_average = request->number_of_reads_to_average();
+      ViBoolean return_calibrated_value = request->return_calibrated_value();
+      ViReal64 cal_adc_value {};
+      auto status = library_->ReadCalADC(vi, number_of_reads_to_average, return_calibrated_value, &cal_adc_value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_cal_adc_value(cal_adc_value);
       }
       return ::grpc::Status::OK;
     }
@@ -3077,6 +3299,27 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 max_time = request->max_time();
       auto status = library_->WaitUntilDone(vi, max_time);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::WriteBinary16AnalogStaticValue(::grpc::ServerContext* context, const WriteBinary16AnalogStaticValueRequest* request, WriteBinary16AnalogStaticValueResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViInt16 value = (ViInt16)request->value();
+      auto status = library_->WriteBinary16AnalogStaticValue(vi, channel_name, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
