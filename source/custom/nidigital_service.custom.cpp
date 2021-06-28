@@ -1,4 +1,4 @@
-#include <nidigitalpattern/nidigitalpattern_service.h>
+#include <nidigital/nidigital_service.h>
 
 namespace nidigital_grpc {
 

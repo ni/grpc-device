@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------
 // Service implementation for the NI-Digital Pattern Driver Metadata
 //---------------------------------------------------------------------
-#include "nidigitalpattern_library.h"
+#include "nidigital_library.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niDigital_64.dll";
@@ -11,7 +11,7 @@ static const char* kLibraryName = "niDigital_64.dll";
 static const char* kLibraryName = "libnidigital.so";
 #endif
 
-namespace nidigitalpattern_grpc {
+namespace nidigital_grpc {
 
 NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
 {
@@ -1750,4 +1750,4 @@ ViStatus NiDigitalLibrary::WriteSourceWaveformSiteUniqueU32(ViSession vi, ViCons
 #endif
 }
 
-}  // namespace nidigitalpattern_grpc
+}  // namespace nidigital_grpc

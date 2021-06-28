@@ -6,8 +6,7 @@ The following metadata was added :
 - 'service_class_prefix': 'NiDigital'
 - 'java_package': 'com.ni.grpc.nidigital'
 - 'csharp_namespace': 'NationalInstruments.Grpc.Digital'
-- 'namespace_component': 'nidigitalpattern'
-- 'module_name' is changed to 'nidigitalpattern'
+- 'namespace_component': 'nidigital'
 
 ## attributes.py
 

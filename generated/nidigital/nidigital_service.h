@@ -4,10 +4,10 @@
 //---------------------------------------------------------------------
 // Service header for the NI-Digital Pattern Driver Metadata
 //---------------------------------------------------------------------
-#ifndef NIDIGITALPATTERN_GRPC_SERVICE_H
-#define NIDIGITALPATTERN_GRPC_SERVICE_H
+#ifndef NIDIGITAL_GRPC_SERVICE_H
+#define NIDIGITAL_GRPC_SERVICE_H
 
-#include <nidigitalpattern.grpc.pb.h>
+#include <nidigital.grpc.pb.h>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
@@ -16,9 +16,9 @@
 #include <server/session_repository.h>
 #include <server/shared_library.h>
 
-#include "nidigitalpattern_library_interface.h"
+#include "nidigital_library_interface.h"
 
-namespace nidigitalpattern_grpc {
+namespace nidigital_grpc {
 
 class NiDigitalService final : public NiDigital::Service {
 public:
@@ -162,6 +162,6 @@ private:
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 };
 
-} // namespace nidigitalpattern_grpc
+} // namespace nidigital_grpc
 
-#endif  // NIDIGITALPATTERN_GRPC_SERVICE_H
+#endif  // NIDIGITAL_GRPC_SERVICE_H
