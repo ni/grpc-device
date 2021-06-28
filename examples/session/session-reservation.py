@@ -59,7 +59,7 @@ def ThrowOnError (vi, error_code):
         error_code = error_code
         )
     error_message_response = niscope_client.GetErrorMessage(error_message_request)
-    raise Exception (error_message_response.error_message)
+    raise Exception (error_message_response)
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -167,10 +167,6 @@ try :
     print(f'All sessions have been closed and reservations have been cleared.\n')
 
 # If NI-SCOPE API or Session API throws an exception, print the error message.
-except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
-    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
-        error_message = f"Failed to connect to server on {server_address}"
-    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
-    print(f"{error_message}")
+except grpc.RpcError as e:
+    error_message = e.details()
+    print(error_message)
