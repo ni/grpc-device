@@ -3085,19 +3085,7 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViInt32 value;
-      switch (request->value_enum_case()) {
-        case nidigitalpattern_grpc::SetAttributeViInt32Request::ValueEnumCase::kValue:
-          value = (ViInt32)request->value();
-          break;
-        case nidigitalpattern_grpc::SetAttributeViInt32Request::ValueEnumCase::kValueRaw:
-          value = (ViInt32)request->value_raw();
-          break;
-        case nidigitalpattern_grpc::SetAttributeViInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET:
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-          break;
-      }
-
+      ViInt32 value = request->value();
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3119,7 +3107,7 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViInt64 value = request->value_raw();
+      ViInt64 value = request->value();
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3141,7 +3129,7 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value = request->value_raw();
+      ViReal64 value = request->value();
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3186,7 +3174,7 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViConstString value = request->value_raw().c_str();
+      ViConstString value = request->value().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
