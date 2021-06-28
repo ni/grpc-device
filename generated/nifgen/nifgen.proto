@@ -204,6 +204,12 @@ enum NiFgenAttributes {
   NIFGEN_ATTRIBUTE_EXPORTED_SAMPLE_CLOCK_DIVISOR = 1150219;
   NIFGEN_ATTRIBUTE_LOAD_IMPEDANCE = 1150220;
   NIFGEN_ATTRIBUTE_ANALOG_PATH = 1150222;
+  NIFGEN_ATTRIBUTE_GAIN_DAC_VALUE = 1150223;
+  NIFGEN_ATTRIBUTE_OFFSET_DAC_VALUE = 1150224;
+  NIFGEN_ATTRIBUTE_OSCILLATOR_FREQ_DAC_VALUE = 1150225;
+  NIFGEN_ATTRIBUTE_CAL_ADC_INPUT = 1150227;
+  NIFGEN_ATTRIBUTE_PRE_AMPLIFIER_ATTENUATION = 1150228;
+  NIFGEN_ATTRIBUTE_POST_AMPLIFIER_ATTENUATION = 1150229;
   NIFGEN_ATTRIBUTE_EXPORTED_SAMPLE_CLOCK_TIMEBASE_DIVISOR = 1150230;
   NIFGEN_ATTRIBUTE_SAMPLE_CLOCK_ABSOLUTE_DELAY = 1150231;
   NIFGEN_ATTRIBUTE_OSCILLATOR_PHASE_DAC_VALUE = 1150232;
@@ -1238,7 +1244,7 @@ message CreateWaveformFromFileF64Response {
   sint32 waveform_handle = 2;
 }
 
-message CreateWaveformFromFileHWSRequest {
+message CreateWaveformFromFileHwsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string file_name = 3;
@@ -1246,7 +1252,7 @@ message CreateWaveformFromFileHWSRequest {
   bool use_gain_and_offset_from_waveform = 5;
 }
 
-message CreateWaveformFromFileHWSResponse {
+message CreateWaveformFromFileHwsResponse {
   int32 status = 1;
   sint32 waveform_handle = 2;
 }
