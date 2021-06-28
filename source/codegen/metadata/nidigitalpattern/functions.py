@@ -1346,7 +1346,6 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'expectedPinStates',
-                'enum': 'PinState',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'pinDataBufferSize',
@@ -1357,7 +1356,6 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'actualPinStates',
-                'enum': 'PinState',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'pinDataBufferSize',
@@ -2726,7 +2724,6 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'enum': 'PinState',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
