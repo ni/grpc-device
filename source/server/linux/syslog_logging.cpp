@@ -5,7 +5,9 @@
 namespace nidevice_grpc {
 namespace logging {
 
-void setup_syslog(bool is_daemon, const std::string& identity)
+static const char* syslog_identity = "ni_grpc_device_server";
+
+void setup_syslog(bool is_daemon)
 {
   int syslog_options = LOG_PID;
   int syslog_facility = 0;
@@ -17,7 +19,7 @@ void setup_syslog(bool is_daemon, const std::string& identity)
     syslog_options |= LOG_CONS;
     syslog_facility |= LOG_USER;
   }
-  openlog(identity.c_str(), syslog_options, syslog_facility);
+  openlog(syslog_identity, syslog_options, syslog_facility);
 }
 
 void log_syslog(Level level, const char* fmt, va_list args)
