@@ -264,8 +264,7 @@ functions = {
             {
                 'name':'sequenceHandle',
                 'direction':'in',
-                'type':'ViInt32',
-                'enum':'SequenceHandle'
+                'type':'ViInt32'
             }
         ],
         'returns':'ViStatus'
@@ -280,8 +279,7 @@ functions = {
             {
                 'name':'waveformHandle',
                 'direction':'in',
-                'type':'ViInt32',
-                'enum':'WaveformHandle'
+                'type':'ViInt32'
             }
         ],
         'returns':'ViStatus'
@@ -306,8 +304,7 @@ functions = {
             {
                 'name':'frequencyListHandle',
                 'direction':'in',
-                'type':'ViInt32',
-                'enum':'FrequencyListOptions'
+                'type':'ViInt32'
             }
         ],
         'returns':'ViStatus'
@@ -1541,7 +1538,6 @@ functions = {
             {
                 'name':'signal',
                 'direction':'in',
-                'enum':'Signal',
                 'type':'ViInt32'
             },
             {
@@ -2480,14 +2476,12 @@ functions = {
             {
                 'name':'routeSignalFrom',
                 'direction':'in',
-                'type':'ViInt32',
-                'enum':'RouteSignalFrom'
+                'type':'ViInt32'
             },
             {
                 'name':'routeSignalTo',
                 'direction':'in',
-                'type':'ViInt32',
-                'enum':'RouteSignalTo'
+                'type':'ViInt32'
             }
         ],
         'returns':'ViStatus'
