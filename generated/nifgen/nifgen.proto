@@ -66,7 +66,7 @@ service NiFgen {
   rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
   rpc CreateWaveformFromFileF64(CreateWaveformFromFileF64Request) returns (CreateWaveformFromFileF64Response);
-  rpc CreateWaveformFromFileHWS(CreateWaveformFromFileHWSRequest) returns (CreateWaveformFromFileHWSResponse);
+  rpc CreateWaveformFromFileHws(CreateWaveformFromFileHwsRequest) returns (CreateWaveformFromFileHwsResponse);
   rpc CreateWaveformI16(CreateWaveformI16Request) returns (CreateWaveformI16Response);
   rpc CreateWaveformFromFileI16(CreateWaveformFromFileI16Request) returns (CreateWaveformFromFileI16Response);
   rpc DefineUserStandardWaveform(DefineUserStandardWaveformRequest) returns (DefineUserStandardWaveformResponse);

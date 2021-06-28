@@ -71,7 +71,7 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateWaveformComplexF64 = reinterpret_cast<CreateWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformComplexF64"));
   function_pointers_.CreateWaveformF64 = reinterpret_cast<CreateWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformF64"));
   function_pointers_.CreateWaveformFromFileF64 = reinterpret_cast<CreateWaveformFromFileF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileF64"));
-  function_pointers_.CreateWaveformFromFileHWS = reinterpret_cast<CreateWaveformFromFileHWSPtr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileHWS"));
+  function_pointers_.CreateWaveformFromFileHws = reinterpret_cast<CreateWaveformFromFileHwsPtr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileHWS"));
   function_pointers_.CreateWaveformI16 = reinterpret_cast<CreateWaveformI16Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformI16"));
   function_pointers_.CreateWaveformFromFileI16 = reinterpret_cast<CreateWaveformFromFileI16Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileI16"));
   function_pointers_.DefineUserStandardWaveform = reinterpret_cast<DefineUserStandardWaveformPtr>(shared_library_.get_function_pointer("niFgen_DefineUserStandardWaveform"));
