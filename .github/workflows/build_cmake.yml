@@ -178,30 +178,3 @@ jobs:
           LICENSE
           ThirdPartyNotices.txt
         retention-days: 5
-
-  trigger_main_ci:
-    name: Trigger Main CI
-    needs: build
-    runs-on: windows-latest
-    if: ${{ github.ref == 'refs/heads/main' }}
-    steps:
-    - name: Trigger Main CI
-      uses: Azure/pipelines@v1
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc-device-main-desktop'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-
-  trigger_release_ci:
-    name: Trigger Release CI
-    needs: build
-    runs-on: windows-latest
-    if: ${{ startsWith(github.ref, 'refs/heads/releases') }}
-    steps:
-    - name: Trigger Release CI
-      uses: Azure/pipelines@v1
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc-device-release-desktop'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-
