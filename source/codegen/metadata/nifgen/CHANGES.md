@@ -18,12 +18,16 @@ The documentation and lv_property values were removed from all the attributes.
 
 The following functions were tagged with their corresponding CNAME tag
 - Close
+- ConfigureCustomFirFilterCoefficients
+- ConfigureP2pEndpointFullnessStartTrigger
+- CreateWaveformFromFileHws
 - ErrorMessage
+- GetFirFilterCoefficients
+- InitializeCalAdcCalibration
+- ManualEnableP2pStream
+- ReadCalAdc
 - Reset
 - SelfTest
-- ErrorQuery
-- Init
-- RevisionQuery
 
 Added value_twist attribute to the coefficientsArray parameter of GetFirFilterCoefficients function.
 

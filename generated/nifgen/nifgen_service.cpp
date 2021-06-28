@@ -672,7 +672,7 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::ConfigureCustomFIRFilterCoefficients(::grpc::ServerContext* context, const ConfigureCustomFIRFilterCoefficientsRequest* request, ConfigureCustomFIRFilterCoefficientsResponse* response)
+  ::grpc::Status NiFgenService::ConfigureCustomFirFilterCoefficients(::grpc::ServerContext* context, const ConfigureCustomFirFilterCoefficientsRequest* request, ConfigureCustomFirFilterCoefficientsResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -683,7 +683,7 @@ namespace nifgen_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 number_of_coefficients = request->coefficients_array().size();
       auto coefficients_array = const_cast<ViReal64*>(request->coefficients_array().data());
-      auto status = library_->ConfigureCustomFIRFilterCoefficients(vi, channel_name, number_of_coefficients, coefficients_array);
+      auto status = library_->ConfigureCustomFirFilterCoefficients(vi, channel_name, number_of_coefficients, coefficients_array);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -887,7 +887,7 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::ConfigureP2PEndpointFullnessStartTrigger(::grpc::ServerContext* context, const ConfigureP2PEndpointFullnessStartTriggerRequest* request, ConfigureP2PEndpointFullnessStartTriggerResponse* response)
+  ::grpc::Status NiFgenService::ConfigureP2pEndpointFullnessStartTrigger(::grpc::ServerContext* context, const ConfigureP2pEndpointFullnessStartTriggerRequest* request, ConfigureP2pEndpointFullnessStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -896,7 +896,7 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 p2p_endpoint_fullness_level = request->p2p_endpoint_fullness_level();
-      auto status = library_->ConfigureP2PEndpointFullnessStartTrigger(vi, p2p_endpoint_fullness_level);
+      auto status = library_->ConfigureP2pEndpointFullnessStartTrigger(vi, p2p_endpoint_fullness_level);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1243,7 +1243,7 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::CreateWaveformFromFileHWS(::grpc::ServerContext* context, const CreateWaveformFromFileHWSRequest* request, CreateWaveformFromFileHWSResponse* response)
+  ::grpc::Status NiFgenService::CreateWaveformFromFileHws(::grpc::ServerContext* context, const CreateWaveformFromFileHwsRequest* request, CreateWaveformFromFileHwsResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1256,7 +1256,7 @@ namespace nifgen_grpc {
       ViBoolean use_rate_from_waveform = request->use_rate_from_waveform();
       ViBoolean use_gain_and_offset_from_waveform = request->use_gain_and_offset_from_waveform();
       ViInt32 waveform_handle {};
-      auto status = library_->CreateWaveformFromFileHWS(vi, channel_name, file_name, use_rate_from_waveform, use_gain_and_offset_from_waveform, &waveform_handle);
+      auto status = library_->CreateWaveformFromFileHws(vi, channel_name, file_name, use_rate_from_waveform, use_gain_and_offset_from_waveform, &waveform_handle);
       response->set_status(status);
       if (status == 0) {
         response->set_waveform_handle(waveform_handle);
@@ -1588,31 +1588,6 @@ namespace nifgen_grpc {
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
-        response->set_error_message(error_message);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 error_code {};
-      std::string error_message(256, '\0');
-      auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_code(error_code);
         response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
@@ -2040,7 +2015,7 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::GetFIRFilterCoefficients(::grpc::ServerContext* context, const GetFIRFilterCoefficientsRequest* request, GetFIRFilterCoefficientsResponse* response)
+  ::grpc::Status NiFgenService::GetFirFilterCoefficients(::grpc::ServerContext* context, const GetFirFilterCoefficientsRequest* request, GetFirFilterCoefficientsResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -2050,14 +2025,14 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       ViInt32 number_of_coefficients_read {};
-      auto status = library_->GetFIRFilterCoefficients(vi, channel_name, 0, nullptr, &number_of_coefficients_read);
+      auto status = library_->GetFirFilterCoefficients(vi, channel_name, 0, nullptr, &number_of_coefficients_read);
       if (status < 0) {
         response->set_status(status);
         return ::grpc::Status::OK;
       }
       response->mutable_coefficients_array()->Resize(number_of_coefficients_read, 0);
       ViReal64* coefficients_array = response->mutable_coefficients_array()->mutable_data();
-      status = library_->GetFIRFilterCoefficients(vi, channel_name, number_of_coefficients_read, coefficients_array, &number_of_coefficients_read);
+      status = library_->GetFirFilterCoefficients(vi, channel_name, number_of_coefficients_read, coefficients_array, &number_of_coefficients_read);
       response->set_status(status);
       if (status == 0) {
         response->set_number_of_coefficients_read(number_of_coefficients_read);
@@ -2085,68 +2060,6 @@ namespace nifgen_grpc {
       if (status == 0) {
         response->set_state(static_cast<nifgen_grpc::HardwareState>(state));
         response->set_state_raw(state);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-
-      auto status = library_->GetNextCoercionRecord(vi, 0, nullptr);
-      if (status < 0) {
-        response->set_status(status);
-        return ::grpc::Status::OK;
-      }
-      ViInt32 buffer_size = status;
-
-      std::string coercion_record(buffer_size, '\0');
-      status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_coercion_record(coercion_record);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-
-      auto status = library_->GetNextInterchangeWarning(vi, 0, nullptr);
-      if (status < 0) {
-        response->set_status(status);
-        return ::grpc::Status::OK;
-      }
-      ViInt32 buffer_size = status;
-
-      std::string interchange_warning(buffer_size, '\0');
-      status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_interchange_warning(interchange_warning);
       }
       return ::grpc::Status::OK;
     }
@@ -2299,38 +2212,6 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViBoolean id_query = request->id_query();
-      ViBoolean reset_device = request->reset_device();
-
-      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
-        ViSession vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &vi);
-        return std::make_tuple(status, vi);
-      };
-      uint32_t session_id = 0;
-      const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
-      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status == 0) {
-        response->mutable_vi()->set_id(session_id);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2447,7 +2328,7 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::InitializeCalADCCalibration(::grpc::ServerContext* context, const InitializeCalADCCalibrationRequest* request, InitializeCalADCCalibrationResponse* response)
+  ::grpc::Status NiFgenService::InitializeCalAdcCalibration(::grpc::ServerContext* context, const InitializeCalAdcCalibrationRequest* request, InitializeCalAdcCalibrationResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -2455,7 +2336,7 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->InitializeCalADCCalibration(vi);
+      auto status = library_->InitializeCalAdcCalibration(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2588,7 +2469,7 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::ManualEnableP2PStream(::grpc::ServerContext* context, const ManualEnableP2PStreamRequest* request, ManualEnableP2PStreamResponse* response)
+  ::grpc::Status NiFgenService::ManualEnableP2pStream(::grpc::ServerContext* context, const ManualEnableP2pStreamRequest* request, ManualEnableP2pStreamResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -2597,7 +2478,7 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString endpoint_name = request->endpoint_name().c_str();
-      auto status = library_->ManualEnableP2PStream(vi, endpoint_name);
+      auto status = library_->ManualEnableP2pStream(vi, endpoint_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2699,7 +2580,7 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::ReadCalADC(::grpc::ServerContext* context, const ReadCalADCRequest* request, ReadCalADCResponse* response)
+  ::grpc::Status NiFgenService::ReadCalAdc(::grpc::ServerContext* context, const ReadCalAdcRequest* request, ReadCalAdcResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -2710,7 +2591,7 @@ namespace nifgen_grpc {
       ViInt32 number_of_reads_to_average = request->number_of_reads_to_average();
       ViBoolean return_calibrated_value = request->return_calibrated_value();
       ViReal64 cal_adc_value {};
-      auto status = library_->ReadCalADC(vi, number_of_reads_to_average, return_calibrated_value, &cal_adc_value);
+      auto status = library_->ReadCalAdc(vi, number_of_reads_to_average, return_calibrated_value, &cal_adc_value);
       response->set_status(status);
       if (status == 0) {
         response->set_cal_adc_value(cal_adc_value);
@@ -2863,31 +2744,6 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      std::string instrument_driver_revision(256, '\0');
-      std::string firmware_revision(256, '\0');
-      auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_instrument_driver_revision(instrument_driver_revision);
-        response->set_firmware_revision(firmware_revision);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::RouteSignalOut(::grpc::ServerContext* context, const RouteSignalOutRequest* request, RouteSignalOutResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2945,39 +2801,6 @@ namespace nifgen_grpc {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
       }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 trigger;
-      switch (request->trigger_enum_case()) {
-        case nifgen_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTrigger:
-          trigger = (ViInt32)request->trigger();
-          break;
-        case nifgen_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTriggerRaw:
-          trigger = (ViInt32)request->trigger_raw();
-          break;
-        case nifgen_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET:
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
-          break;
-      }
-
-      ViString trigger_id = (ViString)request->trigger_id().c_str();
-      auto status = library_->SendSoftwareEdgeTrigger(vi, trigger, trigger_id);
-      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3356,81 +3179,6 @@ namespace nifgen_grpc {
       ViInt32 size = request->data().size();
       auto data = const_cast<ViReal64*>(request->data().data());
       auto status = library_->WriteWaveform(vi, channel_name, waveform_handle, size, data);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::WriteWaveformComplexF64(::grpc::ServerContext* context, const WriteWaveformComplexF64Request* request, WriteWaveformComplexF64Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 number_of_samples = request->data().size();
-      auto data_request = request->data();
-      std::vector<NIComplexNumber_struct> data;
-      Copy(data_request, &data);
-      ViInt32 waveform_handle = request->waveform_handle();
-      auto status = library_->WriteWaveformComplexF64(vi, channel_name, number_of_samples, data.data(), waveform_handle);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::WriteNamedWaveformComplexF64(::grpc::ServerContext* context, const WriteNamedWaveformComplexF64Request* request, WriteNamedWaveformComplexF64Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString waveform_name = request->waveform_name().c_str();
-      ViInt32 size = request->data().size();
-      auto data_request = request->data();
-      std::vector<NIComplexNumber_struct> data;
-      Copy(data_request, &data);
-      auto status = library_->WriteNamedWaveformComplexF64(vi, channel_name, waveform_name, size, data.data());
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::WriteNamedWaveformComplexI16(::grpc::ServerContext* context, const WriteNamedWaveformComplexI16Request* request, WriteNamedWaveformComplexI16Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString waveform_name = request->waveform_name().c_str();
-      ViInt32 size = request->data().size();
-      auto data_request = request->data();
-      std::vector<NIComplexI16_struct> data;
-      Copy(data_request, &data);
-      auto status = library_->WriteNamedWaveformComplexI16(vi, channel_name, waveform_name, size, data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
     }

@@ -45,7 +45,7 @@ service NiFgen {
   rpc ConfigureArbWaveform(ConfigureArbWaveformRequest) returns (ConfigureArbWaveformResponse);
   rpc ConfigureChannels(ConfigureChannelsRequest) returns (ConfigureChannelsResponse);
   rpc ConfigureClockMode(ConfigureClockModeRequest) returns (ConfigureClockModeResponse);
-  rpc ConfigureCustomFIRFilterCoefficients(ConfigureCustomFIRFilterCoefficientsRequest) returns (ConfigureCustomFIRFilterCoefficientsResponse);
+  rpc ConfigureCustomFirFilterCoefficients(ConfigureCustomFirFilterCoefficientsRequest) returns (ConfigureCustomFirFilterCoefficientsResponse);
   rpc ConfigureDigitalEdgeScriptTrigger(ConfigureDigitalEdgeScriptTriggerRequest) returns (ConfigureDigitalEdgeScriptTriggerResponse);
   rpc ConfigureDigitalEdgeStartTrigger(ConfigureDigitalEdgeStartTriggerRequest) returns (ConfigureDigitalEdgeStartTriggerResponse);
   rpc ConfigureDigitalLevelScriptTrigger(ConfigureDigitalLevelScriptTriggerRequest) returns (ConfigureDigitalLevelScriptTriggerResponse);
@@ -55,7 +55,7 @@ service NiFgen {
   rpc ConfigureOutputEnabled(ConfigureOutputEnabledRequest) returns (ConfigureOutputEnabledResponse);
   rpc ConfigureOutputImpedance(ConfigureOutputImpedanceRequest) returns (ConfigureOutputImpedanceResponse);
   rpc ConfigureOutputMode(ConfigureOutputModeRequest) returns (ConfigureOutputModeResponse);
-  rpc ConfigureP2PEndpointFullnessStartTrigger(ConfigureP2PEndpointFullnessStartTriggerRequest) returns (ConfigureP2PEndpointFullnessStartTriggerResponse);
+  rpc ConfigureP2pEndpointFullnessStartTrigger(ConfigureP2pEndpointFullnessStartTriggerRequest) returns (ConfigureP2pEndpointFullnessStartTriggerResponse);
   rpc ConfigureReferenceClock(ConfigureReferenceClockRequest) returns (ConfigureReferenceClockResponse);
   rpc ConfigureSampleClockSource(ConfigureSampleClockSourceRequest) returns (ConfigureSampleClockSourceResponse);
   rpc ConfigureSampleRate(ConfigureSampleRateRequest) returns (ConfigureSampleRateResponse);
@@ -70,7 +70,7 @@ service NiFgen {
   rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
   rpc CreateWaveformFromFileF64(CreateWaveformFromFileF64Request) returns (CreateWaveformFromFileF64Response);
-  rpc CreateWaveformFromFileHWS(CreateWaveformFromFileHWSRequest) returns (CreateWaveformFromFileHWSResponse);
+  rpc CreateWaveformFromFileHws(CreateWaveformFromFileHwsRequest) returns (CreateWaveformFromFileHwsResponse);
   rpc CreateWaveformFromFileI16(CreateWaveformFromFileI16Request) returns (CreateWaveformFromFileI16Response);
   rpc DefineUserStandardWaveform(DefineUserStandardWaveformRequest) returns (DefineUserStandardWaveformResponse);
   rpc DeleteNamedWaveform(DeleteNamedWaveformRequest) returns (DeleteNamedWaveformResponse);
@@ -86,7 +86,6 @@ service NiFgen {
   rpc EnableDigitalPatterning(EnableDigitalPatterningRequest) returns (EnableDigitalPatterningResponse);
   rpc ErrorHandler(ErrorHandlerRequest) returns (ErrorHandlerResponse);
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
-  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
@@ -103,33 +102,30 @@ service NiFgen {
   rpc GetExtCalLastDateAndTime(GetExtCalLastDateAndTimeRequest) returns (GetExtCalLastDateAndTimeResponse);
   rpc GetExtCalLastTemp(GetExtCalLastTempRequest) returns (GetExtCalLastTempResponse);
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
-  rpc GetFIRFilterCoefficients(GetFIRFilterCoefficientsRequest) returns (GetFIRFilterCoefficientsResponse);
+  rpc GetFirFilterCoefficients(GetFirFilterCoefficientsRequest) returns (GetFirFilterCoefficientsResponse);
   rpc GetHardwareState(GetHardwareStateRequest) returns (GetHardwareStateResponse);
-  rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
-  rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetSelfCalLastTemp(GetSelfCalLastTempRequest) returns (GetSelfCalLastTempResponse);
   rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
   rpc GetStreamEndpointHandle(GetStreamEndpointHandleRequest) returns (GetStreamEndpointHandleResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
-  rpc Init(InitRequest) returns (InitResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitializeWithChannels(InitializeWithChannelsRequest) returns (InitializeWithChannelsResponse);
   rpc InitializeAnalogOutputCalibration(InitializeAnalogOutputCalibrationRequest) returns (InitializeAnalogOutputCalibrationResponse);
-  rpc InitializeCalADCCalibration(InitializeCalADCCalibrationRequest) returns (InitializeCalADCCalibrationResponse);
+  rpc InitializeCalAdcCalibration(InitializeCalAdcCalibrationRequest) returns (InitializeCalAdcCalibrationResponse);
   rpc InitializeFlatnessCalibration(InitializeFlatnessCalibrationRequest) returns (InitializeFlatnessCalibrationResponse);
   rpc InitializeOscillatorFrequencyCalibration(InitializeOscillatorFrequencyCalibrationRequest) returns (InitializeOscillatorFrequencyCalibrationResponse);
   rpc InitiateGeneration(InitiateGenerationRequest) returns (InitiateGenerationResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
   rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
-  rpc ManualEnableP2PStream(ManualEnableP2PStreamRequest) returns (ManualEnableP2PStreamResponse);
+  rpc ManualEnableP2pStream(ManualEnableP2pStreamRequest) returns (ManualEnableP2pStreamResponse);
   rpc QueryArbSeqCapabilities(QueryArbSeqCapabilitiesRequest) returns (QueryArbSeqCapabilitiesResponse);
   rpc QueryArbWfmCapabilities(QueryArbWfmCapabilitiesRequest) returns (QueryArbWfmCapabilitiesResponse);
   rpc QueryFreqListCapabilities(QueryFreqListCapabilitiesRequest) returns (QueryFreqListCapabilitiesResponse);
-  rpc ReadCalADC(ReadCalADCRequest) returns (ReadCalADCResponse);
+  rpc ReadCalAdc(ReadCalAdcRequest) returns (ReadCalAdcResponse);
   rpc ReadCurrentTemperature(ReadCurrentTemperatureRequest) returns (ReadCurrentTemperatureResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
@@ -137,11 +133,9 @@ service NiFgen {
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc RestoreLastExtCalConstants(RestoreLastExtCalConstantsRequest) returns (RestoreLastExtCalConstantsResponse);
-  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
   rpc RouteSignalOut(RouteSignalOutRequest) returns (RouteSignalOutResponse);
   rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
-  rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
   rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
   rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
   rpc SetAttributeViInt64(SetAttributeViInt64Request) returns (SetAttributeViInt64Response);
@@ -158,9 +152,6 @@ service NiFgen {
   rpc WriteNamedWaveformF64(WriteNamedWaveformF64Request) returns (WriteNamedWaveformF64Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
-  rpc WriteWaveformComplexF64(WriteWaveformComplexF64Request) returns (WriteWaveformComplexF64Response);
-  rpc WriteNamedWaveformComplexF64(WriteNamedWaveformComplexF64Request) returns (WriteNamedWaveformComplexF64Response);
-  rpc WriteNamedWaveformComplexI16(WriteNamedWaveformComplexI16Request) returns (WriteNamedWaveformComplexI16Response);
 }
 
 enum NiFgenAttributes {
@@ -393,12 +384,6 @@ enum TerminalConfiguration {
   TERMINAL_CONFIGURATION_UNSPECIFIED = 0;
   TERMINAL_CONFIGURATION_NIFGEN_VAL_SINGLE_ENDED = 300;
   TERMINAL_CONFIGURATION_NIFGEN_VAL_DIFFERENTIAL = 301;
-}
-
-enum Trigger {
-  TRIGGER_UNSPECIFIED = 0;
-  TRIGGER_NIFGEN_VAL_START_TRIGGER = 1004;
-  TRIGGER_NIFGEN_VAL_SCRIPT_TRIGGER = 103;
 }
 
 enum TriggerMode {
@@ -724,13 +709,13 @@ message ConfigureClockModeResponse {
   int32 status = 1;
 }
 
-message ConfigureCustomFIRFilterCoefficientsRequest {
+message ConfigureCustomFirFilterCoefficientsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   repeated double coefficients_array = 3;
 }
 
-message ConfigureCustomFIRFilterCoefficientsResponse {
+message ConfigureCustomFirFilterCoefficientsResponse {
   int32 status = 1;
 }
 
@@ -828,12 +813,12 @@ message ConfigureOutputModeResponse {
   int32 status = 1;
 }
 
-message ConfigureP2PEndpointFullnessStartTriggerRequest {
+message ConfigureP2pEndpointFullnessStartTriggerRequest {
   nidevice_grpc.Session vi = 1;
   sint32 p2p_endpoint_fullness_level = 2;
 }
 
-message ConfigureP2PEndpointFullnessStartTriggerResponse {
+message ConfigureP2pEndpointFullnessStartTriggerResponse {
   int32 status = 1;
 }
 
@@ -996,7 +981,7 @@ message CreateWaveformFromFileF64Response {
   sint32 waveform_handle = 2;
 }
 
-message CreateWaveformFromFileHWSRequest {
+message CreateWaveformFromFileHwsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string file_name = 3;
@@ -1004,7 +989,7 @@ message CreateWaveformFromFileHWSRequest {
   bool use_gain_and_offset_from_waveform = 5;
 }
 
-message CreateWaveformFromFileHWSResponse {
+message CreateWaveformFromFileHwsResponse {
   int32 status = 1;
   sint32 waveform_handle = 2;
 }
@@ -1152,16 +1137,6 @@ message ErrorMessageRequest {
 message ErrorMessageResponse {
   int32 status = 1;
   string error_message = 2;
-}
-
-message ErrorQueryRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message ErrorQueryResponse {
-  int32 status = 1;
-  sint32 error_code = 2;
-  string error_message = 3;
 }
 
 message ExportAttributeConfigurationBufferRequest {
@@ -1328,12 +1303,12 @@ message GetExtCalRecommendedIntervalResponse {
   sint32 months = 2;
 }
 
-message GetFIRFilterCoefficientsRequest {
+message GetFirFilterCoefficientsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
 }
 
-message GetFIRFilterCoefficientsResponse {
+message GetFirFilterCoefficientsResponse {
   int32 status = 1;
   repeated double coefficients_array = 2;
   sint32 number_of_coefficients_read = 3;
@@ -1347,24 +1322,6 @@ message GetHardwareStateResponse {
   int32 status = 1;
   HardwareState state = 2;
   sint32 state_raw = 3;
-}
-
-message GetNextCoercionRecordRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetNextCoercionRecordResponse {
-  int32 status = 1;
-  string coercion_record = 2;
-}
-
-message GetNextInterchangeWarningRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetNextInterchangeWarningResponse {
-  int32 status = 1;
-  string interchange_warning = 2;
 }
 
 message GetSelfCalLastDateAndTimeRequest {
@@ -1426,18 +1383,6 @@ message ImportAttributeConfigurationFileResponse {
   int32 status = 1;
 }
 
-message InitRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  bool id_query = 3;
-  bool reset_device = 4;
-}
-
-message InitResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
 message InitExtCalRequest {
   string session_name = 1;
   string resource_name = 2;
@@ -1483,11 +1428,11 @@ message InitializeAnalogOutputCalibrationResponse {
   int32 status = 1;
 }
 
-message InitializeCalADCCalibrationRequest {
+message InitializeCalAdcCalibrationRequest {
   nidevice_grpc.Session vi = 1;
 }
 
-message InitializeCalADCCalibrationResponse {
+message InitializeCalAdcCalibrationResponse {
   int32 status = 1;
 }
 
@@ -1541,12 +1486,12 @@ message LockSessionResponse {
   bool caller_has_lock = 2;
 }
 
-message ManualEnableP2PStreamRequest {
+message ManualEnableP2pStreamRequest {
   nidevice_grpc.Session vi = 1;
   string endpoint_name = 2;
 }
 
-message ManualEnableP2PStreamResponse {
+message ManualEnableP2pStreamResponse {
   int32 status = 1;
 }
 
@@ -1588,13 +1533,13 @@ message QueryFreqListCapabilitiesResponse {
   double frequency_list_duration_quantum = 7;
 }
 
-message ReadCalADCRequest {
+message ReadCalAdcRequest {
   nidevice_grpc.Session vi = 1;
   sint32 number_of_reads_to_average = 2;
   bool return_calibrated_value = 3;
 }
 
-message ReadCalADCResponse {
+message ReadCalAdcResponse {
   int32 status = 1;
   double cal_adc_value = 2;
 }
@@ -1658,16 +1603,6 @@ message RestoreLastExtCalConstantsResponse {
   int32 status = 1;
 }
 
-message RevisionQueryRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message RevisionQueryResponse {
-  int32 status = 1;
-  string instrument_driver_revision = 2;
-  string firmware_revision = 3;
-}
-
 message RouteSignalOutRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1695,19 +1630,6 @@ message SelfTestResponse {
   int32 status = 1;
   sint32 self_test_result = 2;
   string self_test_message = 3;
-}
-
-message SendSoftwareEdgeTriggerRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof trigger_enum {
-    Trigger trigger = 2;
-    sint32 trigger_raw = 3;
-  }
-  string trigger_id = 4;
-}
-
-message SendSoftwareEdgeTriggerResponse {
-  int32 status = 1;
 }
 
 message SetAttributeViBooleanRequest {
@@ -1883,39 +1805,6 @@ message WriteWaveformRequest {
 }
 
 message WriteWaveformResponse {
-  int32 status = 1;
-}
-
-message WriteWaveformComplexF64Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  repeated NIComplexNumber data = 3;
-  sint32 waveform_handle = 4;
-}
-
-message WriteWaveformComplexF64Response {
-  int32 status = 1;
-}
-
-message WriteNamedWaveformComplexF64Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  string waveform_name = 3;
-  repeated NIComplexNumber data = 4;
-}
-
-message WriteNamedWaveformComplexF64Response {
-  int32 status = 1;
-}
-
-message WriteNamedWaveformComplexI16Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  string waveform_name = 3;
-  repeated NIComplexInt32 data = 4;
-}
-
-message WriteNamedWaveformComplexI16Response {
   int32 status = 1;
 }
 
