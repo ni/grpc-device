@@ -1015,10 +1015,7 @@ message ConfigureChannelsResponse {
 
 message ConfigureClockModeRequest {
   nidevice_grpc.Session vi = 1;
-  oneof clock_mode_enum {
-    ClockMode clock_mode = 2;
-    sint32 clock_mode_raw = 3;
-  }
+  sint32 clock_mode = 2;
 }
 
 message ConfigureClockModeResponse {

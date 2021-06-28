@@ -566,8 +566,7 @@ functions = {
             {
                 'name':'clockMode',
                 'direction':'in',
-                'type':'ViInt32',
-                'enum':'ClockMode'
+                'type':'ViInt32'
             }
         ],
         'returns':'ViStatus'
