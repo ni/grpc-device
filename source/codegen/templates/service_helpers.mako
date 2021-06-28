@@ -117,16 +117,16 @@ ${initialize_standard_input_param(function_name, parameter)}\
           if (${iterator_name} == ${map_name}.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range.");
           }
-% if parameter['type'] in ["ViConstString", "ViString"]:
-          ${parameter_name} = const_cast<${parameter['type']}>((${iterator_name}->second).c_str());
+% if parameter['type'] == "ViConstString":
+          ${parameter_name} = static_cast<${parameter['type']}>((${iterator_name}->second).c_str());
 % else:
           ${parameter_name} = static_cast<${parameter['type']}>(${iterator_name}->second);
 % endif
           break;
         }
         case ${enum_type_prefix}k${pascal_parameter_name}Raw: {
-% if parameter['type'] in ["ViConstString", "ViString"]:
-          ${parameter_name} = const_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
+% if parameter['type'] == "ViConstString":
+          ${parameter_name} = static_cast<${parameter['type']}>((request->${parameter_name}_raw()).c_str());
 % else:
           ${parameter_name} = static_cast<${parameter['type']}>(request->${parameter_name}_raw());
 % endif

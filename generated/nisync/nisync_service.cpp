@@ -1208,7 +1208,7 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
-      ViInt32 value = request->value_raw();
+      ViInt32 value = request->value();
       auto status = library_->SetAttributeViInt32(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1230,7 +1230,7 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value = request->value_raw();
+      ViReal64 value = request->value();
       auto status = library_->SetAttributeViReal64(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1274,7 +1274,7 @@ namespace nisync_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
-      ViConstString value = request->value_raw().c_str();
+      ViConstString value = request->value().c_str();
       auto status = library_->SetAttributeViString(vi, active_item, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;

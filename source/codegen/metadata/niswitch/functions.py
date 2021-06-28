@@ -82,9 +82,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'attributeValue',
-                'type': 'ViInt32',
-                'grpc_raw_field_number':'4',
-                'grpc_field_number':'5'
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -1129,9 +1127,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'attributeValue',
-                'type': 'ViInt32',
-                'grpc_raw_field_number':'4',
-                'grpc_field_number':'5'
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'

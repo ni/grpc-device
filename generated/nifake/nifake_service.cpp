@@ -1083,11 +1083,11 @@ namespace nifake_grpc {
           if (a_mobile_o_s_name_imap_it == mobileosnames_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_mobile_o_s_name was not specified or out of range.");
           }
-          a_mobile_o_s_name = const_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
+          a_mobile_o_s_name = static_cast<ViConstString>((a_mobile_o_s_name_imap_it->second).c_str());
           break;
         }
         case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::kAMobileOSNameRaw: {
-          a_mobile_o_s_name = const_cast<ViConstString>((request->a_mobile_o_s_name_raw()).c_str());
+          a_mobile_o_s_name = static_cast<ViConstString>((request->a_mobile_o_s_name_raw()).c_str());
           break;
         } 
         case StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOSNameEnumCase::A_MOBILE_O_S_NAME_ENUM_NOT_SET: {

@@ -6,7 +6,6 @@ import importlib.util
 import mako.template
 import pathlib
 import metadata_mutation
-import common_helpers
 from mako.lookup import TemplateLookup
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
@@ -26,18 +25,11 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
   f.close()
 
 def mutate_metadata(metadata):
-  config = metadata["config"]
-  service_class_prefix = config["service_class_prefix"]
-  attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(metadata["attributes"])
-  metadata_mutation.add_attribute_values_enums(metadata["enums"], attribute_enums_by_type, service_class_prefix)
-  for function_name in metadata["functions"]:
-    function = metadata["functions"][function_name]
-    parameters = function["parameters"]
+  for function in metadata["functions"]:
+    parameters = metadata["functions"][function]["parameters"]
     metadata_mutation.sanitize_names(parameters)
     metadata_mutation.mark_size_params(parameters)
     metadata_mutation.mark_non_proto_params(parameters)
-    if function_name.startswith("SetAttribute") or function_name.startswith("CheckAttribute"):
-      metadata_mutation.mark_attr_value_param_if_required(function, metadata["enums"], attribute_enums_by_type, service_class_prefix)
 
 def generate_all(metadata_dir, gen_dir):
   sys.path.append(metadata_dir)
