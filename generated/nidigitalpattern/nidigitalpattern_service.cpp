@@ -29,7 +29,6 @@ namespace nidigitalpattern_grpc {
       output->Add(item != VI_FALSE);
     }
   }
-
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)

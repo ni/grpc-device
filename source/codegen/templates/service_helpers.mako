@@ -190,7 +190,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
       ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
 % elif c_type == 'ViString' or c_type == 'ViRsrc':
       ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
-% elif common_helpers.is_string_arg(parameter):
+% elif service_helpers.is_string_arg(parameter):
       ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
 % elif c_type == 'ViSession[]':
       auto ${parameter_name}_request = ${request_snippet};
@@ -262,9 +262,9 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 %     elif parameter['type'] == 'ViInt8[]':
       std::string ${parameter_name}(${size}, '\0');
 ## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
-%     elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
+%     elif service_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
       std::string ${parameter_name}(${size} - 1, '\0');
-%     elif common_helpers.is_string_arg(parameter):
+%     elif service_helpers.is_string_arg(parameter):
       std::string ${parameter_name};
       if (${size} > 0) {
           ${parameter_name}.resize(${size}-1);
@@ -303,8 +303,6 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
         if(${iterator_name} != ${map_name}.end()) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${iterator_name}->second));
         }
-%     elif common_helpers.is_array(parameter['type']) and common_helpers.is_string_arg(parameter):
-        CopyBytesToEnums(${parameter_name}, response->mutable_${parameter_name}());
 %     elif parameter['type'] == 'ViReal64':
         if(${parameter_name} == (int)${parameter_name}) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
@@ -314,7 +312,7 @@ one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{PascalFieldNam
 %     endif
         response->set_${parameter_name}_raw(${parameter_name});
 %   elif common_helpers.is_array(parameter['type']):
-%     if common_helpers.is_string_arg(parameter):
+%     if service_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
 %     elif common_helpers.is_struct(parameter) or parameter['type'] == 'ViBoolean[]':
         Copy(${parameter_name}, response->mutable_${parameter_name}());
