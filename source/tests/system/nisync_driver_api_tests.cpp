@@ -1181,7 +1181,12 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferenceIRIGWithInvalidTerminal_ReturnsErro
      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
+  // Bug 1459801: 6683 SetTimeReferenceIRIG has different error behavior on Linux RT
+  #if defined(_MSC_VER)
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  #else
+  EXPECT_EQ(NISYNC_ERROR_INV_PARAMETER, viStatus);
+  #endif
 }
 
 TEST_F(NiSyncDriver6683Test, SetTimeReferencePPS_ReturnsSuccess)
