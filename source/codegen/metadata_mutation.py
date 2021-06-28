@@ -89,12 +89,13 @@ def expand_attribute_function_value_param(function, enums, attribute_enums_by_ty
     if value_param != None and param_type in attribute_enums_by_type:
         enum_name = get_attribute_values_enum_name(service_class_prefix, param_type)
         mapped_enum_name = get_attribute_values_enum_name(service_class_prefix, param_type, is_mapped=True)
-        if enum_name in enums:
+        enum_exists = enum_name in enums
+        mapped_enum_exists = mapped_enum_name in enums
+        if enum_exists:
             value_param['enum'] = enum_name
-        if mapped_enum_name in enums:
+        if mapped_enum_exists:
             value_param['mapped-enum'] = mapped_enum_name
-        has_enum = enum_name in enums or mapped_enum_name in enums
-        if not has_enum:
+        if not enum_exists and not mapped_enum_exists:
             # Ideally there must be an enum associated with this parameter for SetAttribute* API.
             # Since the enum is empty, users will be passing in raw values. Make it clear via naming.
             value_param['name'] = value_param['name'] + "_raw"
