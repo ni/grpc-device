@@ -32,13 +32,6 @@ class NiDigitalSessionTest : public ::testing::Test {
 
   virtual ~NiDigitalSessionTest() {}
 
-  void SetUp() override
-  {
-#ifndef WIN32
-    GTEST_SKIP() << "Digital pattern is not supported on Linux.";
-#endif
-  }
-
   void ResetStubs()
   {
     channel_ = server_->InProcessChannel(::grpc::ChannelArguments());

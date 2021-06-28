@@ -29,9 +29,6 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
   void SetUp() override
   {
-#ifndef WIN32
-    GTEST_SKIP() << "Digital pattern is not supported on Linux.";
-#endif
     initialize_driver_session();
   }
 
@@ -76,9 +73,6 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
   void close_driver_session()
   {
-    if (!driver_session_) {
-      return;
-    }
     ::grpc::ClientContext context;
     digital::CloseRequest request;
     request.mutable_vi()->set_id(driver_session_->id());
