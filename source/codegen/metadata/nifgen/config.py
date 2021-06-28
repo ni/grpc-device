@@ -15,38 +15,6 @@ config = {
         'task': 'generation'
     },
     'custom_types': [
-        { 
-            'name': 'NIComplexNumber_struct',
-            'grpc_name': 'NIComplexNumber',
-            'fields': [
-                {
-                    'type': 'ViReal64',
-                    'name': 'real',
-                    'grpc_name': 'real'
-                },
-                {
-                    'type': 'ViReal64',
-                    'name': 'imaginary',
-                    'grpc_name': 'imaginary'
-                }
-            ]
-        },
-        { 
-            'name': 'NIComplexI16_struct',
-            'grpc_name': 'NIComplexInt32',
-            'fields': [
-                {
-                    'type': 'ViInt16',
-                    'name': 'real',
-                    'grpc_name': 'real'
-                },
-                {
-                    'type': 'ViInt16',
-                    'name': 'imaginary',
-                    'grpc_name': 'imaginary'
-                }
-            ]
-        }
     ],
     'driver_name': 'NI-FGEN',
     'extra_errors_used': [

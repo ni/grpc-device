@@ -67,7 +67,6 @@ service NiFgen {
   rpc CreateAdvancedArbSequence(CreateAdvancedArbSequenceRequest) returns (CreateAdvancedArbSequenceResponse);
   rpc CreateArbSequence(CreateArbSequenceRequest) returns (CreateArbSequenceResponse);
   rpc CreateFreqList(CreateFreqListRequest) returns (CreateFreqListResponse);
-  rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
   rpc CreateWaveformFromFileF64(CreateWaveformFromFileF64Request) returns (CreateWaveformFromFileF64Response);
   rpc CreateWaveformFromFileHws(CreateWaveformFromFileHwsRequest) returns (CreateWaveformFromFileHwsResponse);
@@ -148,7 +147,6 @@ service NiFgen {
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteBinary16AnalogStaticValue(WriteBinary16AnalogStaticValueRequest) returns (WriteBinary16AnalogStaticValueResponse);
-  rpc WriteComplexBinary16Waveform(WriteComplexBinary16WaveformRequest) returns (WriteComplexBinary16WaveformResponse);
   rpc WriteNamedWaveformF64(WriteNamedWaveformF64Request) returns (WriteNamedWaveformF64Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
@@ -412,15 +410,6 @@ enum Waveform {
   WAVEFORM_NIFGEN_VAL_WFM_USER = 102;
 }
 
-message NIComplexNumber {
-    double real = 1;
-    double imaginary = 2;
-} 
-
-message NIComplexInt32 {
-    sint32 real = 1;
-    sint32 imaginary = 2;
-}
 message AbortGenerationRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -942,17 +931,6 @@ message CreateFreqListRequest {
 message CreateFreqListResponse {
   int32 status = 1;
   sint32 frequency_list_handle = 2;
-}
-
-message CreateWaveformComplexF64Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  repeated NIComplexNumber waveform_data_array = 3;
-}
-
-message CreateWaveformComplexF64Response {
-  int32 status = 1;
-  sint32 waveform_handle = 2;
 }
 
 message CreateWaveformF64Request {
@@ -1762,17 +1740,6 @@ message WriteBinary16AnalogStaticValueRequest {
 }
 
 message WriteBinary16AnalogStaticValueResponse {
-  int32 status = 1;
-}
-
-message WriteComplexBinary16WaveformRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  sint32 waveform_handle = 3;
-  repeated NIComplexInt32 data = 4;
-}
-
-message WriteComplexBinary16WaveformResponse {
   int32 status = 1;
 }
 

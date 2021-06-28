@@ -72,7 +72,6 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateAdvancedArbSequence = reinterpret_cast<CreateAdvancedArbSequencePtr>(shared_library_.get_function_pointer("niFgen_CreateAdvancedArbSequence"));
   function_pointers_.CreateArbSequence = reinterpret_cast<CreateArbSequencePtr>(shared_library_.get_function_pointer("niFgen_CreateArbSequence"));
   function_pointers_.CreateFreqList = reinterpret_cast<CreateFreqListPtr>(shared_library_.get_function_pointer("niFgen_CreateFreqList"));
-  function_pointers_.CreateWaveformComplexF64 = reinterpret_cast<CreateWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformComplexF64"));
   function_pointers_.CreateWaveformF64 = reinterpret_cast<CreateWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformF64"));
   function_pointers_.CreateWaveformFromFileF64 = reinterpret_cast<CreateWaveformFromFileF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileF64"));
   function_pointers_.CreateWaveformFromFileHws = reinterpret_cast<CreateWaveformFromFileHwsPtr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileHWS"));
@@ -153,7 +152,6 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niFgen_UnlockSession"));
   function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_.get_function_pointer("niFgen_WaitUntilDone"));
   function_pointers_.WriteBinary16AnalogStaticValue = reinterpret_cast<WriteBinary16AnalogStaticValuePtr>(shared_library_.get_function_pointer("niFgen_WriteBinary16AnalogStaticValue"));
-  function_pointers_.WriteComplexBinary16Waveform = reinterpret_cast<WriteComplexBinary16WaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteComplexBinary16Waveform"));
   function_pointers_.WriteNamedWaveformF64 = reinterpret_cast<WriteNamedWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformF64"));
   function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_.get_function_pointer("niFgen_WriteScript"));
   function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteWaveform"));
@@ -779,18 +777,6 @@ ViStatus NiFgenLibrary::CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 f
   return niFgen_CreateFreqList(vi, waveform, frequencyListLength, frequencyArray, durationArray, frequencyListHandle);
 #else
   return function_pointers_.CreateFreqList(vi, waveform, frequencyListLength, frequencyArray, durationArray, frequencyListHandle);
-#endif
-}
-
-ViStatus NiFgenLibrary::CreateWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct waveformDataArray[], ViInt32* waveformHandle)
-{
-  if (!function_pointers_.CreateWaveformComplexF64) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformComplexF64.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_CreateWaveformComplexF64(vi, channelName, numberOfSamples, waveformDataArray, waveformHandle);
-#else
-  return function_pointers_.CreateWaveformComplexF64(vi, channelName, numberOfSamples, waveformDataArray, waveformHandle);
 #endif
 }
 
@@ -1751,18 +1737,6 @@ ViStatus NiFgenLibrary::WriteBinary16AnalogStaticValue(ViSession vi, ViConstStri
   return niFgen_WriteBinary16AnalogStaticValue(vi, channelName, value);
 #else
   return function_pointers_.WriteBinary16AnalogStaticValue(vi, channelName, value);
-#endif
-}
-
-ViStatus NiFgenLibrary::WriteComplexBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, NIComplexI16_struct data[])
-{
-  if (!function_pointers_.WriteComplexBinary16Waveform) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteComplexBinary16Waveform.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_WriteComplexBinary16Waveform(vi, channelName, waveformHandle, size, data);
-#else
-  return function_pointers_.WriteComplexBinary16Waveform(vi, channelName, waveformHandle, size, data);
 #endif
 }
 
