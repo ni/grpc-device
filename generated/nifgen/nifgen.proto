@@ -821,10 +821,7 @@ message ConfigureOutputImpedanceResponse {
 
 message ConfigureOutputModeRequest {
   nidevice_grpc.Session vi = 1;
-  oneof output_mode_enum {
-    OutputMode output_mode = 2;
-    sint32 output_mode_raw = 3;
-  }
+  sint32 output_mode = 2;
 }
 
 message ConfigureOutputModeResponse {

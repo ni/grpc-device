@@ -795,8 +795,7 @@ functions = {
             {
                 'name':'outputMode',
                 'direction':'in',
-                'type':'ViInt32',
-                'enum':'OutputMode'
+                'type':'ViInt32'
             }
         ],
         'returns':'ViStatus'
