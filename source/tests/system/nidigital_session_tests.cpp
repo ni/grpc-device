@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "device_server.h"
+#include "nidigitalpattern/nidigitalpattern_library.h"
 #include "nidigitalpattern/nidigitalpattern_service.h"
 
 namespace ni {
@@ -19,10 +19,15 @@ const char* kDigitalInvalidResourceName = "";
 class NiDigitalSessionTest : public ::testing::Test {
  protected:
   NiDigitalSessionTest()
-    : device_server_(DeviceServerInterface::Singleton()),
-      nidigital_stub_(digital::NiDigital::NewStub(device_server_->InProcessChannel()))
   {
-    device_server_->ResetServer();
+    ::grpc::ServerBuilder builder;
+    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
+    nidigital_library_ = std::make_unique<digital::NiDigitalLibrary>();
+    nidigital_service_ = std::make_unique<digital::NiDigitalService>(nidigital_library_.get(), session_repository_.get());
+    builder.RegisterService(nidigital_service_.get());
+
+    server_ = builder.BuildAndStart();
+    ResetStubs();
   }
 
   virtual ~NiDigitalSessionTest() {}
@@ -32,6 +37,12 @@ class NiDigitalSessionTest : public ::testing::Test {
 #ifndef WIN32
     GTEST_SKIP() << "Digital pattern is not supported on Linux.";
 #endif
+  }
+
+  void ResetStubs()
+  {
+    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
+    nidigital_stub_ = digital::NiDigital::NewStub(channel_);
   }
 
   std::unique_ptr<digital::NiDigital::Stub>& GetStub()
@@ -54,8 +65,12 @@ class NiDigitalSessionTest : public ::testing::Test {
   }
 
  private:
-  DeviceServerInterface* device_server_;
+  std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<digital::NiDigital::Stub> nidigital_stub_;
+  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
+  std::unique_ptr<digital::NiDigitalLibrary> nidigital_library_;
+  std::unique_ptr<digital::NiDigitalService> nidigital_service_;
+  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)

@@ -11,10 +11,6 @@
 #include <nisync/nisync_service.h>
 #include <nidcpower/nidcpower_library.h>
 #include <nidcpower/nidcpower_service.h>
-#include <nidigitalpattern/nidigitalpattern_library.h>
-#include <nidigitalpattern/nidigitalpattern_service.h>
-#include <nitclk/nitclk_library.h>
-#include <nitclk/nitclk_service.h>
 
 namespace ni {
 namespace tests {
@@ -44,10 +40,6 @@ class DeviceServer : public DeviceServerInterface {
   nisync_grpc::NiSyncService nisync_service_;
   nidcpower_grpc::NiDCPowerLibrary nidcpower_library_;
   nidcpower_grpc::NiDCPowerService nidcpower_service_;
-  nidigitalpattern_grpc::NiDigitalLibrary nidigital_library_;
-  nidigitalpattern_grpc::NiDigitalService nidigital_service_;
-  nitclk_grpc::NiTClkLibrary nitclk_library_;
-  nitclk_grpc::NiTClkService nitclk_service_;
 
   std::unique_ptr<::grpc::Server> server_;
   std::shared_ptr<::grpc::Channel> channel_;
@@ -65,11 +57,7 @@ DeviceServer::DeviceServer()
       nisync_library_(),
       nisync_service_(&nisync_library_, &session_repository_),
       nidcpower_library_(),
-      nidcpower_service_(&nidcpower_library_, &session_repository_),
-      nidigital_library_(),
-      nidigital_service_(&nidigital_library_, &session_repository_),
-      nitclk_library_(),
-      nitclk_service_(&nitclk_library_, &session_repository_)
+      nidcpower_service_(&nidcpower_library_, &session_repository_)
 {
   grpc::ServerBuilder builder;
   builder.RegisterService(&core_service_);
@@ -77,8 +65,6 @@ DeviceServer::DeviceServer()
   builder.RegisterService(&niswitch_service_);
   builder.RegisterService(&nisync_service_);
   builder.RegisterService(&nidcpower_service_);
-  builder.RegisterService(&nidigital_service_);
-  builder.RegisterService(&nitclk_service_);
   server_ = builder.BuildAndStart();
 }
 
