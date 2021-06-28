@@ -84,7 +84,6 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.self_test = reinterpret_cast<self_testPtr>(shared_library_.get_function_pointer("niFake_self_test"));
   function_pointers_.ViUInt8ArrayInputFunction = reinterpret_cast<ViUInt8ArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_ViUInt8ArrayInputFunction"));
   function_pointers_.ViUInt8ArrayOutputFunction = reinterpret_cast<ViUInt8ArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_ViUInt8ArrayOutputFunction"));
-  function_pointers_.ViInt16ArrayInputFunction = reinterpret_cast<ViInt16ArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_ViInt16ArrayInputFunction"));
 }
 
 NiFakeLibrary::~NiFakeLibrary()
@@ -815,18 +814,6 @@ ViStatus NiFakeLibrary::ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberO
   return niFake_ViUInt8ArrayOutputFunction(vi, numberOfElements, anArray);
 #else
   return function_pointers_.ViUInt8ArrayOutputFunction(vi, numberOfElements, anArray);
-#endif
-}
-
-ViStatus NiFakeLibrary::ViInt16ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[])
-{
-  if (!function_pointers_.ViInt16ArrayInputFunction) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFake_ViInt16ArrayInputFunction.");
-  }
-#if defined(_MSC_VER)
-  return niFake_ViInt16ArrayInputFunction(vi, numberOfElements, anArray);
-#else
-  return function_pointers_.ViInt16ArrayInputFunction(vi, numberOfElements, anArray);
 #endif
 }
 

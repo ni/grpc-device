@@ -1282,38 +1282,6 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::CreateWaveformI16(::grpc::ServerContext* context, const CreateWaveformI16Request* request, CreateWaveformI16Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 waveform_size = request->waveform_data_array().size();
-      auto waveform_data_array_request = request->waveform_data_array();
-      std::vector<ViInt16> waveform_data_array;
-      std::transform(
-        waveform_data_array_request.begin(),
-        waveform_data_array_request.end(),
-        std::back_inserter(waveform_data_array),
-        [](auto x) { return (ViInt16)x; }); 
-      ViInt32 waveform_handle {};
-      auto status = library_->CreateWaveformI16(vi, channel_name, waveform_size, waveform_data_array.data(), &waveform_handle);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_waveform_handle(waveform_handle);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::CreateWaveformFromFileI16(::grpc::ServerContext* context, const CreateWaveformFromFileI16Request* request, CreateWaveformFromFileI16Response* response)
   {
     if (context->IsCancelled()) {
@@ -3318,35 +3286,6 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::WriteBinary16Waveform(::grpc::ServerContext* context, const WriteBinary16WaveformRequest* request, WriteBinary16WaveformResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 waveform_handle = request->waveform_handle();
-      ViInt32 size = request->data().size();
-      auto data_request = request->data();
-      std::vector<ViInt16> data;
-      std::transform(
-        data_request.begin(),
-        data_request.end(),
-        std::back_inserter(data),
-        [](auto x) { return (ViInt16)x; }); 
-      auto status = library_->WriteBinary16Waveform(vi, channel_name, waveform_handle, size, data.data());
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::WriteComplexBinary16Waveform(::grpc::ServerContext* context, const WriteComplexBinary16WaveformRequest* request, WriteComplexBinary16WaveformResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3385,63 +3324,6 @@ namespace nifgen_grpc {
       ViInt32 size = request->data().size();
       auto data = const_cast<ViReal64*>(request->data().data());
       auto status = library_->WriteNamedWaveformF64(vi, channel_name, waveform_name, size, data);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::WriteNamedWaveformI16(::grpc::ServerContext* context, const WriteNamedWaveformI16Request* request, WriteNamedWaveformI16Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString waveform_name = request->waveform_name().c_str();
-      ViInt32 size = request->data().size();
-      auto data_request = request->data();
-      std::vector<ViInt16> data;
-      std::transform(
-        data_request.begin(),
-        data_request.end(),
-        std::back_inserter(data),
-        [](auto x) { return (ViInt16)x; }); 
-      auto status = library_->WriteNamedWaveformI16(vi, channel_name, waveform_name, size, data.data());
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::WriteP2PEndpointI16(::grpc::ServerContext* context, const WriteP2PEndpointI16Request* request, WriteP2PEndpointI16Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString endpoint_name = request->endpoint_name().c_str();
-      ViInt32 number_of_samples = request->endpoint_data().size();
-      auto endpoint_data_request = request->endpoint_data();
-      std::vector<ViInt16> endpoint_data;
-      std::transform(
-        endpoint_data_request.begin(),
-        endpoint_data_request.end(),
-        std::back_inserter(endpoint_data),
-        [](auto x) { return (ViInt16)x; }); 
-      auto status = library_->WriteP2PEndpointI16(vi, endpoint_name, number_of_samples, endpoint_data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
     }

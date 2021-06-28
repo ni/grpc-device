@@ -1424,29 +1424,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIv
     EXPECT_EQ(response.actual_size(), expected_size);
 }
 
-TEST(NiFakeServiceTests, NiFakeService_AcceptViInt16Array_CallsAcceptViInt16Array)
-{
-  nidevice_grpc::SessionRepository session_repository;
-  std::uint32_t session_id = create_session(session_repository, kTestViSession);
-  NiFakeMockLibrary library;
-  nifake_grpc::NiFakeService service(&library, &session_repository);
-  std::int16_t int16_array[] = {0, 1, -0x8000, 0x7FFF};
-  std::int32_t array_len = 4;
-  EXPECT_CALL(library, ViInt16ArrayInputFunction(kTestViSession, array_len, _))
-      .With(Args<2, 1>(ElementsAreArray(int16_array)))
-      .WillOnce(Return(kDriverSuccess));
-
-  ::grpc::ServerContext context;
-  nifake_grpc::ViInt16ArrayInputFunctionRequest request;
-  request.mutable_vi()->set_id(session_id);
-  request.mutable_an_array()->CopyFrom(google::protobuf::RepeatedField<google::protobuf::int32>(int16_array, int16_array+4));
-  nifake_grpc::ViInt16ArrayInputFunctionResponse response;
-  ::grpc::Status status = service.ViInt16ArrayInputFunction(&context, &request, &response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kDriverSuccess, response.status());
-}
-
 TEST(NiFakeServiceTests, NiFakeService_SetCustomTypeArray_CallsSetCustomTypeArray)
 {
     nidevice_grpc::SessionRepository session_repository;

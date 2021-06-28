@@ -17,7 +17,7 @@ def create_args(parameters):
       if is_output and common_helpers.is_string_arg(parameter):
         type_without_brackets = common_helpers.get_underlying_type_name(parameter['type'])
         result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
-      elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
+      elif parameter['type'] in {"ViBoolean[]", "ViSession[]"}:
         result = f'{result}{parameter_name}.data(), '
       elif parameter.get('is_size_param', False) and is_twist_mechanism:
         result = f'{result}{twist_value_name}, '
