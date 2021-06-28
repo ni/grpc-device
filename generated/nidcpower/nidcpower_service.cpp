@@ -927,6 +927,201 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustCurrentLimit(::grpc::ServerContext* context, const CalAdjustCurrentLimitRequest* request, CalAdjustCurrentLimitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto requested_outputs = const_cast<ViReal64*>(request->requested_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustCurrentLimit(vi, channel_name, range, number_of_measurements, requested_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustCurrentMeasurement(::grpc::ServerContext* context, const CalAdjustCurrentMeasurementRequest* request, CalAdjustCurrentMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto reported_outputs = const_cast<ViReal64*>(request->reported_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustCurrentMeasurement(vi, channel_name, range, number_of_measurements, reported_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustInternalReference(::grpc::ServerContext* context, const CalAdjustInternalReferenceRequest* request, CalAdjustInternalReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 internal_reference;
+      switch (request->internal_reference_enum_case()) {
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::kInternalReference: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference());
+          break;
+        }
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::kInternalReferenceRaw: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference_raw());
+          break;
+        }
+        case nidcpower_grpc::CalAdjustInternalReferenceRequest::InternalReferenceEnumCase::INTERNAL_REFERENCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for internal_reference was not specified or out of range");
+          break;
+        }
+      }
+
+      ViReal64 adjusted_internal_reference = request->adjusted_internal_reference();
+      auto status = library_->CalAdjustInternalReference(vi, internal_reference, adjusted_internal_reference);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustOutputResistance(::grpc::ServerContext* context, const CalAdjustOutputResistanceRequest* request, CalAdjustOutputResistanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto requested_outputs = const_cast<ViReal64*>(request->requested_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustOutputResistance(vi, channel_name, number_of_measurements, requested_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustResidualCurrentOffset(::grpc::ServerContext* context, const CalAdjustResidualCurrentOffsetRequest* request, CalAdjustResidualCurrentOffsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      auto status = library_->CalAdjustResidualCurrentOffset(vi, channel_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustResidualVoltageOffset(::grpc::ServerContext* context, const CalAdjustResidualVoltageOffsetRequest* request, CalAdjustResidualVoltageOffsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      auto status = library_->CalAdjustResidualVoltageOffset(vi, channel_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustVoltageLevel(::grpc::ServerContext* context, const CalAdjustVoltageLevelRequest* request, CalAdjustVoltageLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto requested_outputs = const_cast<ViReal64*>(request->requested_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustVoltageLevel(vi, channel_name, range, number_of_measurements, requested_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CalAdjustVoltageMeasurement(::grpc::ServerContext* context, const CalAdjustVoltageMeasurementRequest* request, CalAdjustVoltageMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString channel_name = request->channel_name().c_str();
+      ViReal64 range = request->range();
+      ViUInt32 number_of_measurements = request->measured_outputs().size();
+      auto reported_outputs = const_cast<ViReal64*>(request->reported_outputs().data());
+      auto measured_outputs = const_cast<ViReal64*>(request->measured_outputs().data());
+      auto status = library_->CalAdjustVoltageMeasurement(vi, channel_name, range, number_of_measurements, reported_outputs, measured_outputs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response)
   {
     if (context->IsCancelled()) {
@@ -937,6 +1132,27 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
       auto status = library_->CalSelfCalibrate(vi, channel_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString old_password = request->old_password().c_str();
+      ViConstString new_password = request->new_password().c_str();
+      auto status = library_->ChangeExtCalPassword(vi, old_password, new_password);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -995,6 +1211,42 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi);
       auto status = library_->Close(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 action;
+      switch (request->action_enum_case()) {
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::kAction: {
+          action = static_cast<ViInt32>(request->action());
+          break;
+        }
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::kActionRaw: {
+          action = static_cast<ViInt32>(request->action_raw());
+          break;
+        }
+        case nidcpower_grpc::CloseExtCalRequest::ActionEnumCase::ACTION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
+          break;
+        }
+      }
+
+      session_repository_->remove_session(vi);
+      auto status = library_->CloseExtCal(vi, action);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1992,6 +2244,41 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ConnectInternalReference(::grpc::ServerContext* context, const ConnectInternalReferenceRequest* request, ConnectInternalReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 internal_reference;
+      switch (request->internal_reference_enum_case()) {
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::kInternalReference: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference());
+          break;
+        }
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::kInternalReferenceRaw: {
+          internal_reference = static_cast<ViInt32>(request->internal_reference_raw());
+          break;
+        }
+        case nidcpower_grpc::ConnectInternalReferenceRequest::InternalReferenceEnumCase::INTERNAL_REFERENCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for internal_reference was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConnectInternalReference(vi, internal_reference);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::CreateAdvancedSequenceStep(::grpc::ServerContext* context, const CreateAdvancedSequenceStepRequest* request, CreateAdvancedSequenceStepResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2432,6 +2719,52 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::GetCalUserDefinedInfo(::grpc::ServerContext* context, const GetCalUserDefinedInfoRequest* request, GetCalUserDefinedInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      std::string info(256 - 1, '\0');
+      auto status = library_->GetCalUserDefinedInfo(vi, (ViChar*)info.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_info(info);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::GetCalUserDefinedInfoMaxSize(::grpc::ServerContext* context, const GetCalUserDefinedInfoMaxSizeRequest* request, GetCalUserDefinedInfoMaxSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 info_size {};
+      auto status = library_->GetCalUserDefinedInfoMaxSize(vi, &info_size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_info_size(info_size);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2769,6 +3102,37 @@ namespace nidcpower_grpc {
       ViConstString file_path = request->file_path().c_str();
       auto status = library_->ImportAttributeConfigurationFile(vi, file_path);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViConstString password = request->password().c_str();
+
+      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+        ViSession vi;
+        int status = library_->InitExtCal(resource_name, password, &vi);
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& session_name = request->session_name();
+      auto cleanup_lambda = [&] (uint32_t id) { library_->CloseExtCal(id, NIDCPOWER_VAL_CANCEL); };
+      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_vi()->set_id(session_id);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3369,6 +3733,26 @@ namespace nidcpower_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViConstString attribute_value = request->attribute_value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString info = request->info().c_str();
+      auto status = library_->SetCalUserDefinedInfo(vi, info);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

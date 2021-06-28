@@ -59,10 +59,20 @@ public:
   ::grpc::Status SendSoftwareEdgeTriggerWithChannels(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerWithChannelsRequest* request, SendSoftwareEdgeTriggerWithChannelsResponse* response) override;
   ::grpc::Status WaitForEventWithChannels(::grpc::ServerContext* context, const WaitForEventWithChannelsRequest* request, WaitForEventWithChannelsResponse* response) override;
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
+  ::grpc::Status CalAdjustCurrentLimit(::grpc::ServerContext* context, const CalAdjustCurrentLimitRequest* request, CalAdjustCurrentLimitResponse* response) override;
+  ::grpc::Status CalAdjustCurrentMeasurement(::grpc::ServerContext* context, const CalAdjustCurrentMeasurementRequest* request, CalAdjustCurrentMeasurementResponse* response) override;
+  ::grpc::Status CalAdjustInternalReference(::grpc::ServerContext* context, const CalAdjustInternalReferenceRequest* request, CalAdjustInternalReferenceResponse* response) override;
+  ::grpc::Status CalAdjustOutputResistance(::grpc::ServerContext* context, const CalAdjustOutputResistanceRequest* request, CalAdjustOutputResistanceResponse* response) override;
+  ::grpc::Status CalAdjustResidualCurrentOffset(::grpc::ServerContext* context, const CalAdjustResidualCurrentOffsetRequest* request, CalAdjustResidualCurrentOffsetResponse* response) override;
+  ::grpc::Status CalAdjustResidualVoltageOffset(::grpc::ServerContext* context, const CalAdjustResidualVoltageOffsetRequest* request, CalAdjustResidualVoltageOffsetResponse* response) override;
+  ::grpc::Status CalAdjustVoltageLevel(::grpc::ServerContext* context, const CalAdjustVoltageLevelRequest* request, CalAdjustVoltageLevelResponse* response) override;
+  ::grpc::Status CalAdjustVoltageMeasurement(::grpc::ServerContext* context, const CalAdjustVoltageMeasurementRequest* request, CalAdjustVoltageMeasurementResponse* response) override;
   ::grpc::Status CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response) override;
+  ::grpc::Status ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response) override;
   ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
   ::grpc::Status ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
+  ::grpc::Status CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response) override;
   ::grpc::Status Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response) override;
   ::grpc::Status ConfigureApertureTime(::grpc::ServerContext* context, const ConfigureApertureTimeRequest* request, ConfigureApertureTimeResponse* response) override;
   ::grpc::Status ConfigureAutoZero(::grpc::ServerContext* context, const ConfigureAutoZeroRequest* request, ConfigureAutoZeroResponse* response) override;
@@ -102,6 +112,7 @@ public:
   ::grpc::Status ConfigureVoltageLevelRange(::grpc::ServerContext* context, const ConfigureVoltageLevelRangeRequest* request, ConfigureVoltageLevelRangeResponse* response) override;
   ::grpc::Status ConfigureVoltageLimit(::grpc::ServerContext* context, const ConfigureVoltageLimitRequest* request, ConfigureVoltageLimitResponse* response) override;
   ::grpc::Status ConfigureVoltageLimitRange(::grpc::ServerContext* context, const ConfigureVoltageLimitRangeRequest* request, ConfigureVoltageLimitRangeResponse* response) override;
+  ::grpc::Status ConnectInternalReference(::grpc::ServerContext* context, const ConnectInternalReferenceRequest* request, ConnectInternalReferenceResponse* response) override;
   ::grpc::Status CreateAdvancedSequenceStep(::grpc::ServerContext* context, const CreateAdvancedSequenceStepRequest* request, CreateAdvancedSequenceStepResponse* response) override;
   ::grpc::Status DeleteAdvancedSequence(::grpc::ServerContext* context, const DeleteAdvancedSequenceRequest* request, DeleteAdvancedSequenceResponse* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
@@ -120,6 +131,8 @@ public:
   ::grpc::Status GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response) override;
   ::grpc::Status GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response) override;
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;
+  ::grpc::Status GetCalUserDefinedInfo(::grpc::ServerContext* context, const GetCalUserDefinedInfoRequest* request, GetCalUserDefinedInfoResponse* response) override;
+  ::grpc::Status GetCalUserDefinedInfoMaxSize(::grpc::ServerContext* context, const GetCalUserDefinedInfoMaxSizeRequest* request, GetCalUserDefinedInfoMaxSizeResponse* response) override;
   ::grpc::Status GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response) override;
   ::grpc::Status GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response) override;
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
@@ -132,6 +145,7 @@ public:
   ::grpc::Status GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
+  ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InitializeWithChannels(::grpc::ServerContext* context, const InitializeWithChannelsRequest* request, InitializeWithChannelsResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response) override;
@@ -156,6 +170,7 @@ public:
   ::grpc::Status SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response) override;
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
+  ::grpc::Status SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response) override;
   ::grpc::Status SetSequence(::grpc::ServerContext* context, const SetSequenceRequest* request, SetSequenceResponse* response) override;
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitForEvent(::grpc::ServerContext* context, const WaitForEventRequest* request, WaitForEventResponse* response) override;
