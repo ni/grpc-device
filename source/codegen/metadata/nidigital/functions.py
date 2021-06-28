@@ -135,7 +135,7 @@ functions = {
         "returns": "ViStatus"
     },
     "ClearError": {
-        "codegen_method": "public",
+        "codegen_method": "no",
         "parameters": [
             {
                 "direction": "in",
@@ -1427,7 +1427,7 @@ functions = {
         "returns": "ViStatus"
     },
     "GetChannelName": {
-        "codegen_method": "public",
+        "codegen_method": "no",
         "parameters": [
             {
                 "direction": "in",
@@ -2255,7 +2255,7 @@ functions = {
         "returns": "ViStatus"
     },
     "ResetAttribute": {
-        "codegen_method": "public",
+        "codegen_method": "no",
         "parameters": [
             {
                 "direction": "in",
@@ -2284,28 +2284,6 @@ functions = {
             }
         ],
         "returns": "ViStatus"
-    },
-    
-    "SelectFunction":{
-        "parameters":[
-            {
-                "name":"vi",
-                "direction":"in",
-                "type":"ViSession"
-            },
-            {
-                "name":"channelList",
-                "direction":"in",
-                "type":"ViConstString"
-            },
-            {
-                "name":"function",
-                "direction":"in",
-                "type":"ViInt32",
-                "enum":"SelectedFunction"
-            }
-        ],
-        "returns":"ViStatus"
     },
     "SelfCalibrate": {
         "parameters": [
