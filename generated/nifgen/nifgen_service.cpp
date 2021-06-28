@@ -1071,22 +1071,7 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
-      ViInt32 trigger_mode;
-      switch (request->trigger_mode_enum_case()) {
-        case nifgen_grpc::ConfigureTriggerModeRequest::TriggerModeEnumCase::kTriggerMode: {
-          trigger_mode = static_cast<ViInt32>(request->trigger_mode());
-          break;
-        }
-        case nifgen_grpc::ConfigureTriggerModeRequest::TriggerModeEnumCase::kTriggerModeRaw: {
-          trigger_mode = static_cast<ViInt32>(request->trigger_mode_raw());
-          break;
-        }
-        case nifgen_grpc::ConfigureTriggerModeRequest::TriggerModeEnumCase::TRIGGER_MODE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_mode was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 trigger_mode = request->trigger_mode();
       auto status = library_->ConfigureTriggerMode(vi, channel_name, trigger_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
