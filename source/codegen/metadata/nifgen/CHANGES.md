@@ -68,11 +68,6 @@ The following Calibration functions were removed as we are not supporting them i
 - `'ReadCalADC'`
 - `'InitializeFlatnessCalibration'`
 - `'CalAdjustFlatness'`
-- `'ChangeExtCalPassword'`
-- `'GetCalUserDefinedInfo'`
-- `'GetCalUserDefinedInfoMaxSize'`
-- `'RestoreLastExtCalConstants'`
-- `'SetCalUserDefinedInfo'`
 
 ## attributes.py
 

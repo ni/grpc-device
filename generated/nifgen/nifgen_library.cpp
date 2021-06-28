@@ -25,6 +25,7 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.AdjustSampleClockRelativeDelay = reinterpret_cast<AdjustSampleClockRelativeDelayPtr>(shared_library_.get_function_pointer("niFgen_AdjustSampleClockRelativeDelay"));
   function_pointers_.AllocateNamedWaveform = reinterpret_cast<AllocateNamedWaveformPtr>(shared_library_.get_function_pointer("niFgen_AllocateNamedWaveform"));
   function_pointers_.AllocateWaveform = reinterpret_cast<AllocateWaveformPtr>(shared_library_.get_function_pointer("niFgen_AllocateWaveform"));
+  function_pointers_.ChangeExtCalPassword = reinterpret_cast<ChangeExtCalPasswordPtr>(shared_library_.get_function_pointer("niFgen_ChangeExtCalPassword"));
   function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViBoolean"));
   function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViInt32"));
   function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViInt64"));
@@ -97,6 +98,8 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFgen_GetAttributeViReal64"));
   function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niFgen_GetAttributeViSession"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niFgen_GetAttributeViString"));
+  function_pointers_.GetCalUserDefinedInfo = reinterpret_cast<GetCalUserDefinedInfoPtr>(shared_library_.get_function_pointer("niFgen_GetCalUserDefinedInfo"));
+  function_pointers_.GetCalUserDefinedInfoMaxSize = reinterpret_cast<GetCalUserDefinedInfoMaxSizePtr>(shared_library_.get_function_pointer("niFgen_GetCalUserDefinedInfoMaxSize"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niFgen_GetChannelName"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niFgen_GetError"));
   function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niFgen_GetExtCalLastDateAndTime"));
@@ -129,6 +132,7 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niFgen_ResetDevice"));
   function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_.get_function_pointer("niFgen_ResetInterchangeCheck"));
   function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niFgen_ResetWithDefaults"));
+  function_pointers_.RestoreLastExtCalConstants = reinterpret_cast<RestoreLastExtCalConstantsPtr>(shared_library_.get_function_pointer("niFgen_RestoreLastExtCalConstants"));
   function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niFgen_revision_query"));
   function_pointers_.RouteSignalOut = reinterpret_cast<RouteSignalOutPtr>(shared_library_.get_function_pointer("niFgen_RouteSignalOut"));
   function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_.get_function_pointer("niFgen_SelfCal"));
@@ -140,6 +144,7 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFgen_SetAttributeViReal64"));
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niFgen_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niFgen_SetAttributeViString"));
+  function_pointers_.SetCalUserDefinedInfo = reinterpret_cast<SetCalUserDefinedInfoPtr>(shared_library_.get_function_pointer("niFgen_SetCalUserDefinedInfo"));
   function_pointers_.SetNamedWaveformNextWritePosition = reinterpret_cast<SetNamedWaveformNextWritePositionPtr>(shared_library_.get_function_pointer("niFgen_SetNamedWaveformNextWritePosition"));
   function_pointers_.SetWaveformNextWritePosition = reinterpret_cast<SetWaveformNextWritePositionPtr>(shared_library_.get_function_pointer("niFgen_SetWaveformNextWritePosition"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niFgen_UnlockSession"));
@@ -212,6 +217,18 @@ ViStatus NiFgenLibrary::AllocateWaveform(ViSession vi, ViConstString channelName
   return niFgen_AllocateWaveform(vi, channelName, waveformSize, waveformHandle);
 #else
   return function_pointers_.AllocateWaveform(vi, channelName, waveformSize, waveformHandle);
+#endif
+}
+
+ViStatus NiFgenLibrary::ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword)
+{
+  if (!function_pointers_.ChangeExtCalPassword) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ChangeExtCalPassword.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_ChangeExtCalPassword(vi, oldPassword, newPassword);
+#else
+  return function_pointers_.ChangeExtCalPassword(vi, oldPassword, newPassword);
 #endif
 }
 
@@ -1079,6 +1096,30 @@ ViStatus NiFgenLibrary::GetAttributeViString(ViSession vi, ViConstString channel
 #endif
 }
 
+ViStatus NiFgenLibrary::GetCalUserDefinedInfo(ViSession vi, ViChar info[256])
+{
+  if (!function_pointers_.GetCalUserDefinedInfo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetCalUserDefinedInfo.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_GetCalUserDefinedInfo(vi, info);
+#else
+  return function_pointers_.GetCalUserDefinedInfo(vi, info);
+#endif
+}
+
+ViStatus NiFgenLibrary::GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize)
+{
+  if (!function_pointers_.GetCalUserDefinedInfoMaxSize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetCalUserDefinedInfoMaxSize.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_GetCalUserDefinedInfoMaxSize(vi, infoSize);
+#else
+  return function_pointers_.GetCalUserDefinedInfoMaxSize(vi, infoSize);
+#endif
+}
+
 ViStatus NiFgenLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[])
 {
   if (!function_pointers_.GetChannelName) {
@@ -1463,6 +1504,18 @@ ViStatus NiFgenLibrary::ResetWithDefaults(ViSession vi)
 #endif
 }
 
+ViStatus NiFgenLibrary::RestoreLastExtCalConstants(ViSession vi)
+{
+  if (!function_pointers_.RestoreLastExtCalConstants) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_RestoreLastExtCalConstants.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_RestoreLastExtCalConstants(vi);
+#else
+  return function_pointers_.RestoreLastExtCalConstants(vi);
+#endif
+}
+
 ViStatus NiFgenLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256])
 {
   if (!function_pointers_.RevisionQuery) {
@@ -1592,6 +1645,18 @@ ViStatus NiFgenLibrary::SetAttributeViString(ViSession vi, ViConstString channel
   return niFgen_SetAttributeViString(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiFgenLibrary::SetCalUserDefinedInfo(ViSession vi, ViConstString info)
+{
+  if (!function_pointers_.SetCalUserDefinedInfo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetCalUserDefinedInfo.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_SetCalUserDefinedInfo(vi, info);
+#else
+  return function_pointers_.SetCalUserDefinedInfo(vi, info);
 #endif
 }
 

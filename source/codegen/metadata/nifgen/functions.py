@@ -74,6 +74,26 @@ functions = {
         ],
         'returns':'ViStatus'
     },
+    'ChangeExtCalPassword':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'oldPassword',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'newPassword',
+                'direction':'in',
+                'type':'ViConstString'
+            }
+        ],
+        'returns':'ViStatus'
+    },
     'CheckAttributeViBoolean':{
         'parameters':[
             {
@@ -1696,6 +1716,40 @@ functions = {
         ],
         'returns':'ViStatus'
     },
+    'GetCalUserDefinedInfo':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'info',
+                'direction':'in',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'fixed',
+                    'value':256
+                }
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'GetCalUserDefinedInfoMaxSize':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'infoSize',
+                'direction':'out',
+                'type':'ViInt32'
+            }
+        ],
+        'returns':'ViStatus'
+    },
     'GetChannelName':{
         'parameters':[
             {
@@ -2372,6 +2426,16 @@ functions = {
         ],
         'returns':'ViStatus'
     },
+    'RestoreLastExtCalConstants':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            }
+        ],
+        'returns':'ViStatus'
+    },
     'RevisionQuery': {
         'cname' : 'niFgen_revision_query',
         'parameters': [
@@ -2628,6 +2692,21 @@ functions = {
             },
             {
                 'name':'attributeValue',
+                'direction':'in',
+                'type':'ViConstString'
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'SetCalUserDefinedInfo':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'info',
                 'direction':'in',
                 'type':'ViConstString'
             }

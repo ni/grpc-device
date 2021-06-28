@@ -22,6 +22,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 adjustmentTime);
   ViStatus AllocateNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize);
   ViStatus AllocateWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt32* waveformHandle);
+  ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword);
   ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
   ViStatus CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
@@ -94,6 +95,8 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
   ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
+  ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[256]);
+  ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize);
   ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[]);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
   ViStatus GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
@@ -126,6 +129,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus ResetDevice(ViSession vi);
   ViStatus ResetInterchangeCheck(ViSession vi);
   ViStatus ResetWithDefaults(ViSession vi);
+  ViStatus RestoreLastExtCalConstants(ViSession vi);
   ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
   ViStatus RouteSignalOut(ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo);
   ViStatus SelfCal(ViSession vi);
@@ -137,6 +141,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  ViStatus SetCalUserDefinedInfo(ViSession vi, ViConstString info);
   ViStatus SetNamedWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset);
   ViStatus SetWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
@@ -157,6 +162,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using AdjustSampleClockRelativeDelayPtr = ViStatus (*)(ViSession vi, ViReal64 adjustmentTime);
   using AllocateNamedWaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize);
   using AllocateWaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt32* waveformHandle);
+  using ChangeExtCalPasswordPtr = ViStatus (*)(ViSession vi, ViConstString oldPassword, ViConstString newPassword);
   using CheckAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   using CheckAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
   using CheckAttributeViInt64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
@@ -229,6 +235,8 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using GetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
   using GetAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
   using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
+  using GetCalUserDefinedInfoPtr = ViStatus (*)(ViSession vi, ViChar info[256]);
+  using GetCalUserDefinedInfoMaxSizePtr = ViStatus (*)(ViSession vi, ViInt32* infoSize);
   using GetChannelNamePtr = ViStatus (*)(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[]);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
   using GetExtCalLastDateAndTimePtr = ViStatus (*)(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
@@ -261,6 +269,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using ResetDevicePtr = ViStatus (*)(ViSession vi);
   using ResetInterchangeCheckPtr = ViStatus (*)(ViSession vi);
   using ResetWithDefaultsPtr = ViStatus (*)(ViSession vi);
+  using RestoreLastExtCalConstantsPtr = ViStatus (*)(ViSession vi);
   using RevisionQueryPtr = ViStatus (*)(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
   using RouteSignalOutPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo);
   using SelfCalPtr = ViStatus (*)(ViSession vi);
@@ -272,6 +281,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using SetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   using SetAttributeViSessionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  using SetCalUserDefinedInfoPtr = ViStatus (*)(ViSession vi, ViConstString info);
   using SetNamedWaveformNextWritePositionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset);
   using SetWaveformNextWritePositionPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset);
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
@@ -292,6 +302,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     AdjustSampleClockRelativeDelayPtr AdjustSampleClockRelativeDelay;
     AllocateNamedWaveformPtr AllocateNamedWaveform;
     AllocateWaveformPtr AllocateWaveform;
+    ChangeExtCalPasswordPtr ChangeExtCalPassword;
     CheckAttributeViBooleanPtr CheckAttributeViBoolean;
     CheckAttributeViInt32Ptr CheckAttributeViInt32;
     CheckAttributeViInt64Ptr CheckAttributeViInt64;
@@ -364,6 +375,8 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     GetAttributeViReal64Ptr GetAttributeViReal64;
     GetAttributeViSessionPtr GetAttributeViSession;
     GetAttributeViStringPtr GetAttributeViString;
+    GetCalUserDefinedInfoPtr GetCalUserDefinedInfo;
+    GetCalUserDefinedInfoMaxSizePtr GetCalUserDefinedInfoMaxSize;
     GetChannelNamePtr GetChannelName;
     GetErrorPtr GetError;
     GetExtCalLastDateAndTimePtr GetExtCalLastDateAndTime;
@@ -396,6 +409,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     ResetDevicePtr ResetDevice;
     ResetInterchangeCheckPtr ResetInterchangeCheck;
     ResetWithDefaultsPtr ResetWithDefaults;
+    RestoreLastExtCalConstantsPtr RestoreLastExtCalConstants;
     RevisionQueryPtr RevisionQuery;
     RouteSignalOutPtr RouteSignalOut;
     SelfCalPtr SelfCal;
@@ -407,6 +421,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     SetAttributeViReal64Ptr SetAttributeViReal64;
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
+    SetCalUserDefinedInfoPtr SetCalUserDefinedInfo;
     SetNamedWaveformNextWritePositionPtr SetNamedWaveformNextWritePosition;
     SetWaveformNextWritePositionPtr SetWaveformNextWritePosition;
     UnlockSessionPtr UnlockSession;
