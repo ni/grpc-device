@@ -1274,7 +1274,7 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
-      std::string error_message(256 - 1, '\0');
+      std::string error_message(256, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
@@ -1684,10 +1684,7 @@ namespace nidigitalpattern_grpc {
       }
       ViInt32 buffer_size = status;
 
-      std::string value;
-      if (buffer_size > 0) {
-          value.resize(buffer_size-1);
-      }
+      std::string value(buffer_size, '\0');
       status = library_->GetAttributeViString(vi, channel_name, attribute, buffer_size, (ViChar*)value.data());
       response->set_status(status);
       if (status == 0) {
@@ -1719,10 +1716,7 @@ namespace nidigitalpattern_grpc {
       }
       ViInt32 name_buffer_size = status;
 
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
+      std::string name(name_buffer_size, '\0');
       status = library_->GetChannelName(vi, index, name_buffer_size, (ViChar*)name.data());
       response->set_status(status);
       if (status == 0) {
@@ -1754,10 +1748,7 @@ namespace nidigitalpattern_grpc {
       }
       ViInt32 name_buffer_size = status;
 
-      std::string names;
-      if (name_buffer_size > 0) {
-          names.resize(name_buffer_size-1);
-      }
+      std::string names(name_buffer_size, '\0');
       status = library_->GetChannelNameFromString(vi, indices, name_buffer_size, (ViChar*)names.data());
       response->set_status(status);
       if (status == 0) {
@@ -1789,10 +1780,7 @@ namespace nidigitalpattern_grpc {
       ViInt32 error_description_buffer_size = status;
 
       ViStatus error_code {};
-      std::string error_description;
-      if (error_description_buffer_size > 0) {
-          error_description.resize(error_description_buffer_size-1);
-      }
+      std::string error_description(error_description_buffer_size, '\0');
       status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
       response->set_status(status);
       if (status == 0) {
@@ -1911,10 +1899,7 @@ namespace nidigitalpattern_grpc {
       }
       ViInt32 name_buffer_size = status;
 
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
+      std::string name(name_buffer_size, '\0');
       status = library_->GetPatternName(vi, pattern_index, name_buffer_size, (ViChar*)name.data());
       response->set_status(status);
       if (status == 0) {
@@ -1946,10 +1931,7 @@ namespace nidigitalpattern_grpc {
       }
       ViInt32 pin_list_buffer_size = status;
 
-      std::string pin_list;
-      if (pin_list_buffer_size > 0) {
-          pin_list.resize(pin_list_buffer_size-1);
-      }
+      std::string pin_list(pin_list_buffer_size, '\0');
       status = library_->GetPatternPinList(vi, start_label, pin_list_buffer_size, (ViChar*)pin_list.data());
       response->set_status(status);
       if (status == 0) {
@@ -1981,10 +1963,7 @@ namespace nidigitalpattern_grpc {
       }
       ViInt32 name_buffer_size = status;
 
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
+      std::string name(name_buffer_size, '\0');
       status = library_->GetPinName(vi, pin_index, name_buffer_size, (ViChar*)name.data());
       response->set_status(status);
       if (status == 0) {
@@ -2215,10 +2194,7 @@ namespace nidigitalpattern_grpc {
       }
       ViInt32 name_buffer_size = status;
 
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
+      std::string name(name_buffer_size, '\0');
       status = library_->GetTimeSetName(vi, time_set_index, name_buffer_size, (ViChar*)name.data());
       response->set_status(status);
       if (status == 0) {
@@ -3004,7 +2980,7 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 test_result {};
-      std::string test_message(2048 - 1, '\0');
+      std::string test_message(2048, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
       response->set_status(status);
       if (status == 0) {
