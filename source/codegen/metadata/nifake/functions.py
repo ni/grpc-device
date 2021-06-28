@@ -1176,22 +1176,6 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
-    'GetViUInt8': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'name': 'aUint8Number',
-                'type': 'ViUInt8'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetViInt32Array': {
         'parameters': [
             {
@@ -2606,56 +2590,6 @@ functions = {
                     'value': 256
                 },
                 'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ViUInt8ArrayInputFunction': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfElements',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'anArray',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'numberOfElements'
-                },
-                'type': 'ViUInt8[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ViUInt8ArrayOutputFunction': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfElements',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'anArray',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'numberOfElements'
-                },
-                'type': 'ViUInt8[]'
             }
         ],
         'returns': 'ViStatus'
