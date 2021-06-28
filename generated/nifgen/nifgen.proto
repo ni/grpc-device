@@ -51,11 +51,14 @@ service NiFgen {
   rpc ConfigureDigitalLevelScriptTrigger(ConfigureDigitalLevelScriptTriggerRequest) returns (ConfigureDigitalLevelScriptTriggerResponse);
   rpc ConfigureFreqList(ConfigureFreqListRequest) returns (ConfigureFreqListResponse);
   rpc ConfigureFrequency(ConfigureFrequencyRequest) returns (ConfigureFrequencyResponse);
+  rpc ConfigureGain(ConfigureGainRequest) returns (ConfigureGainResponse);
   rpc ConfigureOperationMode(ConfigureOperationModeRequest) returns (ConfigureOperationModeResponse);
   rpc ConfigureOutputEnabled(ConfigureOutputEnabledRequest) returns (ConfigureOutputEnabledResponse);
   rpc ConfigureOutputImpedance(ConfigureOutputImpedanceRequest) returns (ConfigureOutputImpedanceResponse);
   rpc ConfigureOutputMode(ConfigureOutputModeRequest) returns (ConfigureOutputModeResponse);
   rpc ConfigureP2pEndpointFullnessStartTrigger(ConfigureP2pEndpointFullnessStartTriggerRequest) returns (ConfigureP2pEndpointFullnessStartTriggerResponse);
+  rpc ConfigureRefClockFrequency(ConfigureRefClockFrequencyRequest) returns (ConfigureRefClockFrequencyResponse);
+  rpc ConfigureRefClockSource(ConfigureRefClockSourceRequest) returns (ConfigureRefClockSourceResponse);
   rpc ConfigureReferenceClock(ConfigureReferenceClockRequest) returns (ConfigureReferenceClockResponse);
   rpc ConfigureSampleClockSource(ConfigureSampleClockSourceRequest) returns (ConfigureSampleClockSourceResponse);
   rpc ConfigureSampleRate(ConfigureSampleRateRequest) returns (ConfigureSampleRateResponse);
@@ -64,6 +67,8 @@ service NiFgen {
   rpc ConfigureStandardWaveform(ConfigureStandardWaveformRequest) returns (ConfigureStandardWaveformResponse);
   rpc ConfigureSynchronization(ConfigureSynchronizationRequest) returns (ConfigureSynchronizationResponse);
   rpc ConfigureTriggerMode(ConfigureTriggerModeRequest) returns (ConfigureTriggerModeResponse);
+  rpc ConfigureTriggerSource(ConfigureTriggerSourceRequest) returns (ConfigureTriggerSourceResponse);
+  rpc ConfigureUpdateClockSource(ConfigureUpdateClockSourceRequest) returns (ConfigureUpdateClockSourceResponse);
   rpc CreateArbSequence(CreateArbSequenceRequest) returns (CreateArbSequenceResponse);
   rpc CreateFreqList(CreateFreqListRequest) returns (CreateFreqListResponse);
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
@@ -133,6 +138,7 @@ service NiFgen {
   rpc RouteSignalOut(RouteSignalOutRequest) returns (RouteSignalOutResponse);
   rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
   rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
+  rpc SendSoftwareTrigger(SendSoftwareTriggerRequest) returns (SendSoftwareTriggerResponse);
   rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
   rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
   rpc SetAttributeViInt64(SetAttributeViInt64Request) returns (SetAttributeViInt64Response);
@@ -761,6 +767,16 @@ message ConfigureFrequencyResponse {
   int32 status = 1;
 }
 
+message ConfigureGainRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  double gain = 3;
+}
+
+message ConfigureGainResponse {
+  int32 status = 1;
+}
+
 message ConfigureOperationModeRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -806,6 +822,24 @@ message ConfigureP2pEndpointFullnessStartTriggerRequest {
 }
 
 message ConfigureP2pEndpointFullnessStartTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureRefClockFrequencyRequest {
+  nidevice_grpc.Session vi = 1;
+  double reference_clock_frequency = 2;
+}
+
+message ConfigureRefClockFrequencyResponse {
+  int32 status = 1;
+}
+
+message ConfigureRefClockSourceRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 reference_clock_source = 2;
+}
+
+message ConfigureRefClockSourceResponse {
   int32 status = 1;
 }
 
@@ -888,6 +922,25 @@ message ConfigureTriggerModeRequest {
 }
 
 message ConfigureTriggerModeResponse {
+  int32 status = 1;
+}
+
+message ConfigureTriggerSourceRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  sint32 trigger_source = 3;
+}
+
+message ConfigureTriggerSourceResponse {
+  int32 status = 1;
+}
+
+message ConfigureUpdateClockSourceRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 update_clock_source = 2;
+}
+
+message ConfigureUpdateClockSourceResponse {
   int32 status = 1;
 }
 
@@ -1582,6 +1635,14 @@ message SelfTestResponse {
   int32 status = 1;
   sint32 self_test_result = 2;
   string self_test_message = 3;
+}
+
+message SendSoftwareTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SendSoftwareTriggerResponse {
+  int32 status = 1;
 }
 
 message SetAttributeViBooleanRequest {

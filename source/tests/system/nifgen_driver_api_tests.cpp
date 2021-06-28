@@ -366,6 +366,20 @@ TEST_F(nifgenDriverApiTest, ConfigureTriggerMode_ConfiguresSuccessfully)
   EXPECT_EQ(expected_value, actual_trigger_mode);
 }
 
+TEST_F(nifgenDriverApiTest, SendSoftwareTrigger_TriggersSuccessfully)
+{
+  const char* channel_name = "0";
+  ViReal64 expected_current_level = 3.0;
+  ::grpc::ClientContext context;
+  fgen::SendSoftwareTriggerRequest request;
+  request.mutable_vi()->set_id(GetSessionId());
+  fgen::SendSoftwareTriggerResponse response;
+  ::grpc::Status status = GetStub()->SendSoftwareTrigger(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kfgenDriverApiSuccess, response.status());
+}
+
 TEST_F(nifgenDriverApiTest, ResetInterchangeCheck_ResetsSuccessfully)
 {
   const char* channel_name = "0";

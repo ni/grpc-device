@@ -59,11 +59,14 @@ public:
   ::grpc::Status ConfigureDigitalLevelScriptTrigger(::grpc::ServerContext* context, const ConfigureDigitalLevelScriptTriggerRequest* request, ConfigureDigitalLevelScriptTriggerResponse* response) override;
   ::grpc::Status ConfigureFreqList(::grpc::ServerContext* context, const ConfigureFreqListRequest* request, ConfigureFreqListResponse* response) override;
   ::grpc::Status ConfigureFrequency(::grpc::ServerContext* context, const ConfigureFrequencyRequest* request, ConfigureFrequencyResponse* response) override;
+  ::grpc::Status ConfigureGain(::grpc::ServerContext* context, const ConfigureGainRequest* request, ConfigureGainResponse* response) override;
   ::grpc::Status ConfigureOperationMode(::grpc::ServerContext* context, const ConfigureOperationModeRequest* request, ConfigureOperationModeResponse* response) override;
   ::grpc::Status ConfigureOutputEnabled(::grpc::ServerContext* context, const ConfigureOutputEnabledRequest* request, ConfigureOutputEnabledResponse* response) override;
   ::grpc::Status ConfigureOutputImpedance(::grpc::ServerContext* context, const ConfigureOutputImpedanceRequest* request, ConfigureOutputImpedanceResponse* response) override;
   ::grpc::Status ConfigureOutputMode(::grpc::ServerContext* context, const ConfigureOutputModeRequest* request, ConfigureOutputModeResponse* response) override;
   ::grpc::Status ConfigureP2pEndpointFullnessStartTrigger(::grpc::ServerContext* context, const ConfigureP2pEndpointFullnessStartTriggerRequest* request, ConfigureP2pEndpointFullnessStartTriggerResponse* response) override;
+  ::grpc::Status ConfigureRefClockFrequency(::grpc::ServerContext* context, const ConfigureRefClockFrequencyRequest* request, ConfigureRefClockFrequencyResponse* response) override;
+  ::grpc::Status ConfigureRefClockSource(::grpc::ServerContext* context, const ConfigureRefClockSourceRequest* request, ConfigureRefClockSourceResponse* response) override;
   ::grpc::Status ConfigureReferenceClock(::grpc::ServerContext* context, const ConfigureReferenceClockRequest* request, ConfigureReferenceClockResponse* response) override;
   ::grpc::Status ConfigureSampleClockSource(::grpc::ServerContext* context, const ConfigureSampleClockSourceRequest* request, ConfigureSampleClockSourceResponse* response) override;
   ::grpc::Status ConfigureSampleRate(::grpc::ServerContext* context, const ConfigureSampleRateRequest* request, ConfigureSampleRateResponse* response) override;
@@ -72,6 +75,8 @@ public:
   ::grpc::Status ConfigureStandardWaveform(::grpc::ServerContext* context, const ConfigureStandardWaveformRequest* request, ConfigureStandardWaveformResponse* response) override;
   ::grpc::Status ConfigureSynchronization(::grpc::ServerContext* context, const ConfigureSynchronizationRequest* request, ConfigureSynchronizationResponse* response) override;
   ::grpc::Status ConfigureTriggerMode(::grpc::ServerContext* context, const ConfigureTriggerModeRequest* request, ConfigureTriggerModeResponse* response) override;
+  ::grpc::Status ConfigureTriggerSource(::grpc::ServerContext* context, const ConfigureTriggerSourceRequest* request, ConfigureTriggerSourceResponse* response) override;
+  ::grpc::Status ConfigureUpdateClockSource(::grpc::ServerContext* context, const ConfigureUpdateClockSourceRequest* request, ConfigureUpdateClockSourceResponse* response) override;
   ::grpc::Status CreateArbSequence(::grpc::ServerContext* context, const CreateArbSequenceRequest* request, CreateArbSequenceResponse* response) override;
   ::grpc::Status CreateFreqList(::grpc::ServerContext* context, const CreateFreqListRequest* request, CreateFreqListResponse* response) override;
   ::grpc::Status CreateWaveformF64(::grpc::ServerContext* context, const CreateWaveformF64Request* request, CreateWaveformF64Response* response) override;
@@ -141,6 +146,7 @@ public:
   ::grpc::Status RouteSignalOut(::grpc::ServerContext* context, const RouteSignalOutRequest* request, RouteSignalOutResponse* response) override;
   ::grpc::Status SelfCal(::grpc::ServerContext* context, const SelfCalRequest* request, SelfCalResponse* response) override;
   ::grpc::Status SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response) override;
+  ::grpc::Status SendSoftwareTrigger(::grpc::ServerContext* context, const SendSoftwareTriggerRequest* request, SendSoftwareTriggerResponse* response) override;
   ::grpc::Status SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response) override;
   ::grpc::Status SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response) override;
   ::grpc::Status SetAttributeViInt64(::grpc::ServerContext* context, const SetAttributeViInt64Request* request, SetAttributeViInt64Response* response) override;
