@@ -63,7 +63,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus ConfigureStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveform, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 frequency, ViReal64 startPhase) = 0;
   virtual ViStatus ConfigureSynchronization(ViSession vi, ViConstString channelName, ViInt32 synchronizationSource) = 0;
   virtual ViStatus ConfigureTriggerMode(ViSession vi, ViConstString channelName, ViInt32 triggerMode) = 0;
-  virtual ViStatus CreateAdvancedArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32 sampleCountsArray[], ViInt32 markerLocationArray[], ViInt32 coercedMarkersArray[], ViInt32* sequenceHandle) = 0;
   virtual ViStatus CreateArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32* sequenceHandle) = 0;
   virtual ViStatus CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle) = 0;
   virtual ViStatus CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle) = 0;
@@ -82,7 +81,6 @@ class NiFgenLibraryInterface {
   virtual ViStatus EnableAnalogFilter(ViSession vi, ViConstString channelName, ViReal64 filterCorrectionFrequency) = 0;
   virtual ViStatus EnableDigitalFilter(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus EnableDigitalPatterning(ViSession vi, ViConstString channelName) = 0;
-  virtual ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;

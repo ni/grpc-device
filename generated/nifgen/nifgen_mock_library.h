@@ -65,7 +65,6 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureStandardWaveform, (ViSession vi, ViConstString channelName, ViInt32 waveform, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 frequency, ViReal64 startPhase), (override));
   MOCK_METHOD(ViStatus, ConfigureSynchronization, (ViSession vi, ViConstString channelName, ViInt32 synchronizationSource), (override));
   MOCK_METHOD(ViStatus, ConfigureTriggerMode, (ViSession vi, ViConstString channelName, ViInt32 triggerMode), (override));
-  MOCK_METHOD(ViStatus, CreateAdvancedArbSequence, (ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32 sampleCountsArray[], ViInt32 markerLocationArray[], ViInt32 coercedMarkersArray[], ViInt32* sequenceHandle), (override));
   MOCK_METHOD(ViStatus, CreateArbSequence, (ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32* sequenceHandle), (override));
   MOCK_METHOD(ViStatus, CreateFreqList, (ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformF64, (ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle), (override));
@@ -84,7 +83,6 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, EnableAnalogFilter, (ViSession vi, ViConstString channelName, ViReal64 filterCorrectionFrequency), (override));
   MOCK_METHOD(ViStatus, EnableDigitalFilter, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, EnableDigitalPatterning, (ViSession vi, ViConstString channelName), (override));
-  MOCK_METHOD(ViStatus, ErrorHandler, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));

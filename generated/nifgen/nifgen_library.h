@@ -66,7 +66,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus ConfigureStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveform, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 frequency, ViReal64 startPhase);
   ViStatus ConfigureSynchronization(ViSession vi, ViConstString channelName, ViInt32 synchronizationSource);
   ViStatus ConfigureTriggerMode(ViSession vi, ViConstString channelName, ViInt32 triggerMode);
-  ViStatus CreateAdvancedArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32 sampleCountsArray[], ViInt32 markerLocationArray[], ViInt32 coercedMarkersArray[], ViInt32* sequenceHandle);
   ViStatus CreateArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32* sequenceHandle);
   ViStatus CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle);
   ViStatus CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle);
@@ -85,7 +84,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus EnableAnalogFilter(ViSession vi, ViConstString channelName, ViReal64 filterCorrectionFrequency);
   ViStatus EnableDigitalFilter(ViSession vi, ViConstString channelName);
   ViStatus EnableDigitalPatterning(ViSession vi, ViConstString channelName);
-  ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
@@ -202,7 +200,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using ConfigureStandardWaveformPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveform, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 frequency, ViReal64 startPhase);
   using ConfigureSynchronizationPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 synchronizationSource);
   using ConfigureTriggerModePtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 triggerMode);
-  using CreateAdvancedArbSequencePtr = ViStatus (*)(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32 sampleCountsArray[], ViInt32 markerLocationArray[], ViInt32 coercedMarkersArray[], ViInt32* sequenceHandle);
   using CreateArbSequencePtr = ViStatus (*)(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32* sequenceHandle);
   using CreateFreqListPtr = ViStatus (*)(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle);
   using CreateWaveformF64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle);
@@ -221,7 +218,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using EnableAnalogFilterPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViReal64 filterCorrectionFrequency);
   using EnableDigitalFilterPtr = ViStatus (*)(ViSession vi, ViConstString channelName);
   using EnableDigitalPatterningPtr = ViStatus (*)(ViSession vi, ViConstString channelName);
-  using ErrorHandlerPtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   using ErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   using ExportAttributeConfigurationBufferPtr = ViStatus (*)(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]);
   using ExportAttributeConfigurationFilePtr = ViStatus (*)(ViSession vi, ViConstString filePath);
@@ -338,7 +334,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     ConfigureStandardWaveformPtr ConfigureStandardWaveform;
     ConfigureSynchronizationPtr ConfigureSynchronization;
     ConfigureTriggerModePtr ConfigureTriggerMode;
-    CreateAdvancedArbSequencePtr CreateAdvancedArbSequence;
     CreateArbSequencePtr CreateArbSequence;
     CreateFreqListPtr CreateFreqList;
     CreateWaveformF64Ptr CreateWaveformF64;
@@ -357,7 +352,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     EnableAnalogFilterPtr EnableAnalogFilter;
     EnableDigitalFilterPtr EnableDigitalFilter;
     EnableDigitalPatterningPtr EnableDigitalPatterning;
-    ErrorHandlerPtr ErrorHandler;
     ErrorMessagePtr ErrorMessage;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;
