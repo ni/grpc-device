@@ -177,10 +177,8 @@ foreach(api ${nidrivers})
 endforeach()
 
 add_executable(ni_grpc_device_server
-   ${OSDEP_SOURCE}
    "source/server/core_server.cpp"
    "source/server/device_enumerator.cpp"
-   "source/server/logging.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
    "source/server/server_security_configuration.cpp"
@@ -191,11 +189,6 @@ add_executable(ni_grpc_device_server
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
-
-if(CMAKE_SYSTEM_NAME STREQUAL Linux)
-  target_sources(ni_grpc_device_server
-    PRIVATE "source/server/linux/syslog_logging.cpp")
-endif()
 
 target_link_libraries(ni_grpc_device_server
    ${_REFLECTION}
