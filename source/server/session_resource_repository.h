@@ -1,6 +1,9 @@
-#pragma once
+#ifndef NIDEVICE_GRPC_SESSION_RESOURCE_REPOSITORY_H
+#define NIDEVICE_GRPC_SESSION_RESOURCE_REPOSITORY_H
 
 #include <mutex>
+#include <string>
+#include <unordered_map>
 
 #include "session_repository.h"
 
@@ -219,3 +222,5 @@ TResourceHandle SessionResourceRepository<TResourceHandle>::ResourceMap::remove_
 }
 
 }  // namespace nidevice_grpc
+
+#endif /* NIDEVICE_GRPC_SESSION_RESOURCE_REPOSITORY_H */
