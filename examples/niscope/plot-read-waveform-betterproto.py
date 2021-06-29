@@ -110,7 +110,7 @@ async def PerformAcquire():
         level = 0.00,
         holdoff = 0.0,
         trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        slope = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
+        slope_raw = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
     )
     await CheckStatus(scope_service, vi, confTrigger_edge_result)
 
@@ -118,7 +118,7 @@ async def PerformAcquire():
         vi = vi,
         channel_list = channels,
         attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
+        value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
     )
     await CheckStatus(scope_service, vi, set_result)
 
