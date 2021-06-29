@@ -1,4 +1,5 @@
-#pragma once
+#ifndef NIDEVICE_GRPC_FEATURE_TOGGLES_H
+#define NIDEVICE_GRPC_FEATURE_TOGGLES_H
 
 #include <string>
 #include <unordered_map>
@@ -20,3 +21,6 @@ class FeatureToggles {
   FeatureToggleConfigurationMap map_;
 };
 }  // namespace nidevice_grpc
+
+
+#endif /* NIDEVICE_GRPC_FEATURE_TOGGLES_H */
