@@ -36,8 +36,9 @@ def mutate_metadata(metadata):
     metadata_mutation.sanitize_names(parameters)
     metadata_mutation.mark_size_params(parameters)
     metadata_mutation.mark_non_proto_params(parameters)
+    metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])
     if function_name.startswith("SetAttribute") or function_name.startswith("CheckAttribute"):
-      metadata_mutation.mark_attr_value_param_if_required(function, metadata["enums"], attribute_enums_by_type, service_class_prefix)
+      metadata_mutation.expand_attribute_function_value_param(function, metadata["enums"], attribute_enums_by_type, service_class_prefix)
 
 def generate_all(metadata_dir, gen_dir):
   sys.path.append(metadata_dir)

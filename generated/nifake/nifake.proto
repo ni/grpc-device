@@ -129,6 +129,15 @@ enum NiFakeInt32AttributeValues {
   NIFAKE_INT32_BLACK = 42;
 }
 
+enum NiFakeReal64AttributeValuesMapped {
+  NIFAKE_REAL64_MAPPED_UNSPECIFIED = 0;
+  NIFAKE_REAL64_THREE_POINT_FIVE = 1;
+  NIFAKE_REAL64_FOUR_POINT_FIVE = 2;
+  NIFAKE_REAL64_FIVE_POINT_FIVE = 3;
+  NIFAKE_REAL64_SIX_POINT_FIVE = 4;
+  NIFAKE_REAL64_SEVEN_POINT_FIVE = 5;
+}
+
 message FakeCustomStruct {
   sint32 struct_int = 1;
   double struct_double = 2;
@@ -523,7 +532,7 @@ message ParametersAreMultipleTypesRequest {
   }
   double a_float = 7;
   oneof a_float_enum_enum {
-    FloatEnum a_float_enum = 8;
+    FloatEnum a_float_enum_mapped = 8;
     double a_float_enum_raw = 9;
   }
   string a_string = 10;
@@ -604,7 +613,7 @@ message ReturnMultipleTypesResponse {
   Turtle an_int_enum = 5;
   sint32 an_int_enum_raw = 6;
   double a_float = 7;
-  FloatEnum a_float_enum = 8;
+  FloatEnum a_float_enum_mapped = 8;
   double a_float_enum_raw = 9;
   repeated double an_array = 10;
   string a_string = 11;
@@ -622,7 +631,7 @@ message SetCustomTypeArrayResponse {
 message StringValuedEnumInputFunctionWithDefaultsRequest {
   nidevice_grpc.Session vi = 1;
   oneof a_mobile_o_s_name_enum {
-    MobileOSNames a_mobile_o_s_name = 2;
+    MobileOSNames a_mobile_o_s_name_mapped = 2;
     string a_mobile_o_s_name_raw = 3;
   }
 }
