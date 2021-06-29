@@ -60,82 +60,85 @@ if len(sys.argv) == 4:
 async def CheckStatus(scope_service, vi, result):
     if (result.status != 0):
         error_result = await scope_service.get_error_message(vi = vi, error_code = result.status)
-        print(error_result.error_message)
-        exit()
+        raise Exception (error_result.error_message)
 
 async def PerformAcquire():
+    try:
+        # Create the communcation channel for the remote host (in this case we are connecting to a local server)
+        # and create a connection to the niScope service
+        channel = Channel(host=server_address, port=server_port)
+        scope_service = niscope_grpc.NiScopeStub(channel)
 
-    # Create the communcation channel for the remote host (in this case we are connecting to a local server)
-    # and create a connection to the niScope service
-    channel = Channel(host=server_address, port=server_port)
-    scope_service = niscope_grpc.NiScopeStub(channel)
+        # Initialize the scope
+        init_result = await scope_service.init_with_options(
+            session_name = "demoSession",
+            resource_name = resource,
+            id_query = False,
+            reset_device=False,
+            option_string = options
+        )
+        vi = init_result.vi
+        await CheckStatus(scope_service, vi, init_result)
 
-    # Initialize the scope
-    init_result = await scope_service.init_with_options(
-        session_name = "demoSession",
-        resource_name = resource,
-        id_query = False,
-        reset_device=False,
-        option_string = options
-    )
-    vi = init_result.vi
-    await CheckStatus(scope_service, vi, init_result)
+        # Configure horizontal timing
+        config_result = await scope_service.configure_horizontal_timing(
+            vi = vi,
+            min_sample_rate = 5000000,
+            min_num_pts = 100000,
+            ref_position = 50,
+            num_records = 1,
+            enforce_realtime = True
+        )
+        await CheckStatus(scope_service, vi, config_result)
 
-    # Configure horizontal timing
-    config_result = await scope_service.configure_horizontal_timing(
-        vi = vi,
-        min_sample_rate = 5000000,
-        min_num_pts = 100000,
-        ref_position = 50,
-        num_records = 1,
-        enforce_realtime = True
-    )
-    await CheckStatus(scope_service, vi, config_result)
+        # Configure vertical timing
+        vertical_result = await scope_service.configure_vertical(
+            vi = vi,
+            channel_list = channels,
+            range = 10.0,
+            offset = 0,
+            coupling_raw = niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+            enabled = True,
+            probe_attenuation = 1
+        )
+        await CheckStatus(scope_service, vi, vertical_result)
 
-    # Configure vertical timing
-    vertical_result = await scope_service.configure_vertical(
-        vi = vi,
-        channel_list = channels,
-        range = 10.0,
-        offset = 0,
-        coupling_raw = niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
-        enabled = True,
-        probe_attenuation = 1
-    )
-    await CheckStatus(scope_service, vi, vertical_result)
+        confTrigger_edge_result = await scope_service.configure_trigger_edge(
+            vi = vi,
+            trigger_source = channels,
+            level = 0.00,
+            holdoff = 0.0,
+            trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+            slope = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
+        )
+        await CheckStatus(scope_service, vi, confTrigger_edge_result)
 
-    confTrigger_edge_result = await scope_service.configure_trigger_edge(
-        vi = vi,
-        trigger_source = channels,
-        level = 0.00,
-        holdoff = 0.0,
-        trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        slope = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
-    )
-    await CheckStatus(scope_service, vi, confTrigger_edge_result)
+        set_result = await scope_service.set_attribute_vi_int32(
+            vi = vi,
+            channel_list = channels,
+            attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+            value = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
+        )
+        await CheckStatus(scope_service, vi, set_result)
 
-    set_result = await scope_service.set_attribute_vi_int32(
-        vi = vi,
-        channel_list = channels,
-        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
-    )
-    await CheckStatus(scope_service, vi, set_result)
+        read_result = await scope_service.read(
+            vi = vi,
+            channel_list = channels,
+            timeout = 10000,
+            num_samples = 100000
+        )
+        await CheckStatus(scope_service, vi, read_result)
 
-    read_result = await scope_service.read(
-        vi = vi,
-        channel_list = channels,
-        timeout = 10000,
-        num_samples = 100000
-    )
-    await CheckStatus(scope_service, vi, read_result)
-
-    # print the value of the first few samples
-    values = read_result.waveform[0:10]
-    print(values)
-
-    await scope_service.close(vi = vi)
-    channel.close()
+        # print the value of the first few samples
+        values = read_result.waveform[0:10]
+        print(values)
+    
+    except Exception as e:
+        print(e)
+    finally:
+        if('vi' in vars() and vi.id != 0):
+            await scope_service.close(vi = vi)
+            channel.close()
 
 loop = asyncio.get_event_loop()
 future = asyncio.ensure_future(PerformAcquire())

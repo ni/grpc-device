@@ -60,13 +60,17 @@ if len(sys.argv) == 4:
 #set to false to disable graph and increase speed
 show_plot = True 
 
+# Handle closing of plot window.
+closed = False
+def on_close(event):
+    global closed
+    closed = True
+
 # Error Reporting
 async def CheckStatus(scope_service, vi, result):
     if (result.status != 0):
-        error_result = await scope_service.get_error_message(vi = vi, error_code = result.status)
-        print(error_result.error_message)
-        exit()
-
+        error_result2 = await scope_service.get_error(vi = vi)
+        raise Exception (error_result2.description)
 # Entry Points
 async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
     channel = Channel(host=server_address, port=server_port)
@@ -119,7 +123,7 @@ async def ConfigureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, v
     set_trigger_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
         attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
-        value = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER
+        value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER
     )
     await CheckStatus(scope_service, vi, set_trigger_result)
 
@@ -137,7 +141,7 @@ async def ConfigureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, v
         vi = vi,
         channel_list = channels,
         attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
+        value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
     )
     await CheckStatus(scope_service, vi, set_units_result)
 
@@ -146,10 +150,11 @@ async def MeasureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi)
         fig = plt.gcf() # Setup a plot to draw the captured waveform
         fig.show()
         fig.canvas.draw()
+        fig.canvas.mpl_connect('close_event', on_close)
 
     print("\nReading values in loop. CTRL+C to stop.\n")
     try:
-        while True:
+        while not closed:
             if show_plot:
                 plt.clf()                    # clear from last iteration
                 plt.axis([0, 100, -6, 6])    # setup axis again
@@ -181,12 +186,18 @@ async def MeasureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi)
     except KeyboardInterrupt:
         pass
 
-
+grpc_scope = ()
 async def main():
-    grpc_scope = await OpenGrpcScope(resource, server_address, server_port)
-    await ConfigureGrpcScope(*grpc_scope)
-    await MeasureGrpcScope(*grpc_scope)
-    await CloseGrpcScope(*grpc_scope)
+    try:
+        global grpc_scope
+        grpc_scope = await OpenGrpcScope(resource, server_address, server_port)
+        await ConfigureGrpcScope(*grpc_scope)
+        await MeasureGrpcScope(*grpc_scope)
+    except Exception as e:
+        print(e)
+    finally:
+        if grpc_scope:
+            await CloseGrpcScope(*grpc_scope)
 
 ## Run the main
 loop = asyncio.get_event_loop()
