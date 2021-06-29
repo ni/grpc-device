@@ -8,6 +8,8 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
+
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
 {
   nidevice_grpc::ServerConfigurationParser server_config_parser;
@@ -356,6 +358,115 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMissingRootCertFile_ParseRoot
   catch (const nidevice_grpc::ServerConfigurationParser::FileNotFoundException& ex) {
     EXPECT_THAT(ex.what(), testing::HasSubstr(nidevice_grpc::kFileNotFoundMessage));
   }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_FeatureIsEnabled)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "feature_toggles" : { 
+        "feature": true
+      }
+    })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  auto features = server_config_parser.parse_feature_toggles();
+
+  EXPECT_EQ(FeatureState::kEnabled, features.get_feature_state("feature"));
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_SomeOtherFeatureIsUnspecified)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "feature_toggles" : { 
+        "feature": true
+      }
+    })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  auto features = server_config_parser.parse_feature_toggles();
+
+  EXPECT_EQ(FeatureState::kUnspecified, features.get_feature_state("someOtherFeature"));
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithDisabledFeature_ParseFeatureToggles_FeatureIsDisabled)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "feature_toggles" : { 
+        "feature": false
+      }
+    })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  auto features = server_config_parser.parse_feature_toggles();
+
+  EXPECT_EQ(FeatureState::kDisabled, features.get_feature_state("feature"));
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithMultipleFeaturesWithDifferentEnabledState_ParseFeatureToggles_FeaturesAreEnabledAndDisabled)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "feature_toggles" : { 
+        "feature1": false,
+        "feature2": true,
+        "feature3": false,
+        "feature4": true
+      }
+    })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  auto features = server_config_parser.parse_feature_toggles();
+
+  EXPECT_EQ(FeatureState::kDisabled, features.get_feature_state("feature1"));
+  EXPECT_EQ(FeatureState::kEnabled, features.get_feature_state("feature2"));
+  EXPECT_EQ(FeatureState::kDisabled, features.get_feature_state("feature3"));
+  EXPECT_EQ(FeatureState::kEnabled, features.get_feature_state("feature4"));
+  EXPECT_EQ(FeatureState::kUnspecified, features.get_feature_state("someOtherFeature"));
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithInvalidFeatureToggleValue_ParseFeatureToggles_ThrowsInvalidFeatureToggleException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "feature_toggles" : { 
+        "feature": 12345
+      }
+    })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  EXPECT_THROW(
+      {
+        auto features = server_config_parser.parse_feature_toggles();
+      },
+      nidevice_grpc::ServerConfigurationParser::InvalidFeatureToggleException);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithFeatureTogglesAsArray_ParseFeatureToggles_ThrowsInvalidFeatureToggleException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"(
+    {
+      "feature_toggles" : [ { "feature": true } ]
+    })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  EXPECT_THROW(
+      {
+        auto features = server_config_parser.parse_feature_toggles();
+      },
+      nidevice_grpc::ServerConfigurationParser::InvalidFeatureToggleException);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithNoFeatureToggles_ParseFeatureToggles_ReturnsValidFeatureToggles)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({})");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  auto features = server_config_parser.parse_feature_toggles();
+
+  EXPECT_EQ(FeatureState::kUnspecified, features.get_feature_state("dummy_feature"));
 }
 }  // namespace unit
 }  // namespace tests

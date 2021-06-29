@@ -4,6 +4,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
+#include "feature_toggles.h"
+
 namespace nidevice_grpc {
 
 static const char* kConfigFileNotFoundMessage = "The server configuration file was not found at: ";
@@ -14,6 +16,7 @@ static const char* kUnspecifiedPortMessage = "The server port must be specified 
 static const char* kValueTypeNotStringMessage = "The following key must be specified in the server's configuration file as a string enclosed with double quotes: ";
 static const char* kFileNotFoundMessage = "The following certificate file was not found: ";
 static const char* kInvalidExePathMessage = "The server was unable to resolve the current executable path.";
+static const char* kInvalidFeatureToggleMessage = "Feature Toggles must be specified as boolean fields in the form \"feature_toggles\": { \"feature1\": true, \"feature2\": false }. \n\n";
 static const char* kDefaultAddressPrefix = "[::]:";
 
 class ServerConfigurationParser {
@@ -29,6 +32,7 @@ class ServerConfigurationParser {
   std::string parse_server_cert() const;
   std::string parse_server_key() const;
   std::string parse_root_cert() const;
+  FeatureToggles parse_feature_toggles() const;
 
   struct ConfigFileNotFoundException : public std::runtime_error {
     ConfigFileNotFoundException(const std::string& config_file_path);
@@ -60,6 +64,10 @@ class ServerConfigurationParser {
 
   struct InvalidExePathException : public std::runtime_error {
     InvalidExePathException();
+  };
+
+  struct InvalidFeatureToggleException : std::runtime_error {
+    InvalidFeatureToggleException(const std::string& type_error_details);
   };
 
  private:

@@ -1,10 +1,13 @@
 #include <mutex>
+
 #include <nidcpower/nidcpower_library.h>
 #include <nidcpower/nidcpower_service.h>
 #include <nidigitalpattern/nidigitalpattern_library.h>
 #include <nidigitalpattern/nidigitalpattern_service.h>
 #include <nidmm/nidmm_library.h>
 #include <nidmm/nidmm_service.h>
+#include <nifgen/nifgen_library.h>
+#include <nifgen/nifgen_service.h>
 #include <niscope/niscope_library.h>
 #include <niscope/niscope_service.h>
 #include <niswitch/niswitch_library.h>
@@ -13,9 +16,8 @@
 #include <nisync/nisync_service.h>
 #include <nitclk/nitclk_library.h>
 #include <nitclk/nitclk_service.h>
-#include <nifgen/nifgen_library.h>
-#include <nifgen/nifgen_service.h>
 
+#include "feature_toggles.h"
 #include "logging.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
@@ -27,12 +29,12 @@
   #include "linux/syslog_logging.h"
 #endif
 
-struct ServerConfiguration
-{
+struct ServerConfiguration {
   std::string server_address;
   std::string server_cert;
   std::string server_key;
   std::string root_cert;
+  nidevice_grpc::FeatureToggles feature_toggles;
 };
 
 static ServerConfiguration GetConfiguration(const std::string& config_file_path)
@@ -46,6 +48,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
+    config.feature_toggles = server_config_parser.parse_feature_toggles();
   }
   catch (const std::exception& ex) {
     nidevice_grpc::logging::log(
@@ -241,7 +244,7 @@ int main(int argc, char** argv)
     nidevice_grpc::logging::setup_syslog(options.daemonize, options.identity);
     nidevice_grpc::logging::set_logger(&nidevice_grpc::logging::log_syslog);
   }
-  
+
   if (options.daemonize) {
     nidevice_grpc::daemonize(&StopServer, options.identity);
   }
