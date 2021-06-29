@@ -912,6 +912,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sessionOut',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAttributeViString': {
         'codegen_method': 'public',
         'documentation': {
