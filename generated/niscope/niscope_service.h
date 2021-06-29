@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "niscope_library_interface.h"
@@ -22,8 +22,11 @@ namespace niscope_grpc {
 
 class NiScopeService final : public NiScope::Service {
 public:
-  NiScopeService(NiScopeLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiScopeService(NiScopeLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiScopeService();
+  
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response) override;
   ::grpc::Status ActualMeasWfmSize(::grpc::ServerContext* context, const ActualMeasWfmSizeRequest* request, ActualMeasWfmSizeResponse* response) override;
@@ -116,7 +119,7 @@ public:
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
 private:
   NiScopeLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
   void Copy(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output);
   void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<niscope_grpc::WaveformInfo>* output);
   void Copy(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output);

@@ -15,6 +15,9 @@ namespace_prefix = config["namespace_component"] + "_grpc::"
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
+resource_handle_type = "ViSession"
+resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
+resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
 %>\
 
 //---------------------------------------------------------------------
@@ -31,7 +34,7 @@ if len(config["custom_types"]) > 0:
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "${config["module_name"]}_library_interface.h"
@@ -40,8 +43,11 @@ namespace ${config["namespace_component"]}_grpc {
 
 class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
 public:
-  ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = ${resource_repository_ptr};
+
+  ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~${service_class_prefix}Service();
+  
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
@@ -51,7 +57,7 @@ public:
 % endfor
 private:
   ${service_class_prefix}LibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 % endif

@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nisync_library_interface.h"
@@ -22,8 +22,11 @@ namespace nisync_grpc {
 
 class NiSyncService final : public NiSync::Service {
 public:
-  NiSyncService(NiSyncLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiSyncService(NiSyncLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiSyncService();
+  
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
@@ -96,7 +99,7 @@ public:
   ::grpc::Status CalAdjustDDSInitialPhase(::grpc::ServerContext* context, const CalAdjustDDSInitialPhaseRequest* request, CalAdjustDDSInitialPhaseResponse* response) override;
 private:
   NiSyncLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
 };
 
 } // namespace nisync_grpc

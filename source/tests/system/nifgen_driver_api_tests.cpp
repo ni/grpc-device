@@ -14,8 +14,8 @@ const int kFgenDriverApiSuccess = 0;
 class NiFgenDriverApiTest : public ::testing::Test {
  protected:
   NiFgenDriverApiTest()
-    : device_server_(DeviceServerInterface::Singleton()),
-      nifgen_stub_(fgen::NiFgen::NewStub(device_server_->InProcessChannel()))
+      : device_server_(DeviceServerInterface::Singleton()),
+        nifgen_stub_(fgen::NiFgen::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
@@ -508,7 +508,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViString_GetAttributeViString_ValueMatch
 TEST_F(NiFgenDriverApiTest, ConfigureTriggerMode_ConfiguresSuccessfully)
 {
   const char* channel_name = "0";
-  ViInt32 expected_value = 2; // NIFGEN_VAL_CONTINUOUS
+  ViInt32 expected_value = 2;  // NIFGEN_VAL_CONTINUOUS
   configure_trigger_mode(channel_name, fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_CONTINUOUS);
 
   ViInt32 actual_trigger_mode = get_int32_attribute(channel_name, fgen::NiFgenAttributes::NIFGEN_ATTRIBUTE_TRIGGER_MODE);
@@ -560,7 +560,7 @@ TEST_F(NiFgenDriverApiTest, AllocateNamedWaveform_WriteNamedWaveformF64_Waveform
 TEST_F(NiFgenDriverApiTest, ExportTriggerMode_ResetAndImportConfiguration_TriggerModeConfigurationIsImported)
 {
   const char* channel_name = "0";
-  ViInt32 expected_trigger_mode = 1; // NIFGEN_VAL_SINGLE
+  ViInt32 expected_trigger_mode = 1;  // NIFGEN_VAL_SINGLE
   configure_trigger_mode(channel_name, fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_SINGLE);
   auto exported_configuration_response = export_attribute_configuration_buffer();
 

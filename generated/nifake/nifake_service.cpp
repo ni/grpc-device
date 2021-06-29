@@ -14,7 +14,7 @@
 
 namespace nifake_grpc {
 
-  NiFakeService::NiFakeService(NiFakeLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
+  NiFakeService::NiFakeService(NiFakeLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -920,14 +920,14 @@ namespace nifake_grpc {
       ViBoolean reset_device = request->reset_device();
       ViConstString option_string = request->option_string().c_str();
 
-      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+      auto init_lambda = [&] () {
         ViSession vi;
         int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->close(id); };
+      auto cleanup_lambda = [&] (ViSession id) { library_->close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -951,14 +951,14 @@ namespace nifake_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViString calibration_password = (ViString)request->calibration_password().c_str();
 
-      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+      auto init_lambda = [&] () {
         ViSession vi;
         int status = library_->InitExtCal(resource_name, calibration_password, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->CloseExtCal(id, 0); };
+      auto cleanup_lambda = [&] (ViSession id) { library_->CloseExtCal(id, 0); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {

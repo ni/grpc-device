@@ -24,8 +24,10 @@ class NiDmmSessionTest : public ::testing::Test {
   {
     ::grpc::ServerBuilder builder;
     session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
+    using ResourceRepository = nidevice_grpc::SessionResourceRepository<ViSession>;
+    auto resource_repository = std::make_shared<ResourceRepository>(session_repository_.get());
     nidmm_library_ = std::make_unique<dmm::NiDmmLibrary>();
-    nidmm_service_ = std::make_unique<dmm::NiDmmService>(nidmm_library_.get(), session_repository_.get());
+    nidmm_service_ = std::make_unique<dmm::NiDmmService>(nidmm_library_.get(), resource_repository);
     builder.RegisterService(nidmm_service_.get());
 
     server_ = builder.BuildAndStart();

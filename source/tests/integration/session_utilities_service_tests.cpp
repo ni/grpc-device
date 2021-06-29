@@ -402,7 +402,7 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
   uint32_t named_session_id;
   int status = session_repository.add_session(
       session_name,
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       named_session_id);
   call_reserve(&service, session_name, "a");

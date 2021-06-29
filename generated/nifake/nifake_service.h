@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nifake_library_interface.h"
@@ -22,8 +22,11 @@ namespace nifake_grpc {
 
 class NiFakeService final : public NiFake::Service {
 public:
-  NiFakeService(NiFakeLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiFakeService(NiFakeLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiFakeService();
+  
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
   ::grpc::Status AcceptViSessionArray(::grpc::ServerContext* context, const AcceptViSessionArrayRequest* request, AcceptViSessionArrayResponse* response) override;
@@ -82,7 +85,7 @@ public:
   ::grpc::Status ViInt16ArrayInputFunction(::grpc::ServerContext* context, const ViInt16ArrayInputFunctionRequest* request, ViInt16ArrayInputFunctionResponse* response) override;
 private:
   NiFakeLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
   template <typename TEnum>
   void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);

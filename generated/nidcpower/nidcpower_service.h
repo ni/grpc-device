@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nidcpower_library_interface.h"
@@ -22,8 +22,11 @@ namespace nidcpower_grpc {
 
 class NiDCPowerService final : public NiDCPower::Service {
 public:
-  NiDCPowerService(NiDCPowerLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiDCPowerService(NiDCPowerLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiDCPowerService();
+  
   ::grpc::Status AbortWithChannels(::grpc::ServerContext* context, const AbortWithChannelsRequest* request, AbortWithChannelsResponse* response) override;
   ::grpc::Status CommitWithChannels(::grpc::ServerContext* context, const CommitWithChannelsRequest* request, CommitWithChannelsResponse* response) override;
   ::grpc::Status ConfigureDigitalEdgeMeasureTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest* request, ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse* response) override;
@@ -161,7 +164,7 @@ public:
   ::grpc::Status WaitForEvent(::grpc::ServerContext* context, const WaitForEventRequest* request, WaitForEventResponse* response) override;
 private:
   NiDCPowerLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 };
 

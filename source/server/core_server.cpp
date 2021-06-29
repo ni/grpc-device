@@ -88,36 +88,39 @@ static void RunServer(const ServerConfiguration& config)
   nidevice_grpc::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
   builder.RegisterService(&core_service);
 
+  using MIResourceRepository = nidevice_grpc::SessionResourceRepository<ViSession>;
+  auto mi_shared_resource_repository = std::make_shared<MIResourceRepository>(&session_repository);
+
   nidigitalpattern_grpc::NiDigitalLibrary nidigital_library;
-  nidigitalpattern_grpc::NiDigitalService nidigital_service(&nidigital_library, &session_repository);
+  nidigitalpattern_grpc::NiDigitalService nidigital_service(&nidigital_library, mi_shared_resource_repository);
   builder.RegisterService(&nidigital_service);
 
   niscope_grpc::NiScopeLibrary niscope_library;
-  niscope_grpc::NiScopeService niscope_service(&niscope_library, &session_repository);
+  niscope_grpc::NiScopeService niscope_service(&niscope_library, mi_shared_resource_repository);
   builder.RegisterService(&niscope_service);
 
   niswitch_grpc::NiSwitchLibrary niswitch_library;
-  niswitch_grpc::NiSwitchService niswitch_service(&niswitch_library, &session_repository);
+  niswitch_grpc::NiSwitchService niswitch_service(&niswitch_library, mi_shared_resource_repository);
   builder.RegisterService(&niswitch_service);
 
   nidmm_grpc::NiDmmLibrary nidmm_library;
-  nidmm_grpc::NiDmmService nidmm_service(&nidmm_library, &session_repository);
+  nidmm_grpc::NiDmmService nidmm_service(&nidmm_library, mi_shared_resource_repository);
   builder.RegisterService(&nidmm_service);
 
   nisync_grpc::NiSyncLibrary nisync_library;
-  nisync_grpc::NiSyncService nisync_service(&nisync_library, &session_repository);
+  nisync_grpc::NiSyncService nisync_service(&nisync_library, mi_shared_resource_repository);
   builder.RegisterService(&nisync_service);
 
   nitclk_grpc::NiTClkLibrary nitclk_library;
-  nitclk_grpc::NiTClkService nitclk_service(&nitclk_library, &session_repository);
+  nitclk_grpc::NiTClkService nitclk_service(&nitclk_library, mi_shared_resource_repository);
   builder.RegisterService(&nitclk_service);
   
   nidcpower_grpc::NiDCPowerLibrary nidcpower_library;
-  nidcpower_grpc::NiDCPowerService nidcpower_service(&nidcpower_library, &session_repository);
+  nidcpower_grpc::NiDCPowerService nidcpower_service(&nidcpower_library, mi_shared_resource_repository);
   builder.RegisterService(&nidcpower_service);
 
   nifgen_grpc::NiFgenLibrary nifgen_library;
-  nifgen_grpc::NiFgenService nifgen_service(&nifgen_library, &session_repository);
+  nifgen_grpc::NiFgenService nifgen_service(&nifgen_library, mi_shared_resource_repository);
   builder.RegisterService(&nifgen_service);
 
   // Assemble the server.

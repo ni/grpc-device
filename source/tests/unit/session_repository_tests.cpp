@@ -12,7 +12,7 @@ TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNot
   uint32_t session_id = 42;
   int status = session_repository.add_session(
       "",
-      [session_id]() { return std::make_tuple(1, session_id); },
+      [session_id]() { return 1; },
       NULL,
       session_id);
 
@@ -26,12 +26,12 @@ TEST(SessionRepositoryTests, AddSession_StoresSessionWithGivenId)
   uint32_t session_id;
   int status = session_repository.add_session(
       "",
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       session_id);
 
   EXPECT_EQ(status, 0);
-  EXPECT_EQ(session_id, 42);
+  EXPECT_NE(session_id, 0);
   EXPECT_EQ(session_repository.access_session(session_id, ""), session_id);
 }
 
@@ -42,12 +42,12 @@ TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
   uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       session_id);
 
   EXPECT_EQ(status, 0);
-  EXPECT_EQ(session_id, 42);
+  EXPECT_NE(session_id, 0);
   EXPECT_EQ(session_repository.access_session(session_id, ""), session_id);
   EXPECT_EQ(session_repository.access_session(0, session_name), session_id);
 }
@@ -58,7 +58,7 @@ TEST(SessionRepositoryTests, UnnamedSessionAdded_RemoveSession_RemovesSession)
   uint32_t session_id;
   session_repository.add_session(
       "",
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       session_id);
 
@@ -74,7 +74,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_RemoveSession_RemovesSession)
   uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       session_id);
 
@@ -88,26 +88,26 @@ TEST(SessionRepositoryTests, NamedSessionAdded_AddSessionWithSameName_ReturnsFir
 {
   std::string session_name = "session_name";
   nidevice_grpc::SessionRepository session_repository;
-  uint32_t session_id;
+  uint32_t first_session_id;
   session_repository.add_session(
       session_name,
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
-      session_id);
+      first_session_id);
 
-  session_id = 0;
+  uint32_t second_session_id;
   bool init_called = false;
   session_repository.add_session(
       session_name,
       [init_called]() mutable {
         init_called = true;
-        return std::make_tuple(0, 52);
+        return 0;
       },
       NULL,
-      session_id);
+      second_session_id);
 
   EXPECT_FALSE(init_called);
-  EXPECT_EQ(session_id, 42);
+  EXPECT_EQ(first_session_id, second_session_id);
 }
 
 TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
@@ -117,7 +117,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
   uint32_t session_id;
   int status = session_repository.add_session(
       session_name,
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       session_id);
 
@@ -134,7 +134,7 @@ TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
   uint32_t session_id;
   session_repository.add_session(
       "",
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       session_id);
 
@@ -151,13 +151,13 @@ TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBot
   uint32_t named_session_id;
   int status = session_repository.add_session(
       session_name,
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       named_session_id);
   uint32_t unnamed_session_id;
   session_repository.add_session(
       "",
-      []() { return std::make_tuple(0, 42); },
+      []() { return 0; },
       NULL,
       unnamed_session_id);
 

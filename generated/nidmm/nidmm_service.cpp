@@ -14,7 +14,7 @@
 
 namespace nidmm_grpc {
 
-  NiDmmService::NiDmmService(NiDmmLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
+  NiDmmService::NiDmmService(NiDmmLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -1438,7 +1438,8 @@ namespace nidmm_grpc {
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_attribute_value()->set_id(attribute_value);
+        auto session_id = session_repository_->resolve_session_id(attribute_value);
+        response->mutable_attribute_value()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -1912,14 +1913,14 @@ namespace nidmm_grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
 
-      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+      auto init_lambda = [&] () {
         ViSession vi;
         int status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -1945,14 +1946,14 @@ namespace nidmm_grpc {
       ViBoolean reset_device = request->reset_device();
       ViString option_string = (ViString)request->option_string().c_str();
 
-      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
+      auto init_lambda = [&] () {
         ViSession vi;
         int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->Close(id); };
+      auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {

@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "niswitch_library_interface.h"
@@ -22,8 +22,11 @@ namespace niswitch_grpc {
 
 class NiSwitchService final : public NiSwitch::Service {
 public:
-  NiSwitchService(NiSwitchLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiSwitchService(NiSwitchLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiSwitchService();
+  
   ::grpc::Status AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response) override;
   ::grpc::Status CanConnect(::grpc::ServerContext* context, const CanConnectRequest* request, CanConnectResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
@@ -88,7 +91,7 @@ public:
   ::grpc::Status WaitForScanComplete(::grpc::ServerContext* context, const WaitForScanCompleteRequest* request, WaitForScanCompleteResponse* response) override;
 private:
   NiSwitchLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
 };
 
 } // namespace niswitch_grpc
