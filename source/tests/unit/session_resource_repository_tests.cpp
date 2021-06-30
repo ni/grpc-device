@@ -30,7 +30,6 @@ uint32_t add_session_resource(
 TEST(SessionResourceRepositoryTests, AddSessionResource_ResourceIsAdded)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<uint64_t> resource_repository(
       &repository);
 
@@ -54,18 +53,20 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_ResourceIsAdded)
   EXPECT_EQ(
       session_id,
       repository.access_session(0, kSessionName));
+  EXPECT_EQ(
+      session_id,
+      repository.access_session(session_id, ""));
 }
 
-TEST(SessionResourceRepositoryTests, SessionResource_RemoveSessionResource_ResourceIsRemoved)
+TEST(SessionResourceRepositoryTests, SessionResource_RemoveSession_ResourceIsRemoved)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<uint16_t> resource_repository(
       &repository);
   const uint16_t kResourceHandle = 0x1234;
   auto session_id = add_session_resource(resource_repository, kResourceHandle);
 
-  resource_repository.remove_session(kResourceHandle);
+  repository.remove_session(session_id);
 
   EXPECT_EQ(
       kNoSession,
@@ -78,7 +79,6 @@ TEST(SessionResourceRepositoryTests, SessionResource_RemoveSessionResource_Resou
 TEST(SessionResourceRepositoryTests, SessionResource_RemoveFromResourceRepository_ResourceIsRemoved)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int64_t> resource_repository(
       &repository);
   const int64_t kResourceHandle = 68686868;
@@ -102,7 +102,6 @@ TEST(SessionResourceRepositoryTests, SessionResource_RemoveFromResourceRepositor
 TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_ResourceIsRemoved)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int64_t> resource_repository(
       &repository);
   const int64_t kResourceHandle = -9847465247263584;
@@ -121,7 +120,6 @@ TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_ResourceIsRemov
 TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_CleanupIsCalled)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int64_t> resource_repository(
       &repository);
   bool cleanup_called = false;
@@ -141,7 +139,6 @@ TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_CleanupIsCalled
 TEST(SessionResourceRepositoryTests, AddSessionResourceWithErrrOnInit_ResourceIsNotAdded)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int32_t> resource_repository(
       &repository);
 
@@ -160,7 +157,6 @@ TEST(SessionResourceRepositoryTests, AddSessionResourceWithErrrOnInit_ResourceIs
 TEST(SessionResourceRepositoryTests, MultipleResourceRepositories_AddResourceToEach_ResourcesAreAded)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int32_t> int_resource_repository(
       &repository);
   SessionResourceRepository<std::string> string_resource_repository(
@@ -186,7 +182,6 @@ TEST(SessionResourceRepositoryTests, MultipleResourceRepositories_AddResourceToE
 TEST(SessionResourceRepositoryTests, AddMultipleResources_ResourcesAreAdded)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int32_t> resource_repository(
       &repository);
 
@@ -210,7 +205,6 @@ TEST(SessionResourceRepositoryTests, AddMultipleResources_ResourcesAreAdded)
 TEST(SessionResourceRepositoryTests, AddSessionResource_AccessFromDifferentRepository_DoesNotReturnSession)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int32_t> resource_repository(
       &repository);
   SessionResourceRepository<int32_t> other_resource_repository(
@@ -229,15 +223,15 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AccessFromDifferentRepos
 TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFromDifferentRepository_FailsWithoutCallingInit)
 {
   SessionRepository repository;
-  ;
   SessionResourceRepository<int32_t> resource_repository(
       &repository);
   SessionResourceRepository<int32_t> other_resource_repository(
       &repository);
   const int32_t kResourceHandle1 = -123456;
   uint32_t session_id;
+  const std::string kTestResource("test_resource");
   auto result = resource_repository.add_session(
-      "test_resource",
+      kTestResource,
       []() { return std::make_tuple(0, 5555); },
       [](int32_t handle) {},
       session_id);
@@ -247,12 +241,13 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
   MockInitDelegate mock_init;
   uint32_t second_session_id;
   result = other_resource_repository.add_session(
-      "test_resource",
+      kTestResource,
       mock_init.AsStdFunction(),
       [](int32_t handle) { FAIL() << "Unexpected Cleanup"; },
       second_session_id);
 
   EXPECT_EQ(kNoSession, second_session_id);
+  EXPECT_NE(kNoError, result);
 }
 }  // namespace unit
 }  // namespace tests
