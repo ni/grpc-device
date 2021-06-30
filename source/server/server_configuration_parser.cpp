@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "feature_toggles.h"
+
 #if defined(_MSC_VER)
   #include <windows.h>
 #else
@@ -19,6 +21,7 @@ static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
 static const char* kSecurityJsonKey = "security";
 static const char* kCertsFolderName = "certs";
+static const char* kFeatureTogglesKey = "feature_toggles";
 #if defined(_MSC_VER)
 static const char* kPathDelimitter = "\\";
 #else
@@ -128,6 +131,23 @@ std::string ServerConfigurationParser::parse_root_cert() const
   return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
 }
 
+FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
+{
+  FeatureToggleConfigurationMap map;
+  auto feature_toggle_section_it = config_file_.find(kFeatureTogglesKey);
+  if (feature_toggle_section_it != config_file_.end()) {
+    try {
+      for (const auto& feature : feature_toggle_section_it->items()) {
+        map[feature.key()] = feature.value();
+      }
+    }
+    catch (const nlohmann::json::type_error& ex) {
+      throw InvalidFeatureToggleException(ex.what());
+    }
+  }
+  return FeatureToggles(std::move(map));
+}
+
 std::string ServerConfigurationParser::parse_key_from_security_section(const char* key) const
 {
   std::string parsed_value;
@@ -139,7 +159,7 @@ std::string ServerConfigurationParser::parse_key_from_security_section(const cha
       try {
         parsed_value = it->get<std::string>();
       }
-      catch (const nlohmann::json::type_error& ex) {
+      catch (const nlohmann::json::type_error&) {
         throw ValueTypeNotStringException(key);
       }
     }
@@ -201,4 +221,8 @@ ServerConfigurationParser::InvalidExePathException::InvalidExePathException()
 {
 }
 
+ServerConfigurationParser::InvalidFeatureToggleException::InvalidFeatureToggleException(const std::string& type_error_details)
+    : std::runtime_error(kInvalidFeatureToggleMessage + type_error_details)
+{
+}
 }  // namespace nidevice_grpc

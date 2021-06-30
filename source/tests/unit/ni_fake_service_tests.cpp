@@ -1503,6 +1503,31 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayViUInt8WithEnum_CallsGetArrayViUI
   EXPECT_EQ(std::string(uint8_array, uint8_array+array_len), response.u_int8_enum_array_raw());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetAttributeViSession_ReturnsSessionId)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  nifake_grpc::NiFakeService service(&library, &session_repository);
+  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  const ViInt32 kAttributeId = 1234;
+  EXPECT_CALL(library, GetAttributeViSession(kTestViSession, kAttributeId, _))
+      .WillOnce(
+          DoAll(
+              SetArgPointee<2>(kTestViSession),
+              Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAttributeViSessionRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_attribute_id(kAttributeId);
+  nifake_grpc::GetAttributeViSessionResponse response;
+  auto status = service.GetAttributeViSession(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(session_id, response.session_out().id());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

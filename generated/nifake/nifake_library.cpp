@@ -44,6 +44,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViInt32"));
   function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViInt64"));
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFake_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niFake_GetAttributeViSession"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niFake_GetAttributeViString"));
   function_pointers_.GetCalDateAndTime = reinterpret_cast<GetCalDateAndTimePtr>(shared_library_.get_function_pointer("niFake_GetCalDateAndTime"));
   function_pointers_.GetCalInterval = reinterpret_cast<GetCalIntervalPtr>(shared_library_.get_function_pointer("niFake_GetCalInterval"));
@@ -371,6 +372,18 @@ ViStatus NiFakeLibrary::GetAttributeViReal64(ViSession vi, ViConstString channel
   return niFake_GetAttributeViReal64(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.GetAttributeViReal64(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiFakeLibrary::GetAttributeViSession(ViSession vi, ViInt32 attributeId, ViSession* sessionOut)
+{
+  if (!function_pointers_.GetAttributeViSession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAttributeViSession.");
+  }
+#if defined(_MSC_VER)
+  return niFake_GetAttributeViSession(vi, attributeId, sessionOut);
+#else
+  return function_pointers_.GetAttributeViSession(vi, attributeId, sessionOut);
 #endif
 }
 
