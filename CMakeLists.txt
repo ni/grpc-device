@@ -67,7 +67,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifgen" "niscope" "niswitch" "nisync" "nitclk")
+set(nidrivers "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifgen" "niscope" "niswitch" "nisync" "nitclk")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -111,7 +111,7 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_service.cpp
     ${service_output_dir}/${api}/${api}_service.h)
   set(gen_command COMMAND ${Python3_EXECUTABLE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
-  if (NOT api STREQUAL "nifake")
+  if (NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
@@ -168,7 +168,7 @@ foreach(api ${nidrivers})
     "${proto_srcs_dir}/${api}.pb.h"
     "${proto_srcs_dir}/${api}.grpc.pb.cc"
     "${proto_srcs_dir}/${api}.grpc.pb.h")
-  if(NOT api STREQUAL "nifake")
+  if(NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
@@ -283,10 +283,15 @@ add_executable(UnitTestsRunner
     "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs}
-    "${service_output_dir}/nifake/nifake_service.cpp"
-    "${custom_dir}/nifake_service.custom.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
-    "${proto_srcs_dir}/nifake.grpc.pb.cc")
+    "${proto_srcs_dir}/nifake.grpc.pb.cc"
+    "${proto_srcs_dir}/nifake_extension.pb.cc"
+    "${proto_srcs_dir}/nifake_extension.grpc.pb.cc"
+    "${service_output_dir}/nifake/nifake_service.cpp"
+    "${service_output_dir}/nifake_extension/nifake_extension_service.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
+    "${custom_dir}/nifake_extension_service.custom.cpp"
+)
 
 # ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
 # This disables that requirement for just the ni_fake_service_tests.cpp file.
@@ -295,7 +300,8 @@ if(MSVC)
 endif()
 
 target_include_directories(UnitTestsRunner
-    PRIVATE "${service_output_dir}/nifake")
+    PRIVATE "${service_output_dir}/nifake"
+    PRIVATE "${service_output_dir}/nifake_exension")
 
 target_link_libraries(UnitTestsRunner
     gtest
