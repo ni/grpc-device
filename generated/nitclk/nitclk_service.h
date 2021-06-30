@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nitclk_library_interface.h"
@@ -22,8 +22,11 @@ namespace nitclk_grpc {
 
 class NiTClkService final : public NiTClk::Service {
 public:
-  NiTClkService(NiTClkLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiTClkService(NiTClkLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiTClkService();
+  
   ::grpc::Status ConfigureForHomogeneousTriggers(::grpc::ServerContext* context, const ConfigureForHomogeneousTriggersRequest* request, ConfigureForHomogeneousTriggersResponse* response) override;
   ::grpc::Status FinishSyncPulseSenderSynchronize(::grpc::ServerContext* context, const FinishSyncPulseSenderSynchronizeRequest* request, FinishSyncPulseSenderSynchronizeResponse* response) override;
   ::grpc::Status GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response) override;
@@ -41,7 +44,7 @@ public:
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
 private:
   NiTClkLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
 };
 
 } // namespace nitclk_grpc

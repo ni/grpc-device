@@ -9,18 +9,19 @@
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
+  resource_handle_type = session_output_param['type']
   session_output_var_name = session_output_param['cppName']
   close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
 %>\
 ${initialize_input_params(function_name, parameters)}
-      auto init_lambda = [&] () -> std::tuple<int, uint32_t> {
-        ViSession ${session_output_var_name};
+      auto init_lambda = [&] () {
+        ${resource_handle_type} ${session_output_var_name};
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
-        return std::make_tuple(status, vi);
+        return std::make_tuple(status, ${session_output_var_name});
       };
       uint32_t session_id = 0;
       const std::string& session_name = request->session_name();
-      auto cleanup_lambda = [&] (uint32_t id) { library_->${close_function_call}; };
+      auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
@@ -339,7 +340,8 @@ ${initialize_standard_input_param(function_name, parameter)}\
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %     endif
 %   elif parameter['type'] == 'ViSession':
-        response->mutable_${parameter_name}()->set_id(${parameter_name});
+        auto session_id = session_repository_->resolve_session_id(${parameter_name});
+        response->mutable_${parameter_name}()->set_id(session_id);
 %   else:
         response->set_${parameter_name}(${parameter_name});
 %   endif

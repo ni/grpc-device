@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nidmm_library_interface.h"
@@ -22,8 +22,11 @@ namespace nidmm_grpc {
 
 class NiDmmService final : public NiDmm::Service {
 public:
-  NiDmmService(NiDmmLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiDmmService(NiDmmLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiDmmService();
+  
   ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
@@ -116,7 +119,7 @@ public:
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
 private:
   NiDmmLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
 };
 
 } // namespace nidmm_grpc

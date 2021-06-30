@@ -27,12 +27,11 @@ int SessionRepository::add_session(
     return 0;
   }
   auto info = std::make_shared<SessionInfo>();
-  auto init_result = init_func();
-  int status = std::get<0>(init_result);
-  if (status != 0) {
+  auto status = init_func();
+  if (status) {
     return status;
   }
-  session_id = std::get<1>(init_result);
+  session_id = next_id();
   info->id = session_id;
   info->cleanup_func = cleanup_func;
   info->last_access_time = now;

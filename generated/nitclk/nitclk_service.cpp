@@ -14,7 +14,7 @@
 
 namespace nitclk_grpc {
 
-  NiTClkService::NiTClkService(NiTClkLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
+  NiTClkService::NiTClkService(NiTClkLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
@@ -115,7 +115,8 @@ namespace nitclk_grpc {
       auto status = library_->GetAttributeViSession(session, channel_name, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_value()->set_id(value);
+        auto session_id = session_repository_->resolve_session_id(value);
+        response->mutable_value()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }

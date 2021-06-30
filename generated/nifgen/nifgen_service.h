@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nifgen_library_interface.h"
@@ -22,8 +22,11 @@ namespace nifgen_grpc {
 
 class NiFgenService final : public NiFgen::Service {
 public:
-  NiFgenService(NiFgenLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiFgenService(NiFgenLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiFgenService();
+  
   ::grpc::Status AbortGeneration(::grpc::ServerContext* context, const AbortGenerationRequest* request, AbortGenerationResponse* response) override;
   ::grpc::Status AdjustSampleClockRelativeDelay(::grpc::ServerContext* context, const AdjustSampleClockRelativeDelayRequest* request, AdjustSampleClockRelativeDelayResponse* response) override;
   ::grpc::Status AllocateNamedWaveform(::grpc::ServerContext* context, const AllocateNamedWaveformRequest* request, AllocateNamedWaveformResponse* response) override;
@@ -159,7 +162,7 @@ public:
   ::grpc::Status WriteNamedWaveformComplexI16(::grpc::ServerContext* context, const WriteNamedWaveformComplexI16Request* request, WriteNamedWaveformComplexI16Response* response) override;
 private:
   NiFgenLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
   NIComplexNumber_struct ConvertMessage(const nifgen_grpc::NIComplexNumber& input);
   void Copy(const google::protobuf::RepeatedPtrField<nifgen_grpc::NIComplexNumber>& input, std::vector<NIComplexNumber_struct>* output);
   NIComplexI16_struct ConvertMessage(const nifgen_grpc::NIComplexInt32& input);

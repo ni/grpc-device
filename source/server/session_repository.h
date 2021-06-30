@@ -4,6 +4,7 @@
 #include <grpcpp/grpcpp.h>
 #include <session.grpc.pb.h>
 
+#include <atomic>
 #include <shared_mutex>
 
 #include "semaphore.h"
@@ -14,7 +15,7 @@ class SessionRepository {
  public:
   SessionRepository();
 
-  typedef std::function<std::tuple<int, uint32_t>()> InitFunc;
+  typedef std::function<int32_t()> InitFunc;
   typedef std::function<void(uint32_t)> CleanupSessionFunc;
 
   int add_session(const std::string& session_name, InitFunc init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
@@ -55,6 +56,7 @@ class SessionRepository {
   bool close_sessions();
   void cleanup_session(const std::shared_ptr<SessionInfo>& session_info);
   bool release_reservation(const ReservationInfo* reservation_info);
+  uint32_t next_id() { return ++_next_id; }
 
   std::shared_mutex repository_lock_;
   // This map contains every session, including both named and unnamed ones.
@@ -62,8 +64,8 @@ class SessionRepository {
   // These entries point at SessionInfo objects that are also contained in sessions_.
   NamedSessionMap named_sessions_;
   ReservationMap reservations_;
+  std::atomic<uint32_t> _next_id;
 };
-
 }  // namespace nidevice_grpc
 
 #endif  // NIDEVICE_GRPC_SESSION_REPOSITORY

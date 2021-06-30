@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nifake_library_interface.h"
@@ -22,8 +22,11 @@ namespace nifake_grpc {
 
 class NiFakeService final : public NiFake::Service {
 public:
-  NiFakeService(NiFakeLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiFakeService(NiFakeLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiFakeService();
+  
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
   ::grpc::Status AcceptViSessionArray(::grpc::ServerContext* context, const AcceptViSessionArrayRequest* request, AcceptViSessionArrayResponse* response) override;
@@ -82,7 +85,7 @@ public:
   ::grpc::Status ViInt16ArrayInputFunction(::grpc::ServerContext* context, const ViInt16ArrayInputFunctionRequest* request, ViInt16ArrayInputFunctionResponse* response) override;
 private:
   NiFakeLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
   template <typename TEnum>
   void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
@@ -90,12 +93,12 @@ private:
   void Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<nifake_grpc::FakeCustomStruct>* output);
   CustomStruct ConvertMessage(const nifake_grpc::FakeCustomStruct& input);
   void Copy(const google::protobuf::RepeatedPtrField<nifake_grpc::FakeCustomStruct>& input, std::vector<CustomStruct>* output);
-  std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
-  std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
-  std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
-  std::map<float, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
   std::map<std::int32_t, float> nifakereal64attributevaluesmapped_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
   std::map<float, std::int32_t> nifakereal64attributevaluesmapped_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
+  std::map<std::int32_t, float> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
+  std::map<float, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
+  std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
+  std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
 };
 
 } // namespace nifake_grpc

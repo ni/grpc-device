@@ -21,8 +21,8 @@ const char* kTestInvalidFgenRsrc = "";
 class NiFgenSessionTest : public ::testing::Test {
  protected:
   NiFgenSessionTest()
-    : device_server_(DeviceServerInterface::Singleton()),
-      nifgen_stub_(fgen::NiFgen::NewStub(device_server_->InProcessChannel()))
+      : device_server_(DeviceServerInterface::Singleton()),
+        nifgen_stub_(fgen::NiFgen::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
@@ -73,8 +73,8 @@ class NiFgenSessionTest : public ::testing::Test {
   }
 
  private:
-   DeviceServerInterface* device_server_;
-   std::unique_ptr<fgen::NiFgen::Stub> nifgen_stub_;
+  DeviceServerInterface* device_server_;
+  std::unique_ptr<fgen::NiFgen::Stub> nifgen_stub_;
 };
 
 TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)

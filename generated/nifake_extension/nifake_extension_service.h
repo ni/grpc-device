@@ -13,7 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
-#include <server/session_repository.h>
+#include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 
 #include "nifake_extension_library_interface.h"
@@ -22,12 +22,15 @@ namespace nifake_extension_grpc {
 
 class NiFakeExtensionService final : public NiFakeExtension::Service {
 public:
-  NiFakeExtensionService(NiFakeExtensionLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository);
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+
+  NiFakeExtensionService(NiFakeExtensionLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiFakeExtensionService();
+  
   ::grpc::Status AddCoolFunctionality(::grpc::ServerContext* context, const AddCoolFunctionalityRequest* request, AddCoolFunctionalityResponse* response) override;
 private:
   NiFakeExtensionLibraryInterface* library_;
-  nidevice_grpc::SessionRepository* session_repository_;
+  ResourceRepositorySharedPtr session_repository_;
 };
 
 } // namespace nifake_extension_grpc
