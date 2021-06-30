@@ -103,23 +103,23 @@ async def PerformAcquire():
         )
         await CheckStatus(scope_service, vi, vertical_result)
 
-    confTrigger_edge_result = await scope_service.configure_trigger_edge(
-        vi = vi,
-        trigger_source = channels,
-        level = 0.00,
-        holdoff = 0.0,
-        trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        slope_raw = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
-    )
-    await CheckStatus(scope_service, vi, confTrigger_edge_result)
+        confTrigger_edge_result = await scope_service.configure_trigger_edge(
+            vi = vi,
+            trigger_source = channels,
+            level = 0.00,
+            holdoff = 0.0,
+            trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+            slope_raw = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE
+        )
+        await CheckStatus(scope_service, vi, confTrigger_edge_result)
 
-    set_result = await scope_service.set_attribute_vi_int32(
-        vi = vi,
-        channel_list = channels,
-        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
-    )
-    await CheckStatus(scope_service, vi, set_result)
+        set_result = await scope_service.set_attribute_vi_int32(
+            vi = vi,
+            channel_list = channels,
+            attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+            value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
+        )
+        await CheckStatus(scope_service, vi, set_result)
 
         read_result = await scope_service.read(
             vi = vi,
@@ -134,11 +134,16 @@ async def PerformAcquire():
         print(values)
     
     except Exception as e:
-        print(e)
+        error_message = e.args[1]
+        if e.args[0] == 22:
+            error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        elif e.status.name == "UNIMPLEMENTED":
+            error_message = "The operation is not implemented or is not supported/enabled in this service"
+        print(error_message)
     finally:
         if('vi' in vars() and vi.id != 0):
             await scope_service.close(vi = vi)
-            channel.close()
+        channel.close()
 
 loop = asyncio.get_event_loop()
 future = asyncio.ensure_future(PerformAcquire())

@@ -69,10 +69,13 @@ def on_close(event):
 # Error Reporting
 async def CheckStatus(scope_service, vi, result):
     if (result.status != 0):
-        error_result2 = await scope_service.get_error(vi = vi)
-        raise Exception (error_result2.description)
+        error_result = await scope_service.get_error_message(vi = vi, error_code = result.status)
+        raise Exception (error_result.error_message)
+
 # Entry Points
+channel = ()
 async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
+    global channel
     channel = Channel(host=server_address, port=server_port)
     scope_service = niscope_grpc.NiScopeStub(channel)
 
@@ -90,7 +93,8 @@ async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
 
 
 async def CloseGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi):
-    await scope_service.close(vi=vi)
+    if vi.id != 0:
+        await scope_service.close(vi=vi)
     channel.close()
     return 0
 
@@ -194,10 +198,16 @@ async def main():
         await ConfigureGrpcScope(*grpc_scope)
         await MeasureGrpcScope(*grpc_scope)
     except Exception as e:
-        print(e)
+        error_message = e.args[1]
+        if e.args[0] == 22:
+            error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        elif e.status.name == "UNIMPLEMENTED":
+            error_message = "The operation is not implemented or is not supported/enabled in this service"
+        print(error_message)
     finally:
         if grpc_scope:
             await CloseGrpcScope(*grpc_scope)
+        channel.close()
 
 ## Run the main
 loop = asyncio.get_event_loop()
