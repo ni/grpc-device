@@ -1571,8 +1571,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViSession_ReturnsSessionId)
 {
   nidevice_grpc::SessionRepository session_repository;
   NiFakeMockLibrary library;
-  nifake_grpc::NiFakeService service(&library, &session_repository);
-  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
   const ViInt32 kAttributeId = 1234;
   EXPECT_CALL(library, GetAttributeViSession(kTestViSession, kAttributeId, _))
       .WillOnce(
@@ -1596,10 +1597,11 @@ TEST(NiFakeServiceTests, NiFakeExtensionService_CallMethodWithSesionStartedByNIF
 {
   nidevice_grpc::SessionRepository session_repository;
   NiFakeMockLibrary library;
-  nifake_grpc::NiFakeService service(&library, &session_repository);
   NiFakeExtensionMockLibrary extension_library;
-  nifake_extension_grpc::NiFakeExtensionService extension_service(&extension_library, &session_repository);
-  std::uint32_t session_id = create_session(session_repository, kTestViSession);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  nifake_extension_grpc::NiFakeExtensionService extension_service(&extension_library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
   const ViInt32 kParam = 1234;
   EXPECT_CALL(extension_library, AddCoolFunctionality(kTestViSession, kParam))
       .WillOnce(

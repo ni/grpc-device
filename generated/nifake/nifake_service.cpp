@@ -665,7 +665,8 @@ namespace nifake_grpc {
       auto status = library_->GetAttributeViSession(vi, attribute_id, &session_out);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_session_out()->set_id(session_out);
+        auto session_id = session_repository_->resolve_session_id(session_out);
+        response->mutable_session_out()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }

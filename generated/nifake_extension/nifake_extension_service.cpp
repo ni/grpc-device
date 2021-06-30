@@ -14,7 +14,7 @@
 
 namespace nifake_extension_grpc {
 
-  NiFakeExtensionService::NiFakeExtensionService(NiFakeExtensionLibraryInterface* library, nidevice_grpc::SessionRepository* session_repository)
+  NiFakeExtensionService::NiFakeExtensionService(NiFakeExtensionLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
   }
