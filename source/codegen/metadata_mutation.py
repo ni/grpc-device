@@ -59,6 +59,85 @@ def mark_mapped_enum_params(parameters, enums):
             del param['enum']
             param['mapped-enum'] = enum_name
 
+
+def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
+    add_repeated = is_array
+    if 'ViSession' in type:
+        type = 'nidevice_grpc.Session'
+    if 'ViBoolean' in type:
+        type = 'bool'
+    if 'ViReal64' in type:
+        type = 'double'
+    if 'ViInt32' in type:
+        type = 'sint32'
+    if 'ViConstString' in type:
+        type = 'string'
+    if 'ViString' in type:
+        type = 'string'
+    if 'ViRsrc' in type:
+        type = 'string'
+    if 'ViChar' in type:
+        if is_array == True:
+            add_repeated = False
+            type = 'string'
+        else:
+            type = 'uint32'
+    if 'ViReal32' in type:
+        type = 'float'
+    if 'ViAttr' in type:
+        type = driver_name_pascal + "Attributes"
+    if 'ViInt8' in type:
+        if is_array == True:
+            type = "bytes"
+            add_repeated = False
+        else:
+            type = 'uint32'
+    if 'void*' in type:
+        type = 'fixed64'
+    if 'ViInt16' in type:
+        type = 'sint32'
+    if 'ViInt64' in type:
+        type = 'int64'
+    if 'ViUInt16' in type:
+        type = 'uint32'
+    if 'ViUInt32' in type:
+        type = 'uint32'
+    if 'ViUInt64' in type:
+        type = 'uint64'
+    if 'ViUInt8' in type:
+        if is_array == True:
+            type = "bytes"
+            add_repeated = False
+        else:
+            type = 'uint32'
+    if 'ViStatus' in type:
+        type = 'sint32'
+    if 'ViAddr' in type:
+        type = 'fixed64'
+    if 'int' == type:
+        type = 'sint32'
+    if "[]" in type:
+        type = type.replace("[]", "")
+
+    return "repeated " + type if add_repeated else type
+
+
+def populate_grpc_types(parameters, config):
+    service_class_prefix = config["service_class_prefix"]
+    for parameter in parameters:
+        if 'grpc_type' in parameter:
+            pass
+        elif 'type_to_grpc_type' in config:
+          type_map = config['type_to_grpc_type']
+          parameter['grpc_type'] = type_map[parameter['type']]
+        else:
+          is_array = common_helpers.is_array(parameter["type"])
+          parameter['grpc_type'] = get_grpc_type_from_ivi(
+              parameter['type'],
+              is_array,
+              service_class_prefix)
+
+
 def add_attribute_values_enums(enums, attribute_enums_by_type, service_class_prefix):
     """Update enums metadata to add new enums that will be used value parameter of SetAttribute APIs."""
     for type_name in attribute_enums_by_type:

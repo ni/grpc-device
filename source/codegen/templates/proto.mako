@@ -43,12 +43,7 @@ ${mako_helper.define_function_enums(function_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
-  parameter_array = proto_helpers.filter_parameters_for_grpc_fields(functions[function]["parameters"])
-  input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
-  if common_helpers.is_init_method(functions[function]):
-    session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString'}
-    input_parameters.insert(0, session_name_param)
-  output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
+  input_parameters, output_parameters = proto_helpers.get_parameters(functions[function])
 %>\
 ${mako_helper.define_request_message(function, input_parameters)}\
 

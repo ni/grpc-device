@@ -1,5 +1,7 @@
 #include "device_server.h"
 
+#include <nidaqmx/nidaqmx_library.h>
+#include <nidaqmx/nidaqmx_service.h>
 #include <nidcpower/nidcpower_library.h>
 #include <nidcpower/nidcpower_service.h>
 #include <nidigitalpattern/nidigitalpattern_library.h>
@@ -35,6 +37,7 @@ class DeviceServer : public DeviceServerInterface {
 
  private:
   using MIResourceRepository = nidevice_grpc::SessionResourceRepository<ViSession>;
+  using DAQmxResourceRepository = nidevice_grpc::SessionResourceRepository<TaskHandle>;
   nidevice_grpc::SessionRepository session_repository_;
   std::shared_ptr<MIResourceRepository> mi_shared_resource_repository_;
   nidevice_grpc::SysCfgLibrary syscfg_library_;
@@ -54,6 +57,8 @@ class DeviceServer : public DeviceServerInterface {
   nifgen_grpc::NiFgenService nifgen_service_;
   nitclk_grpc::NiTClkLibrary nitclk_library_;
   nitclk_grpc::NiTClkService nitclk_service_;
+  nidaqmx_grpc::NiDAQmxLibrary nidaqmx_library_;
+  nidaqmx_grpc::NiDAQmxService nidaqmx_service_;
 
   std::unique_ptr<::grpc::Server> server_;
   std::shared_ptr<::grpc::Channel> channel_;
@@ -78,7 +83,9 @@ DeviceServer::DeviceServer()
       nifgen_library_(),
       nifgen_service_(&nifgen_library_, mi_shared_resource_repository_),
       nitclk_library_(),
-      nitclk_service_(&nitclk_library_, mi_shared_resource_repository_)
+      nitclk_service_(&nitclk_library_, mi_shared_resource_repository_),
+      nidaqmx_library_(),
+      nidaqmx_service_(&nidaqmx_library_, std::make_shared<DAQmxResourceRepository>(&session_repository_))
 {
   grpc::ServerBuilder builder;
   builder.RegisterService(&core_service_);
@@ -89,6 +96,7 @@ DeviceServer::DeviceServer()
   builder.RegisterService(&nidigital_service_);
   builder.RegisterService(&nifgen_service_);
   builder.RegisterService(&nitclk_service_);
+  builder.RegisterService(&nidaqmx_service_);
   server_ = builder.BuildAndStart();
 }
 

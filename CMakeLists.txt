@@ -67,7 +67,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifgen" "niscope" "niswitch" "nisync" "nitclk")
+set(nidrivers "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "niscope" "niswitch" "nisync" "nitclk" "nidaqmx")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -209,9 +209,9 @@ target_link_libraries(ni_grpc_device_server
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp nidcpower niDigital nidmm niFgen niScope niswitch nisync niTClk)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp nidcpower niDigital nidmm niFgen niScope niswitch nisync niTClk nidaqmx)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nicaiu.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nicaiu.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -271,6 +271,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
+    "source/tests/unit/ni_fake_non_ivi_service_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
@@ -286,12 +287,16 @@ add_executable(UnitTestsRunner
     ${session_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
+    "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
+    "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
     "${proto_srcs_dir}/nifake_extension.grpc.pb.cc"
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_extension/nifake_extension_service.cpp"
+    "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
+    "${custom_dir}/nifake_non_ivi_service.custom.cpp"
 )
 
 # ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
@@ -302,7 +307,8 @@ endif()
 
 target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake"
-    PRIVATE "${service_output_dir}/nifake_exension")
+    PRIVATE "${service_output_dir}/nifake_exension"
+    PRIVATE "${service_output_dir}/nifake_non_ivi")
 
 target_link_libraries(UnitTestsRunner
     gtest
@@ -326,6 +332,7 @@ add_executable(SystemTestsRunner
     "source/tests/system/device_server.cpp"
     "source/tests/system/enumerate_devices.cpp"
     "source/tests/system/session_utilities_service_tests.cpp"
+    "source/tests/system/nidaqmx_session_tests.cpp"
     "source/tests/system/nidcpower_driver_api_tests.cpp"
     "source/tests/system/nidcpower_session_tests.cpp"
     "source/tests/system/nidigital_driver_api_tests.cpp"
@@ -358,9 +365,9 @@ target_link_libraries(SystemTestsRunner
     ${CMAKE_DL_LIBS})
 
 if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp nidcpower niDigital nidmm niFgen niScope niswitch nisync niTClk)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+    target_link_libraries(SystemTestsRunner Delayimp nidcpower niDigital nidmm niFgen niScope niswitch nisync niTClk nidaqmx)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nicaiu.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nicaiu.dll")
 endif()
 
 # Hook up different google test runners to CTest

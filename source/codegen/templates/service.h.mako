@@ -15,7 +15,7 @@ namespace_prefix = config["namespace_component"] + "_grpc::"
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
-resource_handle_type = "ViSession"
+resource_handle_type = config.get("resource_handle_type", "ViSession")
 resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
 resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
 %>\

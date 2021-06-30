@@ -927,9 +927,9 @@ namespace nifake_grpc {
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
-      const std::string& session_name = request->session_name();
+      const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->close(id); };
-      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
         response->mutable_vi()->set_id(session_id);
@@ -958,9 +958,9 @@ namespace nifake_grpc {
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
-      const std::string& session_name = request->session_name();
+      const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->CloseExtCal(id, 0); };
-      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
         response->mutable_vi()->set_id(session_id);

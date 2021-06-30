@@ -39,6 +39,7 @@ def mutate_metadata(metadata):
     metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])
     if function_name.startswith("SetAttribute") or function_name.startswith("CheckAttribute"):
       metadata_mutation.expand_attribute_function_value_param(function, metadata["enums"], attribute_enums_by_type, service_class_prefix)
+    metadata_mutation.populate_grpc_types(parameters, config)
 
 def generate_all(metadata_dir, gen_dir):
   sys.path.append(metadata_dir)
