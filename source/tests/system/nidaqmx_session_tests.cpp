@@ -47,7 +47,7 @@ class NiDAQmxSessionTests : public ::testing::Test {
   std::unique_ptr<NiDAQmx::Stub> nidaqmx_stub_;
 };
 
-TEST_F(NiDAQmxSessionTests, CreateTask_CloseTask_Succeeds)
+TEST_F(NiDAQmxSessionTests, CreateTask_ClearTask_Succeeds)
 {
   CreateTaskResponse create_response;
   auto create_status = create_task("", create_response);
