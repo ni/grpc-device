@@ -1,66 +1,5 @@
 import common_helpers
 
-def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
-  add_repeated = is_array
-  if 'ViSession' in type:
-    type = 'nidevice_grpc.Session'
-  if 'ViBoolean' in type:
-    type = 'bool'
-  if 'ViReal64' in type:
-    type = 'double'
-  if 'ViInt32' in type:
-    type = 'sint32'
-  if 'ViConstString' in type:
-    type = 'string'
-  if 'ViString' in type:
-    type = 'string'
-  if 'ViRsrc' in type:
-    type = 'string'
-  if 'ViChar' in type:
-    if is_array == True:
-      add_repeated = False
-      type = 'string'
-    else:
-      type = 'uint32'
-  if 'ViReal32' in type:
-    type = 'float'
-  if 'ViAttr' in type:
-    type = driver_name_pascal + "Attributes"
-  if 'ViInt8' in type:
-    if is_array == True:
-      type = "bytes"
-      add_repeated = False
-    else:
-      type = 'uint32'
-  if 'void*' in type:
-    type = 'fixed64'
-  if 'ViInt16' in type:
-    type = 'sint32'
-  if 'ViInt64' in type:
-    type = 'int64'
-  if 'ViUInt16' in type:
-    type = 'uint32'
-  if 'ViUInt32' in type:
-    type = 'uint32'
-  if 'ViUInt64' in type:
-    type = 'uint64'
-  if 'ViUInt8' in type:
-    if is_array == True:
-      type = "bytes"
-      add_repeated = False
-    else:
-      type = 'uint32'
-  if 'ViStatus' in type:
-    type = 'sint32'
-  if 'ViAddr' in type:
-    type = 'fixed64'
-  if 'int' == type:
-    type = 'sint32'
-  if "[]" in type:
-    type = type.replace("[]","")
-
-  return "repeated " + type if add_repeated else type
-
 def should_allow_alias(enums):
   if enums.get("generate-mappings", False):
     return False
@@ -105,7 +44,7 @@ def get_enum_definitions(enums_to_define, enums):
     enum_definitions.update({enum_name: enum_definition})
   return enum_definitions
 
-def get_message_parameter_definitions(parameters, service_class_prefix, is_request_message):
+def get_message_parameter_definitions(parameters, is_request_message):
   """Get simplified list of all parameters that can be used for definiing request/respones messages in proto file."""
   parameter_definitions = []
   used_indexes = []
@@ -119,7 +58,7 @@ def get_message_parameter_definitions(parameters, service_class_prefix, is_reque
   for parameter in parameters:
     is_array = common_helpers.is_array(parameter["type"])
     parameter_name = common_helpers.camel_to_snake(parameter["name"])
-    parameter_type = get_parameter_type(parameter, is_array, service_class_prefix)
+    parameter_type = get_parameter_type(parameter)
     if common_helpers.is_enum(parameter):
       enum_parameters = get_enum_parameters(parameter, parameter_name, parameter_type, is_array, used_indexes)
       if is_request_message:
@@ -168,10 +107,24 @@ def get_enum_parameters(parameter, parameter_name, parameter_type, is_array, use
   })
   return enum_parameters
 
-def get_parameter_type(parameter, is_array, service_class_prefix):
-  if 'grpc_type' in parameter:
-    parameter_type = parameter['grpc_type']
-  else:
-    parameter_type = get_grpc_type_from_ivi(parameter["type"], is_array, service_class_prefix)
-  return parameter_type
 
+def get_parameter_type(parameter):
+  return parameter['grpc_type']
+
+
+def is_session_name(parameter):
+  return parameter.get('is_session_name', False)
+
+
+def get_parameters(function):
+  parameter_array = filter_parameters_for_grpc_fields(function['parameters'])
+  input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
+  if common_helpers.is_init_method(function):
+    has_session_input = any(is_session_name(param) for param in input_parameters)
+    if not has_session_input:
+      session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString', 'grpc_type': 'string'}
+      input_parameters.insert(0, session_name_param)
+
+  output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
+
+  return (input_parameters, output_parameters)

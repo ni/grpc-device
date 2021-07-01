@@ -1,5 +1,5 @@
-#include <mutex>
-
+#include <nidaqmx/nidaqmx_library.h>
+#include <nidaqmx/nidaqmx_service.h>
 #include <nidcpower/nidcpower_library.h>
 #include <nidcpower/nidcpower_service.h>
 #include <nidigitalpattern/nidigitalpattern_library.h>
@@ -17,6 +17,8 @@
 #include <nitclk/nitclk_library.h>
 #include <nitclk/nitclk_service.h>
 
+#include <mutex>
+
 #include "feature_toggles.h"
 #include "logging.h"
 #include "server_configuration_parser.h"
@@ -28,6 +30,8 @@
   #include "linux/daemonize.h"
   #include "linux/syslog_logging.h"
 #endif
+
+using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
 
 struct ServerConfiguration {
   std::string server_address;
@@ -122,6 +126,16 @@ static void RunServer(const ServerConfiguration& config)
   nifgen_grpc::NiFgenLibrary nifgen_library;
   nifgen_grpc::NiFgenService nifgen_service(&nifgen_library, mi_shared_resource_repository);
   builder.RegisterService(&nifgen_service);
+
+  nidaqmx_grpc::NiDAQmxLibrary nidaqmx_library;
+  using DAQmxResourceRepository = nidevice_grpc::SessionResourceRepository<TaskHandle>;
+  auto daq_resource_repository = std::make_shared<DAQmxResourceRepository>(&session_repository);
+  nidaqmx_grpc::NiDAQmxService nidaqmx_service(&nidaqmx_library, daq_resource_repository);
+
+  auto daq_feature_state = config.feature_toggles.get_feature_state("nidaqmx");
+  if (daq_feature_state == FeatureState::kEnabled) {
+    builder.RegisterService(&nidaqmx_service);
+  }
 
   // Assemble the server.
   {

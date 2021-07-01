@@ -8,10 +8,13 @@
 <%
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
-  session_output_param = next((parameter for parameter in output_parameters if parameter['type'] == 'ViSession'), None)
+  session_output_param = next((parameter for parameter in output_parameters if parameter['grpc_type'] == 'nidevice_grpc.Session'), None)
   resource_handle_type = session_output_param['type']
   session_output_var_name = session_output_param['cppName']
   close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
+
+  explicit_session_params = (common_helpers.camel_to_snake(param['cppName']) for param in parameters if param.get('is_session_name', False))
+  session_field_name = next(explicit_session_params, 'session_name')
 %>\
 ${initialize_input_params(function_name, parameters)}
       auto init_lambda = [&] () {
@@ -20,9 +23,9 @@ ${initialize_input_params(function_name, parameters)}
         return std::make_tuple(status, ${session_output_var_name});
       };
       uint32_t session_id = 0;
-      const std::string& session_name = request->session_name();
+      const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
-      int status = session_repository_->add_session(session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
         response->mutable_${session_output_var_name}()->set_id(session_id);
@@ -201,10 +204,11 @@ ${initialize_standard_input_param(function_name, parameter)}\
   field_name = common_helpers.camel_to_snake(parameter["name"])
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
+  grpc_type = parameter.get('grpc_type', None)
   c_type_pointer = c_type.replace('[]','*')
   c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
 %>\
-% if c_type == 'ViConstString':
+% if c_type in ['ViConstString', 'const char*']:
       ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
 % elif c_type == 'ViString' or c_type == 'ViRsrc':
       ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
@@ -240,7 +244,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
       Copy(${parameter_name}_request, &${parameter_name});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
-% elif c_type == 'ViSession':
+% elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
       ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
 % elif c_type in ['ViAddr[]', 'ViInt32[]', 'ViUInt32[]']:
