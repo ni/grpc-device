@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# An NI-FAKE Extension that adds fake features to ni-fake sessions
+# An NI-FAKE driver that does not use IVI types
 config = {
     'api_version': '1.2.0d9',
     'c_header': 'niFakeNonIvi.h',
@@ -9,7 +9,7 @@ config = {
     'csharp_namespace': 'NationalInstruments.Grpc.FakeNonIvi',
     'namespace_component': 'nifake_non_ivi',
     'close_function': 'Close',
-    'driver_name': 'NI-FAKE-EXTENSION',
+    'driver_name': 'NI-FAKE-NON-IVI',
     'resource_handle_type': 'FakeHandle',
     'custom_types': [],
     'type_to_grpc_type': {
