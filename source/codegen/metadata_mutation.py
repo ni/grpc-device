@@ -77,7 +77,7 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     if 'ViRsrc' in type:
         type = 'string'
     if 'ViChar' in type:
-        if is_array == True:
+        if is_array:
             add_repeated = False
             type = 'string'
         else:
@@ -87,7 +87,7 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     if 'ViAttr' in type:
         type = driver_name_pascal + "Attributes"
     if 'ViInt8' in type:
-        if is_array == True:
+        if is_array:
             type = "bytes"
             add_repeated = False
         else:
@@ -105,7 +105,7 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     if 'ViUInt64' in type:
         type = 'uint64'
     if 'ViUInt8' in type:
-        if is_array == True:
+        if is_array:
             type = "bytes"
             add_repeated = False
         else:
