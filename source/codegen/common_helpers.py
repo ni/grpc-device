@@ -117,7 +117,7 @@ def get_function_enums(functions):
         function_enums.add(parameter['enum'])
       if 'mapped-enum' in parameter:
         function_enums.add(parameter['mapped-enum'])
-  return function_enums
+  return sorted(function_enums)
 
 def has_viboolean_array_param(functions):
   '''Returns True if atleast one function has parameter of type ViBoolean[]'''
