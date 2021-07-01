@@ -26,5 +26,22 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'InitWithHandleNameAsSessionName': {
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handleName',
+                'type': 'const char*',
+                'is_session_name': True
+            },
+            {
+                'direction': 'out',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            }
+        ],
+        'returns': 'int32'
     }
 }

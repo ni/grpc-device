@@ -19,6 +19,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
  public:
   MOCK_METHOD(int32, Close, (FakeHandle handle), (override));
   MOCK_METHOD(int32, Init, (const char* sessionName, FakeHandle* handle), (override));
+  MOCK_METHOD(int32, InitWithHandleNameAsSessionName, (const char* handleName, FakeHandle* handle), (override));
 };
 
 }  // namespace unit

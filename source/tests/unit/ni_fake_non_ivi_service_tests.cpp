@@ -54,6 +54,34 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
     return response.handle().id();
   }
+
+  uint32_t init_with_handle_name_as_session_name(const std::string& handle_name, FakeHandle handle)
+  {
+    EXPECT_CALL(library_, InitWithHandleNameAsSessionName(StrEq(handle_name.c_str()), _))
+        .WillOnce(DoAll(SetArgPointee<1>(handle), Return(kDriverSuccess)));
+
+    ::grpc::ServerContext context;
+    InitWithHandleNameAsSessionNameRequest request;
+    request.set_handle_name(handle_name.c_str());
+    InitWithHandleNameAsSessionNameResponse response;
+
+    service_.InitWithHandleNameAsSessionName(&context, &request, &response);
+
+    return response.handle().id();
+  }
+
+  int32 close_with_expected_handle(uint32_t session_id, FakeHandle expected_closed_handle)
+  {
+    EXPECT_CALL(library_, Close(expected_closed_handle))
+        .WillOnce(Return(kDriverSuccess));
+    ::grpc::ServerContext context;
+    CloseRequest request;
+    request.mutable_handle()->set_id(session_id);
+    CloseResponse response;
+    service_.Close(&context, &request, &response);
+
+    return response.status();
+  }
 };
 
 TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceeds)
@@ -62,15 +90,20 @@ TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceed
   auto session = init("test", kHandle);
   EXPECT_NE(0, session);
 
-  EXPECT_CALL(library_, Close(kHandle))
-      .WillOnce(Return(kDriverSuccess));
-  ::grpc::ServerContext context;
-  CloseRequest request;
-  request.mutable_handle()->set_id(session);
-  CloseResponse response;
-  service_.Close(&context, &request, &response);
+  auto status = close_with_expected_handle(session, kHandle);
 
-  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, InitWithHandleNameAsSessionName_CloseSession_ClosesHandleAndSucceeds)
+{
+  const FakeHandle kHandle = 99999UL;
+  auto session = init_with_handle_name_as_session_name("test", kHandle);
+  EXPECT_NE(0, session);
+
+  auto status = close_with_expected_handle(session, kHandle);
+
+  EXPECT_EQ(kDriverSuccess, status);
 }
 }  // namespace unit
 }  // namespace tests

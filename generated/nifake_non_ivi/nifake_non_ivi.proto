@@ -18,6 +18,7 @@ import "session.proto";
 service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc Init(InitRequest) returns (InitResponse);
+  rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
 }
 
 enum NiFakeNonIviAttributes {
@@ -37,6 +38,15 @@ message InitRequest {
 }
 
 message InitResponse {
+  int32 status = 1;
+  nidevice_grpc.Session handle = 2;
+}
+
+message InitWithHandleNameAsSessionNameRequest {
+  string handle_name = 1;
+}
+
+message InitWithHandleNameAsSessionNameResponse {
   int32 status = 1;
   nidevice_grpc.Session handle = 2;
 }

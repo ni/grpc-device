@@ -23,6 +23,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niFakeNonIvi_Close"));
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFakeNonIvi_Init"));
+  function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -57,6 +58,18 @@ int32 NiFakeNonIviLibrary::Init(const char* sessionName, FakeHandle* handle)
   return niFakeNonIvi_Init(sessionName, handle);
 #else
   return function_pointers_.Init(sessionName, handle);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::InitWithHandleNameAsSessionName(const char* handleName, FakeHandle* handle)
+{
+  if (!function_pointers_.InitWithHandleNameAsSessionName) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitWithHandleNameAsSessionName.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_InitWithHandleNameAsSessionName(handleName, handle);
+#else
+  return function_pointers_.InitWithHandleNameAsSessionName(handleName, handle);
 #endif
 }
 
