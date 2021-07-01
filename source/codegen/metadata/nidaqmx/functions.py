@@ -16,7 +16,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sessionName',
-                'type': 'const char*'
+                'type': 'const char*',
+                'is_session_name': True
             },
             {
                 'direction': 'out',

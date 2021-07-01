@@ -112,11 +112,15 @@ def get_parameter_type(parameter):
   return parameter['grpc_type']
 
 
+def is_session_name(parameter):
+  return parameter.get('is_session_name', False)
+
+
 def get_parameters(function):
   parameter_array = filter_parameters_for_grpc_fields(function['parameters'])
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
   if common_helpers.is_init_method(function):
-    has_session_input = any(param['name'] == 'sessionName' for param in input_parameters)
+    has_session_input = any(is_session_name(param) for param in input_parameters)
     if not has_session_input:
       session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString', 'grpc_type': 'string'}
       input_parameters.insert(0, session_name_param)

@@ -12,6 +12,9 @@
   resource_handle_type = session_output_param['type']
   session_output_var_name = session_output_param['cppName']
   close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
+
+  explicit_session_params = (common_helpers.camel_to_snake(param['cppName']) for param in parameters if param.get('is_session_name', False))
+  session_field_name = next(explicit_session_params, 'session_name')
 %>\
 ${initialize_input_params(function_name, parameters)}
       auto init_lambda = [&] () {
@@ -20,7 +23,7 @@ ${initialize_input_params(function_name, parameters)}
         return std::make_tuple(status, ${session_output_var_name});
       };
       uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
