@@ -60,15 +60,22 @@ if len(sys.argv) == 4:
 #set to false to disable graph and increase speed
 show_plot = True 
 
+# Handle closing of plot window.
+closed = False
+def on_close(event):
+    global closed
+    closed = True
+
 # Error Reporting
 async def CheckStatus(scope_service, vi, result):
     if (result.status != 0):
         error_result = await scope_service.get_error_message(vi = vi, error_code = result.status)
-        print(error_result.error_message)
-        exit()
+        raise Exception (error_result.error_message)
 
 # Entry Points
+channel = ()
 async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
+    global channel
     channel = Channel(host=server_address, port=server_port)
     scope_service = niscope_grpc.NiScopeStub(channel)
 
@@ -86,7 +93,8 @@ async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
 
 
 async def CloseGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi):
-    await scope_service.close(vi=vi)
+    if vi.id != 0:
+        await scope_service.close(vi=vi)
     channel.close()
     return 0
 
@@ -146,10 +154,11 @@ async def MeasureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi)
         fig = plt.gcf() # Setup a plot to draw the captured waveform
         fig.show()
         fig.canvas.draw()
+        fig.canvas.mpl_connect('close_event', on_close)
 
     print("\nReading values in loop. CTRL+C to stop.\n")
     try:
-        while True:
+        while not closed:
             if show_plot:
                 plt.clf()                    # clear from last iteration
                 plt.axis([0, 100, -6, 6])    # setup axis again
@@ -181,12 +190,24 @@ async def MeasureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi)
     except KeyboardInterrupt:
         pass
 
-
+grpc_scope = ()
 async def main():
-    grpc_scope = await OpenGrpcScope(resource, server_address, server_port)
-    await ConfigureGrpcScope(*grpc_scope)
-    await MeasureGrpcScope(*grpc_scope)
-    await CloseGrpcScope(*grpc_scope)
+    try:
+        global grpc_scope
+        grpc_scope = await OpenGrpcScope(resource, server_address, server_port)
+        await ConfigureGrpcScope(*grpc_scope)
+        await MeasureGrpcScope(*grpc_scope)
+    except Exception as e:
+        error_message = e.args[1]
+        if e.args[0] == 22:
+            error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        elif e.status.name == "UNIMPLEMENTED":
+            error_message = "The operation is not implemented or is not supported/enabled in this service"
+        print(error_message)
+    finally:
+        if grpc_scope:
+            await CloseGrpcScope(*grpc_scope)
+        channel.close()
 
 ## Run the main
 loop = asyncio.get_event_loop()
