@@ -179,13 +179,14 @@ jobs:
           ThirdPartyNotices.txt
         retention-days: 5
 
-    - name: Stage Client Files
+    - name: Stage Windows Client Files
       if: ${{ (runner.os == 'Windows') }}
       shell: powershell
       run: |
-        mkdir "${{ runner.temp }}/staging/proto", "${{ runner.temp }}/staging/examples"
+        mkdir "${{ runner.temp }}/staging/proto"
         Copy-Item "source/*.proto", "generated/*.proto" -Exclude "*nifake*" -Destination "${{ runner.temp }}/staging/proto"
-        Copy-Item "examples/" -Recurse -Destination "${{ runner.temp }}/staging/examples"
+        Copy-Item "examples/" -Recurse -Destination "${{ runner.temp }}/staging/"
+        Copy-Item "LICENSE","ThirdPartyNotices.txt" -Destination "${{ runner.temp }}/staging/"
 
     - name: Upload Windows Client Files Artifact
       uses: actions/upload-artifact@v2
@@ -193,10 +194,7 @@ jobs:
       with:
         name: ni-grpc-device-client
         path: |
-          ${{ runner.temp }}/**/proto
-          ${{ runner.temp }}/**/examples
-          LICENSE
-          ThirdPartyNotices.txt
+          ${{ runner.temp }}/staging
         retention-days: 5
 
   trigger_main_ci:
