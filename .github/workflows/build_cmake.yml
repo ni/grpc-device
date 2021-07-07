@@ -184,9 +184,9 @@ jobs:
       shell: powershell
       run: |
         mkdir "${{ runner.temp }}/staging/proto"
-        Copy-Item "source/*.proto", "generated/*.proto" -Exclude "*nifake*" -Destination "${{ runner.temp }}/staging/proto"
-        Copy-Item "examples/" -Recurse -Destination "${{ runner.temp }}/staging/"
-        Copy-Item "LICENSE","ThirdPartyNotices.txt" -Destination "${{ runner.temp }}/staging/"
+        Copy-Item "source/*.proto", "generated/*.proto" -Exclude "*nifake*" -Destination "${{ runner.temp }}/staging/proto/" -Verbose
+        Copy-Item "examples/" -Recurse -Destination "${{ runner.temp }}/staging/" -Verbose
+        Copy-Item "LICENSE","ThirdPartyNotices.txt" -Destination "${{ runner.temp }}/staging/" -Verbose
 
     - name: Upload Windows Client Files Artifact
       uses: actions/upload-artifact@v2
