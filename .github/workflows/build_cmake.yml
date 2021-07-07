@@ -152,7 +152,7 @@ jobs:
         retention-days: 5
 
     - name: Stage Linux Client Files
-      if: ${{ (runner.os == 'Linux') }}
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       run: |
         mkdir -p ${{ runner.temp }}/staging/proto
         cp generated/**/*.proto source/protobuf/*.proto ${{ runner.temp }}/staging/proto
@@ -162,7 +162,7 @@ jobs:
 
     - name: Upload Linux Client Files Artifact
       uses: actions/upload-artifact@v2
-      if: ${{ (runner.os == 'Linux') }}
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
         name: ni-grpc-device-client-Linux
         path: ni-grpc-device-client.tar.gz
