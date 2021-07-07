@@ -249,6 +249,13 @@ ${initialize_standard_input_param(function_name, parameter)}\
       ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
 % elif c_type in ['ViAddr[]', 'ViInt32[]', 'ViUInt32[]']:
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
+%elif service_helpers.is_input_array_that_needs_coercion(parameter):
+      auto ${parameter_name}_raw = ${request_snippet};
+      // TODO uInt16 constants here
+      auto ${parameter_name} = std::unique_ptr<uInt16[]>(new uInt16[${parameter_name}_raw.size()]);
+      for (auto i = 0; i < ${parameter_name}_raw.size(); ++i) {
+        ${parameter_name}[i] = static_cast<uInt16>(${parameter_name}_raw.data()[i]);
+      }\
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
 % else:

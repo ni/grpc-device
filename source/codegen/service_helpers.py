@@ -4,6 +4,13 @@ def get_include_guard_name(config, suffix):
     include_guard_name = config['namespace_component'] + "_grpc" + suffix
     return include_guard_name.upper()
 
+
+def is_input_array_that_needs_coercion(parameter):
+    if 'grpc_type' not in parameter:
+        return False
+    return parameter['type'] == 'const uInt16*' and parameter['grpc_type'] == 'repeated uint32'
+
+
 def create_args(parameters):
     result = ''
     is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(parameters)
@@ -26,6 +33,8 @@ def create_args(parameters):
           parameter_name = parameter_name + ".data()"
         elif not is_array and is_output:
           result = f'{result}&'
+        elif is_input_array_that_needs_coercion(parameter):
+          parameter_name = parameter_name + ".get()"          
         result = f'{result}{parameter_name}, '
     return result[:-2]
 
