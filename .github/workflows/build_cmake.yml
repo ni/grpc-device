@@ -151,6 +151,23 @@ jobs:
         path: ni-grpc-device-tests-linux-glibc2_23-x64.tar.gz
         retention-days: 5
 
+    - name: Stage Linux Client Files
+      if: ${{ (runner.os == 'Linux') }}
+      run: |
+        mkdir -p ${{ runner.temp }}/staging/proto
+        cp generated/**/*.proto source/protobuf/*.proto ${{ runner.temp }}/staging/proto
+        cp -r examples/ ${{ runner.temp }}/staging/
+        cp LICENSE ThirdPartyNotices.txt ${{ runner.temp }}/staging/
+        tar -cvzf ni-grpc-device-client.tar.gz -C ${{ runner.temp }}/staging/ --exclude *nifake* examples/ proto/ LICENSE ThirdPartyNotices.txt
+
+    - name: Upload Linux Client Files Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ (runner.os == 'Linux') }}
+      with:
+        name: ni-grpc-device-client-Linux
+        path: ni-grpc-device-client.tar.gz
+        retention-days: 5
+
     - name: Upload Windows Server Binaries Artifact
       uses: actions/upload-artifact@v2
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
