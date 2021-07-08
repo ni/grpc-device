@@ -17,6 +17,8 @@ MATCHER(CustomU16Data, "")
   return write_data_array[0] == 0 && write_data_array[1] == UINT16_MAX && write_data_array[2] == 16;
 }
 
+using DAQmxResourceRepository = nidevice_grpc::SessionResourceRepository<TaskHandle>;
+
 TEST(NIDAQMX_TESTS, WriteDigitalU16_U32DataGetsConverted)
 {
   using ::testing::_;
@@ -25,7 +27,8 @@ TEST(NIDAQMX_TESTS, WriteDigitalU16_U32DataGetsConverted)
       .With(CustomU16Data())
       .Times(1);
   nidevice_grpc::SessionRepository session_repository;
-  nidaqmx_grpc::NiDAQmxService nidaqmx_service(&mock_library, &session_repository);
+  auto resource_repository = std::make_shared<DAQmxResourceRepository>(&session_repository);
+  nidaqmx_grpc::NiDAQmxService nidaqmx_service(&mock_library, resource_repository);
   ::grpc::ServerContext context;
   daqmx::WriteDigitalU16Request request;
   request.add_write_array(0);
