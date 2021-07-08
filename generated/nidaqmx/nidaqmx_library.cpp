@@ -22,7 +22,10 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.ClearTask = reinterpret_cast<ClearTaskPtr>(shared_library_.get_function_pointer("DAQmxClearTask"));
+  function_pointers_.CreateAIVoltageChan = reinterpret_cast<CreateAIVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIVoltageChan"));
   function_pointers_.CreateTask = reinterpret_cast<CreateTaskPtr>(shared_library_.get_function_pointer("DAQmxCreateTask"));
+  function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
+  function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
 }
 
 NiDAQmxLibrary::~NiDAQmxLibrary()
@@ -48,7 +51,19 @@ int32 NiDAQmxLibrary::ClearTask(TaskHandle task)
 #endif
 }
 
-int32 NiDAQmxLibrary::CreateTask(const char* sessionName, TaskHandle* task)
+int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIVoltageChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIVoltageChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
+#else
+  return function_pointers_.CreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTask(const char sessionName[], TaskHandle* task)
 {
   if (!function_pointers_.CreateTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTask.");
@@ -57,6 +72,30 @@ int32 NiDAQmxLibrary::CreateTask(const char* sessionName, TaskHandle* task)
   return DAQmxCreateTask(sessionName, task);
 #else
   return function_pointers_.CreateTask(sessionName, task);
+#endif
+}
+
+int32 NiDAQmxLibrary::StartTask(TaskHandle task)
+{
+  if (!function_pointers_.StartTask) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxStartTask.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxStartTask(task);
+#else
+  return function_pointers_.StartTask(task);
+#endif
+}
+
+int32 NiDAQmxLibrary::StopTask(TaskHandle task)
+{
+  if (!function_pointers_.StopTask) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxStopTask.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxStopTask(task);
+#else
+  return function_pointers_.StopTask(task);
 #endif
 }
 

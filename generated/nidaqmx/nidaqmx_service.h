@@ -28,7 +28,10 @@ public:
   virtual ~NiDAQmxService();
   
   ::grpc::Status ClearTask(::grpc::ServerContext* context, const ClearTaskRequest* request, ClearTaskResponse* response) override;
+  ::grpc::Status CreateAIVoltageChan(::grpc::ServerContext* context, const CreateAIVoltageChanRequest* request, CreateAIVoltageChanResponse* response) override;
   ::grpc::Status CreateTask(::grpc::ServerContext* context, const CreateTaskRequest* request, CreateTaskResponse* response) override;
+  ::grpc::Status StartTask(::grpc::ServerContext* context, const StartTaskRequest* request, StartTaskResponse* response) override;
+  ::grpc::Status StopTask(::grpc::ServerContext* context, const StopTaskRequest* request, StopTaskResponse* response) override;
 private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

@@ -19,15 +19,24 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 ClearTask(TaskHandle task);
-  int32 CreateTask(const char* sessionName, TaskHandle* task);
+  int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[]);
+  int32 CreateTask(const char sessionName[], TaskHandle* task);
+  int32 StartTask(TaskHandle task);
+  int32 StopTask(TaskHandle task);
 
  private:
   using ClearTaskPtr = int32 (*)(TaskHandle task);
-  using CreateTaskPtr = int32 (*)(const char* sessionName, TaskHandle* task);
+  using CreateAIVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[]);
+  using CreateTaskPtr = int32 (*)(const char sessionName[], TaskHandle* task);
+  using StartTaskPtr = int32 (*)(TaskHandle task);
+  using StopTaskPtr = int32 (*)(TaskHandle task);
 
   typedef struct FunctionPointers {
     ClearTaskPtr ClearTask;
+    CreateAIVoltageChanPtr CreateAIVoltageChan;
     CreateTaskPtr CreateTask;
+    StartTaskPtr StartTask;
+    StopTaskPtr StopTask;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

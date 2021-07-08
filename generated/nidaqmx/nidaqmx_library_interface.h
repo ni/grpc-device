@@ -16,7 +16,10 @@ class NiDAQmxLibraryInterface {
   virtual ~NiDAQmxLibraryInterface() {}
 
   virtual int32 ClearTask(TaskHandle task) = 0;
-  virtual int32 CreateTask(const char* sessionName, TaskHandle* task) = 0;
+  virtual int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[]) = 0;
+  virtual int32 CreateTask(const char sessionName[], TaskHandle* task) = 0;
+  virtual int32 StartTask(TaskHandle task) = 0;
+  virtual int32 StopTask(TaskHandle task) = 0;
 };
 
 }  // namespace nidaqmx_grpc

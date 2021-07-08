@@ -59,14 +59,19 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
 def create_params(parameters):
     return ', '.join(create_param(p) for p in parameters)
 
+def get_array_param_size(parameter) -> str:
+    if 'size' in parameter and parameter['size']['mechanism'] == 'fixed':
+      return parameter['size']['value']
+
+    return ''
+
 def create_param(parameter):
     type = parameter['type']
     name = parameter['cppName']
     if common_helpers.is_struct(parameter):
       type = type.replace("struct ", "")
     if common_helpers.is_array(type):
-        is_fixed = parameter['size']['mechanism'] == 'fixed'
-        array_size = parameter['size']['value'] if is_fixed else ''
+        array_size = get_array_param_size(parameter)
         return f'{type[:-2]} {name}[{array_size}]'
     elif common_helpers.is_output_parameter(parameter):
         return f'{type}* {name}'

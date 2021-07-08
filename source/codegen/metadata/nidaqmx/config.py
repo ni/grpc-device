@@ -12,8 +12,9 @@ config = {
     ],
     'type_to_grpc_type': {
         'TaskHandle': 'nidevice_grpc.Session',
-        'TaskHandle*': 'nidevice_grpc.Session',
-        'const char*': 'string'
+        'const char[]': 'string',
+        'float64': 'double',
+        'int': 'int32'
     },
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [
