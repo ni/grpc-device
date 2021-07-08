@@ -85,6 +85,28 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     return stub()->CreateAIVoltageChan(&context, request, &response);
   }
 
+  ::grpc::Status create_di_chan(CreateDIChanResponse& response)
+  {
+    ::grpc::ClientContext context;
+    CreateDIChanRequest request;
+    set_id(request);
+    request.set_lines("Dev1/port0/line0");
+    request.set_name_to_assign_to_lines("di");
+    request.set_line_grouping(LineGrouping::LINE_GROUPING_ChanPerLine);
+    return stub()->CreateDIChan(&context, request, &response);
+  }
+
+  ::grpc::Status create_do_chan(CreateDOChanResponse& response)
+  {
+    ::grpc::ClientContext context;
+    CreateDOChanRequest request;
+    set_id(request);
+    request.set_lines("Dev1/port1/line0");
+    request.set_name_to_assign_to_lines("do");
+    request.set_line_grouping(LineGrouping::LINE_GROUPING_ChanPerLine);
+    return stub()->CreateDOChan(&context, request, &response);
+  }
+
   ::grpc::Status start_task(StartTaskResponse& response)
   {
     ::grpc::ClientContext context;
@@ -128,6 +150,22 @@ TEST_F(NiDAQmxDriverApiTests, CreateAIVoltageChannel_Succeeds)
 {
   CreateAIVoltageChanResponse response;
   auto status = create_ai_voltage_chan(response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, CreateDIChan_Succeeds)
+{
+  CreateDIChanResponse response;
+  auto status = create_di_chan(response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, CreateDOChan_Succeeds)
+{
+  CreateDOChanResponse response;
+  auto status = create_do_chan(response);
 
   EXPECT_SUCCESS(status, response);
 }

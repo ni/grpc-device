@@ -19,6 +19,8 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
   MOCK_METHOD(int32, ClearTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, CreateAIVoltageChan, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[]), (override));
+  MOCK_METHOD(int32, CreateDIChan, (TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping), (override));
+  MOCK_METHOD(int32, CreateDOChan, (TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping), (override));
   MOCK_METHOD(int32, CreateTask, (const char sessionName[], TaskHandle* task), (override));
   MOCK_METHOD(int32, StartTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, StopTask, (TaskHandle task), (override));

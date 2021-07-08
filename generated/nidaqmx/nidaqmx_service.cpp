@@ -101,6 +101,80 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateDIChan(::grpc::ServerContext* context, const CreateDIChanRequest* request, CreateDIChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto lines = const_cast<const char*>(request->lines().data());
+      auto name_to_assign_to_lines = const_cast<const char*>(request->name_to_assign_to_lines().data());
+      int line_grouping;
+      switch (request->line_grouping_enum_case()) {
+        case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::kLineGrouping: {
+          line_grouping = static_cast<int>(request->line_grouping());
+          break;
+        }
+        case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::kLineGroupingRaw: {
+          line_grouping = static_cast<int>(request->line_grouping_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::LINE_GROUPING_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for line_grouping was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateDIChan(task, lines, name_to_assign_to_lines, line_grouping);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateDOChan(::grpc::ServerContext* context, const CreateDOChanRequest* request, CreateDOChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto lines = const_cast<const char*>(request->lines().data());
+      auto name_to_assign_to_lines = const_cast<const char*>(request->name_to_assign_to_lines().data());
+      int line_grouping;
+      switch (request->line_grouping_enum_case()) {
+        case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::kLineGrouping: {
+          line_grouping = static_cast<int>(request->line_grouping());
+          break;
+        }
+        case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::kLineGroupingRaw: {
+          line_grouping = static_cast<int>(request->line_grouping_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::LINE_GROUPING_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for line_grouping was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateDOChan(task, lines, name_to_assign_to_lines, line_grouping);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateTask(::grpc::ServerContext* context, const CreateTaskRequest* request, CreateTaskResponse* response)
   {
     if (context->IsCancelled()) {

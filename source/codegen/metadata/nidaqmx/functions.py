@@ -56,6 +56,58 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateDIChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToLines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LineGrouping',
+                'name': 'lineGrouping',
+                'type': 'int'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateDOChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToLines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LineGrouping',
+                'name': 'lineGrouping',
+                'type': 'int'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateTask': {
         'init_method': True,
         'parameters': [

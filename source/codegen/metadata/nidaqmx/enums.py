@@ -25,6 +25,19 @@ enums = {
             }
         ]
     },
+    'LineGrouping': {
+        'name': 'LineGrouping',
+        'values': [
+            {
+                'name': 'ChanForAllLines',
+                'value': 1
+            },
+            {
+                'name': 'ChanPerLine',
+                'value': 0
+            }
+        ]
+    },
     'VoltageUnits2': {
         'name': 'VoltageUnits2',
         'values': [
@@ -45,4 +58,3 @@ enums = {
         ]
     }
 }
-

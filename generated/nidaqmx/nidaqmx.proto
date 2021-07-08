@@ -18,6 +18,8 @@ import "session.proto";
 service NiDAQmx {
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
   rpc CreateAIVoltageChan(CreateAIVoltageChanRequest) returns (CreateAIVoltageChanResponse);
+  rpc CreateDIChan(CreateDIChanRequest) returns (CreateDIChanResponse);
+  rpc CreateDOChan(CreateDOChanRequest) returns (CreateDOChanResponse);
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
@@ -34,6 +36,13 @@ enum InputTermCfgWithDefault {
   INPUT_TERM_CFG_WITH_DEFAULT_NRSE = 10078;
   INPUT_TERM_CFG_WITH_DEFAULT_Diff = 10106;
   INPUT_TERM_CFG_WITH_DEFAULT_PseudoDiff = 12529;
+}
+
+enum LineGrouping {
+  option allow_alias = true;
+  LINE_GROUPING_UNSPECIFIED = 0;
+  LINE_GROUPING_ChanForAllLines = 1;
+  LINE_GROUPING_ChanPerLine = 0;
 }
 
 enum VoltageUnits2 {
@@ -68,6 +77,34 @@ message CreateAIVoltageChanRequest {
 }
 
 message CreateAIVoltageChanResponse {
+  int32 status = 1;
+}
+
+message CreateDIChanRequest {
+  nidevice_grpc.Session task = 1;
+  string lines = 2;
+  string name_to_assign_to_lines = 3;
+  oneof line_grouping_enum {
+    LineGrouping line_grouping = 4;
+    int32 line_grouping_raw = 5;
+  }
+}
+
+message CreateDIChanResponse {
+  int32 status = 1;
+}
+
+message CreateDOChanRequest {
+  nidevice_grpc.Session task = 1;
+  string lines = 2;
+  string name_to_assign_to_lines = 3;
+  oneof line_grouping_enum {
+    LineGrouping line_grouping = 4;
+    int32 line_grouping_raw = 5;
+  }
+}
+
+message CreateDOChanResponse {
   int32 status = 1;
 }
 
