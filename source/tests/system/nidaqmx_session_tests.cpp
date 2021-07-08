@@ -43,7 +43,6 @@ class NiDAQmxSessionTests : public ::testing::Test {
     return nidaqmx_stub_;
   }
   DeviceServerInterface* device_server_;
-  std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<NiDAQmx::Stub> nidaqmx_stub_;
 };
 
@@ -57,8 +56,8 @@ TEST_F(NiDAQmxSessionTests, CreateTask_ClearTask_Succeeds)
 
   EXPECT_TRUE(create_status.ok());
   EXPECT_TRUE(clear_status.ok());
-  EXPECT_EQ(0, create_response.status());
-  EXPECT_EQ(0, clear_response.status());
+  EXPECT_EQ(DAQmxSuccess, create_response.status());
+  EXPECT_EQ(DAQmxSuccess, clear_response.status());
   EXPECT_NE(0, create_response.task().id());
 }
 }  // namespace system
