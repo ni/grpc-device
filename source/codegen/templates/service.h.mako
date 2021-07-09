@@ -36,6 +36,7 @@ resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
 #include <map>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
+#include <server/exceptions.h>
 
 #include "${config["module_name"]}_library_interface.h"
 

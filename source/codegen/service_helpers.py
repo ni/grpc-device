@@ -18,24 +18,25 @@ def create_args(parameters):
         twist_value = common_helpers.get_twist_value(parameters)
         twist_value_name = common_helpers.camel_to_snake(twist_value)
     for parameter in parameters:
-      parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-      is_array = common_helpers.is_array(parameter['type'])
-      is_output = common_helpers.is_output_parameter(parameter)
-      if is_output and common_helpers.is_string_arg(parameter):
-        type_without_brackets = common_helpers.get_underlying_type_name(parameter['type'])
-        result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
-      elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
-        result = f'{result}{parameter_name}.data(), '
-      elif parameter.get('is_size_param', False) and is_twist_mechanism:
-        result = f'{result}{twist_value_name}, '
-      else:
-        if is_array and common_helpers.is_struct(parameter):
-          parameter_name = parameter_name + ".data()"
-        elif not is_array and is_output:
-          result = f'{result}&'
-        elif is_input_array_that_needs_coercion(parameter):
-          parameter_name = parameter_name + ".get()"          
-        result = f'{result}{parameter_name}, '
+        parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+        is_array = common_helpers.is_array(parameter['type'])
+        is_output = common_helpers.is_output_parameter(parameter)
+        if is_output and common_helpers.is_string_arg(parameter):
+            type_without_brackets = common_helpers.get_underlying_type_name(
+                parameter['type'])
+            result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
+        elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
+            result = f'{result}{parameter_name}.data(), '
+        elif parameter.get('is_size_param', False) and is_twist_mechanism:
+            result = f'{result}{twist_value_name}, '
+        else:
+            if is_array and common_helpers.is_struct(parameter):
+                parameter_name = parameter_name + ".data()"
+            elif not is_array and is_output:
+                result = f'{result}&'
+            elif is_input_array_that_needs_coercion(parameter):
+                parameter_name = parameter_name + ".data()"
+            result = f'{result}{parameter_name}, '
     return result[:-2]
 
 def create_args_for_ivi_dance(parameters):

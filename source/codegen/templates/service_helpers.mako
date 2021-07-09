@@ -251,11 +251,22 @@ ${initialize_standard_input_param(function_name, parameter)}\
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 %elif service_helpers.is_input_array_that_needs_coercion(parameter):
       auto ${parameter_name}_raw = ${request_snippet};
-      // TODO uInt16 constants here
-      auto ${parameter_name} = std::unique_ptr<uInt16[]>(new uInt16[${parameter_name}_raw.size()]);
-      for (auto i = 0; i < ${parameter_name}_raw.size(); ++i) {
-        ${parameter_name}[i] = static_cast<uInt16>(${parameter_name}_raw.data()[i]);
-      }\
+      auto ${parameter_name} = std::vector<uInt16>();
+      ${parameter_name}.reserve(${parameter_name}_raw.size());
+      std::transform(
+        ${parameter_name}_raw.begin(),
+        ${parameter_name}_raw.end(),
+        std::back_inserter(${parameter_name}),
+        [](auto x) { 
+              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uInt16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uInt16>(x);
+        });
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
 % else:

@@ -89,7 +89,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     return response.status();
   }
 
-  int32 input_arrays_with_narrow_integer_types()
+  int32 input_arrays_with_narrow_integer_types_u16()
   {
     EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_))
         .With(CustomU16Data())
@@ -105,6 +105,22 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
 
     return response.status();
+  }
+
+  void input_arrays_with_narrow_integer_types_u16_out_of_range()
+  {
+    using ::testing::HasSubstr;
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_))
+        .Times(0);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_u16_array(UINT16_MAX + 1);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(UINT16_MAX + 1)));
   }
 };
 
@@ -130,10 +146,15 @@ TEST_F(NiFakeNonIviServiceTests, InitWithHandleNameAsSessionName_CloseSession_Cl
   EXPECT_EQ(kDriverSuccess, status);
 }
 
-TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_DataGetsCoerced)
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataGetsCoerced)
 {
-  auto status = input_arrays_with_narrow_integer_types();
+  auto status = input_arrays_with_narrow_integer_types_u16();
   EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataOutOfRange_ReturnsError)
+{
+  input_arrays_with_narrow_integer_types_u16_out_of_range();
 }
 
 }  // namespace unit

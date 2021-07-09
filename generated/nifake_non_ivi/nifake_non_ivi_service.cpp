@@ -41,6 +41,9 @@ namespace nifake_non_ivi_grpc {
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -70,6 +73,9 @@ namespace nifake_non_ivi_grpc {
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
   }
 
@@ -101,6 +107,9 @@ namespace nifake_non_ivi_grpc {
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -112,17 +121,32 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto u16_array_raw = request->u16_array();
-      // TODO uInt16 constants here
-      auto u16_array = std::unique_ptr<uInt16[]>(new uInt16[u16_array_raw.size()]);
-      for (auto i = 0; i < u16_array_raw.size(); ++i) {
-        u16_array[i] = static_cast<uInt16>(u16_array_raw.data()[i]);
-      }
-      auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.get());
+      auto u16_array = std::vector<uInt16>();
+      u16_array.reserve(u16_array_raw.size());
+      std::transform(
+        u16_array_raw.begin(),
+        u16_array_raw.end(),
+        std::back_inserter(u16_array),
+        [](auto x) { 
+              if (x > std::numeric_limits<uInt16>::max()) {
+                    //TODO
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uInt16>(x);
+        });
+
+      auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.data());
       response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
   }
 

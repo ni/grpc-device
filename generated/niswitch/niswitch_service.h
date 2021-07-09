@@ -15,6 +15,7 @@
 #include <map>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
+#include <server/exceptions.h>
 
 #include "niswitch_library_interface.h"
 

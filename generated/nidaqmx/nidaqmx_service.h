@@ -15,6 +15,7 @@
 #include <map>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
+#include <server/exceptions.h>
 
 #include "nidaqmx_library_interface.h"
 
