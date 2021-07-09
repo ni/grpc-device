@@ -208,8 +208,8 @@ ${initialize_standard_input_param(function_name, parameter)}\
   c_type_pointer = c_type.replace('[]','*')
   c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
 %>\
-% if c_type in ['ViConstString', 'const char*']:
-      ${c_type} ${parameter_name} = ${request_snippet}.c_str();\
+% if c_type in ['ViConstString', 'const char[]']:
+      auto ${parameter_name} = ${request_snippet}.c_str();\
 % elif c_type == 'ViString' or c_type == 'ViRsrc':
       ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
 % elif common_helpers.is_string_arg(parameter):

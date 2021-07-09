@@ -51,7 +51,7 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session_name = const_cast<const char*>(request->session_name().data());
+      auto session_name = request->session_name().c_str();
 
       auto init_lambda = [&] () {
         FakeHandle handle;
@@ -81,7 +81,7 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto handle_name = const_cast<const char*>(request->handle_name().data());
+      auto handle_name = request->handle_name().c_str();
 
       auto init_lambda = [&] () {
         FakeHandle handle;

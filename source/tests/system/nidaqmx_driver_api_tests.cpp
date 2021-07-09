@@ -123,7 +123,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   template <typename TRequest>
   void set_request_session_id(TRequest& request)
   {
-    request.mutable_task()->set_request_session_id(driver_session_->id());
+    request.mutable_task()->set_id(driver_session_->id());
   }
 
   template <typename TResponse>

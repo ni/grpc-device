@@ -53,8 +53,8 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      auto physical_channel = const_cast<const char*>(request->physical_channel().data());
-      auto name_to_assign_to_channel = const_cast<const char*>(request->name_to_assign_to_channel().data());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int terminal_config;
       switch (request->terminal_config_enum_case()) {
         case nidaqmx_grpc::CreateAIVoltageChanRequest::TerminalConfigEnumCase::kTerminalConfig: {
@@ -89,7 +89,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto custom_scale_name = const_cast<const char*>(request->custom_scale_name().data());
+      auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIVoltageChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, custom_scale_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -109,8 +109,8 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      auto lines = const_cast<const char*>(request->lines().data());
-      auto name_to_assign_to_lines = const_cast<const char*>(request->name_to_assign_to_lines().data());
+      auto lines = request->lines().c_str();
+      auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
       int line_grouping;
       switch (request->line_grouping_enum_case()) {
         case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::kLineGrouping: {
@@ -146,8 +146,8 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      auto lines = const_cast<const char*>(request->lines().data());
-      auto name_to_assign_to_lines = const_cast<const char*>(request->name_to_assign_to_lines().data());
+      auto lines = request->lines().c_str();
+      auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
       int line_grouping;
       switch (request->line_grouping_enum_case()) {
         case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::kLineGrouping: {
@@ -181,7 +181,7 @@ namespace nidaqmx_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session_name = const_cast<const char*>(request->session_name().data());
+      auto session_name = request->session_name().c_str();
 
       auto init_lambda = [&] () {
         TaskHandle task;

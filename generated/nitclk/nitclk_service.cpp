@@ -84,7 +84,7 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(session, channel_name, attribute_id, &value);
@@ -109,7 +109,7 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession value {};
       auto status = library_->GetAttributeViSession(session, channel_name, attribute_id, &value);
@@ -221,7 +221,7 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(session, channel_name, attribute_id, value);
@@ -243,7 +243,7 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
@@ -266,9 +266,9 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViConstString value = request->value_raw().c_str();
+      auto value = request->value_raw().c_str();
       auto status = library_->SetAttributeViString(session, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
