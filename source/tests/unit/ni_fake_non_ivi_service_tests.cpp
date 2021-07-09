@@ -22,6 +22,12 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+MATCHER(CustomU16Data, "")
+{
+  uInt16 const* write_data_array = std::get<0>(arg);
+  return write_data_array[0] == 0 && write_data_array[1] == UINT16_MAX && write_data_array[2] == 16;
+}
+
 class NiFakeNonIviServiceTests : public ::testing::Test {
  protected:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
@@ -82,6 +88,24 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
     return response.status();
   }
+
+  int32 input_arrays_with_narrow_integer_types()
+  {
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_))
+        .With(CustomU16Data())
+        .Times(1);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_u16_array(0);
+    request.add_u16_array(UINT16_MAX);
+    request.add_u16_array(16);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+    return response.status();
+  }
 };
 
 TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceeds)
@@ -105,6 +129,13 @@ TEST_F(NiFakeNonIviServiceTests, InitWithHandleNameAsSessionName_CloseSession_Cl
 
   EXPECT_EQ(kDriverSuccess, status);
 }
+
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_DataGetsCoerced)
+{
+  auto status = input_arrays_with_narrow_integer_types();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

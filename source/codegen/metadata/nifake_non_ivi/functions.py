@@ -43,5 +43,16 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'InputArraysWithNarrowIntegerTypes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'u16Array',
+                'type': 'const uInt16*',
+                'grpc_type': 'repeated uint32',
+            }
+        ],
+        'returns': 'int32'
     }
 }

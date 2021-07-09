@@ -266,7 +266,6 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
-    "source/tests/unit/nidaqmx_tests.cpp"
     "source/tests/unit/session_resource_repository_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
@@ -300,10 +299,6 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
-    "${service_output_dir}/nidaqmx/nidaqmx_service.cpp"
-    "${custom_dir}/nidaqmx_service.custom.cpp"
-    "${proto_srcs_dir}/nidaqmx.pb.cc"
-    "${proto_srcs_dir}/nidaqmx.grpc.pb.cc"
 )
 
 # ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.

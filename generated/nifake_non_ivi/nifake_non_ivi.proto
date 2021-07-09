@@ -19,6 +19,7 @@ service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
+  rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
 }
 
 enum NiFakeNonIviAttributes {
@@ -49,5 +50,13 @@ message InitWithHandleNameAsSessionNameRequest {
 message InitWithHandleNameAsSessionNameResponse {
   int32 status = 1;
   nidevice_grpc.Session handle = 2;
+}
+
+message InputArraysWithNarrowIntegerTypesRequest {
+  repeated uint32 u16_array = 1;
+}
+
+message InputArraysWithNarrowIntegerTypesResponse {
+  int32 status = 1;
 }
 

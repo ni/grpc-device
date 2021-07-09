@@ -103,5 +103,28 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const InputArraysWithNarrowIntegerTypesRequest* request, InputArraysWithNarrowIntegerTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto u16_array_raw = request->u16_array();
+      // TODO uInt16 constants here
+      auto u16_array = std::unique_ptr<uInt16[]>(new uInt16[u16_array_raw.size()]);
+      for (auto i = 0; i < u16_array_raw.size(); ++i) {
+        u16_array[i] = static_cast<uInt16>(u16_array_raw.data()[i]);
+      }
+      auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.get());
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 } // namespace nifake_non_ivi_grpc
 
