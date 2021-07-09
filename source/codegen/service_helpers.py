@@ -8,16 +8,23 @@ def get_include_guard_name(config, suffix):
 NARROW_INTEGER_TYPE_TO_GRPC_TYPE_MAP = {
     "uInt16": "uint32", "int16": "int32", "int8": "int32"}
 
-def is_input_array_that_needs_coercion(parameter):
+
+def get_c_element_type_for_input_array_that_needs_coercion(parameter):
     if 'grpc_type' not in parameter:
-        return False
+        return None
     if not (parameter['type'].startswith('const ') and parameter['type'].endswith('*')):
-        return False
+        return None
     stripped_type = parameter['type'][len('const '):-1]
     grpc_type = NARROW_INTEGER_TYPE_TO_GRPC_TYPE_MAP.get(stripped_type)
     if grpc_type is None:
-        return False
-    return parameter['grpc_type'] == 'repeated ' + grpc_type
+        return None
+    if parameter['grpc_type'] == 'repeated ' + grpc_type:
+        return stripped_type
+    return None
+
+
+def is_input_array_that_needs_coercion(parameter):
+    return get_c_element_type_for_input_array_that_needs_coercion(parameter) is not None
 
 
 def create_args(parameters):

@@ -207,6 +207,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
   grpc_type = parameter.get('grpc_type', None)
   c_type_pointer = c_type.replace('[]','*')
   c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
+  c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_input_array_that_needs_coercion(parameter)
 %>\
 % if c_type in ['ViConstString', 'const char[]']:
       auto ${parameter_name} = ${request_snippet}.c_str();\
@@ -251,21 +252,21 @@ ${initialize_standard_input_param(function_name, parameter)}\
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 %elif service_helpers.is_input_array_that_needs_coercion(parameter):
       auto ${parameter_name}_raw = ${request_snippet};
-      auto ${parameter_name} = std::vector<uInt16>();
+      auto ${parameter_name} = std::vector<${c_element_type_that_needs_coercion}>();
       ${parameter_name}.reserve(${parameter_name}_raw.size());
       std::transform(
         ${parameter_name}_raw.begin(),
         ${parameter_name}_raw.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { 
-              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+              if (x < std::numeric_limits<${c_element_type_that_needs_coercion}>::min() || x > std::numeric_limits<${c_element_type_that_needs_coercion}>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
                   message.append(" doesn't fit in datatype ");
-                  message.append("uInt16");
+                  message.append("${c_element_type_that_needs_coercion}");
                   throw nidevice_grpc::ValueOutOfRangeException(message);
               }
-              return static_cast<uInt16>(x);
+              return static_cast<${c_element_type_that_needs_coercion}>(x);
         });
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
