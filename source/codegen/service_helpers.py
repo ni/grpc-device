@@ -5,10 +5,19 @@ def get_include_guard_name(config, suffix):
     return include_guard_name.upper()
 
 
+NARROW_INTEGER_TYPE_TO_GRPC_TYPE_MAP = {
+    "uInt16": "uint32", "int16": "int32", "int8": "int32"}
+
 def is_input_array_that_needs_coercion(parameter):
     if 'grpc_type' not in parameter:
         return False
-    return parameter['type'] == 'const uInt16*' and parameter['grpc_type'] == 'repeated uint32'
+    if not (parameter['type'].startswith('const ') and parameter['type'].endswith('*')):
+        return False
+    stripped_type = parameter['type'][len('const '):-1]
+    grpc_type = NARROW_INTEGER_TYPE_TO_GRPC_TYPE_MAP.get(stripped_type)
+    if grpc_type is None:
+        return False
+    return parameter['grpc_type'] == 'repeated ' + grpc_type
 
 
 def create_args(parameters):

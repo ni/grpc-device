@@ -128,11 +128,11 @@ namespace nifake_non_ivi_grpc {
         u16_array_raw.end(),
         std::back_inserter(u16_array),
         [](auto x) { 
-              if (x > std::numeric_limits<uInt16>::max()) {
-                    //TODO
+              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
-                  message.append(" doesn't fit");
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uInt16");
                   throw nidevice_grpc::ValueOutOfRangeException(message);
               }
               return static_cast<uInt16>(x);
