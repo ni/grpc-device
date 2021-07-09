@@ -31,8 +31,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     CreateTaskResponse response;
-
-    auto status = create_task("", response);
+    auto status = create_task(response);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.task());
 
     EXPECT_SUCCESS(status, response);
@@ -44,30 +43,23 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
 
     ::grpc::ClientContext context;
     ClearTaskResponse response;
-
-    auto status = clear_task(driver_session_->name(), driver_session_->id(), response);
+    auto status = clear_task(response);
 
     EXPECT_SUCCESS(status, response);
   }
 
-  ::grpc::Status create_task(const std::string& name, CreateTaskResponse& response)
+  ::grpc::Status create_task(CreateTaskResponse& response)
   {
     ::grpc::ClientContext context;
     CreateTaskRequest request;
-    request.set_session_name(name);
     return stub()->CreateTask(&context, request, &response);
   }
 
-  ::grpc::Status clear_task(const std::string& name, uint32_t session_id, ClearTaskResponse& response)
+  ::grpc::Status clear_task(ClearTaskResponse& response)
   {
     ::grpc::ClientContext context;
     ClearTaskRequest request;
-    if (!name.empty()) {
-      request.mutable_task()->set_name(name);
-    }
-    if (session_id) {
-      request.mutable_task()->set_id(session_id);
-    }
+    set_request_session_id(request);
     return stub()->ClearTask(&context, request, &response);
   }
 
@@ -75,7 +67,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     CreateAIVoltageChanRequest request;
-    set_id(request);
+    set_request_session_id(request);
     request.set_physical_channel("Dev1/ai0");
     request.set_name_to_assign_to_channel("channel1");
     request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_Cfg_Default);
@@ -89,7 +81,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     CreateDIChanRequest request;
-    set_id(request);
+    set_request_session_id(request);
     request.set_lines("Dev1/port0/line0");
     request.set_name_to_assign_to_lines("di");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_ChanPerLine);
@@ -100,7 +92,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     CreateDOChanRequest request;
-    set_id(request);
+    set_request_session_id(request);
     request.set_lines("Dev1/port1/line0");
     request.set_name_to_assign_to_lines("do");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_ChanPerLine);
@@ -111,7 +103,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     StartTaskRequest request;
-    set_id(request);
+    set_request_session_id(request);
     return stub()->StartTask(&context, request, &response);
   }
 
@@ -119,7 +111,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     StopTaskRequest request;
-    set_id(request);
+    set_request_session_id(request);
     return stub()->StopTask(&context, request, &response);
   }
 
@@ -129,13 +121,13 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   }
 
   template <typename TRequest>
-  void set_id(TRequest& request)
+  void set_request_session_id(TRequest& request)
   {
-    request.mutable_task()->set_id(driver_session_->id());
+    request.mutable_task()->set_request_session_id(driver_session_->id());
   }
 
   template <typename TResponse>
-  void EXPECT_SUCCESS(const ::grpc::Status& status, TResponse& response)
+  void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
   {
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(DAQmxSuccess, response.status());
