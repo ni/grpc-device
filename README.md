@@ -1,4 +1,4 @@
-# NI Device gRPC Server and Client APIs
+# NI gRPC Device Server and Client APIs
 
 This repo contains the source code needed to build and run the NI gRPC Device Server for supported NI hardware driver APIs. Also contained in this repo are instructions and examples that demonstrate how to create client code that interacts with devices connected to an instance of the NI gRPC Device Server.
 
