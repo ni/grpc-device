@@ -54,6 +54,8 @@ message InitWithHandleNameAsSessionNameResponse {
 
 message InputArraysWithNarrowIntegerTypesRequest {
   repeated uint32 u16_array = 1;
+  repeated int32 i16_array = 2;
+  repeated int32 i8_array = 3;
 }
 
 message InputArraysWithNarrowIntegerTypesResponse {

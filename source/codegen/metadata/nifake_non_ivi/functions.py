@@ -51,6 +51,18 @@ functions = {
                 'name': 'u16Array',
                 'type': 'const uInt16*',
                 'grpc_type': 'repeated uint32',
+            },
+            {
+                'direction': 'in',
+                'name': 'i16Array',
+                'type': 'const int16*',
+                'grpc_type': 'repeated int32',
+            },
+            {
+                'direction': 'in',
+                'name': 'i8Array',
+                'type': 'const int8*',
+                'grpc_type': 'repeated int32',
             }
         ],
         'returns': 'int32'

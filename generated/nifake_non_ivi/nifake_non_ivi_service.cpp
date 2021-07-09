@@ -138,7 +138,43 @@ namespace nifake_non_ivi_grpc {
               return static_cast<uInt16>(x);
         });
 
-      auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.data());
+      auto i16_array_raw = request->i16_array();
+      auto i16_array = std::vector<int16>();
+      i16_array.reserve(i16_array_raw.size());
+      std::transform(
+        i16_array_raw.begin(),
+        i16_array_raw.end(),
+        std::back_inserter(i16_array),
+        [](auto x) { 
+              if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int16>(x);
+        });
+
+      auto i8_array_raw = request->i8_array();
+      auto i8_array = std::vector<int8>();
+      i8_array.reserve(i8_array_raw.size());
+      std::transform(
+        i8_array_raw.begin(),
+        i8_array_raw.end(),
+        std::back_inserter(i8_array),
+        [](auto x) { 
+              if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8>(x);
+        });
+
+      auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.data(), i16_array.data(), i8_array.data());
       response->set_status(status);
       return ::grpc::Status::OK;
     }

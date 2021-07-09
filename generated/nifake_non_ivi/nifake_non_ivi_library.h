@@ -19,18 +19,21 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 Close(FakeHandle handle);
-  int32 Init(const char sessionName[], FakeHandle* handle);
-  int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle);
+  int32 Init(const char* sessionName, FakeHandle* handle);
+  int32 InitWithHandleNameAsSessionName(const char* handleName, FakeHandle* handle);
+  int32 InputArraysWithNarrowIntegerTypes(const uInt16* u16Array, const int16* i16Array, const int8* i8Array);
 
  private:
   using ClosePtr = int32 (*)(FakeHandle handle);
-  using InitPtr = int32 (*)(const char sessionName[], FakeHandle* handle);
-  using InitWithHandleNameAsSessionNamePtr = int32 (*)(const char handleName[], FakeHandle* handle);
+  using InitPtr = int32 (*)(const char* sessionName, FakeHandle* handle);
+  using InitWithHandleNameAsSessionNamePtr = int32 (*)(const char* handleName, FakeHandle* handle);
+  using InputArraysWithNarrowIntegerTypesPtr = int32 (*)(const uInt16* u16Array, const int16* i16Array, const int8* i8Array);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
     InitPtr Init;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
+    InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

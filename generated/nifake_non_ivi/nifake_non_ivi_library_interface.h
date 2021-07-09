@@ -16,8 +16,9 @@ class NiFakeNonIviLibraryInterface {
   virtual ~NiFakeNonIviLibraryInterface() {}
 
   virtual int32 Close(FakeHandle handle) = 0;
-  virtual int32 Init(const char sessionName[], FakeHandle* handle) = 0;
-  virtual int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle) = 0;
+  virtual int32 Init(const char* sessionName, FakeHandle* handle) = 0;
+  virtual int32 InitWithHandleNameAsSessionName(const char* handleName, FakeHandle* handle) = 0;
+  virtual int32 InputArraysWithNarrowIntegerTypes(const uInt16* u16Array, const int16* i16Array, const int8* i8Array) = 0;
 };
 
 }  // namespace nifake_non_ivi_grpc

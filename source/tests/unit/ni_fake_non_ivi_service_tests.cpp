@@ -28,6 +28,18 @@ MATCHER(CustomU16Data, "")
   return write_data_array[0] == 0 && write_data_array[1] == UINT16_MAX && write_data_array[2] == 16;
 }
 
+MATCHER(CustomI16Data, "")
+{
+  int16 const* write_data_array = std::get<1>(arg);
+  return write_data_array[0] == 0 && write_data_array[1] == INT16_MAX && write_data_array[2] == INT16_MIN;
+}
+
+MATCHER(CustomI8Data, "")
+{
+  int8 const* write_data_array = std::get<2>(arg);
+  return write_data_array[0] == 0 && write_data_array[1] == INT8_MAX && write_data_array[2] == INT8_MIN;
+}
+
 class NiFakeNonIviServiceTests : public ::testing::Test {
  protected:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
@@ -91,7 +103,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   int32 input_arrays_with_narrow_integer_types_u16()
   {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_))
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
         .With(CustomU16Data())
         .Times(1);
 
@@ -110,7 +122,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
   void input_arrays_with_narrow_integer_types_u16_out_of_range()
   {
     using ::testing::HasSubstr;
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_))
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
         .Times(0);
 
     ::grpc::ServerContext context;
@@ -121,6 +133,106 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
     EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
     EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(UINT16_MAX + 1)));
+  }
+
+  int32 input_arrays_with_narrow_integer_types_i16()
+  {
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+        .With(CustomI16Data())
+        .Times(1);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_i16_array(0);
+    request.add_i16_array(INT16_MAX);
+    request.add_i16_array(INT16_MIN);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+    return response.status();
+  }
+
+  void input_arrays_with_narrow_integer_types_i16_out_of_range_too_high()
+  {
+    using ::testing::HasSubstr;
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+        .Times(0);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_i16_array(INT16_MAX + 1);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MAX + 1)));
+  }
+
+  void input_arrays_with_narrow_integer_types_i16_out_of_range_too_low()
+  {
+    using ::testing::HasSubstr;
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+        .Times(0);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_i16_array(INT16_MIN - 1);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MIN - 1)));
+  }
+
+  int32 input_arrays_with_narrow_integer_types_i8()
+  {
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+        .With(CustomI8Data())
+        .Times(1);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_i8_array(0);
+    request.add_i8_array(INT8_MAX);
+    request.add_i8_array(INT8_MIN);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+    return response.status();
+  }
+
+  void input_arrays_with_narrow_integer_types_i8_out_of_range_too_high()
+  {
+    using ::testing::HasSubstr;
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+        .Times(0);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_i8_array(INT8_MAX + 1);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MAX + 1)));
+  }
+
+  void input_arrays_with_narrow_integer_types_i8_out_of_range_too_low()
+  {
+    using ::testing::HasSubstr;
+    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+        .Times(0);
+
+    ::grpc::ServerContext context;
+    InputArraysWithNarrowIntegerTypesRequest request;
+    request.add_i8_array(INT8_MIN - 1);
+    InputArraysWithNarrowIntegerTypesResponse response;
+
+    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
   }
 };
 
@@ -157,6 +269,37 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataOutOfR
   input_arrays_with_narrow_integer_types_u16_out_of_range();
 }
 
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataGetsCoerced)
+{
+  auto status = input_arrays_with_narrow_integer_types_i16();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfRangeTooHigh_ReturnsError)
+{
+  input_arrays_with_narrow_integer_types_i16_out_of_range_too_high();
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfRangeTooLow_ReturnsError)
+{
+  input_arrays_with_narrow_integer_types_i16_out_of_range_too_low();
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataGetsCoerced)
+{
+  auto status = input_arrays_with_narrow_integer_types_i8();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRangeTooHigh_ReturnsError)
+{
+  input_arrays_with_narrow_integer_types_i8_out_of_range_too_high();
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRangeTooLow_ReturnsError)
+{
+  input_arrays_with_narrow_integer_types_i8_out_of_range_too_low();
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
