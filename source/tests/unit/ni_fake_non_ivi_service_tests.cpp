@@ -11,9 +11,12 @@ using namespace nifake_non_ivi_grpc;
 
 using ::testing::_;
 using ::testing::DoAll;
+using ::testing::HasSubstr;
+using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::StrEq;
+using ::testing::Unused;
 
 const int32 kDriverSuccess = 0;
 const int32 kDriverFailure = 1;
@@ -39,6 +42,13 @@ MATCHER(CustomI8Data, "")
   int8 const* write_data_array = std::get<2>(arg);
   return write_data_array[0] == 0 && write_data_array[1] == INT8_MAX && write_data_array[2] == INT8_MIN;
 }
+
+void SetU16Data(Unused, uInt16* u16_data)
+{
+  u16_data[0] = 0;
+  u16_data[1] = UINT16_MAX;
+  u16_data[2] = 16;
+};
 
 class NiFakeNonIviServiceTests : public ::testing::Test {
  protected:
@@ -121,7 +131,6 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   void input_arrays_with_narrow_integer_types_u16_out_of_range()
   {
-    using ::testing::HasSubstr;
     EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
         .Times(0);
 
@@ -155,7 +164,6 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   void input_arrays_with_narrow_integer_types_i16_out_of_range_too_high()
   {
-    using ::testing::HasSubstr;
     EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
         .Times(0);
 
@@ -171,7 +179,6 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   void input_arrays_with_narrow_integer_types_i16_out_of_range_too_low()
   {
-    using ::testing::HasSubstr;
     EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
         .Times(0);
 
@@ -205,7 +212,6 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   void input_arrays_with_narrow_integer_types_i8_out_of_range_too_high()
   {
-    using ::testing::HasSubstr;
     EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
         .Times(0);
 
@@ -221,7 +227,6 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   void input_arrays_with_narrow_integer_types_i8_out_of_range_too_low()
   {
-    using ::testing::HasSubstr;
     EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
         .Times(0);
 
@@ -233,6 +238,25 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
     EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
     EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
+  }
+
+  int32 output_array_with_narrow_integer_types_u16()
+  {
+    ::grpc::ServerContext context;
+    OutputArraysWithNarrowIntegerTypesRequest request;
+    request.set_number_of_u16_samples(3);
+    OutputArraysWithNarrowIntegerTypesResponse response;
+    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _))
+        .WillOnce(DoAll(
+            Invoke(SetU16Data),
+            Return(kDriverSuccess)));
+
+    service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(3, response.u16_data_size());
+    EXPECT_EQ(0, response.u16_data().Get(0));
+    EXPECT_EQ(UINT16_MAX, response.u16_data().Get(1));
+    EXPECT_EQ(16, response.u16_data().Get(2));
+    return response.status();
   }
 };
 
@@ -299,6 +323,11 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRa
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRangeTooLow_ReturnsError)
 {
   input_arrays_with_narrow_integer_types_i8_out_of_range_too_low();
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_U16)
+{
+  output_array_with_narrow_integer_types_u16();
 }
 }  // namespace unit
 }  // namespace tests

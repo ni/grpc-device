@@ -206,7 +206,7 @@ namespace nifake_non_ivi_grpc {
           u16_data.end(),
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
           [](auto x) { 
-              return static_cast<uInt16[]>(x);
+              return x;
           });
       }
       return ::grpc::Status::OK;

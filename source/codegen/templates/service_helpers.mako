@@ -362,7 +362,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
           ${parameter_name}.end(),
           google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
           [](auto x) { 
-              return static_cast<${parameter['type']}>(x);
+              return x;
           });
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.is_string_arg(parameter):
