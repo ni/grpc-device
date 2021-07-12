@@ -1,15 +1,16 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
+#include "enumerate_devices.h"
+
 #include "nidaqmx/nidaqmx_service.h"
 
+using namespace ::testing;
 using namespace nidaqmx_grpc;
 
 namespace ni {
 namespace tests {
 namespace system {
-// These tests use a simulated PXIe-6341 named "Dev1".
-// In MAX, this can be set up by importing grpc-device-daq-tests.nce.
 class NiDAQmxDriverApiTests : public ::testing::Test {
  protected:
   NiDAQmxDriverApiTests()
@@ -21,12 +22,35 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
 
   void SetUp() override
   {
+    // In MAX, this can be set up by importing grpc-device-daq-tests.nce.
+    std::unordered_map<std::string, std::string> required_devices
+    {
+      { "Dev1", "NI PXIe-6341" }
+    };
+
+    if (!are_all_devices_present(required_devices)) {
+      GTEST_SKIP() << "Required Device(s) not found";
+    }
+
     initialize_driver_session();
   }
 
   void TearDown() override
   {
     close_driver_session();
+  }
+
+  bool are_all_devices_present(std::unordered_map<std::string, std::string> required_devices) 
+  {
+    for(const auto& device : EnumerateDevices()) {
+      auto matched_required_device = required_devices.find(device.name());
+      if (matched_required_device != required_devices.cend()
+        && matched_required_device->second == device.model()) {
+          required_devices.erase(matched_required_device);
+      }
+    }
+
+    return required_devices.empty();
   }
 
   void initialize_driver_session()
@@ -148,7 +172,7 @@ TEST_F(NiDAQmxDriverApiTests, CreateAIVoltageChannel_Succeeds)
   EXPECT_SUCCESS(status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, CreateDIChan_Succeeds)
+TEST_F(NiDAQmxDriverApiTests, CreateDIChannel_Succeeds)
 {
   CreateDIChanResponse response;
   auto status = create_di_chan(response);
@@ -156,7 +180,7 @@ TEST_F(NiDAQmxDriverApiTests, CreateDIChan_Succeeds)
   EXPECT_SUCCESS(status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, CreateDOChan_Succeeds)
+TEST_F(NiDAQmxDriverApiTests, CreateDOChannel_Succeeds)
 {
   CreateDOChanResponse response;
   auto status = create_do_chan(response);
