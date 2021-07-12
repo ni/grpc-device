@@ -43,11 +43,25 @@ MATCHER(CustomI8Data, "")
   return write_data_array[0] == 0 && write_data_array[1] == INT8_MAX && write_data_array[2] == INT8_MIN;
 }
 
-void SetU16Data(Unused, uInt16* u16_data)
+void SetU16Data(Unused, uInt16* u16_data, Unused, Unused, Unused, Unused)
 {
   u16_data[0] = 0;
   u16_data[1] = UINT16_MAX;
   u16_data[2] = 16;
+};
+
+void SetI16Data(Unused, Unused, Unused, int16* i16_data, Unused, Unused)
+{
+  i16_data[0] = 0;
+  i16_data[1] = INT16_MAX;
+  i16_data[2] = INT16_MIN;
+};
+
+void SetI8Data(Unused, Unused, Unused, Unused, Unused, int8* i8_data)
+{
+  i8_data[0] = 0;
+  i8_data[1] = INT8_MAX;
+  i8_data[2] = INT8_MIN;
 };
 
 class NiFakeNonIviServiceTests : public ::testing::Test {
@@ -246,7 +260,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     OutputArraysWithNarrowIntegerTypesRequest request;
     request.set_number_of_u16_samples(3);
     OutputArraysWithNarrowIntegerTypesResponse response;
-    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _))
+    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
         .WillOnce(DoAll(
             Invoke(SetU16Data),
             Return(kDriverSuccess)));
@@ -256,6 +270,44 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     EXPECT_EQ(0, response.u16_data().Get(0));
     EXPECT_EQ(UINT16_MAX, response.u16_data().Get(1));
     EXPECT_EQ(16, response.u16_data().Get(2));
+    return response.status();
+  }
+
+  int32 output_array_with_narrow_integer_types_i16()
+  {
+    ::grpc::ServerContext context;
+    OutputArraysWithNarrowIntegerTypesRequest request;
+    request.set_number_of_i16_samples(3);
+    OutputArraysWithNarrowIntegerTypesResponse response;
+    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+        .WillOnce(DoAll(
+            Invoke(SetI16Data),
+            Return(kDriverSuccess)));
+
+    service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(3, response.i16_data_size());
+    EXPECT_EQ(0, response.i16_data().Get(0));
+    EXPECT_EQ(INT16_MAX, response.i16_data().Get(1));
+    EXPECT_EQ(INT16_MIN, response.i16_data().Get(2));
+    return response.status();
+  }
+
+  int32 output_array_with_narrow_integer_types_i8()
+  {
+    ::grpc::ServerContext context;
+    OutputArraysWithNarrowIntegerTypesRequest request;
+    request.set_number_of_i8_samples(3);
+    OutputArraysWithNarrowIntegerTypesResponse response;
+    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+        .WillOnce(DoAll(
+            Invoke(SetI8Data),
+            Return(kDriverSuccess)));
+
+    service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
+    EXPECT_EQ(3, response.i8_data_size());
+    EXPECT_EQ(0, response.i8_data().Get(0));
+    EXPECT_EQ(INT8_MAX, response.i8_data().Get(1));
+    EXPECT_EQ(INT8_MIN, response.i8_data().Get(2));
     return response.status();
   }
 };
@@ -327,7 +379,20 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRa
 
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_U16)
 {
-  output_array_with_narrow_integer_types_u16();
+  auto status = output_array_with_narrow_integer_types_u16();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I16)
+{
+  auto status = output_array_with_narrow_integer_types_i16();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I8)
+{
+  auto status = output_array_with_narrow_integer_types_i8();
+  EXPECT_EQ(kDriverSuccess, status);
 }
 }  // namespace unit
 }  // namespace tests

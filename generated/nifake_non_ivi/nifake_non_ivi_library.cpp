@@ -87,15 +87,15 @@ int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const uInt16* u16Ar
 #endif
 }
 
-int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, uInt16 u16Data[])
+int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, uInt16 u16Data[], int32 numberOfI16Samples, int16 i16Data[], int32 numberOfI8Samples, int8 i8Data[])
 {
   if (!function_pointers_.OutputArraysWithNarrowIntegerTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputArraysWithNarrowIntegerTypes.");
   }
 #if defined(_MSC_VER)
-  return niFakeNonIvi_OutputArraysWithNarrowIntegerTypes(numberOfU16Samples, u16Data);
+  return niFakeNonIvi_OutputArraysWithNarrowIntegerTypes(numberOfU16Samples, u16Data, numberOfI16Samples, i16Data, numberOfI8Samples, i8Data);
 #else
-  return function_pointers_.OutputArraysWithNarrowIntegerTypes(numberOfU16Samples, u16Data);
+  return function_pointers_.OutputArraysWithNarrowIntegerTypes(numberOfU16Samples, u16Data, numberOfI16Samples, i16Data, numberOfI8Samples, i8Data);
 #endif
 }
 

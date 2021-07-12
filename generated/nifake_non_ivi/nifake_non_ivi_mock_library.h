@@ -21,7 +21,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, Init, (const char* sessionName, FakeHandle* handle), (override));
   MOCK_METHOD(int32, InitWithHandleNameAsSessionName, (const char* handleName, FakeHandle* handle), (override));
   MOCK_METHOD(int32, InputArraysWithNarrowIntegerTypes, (const uInt16* u16Array, const int16* i16Array, const int8* i8Array), (override));
-  MOCK_METHOD(int32, OutputArraysWithNarrowIntegerTypes, (int32 numberOfU16Samples, uInt16 u16Data[]), (override));
+  MOCK_METHOD(int32, OutputArraysWithNarrowIntegerTypes, (int32 numberOfU16Samples, uInt16 u16Data[], int32 numberOfI16Samples, int16 i16Data[], int32 numberOfI8Samples, int8 i8Data[]), (override));
 };
 
 }  // namespace unit

@@ -195,8 +195,12 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       int32 number_of_u16_samples = request->number_of_u16_samples();
+      int32 number_of_i16_samples = request->number_of_i16_samples();
+      int32 number_of_i8_samples = request->number_of_i8_samples();
       std::vector<uInt16> u16_data(number_of_u16_samples);
-      auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data());
+      std::vector<int16> i16_data(number_of_i16_samples);
+      std::vector<int8> i8_data(number_of_i8_samples);
+      auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data(), number_of_i16_samples, i16_data.data(), number_of_i8_samples, i8_data.data());
       response->set_status(status);
       if (status == 0) {
         response->mutable_u16_data()->Clear();
@@ -205,6 +209,24 @@ namespace nifake_non_ivi_grpc {
           u16_data.begin(),
           u16_data.end(),
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+          [](auto x) { 
+              return x;
+          });
+        response->mutable_i16_data()->Clear();
+        response->mutable_i16_data()->Reserve(number_of_i16_samples);
+        std::transform(
+          i16_data.begin(),
+          i16_data.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
+          [](auto x) { 
+              return x;
+          });
+        response->mutable_i8_data()->Clear();
+        response->mutable_i8_data()->Reserve(number_of_i8_samples);
+        std::transform(
+          i8_data.begin(),
+          i8_data.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
           [](auto x) { 
               return x;
           });

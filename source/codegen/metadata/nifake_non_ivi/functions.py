@@ -84,6 +84,36 @@ functions = {
                 'type': 'uInt16[]',
                 'grpc_type': 'repeated uint32'
             },
+            {
+                'direction': 'in',
+                'name': 'numberOfI16Samples',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'i16Data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfI16Samples'
+                },
+                'type': 'int16[]',
+                'grpc_type': 'repeated int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfI8Samples',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'i8Data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfI8Samples'
+                },
+                'type': 'int8[]',
+                'grpc_type': 'repeated int32'
+            },
         ],
         'returns': 'int32'
     }

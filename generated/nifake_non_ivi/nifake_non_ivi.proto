@@ -65,10 +65,14 @@ message InputArraysWithNarrowIntegerTypesResponse {
 
 message OutputArraysWithNarrowIntegerTypesRequest {
   int32 number_of_u16_samples = 1;
+  int32 number_of_i16_samples = 2;
+  int32 number_of_i8_samples = 3;
 }
 
 message OutputArraysWithNarrowIntegerTypesResponse {
   int32 status = 1;
   repeated uint32 u16_data = 2;
+  repeated int32 i16_data = 3;
+  repeated int32 i8_data = 4;
 }
 
