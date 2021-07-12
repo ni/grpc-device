@@ -175,6 +175,21 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CommandWithReservedParam': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'pass_null',
+                'name': 'reserved',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'DoubleAllTheNums': {
         'documentation': {
             'description': 'Test for buffer with converter'

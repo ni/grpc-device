@@ -1619,6 +1619,28 @@ TEST(NiFakeServiceTests, NiFakeExtensionService_CallMethodWithSesionStartedByNIF
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_CallMethodWithReservedPassNullParam_PassesNull)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  EXPECT_CALL(library, CommandWithReservedParam(kTestViSession, nullptr))
+      .WillOnce(
+          DoAll(
+              Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::CommandWithReservedParamRequest request;
+  request.mutable_vi()->set_id(session_id);
+  nifake_grpc::CommandWithReservedParamResponse response;
+  auto status = service.CommandWithReservedParam(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

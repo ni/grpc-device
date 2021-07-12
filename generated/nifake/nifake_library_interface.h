@@ -21,6 +21,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) = 0;
   virtual ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;
   virtual ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;
+  virtual ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved) = 0;
   virtual ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]) = 0;
   virtual ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]) = 0;
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
