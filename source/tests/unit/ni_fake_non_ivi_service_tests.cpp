@@ -43,6 +43,12 @@ MATCHER(CustomI8Data, "")
   return write_data_array[0] == 0 && write_data_array[1] == INT8_MAX && write_data_array[2] == INT8_MIN;
 }
 
+MATCHER(CustomU8Data, "")
+{
+  uInt8 const* write_data_array = std::get<0>(arg);
+  return write_data_array[0] == 0 && write_data_array[1] == UINT8_MAX && write_data_array[2] == 16;
+}
+
 void SetU16Data(Unused, uInt16* u16_data, Unused, Unused, Unused, Unused)
 {
   u16_data[0] = 0;
@@ -310,6 +316,24 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     EXPECT_EQ(INT8_MIN, response.i8_data().Get(2));
     return response.status();
   }
+
+  int32 input_array_of_bytes()
+  {
+    EXPECT_CALL(library_, InputArrayOfBytes(_))
+        .With(CustomU8Data())
+        .Times(1);
+
+    ::grpc::ServerContext context;
+    InputArrayOfBytesRequest request;
+    request.mutable_u8_array()->push_back(0);
+    request.mutable_u8_array()->push_back(UINT8_MAX);
+    request.mutable_u8_array()->push_back(16);
+    InputArrayOfBytesResponse response;
+
+    service_.InputArrayOfBytes(&context, &request, &response);
+
+    return response.status();
+  }
 };
 
 TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceeds)
@@ -394,6 +418,13 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I8)
   auto status = output_array_with_narrow_integer_types_i8();
   EXPECT_EQ(kDriverSuccess, status);
 }
+
+TEST_F(NiFakeNonIviServiceTests, InputArrayOfBytes)
+{
+  auto status = input_array_of_bytes();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

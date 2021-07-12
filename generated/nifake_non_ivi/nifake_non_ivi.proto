@@ -21,6 +21,7 @@ service NiFakeNonIvi {
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
   rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
+  rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
 }
 
 enum NiFakeNonIviAttributes {
@@ -74,5 +75,13 @@ message OutputArraysWithNarrowIntegerTypesResponse {
   repeated uint32 u16_data = 2;
   repeated int32 i16_data = 3;
   repeated int32 i8_data = 4;
+}
+
+message InputArrayOfBytesRequest {
+  bytes u8_array = 1;
+}
+
+message InputArrayOfBytesResponse {
+  int32 status = 1;
 }
 

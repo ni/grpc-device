@@ -116,5 +116,17 @@ functions = {
             },
         ],
         'returns': 'int32'
-    }
+    },
+    'InputArrayOfBytes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'u8Array',
+                'type': 'const uInt8*',
+                'grpc_type': 'bytes',
+            },
+        ],
+        'returns': 'int32'
+    },
+
 }

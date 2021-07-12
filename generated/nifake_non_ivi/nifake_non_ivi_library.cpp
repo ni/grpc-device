@@ -26,6 +26,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
   function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
   function_pointers_.OutputArraysWithNarrowIntegerTypes = reinterpret_cast<OutputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithNarrowIntegerTypes"));
+  function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -96,6 +97,18 @@ int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16S
   return niFakeNonIvi_OutputArraysWithNarrowIntegerTypes(numberOfU16Samples, u16Data, numberOfI16Samples, i16Data, numberOfI8Samples, i8Data);
 #else
   return function_pointers_.OutputArraysWithNarrowIntegerTypes(numberOfU16Samples, u16Data, numberOfI16Samples, i16Data, numberOfI8Samples, i8Data);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::InputArrayOfBytes(const uInt8* u8Array)
+{
+  if (!function_pointers_.InputArrayOfBytes) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputArrayOfBytes.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_InputArrayOfBytes(u8Array);
+#else
+  return function_pointers_.InputArrayOfBytes(u8Array);
 #endif
 }
 
