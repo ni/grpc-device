@@ -8,6 +8,8 @@ using namespace nidaqmx_grpc;
 namespace ni {
 namespace tests {
 namespace system {
+// These tests use a simulated PXIe-6341 named "Dev1".
+// In MAX, this can be set up by importing grpc-device-daq-tests.nce.
 class NiDAQmxDriverApiTests : public ::testing::Test {
  protected:
   NiDAQmxDriverApiTests()
