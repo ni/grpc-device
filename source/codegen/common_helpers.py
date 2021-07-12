@@ -139,6 +139,16 @@ def get_size_mechanism(parameter):
   size = parameter.get('size', {})
   return size.get('mechanism', None)
 
+def get_size_expression(parameter):
+  size_mechanism = get_size_mechanism(parameter)
+  if size_mechanism == 'fixed':
+    return parameter['size']['value']
+  elif size_mechanism == 'ivi-dance-with-a-twist':
+    return camel_to_snake(parameter['size']['value_twist'])
+  else:
+    return camel_to_snake(parameter['size']['value'])
+
+
 def is_ivi_dance_array_param(parameter):
   return get_size_mechanism(parameter) == 'ivi-dance'
 

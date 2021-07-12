@@ -66,5 +66,25 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'OutputArraysWithNarrowIntegerTypes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'numberOfU16Samples',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'u16Data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfU16Samples'
+                },
+                'type': 'uInt16[]',
+                'grpc_type': 'repeated uint32'
+            },
+        ],
+        'returns': 'int32'
     }
 }

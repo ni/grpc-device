@@ -186,5 +186,38 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const OutputArraysWithNarrowIntegerTypesRequest* request, OutputArraysWithNarrowIntegerTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 number_of_u16_samples = request->number_of_u16_samples();
+      std::vector<uInt16> u16_data(number_of_u16_samples);
+      auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_u16_data()->Clear();
+        response->mutable_u16_data()->Reserve(number_of_u16_samples);
+        std::transform(
+          u16_data.begin(),
+          u16_data.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+          [](auto x) { 
+              return static_cast<uInt16[]>(x);
+          });
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
 } // namespace nifake_non_ivi_grpc
 

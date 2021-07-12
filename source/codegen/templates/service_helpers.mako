@@ -207,7 +207,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
   grpc_type = parameter.get('grpc_type', None)
   c_type_pointer = c_type.replace('[]','*')
   c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
-  c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_input_array_that_needs_coercion(parameter)
+  c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(parameter)
 %>\
 % if c_type in ['ViConstString', 'const char[]']:
       auto ${parameter_name} = ${request_snippet}.c_str();\
@@ -281,16 +281,11 @@ ${initialize_standard_input_param(function_name, parameter)}\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
+  c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(parameter)
 %>\
 %   if common_helpers.is_array(parameter['type']):
 <%
-  size = ''
-  if common_helpers.get_size_mechanism(parameter) == 'fixed':
-    size = parameter['size']['value']
-  elif common_helpers.get_size_mechanism(parameter) == 'ivi-dance-with-a-twist':
-    size = common_helpers.camel_to_snake(parameter['size']['value_twist'])
-  else:
-    size = common_helpers.camel_to_snake(parameter['size']['value'])
+  size = common_helpers.get_size_expression(parameter)
 %>\
 %     if common_helpers.is_struct(parameter) or underlying_param_type == 'ViBoolean':
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
@@ -305,7 +300,10 @@ ${initialize_standard_input_param(function_name, parameter)}\
       if (${size} > 0) {
           ${parameter_name}.resize(${size}-1);
       }
-%     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16']:
+%     elif service_helpers.is_output_array_that_needs_coercion(parameter):
+      std::vector<${underlying_param_type}> ${parameter_name}(${size});
+## uInt32 requires cast because of int vs long in that typedef vs uint32_t
+%     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16', 'uInt32']:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());
 %     else:
@@ -356,6 +354,16 @@ ${initialize_standard_input_param(function_name, parameter)}\
 %       endif
 %     endif
         response->set_${parameter_name}_raw(${parameter_name});
+%   elif service_helpers.is_output_array_that_needs_coercion(parameter):
+        response->mutable_${parameter_name}()->Clear();
+        response->mutable_${parameter_name}()->Reserve(${common_helpers.get_size_expression(parameter)});
+        std::transform(
+          ${parameter_name}.begin(),
+          ${parameter_name}.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
+          [](auto x) { 
+              return static_cast<${parameter['type']}>(x);
+          });
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});

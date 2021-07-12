@@ -9,12 +9,18 @@ NARROW_INTEGER_TYPE_TO_GRPC_TYPE_MAP = {
     "uInt16": "uint32", "int16": "int32", "int8": "int32"}
 
 
-def get_c_element_type_for_input_array_that_needs_coercion(parameter):
+def get_c_element_type_for_array_that_needs_coercion(parameter):
     if 'grpc_type' not in parameter:
         return None
-    if not (parameter['type'].startswith('const ') and parameter['type'].endswith('*')):
+    stripped_type = parameter['type']
+    if stripped_type.startswith('const '):
+        stripped_type = stripped_type[len('const '):]
+    if stripped_type.endswith('*'):
+        stripped_type = stripped_type[:-1]
+    elif stripped_type.endswith('[]'):
+        stripped_type = stripped_type[:-2]
+    else:
         return None
-    stripped_type = parameter['type'][len('const '):-1]
     grpc_type = NARROW_INTEGER_TYPE_TO_GRPC_TYPE_MAP.get(stripped_type)
     if grpc_type is None:
         return None
@@ -24,7 +30,11 @@ def get_c_element_type_for_input_array_that_needs_coercion(parameter):
 
 
 def is_input_array_that_needs_coercion(parameter):
-    return get_c_element_type_for_input_array_that_needs_coercion(parameter) is not None
+    return common_helpers.is_input_parameter(parameter) and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
+
+
+def is_output_array_that_needs_coercion(parameter):
+    return common_helpers.is_output_parameter(parameter) and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
 
 
 def create_args(parameters):
@@ -50,7 +60,7 @@ def create_args(parameters):
                 parameter_name = parameter_name + ".data()"
             elif not is_array and is_output:
                 result = f'{result}&'
-            elif is_input_array_that_needs_coercion(parameter):
+            elif get_c_element_type_for_array_that_needs_coercion(parameter) is not None:
                 parameter_name = parameter_name + ".data()"
             result = f'{result}{parameter_name}, '
     return result[:-2]

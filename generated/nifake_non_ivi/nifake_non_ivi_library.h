@@ -22,18 +22,21 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 Init(const char* sessionName, FakeHandle* handle);
   int32 InitWithHandleNameAsSessionName(const char* handleName, FakeHandle* handle);
   int32 InputArraysWithNarrowIntegerTypes(const uInt16* u16Array, const int16* i16Array, const int8* i8Array);
+  int32 OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, uInt16 u16Data[]);
 
  private:
   using ClosePtr = int32 (*)(FakeHandle handle);
   using InitPtr = int32 (*)(const char* sessionName, FakeHandle* handle);
   using InitWithHandleNameAsSessionNamePtr = int32 (*)(const char* handleName, FakeHandle* handle);
   using InputArraysWithNarrowIntegerTypesPtr = int32 (*)(const uInt16* u16Array, const int16* i16Array, const int8* i8Array);
+  using OutputArraysWithNarrowIntegerTypesPtr = int32 (*)(int32 numberOfU16Samples, uInt16 u16Data[]);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
     InitPtr Init;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
     InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;
+    OutputArraysWithNarrowIntegerTypesPtr OutputArraysWithNarrowIntegerTypes;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;
