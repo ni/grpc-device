@@ -21,6 +21,8 @@ def create_args(parameters):
         result = f'{result}{parameter_name}.data(), '
       elif parameter.get('is_size_param', False) and is_twist_mechanism:
         result = f'{result}{twist_value_name}, '
+      elif common_helpers.is_pass_null_parameter(parameter):
+        result = f'{result}nullptr, '
       else:
         if is_array and common_helpers.is_struct(parameter):
           parameter_name = parameter_name + ".data()"
@@ -73,7 +75,7 @@ def create_param(parameter):
     if common_helpers.is_array(type):
         array_size = get_array_param_size(parameter)
         return f'{type[:-2]} {name}[{array_size}]'
-    elif common_helpers.is_output_parameter(parameter):
+    elif common_helpers.is_pointer_parameter(parameter):
         return f'{type}* {name}'
     else:
         return f'{type} {name}'

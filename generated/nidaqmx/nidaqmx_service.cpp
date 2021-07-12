@@ -55,14 +55,14 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
-      int terminal_config;
+      int32 terminal_config;
       switch (request->terminal_config_enum_case()) {
         case nidaqmx_grpc::CreateAIVoltageChanRequest::TerminalConfigEnumCase::kTerminalConfig: {
-          terminal_config = static_cast<int>(request->terminal_config());
+          terminal_config = static_cast<int32>(request->terminal_config());
           break;
         }
         case nidaqmx_grpc::CreateAIVoltageChanRequest::TerminalConfigEnumCase::kTerminalConfigRaw: {
-          terminal_config = static_cast<int>(request->terminal_config_raw());
+          terminal_config = static_cast<int32>(request->terminal_config_raw());
           break;
         }
         case nidaqmx_grpc::CreateAIVoltageChanRequest::TerminalConfigEnumCase::TERMINAL_CONFIG_ENUM_NOT_SET: {
@@ -73,14 +73,14 @@ namespace nidaqmx_grpc {
 
       float64 min_val = request->min_val();
       float64 max_val = request->max_val();
-      int units;
+      int32 units;
       switch (request->units_enum_case()) {
         case nidaqmx_grpc::CreateAIVoltageChanRequest::UnitsEnumCase::kUnits: {
-          units = static_cast<int>(request->units());
+          units = static_cast<int32>(request->units());
           break;
         }
         case nidaqmx_grpc::CreateAIVoltageChanRequest::UnitsEnumCase::kUnitsRaw: {
-          units = static_cast<int>(request->units_raw());
+          units = static_cast<int32>(request->units_raw());
           break;
         }
         case nidaqmx_grpc::CreateAIVoltageChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
@@ -111,14 +111,14 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto lines = request->lines().c_str();
       auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
-      int line_grouping;
+      int32 line_grouping;
       switch (request->line_grouping_enum_case()) {
         case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::kLineGrouping: {
-          line_grouping = static_cast<int>(request->line_grouping());
+          line_grouping = static_cast<int32>(request->line_grouping());
           break;
         }
         case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::kLineGroupingRaw: {
-          line_grouping = static_cast<int>(request->line_grouping_raw());
+          line_grouping = static_cast<int32>(request->line_grouping_raw());
           break;
         }
         case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::LINE_GROUPING_ENUM_NOT_SET: {
@@ -148,14 +148,14 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto lines = request->lines().c_str();
       auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
-      int line_grouping;
+      int32 line_grouping;
       switch (request->line_grouping_enum_case()) {
         case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::kLineGrouping: {
-          line_grouping = static_cast<int>(request->line_grouping());
+          line_grouping = static_cast<int32>(request->line_grouping());
           break;
         }
         case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::kLineGroupingRaw: {
-          line_grouping = static_cast<int>(request->line_grouping_raw());
+          line_grouping = static_cast<int32>(request->line_grouping_raw());
           break;
         }
         case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::LINE_GROUPING_ENUM_NOT_SET: {
@@ -195,6 +195,50 @@ namespace nidaqmx_grpc {
       response->set_status(status);
       if (status == 0) {
         response->mutable_task()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadAnalogF64Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadAnalogF64Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadAnalogF64Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      float64* read_array = response->mutable_read_array()->mutable_data();
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, nullptr);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
     }

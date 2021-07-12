@@ -1,8 +1,14 @@
 def is_output_parameter(parameter):
-    return "out" in parameter["direction"]
+  return "out" in parameter["direction"]
 
 def is_input_parameter(parameter):
-    return "in" in parameter["direction"]
+  return "in" in parameter["direction"]
+
+def is_pass_null_parameter(parameter):
+  return "pass_null" in parameter["direction"]
+
+def is_pointer_parameter(parameter):
+  return is_output_parameter(parameter) or is_pass_null_parameter(parameter)
 
 def is_array(dataType):
   return dataType.endswith("[]")

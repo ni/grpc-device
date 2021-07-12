@@ -16,10 +16,11 @@ class NiDAQmxLibraryInterface {
   virtual ~NiDAQmxLibraryInterface() {}
 
   virtual int32 ClearTask(TaskHandle task) = 0;
-  virtual int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[]) = 0;
-  virtual int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping) = 0;
-  virtual int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping) = 0;
+  virtual int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]) = 0;
+  virtual int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping) = 0;
+  virtual int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping) = 0;
   virtual int32 CreateTask(const char sessionName[], TaskHandle* task) = 0;
+  virtual int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 StartTask(TaskHandle task) = 0;
   virtual int32 StopTask(TaskHandle task) = 0;
 };

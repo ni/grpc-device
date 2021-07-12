@@ -14,7 +14,10 @@ config = {
         'TaskHandle': 'nidevice_grpc.Session',
         'const char[]': 'string',
         'float64': 'double',
-        'int': 'int32'
+        'float64[]': 'repeated double',
+        'int32': 'int32',
+        'uInt32': 'uint32',
+        'bool32': 'bool'
     },
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [

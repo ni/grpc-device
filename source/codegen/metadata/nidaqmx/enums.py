@@ -1,4 +1,17 @@
 enums = {
+    'GroupBy': {
+        'name': 'GroupBy',
+        'values': [
+            {
+                'name': 'GroupByChannel',
+                'value': 0
+            },
+            {
+                'name': 'GroupByScanNumber',
+                'value': 1
+            }
+        ]
+    },
     'InputTermCfgWithDefault': {
         'values': [
             {

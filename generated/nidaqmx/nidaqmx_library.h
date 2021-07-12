@@ -19,19 +19,21 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 ClearTask(TaskHandle task);
-  int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[]);
-  int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping);
-  int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping);
+  int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
+  int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
+  int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   int32 CreateTask(const char sessionName[], TaskHandle* task);
+  int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 StartTask(TaskHandle task);
   int32 StopTask(TaskHandle task);
 
  private:
   using ClearTaskPtr = int32 (*)(TaskHandle task);
-  using CreateAIVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[]);
-  using CreateDIChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping);
-  using CreateDOChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping);
+  using CreateAIVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
+  using CreateDIChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
+  using CreateDOChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   using CreateTaskPtr = int32 (*)(const char sessionName[], TaskHandle* task);
+  using ReadAnalogF64Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using StartTaskPtr = int32 (*)(TaskHandle task);
   using StopTaskPtr = int32 (*)(TaskHandle task);
 
@@ -41,6 +43,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     CreateDIChanPtr CreateDIChan;
     CreateDOChanPtr CreateDOChan;
     CreateTaskPtr CreateTask;
+    ReadAnalogF64Ptr ReadAnalogF64;
     StartTaskPtr StartTask;
     StopTaskPtr StopTask;
   } FunctionLoadStatus;
