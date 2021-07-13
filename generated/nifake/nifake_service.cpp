@@ -450,7 +450,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString a_string = request->a_string().c_str();
+      auto a_string = request->a_string().c_str();
       ViInt32 actual_size {};
       auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
       if (status < 0) {
@@ -560,7 +560,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
@@ -585,7 +585,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
@@ -610,7 +610,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
@@ -635,7 +635,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
@@ -685,7 +685,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
       auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
@@ -919,7 +919,7 @@ namespace nifake_grpc {
       ViString resource_name = (ViString)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
-      ViConstString option_string = request->option_string().c_str();
+      auto option_string = request->option_string().c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -1102,7 +1102,7 @@ namespace nifake_grpc {
       }
 
       ViInt32 string_size = request->a_string().size();
-      ViConstString a_string = request->a_string().c_str();
+      auto a_string = request->a_string().c_str();
       auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1165,7 +1165,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 maximum_time = request->maximum_time();
       ViReal64 reading {};
       auto status = library_->ReadFromChannel(vi, channel_name, maximum_time, &reading);

@@ -45,13 +45,143 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAIVoltageChan(::grpc::ServerContext* context, const CreateAIVoltageChanRequest* request, CreateAIVoltageChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      int terminal_config;
+      switch (request->terminal_config_enum_case()) {
+        case nidaqmx_grpc::CreateAIVoltageChanRequest::TerminalConfigEnumCase::kTerminalConfig: {
+          terminal_config = static_cast<int>(request->terminal_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIVoltageChanRequest::TerminalConfigEnumCase::kTerminalConfigRaw: {
+          terminal_config = static_cast<int>(request->terminal_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIVoltageChanRequest::TerminalConfigEnumCase::TERMINAL_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for terminal_config was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAIVoltageChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIVoltageChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIVoltageChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      auto custom_scale_name = request->custom_scale_name().c_str();
+      auto status = library_->CreateAIVoltageChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, custom_scale_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateDIChan(::grpc::ServerContext* context, const CreateDIChanRequest* request, CreateDIChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto lines = request->lines().c_str();
+      auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
+      int line_grouping;
+      switch (request->line_grouping_enum_case()) {
+        case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::kLineGrouping: {
+          line_grouping = static_cast<int>(request->line_grouping());
+          break;
+        }
+        case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::kLineGroupingRaw: {
+          line_grouping = static_cast<int>(request->line_grouping_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateDIChanRequest::LineGroupingEnumCase::LINE_GROUPING_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for line_grouping was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateDIChan(task, lines, name_to_assign_to_lines, line_grouping);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateDOChan(::grpc::ServerContext* context, const CreateDOChanRequest* request, CreateDOChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto lines = request->lines().c_str();
+      auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
+      int line_grouping;
+      switch (request->line_grouping_enum_case()) {
+        case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::kLineGrouping: {
+          line_grouping = static_cast<int>(request->line_grouping());
+          break;
+        }
+        case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::kLineGroupingRaw: {
+          line_grouping = static_cast<int>(request->line_grouping_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateDOChanRequest::LineGroupingEnumCase::LINE_GROUPING_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for line_grouping was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateDOChan(task, lines, name_to_assign_to_lines, line_grouping);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateTask(::grpc::ServerContext* context, const CreateTaskRequest* request, CreateTaskResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      const char* session_name = request->session_name().c_str();
+      auto session_name = request->session_name().c_str();
 
       auto init_lambda = [&] () {
         TaskHandle task;
@@ -66,6 +196,44 @@ namespace nidaqmx_grpc {
       if (status == 0) {
         response->mutable_task()->set_id(session_id);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::StartTask(::grpc::ServerContext* context, const StartTaskRequest* request, StartTaskResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto status = library_->StartTask(task);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::StopTask(::grpc::ServerContext* context, const StopTaskRequest* request, StopTaskResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto status = library_->StopTask(task);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

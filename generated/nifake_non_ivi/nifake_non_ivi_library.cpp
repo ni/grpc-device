@@ -49,7 +49,7 @@ int32 NiFakeNonIviLibrary::Close(FakeHandle handle)
 #endif
 }
 
-int32 NiFakeNonIviLibrary::Init(const char* sessionName, FakeHandle* handle)
+int32 NiFakeNonIviLibrary::Init(const char sessionName[], FakeHandle* handle)
 {
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_Init.");
@@ -61,7 +61,7 @@ int32 NiFakeNonIviLibrary::Init(const char* sessionName, FakeHandle* handle)
 #endif
 }
 
-int32 NiFakeNonIviLibrary::InitWithHandleNameAsSessionName(const char* handleName, FakeHandle* handle)
+int32 NiFakeNonIviLibrary::InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle)
 {
   if (!function_pointers_.InitWithHandleNameAsSessionName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitWithHandleNameAsSessionName.");

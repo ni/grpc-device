@@ -332,6 +332,7 @@ add_executable(SystemTestsRunner
     "source/tests/system/device_server.cpp"
     "source/tests/system/enumerate_devices.cpp"
     "source/tests/system/session_utilities_service_tests.cpp"
+    "source/tests/system/nidaqmx_driver_api_tests.cpp"
     "source/tests/system/nidaqmx_session_tests.cpp"
     "source/tests/system/nidcpower_driver_api_tests.cpp"
     "source/tests/system/nidcpower_session_tests.cpp"

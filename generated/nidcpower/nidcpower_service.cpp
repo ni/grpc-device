@@ -40,7 +40,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->AbortWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -60,7 +60,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->CommitWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -80,8 +80,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
@@ -117,8 +117,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
@@ -154,8 +154,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
@@ -191,8 +191,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
@@ -228,8 +228,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
@@ -265,8 +265,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
@@ -302,7 +302,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViBoolean enabled = request->enabled();
       ViReal64 limit = request->limit();
       auto status = library_->ConfigureOvp(vi, channel_name, enabled, limit);
@@ -324,7 +324,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeMeasureTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -344,7 +344,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgePulseTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -364,7 +364,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -384,7 +384,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeShutdownTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -404,7 +404,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeSourceTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -424,7 +424,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeStartTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -444,7 +444,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 source_mode;
       switch (request->source_mode_enum_case()) {
         case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceMode: {
@@ -480,7 +480,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViBoolean set_as_active_step = request->set_as_active_step();
       auto status = library_->CreateAdvancedSequenceCommitStepWithChannels(vi, channel_name, set_as_active_step);
       response->set_status(status);
@@ -501,7 +501,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViBoolean set_as_active_step = request->set_as_active_step();
       auto status = library_->CreateAdvancedSequenceStepWithChannels(vi, channel_name, set_as_active_step);
       response->set_status(status);
@@ -522,8 +522,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString sequence_name = request->sequence_name().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto sequence_name = request->sequence_name().c_str();
       ViInt32 attribute_id_count = request->attribute_ids().size();
       auto attribute_ids = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->attribute_ids().data()));
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
@@ -546,7 +546,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString sequence_name = request->sequence_name().c_str();
+      auto sequence_name = request->sequence_name().c_str();
       ViInt32 attribute_id_count = request->attribute_ids().size();
       auto attribute_ids = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->attribute_ids().data()));
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
@@ -569,8 +569,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
-      ViConstString sequence_name = request->sequence_name().c_str();
+      auto channel_name = request->channel_name().c_str();
+      auto sequence_name = request->sequence_name().c_str();
       auto status = library_->DeleteAdvancedSequenceWithChannels(vi, channel_name, sequence_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -590,7 +590,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->DisablePulseTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -610,7 +610,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableSequenceAdvanceTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -630,7 +630,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableShutdownTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -650,7 +650,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableSourceTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -670,7 +670,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableStartTriggerWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -714,7 +714,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 signal;
       switch (request->signal_enum_case()) {
         case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignal: {
@@ -731,8 +731,8 @@ namespace nidcpower_grpc {
         }
       }
 
-      ViConstString signal_identifier = request->signal_identifier().c_str();
-      ViConstString output_terminal = request->output_terminal().c_str();
+      auto signal_identifier = request->signal_identifier().c_str();
+      auto output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignalWithChannels(vi, channel_name, signal, signal_identifier, output_terminal);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -752,7 +752,7 @@ namespace nidcpower_grpc {
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViBoolean reset = request->reset();
-      ViConstString option_string = request->option_string().c_str();
+      auto option_string = request->option_string().c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -784,7 +784,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->InitiateWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -823,7 +823,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->ResetWithChannels(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -843,7 +843,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 trigger;
       switch (request->trigger_enum_case()) {
         case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTrigger: {
@@ -879,7 +879,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 event_id;
       switch (request->event_id_enum_case()) {
         case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventId: {
@@ -935,7 +935,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto status = library_->CalSelfCalibrate(vi, channel_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1032,7 +1032,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 aperture_time = request->aperture_time();
       ViInt32 units;
       switch (request->units_enum_case()) {
@@ -1069,7 +1069,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 auto_zero;
       switch (request->auto_zero_enum_case()) {
         case nidcpower_grpc::ConfigureAutoZeroRequest::AutoZeroEnumCase::kAutoZero: {
@@ -1105,7 +1105,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 level = request->level();
       auto status = library_->ConfigureCurrentLevel(vi, channel_name, level);
       response->set_status(status);
@@ -1126,7 +1126,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigureCurrentLevelRange(vi, channel_name, range);
       response->set_status(status);
@@ -1147,7 +1147,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 behavior;
       switch (request->behavior_enum_case()) {
         case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehavior: {
@@ -1184,7 +1184,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigureCurrentLimitRange(vi, channel_name, range);
       response->set_status(status);
@@ -1205,7 +1205,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdge: {
@@ -1241,7 +1241,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdge: {
@@ -1277,7 +1277,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdge: {
@@ -1313,7 +1313,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdge: {
@@ -1349,7 +1349,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString input_terminal = request->input_terminal().c_str();
+      auto input_terminal = request->input_terminal().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
         case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdge: {
@@ -1385,7 +1385,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViBoolean enabled = request->enabled();
       auto status = library_->ConfigureOutputEnabled(vi, channel_name, enabled);
       response->set_status(status);
@@ -1406,7 +1406,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 function;
       switch (request->function_enum_case()) {
         case nidcpower_grpc::ConfigureOutputFunctionRequest::FunctionEnumCase::kFunction: {
@@ -1442,7 +1442,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 resistance = request->resistance();
       auto status = library_->ConfigureOutputResistance(vi, channel_name, resistance);
       response->set_status(status);
@@ -1498,7 +1498,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseBiasCurrentLevel(vi, channel_name, level);
       response->set_status(status);
@@ -1519,7 +1519,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseBiasCurrentLimit(vi, channel_name, limit);
       response->set_status(status);
@@ -1540,7 +1540,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseBiasVoltageLevel(vi, channel_name, level);
       response->set_status(status);
@@ -1561,7 +1561,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseBiasVoltageLimit(vi, channel_name, limit);
       response->set_status(status);
@@ -1582,7 +1582,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseCurrentLevel(vi, channel_name, level);
       response->set_status(status);
@@ -1603,7 +1603,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseCurrentLevelRange(vi, channel_name, range);
       response->set_status(status);
@@ -1624,7 +1624,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseCurrentLimit(vi, channel_name, limit);
       response->set_status(status);
@@ -1645,7 +1645,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseCurrentLimitRange(vi, channel_name, range);
       response->set_status(status);
@@ -1666,7 +1666,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseVoltageLevel(vi, channel_name, level);
       response->set_status(status);
@@ -1687,7 +1687,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseVoltageLevelRange(vi, channel_name, range);
       response->set_status(status);
@@ -1708,7 +1708,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseVoltageLimit(vi, channel_name, limit);
       response->set_status(status);
@@ -1729,7 +1729,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseVoltageLimitRange(vi, channel_name, range);
       response->set_status(status);
@@ -1750,7 +1750,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 sense;
       switch (request->sense_enum_case()) {
         case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSense: {
@@ -1916,7 +1916,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 level = request->level();
       auto status = library_->ConfigureVoltageLevel(vi, channel_name, level);
       response->set_status(status);
@@ -1937,7 +1937,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigureVoltageLevelRange(vi, channel_name, range);
       response->set_status(status);
@@ -1958,7 +1958,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 limit = request->limit();
       auto status = library_->ConfigureVoltageLimit(vi, channel_name, limit);
       response->set_status(status);
@@ -1979,7 +1979,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigureVoltageLimitRange(vi, channel_name, range);
       response->set_status(status);
@@ -2020,7 +2020,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString sequence_name = request->sequence_name().c_str();
+      auto sequence_name = request->sequence_name().c_str();
       auto status = library_->DeleteAdvancedSequence(vi, sequence_name);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2190,7 +2190,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString file_path = request->file_path().c_str();
+      auto file_path = request->file_path().c_str();
       auto status = library_->ExportAttributeConfigurationFile(vi, file_path);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2226,8 +2226,8 @@ namespace nidcpower_grpc {
         }
       }
 
-      ViConstString signal_identifier = request->signal_identifier().c_str();
-      ViConstString output_terminal = request->output_terminal().c_str();
+      auto signal_identifier = request->signal_identifier().c_str();
+      auto output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2247,7 +2247,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 timeout = request->timeout();
       ViInt32 count = request->count();
       response->mutable_voltage_measurements()->Resize(count, 0);
@@ -2279,7 +2279,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
@@ -2304,7 +2304,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
@@ -2329,7 +2329,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
@@ -2354,7 +2354,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
@@ -2379,7 +2379,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
@@ -2405,7 +2405,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
       auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
@@ -2476,7 +2476,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString index = request->index().c_str();
+      auto index = request->index().c_str();
 
       auto status = library_->GetChannelNameFromString(vi, index, 0, nullptr);
       if (status < 0) {
@@ -2767,7 +2767,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString file_path = request->file_path().c_str();
+      auto file_path = request->file_path().c_str();
       auto status = library_->ImportAttributeConfigurationFile(vi, file_path);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2786,9 +2786,9 @@ namespace nidcpower_grpc {
     }
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViConstString channels = request->channels().c_str();
+      auto channels = request->channels().c_str();
       ViBoolean reset = request->reset();
-      ViConstString option_string = request->option_string().c_str();
+      auto option_string = request->option_string().c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -2862,7 +2862,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 measurement_type;
       switch (request->measurement_type_enum_case()) {
         case nidcpower_grpc::MeasureRequest::MeasurementTypeEnumCase::kMeasurementType: {
@@ -2902,7 +2902,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViBoolean in_compliance {};
       auto status = library_->QueryInCompliance(vi, channel_name, &in_compliance);
       response->set_status(status);
@@ -2926,7 +2926,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 voltage_level = request->voltage_level();
       ViReal64 max_current_limit {};
       auto status = library_->QueryMaxCurrentLimit(vi, channel_name, voltage_level, &max_current_limit);
@@ -2951,7 +2951,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 current_limit = request->current_limit();
       ViReal64 max_voltage_level {};
       auto status = library_->QueryMaxVoltageLevel(vi, channel_name, current_limit, &max_voltage_level);
@@ -2976,7 +2976,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViReal64 voltage_level = request->voltage_level();
       ViReal64 min_current_limit {};
       auto status = library_->QueryMinCurrentLimit(vi, channel_name, voltage_level, &min_current_limit);
@@ -3001,7 +3001,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViInt32 output_state;
       switch (request->output_state_enum_case()) {
         case nidcpower_grpc::QueryOutputStateRequest::OutputStateEnumCase::kOutputState: {
@@ -3225,7 +3225,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value = request->attribute_value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
@@ -3247,7 +3247,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -3284,7 +3284,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value = request->attribute_value_raw();
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, attribute_value);
@@ -3306,7 +3306,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -3343,7 +3343,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto attribute_value_grpc_session = request->attribute_value();
       ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.id(), attribute_value_grpc_session.name());
@@ -3366,9 +3366,9 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViConstString attribute_value = request->attribute_value_raw().c_str();
+      auto attribute_value = request->attribute_value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3388,7 +3388,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       auto values = const_cast<ViReal64*>(request->values().data());
       auto source_delays = const_cast<ViReal64*>(request->source_delays().data());
       ViUInt32 size = request->source_delays().size();

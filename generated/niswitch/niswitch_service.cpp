@@ -52,8 +52,8 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel1 = request->channel1().c_str();
-      ViConstString channel2 = request->channel2().c_str();
+      auto channel1 = request->channel1().c_str();
+      auto channel2 = request->channel2().c_str();
       ViInt32 path_capability {};
       auto status = library_->CanConnect(vi, channel1, channel2, &path_capability);
       response->set_status(status);
@@ -78,7 +78,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value = request->attribute_value();
       auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
@@ -100,7 +100,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -137,7 +137,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value = request->attribute_value_raw();
       auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
@@ -159,7 +159,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViString attribute_value = (ViString)request->attribute_value_raw().c_str();
       auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, attribute_value);
@@ -181,7 +181,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto attribute_value_grpc_session = request->attribute_value();
       ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.id(), attribute_value_grpc_session.name());
@@ -281,7 +281,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString scanlist = request->scanlist().c_str();
+      auto scanlist = request->scanlist().c_str();
       ViInt32 scan_mode;
       switch (request->scan_mode_enum_case()) {
         case niswitch_grpc::ConfigureScanListRequest::ScanModeEnumCase::kScanMode: {
@@ -369,8 +369,8 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel1 = request->channel1().c_str();
-      ViConstString channel2 = request->channel2().c_str();
+      auto channel1 = request->channel1().c_str();
+      auto channel2 = request->channel2().c_str();
       auto status = library_->Connect(vi, channel1, channel2);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -390,7 +390,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString connection_list = request->connection_list().c_str();
+      auto connection_list = request->connection_list().c_str();
       auto status = library_->ConnectMultiple(vi, connection_list);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -429,8 +429,8 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel1 = request->channel1().c_str();
-      ViConstString channel2 = request->channel2().c_str();
+      auto channel1 = request->channel1().c_str();
+      auto channel2 = request->channel2().c_str();
       auto status = library_->Disconnect(vi, channel1, channel2);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -469,7 +469,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString disconnection_list = request->disconnection_list().c_str();
+      auto disconnection_list = request->disconnection_list().c_str();
       auto status = library_->DisconnectMultiple(vi, disconnection_list);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -538,7 +538,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
@@ -563,7 +563,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
@@ -588,7 +588,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
@@ -613,7 +613,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
       auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
@@ -649,7 +649,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
@@ -814,8 +814,8 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel1 = request->channel1().c_str();
-      ViConstString channel2 = request->channel2().c_str();
+      auto channel1 = request->channel1().c_str();
+      auto channel2 = request->channel2().c_str();
 
       auto status = library_->GetPath(vi, channel1, channel2, 0, nullptr);
       if (status < 0) {
@@ -850,7 +850,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString relay_name = request->relay_name().c_str();
+      auto relay_name = request->relay_name().c_str();
       ViInt32 relay_count {};
       auto status = library_->GetRelayCount(vi, relay_name, &relay_count);
       response->set_status(status);
@@ -909,7 +909,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString relay_name = request->relay_name().c_str();
+      auto relay_name = request->relay_name().c_str();
       ViInt32 relay_position {};
       auto status = library_->GetRelayPosition(vi, relay_name, &relay_position);
       response->set_status(status);
@@ -967,7 +967,7 @@ namespace niswitch_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
-      ViConstString option_string = request->option_string().c_str();
+      auto option_string = request->option_string().c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -998,7 +998,7 @@ namespace niswitch_grpc {
     }
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViConstString topology = request->topology().c_str();
+      auto topology = request->topology().c_str();
       ViBoolean simulate = request->simulate();
       ViBoolean reset_device = request->reset_device();
 
@@ -1139,7 +1139,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString relay_name = request->relay_name().c_str();
+      auto relay_name = request->relay_name().c_str();
       ViInt32 relay_action;
       switch (request->relay_action_enum_case()) {
         case niswitch_grpc::RelayControlRequest::RelayActionEnumCase::kRelayAction: {
@@ -1361,7 +1361,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString scanlist = request->scanlist().c_str();
+      auto scanlist = request->scanlist().c_str();
       ViInt16 initiation;
       switch (request->initiation_enum_case()) {
         case niswitch_grpc::ScanRequest::InitiationEnumCase::kInitiation: {
@@ -1441,7 +1441,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value = request->attribute_value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
@@ -1463,7 +1463,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -1500,7 +1500,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value = request->attribute_value_raw();
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
@@ -1522,7 +1522,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViString attribute_value = (ViString)request->attribute_value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
@@ -1544,7 +1544,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString channel_name = request->channel_name().c_str();
+      auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto attribute_value_grpc_session = request->attribute_value();
       ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.id(), attribute_value_grpc_session.name());
@@ -1587,7 +1587,7 @@ namespace niswitch_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViConstString path_list = request->path_list().c_str();
+      auto path_list = request->path_list().c_str();
       auto status = library_->SetPath(vi, path_list);
       response->set_status(status);
       return ::grpc::Status::OK;
