@@ -70,6 +70,13 @@ void SetI8Data(Unused, Unused, Unused, Unused, Unused, int8* i8_data)
   i8_data[2] = INT8_MIN;
 };
 
+void SetU8Data(Unused, uInt8* u8_data)
+{
+  u8_data[0] = 0;
+  u8_data[1] = UINT8_MAX;
+  u8_data[2] = 16;
+}
+
 class NiFakeNonIviServiceTests : public ::testing::Test {
  protected:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
@@ -334,6 +341,27 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
     return response.status();
   }
+
+  int32 output_array_of_bytes()
+  {
+    EXPECT_CALL(library_, OutputArrayOfBytes(_, _))
+        .WillOnce(DoAll(
+            Invoke(SetU8Data),
+            Return(kDriverSuccess)));
+
+    ::grpc::ServerContext context;
+    OutputArrayOfBytesRequest request;
+    request.set_number_of_u8_samples(3);
+    OutputArrayOfBytesResponse response;
+
+    service_.OutputArrayOfBytes(&context, &request, &response);
+    EXPECT_EQ(3, response.u8_data().size());
+    EXPECT_EQ(0, (uInt8)response.u8_data()[0]);
+    EXPECT_EQ(UINT8_MAX, (uInt8)response.u8_data()[1]);
+    EXPECT_EQ(16, (uInt8)response.u8_data()[2]);
+
+    return response.status();
+  }
 };
 
 TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceeds)
@@ -422,6 +450,12 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I8)
 TEST_F(NiFakeNonIviServiceTests, InputArrayOfBytes)
 {
   auto status = input_array_of_bytes();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputArrayOfBytes)
+{
+  auto status = output_array_of_bytes();
   EXPECT_EQ(kDriverSuccess, status);
 }
 

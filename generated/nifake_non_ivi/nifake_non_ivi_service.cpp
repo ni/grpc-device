@@ -262,5 +262,30 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputArrayOfBytes(::grpc::ServerContext* context, const OutputArrayOfBytesRequest* request, OutputArrayOfBytesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 number_of_u8_samples = request->number_of_u8_samples();
+      std::string u8_data(number_of_u8_samples, '\0');
+      auto status = library_->OutputArrayOfBytes(number_of_u8_samples, (uInt8*)u8_data.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_u8_data(u8_data);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
 } // namespace nifake_non_ivi_grpc
 

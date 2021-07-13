@@ -128,5 +128,24 @@ functions = {
         ],
         'returns': 'int32'
     },
-
+    'OutputArrayOfBytes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'numberOfU8Samples',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'u8Data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfU8Samples'
+                },
+                'type': 'uInt8[]',
+                'grpc_type': 'bytes'
+            },
+        ],
+        'returns': 'int32'
+    },
 }
