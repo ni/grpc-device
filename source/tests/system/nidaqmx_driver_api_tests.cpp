@@ -96,10 +96,10 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     set_request_session_id(request);
     request.set_physical_channel("Dev1/ai0");
     request.set_name_to_assign_to_channel("channel1");
-    request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_Cfg_Default);
+    request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
     request.set_min_val(-10.0);
     request.set_max_val(10.0);
-    request.set_units(VoltageUnits2::VOLTAGE_UNITS2_Volts);
+    request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
     return stub()->CreateAIVoltageChan(&context, request, &response);
   }
 
@@ -110,7 +110,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     set_request_session_id(request);
     request.set_lines("Dev1/port0/line0");
     request.set_name_to_assign_to_lines("di");
-    request.set_line_grouping(LineGrouping::LINE_GROUPING_ChanPerLine);
+    request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
     return stub()->CreateDIChan(&context, request, &response);
   }
 
@@ -121,7 +121,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     set_request_session_id(request);
     request.set_lines("Dev1/port1/line0");
     request.set_name_to_assign_to_lines("do");
-    request.set_line_grouping(LineGrouping::LINE_GROUPING_ChanPerLine);
+    request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
     return stub()->CreateDOChan(&context, request, &response);
   }
 

@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
 enums = {
     'InputTermCfgWithDefault': {
-        'name': 'InputTermCfgWithDefault',
         'values': [
             {
-                'name': 'Cfg_Default',
+                'name': 'CFG_DEFAULT',
                 'value': -1
             },
             {
@@ -16,43 +14,41 @@ enums = {
                 'value': 10078
             },
             {
-                'name': 'Diff',
+                'name': 'DIFF',
                 'value': 10106
             },
             {
-                'name': 'PseudoDiff',
+                'name': 'PSEUDO_DIFF',
                 'value': 12529
             }
         ]
     },
     'LineGrouping': {
-        'name': 'LineGrouping',
         'values': [
             {
-                'name': 'ChanForAllLines',
+                'name': 'CHAN_FOR_ALL_LINES',
                 'value': 1
             },
             {
-                'name': 'ChanPerLine',
+                'name': 'CHAN_PER_LINE',
                 'value': 0
             }
         ]
     },
     'VoltageUnits2': {
-        'name': 'VoltageUnits2',
         'values': [
             {
                 'documentation': {
                     'description': 'Volts.'
                 },
-                'name': 'Volts',
+                'name': 'VOLTS',
                 'value': 10348
             },
             {
                 'documentation': {
                     'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
                 },
-                'name': 'FromCustomScale',
+                'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
             }
         ]
