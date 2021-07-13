@@ -23,10 +23,8 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
   void SetUp() override
   {
     // In MAX, this can be set up by importing grpc-device-daq-tests.nce.
-    std::unordered_map<std::string, std::string> required_devices
-    {
-      { "Dev1", "NI PXIe-6341" }
-    };
+    std::unordered_map<std::string, std::string> required_devices{
+        {"gRPCSystemTestDAQ", "NI PXIe-6341"}};
 
     if (!are_all_devices_present(required_devices)) {
       GTEST_SKIP() << "Required Device(s) not found";
@@ -94,7 +92,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     ::grpc::ClientContext context;
     CreateAIVoltageChanRequest request;
     set_request_session_id(request);
-    request.set_physical_channel("Dev1/ai0");
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     request.set_name_to_assign_to_channel("channel1");
     request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
     request.set_min_val(-10.0);
@@ -108,7 +106,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     ::grpc::ClientContext context;
     CreateDIChanRequest request;
     set_request_session_id(request);
-    request.set_lines("Dev1/port0/line0");
+    request.set_lines("gRPCSystemTestDAQ/port0/line0");
     request.set_name_to_assign_to_lines("di");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
     return stub()->CreateDIChan(&context, request, &response);
@@ -119,7 +117,7 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     ::grpc::ClientContext context;
     CreateDOChanRequest request;
     set_request_session_id(request);
-    request.set_lines("Dev1/port1/line0");
+    request.set_lines("gRPCSystemTestDAQ/port1/line0");
     request.set_name_to_assign_to_lines("do");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
     return stub()->CreateDOChan(&context, request, &response);
