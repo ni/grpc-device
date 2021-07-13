@@ -183,8 +183,10 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'direction': 'pass_null',
+                'direction': 'in',
+                'include_in_proto': False,
                 'name': 'reserved',
+                'pass_null': True,
                 'type': 'ViBoolean'
             }
         ],

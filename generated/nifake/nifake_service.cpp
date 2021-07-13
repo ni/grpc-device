@@ -219,7 +219,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->CommandWithReservedParam(vi, nullptr);
+      auto reserved = nullptr;
+      auto status = library_->CommandWithReservedParam(vi, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

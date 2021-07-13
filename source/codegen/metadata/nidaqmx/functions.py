@@ -168,8 +168,10 @@ functions = {
                 'type': 'int32'
             },
             {
-                'direction': 'pass_null',
+                'direction': 'in',
+                'include_in_proto': False,
                 'name': 'reserved',
+                'pass_null': True,
                 'type': 'bool32',
             }
         ],

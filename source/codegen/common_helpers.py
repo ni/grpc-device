@@ -5,7 +5,7 @@ def is_input_parameter(parameter):
   return "in" in parameter["direction"]
 
 def is_pass_null_parameter(parameter):
-  return "pass_null" in parameter["direction"]
+  return parameter.get('pass_null', False)
 
 def is_pointer_parameter(parameter):
   return is_output_parameter(parameter) or is_pass_null_parameter(parameter)

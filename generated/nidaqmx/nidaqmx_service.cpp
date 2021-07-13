@@ -232,10 +232,11 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       float64* read_array = response->mutable_read_array()->mutable_data();
       int32 samps_per_chan_read {};
-      auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, nullptr);
+      auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status == 0) {
         response->set_samps_per_chan_read(samps_per_chan_read);

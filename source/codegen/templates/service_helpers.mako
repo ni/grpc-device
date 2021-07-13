@@ -122,6 +122,8 @@ ${initialize_input_param(function_name, parameter)}
 ${initialize_enum_input_param(function_name, parameter)}\
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}\
+% elif common_helpers.is_pass_null_parameter(parameter):
+${initialize_pass_null_param(parameter)}\
 % else:
 ${initialize_standard_input_param(function_name, parameter)}\
 % endif
@@ -195,6 +197,11 @@ ${initialize_standard_input_param(function_name, parameter)}\
   field_name = common_helpers.camel_to_snake(parameter["determine_size_from"])
 %>\
       ${parameter['type']} ${parameter_name} = request->${field_name}().size();\
+</%def>
+
+## Initialize a 'pass_null' param.
+<%def name="initialize_pass_null_param(parameter)">\
+      auto ${parameter["name"]} = nullptr;\
 </%def>
 
 ## Initialize an input parameter for an API call.
