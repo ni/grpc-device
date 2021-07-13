@@ -151,8 +151,8 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     ReadAnalogF64Request request;
     set_request_session_id(request);
-    request.set_num_samps_per_chan(100);
-    request.set_array_size_in_samps(100);
+    request.set_num_samps_per_chan(samps_per_chan);
+    request.set_array_size_in_samps(array_size_in_samps);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->ReadAnalogF64(&context, request, &response);
   }
