@@ -223,6 +223,7 @@ TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
   stop_task(stop_response);
 
   EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan_written());
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
@@ -239,6 +240,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
   stop_task(stop_response);
 
   EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_StartTaskStopTask_Succeeds)
