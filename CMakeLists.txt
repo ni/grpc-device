@@ -297,8 +297,6 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
-    "${proto_srcs_dir}/nifake.pb.cc"
-    "${proto_srcs_dir}/nifake.grpc.pb.cc"
 )
 
 # ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
