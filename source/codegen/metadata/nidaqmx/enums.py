@@ -1,13 +1,12 @@
 enums = {
     'GroupBy': {
-        'name': 'GroupBy',
         'values': [
             {
-                'name': 'GroupByChannel',
+                'name': 'GROUP_BY_CHANNEL',
                 'value': 0
             },
             {
-                'name': 'GroupByScanNumber',
+                'name': 'GROUP_BY_SCAN_NUMBER',
                 'value': 1
             }
         ]

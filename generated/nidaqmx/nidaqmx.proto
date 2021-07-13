@@ -33,8 +33,8 @@ enum NiDAQmxAttributes {
 enum GroupBy {
   option allow_alias = true;
   GROUP_BY_UNSPECIFIED = 0;
-  GROUP_BY_GroupByChannel = 0;
-  GROUP_BY_GroupByScanNumber = 1;
+  GROUP_BY_GROUP_BY_CHANNEL = 0;
+  GROUP_BY_GROUP_BY_SCAN_NUMBER = 1;
 }
 
 enum InputTermCfgWithDefault {

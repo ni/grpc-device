@@ -153,7 +153,7 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     request.set_num_samps_per_chan(100);
     request.set_array_size_in_samps(100);
-    request.set_fill_mode(GroupBy::GROUP_BY_GroupByChannel);
+    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->ReadAnalogF64(&context, request, &response);
   }
 
