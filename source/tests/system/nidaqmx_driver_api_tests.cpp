@@ -8,7 +8,6 @@
 
 using namespace ::testing;
 using namespace nidaqmx_grpc;
-using namespace ::testing;
 using google::protobuf::uint32;
 
 namespace ni {
@@ -98,7 +97,7 @@ class NiDAQmxDriverApiTests : public Test {
     CreateAIVoltageChanRequest request;
     set_request_session_id(request);
     request.set_physical_channel("Dev1/ai0");
-    request.set_name_to_assign_to_channel("channel1");
+    request.set_name_to_assign_to_channel("ai0");
     request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
     request.set_min_val(min_val);
     request.set_max_val(max_val);
