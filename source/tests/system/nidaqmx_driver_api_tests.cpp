@@ -125,6 +125,29 @@ class NiDAQmxDriverApiTests : public ::testing::Test {
     return stub()->CreateDOChan(&context, request, &response);
   }
 
+  ::grpc::Status write_u16_digital_data(WriteDigitalU16Response& response)
+  {
+    ::grpc::ClientContext context;
+    WriteDigitalU16Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(4);
+    request.add_write_array(100);
+    request.add_write_array(10);
+    request.add_write_array(1);
+    request.add_write_array(0);
+    return stub()->WriteDigitalU16(&context, request, &response);
+  }
+
+  ::grpc::Status read_u16_digital_data(ReadDigitalU16Response& response)
+  {
+    ::grpc::ClientContext context;
+    ReadDigitalU16Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(4);
+    request.set_array_size_in_samps(4);
+    return stub()->ReadDigitalU16(&context, request, &response);
+  }
+
   ::grpc::Status start_task(StartTaskResponse& response)
   {
     ::grpc::ClientContext context;
@@ -184,6 +207,38 @@ TEST_F(NiDAQmxDriverApiTests, CreateDOChannel_Succeeds)
 {
   CreateDOChanResponse response;
   auto status = create_do_chan(response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
+{
+  CreateDOChanResponse create_channel_response;
+  create_do_chan(create_channel_response);
+  StartTaskResponse start_response;
+  start_task(start_response);
+
+  WriteDigitalU16Response response;
+  auto status = write_u16_digital_data(response);
+
+  StopTaskResponse stop_response;
+  stop_task(stop_response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
+{
+  CreateDIChanResponse create_channel_response;
+  create_di_chan(create_channel_response);
+  StartTaskResponse start_response;
+  start_task(start_response);
+
+  ReadDigitalU16Response response;
+  auto status = read_u16_digital_data(response);
+
+  StopTaskResponse stop_response;
+  stop_task(stop_response);
 
   EXPECT_SUCCESS(status, response);
 }

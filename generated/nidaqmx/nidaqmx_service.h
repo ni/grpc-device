@@ -33,6 +33,8 @@ public:
   ::grpc::Status CreateDIChan(::grpc::ServerContext* context, const CreateDIChanRequest* request, CreateDIChanResponse* response) override;
   ::grpc::Status CreateDOChan(::grpc::ServerContext* context, const CreateDOChanRequest* request, CreateDOChanResponse* response) override;
   ::grpc::Status CreateTask(::grpc::ServerContext* context, const CreateTaskRequest* request, CreateTaskResponse* response) override;
+  ::grpc::Status ReadDigitalU16(::grpc::ServerContext* context, const ReadDigitalU16Request* request, ReadDigitalU16Response* response) override;
+  ::grpc::Status WriteDigitalU16(::grpc::ServerContext* context, const WriteDigitalU16Request* request, WriteDigitalU16Response* response) override;
   ::grpc::Status StartTask(::grpc::ServerContext* context, const StartTaskRequest* request, StartTaskResponse* response) override;
   ::grpc::Status StopTask(::grpc::ServerContext* context, const StopTaskRequest* request, StopTaskResponse* response) override;
 private:

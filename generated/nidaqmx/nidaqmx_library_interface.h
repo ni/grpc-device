@@ -20,6 +20,8 @@ class NiDAQmxLibraryInterface {
   virtual int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping) = 0;
   virtual int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping) = 0;
   virtual int32 CreateTask(const char sessionName[], TaskHandle* task) = 0;
+  virtual int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved) = 0;
+  virtual int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16* writeArray, int32* sampsPerChanWritten, bool32* reserved) = 0;
   virtual int32 StartTask(TaskHandle task) = 0;
   virtual int32 StopTask(TaskHandle task) = 0;
 };

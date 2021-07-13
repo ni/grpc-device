@@ -22,6 +22,8 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, CreateDIChan, (TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping), (override));
   MOCK_METHOD(int32, CreateDOChan, (TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping), (override));
   MOCK_METHOD(int32, CreateTask, (const char sessionName[], TaskHandle* task), (override));
+  MOCK_METHOD(int32, ReadDigitalU16, (TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved), (override));
+  MOCK_METHOD(int32, WriteDigitalU16, (TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16* writeArray, int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, StartTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, StopTask, (TaskHandle task), (override));
 };

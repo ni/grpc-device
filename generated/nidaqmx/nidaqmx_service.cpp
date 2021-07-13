@@ -220,6 +220,98 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadDigitalU16(::grpc::ServerContext* context, const ReadDigitalU16Request* request, ReadDigitalU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      double timeout = request->timeout();
+      int32 fill_mode = request->fill_mode();
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      bool32* reserved = nullptr;
+
+      std::vector<uInt16> read_array(array_size_in_samps);
+      int32 samps_per_chan {};
+      auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_read_array()->Clear();
+        response->mutable_read_array()->Reserve(array_size_in_samps);
+        std::transform(
+          read_array.begin(),
+          read_array.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+          [](auto x) { 
+              return x;
+          });
+        response->set_samps_per_chan(samps_per_chan);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteDigitalU16(::grpc::ServerContext* context, const WriteDigitalU16Request* request, WriteDigitalU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      int32 auto_start = request->auto_start();
+      double timeout = request->timeout();
+      int32 data_layout = request->data_layout();
+      auto write_array_raw = request->write_array();
+      auto write_array = std::vector<uInt16>();
+      write_array.reserve(write_array_raw.size());
+      std::transform(
+        write_array_raw.begin(),
+        write_array_raw.end(),
+        std::back_inserter(write_array),
+        [](auto x) { 
+              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uInt16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uInt16>(x);
+        });
+
+      bool32* reserved = nullptr;
+
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::StartTask(::grpc::ServerContext* context, const StartTaskRequest* request, StartTaskResponse* response)
   {
     if (context->IsCancelled()) {
