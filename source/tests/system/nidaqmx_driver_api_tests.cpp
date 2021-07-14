@@ -226,7 +226,7 @@ std::function<T()> random_generator(T begin, T end)
 {
   std::random_device device;
   std::default_random_engine engine(device());
-  std::uniform_real_distribution distribution(begin, end);
+  std::uniform_real_distribution<T> distribution(begin, end);
   return [=]() mutable { return distribution(engine); };
 }
 
