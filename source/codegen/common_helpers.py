@@ -27,7 +27,7 @@ def get_input_and_output_custom_types(functions):
   return (input_custom_types, output_custom_types)
 
 def is_string_arg(parameter):
-  return parameter['type'] in ['ViChar[]', 'ViInt8[]', 'ViUInt8[]', 'char[]', 'uInt8[]']
+  return parameter['grpc_type'] in ['string', 'bytes']
 
 def get_underlying_type_name(parameter_type):
   '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''

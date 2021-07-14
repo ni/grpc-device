@@ -237,7 +237,7 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto u8_array = reinterpret_cast<const unsigned char*>(request->u8_array().data());
+      const uInt8* u8_array = (const uInt8*)request->u8_array().c_str();
       auto status = library_->InputArrayOfBytes(u8_array);
       response->set_status(status);
       return ::grpc::Status::OK;
