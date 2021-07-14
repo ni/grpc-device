@@ -129,231 +129,6 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
     return response.status();
   }
-
-  int32 input_arrays_with_narrow_integer_types_u16()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .With(CustomU16Data())
-        .Times(1);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_u16_array(0);
-    request.add_u16_array(UINT16_MAX);
-    request.add_u16_array(16);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-
-    return response.status();
-  }
-
-  void input_arrays_with_narrow_integer_types_u16_out_of_range()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .Times(0);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_u16_array(UINT16_MAX + 1);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
-    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(UINT16_MAX + 1)));
-  }
-
-  int32 input_arrays_with_narrow_integer_types_i16()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .With(CustomI16Data())
-        .Times(1);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_i16_array(0);
-    request.add_i16_array(INT16_MAX);
-    request.add_i16_array(INT16_MIN);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-
-    return response.status();
-  }
-
-  void input_arrays_with_narrow_integer_types_i16_out_of_range_too_high()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .Times(0);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_i16_array(INT16_MAX + 1);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
-    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MAX + 1)));
-  }
-
-  void input_arrays_with_narrow_integer_types_i16_out_of_range_too_low()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .Times(0);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_i16_array(INT16_MIN - 1);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
-    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MIN - 1)));
-  }
-
-  int32 input_arrays_with_narrow_integer_types_i8()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .With(CustomI8Data())
-        .Times(1);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_i8_array(0);
-    request.add_i8_array(INT8_MAX);
-    request.add_i8_array(INT8_MIN);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-
-    return response.status();
-  }
-
-  void input_arrays_with_narrow_integer_types_i8_out_of_range_too_high()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .Times(0);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_i8_array(INT8_MAX + 1);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
-    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MAX + 1)));
-  }
-
-  void input_arrays_with_narrow_integer_types_i8_out_of_range_too_low()
-  {
-    EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
-        .Times(0);
-
-    ::grpc::ServerContext context;
-    InputArraysWithNarrowIntegerTypesRequest request;
-    request.add_i8_array(INT8_MIN - 1);
-    InputArraysWithNarrowIntegerTypesResponse response;
-
-    auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
-    EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
-  }
-
-  int32 output_array_with_narrow_integer_types_u16()
-  {
-    ::grpc::ServerContext context;
-    OutputArraysWithNarrowIntegerTypesRequest request;
-    request.set_number_of_u16_samples(3);
-    OutputArraysWithNarrowIntegerTypesResponse response;
-    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
-        .WillOnce(DoAll(
-            Invoke(SetU16Data),
-            Return(kDriverSuccess)));
-
-    service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(3, response.u16_data_size());
-    EXPECT_EQ(0, response.u16_data().Get(0));
-    EXPECT_EQ(UINT16_MAX, response.u16_data().Get(1));
-    EXPECT_EQ(16, response.u16_data().Get(2));
-    return response.status();
-  }
-
-  int32 output_array_with_narrow_integer_types_i16()
-  {
-    ::grpc::ServerContext context;
-    OutputArraysWithNarrowIntegerTypesRequest request;
-    request.set_number_of_i16_samples(3);
-    OutputArraysWithNarrowIntegerTypesResponse response;
-    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
-        .WillOnce(DoAll(
-            Invoke(SetI16Data),
-            Return(kDriverSuccess)));
-
-    service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(3, response.i16_data_size());
-    EXPECT_EQ(0, response.i16_data().Get(0));
-    EXPECT_EQ(INT16_MAX, response.i16_data().Get(1));
-    EXPECT_EQ(INT16_MIN, response.i16_data().Get(2));
-    return response.status();
-  }
-
-  int32 output_array_with_narrow_integer_types_i8()
-  {
-    ::grpc::ServerContext context;
-    OutputArraysWithNarrowIntegerTypesRequest request;
-    request.set_number_of_i8_samples(3);
-    OutputArraysWithNarrowIntegerTypesResponse response;
-    EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
-        .WillOnce(DoAll(
-            Invoke(SetI8Data),
-            Return(kDriverSuccess)));
-
-    service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
-    EXPECT_EQ(3, response.i8_data_size());
-    EXPECT_EQ(0, response.i8_data().Get(0));
-    EXPECT_EQ(INT8_MAX, response.i8_data().Get(1));
-    EXPECT_EQ(INT8_MIN, response.i8_data().Get(2));
-    return response.status();
-  }
-
-  int32 input_array_of_bytes()
-  {
-    EXPECT_CALL(library_, InputArrayOfBytes(_))
-        .With(CustomU8Data())
-        .Times(1);
-
-    ::grpc::ServerContext context;
-    InputArrayOfBytesRequest request;
-    request.mutable_u8_array()->push_back(0);
-    request.mutable_u8_array()->push_back(UINT8_MAX);
-    request.mutable_u8_array()->push_back(16);
-    InputArrayOfBytesResponse response;
-
-    service_.InputArrayOfBytes(&context, &request, &response);
-
-    return response.status();
-  }
-
-  int32 output_array_of_bytes()
-  {
-    EXPECT_CALL(library_, OutputArrayOfBytes(_, _))
-        .WillOnce(DoAll(
-            Invoke(SetU8Data),
-            Return(kDriverSuccess)));
-
-    ::grpc::ServerContext context;
-    OutputArrayOfBytesRequest request;
-    request.set_number_of_u8_samples(3);
-    OutputArrayOfBytesResponse response;
-
-    service_.OutputArrayOfBytes(&context, &request, &response);
-    EXPECT_EQ(3, response.u8_data().size());
-    EXPECT_EQ(0, (uInt8)response.u8_data()[0]);
-    EXPECT_EQ(UINT8_MAX, (uInt8)response.u8_data()[1]);
-    EXPECT_EQ(16, (uInt8)response.u8_data()[2]);
-
-    return response.status();
-  }
 };
 
 TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceeds)
@@ -380,74 +155,232 @@ TEST_F(NiFakeNonIviServiceTests, InitWithHandleNameAsSessionName_CloseSession_Cl
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataGetsCoerced)
 {
-  auto status = input_arrays_with_narrow_integer_types_u16();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .With(CustomU16Data())
+      .Times(1);
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_u16_array(0);
+  request.add_u16_array(UINT16_MAX);
+  request.add_u16_array(16);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataOutOfRange_ReturnsError)
 {
-  input_arrays_with_narrow_integer_types_u16_out_of_range();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_u16_array(UINT16_MAX + 1);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(UINT16_MAX + 1)));
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataGetsCoerced)
 {
-  auto status = input_arrays_with_narrow_integer_types_i16();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .With(CustomI16Data())
+      .Times(1);
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_i16_array(0);
+  request.add_i16_array(INT16_MAX);
+  request.add_i16_array(INT16_MIN);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfRangeTooHigh_ReturnsError)
 {
-  input_arrays_with_narrow_integer_types_i16_out_of_range_too_high();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_i16_array(INT16_MAX + 1);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MAX + 1)));
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfRangeTooLow_ReturnsError)
 {
-  input_arrays_with_narrow_integer_types_i16_out_of_range_too_low();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_i16_array(INT16_MIN - 1);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MIN - 1)));
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataGetsCoerced)
 {
-  auto status = input_arrays_with_narrow_integer_types_i8();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .With(CustomI8Data())
+      .Times(1);
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_i8_array(0);
+  request.add_i8_array(INT8_MAX);
+  request.add_i8_array(INT8_MIN);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRangeTooHigh_ReturnsError)
 {
-  input_arrays_with_narrow_integer_types_i8_out_of_range_too_high();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_i8_array(INT8_MAX + 1);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MAX + 1)));
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRangeTooLow_ReturnsError)
 {
-  input_arrays_with_narrow_integer_types_i8_out_of_range_too_low();
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  InputArraysWithNarrowIntegerTypesRequest request;
+  request.add_i8_array(INT8_MIN - 1);
+  InputArraysWithNarrowIntegerTypesResponse response;
+
+  auto status = service_.InputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
 }
 
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_U16)
 {
-  auto status = output_array_with_narrow_integer_types_u16();
+  ::grpc::ServerContext context;
+  OutputArraysWithNarrowIntegerTypesRequest request;
+  request.set_number_of_u16_samples(3);
+  OutputArraysWithNarrowIntegerTypesResponse response;
+  EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+      .WillOnce(DoAll(
+          Invoke(SetU16Data),
+          Return(kDriverSuccess)));
+
+  service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(3, response.u16_data_size());
+  EXPECT_EQ(0, response.u16_data().Get(0));
+  EXPECT_EQ(UINT16_MAX, response.u16_data().Get(1));
+  EXPECT_EQ(16, response.u16_data().Get(2));
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I16)
 {
-  auto status = output_array_with_narrow_integer_types_i16();
+  ::grpc::ServerContext context;
+  OutputArraysWithNarrowIntegerTypesRequest request;
+  request.set_number_of_i16_samples(3);
+  OutputArraysWithNarrowIntegerTypesResponse response;
+  EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+      .WillOnce(DoAll(
+          Invoke(SetI16Data),
+          Return(kDriverSuccess)));
+
+  service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(3, response.i16_data_size());
+  EXPECT_EQ(0, response.i16_data().Get(0));
+  EXPECT_EQ(INT16_MAX, response.i16_data().Get(1));
+  EXPECT_EQ(INT16_MIN, response.i16_data().Get(2));
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I8)
 {
-  auto status = output_array_with_narrow_integer_types_i8();
+  ::grpc::ServerContext context;
+  OutputArraysWithNarrowIntegerTypesRequest request;
+  request.set_number_of_i8_samples(3);
+  OutputArraysWithNarrowIntegerTypesResponse response;
+  EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+      .WillOnce(DoAll(
+          Invoke(SetI8Data),
+          Return(kDriverSuccess)));
+
+  service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(3, response.i8_data_size());
+  EXPECT_EQ(0, response.i8_data().Get(0));
+  EXPECT_EQ(INT8_MAX, response.i8_data().Get(1));
+  EXPECT_EQ(INT8_MIN, response.i8_data().Get(2));
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
 TEST_F(NiFakeNonIviServiceTests, InputArrayOfBytes)
 {
-  auto status = input_array_of_bytes();
+  EXPECT_CALL(library_, InputArrayOfBytes(_))
+      .With(CustomU8Data())
+      .Times(1);
+  ::grpc::ServerContext context;
+  InputArrayOfBytesRequest request;
+  request.mutable_u8_array()->push_back(0);
+  request.mutable_u8_array()->push_back(UINT8_MAX);
+  request.mutable_u8_array()->push_back(16);
+  InputArrayOfBytesResponse response;
+
+  service_.InputArrayOfBytes(&context, &request, &response);
+
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
 TEST_F(NiFakeNonIviServiceTests, OutputArrayOfBytes)
 {
-  auto status = output_array_of_bytes();
+  EXPECT_CALL(library_, OutputArrayOfBytes(_, _))
+      .WillOnce(DoAll(
+          Invoke(SetU8Data),
+          Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputArrayOfBytesRequest request;
+  request.set_number_of_u8_samples(3);
+  OutputArrayOfBytesResponse response;
+
+  service_.OutputArrayOfBytes(&context, &request, &response);
+
+  EXPECT_EQ(3, response.u8_data().size());
+  EXPECT_EQ(0, (uInt8)response.u8_data()[0]);
+  EXPECT_EQ(UINT8_MAX, (uInt8)response.u8_data()[1]);
+  EXPECT_EQ(16, (uInt8)response.u8_data()[2]);
+  auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }
 
