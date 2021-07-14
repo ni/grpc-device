@@ -175,3 +175,6 @@ def is_private_method(function_data):
 def is_custom_close_method(function_data):
   return function_data.get('custom_close_method', False)
   
+
+def requires_checked_conversion(parameters):
+  return any([is_input_array_that_needs_coercion(p) for p in parameters])
