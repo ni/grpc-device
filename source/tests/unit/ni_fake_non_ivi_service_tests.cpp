@@ -8,15 +8,7 @@
 #include <string>
 
 using namespace nifake_non_ivi_grpc;
-
-using ::testing::_;
-using ::testing::DoAll;
-using ::testing::HasSubstr;
-using ::testing::Invoke;
-using ::testing::Return;
-using ::testing::SetArgPointee;
-using ::testing::StrEq;
-using ::testing::Unused;
+using namespace ::testing;
 
 const int32 kDriverSuccess = 0;
 const int32 kDriverFailure = 1;
