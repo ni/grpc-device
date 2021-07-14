@@ -294,7 +294,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
 %     if common_helpers.is_struct(parameter) or underlying_param_type == 'ViBoolean':
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 ## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.
-%     elif parameter['type'] in ['ViInt8[]', 'ViUInt8[]', 'uInt8[]']:
+%     elif parameter['grpc_type'] == 'bytes':
       std::string ${parameter_name}(${size}, '\0');
 ## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
 %     elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
