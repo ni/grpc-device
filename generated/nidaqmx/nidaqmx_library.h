@@ -24,9 +24,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping);
   int32 CreateTask(const char sessionName[], TaskHandle* task);
   int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved);
-  int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 StartTask(TaskHandle task);
   int32 StopTask(TaskHandle task);
+  int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
  private:
   using ClearTaskPtr = int32 (*)(TaskHandle task);
@@ -35,9 +35,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using CreateDOChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping);
   using CreateTaskPtr = int32 (*)(const char sessionName[], TaskHandle* task);
   using ReadDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved);
-  using WriteDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using StartTaskPtr = int32 (*)(TaskHandle task);
   using StopTaskPtr = int32 (*)(TaskHandle task);
+  using WriteDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
   typedef struct FunctionPointers {
     ClearTaskPtr ClearTask;
@@ -46,9 +46,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     CreateDOChanPtr CreateDOChan;
     CreateTaskPtr CreateTask;
     ReadDigitalU16Ptr ReadDigitalU16;
-    WriteDigitalU16Ptr WriteDigitalU16;
     StartTaskPtr StartTask;
     StopTaskPtr StopTask;
+    WriteDigitalU16Ptr WriteDigitalU16;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

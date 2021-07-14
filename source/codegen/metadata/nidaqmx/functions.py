@@ -178,6 +178,26 @@ functions = {
         ],
         'returns': 'int32',
     },
+    'StartTask': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'StopTask': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
     'WriteDigitalU16': {
         'parameters': [
             {
@@ -226,25 +246,5 @@ functions = {
             }
         ],
         'returns': 'int32',
-    },
-    'StartTask': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'task',
-                'type': 'TaskHandle'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'StopTask': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'task',
-                'type': 'TaskHandle'
-            }
-        ],
-        'returns': 'int32'
     }
 }

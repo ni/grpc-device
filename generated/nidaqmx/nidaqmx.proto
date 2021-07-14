@@ -22,9 +22,9 @@ service NiDAQmx {
   rpc CreateDOChan(CreateDOChanRequest) returns (CreateDOChanResponse);
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
-  rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
+  rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
 }
 
 enum NiDAQmxAttributes {
@@ -134,21 +134,6 @@ message ReadDigitalU16Response {
   int32 samps_per_chan = 3;
 }
 
-message WriteDigitalU16Request {
-  nidevice_grpc.Session task = 1;
-  int32 num_samps_per_chan = 2;
-  int32 auto_start = 3;
-  double timeout = 4;
-  int32 data_layout = 5;
-  repeated uint32 write_array = 6;
-  uint64 reserved = 7;
-}
-
-message WriteDigitalU16Response {
-  int32 status = 1;
-  int32 samps_per_chan_written = 2;
-}
-
 message StartTaskRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -163,5 +148,20 @@ message StopTaskRequest {
 
 message StopTaskResponse {
   int32 status = 1;
+}
+
+message WriteDigitalU16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  int32 auto_start = 3;
+  double timeout = 4;
+  int32 data_layout = 5;
+  repeated uint32 write_array = 6;
+  uint64 reserved = 7;
+}
+
+message WriteDigitalU16Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
 }
 
