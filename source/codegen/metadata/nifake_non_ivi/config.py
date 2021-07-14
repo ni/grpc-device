@@ -14,7 +14,11 @@ config = {
     'custom_types': [],
     'type_to_grpc_type': {
         'FakeHandle': 'nidevice_grpc.Session',
-        'const char[]': 'string'
+        'const char[]': 'string',
+        'int16': 'int32',
+        'uInt16': 'uint32',
+        'int8': 'int32',
+        'uInt8[]': 'bytes'
     },
     'library_info': {
         'Linux': {

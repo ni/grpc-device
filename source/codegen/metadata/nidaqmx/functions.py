@@ -152,7 +152,7 @@ functions = {
                 'direction': 'out',
                 'name': 'readArray',
                 'type': 'uInt16[]',
-                'grpc_type': 'repeated uint32',
+                'coerced': True,
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'arraySizeInSamps'
@@ -210,7 +210,7 @@ functions = {
                 'direction': 'in',
                 'name': 'writeArray',
                 'type': 'const uInt16*',
-                'grpc_type': 'repeated uint32',
+                'coerced': True
             },
             {
                 'direction': 'out',

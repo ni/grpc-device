@@ -50,19 +50,19 @@ functions = {
                 'direction': 'in',
                 'name': 'u16Array',
                 'type': 'const uInt16*',
-                'grpc_type': 'repeated uint32',
+                'coerced': True
             },
             {
                 'direction': 'in',
                 'name': 'i16Array',
                 'type': 'const int16*',
-                'grpc_type': 'repeated int32',
+                'coerced': True
             },
             {
                 'direction': 'in',
                 'name': 'i8Array',
                 'type': 'const int8*',
-                'grpc_type': 'repeated int32',
+                'coerced': True
             }
         ],
         'returns': 'int32'
@@ -82,7 +82,7 @@ functions = {
                     'value': 'numberOfU16Samples'
                 },
                 'type': 'uInt16[]',
-                'grpc_type': 'repeated uint32'
+                'coerced': True
             },
             {
                 'direction': 'in',
@@ -97,7 +97,7 @@ functions = {
                     'value': 'numberOfI16Samples'
                 },
                 'type': 'int16[]',
-                'grpc_type': 'repeated int32'
+                'coerced': True
             },
             {
                 'direction': 'in',
@@ -112,7 +112,7 @@ functions = {
                     'value': 'numberOfI8Samples'
                 },
                 'type': 'int8[]',
-                'grpc_type': 'repeated int32'
+                'coerced': True
             },
         ],
         'returns': 'int32'

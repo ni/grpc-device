@@ -129,8 +129,24 @@ def populate_grpc_types(parameters, config):
           continue
         if 'type_to_grpc_type' in config:
           type_map = config['type_to_grpc_type']
-          if parameter['type'] in type_map:
-            parameter['grpc_type'] = type_map[parameter['type']]
+          stripped_type = parameter['type']
+          if stripped_type in type_map:
+            parameter['grpc_type'] = type_map[stripped_type]
+            continue
+          if stripped_type.startswith('const '):
+            stripped_type = stripped_type[len('const '):]
+          if stripped_type in type_map:
+            parameter['grpc_type'] = type_map[stripped_type]
+            continue
+          is_array = False
+          if stripped_type.endswith('*'):
+            is_array = True
+            stripped_type = stripped_type[:-1]
+          elif stripped_type.endswith('[]'):
+            is_array = True
+            stripped_type = stripped_type[:-2]
+          if stripped_type in type_map:
+            parameter['grpc_type'] = 'repeated ' + type_map[stripped_type]
             continue
         is_array = common_helpers.is_array(parameter["type"])
         parameter['grpc_type'] = get_grpc_type_from_ivi(
