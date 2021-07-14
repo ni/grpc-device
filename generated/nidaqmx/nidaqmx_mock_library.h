@@ -19,12 +19,14 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
   MOCK_METHOD(int32, ClearTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, CreateAIVoltageChan, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]), (override));
+  MOCK_METHOD(int32, CreateAOVoltageChan, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[]), (override));
   MOCK_METHOD(int32, CreateDIChan, (TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping), (override));
   MOCK_METHOD(int32, CreateDOChan, (TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping), (override));
   MOCK_METHOD(int32, CreateTask, (const char sessionName[], TaskHandle* task), (override));
   MOCK_METHOD(int32, ReadAnalogF64, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, StartTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, StopTask, (TaskHandle task), (override));
+  MOCK_METHOD(int32, WriteAnalogF64, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
 };
 
 }  // namespace unit

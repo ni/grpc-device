@@ -18,12 +18,14 @@ import "session.proto";
 service NiDAQmx {
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
   rpc CreateAIVoltageChan(CreateAIVoltageChanRequest) returns (CreateAIVoltageChanResponse);
+  rpc CreateAOVoltageChan(CreateAOVoltageChanRequest) returns (CreateAOVoltageChanResponse);
   rpc CreateDIChan(CreateDIChanRequest) returns (CreateDIChanResponse);
   rpc CreateDOChan(CreateDOChanRequest) returns (CreateDOChanResponse);
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
+  rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
 }
 
 enum NiDAQmxAttributes {
@@ -85,6 +87,23 @@ message CreateAIVoltageChanRequest {
 }
 
 message CreateAIVoltageChanResponse {
+  int32 status = 1;
+}
+
+message CreateAOVoltageChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    VoltageUnits2 units = 6;
+    int32 units_raw = 7;
+  }
+  string custom_scale_name = 8;
+}
+
+message CreateAOVoltageChanResponse {
   int32 status = 1;
 }
 
@@ -156,5 +175,22 @@ message StopTaskRequest {
 
 message StopTaskResponse {
   int32 status = 1;
+}
+
+message WriteAnalogF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated double write_array = 7;
+}
+
+message WriteAnalogF64Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
 }
 

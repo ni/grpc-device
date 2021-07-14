@@ -29,12 +29,14 @@ public:
   
   ::grpc::Status ClearTask(::grpc::ServerContext* context, const ClearTaskRequest* request, ClearTaskResponse* response) override;
   ::grpc::Status CreateAIVoltageChan(::grpc::ServerContext* context, const CreateAIVoltageChanRequest* request, CreateAIVoltageChanResponse* response) override;
+  ::grpc::Status CreateAOVoltageChan(::grpc::ServerContext* context, const CreateAOVoltageChanRequest* request, CreateAOVoltageChanResponse* response) override;
   ::grpc::Status CreateDIChan(::grpc::ServerContext* context, const CreateDIChanRequest* request, CreateDIChanResponse* response) override;
   ::grpc::Status CreateDOChan(::grpc::ServerContext* context, const CreateDOChanRequest* request, CreateDOChanResponse* response) override;
   ::grpc::Status CreateTask(::grpc::ServerContext* context, const CreateTaskRequest* request, CreateTaskResponse* response) override;
   ::grpc::Status ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response) override;
   ::grpc::Status StartTask(::grpc::ServerContext* context, const StartTaskRequest* request, StartTaskResponse* response) override;
   ::grpc::Status StopTask(::grpc::ServerContext* context, const StopTaskRequest* request, StopTaskResponse* response) override;
+  ::grpc::Status WriteAnalogF64(::grpc::ServerContext* context, const WriteAnalogF64Request* request, WriteAnalogF64Response* response) override;
 private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

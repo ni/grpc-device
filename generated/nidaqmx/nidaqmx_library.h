@@ -20,32 +20,38 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   int32 ClearTask(TaskHandle task);
   int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
+  int32 CreateAOVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
   int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   int32 CreateTask(const char sessionName[], TaskHandle* task);
   int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 StartTask(TaskHandle task);
   int32 StopTask(TaskHandle task);
+  int32 WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
  private:
   using ClearTaskPtr = int32 (*)(TaskHandle task);
   using CreateAIVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
+  using CreateAOVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
   using CreateDIChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   using CreateDOChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   using CreateTaskPtr = int32 (*)(const char sessionName[], TaskHandle* task);
   using ReadAnalogF64Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using StartTaskPtr = int32 (*)(TaskHandle task);
   using StopTaskPtr = int32 (*)(TaskHandle task);
+  using WriteAnalogF64Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
   typedef struct FunctionPointers {
     ClearTaskPtr ClearTask;
     CreateAIVoltageChanPtr CreateAIVoltageChan;
+    CreateAOVoltageChanPtr CreateAOVoltageChan;
     CreateDIChanPtr CreateDIChan;
     CreateDOChanPtr CreateDOChan;
     CreateTaskPtr CreateTask;
     ReadAnalogF64Ptr ReadAnalogF64;
     StartTaskPtr StartTask;
     StopTaskPtr StopTask;
+    WriteAnalogF64Ptr WriteAnalogF64;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

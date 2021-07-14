@@ -1,6 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
+#include <algorithm>
+#include <random>
+
 #include "device_server.h"
 #include "enumerate_devices.h"
 
@@ -13,6 +16,17 @@ using google::protobuf::uint32;
 namespace ni {
 namespace tests {
 namespace system {
+
+// Creates a static TResponse instance that can be used as a default/in-line value (because it's not a temporary).
+template <typename TResponse>
+struct ThrowawayResponse {
+  static TResponse& response()
+  {
+    static TResponse response_instance;
+    return response_instance;
+  }
+};
+
 class NiDAQmxDriverApiTests : public Test {
  protected:
   NiDAQmxDriverApiTests()
@@ -105,6 +119,19 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateAIVoltageChan(&context, request, &response);
   }
 
+  ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response)
+  {
+    ::grpc::ClientContext context;
+    CreateAOVoltageChanRequest request;
+    set_request_session_id(request);
+    request.set_physical_channel("Dev1/ao0");
+    request.set_name_to_assign_to_channel("ao0");
+    request.set_min_val(min_val);
+    request.set_max_val(max_val);
+    request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
+    return stub()->CreateAOVoltageChan(&context, request, &response);
+  }
+
   ::grpc::Status create_di_chan(CreateDIChanResponse& response)
   {
     ::grpc::ClientContext context;
@@ -127,7 +154,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateDOChan(&context, request, &response);
   }
 
-  ::grpc::Status start_task(StartTaskResponse& response)
+  ::grpc::Status start_task(StartTaskResponse& response = ThrowawayResponse<StartTaskResponse>::response())
   {
     ::grpc::ClientContext context;
     StartTaskRequest request;
@@ -135,7 +162,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->StartTask(&context, request, &response);
   }
 
-  ::grpc::Status stop_task(StopTaskResponse& response)
+  ::grpc::Status stop_task(StopTaskResponse& response = ThrowawayResponse<StopTaskResponse>::response())
   {
     ::grpc::ClientContext context;
     StopTaskRequest request;
@@ -155,6 +182,20 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_array_size_in_samps(array_size_in_samps);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->ReadAnalogF64(&context, request, &response);
+  }
+
+  ::grpc::Status write_analog_f64(
+      const std::vector<double>& data,
+      WriteAnalogF64Response& response)
+  {
+    ::grpc::ClientContext context;
+    WriteAnalogF64Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(static_cast<int32_t>(data.size()));
+    request.set_auto_start(false);
+    request.mutable_write_array()->Add(data.cbegin(), data.cend());
+    request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    return stub()->WriteAnalogF64(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -179,6 +220,24 @@ class NiDAQmxDriverApiTests : public Test {
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<NiDAQmx::Stub> nidaqmx_stub_;
 };
+
+template <typename T>
+std::function<T()> random_generator(T begin, T end)
+{
+  std::random_device device;
+  std::default_random_engine engine(device());
+  std::uniform_real_distribution distribution(begin, end);
+  return [=]() mutable { return distribution(engine); };
+}
+
+template <typename T>
+std::vector<T> generate_random_data(T min, T max, size_t size)
+{
+  std::vector<T> data(size);
+  auto generate_value_in_range = random_generator<T>(min, max);
+  std::generate(data.begin(), data.end(), generate_value_in_range);
+  return data;
+}
 
 TEST_F(NiDAQmxDriverApiTests, CreateAIVoltageChannel_Succeeds)
 {
@@ -224,6 +283,39 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadAIData_ReturnsDataInExpectedR
   EXPECT_SUCCESS(start_status, start_response);
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_SUCCESS(stop_status, stop_response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
+{
+  const double AO_MIN = 1.0;
+  const double AO_MAX = 10.0;
+  CreateAOVoltageChanResponse create_channel_response;
+  create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+
+  start_task();
+  auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
+  WriteAnalogF64Response write_response;
+  auto write_status = write_analog_f64(write_data, write_response);
+  stop_task();
+
+  EXPECT_SUCCESS(write_status, write_response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_ReturnsInvalidAODataError)
+{
+  const double AO_MIN = 1.0;
+  const double AO_MAX = 10.0;
+  CreateAOVoltageChanResponse create_channel_response;
+  create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+
+  start_task();
+  auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
+  write_data[80] += 10.0;
+  WriteAnalogF64Response write_response;
+  write_analog_f64(write_data, write_response);
+  stop_task();
+
+  EXPECT_EQ(DAQmxErrorInvalidAODataWrite, write_response.status());
 }
 }  // namespace system
 }  // namespace tests

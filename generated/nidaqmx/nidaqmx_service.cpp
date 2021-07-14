@@ -101,6 +101,46 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAOVoltageChan(::grpc::ServerContext* context, const CreateAOVoltageChanRequest* request, CreateAOVoltageChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAOVoltageChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAOVoltageChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAOVoltageChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      auto custom_scale_name = request->custom_scale_name().c_str();
+      auto status = library_->CreateAOVoltageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, custom_scale_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateDIChan(::grpc::ServerContext* context, const CreateDIChanRequest* request, CreateDIChanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -279,6 +319,50 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto status = library_->StopTask(task);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteAnalogF64(::grpc::ServerContext* context, const WriteAnalogF64Request* request, WriteAnalogF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteAnalogF64Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteAnalogF64Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteAnalogF64Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto write_array = const_cast<const float64*>(request->write_array().data());
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
