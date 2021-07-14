@@ -30,7 +30,7 @@ functions = {
                 'direction': 'in',
                 'enum': 'InputTermCfgWithDefault',
                 'name': 'terminalConfig',
-                'type': 'int'
+                'type': 'int32'
             },
             {
                 'direction': 'in',
@@ -46,7 +46,7 @@ functions = {
                 'direction': 'in',
                 'enum': 'VoltageUnits2',
                 'name': 'units',
-                'type': 'int'
+                'type': 'int32'
             },
             {
                 'direction': 'in',
@@ -77,7 +77,7 @@ functions = {
                 'direction': 'in',
                 'enum': 'LineGrouping',
                 'name': 'lineGrouping',
-                'type': 'int'
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
@@ -103,7 +103,7 @@ functions = {
                 'direction': 'in',
                 'enum': 'LineGrouping',
                 'name': 'lineGrouping',
-                'type': 'int'
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
@@ -121,6 +121,58 @@ functions = {
                 'direction': 'out',
                 'name': 'task',
                 'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadAnalogF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32',
             }
         ],
         'returns': 'int32'

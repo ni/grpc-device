@@ -24,6 +24,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
   ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
+  ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved);
   ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
   ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]);
   ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle);
@@ -91,6 +92,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using AcceptViUInt32ArrayPtr = ViStatus (*)(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
   using BoolArrayOutputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   using BoolArrayInputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
+  using CommandWithReservedParamPtr = ViStatus (*)(ViSession vi, ViBoolean* reserved);
   using DoubleAllTheNumsPtr = ViStatus (*)(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
   using EnumArrayOutputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]);
   using EnumInputFunctionWithDefaultsPtr = ViStatus (*)(ViSession vi, ViInt16 aTurtle);
@@ -158,6 +160,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     AcceptViUInt32ArrayPtr AcceptViUInt32Array;
     BoolArrayOutputFunctionPtr BoolArrayOutputFunction;
     BoolArrayInputFunctionPtr BoolArrayInputFunction;
+    CommandWithReservedParamPtr CommandWithReservedParam;
     DoubleAllTheNumsPtr DoubleAllTheNums;
     EnumArrayOutputFunctionPtr EnumArrayOutputFunction;
     EnumInputFunctionWithDefaultsPtr EnumInputFunctionWithDefaults;
