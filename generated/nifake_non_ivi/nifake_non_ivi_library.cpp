@@ -77,7 +77,7 @@ int32 NiFakeNonIviLibrary::InitWithHandleNameAsSessionName(const char handleName
 #endif
 }
 
-int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const uInt16* u16Array, const int16* i16Array, const int8* i8Array)
+int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const uInt16 u16Array[], const int16 i16Array[], const int8 i8Array[])
 {
   if (!function_pointers_.InputArraysWithNarrowIntegerTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputArraysWithNarrowIntegerTypes.");
@@ -101,7 +101,7 @@ int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16S
 #endif
 }
 
-int32 NiFakeNonIviLibrary::InputArrayOfBytes(const uInt8* u8Array)
+int32 NiFakeNonIviLibrary::InputArrayOfBytes(const uInt8 u8Array[])
 {
   if (!function_pointers_.InputArrayOfBytes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputArrayOfBytes.");

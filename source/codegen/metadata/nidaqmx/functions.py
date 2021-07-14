@@ -209,7 +209,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'writeArray',
-                'type': 'const uInt16*',
+                'type': 'const uInt16[]',
                 'coerced': True
             },
             {
