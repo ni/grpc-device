@@ -108,7 +108,7 @@ def create_param(parameter):
     if common_helpers.is_array(type):
         array_size = get_array_param_size(parameter)
         return f'{type[:-2]} {name}[{array_size}]'
-    elif common_helpers.is_output_parameter(parameter):
+    elif common_helpers.is_pointer_parameter(parameter):
         return f'{type}* {name}'
     else:
         return f'{type} {name}'

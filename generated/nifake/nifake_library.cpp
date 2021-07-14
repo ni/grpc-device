@@ -27,6 +27,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.AcceptViUInt32Array = reinterpret_cast<AcceptViUInt32ArrayPtr>(shared_library_.get_function_pointer("niFake_AcceptViUInt32Array"));
   function_pointers_.BoolArrayOutputFunction = reinterpret_cast<BoolArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayOutputFunction"));
   function_pointers_.BoolArrayInputFunction = reinterpret_cast<BoolArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayInputFunction"));
+  function_pointers_.CommandWithReservedParam = reinterpret_cast<CommandWithReservedParamPtr>(shared_library_.get_function_pointer("niFake_CommandWithReservedParam"));
   function_pointers_.DoubleAllTheNums = reinterpret_cast<DoubleAllTheNumsPtr>(shared_library_.get_function_pointer("niFake_DoubleAllTheNums"));
   function_pointers_.EnumArrayOutputFunction = reinterpret_cast<EnumArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_EnumArrayOutputFunction"));
   function_pointers_.EnumInputFunctionWithDefaults = reinterpret_cast<EnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
@@ -168,6 +169,18 @@ ViStatus NiFakeLibrary::BoolArrayInputFunction(ViSession vi, ViInt32 numberOfEle
   return niFake_BoolArrayInputFunction(vi, numberOfElements, anArray);
 #else
   return function_pointers_.BoolArrayInputFunction(vi, numberOfElements, anArray);
+#endif
+}
+
+ViStatus NiFakeLibrary::CommandWithReservedParam(ViSession vi, ViBoolean* reserved)
+{
+  if (!function_pointers_.CommandWithReservedParam) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_CommandWithReservedParam.");
+  }
+#if defined(_MSC_VER)
+  return niFake_CommandWithReservedParam(vi, reserved);
+#else
+  return function_pointers_.CommandWithReservedParam(vi, reserved);
 #endif
 }
 
