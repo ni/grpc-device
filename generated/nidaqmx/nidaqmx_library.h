@@ -18,49 +18,64 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   virtual ~NiDAQmxLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
+  int32 AddGlobalChansToTask(TaskHandle task, const char channelNames[]);
   int32 ClearTask(TaskHandle task);
   int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
   int32 CreateAOVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
   int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   int32 CreateTask(const char sessionName[], TaskHandle* task);
+  int32 GetNthTaskChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
+  int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
+  int32 IsTaskDone(TaskHandle task, bool32* isTaskDone);
   int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved);
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 StartTask(TaskHandle task);
   int32 StopTask(TaskHandle task);
+  int32 WaitUntilTaskDone(TaskHandle task, float64 timeToWait);
   int32 WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
  private:
+  using AddGlobalChansToTaskPtr = int32 (*)(TaskHandle task, const char channelNames[]);
   using ClearTaskPtr = int32 (*)(TaskHandle task);
   using CreateAIVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
   using CreateAOVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[]);
   using CreateDIChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   using CreateDOChanPtr = int32 (*)(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping);
   using CreateTaskPtr = int32 (*)(const char sessionName[], TaskHandle* task);
+  using GetNthTaskChannelPtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
+  using GetNthTaskDevicePtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
+  using IsTaskDonePtr = int32 (*)(TaskHandle task, bool32* isTaskDone);
   using ReadAnalogF64Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved);
   using ReadDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using StartTaskPtr = int32 (*)(TaskHandle task);
   using StopTaskPtr = int32 (*)(TaskHandle task);
+  using WaitUntilTaskDonePtr = int32 (*)(TaskHandle task, float64 timeToWait);
   using WriteAnalogF64Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using WriteDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using WriteDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
   typedef struct FunctionPointers {
+    AddGlobalChansToTaskPtr AddGlobalChansToTask;
     ClearTaskPtr ClearTask;
     CreateAIVoltageChanPtr CreateAIVoltageChan;
     CreateAOVoltageChanPtr CreateAOVoltageChan;
     CreateDIChanPtr CreateDIChan;
     CreateDOChanPtr CreateDOChan;
     CreateTaskPtr CreateTask;
+    GetNthTaskChannelPtr GetNthTaskChannel;
+    GetNthTaskDevicePtr GetNthTaskDevice;
+    IsTaskDonePtr IsTaskDone;
     ReadAnalogF64Ptr ReadAnalogF64;
     ReadDigitalU16Ptr ReadDigitalU16;
     ReadDigitalU8Ptr ReadDigitalU8;
     StartTaskPtr StartTask;
     StopTaskPtr StopTask;
+    WaitUntilTaskDonePtr WaitUntilTaskDone;
     WriteAnalogF64Ptr WriteAnalogF64;
     WriteDigitalU16Ptr WriteDigitalU16;
     WriteDigitalU8Ptr WriteDigitalU8;

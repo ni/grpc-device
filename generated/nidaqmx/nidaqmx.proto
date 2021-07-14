@@ -16,17 +16,22 @@ package nidaqmx_grpc;
 import "session.proto";
 
 service NiDAQmx {
+  rpc AddGlobalChansToTask(AddGlobalChansToTaskRequest) returns (AddGlobalChansToTaskResponse);
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
   rpc CreateAIVoltageChan(CreateAIVoltageChanRequest) returns (CreateAIVoltageChanResponse);
   rpc CreateAOVoltageChan(CreateAOVoltageChanRequest) returns (CreateAOVoltageChanResponse);
   rpc CreateDIChan(CreateDIChanRequest) returns (CreateDIChanResponse);
   rpc CreateDOChan(CreateDOChanRequest) returns (CreateDOChanResponse);
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+  rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
+  rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
+  rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
+  rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
@@ -63,6 +68,15 @@ enum VoltageUnits2 {
   VOLTAGE_UNITS2_UNSPECIFIED = 0;
   VOLTAGE_UNITS2_VOLTS = 10348;
   VOLTAGE_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+message AddGlobalChansToTaskRequest {
+  nidevice_grpc.Session task = 1;
+  string channel_names = 2;
+}
+
+message AddGlobalChansToTaskResponse {
+  int32 status = 1;
 }
 
 message ClearTaskRequest {
@@ -148,6 +162,37 @@ message CreateTaskResponse {
   nidevice_grpc.Session task = 2;
 }
 
+message GetNthTaskChannelRequest {
+  nidevice_grpc.Session task = 1;
+  uint32 index = 2;
+  int32 buffer_size = 3;
+}
+
+message GetNthTaskChannelResponse {
+  int32 status = 1;
+  string buffer = 2;
+}
+
+message GetNthTaskDeviceRequest {
+  nidevice_grpc.Session task = 1;
+  uint32 index = 2;
+  int32 buffer_size = 3;
+}
+
+message GetNthTaskDeviceResponse {
+  int32 status = 1;
+  string buffer = 2;
+}
+
+message IsTaskDoneRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message IsTaskDoneResponse {
+  int32 status = 1;
+  bool is_task_done = 2;
+}
+
 message ReadAnalogF64Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -212,6 +257,15 @@ message StopTaskRequest {
 }
 
 message StopTaskResponse {
+  int32 status = 1;
+}
+
+message WaitUntilTaskDoneRequest {
+  nidevice_grpc.Session task = 1;
+  double time_to_wait = 2;
+}
+
+message WaitUntilTaskDoneResponse {
   int32 status = 1;
 }
 

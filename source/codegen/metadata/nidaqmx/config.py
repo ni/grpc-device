@@ -13,6 +13,7 @@ config = {
     'type_to_grpc_type': {
         'TaskHandle': 'nidevice_grpc.Session',
         'const char[]': 'string',
+        'char[]': 'string',
         'float64': 'double',
         'bool32': 'bool',
         'int32': 'int32',

@@ -29,6 +29,8 @@ struct ThrowawayResponse {
 
 class NiDAQmxDriverApiTests : public Test {
  protected:
+  const std::string DEVICE_NAME{"Dev1"};
+
   NiDAQmxDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
         nidaqmx_stub_(NiDAQmx::NewStub(device_server_->InProcessChannel()))
@@ -218,6 +220,15 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->ReadDigitalU16(&context, request, &response);
+  ::grpc::Status get_nth_task_device(uint32_t index, GetNthTaskDeviceResponse& response)
+  {
+    ::grpc::ClientContext context;
+    GetNthTaskDeviceRequest request;
+    set_request_session_id(request);
+    request.set_index(index);
+    request.set_buffer_size(256);
+    
+    return stub()->GetNthTaskDevice(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -373,6 +384,21 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
   stop_task();
 
   EXPECT_EQ(DAQmxErrorInvalidAODataWrite, write_response.status());
+}
+
+TEST_F(NiDAQmxDriverApiTests, TaskWithAOChannel_GetNthTaskDevice_ReturnsDeviceForChannel)
+{
+  const double AO_MIN = 1.0;
+  const double AO_MAX = 10.0;
+  CreateAOVoltageChanResponse create_channel_response;
+  create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+
+  GetNthTaskDeviceResponse nth_device_response;
+  auto status = get_nth_task_device(1, nth_device_response);
+
+  EXPECT_SUCCESS(status, nth_device_response);
+  auto trimmed_string = std::string(nth_device_response.buffer().c_str());
+  EXPECT_EQ(DEVICE_NAME, trimmed_string);
 }
 }  // namespace system
 }  // namespace tests

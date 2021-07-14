@@ -15,17 +15,22 @@ class NiDAQmxLibraryInterface {
  public:
   virtual ~NiDAQmxLibraryInterface() {}
 
+  virtual int32 AddGlobalChansToTask(TaskHandle task, const char channelNames[]) = 0;
   virtual int32 ClearTask(TaskHandle task) = 0;
   virtual int32 CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]) = 0;
   virtual int32 CreateAOVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[]) = 0;
   virtual int32 CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping) = 0;
   virtual int32 CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping) = 0;
   virtual int32 CreateTask(const char sessionName[], TaskHandle* task) = 0;
+  virtual int32 GetNthTaskChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
+  virtual int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
+  virtual int32 IsTaskDone(TaskHandle task, bool32* isTaskDone) = 0;
   virtual int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved) = 0;
   virtual int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 StartTask(TaskHandle task) = 0;
   virtual int32 StopTask(TaskHandle task) = 0;
+  virtual int32 WaitUntilTaskDone(TaskHandle task, float64 timeToWait) = 0;
   virtual int32 WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;
   virtual int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;
   virtual int32 WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;

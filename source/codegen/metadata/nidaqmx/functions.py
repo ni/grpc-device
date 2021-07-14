@@ -1,4 +1,19 @@
 functions = {
+    'AddGlobalChansToTask': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ClearTask': {
         'parameters': [
             {
@@ -166,6 +181,79 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetNthTaskChannel': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'index',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'buffer',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetNthTaskDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'index',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'buffer',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IsTaskDone': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'isTaskDone',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ReadAnalogF64': {
         'parameters': [
             {
@@ -213,7 +301,7 @@ functions = {
                 'include_in_proto': False,
                 'name': 'reserved',
                 'pass_null': True,
-                'type': 'bool32',
+                'type': 'bool32'
             }
         ],
         'returns': 'int32'
@@ -341,6 +429,21 @@ functions = {
                 'direction': 'in',
 	            'name': 'task',
                 'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WaitUntilTaskDone': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeToWait',
+                'type': 'float64'
             }
         ],
         'returns': 'int32'
