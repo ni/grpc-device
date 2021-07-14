@@ -201,7 +201,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
 
 ## Initialize a 'pass_null' param.
 <%def name="initialize_pass_null_param(parameter)">\
-      auto ${parameter["name"]} = nullptr;\
+      auto ${common_helpers.camel_to_snake(parameter['cppName'])} = nullptr;\
 </%def>
 
 ## Initialize an input parameter for an API call.
