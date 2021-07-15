@@ -21,17 +21,23 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
+  function_pointers_.AddGlobalChansToTask = reinterpret_cast<AddGlobalChansToTaskPtr>(shared_library_.get_function_pointer("DAQmxAddGlobalChansToTask"));
   function_pointers_.ClearTask = reinterpret_cast<ClearTaskPtr>(shared_library_.get_function_pointer("DAQmxClearTask"));
   function_pointers_.CreateAIVoltageChan = reinterpret_cast<CreateAIVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIVoltageChan"));
   function_pointers_.CreateAOVoltageChan = reinterpret_cast<CreateAOVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAOVoltageChan"));
   function_pointers_.CreateDIChan = reinterpret_cast<CreateDIChanPtr>(shared_library_.get_function_pointer("DAQmxCreateDIChan"));
   function_pointers_.CreateDOChan = reinterpret_cast<CreateDOChanPtr>(shared_library_.get_function_pointer("DAQmxCreateDOChan"));
   function_pointers_.CreateTask = reinterpret_cast<CreateTaskPtr>(shared_library_.get_function_pointer("DAQmxCreateTask"));
+  function_pointers_.GetNthTaskChannel = reinterpret_cast<GetNthTaskChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskChannel"));
+  function_pointers_.GetNthTaskDevice = reinterpret_cast<GetNthTaskDevicePtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskDevice"));
+  function_pointers_.IsTaskDone = reinterpret_cast<IsTaskDonePtr>(shared_library_.get_function_pointer("DAQmxIsTaskDone"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
   function_pointers_.ReadDigitalU16 = reinterpret_cast<ReadDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU16"));
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
+  function_pointers_.TaskControl = reinterpret_cast<TaskControlPtr>(shared_library_.get_function_pointer("DAQmxTaskControl"));
+  function_pointers_.WaitUntilTaskDone = reinterpret_cast<WaitUntilTaskDonePtr>(shared_library_.get_function_pointer("DAQmxWaitUntilTaskDone"));
   function_pointers_.WriteAnalogF64 = reinterpret_cast<WriteAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogF64"));
   function_pointers_.WriteDigitalU16 = reinterpret_cast<WriteDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU16"));
   function_pointers_.WriteDigitalU8 = reinterpret_cast<WriteDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU8"));
@@ -46,6 +52,18 @@ NiDAQmxLibrary::~NiDAQmxLibrary()
   return shared_library_.function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+}
+
+int32 NiDAQmxLibrary::AddGlobalChansToTask(TaskHandle task, const char channelNames[])
+{
+  if (!function_pointers_.AddGlobalChansToTask) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAddGlobalChansToTask.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxAddGlobalChansToTask(task, channelNames);
+#else
+  return function_pointers_.AddGlobalChansToTask(task, channelNames);
+#endif
 }
 
 int32 NiDAQmxLibrary::ClearTask(TaskHandle task)
@@ -120,6 +138,42 @@ int32 NiDAQmxLibrary::CreateTask(const char sessionName[], TaskHandle* task)
 #endif
 }
 
+int32 NiDAQmxLibrary::GetNthTaskChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize)
+{
+  if (!function_pointers_.GetNthTaskChannel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetNthTaskChannel.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetNthTaskChannel(task, index, buffer, bufferSize);
+#else
+  return function_pointers_.GetNthTaskChannel(task, index, buffer, bufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize)
+{
+  if (!function_pointers_.GetNthTaskDevice) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetNthTaskDevice.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetNthTaskDevice(task, index, buffer, bufferSize);
+#else
+  return function_pointers_.GetNthTaskDevice(task, index, buffer, bufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::IsTaskDone(TaskHandle task, bool32* isTaskDone)
+{
+  if (!function_pointers_.IsTaskDone) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxIsTaskDone.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxIsTaskDone(task, isTaskDone);
+#else
+  return function_pointers_.IsTaskDone(task, isTaskDone);
+#endif
+}
+
 int32 NiDAQmxLibrary::ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
 {
   if (!function_pointers_.ReadAnalogF64) {
@@ -132,15 +186,15 @@ int32 NiDAQmxLibrary::ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, floa
 #endif
 }
 
-int32 NiDAQmxLibrary::ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, double timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChan, bool32* reserved)
+int32 NiDAQmxLibrary::ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
 {
   if (!function_pointers_.ReadDigitalU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalU16.");
   }
 #if defined(_MSC_VER)
-  return DAQmxReadDigitalU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChan, reserved);
+  return DAQmxReadDigitalU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
 #else
-  return function_pointers_.ReadDigitalU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChan, reserved);
+  return function_pointers_.ReadDigitalU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
 #endif
 }
 
@@ -180,6 +234,30 @@ int32 NiDAQmxLibrary::StopTask(TaskHandle task)
 #endif
 }
 
+int32 NiDAQmxLibrary::TaskControl(TaskHandle task, int32 action)
+{
+  if (!function_pointers_.TaskControl) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxTaskControl.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxTaskControl(task, action);
+#else
+  return function_pointers_.TaskControl(task, action);
+#endif
+}
+
+int32 NiDAQmxLibrary::WaitUntilTaskDone(TaskHandle task, float64 timeToWait)
+{
+  if (!function_pointers_.WaitUntilTaskDone) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWaitUntilTaskDone.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWaitUntilTaskDone(task, timeToWait);
+#else
+  return function_pointers_.WaitUntilTaskDone(task, timeToWait);
+#endif
+}
+
 int32 NiDAQmxLibrary::WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
 {
   if (!function_pointers_.WriteAnalogF64) {
@@ -192,7 +270,7 @@ int32 NiDAQmxLibrary::WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, boo
 #endif
 }
 
-int32 NiDAQmxLibrary::WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
+int32 NiDAQmxLibrary::WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
 {
   if (!function_pointers_.WriteDigitalU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalU16.");

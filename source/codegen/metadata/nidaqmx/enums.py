@@ -47,6 +47,38 @@ enums = {
             }
         ]
     },
+    'TaskControlAction': {
+        'values': [
+            {
+                'name': 'TASK_START',
+                'value': 0
+            },
+            {
+                'name': 'TASK_STOP',
+                'value': 1
+            },
+            {
+                'name': 'TASK_VERIFY',
+                'value': 2
+            },
+            {
+                'name': 'TASK_COMMIT',
+                'value': 3
+            },
+            {
+                'name': 'TASK_RESERVE',
+                'value': 4
+            },
+            {
+                'name': 'TASK_UNRESERVE',
+                'value': 5
+            },
+            {
+                'name': 'TASK_ABORT',
+                'value': 6
+            }
+        ]
+    },
     'VoltageUnits2': {
         'values': [
             {

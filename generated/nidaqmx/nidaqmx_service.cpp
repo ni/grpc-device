@@ -25,6 +25,26 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto channel_names = request->channel_names().c_str();
+      auto status = library_->AddGlobalChansToTask(task, channel_names);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ClearTask(::grpc::ServerContext* context, const ClearTaskRequest* request, ClearTaskResponse* response)
   {
     if (context->IsCancelled()) {
@@ -245,6 +265,85 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetNthTaskChannel(::grpc::ServerContext* context, const GetNthTaskChannelRequest* request, GetNthTaskChannelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      uInt32 index = request->index();
+      int32 buffer_size = request->buffer_size();
+      std::string buffer;
+      if (buffer_size > 0) {
+          buffer.resize(buffer_size-1);
+      }
+      auto status = library_->GetNthTaskChannel(task, index, (char*)buffer.data(), buffer_size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_buffer(buffer);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetNthTaskDevice(::grpc::ServerContext* context, const GetNthTaskDeviceRequest* request, GetNthTaskDeviceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      uInt32 index = request->index();
+      int32 buffer_size = request->buffer_size();
+      std::string buffer;
+      if (buffer_size > 0) {
+          buffer.resize(buffer_size-1);
+      }
+      auto status = library_->GetNthTaskDevice(task, index, (char*)buffer.data(), buffer_size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_buffer(buffer);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::IsTaskDone(::grpc::ServerContext* context, const IsTaskDoneRequest* request, IsTaskDoneResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      bool32 is_task_done {};
+      auto status = library_->IsTaskDone(task, &is_task_done);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_is_task_done(is_task_done);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response)
   {
     if (context->IsCancelled()) {
@@ -299,7 +398,7 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
-      double timeout = request->timeout();
+      float64 timeout = request->timeout();
       int32 fill_mode;
       switch (request->fill_mode_enum_case()) {
         case nidaqmx_grpc::ReadDigitalU16Request::FillModeEnumCase::kFillMode: {
@@ -319,8 +418,8 @@ namespace nidaqmx_grpc {
       uInt32 array_size_in_samps = request->array_size_in_samps();
       auto reserved = nullptr;
       std::vector<uInt16> read_array(array_size_in_samps);
-      int32 samps_per_chan {};
-      auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan, reserved);
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status == 0) {
         response->mutable_read_array()->Clear();
@@ -332,7 +431,7 @@ namespace nidaqmx_grpc {
           [](auto x) { 
               return x;
           });
-        response->set_samps_per_chan(samps_per_chan);
+        response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
     }
@@ -426,6 +525,61 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::TaskControl(::grpc::ServerContext* context, const TaskControlRequest* request, TaskControlResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 action;
+      switch (request->action_enum_case()) {
+        case nidaqmx_grpc::TaskControlRequest::ActionEnumCase::kAction: {
+          action = static_cast<int32>(request->action());
+          break;
+        }
+        case nidaqmx_grpc::TaskControlRequest::ActionEnumCase::kActionRaw: {
+          action = static_cast<int32>(request->action_raw());
+          break;
+        }
+        case nidaqmx_grpc::TaskControlRequest::ActionEnumCase::ACTION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->TaskControl(task, action);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WaitUntilTaskDone(::grpc::ServerContext* context, const WaitUntilTaskDoneRequest* request, WaitUntilTaskDoneResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 time_to_wait = request->time_to_wait();
+      auto status = library_->WaitUntilTaskDone(task, time_to_wait);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::WriteAnalogF64(::grpc::ServerContext* context, const WriteAnalogF64Request* request, WriteAnalogF64Response* response)
   {
     if (context->IsCancelled()) {
@@ -479,9 +633,24 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
-      int32 auto_start = request->auto_start();
-      double timeout = request->timeout();
-      int32 data_layout = request->data_layout();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteDigitalU16Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalU16Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalU16Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
       auto write_array_raw = request->write_array();
       auto write_array = std::vector<uInt16>();
       write_array.reserve(write_array_raw.size());

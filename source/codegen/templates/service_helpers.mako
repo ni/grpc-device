@@ -218,8 +218,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
 %>\
 % if c_type in ['ViConstString', 'const char[]']:
       auto ${parameter_name} = ${request_snippet}.c_str();\
-% elif c_type == 'ViString' or c_type == 'ViRsrc':
-      ${c_type} ${parameter_name} = (${c_type})${request_snippet}.c_str();\
 % elif common_helpers.is_string_arg(parameter):
       ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
 % elif c_type == 'ViSession[]':
