@@ -39,10 +39,8 @@ class NiDAQmxDriverApiTests : public Test {
   void SetUp() override
   {
     // In MAX, this can be set up by importing grpc-device-daq-tests.nce.
-    std::unordered_map<std::string, std::string> required_devices
-    {
-      { "Dev1", "NI PXIe-6341" }
-    };
+    std::unordered_map<std::string, std::string> required_devices{
+        {"gRPCSystemTestDAQ", "NI PXIe-6341"}};
 
     if (!are_all_devices_present(required_devices)) {
       GTEST_SKIP() << "Required Device(s) not found";
@@ -110,7 +108,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CreateAIVoltageChanRequest request;
     set_request_session_id(request);
-    request.set_physical_channel("Dev1/ai0");
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     request.set_name_to_assign_to_channel("ai0");
     request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
     request.set_min_val(min_val);
@@ -124,7 +122,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CreateAOVoltageChanRequest request;
     set_request_session_id(request);
-    request.set_physical_channel("Dev1/ao0");
+    request.set_physical_channel("gRPCSystemTestDAQ/ao0");
     request.set_name_to_assign_to_channel("ao0");
     request.set_min_val(min_val);
     request.set_max_val(max_val);
@@ -137,7 +135,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CreateDIChanRequest request;
     set_request_session_id(request);
-    request.set_lines("Dev1/port0/line0");
+    request.set_lines("gRPCSystemTestDAQ/port0/line0");
     request.set_name_to_assign_to_lines("di");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
     return stub()->CreateDIChan(&context, request, &response);
@@ -148,7 +146,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CreateDOChanRequest request;
     set_request_session_id(request);
-    request.set_lines("Dev1/port1/line0");
+    request.set_lines("gRPCSystemTestDAQ/port1/line0");
     request.set_name_to_assign_to_lines("do");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
     return stub()->CreateDOChan(&context, request, &response);
@@ -196,6 +194,30 @@ class NiDAQmxDriverApiTests : public Test {
     request.mutable_write_array()->Add(data.cbegin(), data.cend());
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->WriteAnalogF64(&context, request, &response);
+  }
+
+  ::grpc::Status write_u16_digital_data(WriteDigitalU16Response& response)
+  {
+    ::grpc::ClientContext context;
+    WriteDigitalU16Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(4);
+    request.add_write_array(100);
+    request.add_write_array(10);
+    request.add_write_array(1);
+    request.add_write_array(0);
+    return stub()->WriteDigitalU16(&context, request, &response);
+  }
+
+  ::grpc::Status read_u16_digital_data(ReadDigitalU16Response& response)
+  {
+    ::grpc::ClientContext context;
+    ReadDigitalU16Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(4);
+    request.set_array_size_in_samps(4);
+    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    return stub()->ReadDigitalU16(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -261,6 +283,41 @@ TEST_F(NiDAQmxDriverApiTests, CreateDOChannel_Succeeds)
   auto status = create_do_chan(response);
 
   EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
+{
+  CreateDOChanResponse create_channel_response;
+  create_do_chan(create_channel_response);
+  StartTaskResponse start_response;
+  start_task(start_response);
+
+  WriteDigitalU16Response response;
+  auto status = write_u16_digital_data(response);
+
+  StopTaskResponse stop_response;
+  stop_task(stop_response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan_written());
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
+{
+  CreateDIChanResponse create_channel_response;
+  create_di_chan(create_channel_response);
+  StartTaskResponse start_response;
+  start_task(start_response);
+
+  ReadDigitalU16Response response;
+  auto status = read_u16_digital_data(response);
+
+  StopTaskResponse stop_response;
+  stop_task(stop_response);
+
+  EXPECT_EQ(0, status.error_code());
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadAIData_ReturnsDataInExpectedRange)

@@ -33,7 +33,7 @@ def get_input_and_output_custom_types(functions):
   return (input_custom_types, output_custom_types)
 
 def is_string_arg(parameter):
-  return parameter['type'] in ['ViChar[]', 'ViInt8[]', 'ViUInt8[]']
+  return parameter['grpc_type'] in ['string', 'bytes']
 
 def get_underlying_type_name(parameter_type):
   '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
@@ -144,6 +144,16 @@ def has_enum_array_string_out_param(functions):
 def get_size_mechanism(parameter):
   size = parameter.get('size', {})
   return size.get('mechanism', None)
+
+def get_size_expression(parameter):
+  size_mechanism = get_size_mechanism(parameter)
+  if size_mechanism == 'fixed':
+    return parameter['size']['value']
+  elif size_mechanism == 'ivi-dance-with-a-twist':
+    return camel_to_snake(parameter['size']['value_twist'])
+  else:
+    return camel_to_snake(parameter['size']['value'])
+
 
 def is_ivi_dance_array_param(parameter):
   return get_size_mechanism(parameter) == 'ivi-dance'

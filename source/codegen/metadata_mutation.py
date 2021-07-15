@@ -126,16 +126,33 @@ def populate_grpc_types(parameters, config):
     service_class_prefix = config["service_class_prefix"]
     for parameter in parameters:
         if 'grpc_type' in parameter:
-            pass
-        elif 'type_to_grpc_type' in config:
+          continue
+        if 'type_to_grpc_type' in config:
           type_map = config['type_to_grpc_type']
-          parameter['grpc_type'] = type_map[parameter['type']]
-        else:
-          is_array = common_helpers.is_array(parameter["type"])
-          parameter['grpc_type'] = get_grpc_type_from_ivi(
-              parameter['type'],
-              is_array,
-              service_class_prefix)
+          stripped_type = parameter['type']
+          if stripped_type in type_map:
+            parameter['grpc_type'] = type_map[stripped_type]
+            continue
+          if stripped_type.startswith('const '):
+            stripped_type = stripped_type[len('const '):]
+          if stripped_type in type_map:
+            parameter['grpc_type'] = type_map[stripped_type]
+            continue
+          is_array = False
+          if stripped_type.endswith('*'):
+            is_array = True
+            stripped_type = stripped_type[:-1]
+          elif stripped_type.endswith('[]'):
+            is_array = True
+            stripped_type = stripped_type[:-2]
+          if stripped_type in type_map:
+            parameter['grpc_type'] = 'repeated ' + type_map[stripped_type]
+            continue
+        is_array = common_helpers.is_array(parameter["type"])
+        parameter['grpc_type'] = get_grpc_type_from_ivi(
+            parameter['type'],
+            is_array,
+            service_class_prefix)
 
 
 def add_attribute_values_enums(enums, attribute_enums_by_type, service_class_prefix):
