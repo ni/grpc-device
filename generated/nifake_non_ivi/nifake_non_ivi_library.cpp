@@ -77,7 +77,7 @@ int32 NiFakeNonIviLibrary::InitWithHandleNameAsSessionName(const char handleName
 #endif
 }
 
-int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const uInt16 u16Array[], const int16 i16Array[], const int8 i8Array[])
+int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[])
 {
   if (!function_pointers_.InputArraysWithNarrowIntegerTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputArraysWithNarrowIntegerTypes.");
@@ -89,7 +89,7 @@ int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const uInt16 u16Arr
 #endif
 }
 
-int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, uInt16 u16Data[], int32 numberOfI16Samples, int16 i16Data[], int32 numberOfI8Samples, int8 i8Data[])
+int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[])
 {
   if (!function_pointers_.OutputArraysWithNarrowIntegerTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputArraysWithNarrowIntegerTypes.");
@@ -101,7 +101,7 @@ int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16S
 #endif
 }
 
-int32 NiFakeNonIviLibrary::InputArrayOfBytes(const uInt8 u8Array[])
+int32 NiFakeNonIviLibrary::InputArrayOfBytes(const myUInt8 u8Array[])
 {
   if (!function_pointers_.InputArrayOfBytes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputArrayOfBytes.");
@@ -113,7 +113,7 @@ int32 NiFakeNonIviLibrary::InputArrayOfBytes(const uInt8 u8Array[])
 #endif
 }
 
-int32 NiFakeNonIviLibrary::OutputArrayOfBytes(int32 numberOfU8Samples, uInt8 u8Data[])
+int32 NiFakeNonIviLibrary::OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[])
 {
   if (!function_pointers_.OutputArrayOfBytes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputArrayOfBytes.");

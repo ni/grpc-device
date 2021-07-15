@@ -19,50 +19,50 @@ namespace unit {
 
 MATCHER(CustomU16Data, "")
 {
-  uInt16 const* write_data_array = std::get<0>(arg);
+  myUInt16 const* write_data_array = std::get<0>(arg);
   return write_data_array[0] == 0 && write_data_array[1] == UINT16_MAX && write_data_array[2] == 16;
 }
 
 MATCHER(CustomI16Data, "")
 {
-  int16 const* write_data_array = std::get<1>(arg);
+  myInt16 const* write_data_array = std::get<1>(arg);
   return write_data_array[0] == 0 && write_data_array[1] == INT16_MAX && write_data_array[2] == INT16_MIN;
 }
 
 MATCHER(CustomI8Data, "")
 {
-  int8 const* write_data_array = std::get<2>(arg);
+  myInt8 const* write_data_array = std::get<2>(arg);
   return write_data_array[0] == 0 && write_data_array[1] == INT8_MAX && write_data_array[2] == INT8_MIN;
 }
 
 MATCHER(CustomU8Data, "")
 {
-  uInt8 const* write_data_array = std::get<0>(arg);
+  myUInt8 const* write_data_array = std::get<0>(arg);
   return write_data_array[0] == 0 && write_data_array[1] == UINT8_MAX && write_data_array[2] == 16;
 }
 
-void SetU16Data(Unused, uInt16* u16_data, Unused, Unused, Unused, Unused)
+void SetU16Data(Unused, myUInt16* u16_data, Unused, Unused, Unused, Unused)
 {
   u16_data[0] = 0;
   u16_data[1] = UINT16_MAX;
   u16_data[2] = 16;
 };
 
-void SetI16Data(Unused, Unused, Unused, int16* i16_data, Unused, Unused)
+void SetI16Data(Unused, Unused, Unused, myInt16* i16_data, Unused, Unused)
 {
   i16_data[0] = 0;
   i16_data[1] = INT16_MAX;
   i16_data[2] = INT16_MIN;
 };
 
-void SetI8Data(Unused, Unused, Unused, Unused, Unused, int8* i8_data)
+void SetI8Data(Unused, Unused, Unused, Unused, Unused, myInt8* i8_data)
 {
   i8_data[0] = 0;
   i8_data[1] = INT8_MAX;
   i8_data[2] = INT8_MIN;
 };
 
-void SetU8Data(Unused, uInt8* u8_data)
+void SetU8Data(Unused, myUInt8* u8_data)
 {
   u8_data[0] = 0;
   u8_data[1] = UINT8_MAX;
@@ -377,9 +377,9 @@ TEST_F(NiFakeNonIviServiceTests, OutputArrayOfBytes)
   service_.OutputArrayOfBytes(&context, &request, &response);
 
   EXPECT_EQ(3, response.u8_data().size());
-  EXPECT_EQ(0, (uInt8)response.u8_data()[0]);
-  EXPECT_EQ(UINT8_MAX, (uInt8)response.u8_data()[1]);
-  EXPECT_EQ(16, (uInt8)response.u8_data()[2]);
+  EXPECT_EQ(0, (myUInt8)response.u8_data()[0]);
+  EXPECT_EQ(UINT8_MAX, (myUInt8)response.u8_data()[1]);
+  EXPECT_EQ(16, (myUInt8)response.u8_data()[2]);
   auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
 }

@@ -112,57 +112,57 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto u16_array_raw = request->u16_array();
-      auto u16_array = std::vector<uInt16>();
+      auto u16_array = std::vector<myUInt16>();
       u16_array.reserve(u16_array_raw.size());
       std::transform(
         u16_array_raw.begin(),
         u16_array_raw.end(),
         std::back_inserter(u16_array),
         [](auto x) { 
-              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+              if (x < std::numeric_limits<myUInt16>::min() || x > std::numeric_limits<myUInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
                   message.append(" doesn't fit in datatype ");
-                  message.append("uInt16");
+                  message.append("myUInt16");
                   throw nidevice_grpc::ValueOutOfRangeException(message);
               }
-              return static_cast<uInt16>(x);
+              return static_cast<myUInt16>(x);
         });
 
       auto i16_array_raw = request->i16_array();
-      auto i16_array = std::vector<int16>();
+      auto i16_array = std::vector<myInt16>();
       i16_array.reserve(i16_array_raw.size());
       std::transform(
         i16_array_raw.begin(),
         i16_array_raw.end(),
         std::back_inserter(i16_array),
         [](auto x) { 
-              if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
+              if (x < std::numeric_limits<myInt16>::min() || x > std::numeric_limits<myInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
                   message.append(" doesn't fit in datatype ");
-                  message.append("int16");
+                  message.append("myInt16");
                   throw nidevice_grpc::ValueOutOfRangeException(message);
               }
-              return static_cast<int16>(x);
+              return static_cast<myInt16>(x);
         });
 
       auto i8_array_raw = request->i8_array();
-      auto i8_array = std::vector<int8>();
+      auto i8_array = std::vector<myInt8>();
       i8_array.reserve(i8_array_raw.size());
       std::transform(
         i8_array_raw.begin(),
         i8_array_raw.end(),
         std::back_inserter(i8_array),
         [](auto x) { 
-              if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
+              if (x < std::numeric_limits<myInt8>::min() || x > std::numeric_limits<myInt8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
                   message.append(" doesn't fit in datatype ");
-                  message.append("int8");
+                  message.append("myInt8");
                   throw nidevice_grpc::ValueOutOfRangeException(message);
               }
-              return static_cast<int8>(x);
+              return static_cast<myInt8>(x);
         });
 
       auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.data(), i16_array.data(), i8_array.data());
@@ -188,9 +188,9 @@ namespace nifake_non_ivi_grpc {
       int32 number_of_u16_samples = request->number_of_u16_samples();
       int32 number_of_i16_samples = request->number_of_i16_samples();
       int32 number_of_i8_samples = request->number_of_i8_samples();
-      std::vector<uInt16> u16_data(number_of_u16_samples);
-      std::vector<int16> i16_data(number_of_i16_samples);
-      std::vector<int8> i8_data(number_of_i8_samples);
+      std::vector<myUInt16> u16_data(number_of_u16_samples);
+      std::vector<myInt16> i16_data(number_of_i16_samples);
+      std::vector<myInt8> i8_data(number_of_i8_samples);
       auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data(), number_of_i16_samples, i16_data.data(), number_of_i8_samples, i8_data.data());
       response->set_status(status);
       if (status == 0) {
@@ -237,7 +237,7 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      const uInt8* u8_array = (const uInt8*)request->u8_array().c_str();
+      const myUInt8* u8_array = (const myUInt8*)request->u8_array().c_str();
       auto status = library_->InputArrayOfBytes(u8_array);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -257,7 +257,7 @@ namespace nifake_non_ivi_grpc {
     try {
       int32 number_of_u8_samples = request->number_of_u8_samples();
       std::string u8_data(number_of_u8_samples, '\0');
-      auto status = library_->OutputArrayOfBytes(number_of_u8_samples, (uInt8*)u8_data.data());
+      auto status = library_->OutputArrayOfBytes(number_of_u8_samples, (myUInt8*)u8_data.data());
       response->set_status(status);
       if (status == 0) {
         response->set_u8_data(u8_data);

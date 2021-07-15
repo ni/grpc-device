@@ -49,19 +49,19 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'u16Array',
-                'type': 'const uInt16[]',
+                'type': 'const myUInt16[]',
                 'coerced': True
             },
             {
                 'direction': 'in',
                 'name': 'i16Array',
-                'type': 'const int16[]',
+                'type': 'const myInt16[]',
                 'coerced': True
             },
             {
                 'direction': 'in',
                 'name': 'i8Array',
-                'type': 'const int8[]',
+                'type': 'const myInt8[]',
                 'coerced': True
             }
         ],
@@ -81,7 +81,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'numberOfU16Samples'
                 },
-                'type': 'uInt16[]',
+                'type': 'myUInt16[]',
                 'coerced': True
             },
             {
@@ -96,7 +96,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'numberOfI16Samples'
                 },
-                'type': 'int16[]',
+                'type': 'myInt16[]',
                 'coerced': True
             },
             {
@@ -111,7 +111,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'numberOfI8Samples'
                 },
-                'type': 'int8[]',
+                'type': 'myInt8[]',
                 'coerced': True
             },
         ],
@@ -122,7 +122,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'u8Array',
-                'type': 'const uInt8[]',
+                'type': 'const myUInt8[]',
             },
         ],
         'returns': 'int32'
@@ -141,7 +141,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'numberOfU8Samples'
                 },
-                'type': 'uInt8[]',
+                'type': 'myUInt8[]',
             },
         ],
         'returns': 'int32'

@@ -15,10 +15,10 @@ config = {
     'type_to_grpc_type': {
         'FakeHandle': 'nidevice_grpc.Session',
         'const char[]': 'string',
-        'int16': 'int32',
-        'uInt16': 'uint32',
-        'int8': 'int32',
-        'uInt8[]': 'bytes'
+        'myInt16': 'int32',
+        'myUInt16': 'uint32',
+        'myInt8': 'int32',
+        'myUInt8[]': 'bytes'
     },
     'library_info': {
         'Linux': {
