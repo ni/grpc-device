@@ -18,17 +18,63 @@ import "session.proto";
 service NiDAQmx {
   rpc AddGlobalChansToTask(AddGlobalChansToTaskRequest) returns (AddGlobalChansToTaskResponse);
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
+  rpc CreateAIAccel4WireDCVoltageChan(CreateAIAccel4WireDCVoltageChanRequest) returns (CreateAIAccel4WireDCVoltageChanResponse);
+  rpc CreateAIAccelChan(CreateAIAccelChanRequest) returns (CreateAIAccelChanResponse);
+  rpc CreateAIAccelChargeChan(CreateAIAccelChargeChanRequest) returns (CreateAIAccelChargeChanResponse);
+  rpc CreateAIBridgeChan(CreateAIBridgeChanRequest) returns (CreateAIBridgeChanResponse);
+  rpc CreateAIChargeChan(CreateAIChargeChanRequest) returns (CreateAIChargeChanResponse);
+  rpc CreateAICurrentChan(CreateAICurrentChanRequest) returns (CreateAICurrentChanResponse);
+  rpc CreateAICurrentRMSChan(CreateAICurrentRMSChanRequest) returns (CreateAICurrentRMSChanResponse);
+  rpc CreateAIFreqVoltageChan(CreateAIFreqVoltageChanRequest) returns (CreateAIFreqVoltageChanResponse);
+  rpc CreateAIMicrophoneChan(CreateAIMicrophoneChanRequest) returns (CreateAIMicrophoneChanResponse);
+  rpc CreateAIPosLVDTChan(CreateAIPosLVDTChanRequest) returns (CreateAIPosLVDTChanResponse);
+  rpc CreateAIPosRVDTChan(CreateAIPosRVDTChanRequest) returns (CreateAIPosRVDTChanResponse);
+  rpc CreateAIResistanceChan(CreateAIResistanceChanRequest) returns (CreateAIResistanceChanResponse);
+  rpc CreateAIStrainGageChan(CreateAIStrainGageChanRequest) returns (CreateAIStrainGageChanResponse);
+  rpc CreateAIVelocityIEPEChan(CreateAIVelocityIEPEChanRequest) returns (CreateAIVelocityIEPEChanResponse);
   rpc CreateAIVoltageChan(CreateAIVoltageChanRequest) returns (CreateAIVoltageChanResponse);
+  rpc CreateAIVoltageRMSChan(CreateAIVoltageRMSChanRequest) returns (CreateAIVoltageRMSChanResponse);
+  rpc CreateAOCurrentChan(CreateAOCurrentChanRequest) returns (CreateAOCurrentChanResponse);
+  rpc CreateAOFuncGenChan(CreateAOFuncGenChanRequest) returns (CreateAOFuncGenChanResponse);
   rpc CreateAOVoltageChan(CreateAOVoltageChanRequest) returns (CreateAOVoltageChanResponse);
+  rpc CreateCIAngEncoderChan(CreateCIAngEncoderChanRequest) returns (CreateCIAngEncoderChanResponse);
+  rpc CreateCIAngVelocityChan(CreateCIAngVelocityChanRequest) returns (CreateCIAngVelocityChanResponse);
+  rpc CreateCICountEdgesChan(CreateCICountEdgesChanRequest) returns (CreateCICountEdgesChanResponse);
+  rpc CreateCIDutyCycleChan(CreateCIDutyCycleChanRequest) returns (CreateCIDutyCycleChanResponse);
+  rpc CreateCIFreqChan(CreateCIFreqChanRequest) returns (CreateCIFreqChanResponse);
+  rpc CreateCIGPSTimestampChan(CreateCIGPSTimestampChanRequest) returns (CreateCIGPSTimestampChanResponse);
+  rpc CreateCILinEncoderChan(CreateCILinEncoderChanRequest) returns (CreateCILinEncoderChanResponse);
+  rpc CreateCILinVelocityChan(CreateCILinVelocityChanRequest) returns (CreateCILinVelocityChanResponse);
+  rpc CreateCIPeriodChan(CreateCIPeriodChanRequest) returns (CreateCIPeriodChanResponse);
+  rpc CreateCIPulseChanFreq(CreateCIPulseChanFreqRequest) returns (CreateCIPulseChanFreqResponse);
+  rpc CreateCIPulseChanTicks(CreateCIPulseChanTicksRequest) returns (CreateCIPulseChanTicksResponse);
+  rpc CreateCIPulseChanTime(CreateCIPulseChanTimeRequest) returns (CreateCIPulseChanTimeResponse);
+  rpc CreateCIPulseWidthChan(CreateCIPulseWidthChanRequest) returns (CreateCIPulseWidthChanResponse);
+  rpc CreateCISemiPeriodChan(CreateCISemiPeriodChanRequest) returns (CreateCISemiPeriodChanResponse);
+  rpc CreateCITwoEdgeSepChan(CreateCITwoEdgeSepChanRequest) returns (CreateCITwoEdgeSepChanResponse);
+  rpc CreateCOPulseChanFreq(CreateCOPulseChanFreqRequest) returns (CreateCOPulseChanFreqResponse);
+  rpc CreateCOPulseChanTicks(CreateCOPulseChanTicksRequest) returns (CreateCOPulseChanTicksResponse);
+  rpc CreateCOPulseChanTime(CreateCOPulseChanTimeRequest) returns (CreateCOPulseChanTimeResponse);
   rpc CreateDIChan(CreateDIChanRequest) returns (CreateDIChanResponse);
   rpc CreateDOChan(CreateDOChanRequest) returns (CreateDOChanResponse);
+  rpc CreateTEDSAIAccelChan(CreateTEDSAIAccelChanRequest) returns (CreateTEDSAIAccelChanResponse);
+  rpc CreateTEDSAIBridgeChan(CreateTEDSAIBridgeChanRequest) returns (CreateTEDSAIBridgeChanResponse);
+  rpc CreateTEDSAICurrentChan(CreateTEDSAICurrentChanRequest) returns (CreateTEDSAICurrentChanResponse);
+  rpc CreateTEDSAIPosLVDTChan(CreateTEDSAIPosLVDTChanRequest) returns (CreateTEDSAIPosLVDTChanResponse);
+  rpc CreateTEDSAIPosRVDTChan(CreateTEDSAIPosRVDTChanRequest) returns (CreateTEDSAIPosRVDTChanResponse);
+  rpc CreateTEDSAIVoltageChan(CreateTEDSAIVoltageChanRequest) returns (CreateTEDSAIVoltageChanResponse);
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+  rpc GetAIChanCalCalDate(GetAIChanCalCalDateRequest) returns (GetAIChanCalCalDateResponse);
+  rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
   rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
   rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
+  rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
+  rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
   rpc TaskControl(TaskControlRequest) returns (TaskControlResponse);
@@ -40,6 +86,175 @@ service NiDAQmx {
 
 enum NiDAQmxAttributes {
   NIDAQMX_ATTRIBUTE_UNSPECIFIED = 0;
+}
+
+enum ACExcitWireMode {
+  A_C_EXCIT_WIRE_MODE_UNSPECIFIED = 0;
+  A_C_EXCIT_WIRE_MODE_4_WIRE = 4;
+  A_C_EXCIT_WIRE_MODE_5_WIRE = 5;
+  A_C_EXCIT_WIRE_MODE_6_WIRE = 6;
+}
+
+enum AccelChargeSensitivityUnits {
+  ACCEL_CHARGE_SENSITIVITY_UNITS_UNSPECIFIED = 0;
+  ACCEL_CHARGE_SENSITIVITY_UNITS_PICO_COULOMBS_PER_G = 16099;
+  ACCEL_CHARGE_SENSITIVITY_UNITS_PICO_COULOMBS_PER_METERS_PER_SECOND_SQUARED = 16100;
+  ACCEL_CHARGE_SENSITIVITY_UNITS_PICO_COULOMBS_PER_INCHES_PER_SECOND_SQUARED = 16101;
+}
+
+enum AccelSensitivityUnits1 {
+  ACCEL_SENSITIVITY_UNITS1_UNSPECIFIED = 0;
+  ACCEL_SENSITIVITY_UNITS1_M_VOLTS_PER_G = 12509;
+  ACCEL_SENSITIVITY_UNITS1_VOLTS_PER_G = 12510;
+}
+
+enum AccelUnits2 {
+  ACCEL_UNITS2_UNSPECIFIED = 0;
+  ACCEL_UNITS2_ACCEL_UNIT_G = 10186;
+  ACCEL_UNITS2_METERS_PER_SECOND_SQUARED = 12470;
+  ACCEL_UNITS2_INCHES_PER_SECOND_SQUARED = 12471;
+  ACCEL_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum AngleUnits1 {
+  ANGLE_UNITS1_UNSPECIFIED = 0;
+  ANGLE_UNITS1_DEGREES = 10146;
+  ANGLE_UNITS1_RADIANS = 10273;
+  ANGLE_UNITS1_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum AngleUnits2 {
+  ANGLE_UNITS2_UNSPECIFIED = 0;
+  ANGLE_UNITS2_DEGREES = 10146;
+  ANGLE_UNITS2_RADIANS = 10273;
+  ANGLE_UNITS2_TICKS = 10304;
+  ANGLE_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum AngularVelocityUnits {
+  ANGULAR_VELOCITY_UNITS_UNSPECIFIED = 0;
+  ANGULAR_VELOCITY_UNITS_RPM = 16080;
+  ANGULAR_VELOCITY_UNITS_RADIANS_PER_SECOND = 16081;
+  ANGULAR_VELOCITY_UNITS_DEGREES_PER_SECOND = 16082;
+  ANGULAR_VELOCITY_UNITS_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum BridgeConfiguration1 {
+  BRIDGE_CONFIGURATION1_UNSPECIFIED = 0;
+  BRIDGE_CONFIGURATION1_FULL_BRIDGE = 10182;
+  BRIDGE_CONFIGURATION1_HALF_BRIDGE = 10187;
+  BRIDGE_CONFIGURATION1_QUARTER_BRIDGE = 10270;
+  BRIDGE_CONFIGURATION1_NO_BRIDGE = 10228;
+}
+
+enum BridgeUnits {
+  BRIDGE_UNITS_UNSPECIFIED = 0;
+  BRIDGE_UNITS_VOLTS_PER_VOLT = 15896;
+  BRIDGE_UNITS_M_VOLTS_PER_VOLT = 15897;
+  BRIDGE_UNITS_FROM_CUSTOM_SCALE = 10065;
+  BRIDGE_UNITS_FROM_TEDS = 12516;
+}
+
+enum ChargeUnits {
+  CHARGE_UNITS_UNSPECIFIED = 0;
+  CHARGE_UNITS_COULOMBS = 16102;
+  CHARGE_UNITS_PICO_COULOMBS = 16103;
+  CHARGE_UNITS_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum CountDirection1 {
+  COUNT_DIRECTION1_UNSPECIFIED = 0;
+  COUNT_DIRECTION1_COUNT_UP = 10128;
+  COUNT_DIRECTION1_COUNT_DOWN = 10124;
+  COUNT_DIRECTION1_EXT_CONTROLLED = 10326;
+}
+
+enum CounterFrequencyMethod {
+  COUNTER_FREQUENCY_METHOD_UNSPECIFIED = 0;
+  COUNTER_FREQUENCY_METHOD_LOW_FREQ_1_CTR = 10105;
+  COUNTER_FREQUENCY_METHOD_HIGH_FREQ_2_CTR = 10157;
+  COUNTER_FREQUENCY_METHOD_LARGE_RNG_2_CTR = 10205;
+  COUNTER_FREQUENCY_METHOD_DYN_AVG = 16065;
+}
+
+enum CurrentShuntResistorLocationWithDefault {
+  CURRENT_SHUNT_RESISTOR_LOCATION_WITH_DEFAULT_UNSPECIFIED = 0;
+  CURRENT_SHUNT_RESISTOR_LOCATION_WITH_DEFAULT_DEFAULT = -1;
+  CURRENT_SHUNT_RESISTOR_LOCATION_WITH_DEFAULT_INTERNAL = 10200;
+  CURRENT_SHUNT_RESISTOR_LOCATION_WITH_DEFAULT_EXTERNAL = 10167;
+}
+
+enum CurrentUnits2 {
+  CURRENT_UNITS2_UNSPECIFIED = 0;
+  CURRENT_UNITS2_AMPS = 10342;
+  CURRENT_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum DigitalWidthUnits3 {
+  DIGITAL_WIDTH_UNITS3_UNSPECIFIED = 0;
+  DIGITAL_WIDTH_UNITS3_SECONDS = 10364;
+}
+
+enum Edge1 {
+  EDGE1_UNSPECIFIED = 0;
+  EDGE1_RISING = 10280;
+  EDGE1_FALLING = 10171;
+}
+
+enum EncoderType2 {
+  ENCODER_TYPE2_UNSPECIFIED = 0;
+  ENCODER_TYPE2_X_1 = 10090;
+  ENCODER_TYPE2_X_2 = 10091;
+  ENCODER_TYPE2_X_4 = 10092;
+  ENCODER_TYPE2_TWO_PULSE_COUNTING = 10313;
+}
+
+enum EncoderZIndexPhase1 {
+  ENCODER_Z_INDEX_PHASE1_UNSPECIFIED = 0;
+  ENCODER_Z_INDEX_PHASE1_A_HIGH_B_HIGH = 10040;
+  ENCODER_Z_INDEX_PHASE1_A_HIGH_B_LOW = 10041;
+  ENCODER_Z_INDEX_PHASE1_A_LOW_B_HIGH = 10042;
+  ENCODER_Z_INDEX_PHASE1_A_LOW_B_LOW = 10043;
+}
+
+enum ExcitationSource {
+  EXCITATION_SOURCE_UNSPECIFIED = 0;
+  EXCITATION_SOURCE_INTERNAL = 10200;
+  EXCITATION_SOURCE_EXTERNAL = 10167;
+  EXCITATION_SOURCE_NONE = 10230;
+}
+
+enum FrequencyUnits {
+  FREQUENCY_UNITS_UNSPECIFIED = 0;
+  FREQUENCY_UNITS_HZ = 10373;
+  FREQUENCY_UNITS_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum FrequencyUnits2 {
+  FREQUENCY_UNITS2_UNSPECIFIED = 0;
+  FREQUENCY_UNITS2_HZ = 10373;
+}
+
+enum FrequencyUnits3 {
+  FREQUENCY_UNITS3_UNSPECIFIED = 0;
+  FREQUENCY_UNITS3_HZ = 10373;
+  FREQUENCY_UNITS3_TICKS = 10304;
+  FREQUENCY_UNITS3_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum FuncGenType {
+  FUNC_GEN_TYPE_UNSPECIFIED = 0;
+  FUNC_GEN_TYPE_SINE = 14751;
+  FUNC_GEN_TYPE_TRIANGLE = 14752;
+  FUNC_GEN_TYPE_SQUARE = 14753;
+  FUNC_GEN_TYPE_SAWTOOTH = 14754;
+}
+
+enum GpsSignalType1 {
+  GPS_SIGNAL_TYPE1_UNSPECIFIED = 0;
+  GPS_SIGNAL_TYPE1_IRIGB = 10070;
+  GPS_SIGNAL_TYPE1_PPS = 10080;
+  GPS_SIGNAL_TYPE1_NONE = 10230;
 }
 
 enum GroupBy {
@@ -58,11 +273,86 @@ enum InputTermCfgWithDefault {
   INPUT_TERM_CFG_WITH_DEFAULT_PSEUDO_DIFF = 12529;
 }
 
+enum LVDTSensitivityUnits1 {
+  L_V_D_T_SENSITIVITY_UNITS1_UNSPECIFIED = 0;
+  L_V_D_T_SENSITIVITY_UNITS1_M_VOLTS_PER_VOLT_PER_MILLIMETER = 12506;
+  L_V_D_T_SENSITIVITY_UNITS1_M_VOLTS_PER_VOLT_PER_MILLI_INCH = 12505;
+}
+
+enum LengthUnits2 {
+  LENGTH_UNITS2_UNSPECIFIED = 0;
+  LENGTH_UNITS2_METERS = 10219;
+  LENGTH_UNITS2_INCHES = 10379;
+  LENGTH_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum LengthUnits3 {
+  LENGTH_UNITS3_UNSPECIFIED = 0;
+  LENGTH_UNITS3_METERS = 10219;
+  LENGTH_UNITS3_INCHES = 10379;
+  LENGTH_UNITS3_TICKS = 10304;
+  LENGTH_UNITS3_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum Level1 {
+  LEVEL1_UNSPECIFIED = 0;
+  LEVEL1_HIGH = 10192;
+  LEVEL1_LOW = 10214;
+}
+
 enum LineGrouping {
   option allow_alias = true;
   LINE_GROUPING_UNSPECIFIED = 0;
   LINE_GROUPING_CHAN_FOR_ALL_LINES = 1;
   LINE_GROUPING_CHAN_PER_LINE = 0;
+}
+
+enum RVDTSensitivityUnits1 {
+  R_V_D_T_SENSITIVITY_UNITS1_UNSPECIFIED = 0;
+  R_V_D_T_SENSITIVITY_UNITS1_M_VOLTS_PER_VOLT_PER_DEGREE = 12507;
+  R_V_D_T_SENSITIVITY_UNITS1_M_VOLTS_PER_VOLT_PER_RADIAN = 12508;
+}
+
+enum ResistanceConfiguration {
+  RESISTANCE_CONFIGURATION_UNSPECIFIED = 0;
+  RESISTANCE_CONFIGURATION_2_WIRE = 2;
+  RESISTANCE_CONFIGURATION_3_WIRE = 3;
+  RESISTANCE_CONFIGURATION_4_WIRE = 4;
+}
+
+enum ResistanceUnits2 {
+  RESISTANCE_UNITS2_UNSPECIFIED = 0;
+  RESISTANCE_UNITS2_OHMS = 10384;
+  RESISTANCE_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum SoundPressureUnits1 {
+  SOUND_PRESSURE_UNITS1_UNSPECIFIED = 0;
+  SOUND_PRESSURE_UNITS1_PASCALS = 10081;
+  SOUND_PRESSURE_UNITS1_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum StrainGageBridgeType1 {
+  STRAIN_GAGE_BRIDGE_TYPE1_UNSPECIFIED = 0;
+  STRAIN_GAGE_BRIDGE_TYPE1_FULL_BRIDGE_I = 10183;
+  STRAIN_GAGE_BRIDGE_TYPE1_FULL_BRIDGE_II = 10184;
+  STRAIN_GAGE_BRIDGE_TYPE1_FULL_BRIDGE_III = 10185;
+  STRAIN_GAGE_BRIDGE_TYPE1_HALF_BRIDGE_I = 10188;
+  STRAIN_GAGE_BRIDGE_TYPE1_HALF_BRIDGE_II = 10189;
+  STRAIN_GAGE_BRIDGE_TYPE1_QUARTER_BRIDGE_I = 10271;
+  STRAIN_GAGE_BRIDGE_TYPE1_QUARTER_BRIDGE_II = 10272;
+}
+
+enum StrainUnits1 {
+  STRAIN_UNITS1_UNSPECIFIED = 0;
+  STRAIN_UNITS1_STRAIN = 10299;
+  STRAIN_UNITS1_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum TEDSUnits {
+  T_E_D_S_UNITS_UNSPECIFIED = 0;
+  T_E_D_S_UNITS_FROM_CUSTOM_SCALE = 10065;
+  T_E_D_S_UNITS_FROM_TEDS = 12516;
 }
 
 enum TaskControlAction {
@@ -75,6 +365,32 @@ enum TaskControlAction {
   TASK_CONTROL_ACTION_TASK_RESERVE = 4;
   TASK_CONTROL_ACTION_TASK_UNRESERVE = 5;
   TASK_CONTROL_ACTION_TASK_ABORT = 6;
+}
+
+enum TimeUnits {
+  TIME_UNITS_UNSPECIFIED = 0;
+  TIME_UNITS_SECONDS = 10364;
+  TIME_UNITS_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum TimeUnits3 {
+  TIME_UNITS3_UNSPECIFIED = 0;
+  TIME_UNITS3_SECONDS = 10364;
+  TIME_UNITS3_TICKS = 10304;
+  TIME_UNITS3_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum VelocityIEPESensorSensitivityUnits {
+  VELOCITY_I_E_P_E_SENSOR_SENSITIVITY_UNITS_UNSPECIFIED = 0;
+  VELOCITY_I_E_P_E_SENSOR_SENSITIVITY_UNITS_MILLIVOLTS_PER_MILLIMETER_PER_SECOND = 15963;
+  VELOCITY_I_E_P_E_SENSOR_SENSITIVITY_UNITS_MILLI_VOLTS_PER_INCH_PER_SECOND = 15964;
+}
+
+enum VelocityUnits {
+  VELOCITY_UNITS_UNSPECIFIED = 0;
+  VELOCITY_UNITS_METERS_PER_SECOND = 15959;
+  VELOCITY_UNITS_INCHES_PER_SECOND = 15960;
+  VELOCITY_UNITS_FROM_CUSTOM_SCALE = 10065;
 }
 
 enum VoltageUnits2 {
@@ -100,6 +416,392 @@ message ClearTaskResponse {
   int32 status = 1;
 }
 
+message CreateAIAccel4WireDCVoltageChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    AccelUnits2 units = 8;
+    int32 units_raw = 9;
+  }
+  double sensitivity = 10;
+  oneof sensitivity_units_enum {
+    AccelSensitivityUnits1 sensitivity_units = 11;
+    int32 sensitivity_units_raw = 12;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 13;
+    int32 voltage_excit_source_raw = 14;
+  }
+  double voltage_excit_val = 15;
+  bool use_excit_for_scaling = 16;
+  string custom_scale_name = 17;
+}
+
+message CreateAIAccel4WireDCVoltageChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIAccelChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    AccelUnits2 units = 8;
+    int32 units_raw = 9;
+  }
+  double sensitivity = 10;
+  oneof sensitivity_units_enum {
+    AccelSensitivityUnits1 sensitivity_units = 11;
+    int32 sensitivity_units_raw = 12;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 13;
+    int32 current_excit_source_raw = 14;
+  }
+  double current_excit_val = 15;
+  string custom_scale_name = 16;
+}
+
+message CreateAIAccelChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIAccelChargeChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    AccelUnits2 units = 8;
+    int32 units_raw = 9;
+  }
+  double sensitivity = 10;
+  oneof sensitivity_units_enum {
+    AccelChargeSensitivityUnits sensitivity_units = 11;
+    int32 sensitivity_units_raw = 12;
+  }
+  string custom_scale_name = 13;
+}
+
+message CreateAIAccelChargeChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIBridgeChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    BridgeUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof bridge_config_enum {
+    BridgeConfiguration1 bridge_config = 8;
+    int32 bridge_config_raw = 9;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 10;
+    int32 voltage_excit_source_raw = 11;
+  }
+  double voltage_excit_val = 12;
+  double nominal_bridge_resistance = 13;
+  string custom_scale_name = 14;
+}
+
+message CreateAIBridgeChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIChargeChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    ChargeUnits units = 8;
+    int32 units_raw = 9;
+  }
+  string custom_scale_name = 10;
+}
+
+message CreateAIChargeChanResponse {
+  int32 status = 1;
+}
+
+message CreateAICurrentChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    CurrentUnits2 units = 8;
+    int32 units_raw = 9;
+  }
+  oneof shunt_resistor_loc_enum {
+    CurrentShuntResistorLocationWithDefault shunt_resistor_loc = 10;
+    int32 shunt_resistor_loc_raw = 11;
+  }
+  double ext_shunt_resistor_val = 12;
+  string custom_scale_name = 13;
+}
+
+message CreateAICurrentChanResponse {
+  int32 status = 1;
+}
+
+message CreateAICurrentRMSChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    CurrentUnits2 units = 8;
+    int32 units_raw = 9;
+  }
+  oneof shunt_resistor_loc_enum {
+    CurrentShuntResistorLocationWithDefault shunt_resistor_loc = 10;
+    int32 shunt_resistor_loc_raw = 11;
+  }
+  double ext_shunt_resistor_val = 12;
+  string custom_scale_name = 13;
+}
+
+message CreateAICurrentRMSChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIFreqVoltageChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    FrequencyUnits units = 6;
+    int32 units_raw = 7;
+  }
+  double threshold_level = 8;
+  double hysteresis = 9;
+  string custom_scale_name = 10;
+}
+
+message CreateAIFreqVoltageChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIMicrophoneChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  oneof units_enum {
+    SoundPressureUnits1 units = 6;
+    int32 units_raw = 7;
+  }
+  double mic_sensitivity = 8;
+  double max_snd_press_level = 9;
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 10;
+    int32 current_excit_source_raw = 11;
+  }
+  double current_excit_val = 12;
+  string custom_scale_name = 13;
+}
+
+message CreateAIMicrophoneChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIPosLVDTChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    LengthUnits2 units = 6;
+    int32 units_raw = 7;
+  }
+  double sensitivity = 8;
+  oneof sensitivity_units_enum {
+    LVDTSensitivityUnits1 sensitivity_units = 9;
+    int32 sensitivity_units_raw = 10;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 11;
+    int32 voltage_excit_source_raw = 12;
+  }
+  double voltage_excit_val = 13;
+  double voltage_excit_freq = 14;
+  oneof ac_excit_wire_mode_enum {
+    ACExcitWireMode ac_excit_wire_mode = 15;
+    int32 ac_excit_wire_mode_raw = 16;
+  }
+  string custom_scale_name = 17;
+}
+
+message CreateAIPosLVDTChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIPosRVDTChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    AngleUnits1 units = 6;
+    int32 units_raw = 7;
+  }
+  double sensitivity = 8;
+  oneof sensitivity_units_enum {
+    RVDTSensitivityUnits1 sensitivity_units = 9;
+    int32 sensitivity_units_raw = 10;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 11;
+    int32 voltage_excit_source_raw = 12;
+  }
+  double voltage_excit_val = 13;
+  double voltage_excit_freq = 14;
+  oneof ac_excit_wire_mode_enum {
+    ACExcitWireMode ac_excit_wire_mode = 15;
+    int32 ac_excit_wire_mode_raw = 16;
+  }
+  string custom_scale_name = 17;
+}
+
+message CreateAIPosRVDTChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIResistanceChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    ResistanceUnits2 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof resistance_config_enum {
+    ResistanceConfiguration resistance_config = 8;
+    int32 resistance_config_raw = 9;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 10;
+    int32 current_excit_source_raw = 11;
+  }
+  double current_excit_val = 12;
+  string custom_scale_name = 13;
+}
+
+message CreateAIResistanceChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIStrainGageChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    StrainUnits1 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof strain_config_enum {
+    StrainGageBridgeType1 strain_config = 8;
+    int32 strain_config_raw = 9;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 10;
+    int32 voltage_excit_source_raw = 11;
+  }
+  double voltage_excit_val = 12;
+  double gage_factor = 13;
+  double initial_bridge_voltage = 14;
+  double nominal_gage_resistance = 15;
+  double poisson_ratio = 16;
+  double lead_wire_resistance = 17;
+  string custom_scale_name = 18;
+}
+
+message CreateAIStrainGageChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIVelocityIEPEChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    VelocityUnits units = 8;
+    int32 units_raw = 9;
+  }
+  double sensitivity = 10;
+  oneof sensitivity_units_enum {
+    VelocityIEPESensorSensitivityUnits sensitivity_units = 11;
+    int32 sensitivity_units_raw = 12;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 13;
+    int32 current_excit_source_raw = 14;
+  }
+  double current_excit_val = 15;
+  string custom_scale_name = 16;
+}
+
+message CreateAIVelocityIEPEChanResponse {
+  int32 status = 1;
+}
+
 message CreateAIVoltageChanRequest {
   nidevice_grpc.Session task = 1;
   string physical_channel = 2;
@@ -121,6 +823,61 @@ message CreateAIVoltageChanResponse {
   int32 status = 1;
 }
 
+message CreateAIVoltageRMSChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    VoltageUnits2 units = 8;
+    int32 units_raw = 9;
+  }
+  string custom_scale_name = 10;
+}
+
+message CreateAIVoltageRMSChanResponse {
+  int32 status = 1;
+}
+
+message CreateAOCurrentChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    CurrentUnits2 units = 6;
+    int32 units_raw = 7;
+  }
+  string custom_scale_name = 8;
+}
+
+message CreateAOCurrentChanResponse {
+  int32 status = 1;
+}
+
+message CreateAOFuncGenChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof type_enum {
+    FuncGenType type = 4;
+    int32 type_raw = 5;
+  }
+  double freq = 6;
+  double amplitude = 7;
+  double offset = 8;
+}
+
+message CreateAOFuncGenChanResponse {
+  int32 status = 1;
+}
+
 message CreateAOVoltageChanRequest {
   nidevice_grpc.Session task = 1;
   string physical_channel = 2;
@@ -135,6 +892,381 @@ message CreateAOVoltageChanRequest {
 }
 
 message CreateAOVoltageChanResponse {
+  int32 status = 1;
+}
+
+message CreateCIAngEncoderChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  oneof decoding_type_enum {
+    EncoderType2 decoding_type = 4;
+    int32 decoding_type_raw = 5;
+  }
+  bool zidx_enable = 6;
+  double zidx_val = 7;
+  oneof zidx_phase_enum {
+    EncoderZIndexPhase1 zidx_phase = 8;
+    int32 zidx_phase_raw = 9;
+  }
+  oneof units_enum {
+    AngleUnits2 units = 10;
+    int32 units_raw = 11;
+  }
+  uint32 pulses_per_rev = 12;
+  double initial_angle = 13;
+  string custom_scale_name = 14;
+}
+
+message CreateCIAngEncoderChanResponse {
+  int32 status = 1;
+}
+
+message CreateCIAngVelocityChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof decoding_type_enum {
+    EncoderType2 decoding_type = 6;
+    int32 decoding_type_raw = 7;
+  }
+  oneof units_enum {
+    AngularVelocityUnits units = 8;
+    int32 units_raw = 9;
+  }
+  uint32 pulses_per_rev = 10;
+  string custom_scale_name = 11;
+}
+
+message CreateCIAngVelocityChanResponse {
+  int32 status = 1;
+}
+
+message CreateCICountEdgesChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  oneof edge_enum {
+    Edge1 edge = 4;
+    int32 edge_raw = 5;
+  }
+  uint32 initial_count = 6;
+  oneof count_direction_enum {
+    CountDirection1 count_direction = 7;
+    int32 count_direction_raw = 8;
+  }
+}
+
+message CreateCICountEdgesChanResponse {
+  int32 status = 1;
+}
+
+message CreateCIDutyCycleChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_freq = 4;
+  double max_freq = 5;
+  oneof edge_enum {
+    Edge1 edge = 6;
+    int32 edge_raw = 7;
+  }
+  string custom_scale_name = 8;
+}
+
+message CreateCIDutyCycleChanResponse {
+  int32 status = 1;
+}
+
+message CreateCIFreqChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    FrequencyUnits3 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof edge_enum {
+    Edge1 edge = 8;
+    int32 edge_raw = 9;
+  }
+  oneof meas_method_enum {
+    CounterFrequencyMethod meas_method = 10;
+    int32 meas_method_raw = 11;
+  }
+  double meas_time = 12;
+  uint32 divisor = 13;
+  string custom_scale_name = 14;
+}
+
+message CreateCIFreqChanResponse {
+  int32 status = 1;
+}
+
+message CreateCIGPSTimestampChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  oneof units_enum {
+    TimeUnits units = 4;
+    int32 units_raw = 5;
+  }
+  oneof sync_method_enum {
+    GpsSignalType1 sync_method = 6;
+    int32 sync_method_raw = 7;
+  }
+  string custom_scale_name = 8;
+}
+
+message CreateCIGPSTimestampChanResponse {
+  int32 status = 1;
+}
+
+message CreateCILinEncoderChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  oneof decoding_type_enum {
+    EncoderType2 decoding_type = 4;
+    int32 decoding_type_raw = 5;
+  }
+  bool zidx_enable = 6;
+  double zidx_val = 7;
+  oneof zidx_phase_enum {
+    EncoderZIndexPhase1 zidx_phase = 8;
+    int32 zidx_phase_raw = 9;
+  }
+  oneof units_enum {
+    LengthUnits3 units = 10;
+    int32 units_raw = 11;
+  }
+  double dist_per_pulse = 12;
+  double initial_pos = 13;
+  string custom_scale_name = 14;
+}
+
+message CreateCILinEncoderChanResponse {
+  int32 status = 1;
+}
+
+message CreateCILinVelocityChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof decoding_type_enum {
+    EncoderType2 decoding_type = 6;
+    int32 decoding_type_raw = 7;
+  }
+  oneof units_enum {
+    VelocityUnits units = 8;
+    int32 units_raw = 9;
+  }
+  double dist_per_pulse = 10;
+  string custom_scale_name = 11;
+}
+
+message CreateCILinVelocityChanResponse {
+  int32 status = 1;
+}
+
+message CreateCIPeriodChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TimeUnits3 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof edge_enum {
+    Edge1 edge = 8;
+    int32 edge_raw = 9;
+  }
+  oneof meas_method_enum {
+    CounterFrequencyMethod meas_method = 10;
+    int32 meas_method_raw = 11;
+  }
+  double meas_time = 12;
+  uint32 divisor = 13;
+  string custom_scale_name = 14;
+}
+
+message CreateCIPeriodChanResponse {
+  int32 status = 1;
+}
+
+message CreateCIPulseChanFreqRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    FrequencyUnits2 units = 6;
+    int32 units_raw = 7;
+  }
+}
+
+message CreateCIPulseChanFreqResponse {
+  int32 status = 1;
+}
+
+message CreateCIPulseChanTicksRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  string source_terminal = 4;
+  double min_val = 5;
+  double max_val = 6;
+}
+
+message CreateCIPulseChanTicksResponse {
+  int32 status = 1;
+}
+
+message CreateCIPulseChanTimeRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    DigitalWidthUnits3 units = 6;
+    int32 units_raw = 7;
+  }
+}
+
+message CreateCIPulseChanTimeResponse {
+  int32 status = 1;
+}
+
+message CreateCIPulseWidthChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TimeUnits3 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof starting_edge_enum {
+    Edge1 starting_edge = 8;
+    int32 starting_edge_raw = 9;
+  }
+  string custom_scale_name = 10;
+}
+
+message CreateCIPulseWidthChanResponse {
+  int32 status = 1;
+}
+
+message CreateCISemiPeriodChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TimeUnits3 units = 6;
+    int32 units_raw = 7;
+  }
+  string custom_scale_name = 8;
+}
+
+message CreateCISemiPeriodChanResponse {
+  int32 status = 1;
+}
+
+message CreateCITwoEdgeSepChanRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TimeUnits3 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof first_edge_enum {
+    Edge1 first_edge = 8;
+    int32 first_edge_raw = 9;
+  }
+  oneof second_edge_enum {
+    Edge1 second_edge = 10;
+    int32 second_edge_raw = 11;
+  }
+  string custom_scale_name = 12;
+}
+
+message CreateCITwoEdgeSepChanResponse {
+  int32 status = 1;
+}
+
+message CreateCOPulseChanFreqRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  oneof units_enum {
+    FrequencyUnits2 units = 4;
+    int32 units_raw = 5;
+  }
+  oneof idle_state_enum {
+    Level1 idle_state = 6;
+    int32 idle_state_raw = 7;
+  }
+  double initial_delay = 8;
+  double freq = 9;
+  double duty_cycle = 10;
+}
+
+message CreateCOPulseChanFreqResponse {
+  int32 status = 1;
+}
+
+message CreateCOPulseChanTicksRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  string source_terminal = 4;
+  oneof idle_state_enum {
+    Level1 idle_state = 5;
+    int32 idle_state_raw = 6;
+  }
+  int32 initial_delay = 7;
+  int32 low_ticks = 8;
+  int32 high_ticks = 9;
+}
+
+message CreateCOPulseChanTicksResponse {
+  int32 status = 1;
+}
+
+message CreateCOPulseChanTimeRequest {
+  nidevice_grpc.Session task = 1;
+  string counter = 2;
+  string name_to_assign_to_channel = 3;
+  oneof units_enum {
+    DigitalWidthUnits3 units = 4;
+    int32 units_raw = 5;
+  }
+  oneof idle_state_enum {
+    Level1 idle_state = 6;
+    int32 idle_state_raw = 7;
+  }
+  double initial_delay = 8;
+  double low_time = 9;
+  double high_time = 10;
+}
+
+message CreateCOPulseChanTimeResponse {
   int32 status = 1;
 }
 
@@ -166,6 +1298,155 @@ message CreateDOChanResponse {
   int32 status = 1;
 }
 
+message CreateTEDSAIAccelChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    AccelUnits2 units = 8;
+    int32 units_raw = 9;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 10;
+    int32 current_excit_source_raw = 11;
+  }
+  double current_excit_val = 12;
+  string custom_scale_name = 13;
+}
+
+message CreateTEDSAIAccelChanResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAIBridgeChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TEDSUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 8;
+    int32 voltage_excit_source_raw = 9;
+  }
+  double voltage_excit_val = 10;
+  string custom_scale_name = 11;
+}
+
+message CreateTEDSAIBridgeChanResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAICurrentChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    TEDSUnits units = 8;
+    int32 units_raw = 9;
+  }
+  oneof shunt_resistor_loc_enum {
+    CurrentShuntResistorLocationWithDefault shunt_resistor_loc = 10;
+    int32 shunt_resistor_loc_raw = 11;
+  }
+  double ext_shunt_resistor_val = 12;
+  string custom_scale_name = 13;
+}
+
+message CreateTEDSAICurrentChanResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAIPosLVDTChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    LengthUnits2 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 8;
+    int32 voltage_excit_source_raw = 9;
+  }
+  double voltage_excit_val = 10;
+  double voltage_excit_freq = 11;
+  oneof ac_excit_wire_mode_enum {
+    ACExcitWireMode ac_excit_wire_mode = 12;
+    int32 ac_excit_wire_mode_raw = 13;
+  }
+  string custom_scale_name = 14;
+}
+
+message CreateTEDSAIPosLVDTChanResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAIPosRVDTChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    AngleUnits1 units = 6;
+    int32 units_raw = 7;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 8;
+    int32 voltage_excit_source_raw = 9;
+  }
+  double voltage_excit_val = 10;
+  double voltage_excit_freq = 11;
+  oneof ac_excit_wire_mode_enum {
+    ACExcitWireMode ac_excit_wire_mode = 12;
+    int32 ac_excit_wire_mode_raw = 13;
+  }
+  string custom_scale_name = 14;
+}
+
+message CreateTEDSAIPosRVDTChanResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAIVoltageChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    TEDSUnits units = 8;
+    int32 units_raw = 9;
+  }
+  string custom_scale_name = 10;
+}
+
+message CreateTEDSAIVoltageChanResponse {
+  int32 status = 1;
+}
+
 message CreateTaskRequest {
   string session_name = 1;
 }
@@ -173,6 +1454,44 @@ message CreateTaskRequest {
 message CreateTaskResponse {
   int32 status = 1;
   nidevice_grpc.Session task = 2;
+}
+
+message GetAIChanCalCalDateRequest {
+  nidevice_grpc.Session task = 1;
+  string channel_name = 2;
+}
+
+message GetAIChanCalCalDateResponse {
+  int32 status = 1;
+  uint32 year = 2;
+  uint32 month = 3;
+  uint32 day = 4;
+  uint32 hour = 5;
+  uint32 minute = 6;
+}
+
+message GetAIChanCalExpDateRequest {
+  nidevice_grpc.Session task = 1;
+  string channel_name = 2;
+}
+
+message GetAIChanCalExpDateResponse {
+  int32 status = 1;
+  uint32 year = 2;
+  uint32 month = 3;
+  uint32 day = 4;
+  uint32 hour = 5;
+  uint32 minute = 6;
+}
+
+message GetErrorStringRequest {
+  int32 error_code = 1;
+  uint32 buffer_size = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_string = 2;
 }
 
 message GetNthTaskChannelRequest {
@@ -255,6 +1574,34 @@ message ReadDigitalU8Response {
   int32 status = 1;
   bytes read_array = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message SetAIChanCalCalDateRequest {
+  nidevice_grpc.Session task = 1;
+  string channel_name = 2;
+  uint32 year = 3;
+  uint32 month = 4;
+  uint32 day = 5;
+  uint32 hour = 6;
+  uint32 minute = 7;
+}
+
+message SetAIChanCalCalDateResponse {
+  int32 status = 1;
+}
+
+message SetAIChanCalExpDateRequest {
+  nidevice_grpc.Session task = 1;
+  string channel_name = 2;
+  uint32 year = 3;
+  uint32 month = 4;
+  uint32 day = 5;
+  uint32 hour = 6;
+  uint32 minute = 7;
+}
+
+message SetAIChanCalExpDateResponse {
+  int32 status = 1;
 }
 
 message StartTaskRequest {
