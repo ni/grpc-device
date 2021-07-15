@@ -122,7 +122,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CreateAOVoltageChanRequest request;
     set_request_session_id(request);
-    request.set_physical_channel("Dev1/ao0");
+    request.set_physical_channel("gRPCSystemTestDAQ/ao0");
     request.set_name_to_assign_to_channel("ao0");
     request.set_min_val(min_val);
     request.set_max_val(max_val);
