@@ -28,9 +28,11 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateTask = reinterpret_cast<CreateTaskPtr>(shared_library_.get_function_pointer("DAQmxCreateTask"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
   function_pointers_.ReadDigitalU16 = reinterpret_cast<ReadDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU16"));
+  function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
   function_pointers_.WriteDigitalU16 = reinterpret_cast<WriteDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU16"));
+  function_pointers_.WriteDigitalU8 = reinterpret_cast<WriteDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU8"));
 }
 
 NiDAQmxLibrary::~NiDAQmxLibrary()
@@ -128,6 +130,18 @@ int32 NiDAQmxLibrary::ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, dou
 #endif
 }
 
+int32 NiDAQmxLibrary::ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  if (!function_pointers_.ReadDigitalU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalU8.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+#else
+  return function_pointers_.ReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+#endif
+}
+
 int32 NiDAQmxLibrary::StartTask(TaskHandle task)
 {
   if (!function_pointers_.StartTask) {
@@ -161,6 +175,18 @@ int32 NiDAQmxLibrary::WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, in
   return DAQmxWriteDigitalU16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
 #else
   return function_pointers_.WriteDigitalU16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
+#endif
+}
+
+int32 NiDAQmxLibrary::WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
+{
+  if (!function_pointers_.WriteDigitalU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalU8.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
+#else
+  return function_pointers_.WriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
 #endif
 }
 

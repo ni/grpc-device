@@ -231,7 +231,58 @@ functions = {
             }
         ],
         'returns': 'int32',
-
+    },
+    'ReadDigitalU8': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
     },
     'StartTask': {
         'parameters': [
@@ -301,5 +352,53 @@ functions = {
             }
         ],
         'returns': 'int32',
-    }
+    },
+    'WriteDigitalU8': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'const uInt8[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
 }

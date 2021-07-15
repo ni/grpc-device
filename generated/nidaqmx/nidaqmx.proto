@@ -23,9 +23,11 @@ service NiDAQmx {
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
+  rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
+  rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
 }
 
 enum NiDAQmxAttributes {
@@ -158,6 +160,23 @@ message ReadDigitalU16Response {
   int32 samps_per_chan = 3;
 }
 
+message ReadDigitalU8Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadDigitalU8Response {
+  int32 status = 1;
+  bytes read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
 message StartTaskRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -184,6 +203,23 @@ message WriteDigitalU16Request {
 }
 
 message WriteDigitalU16Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteDigitalU8Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  bytes write_array = 7;
+}
+
+message WriteDigitalU8Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }
