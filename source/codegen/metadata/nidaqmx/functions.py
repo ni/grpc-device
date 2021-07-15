@@ -56,6 +56,47 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateAOVoltageChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VoltageUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateDIChan': {
         'parameters': [
             {
@@ -298,8 +339,56 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+	            'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteAnalogF64': {
+        'parameters': [
+	        {
+                'direction': 'in',
                 'name': 'task',
                 'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+            	'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+	            'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+	            'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32',
             }
         ],
         'returns': 'int32'
