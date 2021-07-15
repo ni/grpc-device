@@ -23,12 +23,14 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.ClearTask = reinterpret_cast<ClearTaskPtr>(shared_library_.get_function_pointer("DAQmxClearTask"));
   function_pointers_.CreateAIVoltageChan = reinterpret_cast<CreateAIVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIVoltageChan"));
+  function_pointers_.CreateAOVoltageChan = reinterpret_cast<CreateAOVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAOVoltageChan"));
   function_pointers_.CreateDIChan = reinterpret_cast<CreateDIChanPtr>(shared_library_.get_function_pointer("DAQmxCreateDIChan"));
   function_pointers_.CreateDOChan = reinterpret_cast<CreateDOChanPtr>(shared_library_.get_function_pointer("DAQmxCreateDOChan"));
   function_pointers_.CreateTask = reinterpret_cast<CreateTaskPtr>(shared_library_.get_function_pointer("DAQmxCreateTask"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
+  function_pointers_.WriteAnalogF64 = reinterpret_cast<WriteAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogF64"));
 }
 
 NiDAQmxLibrary::~NiDAQmxLibrary()
@@ -63,6 +65,18 @@ int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalCh
   return DAQmxCreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
 #else
   return function_pointers_.CreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAOVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAOVoltageChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAOVoltageChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAOVoltageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
+#else
+  return function_pointers_.CreateAOVoltageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
 #endif
 }
 
@@ -135,6 +149,18 @@ int32 NiDAQmxLibrary::StopTask(TaskHandle task)
   return DAQmxStopTask(task);
 #else
   return function_pointers_.StopTask(task);
+#endif
+}
+
+int32 NiDAQmxLibrary::WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
+{
+  if (!function_pointers_.WriteAnalogF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteAnalogF64.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWriteAnalogF64(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
+#else
+  return function_pointers_.WriteAnalogF64(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
 #endif
 }
 

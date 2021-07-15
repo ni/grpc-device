@@ -15,6 +15,7 @@ config = {
         'const char[]': 'string',
         'float64': 'double',
         'float64[]': 'repeated double',
+        'const float64[]': 'repeated double',
         'int32': 'int32',
         'uInt32': 'uint32',
         'bool32': 'bool'
