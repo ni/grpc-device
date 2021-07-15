@@ -30,14 +30,25 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateAIChargeChan = reinterpret_cast<CreateAIChargeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIChargeChan"));
   function_pointers_.CreateAICurrentChan = reinterpret_cast<CreateAICurrentChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAICurrentChan"));
   function_pointers_.CreateAICurrentRMSChan = reinterpret_cast<CreateAICurrentRMSChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAICurrentRMSChan"));
+  function_pointers_.CreateAIForceBridgePolynomialChan = reinterpret_cast<CreateAIForceBridgePolynomialChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIForceBridgePolynomialChan"));
+  function_pointers_.CreateAIForceBridgeTableChan = reinterpret_cast<CreateAIForceBridgeTableChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIForceBridgeTableChan"));
+  function_pointers_.CreateAIForceBridgeTwoPointLinChan = reinterpret_cast<CreateAIForceBridgeTwoPointLinChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIForceBridgeTwoPointLinChan"));
   function_pointers_.CreateAIFreqVoltageChan = reinterpret_cast<CreateAIFreqVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIFreqVoltageChan"));
   function_pointers_.CreateAIMicrophoneChan = reinterpret_cast<CreateAIMicrophoneChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIMicrophoneChan"));
+  function_pointers_.CreateAIPosEddyCurrProxProbeChan = reinterpret_cast<CreateAIPosEddyCurrProxProbeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPosEddyCurrProxProbeChan"));
   function_pointers_.CreateAIPosLVDTChan = reinterpret_cast<CreateAIPosLVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPosLVDTChan"));
   function_pointers_.CreateAIPosRVDTChan = reinterpret_cast<CreateAIPosRVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPosRVDTChan"));
+  function_pointers_.CreateAIPressureBridgePolynomialChan = reinterpret_cast<CreateAIPressureBridgePolynomialChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgePolynomialChan"));
+  function_pointers_.CreateAIPressureBridgeTableChan = reinterpret_cast<CreateAIPressureBridgeTableChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgeTableChan"));
+  function_pointers_.CreateAIPressureBridgeTwoPointLinChan = reinterpret_cast<CreateAIPressureBridgeTwoPointLinChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgeTwoPointLinChan"));
   function_pointers_.CreateAIResistanceChan = reinterpret_cast<CreateAIResistanceChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIResistanceChan"));
   function_pointers_.CreateAIStrainGageChan = reinterpret_cast<CreateAIStrainGageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIStrainGageChan"));
+  function_pointers_.CreateAITorqueBridgePolynomialChan = reinterpret_cast<CreateAITorqueBridgePolynomialChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAITorqueBridgePolynomialChan"));
+  function_pointers_.CreateAITorqueBridgeTableChan = reinterpret_cast<CreateAITorqueBridgeTableChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAITorqueBridgeTableChan"));
+  function_pointers_.CreateAITorqueBridgeTwoPointLinChan = reinterpret_cast<CreateAITorqueBridgeTwoPointLinChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAITorqueBridgeTwoPointLinChan"));
   function_pointers_.CreateAIVelocityIEPEChan = reinterpret_cast<CreateAIVelocityIEPEChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIVelocityIEPEChan"));
   function_pointers_.CreateAIVoltageChan = reinterpret_cast<CreateAIVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIVoltageChan"));
+  function_pointers_.CreateAIVoltageChanWithExcit = reinterpret_cast<CreateAIVoltageChanWithExcitPtr>(shared_library_.get_function_pointer("DAQmxCreateAIVoltageChanWithExcit"));
   function_pointers_.CreateAIVoltageRMSChan = reinterpret_cast<CreateAIVoltageRMSChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIVoltageRMSChan"));
   function_pointers_.CreateAOCurrentChan = reinterpret_cast<CreateAOCurrentChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAOCurrentChan"));
   function_pointers_.CreateAOFuncGenChan = reinterpret_cast<CreateAOFuncGenChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAOFuncGenChan"));
@@ -65,9 +76,16 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateTEDSAIAccelChan = reinterpret_cast<CreateTEDSAIAccelChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIAccelChan"));
   function_pointers_.CreateTEDSAIBridgeChan = reinterpret_cast<CreateTEDSAIBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIBridgeChan"));
   function_pointers_.CreateTEDSAICurrentChan = reinterpret_cast<CreateTEDSAICurrentChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAICurrentChan"));
+  function_pointers_.CreateTEDSAIForceBridgeChan = reinterpret_cast<CreateTEDSAIForceBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIForceBridgeChan"));
+  function_pointers_.CreateTEDSAIMicrophoneChan = reinterpret_cast<CreateTEDSAIMicrophoneChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIMicrophoneChan"));
   function_pointers_.CreateTEDSAIPosLVDTChan = reinterpret_cast<CreateTEDSAIPosLVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIPosLVDTChan"));
   function_pointers_.CreateTEDSAIPosRVDTChan = reinterpret_cast<CreateTEDSAIPosRVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIPosRVDTChan"));
+  function_pointers_.CreateTEDSAIPressureBridgeChan = reinterpret_cast<CreateTEDSAIPressureBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIPressureBridgeChan"));
+  function_pointers_.CreateTEDSAIResistanceChan = reinterpret_cast<CreateTEDSAIResistanceChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIResistanceChan"));
+  function_pointers_.CreateTEDSAIStrainGageChan = reinterpret_cast<CreateTEDSAIStrainGageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIStrainGageChan"));
+  function_pointers_.CreateTEDSAITorqueBridgeChan = reinterpret_cast<CreateTEDSAITorqueBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAITorqueBridgeChan"));
   function_pointers_.CreateTEDSAIVoltageChan = reinterpret_cast<CreateTEDSAIVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIVoltageChan"));
+  function_pointers_.CreateTEDSAIVoltageChanWithExcit = reinterpret_cast<CreateTEDSAIVoltageChanWithExcitPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIVoltageChanWithExcit"));
   function_pointers_.CreateTask = reinterpret_cast<CreateTaskPtr>(shared_library_.get_function_pointer("DAQmxCreateTask"));
   function_pointers_.GetAIChanCalCalDate = reinterpret_cast<GetAIChanCalCalDatePtr>(shared_library_.get_function_pointer("DAQmxGetAIChanCalCalDate"));
   function_pointers_.GetAIChanCalExpDate = reinterpret_cast<GetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxGetAIChanCalExpDate"));
@@ -208,6 +226,42 @@ int32 NiDAQmxLibrary::CreateAICurrentRMSChan(TaskHandle task, const char physica
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateAIForceBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIForceBridgePolynomialChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceBridgePolynomialChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIForceBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAIForceBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIForceBridgeTableChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 electricalVals[], uInt32 numElectricalVals, int32 electricalUnits, const float64 physicalVals[], uInt32 numPhysicalVals, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIForceBridgeTableChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceBridgeTableChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIForceBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAIForceBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIForceBridgeTwoPointLinChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, float64 firstElectricalVal, float64 secondElectricalVal, int32 electricalUnits, float64 firstPhysicalVal, float64 secondPhysicalVal, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIForceBridgeTwoPointLinChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceBridgeTwoPointLinChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIForceBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAIForceBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateAIFreqVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 thresholdLevel, float64 hysteresis, const char customScaleName[])
 {
   if (!function_pointers_.CreateAIFreqVoltageChan) {
@@ -229,6 +283,18 @@ int32 NiDAQmxLibrary::CreateAIMicrophoneChan(TaskHandle task, const char physica
   return DAQmxCreateAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, micSensitivity, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
 #else
   return function_pointers_.CreateAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, micSensitivity, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIPosEddyCurrProxProbeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIPosEddyCurrProxProbeChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPosEddyCurrProxProbeChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIPosEddyCurrProxProbeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, customScaleName);
+#else
+  return function_pointers_.CreateAIPosEddyCurrProxProbeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, customScaleName);
 #endif
 }
 
@@ -256,6 +322,42 @@ int32 NiDAQmxLibrary::CreateAIPosRVDTChan(TaskHandle task, const char physicalCh
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateAIPressureBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIPressureBridgePolynomialChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPressureBridgePolynomialChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIPressureBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAIPressureBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIPressureBridgeTableChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 electricalVals[], uInt32 numElectricalVals, int32 electricalUnits, const float64 physicalVals[], uInt32 numPhysicalVals, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIPressureBridgeTableChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPressureBridgeTableChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIPressureBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAIPressureBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIPressureBridgeTwoPointLinChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, float64 firstElectricalVal, float64 secondElectricalVal, int32 electricalUnits, float64 firstPhysicalVal, float64 secondPhysicalVal, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIPressureBridgeTwoPointLinChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPressureBridgeTwoPointLinChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIPressureBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAIPressureBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateAIResistanceChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
 {
   if (!function_pointers_.CreateAIResistanceChan) {
@@ -280,6 +382,42 @@ int32 NiDAQmxLibrary::CreateAIStrainGageChan(TaskHandle task, const char physica
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateAITorqueBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAITorqueBridgePolynomialChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITorqueBridgePolynomialChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAITorqueBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAITorqueBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAITorqueBridgeTableChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 electricalVals[], uInt32 numElectricalVals, int32 electricalUnits, const float64 physicalVals[], uInt32 numPhysicalVals, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAITorqueBridgeTableChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITorqueBridgeTableChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAITorqueBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAITorqueBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAITorqueBridgeTwoPointLinChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, float64 firstElectricalVal, float64 secondElectricalVal, int32 electricalUnits, float64 firstPhysicalVal, float64 secondPhysicalVal, int32 physicalUnits, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAITorqueBridgeTwoPointLinChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITorqueBridgeTwoPointLinChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAITorqueBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
+#else
+  return function_pointers_.CreateAITorqueBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateAIVelocityIEPEChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
 {
   if (!function_pointers_.CreateAIVelocityIEPEChan) {
@@ -301,6 +439,18 @@ int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalCh
   return DAQmxCreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
 #else
   return function_pointers_.CreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIVoltageChanWithExcit(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIVoltageChanWithExcit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIVoltageChanWithExcit.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, useExcitForScaling, customScaleName);
+#else
+  return function_pointers_.CreateAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, useExcitForScaling, customScaleName);
 #endif
 }
 
@@ -628,6 +778,30 @@ int32 NiDAQmxLibrary::CreateTEDSAICurrentChan(TaskHandle task, const char physic
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateTEDSAIForceBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAIForceBridgeChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIForceBridgeChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIForceBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAIForceBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAIMicrophoneChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, int32 units, float64 maxSndPressLevel, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAIMicrophoneChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIMicrophoneChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateTEDSAIPosLVDTChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, float64 voltageExcitFreq, int32 acExcitWireMode, const char customScaleName[])
 {
   if (!function_pointers_.CreateTEDSAIPosLVDTChan) {
@@ -652,6 +826,54 @@ int32 NiDAQmxLibrary::CreateTEDSAIPosRVDTChan(TaskHandle task, const char physic
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateTEDSAIPressureBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAIPressureBridgeChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIPressureBridgeChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIPressureBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAIPressureBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAIResistanceChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAIResistanceChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIResistanceChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIResistanceChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAIResistanceChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAIStrainGageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, float64 initialBridgeVoltage, float64 leadWireResistance, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAIStrainGageChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIStrainGageChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, initialBridgeVoltage, leadWireResistance, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, initialBridgeVoltage, leadWireResistance, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAITorqueBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAITorqueBridgeChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAITorqueBridgeChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAITorqueBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAITorqueBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateTEDSAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
 {
   if (!function_pointers_.CreateTEDSAIVoltageChan) {
@@ -661,6 +883,18 @@ int32 NiDAQmxLibrary::CreateTEDSAIVoltageChan(TaskHandle task, const char physic
   return DAQmxCreateTEDSAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
 #else
   return function_pointers_.CreateTEDSAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAIVoltageChanWithExcit(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAIVoltageChanWithExcit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIVoltageChanWithExcit.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
 #endif
 }
 

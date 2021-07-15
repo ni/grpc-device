@@ -220,6 +220,98 @@ enums = {
             }
         ]
     },
+    'BridgeElectricalUnits': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Volts per volt.'
+                },
+                'name': 'VOLTS_PER_VOLT',
+                'value': 15896
+            },
+            {
+                'documentation': {
+                    'description': 'Millivolts per volt.'
+                },
+                'name': 'M_VOLTS_PER_VOLT',
+                'value': 15897
+            }
+        ]
+    },
+    'BridgePhysicalUnits': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Newtons.'
+                },
+                'name': 'NEWTONS',
+                'value': 15875
+            },
+            {
+                'documentation': {
+                    'description': 'Pounds.'
+                },
+                'name': 'POUNDS',
+                'value': 15876
+            },
+            {
+                'documentation': {
+                    'description': 'kilograms-force.'
+                },
+                'name': 'KILOGRAM_FORCE',
+                'value': 15877
+            },
+            {
+                'documentation': {
+                    'description': 'Pascals.'
+                },
+                'name': 'PASCALS',
+                'value': 10081
+            },
+            {
+                'documentation': {
+                    'description': 'Pounds per square inch.'
+                },
+                'name': 'POUNDS_PER_SQUARE_INCH',
+                'value': 15879
+            },
+            {
+                'documentation': {
+                    'description': 'Bar.'
+                },
+                'name': 'BAR',
+                'value': 15880
+            },
+            {
+                'documentation': {
+                    'description': 'Newton metres.'
+                },
+                'name': 'NEWTON_METERS',
+                'value': 15881
+            },
+            {
+                'documentation': {
+                    'description': 'Ounce-inches.'
+                },
+                'name': 'INCH_OUNCES',
+                'value': 15882
+            },
+            {
+                'documentation': {
+                    'description': 'Pound-inches.'
+                },
+                'name': 'INCH_POUNDS',
+                'value': 15883
+            },
+            {
+                'documentation': {
+                    'description': 'Pound-feet.'
+                },
+                'name': 'FOOT_POUNDS',
+                'value': 15884
+            }
+        ]
+    },
     'BridgeUnits': {
         'values': [
             {
@@ -373,6 +465,45 @@ enums = {
             }
         ]
     },
+    'EddyCurrentProxProbeSensitivityUnits': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'mVolts/mil.'
+                },
+                'name': 'M_VOLTS_PER_MIL',
+                'value': 14836
+            },
+            {
+                'documentation': {
+                    'description': 'Volts/mil.'
+                },
+                'name': 'VOLTS_PER_MIL',
+                'value': 14837
+            },
+            {
+                'documentation': {
+                    'description': 'mVolts/mMeter.'
+                },
+                'name': 'M_VOLTS_PER_MILLIMETER',
+                'value': 14838
+            },
+            {
+                'documentation': {
+                    'description': 'Volts/mMeter.'
+                },
+                'name': 'VOLTS_PER_MILLIMETER',
+                'value': 14839
+            },
+            {
+                'documentation': {
+                    'description': 'mVolts/micron.'
+                },
+                'name': 'M_VOLTS_PER_MICRON',
+                'value': 14840
+            }
+        ]
+    },
     'Edge1': {
         'values': [
             {
@@ -477,6 +608,38 @@ enums = {
                 },
                 'name': 'NONE',
                 'value': 10230
+            }
+        ]
+    },
+    'ForceUnits': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Newtons.'
+                },
+                'name': 'NEWTONS',
+                'value': 15875
+            },
+            {
+                'documentation': {
+                    'description': 'Pounds.'
+                },
+                'name': 'POUNDS',
+                'value': 15876
+            },
+            {
+                'documentation': {
+                    'description': 'Kilograms-force.'
+                },
+                'name': 'KILOGRAM_FORCE',
+                'value': 15877
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
             }
         ]
     },
@@ -732,6 +895,38 @@ enums = {
             }
         ]
     },
+    'PressureUnits': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Pascals.'
+                },
+                'name': 'PASCALS',
+                'value': 10081
+            },
+            {
+                'documentation': {
+                    'description': 'Pounds per square inch.'
+                },
+                'name': 'POUNDS_PER_SQUARE_INCH',
+                'value': 15879
+            },
+            {
+                'documentation': {
+                    'description': 'Bar.'
+                },
+                'name': 'BAR',
+                'value': 15880
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
     'RVDTSensitivityUnits1': {
         'values': [
             {
@@ -959,6 +1154,45 @@ enums = {
                 },
                 'name': 'TICKS',
                 'value': 10304
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
+    'TorqueUnits': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Newton meters.'
+                },
+                'name': 'NEWTON_METERS',
+                'value': 15881
+            },
+            {
+                'documentation': {
+                    'description': 'Ounce-inches.'
+                },
+                'name': 'INCH_OUNCES',
+                'value': 15882
+            },
+            {
+                'documentation': {
+                    'description': 'Pound-inches.'
+                },
+                'name': 'INCH_POUNDS',
+                'value': 15883
+            },
+            {
+                'documentation': {
+                    'description': 'Pound-feet.'
+                },
+                'name': 'FOOT_POUNDS',
+                'value': 15884
             },
             {
                 'documentation': {
