@@ -119,7 +119,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateAIVoltageChan(&context, request, &response);
   }
 
-  ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response)
+  ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
   {
     ::grpc::ClientContext context;
     CreateAOVoltageChanRequest request;
@@ -229,6 +229,25 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_buffer_size(256);
     
     return stub()->GetNthTaskDevice(&context, request, &response);
+  }
+
+  bool is_task_done() {
+    ::grpc::ClientContext context;
+    IsTaskDoneRequest request;
+    set_request_session_id(request);
+    IsTaskDoneResponse response;
+    auto status = stub()->IsTaskDone(&context, request, &response);
+    EXPECT_SUCCESS(status, response);
+    return response.is_task_done();
+  }
+
+  ::grpc::Status task_control(TaskControlAction action, TaskControlResponse& response)
+  {
+      ::grpc::ClientContext context;
+      TaskControlRequest request;
+      set_request_session_id(request);
+      request.set_action(action);
+      return stub()->TaskControl(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -399,6 +418,19 @@ TEST_F(NiDAQmxDriverApiTests, TaskWithAOChannel_GetNthTaskDevice_ReturnsDeviceFo
   EXPECT_SUCCESS(status, nth_device_response);
   auto trimmed_string = std::string(nth_device_response.buffer().c_str());
   EXPECT_EQ(DEVICE_NAME, trimmed_string);
+}
+
+TEST_F(NiDAQmxDriverApiTests, RunningTask_StopWithTaskControl_TaskIsDone)
+{
+  create_ao_voltage_chan(0.0, 1.0);
+  start_task();
+  EXPECT_FALSE(is_task_done());
+
+  TaskControlResponse response;
+  auto status = task_control(TaskControlAction::TASK_CONTROL_ACTION_TASK_STOP, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_TRUE(is_task_done());
 }
 }  // namespace system
 }  // namespace tests

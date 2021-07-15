@@ -36,6 +36,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
+  function_pointers_.TaskControl = reinterpret_cast<TaskControlPtr>(shared_library_.get_function_pointer("DAQmxTaskControl"));
   function_pointers_.WaitUntilTaskDone = reinterpret_cast<WaitUntilTaskDonePtr>(shared_library_.get_function_pointer("DAQmxWaitUntilTaskDone"));
   function_pointers_.WriteAnalogF64 = reinterpret_cast<WriteAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogF64"));
   function_pointers_.WriteDigitalU16 = reinterpret_cast<WriteDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU16"));
@@ -230,6 +231,18 @@ int32 NiDAQmxLibrary::StopTask(TaskHandle task)
   return DAQmxStopTask(task);
 #else
   return function_pointers_.StopTask(task);
+#endif
+}
+
+int32 NiDAQmxLibrary::TaskControl(TaskHandle task, int32 action)
+{
+  if (!function_pointers_.TaskControl) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxTaskControl.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxTaskControl(task, action);
+#else
+  return function_pointers_.TaskControl(task, action);
 #endif
 }
 

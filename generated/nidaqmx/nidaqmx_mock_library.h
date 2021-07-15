@@ -32,6 +32,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ReadDigitalU8, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, StartTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, StopTask, (TaskHandle task), (override));
+  MOCK_METHOD(int32, TaskControl, (TaskHandle task, int32 action), (override));
   MOCK_METHOD(int32, WaitUntilTaskDone, (TaskHandle task, float64 timeToWait), (override));
   MOCK_METHOD(int32, WriteAnalogF64, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteDigitalU16, (TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));

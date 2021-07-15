@@ -31,6 +31,7 @@ service NiDAQmx {
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
+  rpc TaskControl(TaskControlRequest) returns (TaskControlResponse);
   rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
@@ -62,6 +63,18 @@ enum LineGrouping {
   LINE_GROUPING_UNSPECIFIED = 0;
   LINE_GROUPING_CHAN_FOR_ALL_LINES = 1;
   LINE_GROUPING_CHAN_PER_LINE = 0;
+}
+
+enum TaskControlAction {
+  option allow_alias = true;
+  TASK_CONTROL_ACTION_UNSPECIFIED = 0;
+  TASK_CONTROL_ACTION_TASK_START = 0;
+  TASK_CONTROL_ACTION_TASK_STOP = 1;
+  TASK_CONTROL_ACTION_TASK_VERIFY = 2;
+  TASK_CONTROL_ACTION_TASK_COMMIT = 3;
+  TASK_CONTROL_ACTION_TASK_RESERVE = 4;
+  TASK_CONTROL_ACTION_TASK_UNRESERVE = 5;
+  TASK_CONTROL_ACTION_TASK_ABORT = 6;
 }
 
 enum VoltageUnits2 {
@@ -257,6 +270,18 @@ message StopTaskRequest {
 }
 
 message StopTaskResponse {
+  int32 status = 1;
+}
+
+message TaskControlRequest {
+  nidevice_grpc.Session task = 1;
+  oneof action_enum {
+    TaskControlAction action = 2;
+    int32 action_raw = 3;
+  }
+}
+
+message TaskControlResponse {
   int32 status = 1;
 }
 

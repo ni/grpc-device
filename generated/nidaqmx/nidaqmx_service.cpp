@@ -525,6 +525,41 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::TaskControl(::grpc::ServerContext* context, const TaskControlRequest* request, TaskControlResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 action;
+      switch (request->action_enum_case()) {
+        case nidaqmx_grpc::TaskControlRequest::ActionEnumCase::kAction: {
+          action = static_cast<int32>(request->action());
+          break;
+        }
+        case nidaqmx_grpc::TaskControlRequest::ActionEnumCase::kActionRaw: {
+          action = static_cast<int32>(request->action_raw());
+          break;
+        }
+        case nidaqmx_grpc::TaskControlRequest::ActionEnumCase::ACTION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->TaskControl(task, action);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::WaitUntilTaskDone(::grpc::ServerContext* context, const WaitUntilTaskDoneRequest* request, WaitUntilTaskDoneResponse* response)
   {
     if (context->IsCancelled()) {

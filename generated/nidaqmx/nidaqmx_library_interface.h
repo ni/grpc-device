@@ -30,6 +30,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 StartTask(TaskHandle task) = 0;
   virtual int32 StopTask(TaskHandle task) = 0;
+  virtual int32 TaskControl(TaskHandle task, int32 action) = 0;
   virtual int32 WaitUntilTaskDone(TaskHandle task, float64 timeToWait) = 0;
   virtual int32 WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;
   virtual int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;

@@ -433,6 +433,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'TaskControl': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TaskControlAction',
+                'name': 'action',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'WaitUntilTaskDone': {
         'parameters': [
             {

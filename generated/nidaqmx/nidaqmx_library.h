@@ -33,6 +33,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 StartTask(TaskHandle task);
   int32 StopTask(TaskHandle task);
+  int32 TaskControl(TaskHandle task, int32 action);
   int32 WaitUntilTaskDone(TaskHandle task, float64 timeToWait);
   int32 WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
@@ -54,6 +55,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ReadDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using StartTaskPtr = int32 (*)(TaskHandle task);
   using StopTaskPtr = int32 (*)(TaskHandle task);
+  using TaskControlPtr = int32 (*)(TaskHandle task, int32 action);
   using WaitUntilTaskDonePtr = int32 (*)(TaskHandle task, float64 timeToWait);
   using WriteAnalogF64Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using WriteDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, int32 autoStart, double timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
@@ -75,6 +77,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ReadDigitalU8Ptr ReadDigitalU8;
     StartTaskPtr StartTask;
     StopTaskPtr StopTask;
+    TaskControlPtr TaskControl;
     WaitUntilTaskDonePtr WaitUntilTaskDone;
     WriteAnalogF64Ptr WriteAnalogF64;
     WriteDigitalU16Ptr WriteDigitalU16;
