@@ -26,6 +26,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateDIChan = reinterpret_cast<CreateDIChanPtr>(shared_library_.get_function_pointer("DAQmxCreateDIChan"));
   function_pointers_.CreateDOChan = reinterpret_cast<CreateDOChanPtr>(shared_library_.get_function_pointer("DAQmxCreateDOChan"));
   function_pointers_.CreateTask = reinterpret_cast<CreateTaskPtr>(shared_library_.get_function_pointer("DAQmxCreateTask"));
+  function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
   function_pointers_.ReadDigitalU16 = reinterpret_cast<ReadDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU16"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
@@ -55,7 +56,7 @@ int32 NiDAQmxLibrary::ClearTask(TaskHandle task)
 #endif
 }
 
-int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int terminalConfig, float64 minVal, float64 maxVal, int units, const char customScaleName[])
+int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
 {
   if (!function_pointers_.CreateAIVoltageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIVoltageChan.");
@@ -67,7 +68,7 @@ int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalCh
 #endif
 }
 
-int32 NiDAQmxLibrary::CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping)
+int32 NiDAQmxLibrary::CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping)
 {
   if (!function_pointers_.CreateDIChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateDIChan.");
@@ -79,7 +80,7 @@ int32 NiDAQmxLibrary::CreateDIChan(TaskHandle task, const char lines[], const ch
 #endif
 }
 
-int32 NiDAQmxLibrary::CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int lineGrouping)
+int32 NiDAQmxLibrary::CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping)
 {
   if (!function_pointers_.CreateDOChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateDOChan.");
@@ -100,6 +101,18 @@ int32 NiDAQmxLibrary::CreateTask(const char sessionName[], TaskHandle* task)
   return DAQmxCreateTask(sessionName, task);
 #else
   return function_pointers_.CreateTask(sessionName, task);
+#endif
+}
+
+int32 NiDAQmxLibrary::ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  if (!function_pointers_.ReadAnalogF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadAnalogF64.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxReadAnalogF64(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+#else
+  return function_pointers_.ReadAnalogF64(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
 #endif
 }
 

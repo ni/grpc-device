@@ -224,9 +224,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'reserved',
-                'type': 'bool32*',
-                'grpc_type': 'uint64',
+                'pass_null': True,
+                'type': 'bool32',
             }
         ],
         'returns': 'int32',
@@ -293,10 +294,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'reserved',
-                'type': 'bool32*',
-                'grpc_type': 'uint64',
-
+                'pass_null': True,
+                'type': 'bool32',
             }
         ],
         'returns': 'int32',

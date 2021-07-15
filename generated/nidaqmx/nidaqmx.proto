@@ -21,6 +21,7 @@ service NiDAQmx {
   rpc CreateDIChan(CreateDIChanRequest) returns (CreateDIChanResponse);
   rpc CreateDOChan(CreateDOChanRequest) returns (CreateDOChanResponse);
   rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+  rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
@@ -29,6 +30,13 @@ service NiDAQmx {
 
 enum NiDAQmxAttributes {
   NIDAQMX_ATTRIBUTE_UNSPECIFIED = 0;
+}
+
+enum GroupBy {
+  option allow_alias = true;
+  GROUP_BY_UNSPECIFIED = 0;
+  GROUP_BY_GROUP_BY_CHANNEL = 0;
+  GROUP_BY_GROUP_BY_SCAN_NUMBER = 1;
 }
 
 enum InputTermCfgWithDefault {
@@ -119,13 +127,29 @@ message CreateTaskResponse {
   nidevice_grpc.Session task = 2;
 }
 
+message ReadAnalogF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadAnalogF64Response {
+  int32 status = 1;
+  repeated double read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
 message ReadDigitalU16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
   double timeout = 3;
   int32 fill_mode = 4;
   uint32 array_size_in_samps = 5;
-  uint64 reserved = 6;
 }
 
 message ReadDigitalU16Response {
@@ -157,7 +181,6 @@ message WriteDigitalU16Request {
   double timeout = 4;
   int32 data_layout = 5;
   repeated uint32 write_array = 6;
-  uint64 reserved = 7;
 }
 
 message WriteDigitalU16Response {

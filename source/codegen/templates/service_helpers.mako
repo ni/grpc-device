@@ -279,8 +279,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
         });
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
-%elif parameter_name == 'reserved' and c_type == 'bool32*':
-      ${c_type} ${parameter_name} = nullptr;
 % else:
       ${c_type} ${parameter_name} = ${request_snippet};\
 % endif
