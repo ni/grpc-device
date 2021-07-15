@@ -290,7 +290,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
-  c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(parameter)
 %>\
 %   if common_helpers.is_array(parameter['type']):
 <%
