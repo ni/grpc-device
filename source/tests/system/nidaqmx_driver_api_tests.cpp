@@ -29,7 +29,7 @@ struct ThrowawayResponse {
 
 class NiDAQmxDriverApiTests : public Test {
  protected:
-  const std::string DEVICE_NAME{"Dev1"};
+  const std::string DEVICE_NAME{"gRPCSystemTestDAQ"};
 
   NiDAQmxDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
@@ -42,7 +42,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     // In MAX, this can be set up by importing grpc-device-daq-tests.nce.
     std::unordered_map<std::string, std::string> required_devices{
-        {"gRPCSystemTestDAQ", "NI PXIe-6341"}};
+        {DEVICE_NAME, "NI PXIe-6341"}};
 
     if (!are_all_devices_present(required_devices)) {
       GTEST_SKIP() << "Required Device(s) not found";
@@ -105,7 +105,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ClearTask(&context, request, &response);
   }
 
-  ::grpc::Status create_ai_voltage_chan(double min_val, double max_val, CreateAIVoltageChanResponse& response)
+  ::grpc::Status create_ai_voltage_chan(double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
   {
     ::grpc::ClientContext context;
     CreateAIVoltageChanRequest request;
@@ -203,6 +203,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     WriteDigitalU16Request request;
     set_request_session_id(request);
+    request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     request.set_num_samps_per_chan(4);
     request.add_write_array(100);
     request.add_write_array(10);
@@ -220,6 +221,8 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->ReadDigitalU16(&context, request, &response);
+  }
+
   ::grpc::Status get_nth_task_device(uint32_t index, GetNthTaskDeviceResponse& response)
   {
     ::grpc::ClientContext context;
@@ -319,14 +322,11 @@ TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
 {
   CreateDOChanResponse create_channel_response;
   create_do_chan(create_channel_response);
-  StartTaskResponse start_response;
-  start_task(start_response);
+  start_task();
 
   WriteDigitalU16Response response;
   auto status = write_u16_digital_data(response);
-
-  StopTaskResponse stop_response;
-  stop_task(stop_response);
+  stop_task();
 
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(4, response.samps_per_chan_written());
@@ -336,26 +336,22 @@ TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
 {
   CreateDIChanResponse create_channel_response;
   create_di_chan(create_channel_response);
-  StartTaskResponse start_response;
-  start_task(start_response);
+  start_task();
 
   ReadDigitalU16Response response;
   auto status = read_u16_digital_data(response);
-
-  StopTaskResponse stop_response;
-  stop_task(stop_response);
+  stop_task();
 
   EXPECT_EQ(0, status.error_code());
   EXPECT_SUCCESS(status, response);
-  EXPECT_EQ(4, response.samps_per_chan());
+  EXPECT_EQ(4, response.samps_per_chan_read());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadAIData_ReturnsDataInExpectedRange)
 {
   const double AI_MIN = 1.0;
   const double AI_MAX = 10.0;
-  CreateAIVoltageChanResponse create_channel_response;
-  create_ai_voltage_chan(AI_MIN, AI_MAX, create_channel_response);
+  create_ai_voltage_chan(AI_MIN, AI_MAX);
 
   StartTaskResponse start_response;
   auto start_status = start_task(start_response);
@@ -392,8 +388,7 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
 {
   const double AO_MIN = 1.0;
   const double AO_MAX = 10.0;
-  CreateAOVoltageChanResponse create_channel_response;
-  create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+  create_ao_voltage_chan(AO_MIN, AO_MAX);
 
   start_task();
   auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
@@ -409,8 +404,7 @@ TEST_F(NiDAQmxDriverApiTests, TaskWithAOChannel_GetNthTaskDevice_ReturnsDeviceFo
 {
   const double AO_MIN = 1.0;
   const double AO_MAX = 10.0;
-  CreateAOVoltageChanResponse create_channel_response;
-  create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+  create_ao_voltage_chan(AO_MIN, AO_MAX);
 
   GetNthTaskDeviceResponse nth_device_response;
   auto status = get_nth_task_device(1, nth_device_response);

@@ -237,7 +237,7 @@ message ReadDigitalU16Request {
 message ReadDigitalU16Response {
   int32 status = 1;
   repeated uint32 read_array = 2;
-  int32 samps_per_chan = 3;
+  int32 samps_per_chan_read = 3;
 }
 
 message ReadDigitalU8Request {
@@ -314,10 +314,13 @@ message WriteAnalogF64Response {
 message WriteDigitalU16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
-  int32 auto_start = 3;
+  bool auto_start = 3;
   double timeout = 4;
-  int32 data_layout = 5;
-  repeated uint32 write_array = 6;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated uint32 write_array = 7;
 }
 
 message WriteDigitalU16Response {

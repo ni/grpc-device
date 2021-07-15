@@ -311,44 +311,42 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'task',
-                'type': 'TaskHandle',
-                'grpc_type': 'nidevice_grpc.Session'
+                'type': 'TaskHandle'
             },
             {
                 'direction': 'in',
                 'name': 'numSampsPerChan',
-                'type': 'int32',
+                'type': 'int32'
             },
             {
                 'direction': 'in',
                 'name': 'timeout',
-                'type': 'double',
+                'type': 'float64'
             },
             {
                 'direction': 'in',
                 'enum': 'GroupBy',
                 'name': 'fillMode',
-                'type': 'int32',
+                'type': 'int32'
             },
             {
+                'coerced': True,
                 'direction': 'out',
                 'name': 'readArray',
-                'type': 'uInt16[]',
-                'coerced': True,
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'arraySizeInSamps'
-                }
+                },
+                'type': 'uInt16[]'
             },
             {
                 'direction': 'in',
                 'name': 'arraySizeInSamps',
-                'type': 'uInt32',
-                'grpc_type': 'uint32'
+                'type': 'uInt32'
             },
             {
                 'direction': 'out',
-                'name': 'sampsPerChan',
+                'name': 'sampsPerChanRead',
                 'type': 'int32'
             },
             {
@@ -356,10 +354,10 @@ functions = {
                 'include_in_proto': False,
                 'name': 'reserved',
                 'pass_null': True,
-                'type': 'bool32',
+                'type': 'bool32'
             }
         ],
-        'returns': 'int32',
+        'returns': 'int32'
     },
     'ReadDigitalU8': {
         'parameters': [
@@ -427,7 +425,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-	            'name': 'task',
+                'name': 'task',
                 'type': 'TaskHandle'
             }
         ],
@@ -466,7 +464,7 @@ functions = {
     },
     'WriteAnalogF64': {
         'parameters': [
-	        {
+            {
                 'direction': 'in',
                 'name': 'task',
                 'type': 'TaskHandle'
@@ -483,13 +481,13 @@ functions = {
             },
             {
                 'direction': 'in',
-            	'name': 'timeout',
+                'name': 'timeout',
                 'type': 'float64'
             },
             {
                 'direction': 'in',
                 'enum': 'GroupBy',
-	            'name': 'dataLayout',
+                'name': 'dataLayout',
                 'type': 'int32'
             },
             {
@@ -505,9 +503,9 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-	            'name': 'reserved',
+                'name': 'reserved',
                 'pass_null': True,
-                'type': 'bool32',
+                'type': 'bool32'
             }
         ],
         'returns': 'int32'
@@ -517,34 +515,34 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'task',
-                'type': 'TaskHandle',
-                'grpc_type': 'nidevice_grpc.Session'
+                'type': 'TaskHandle'
             },
             {
                 'direction': 'in',
                 'name': 'numSampsPerChan',
-                'type': 'int32',
+                'type': 'int32'
             },
             {
                 'direction': 'in',
                 'name': 'autoStart',
-                'type': 'int32',
+                'type': 'bool32'
             },
             {
                 'direction': 'in',
                 'name': 'timeout',
-                'type': 'double',
+                'type': 'float64'
             },
             {
                 'direction': 'in',
+                'enum': 'GroupBy',
                 'name': 'dataLayout',
-                'type': 'int32',
+                'type': 'int32'
             },
             {
+                'coerced': True,
                 'direction': 'in',
                 'name': 'writeArray',
-                'type': 'const uInt16[]',
-                'coerced': True
+                'type': 'const uInt16[]'
             },
             {
                 'direction': 'out',
@@ -556,10 +554,10 @@ functions = {
                 'include_in_proto': False,
                 'name': 'reserved',
                 'pass_null': True,
-                'type': 'bool32',
+                'type': 'bool32'
             }
         ],
-        'returns': 'int32',
+        'returns': 'int32'
     },
     'WriteDigitalU8': {
         'parameters': [
@@ -608,5 +606,5 @@ functions = {
             }
         ],
         'returns': 'int32'
-    },
+    }
 }

@@ -398,7 +398,7 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
-      double timeout = request->timeout();
+      float64 timeout = request->timeout();
       int32 fill_mode;
       switch (request->fill_mode_enum_case()) {
         case nidaqmx_grpc::ReadDigitalU16Request::FillModeEnumCase::kFillMode: {
@@ -418,8 +418,8 @@ namespace nidaqmx_grpc {
       uInt32 array_size_in_samps = request->array_size_in_samps();
       auto reserved = nullptr;
       std::vector<uInt16> read_array(array_size_in_samps);
-      int32 samps_per_chan {};
-      auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan, reserved);
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status == 0) {
         response->mutable_read_array()->Clear();
@@ -431,7 +431,7 @@ namespace nidaqmx_grpc {
           [](auto x) { 
               return x;
           });
-        response->set_samps_per_chan(samps_per_chan);
+        response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
     }
@@ -633,9 +633,24 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
-      int32 auto_start = request->auto_start();
-      double timeout = request->timeout();
-      int32 data_layout = request->data_layout();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteDigitalU16Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalU16Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalU16Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
       auto write_array_raw = request->write_array();
       auto write_array = std::vector<uInt16>();
       write_array.reserve(write_array_raw.size());
