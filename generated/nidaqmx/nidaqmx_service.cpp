@@ -300,7 +300,22 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       double timeout = request->timeout();
-      int32 fill_mode = request->fill_mode();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadDigitalU16Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadDigitalU16Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadDigitalU16Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
       uInt32 array_size_in_samps = request->array_size_in_samps();
       auto reserved = nullptr;
       std::vector<uInt16> read_array(array_size_in_samps);

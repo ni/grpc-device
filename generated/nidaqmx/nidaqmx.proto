@@ -169,8 +169,11 @@ message ReadDigitalU16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
   double timeout = 3;
-  int32 fill_mode = 4;
-  uint32 array_size_in_samps = 5;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
 }
 
 message ReadDigitalU16Response {

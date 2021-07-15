@@ -216,6 +216,7 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     request.set_num_samps_per_chan(4);
     request.set_array_size_in_samps(4);
+    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->ReadDigitalU16(&context, request, &response);
   }
 
@@ -314,6 +315,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
   StopTaskResponse stop_response;
   stop_task(stop_response);
 
+  EXPECT_EQ(0, status.error_code());
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(4, response.samps_per_chan());
 }

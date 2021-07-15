@@ -238,9 +238,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'GroupBy',
                 'name': 'fillMode',
                 'type': 'int32',
-
             },
             {
                 'direction': 'out',
