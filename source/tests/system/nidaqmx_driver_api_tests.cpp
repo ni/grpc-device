@@ -310,7 +310,7 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
 
   start_task();
   auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
-  write_data[80] += 10.0;
+  write_data[80] += AO_MAX;
   WriteAnalogF64Response write_response;
   write_analog_f64(write_data, write_response);
   stop_task();
