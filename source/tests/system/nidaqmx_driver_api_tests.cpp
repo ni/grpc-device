@@ -154,6 +154,30 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateDOChan(&context, request, &response);
   }
 
+  ::grpc::Status create_ci_freq_chan(CreateCIFreqChanResponse& response){
+    ::grpc::ClientContext context;
+    CreateCIFreqChanRequest request;
+    set_request_session_id(request);
+    request.set_counter("gRPCSystemTestDAQ/ctr0");
+    request.set_name_to_assign_to_channel("ctr");
+    request.set_min_val(1.19209);
+    request.set_max_val(1e+2);
+    request.set_units(FrequencyUnits3::FREQUENCY_UNITS3_HZ);
+    request.set_edge(Edge1::EDGE1_RISING);
+    request.set_meas_method(CounterFrequencyMethod::COUNTER_FREQUENCY_METHOD_LOW_FREQ_1_CTR);
+    request.set_meas_time(0.001);
+    request.set_divisor(4);
+    return stub()->CreateCIFreqChan(&context, request, &response);
+  }
+
+  ::grpc::Status get_error_string(int32 error_code, GetErrorStringResponse& response) {
+    ::grpc::ClientContext context;
+    GetErrorStringRequest request;
+    request.set_buffer_size(4096);
+    request.set_error_code(error_code);
+    return stub()->GetErrorString(&context, request, &response);
+  }
+
   ::grpc::Status start_task(StartTaskResponse& response = ThrowawayResponse<StartTaskResponse>::response())
   {
     ::grpc::ClientContext context;
@@ -267,8 +291,8 @@ class NiDAQmxDriverApiTests : public Test {
   template <typename TResponse>
   void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
   {
-    EXPECT_TRUE(status.ok());
     EXPECT_EQ(DAQmxSuccess, response.status());
+    EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
   }
 
   DeviceServerInterface* device_server_;
@@ -425,6 +449,24 @@ TEST_F(NiDAQmxDriverApiTests, RunningTask_StopWithTaskControl_TaskIsDone)
 
   EXPECT_SUCCESS(status, response);
   EXPECT_TRUE(is_task_done());
+}
+
+TEST_F(NiDAQmxDriverApiTests, CreateCIFreqChannel_Succeeds)
+{
+  CreateCIFreqChanResponse response;
+  auto status = create_ci_freq_chan(response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
+
+TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
+{
+  GetErrorStringResponse response;
+  auto status = get_error_string(-200077, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
 }
 }  // namespace system
 }  // namespace tests
