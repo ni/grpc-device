@@ -24,6 +24,1807 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateAIAccel4WireDCVoltageChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelSensitivityUnits1',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'useExcitForScaling',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIAccelChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelSensitivityUnits1',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIAccelChargeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelChargeSensitivityUnits',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIBridgeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIChargeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ChargeUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAICurrentChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentShuntResistorLocationWithDefault',
+                'name': 'shuntResistorLoc',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'extShuntResistorVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAICurrentRMSChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentShuntResistorLocationWithDefault',
+                'name': 'shuntResistorLoc',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'extShuntResistorVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIForceBridgePolynomialChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'forwardCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numForwardCoeffs',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reverseCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numReverseCoeffs',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIForceBridgeTableChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'electricalVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numElectricalVals',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numPhysicalVals',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIForceBridgeTwoPointLinChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'firstElectricalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'secondElectricalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'firstPhysicalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'secondPhysicalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIFreqVoltageChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'thresholdLevel',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'hysteresis',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIMicrophoneChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SoundPressureUnits1',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'micSensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxSndPressLevel',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIPosEddyCurrProxProbeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LengthUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EddyCurrentProxProbeSensitivityUnits',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIPosLVDTChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LengthUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LVDTSensitivityUnits1',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitFreq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ACExcitWireMode',
+                'name': 'acExcitWireMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIPosRVDTChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AngleUnits1',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'RVDTSensitivityUnits1',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitFreq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ACExcitWireMode',
+                'name': 'acExcitWireMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIPressureBridgePolynomialChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PressureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'forwardCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numForwardCoeffs',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reverseCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numReverseCoeffs',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIPressureBridgeTableChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PressureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'electricalVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numElectricalVals',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numPhysicalVals',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIPressureBridgeTwoPointLinChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PressureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'firstElectricalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'secondElectricalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'firstPhysicalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'secondPhysicalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIResistanceChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIStrainGageChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainUnits1',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainGageBridgeType1',
+                'name': 'strainConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'gageFactor',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialBridgeVoltage',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalGageResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'poissonRatio',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'leadWireResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAITorqueBridgePolynomialChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TorqueUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'forwardCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numForwardCoeffs',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reverseCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numReverseCoeffs',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAITorqueBridgeTableChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TorqueUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'electricalVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numElectricalVals',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numPhysicalVals',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAITorqueBridgeTwoPointLinChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TorqueUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalBridgeResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'firstElectricalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'secondElectricalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'electricalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'firstPhysicalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'secondPhysicalVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'physicalUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIVelocityIEPEChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VelocityUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VelocityIEPESensorSensitivityUnits',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateAIVoltageChan': {
         'parameters': [
             {
@@ -71,6 +1872,204 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateAIVoltageChanWithExcit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VoltageUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'bridgeConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'useExcitForScaling',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIVoltageRMSChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VoltageUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAOCurrentChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAOFuncGenChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FuncGenType',
+                'name': 'type',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'freq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'amplitude',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'offset',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateAOVoltageChan': {
         'parameters': [
             {
@@ -108,6 +2107,865 @@ functions = {
                 'direction': 'in',
                 'name': 'customScaleName',
                 'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIAngEncoderChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderType2',
+                'name': 'decodingType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'zidxEnable',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'zidxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderZIndexPhase1',
+                'name': 'zidxPhase',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AngleUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'pulsesPerRev',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialAngle',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIAngVelocityChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderType2',
+                'name': 'decodingType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AngularVelocityUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'pulsesPerRev',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCICountEdgesChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'edge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialCount',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CountDirection1',
+                'name': 'countDirection',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIDutyCycleChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minFreq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxFreq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'edge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIFreqChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits3',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'edge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CounterFrequencyMethod',
+                'name': 'measMethod',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measTime',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'divisor',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIGPSTimestampChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GpsSignalType1',
+                'name': 'syncMethod',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCILinEncoderChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderType2',
+                'name': 'decodingType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'zidxEnable',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'zidxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderZIndexPhase1',
+                'name': 'zidxPhase',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LengthUnits3',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'distPerPulse',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialPos',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCILinVelocityChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderType2',
+                'name': 'decodingType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VelocityUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'distPerPulse',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIPeriodChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'edge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CounterFrequencyMethod',
+                'name': 'measMethod',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measTime',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'divisor',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIPulseChanFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits2',
+                'name': 'units',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIPulseChanTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sourceTerminal',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIPulseChanTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalWidthUnits3',
+                'name': 'units',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCIPulseWidthChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'startingEdge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCISemiPeriodChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCITwoEdgeSepChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'firstEdge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'secondEdge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCOPulseChanFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Level1',
+                'name': 'idleState',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialDelay',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'freq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutyCycle',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCOPulseChanTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sourceTerminal',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Level1',
+                'name': 'idleState',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialDelay',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowTicks',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'highTicks',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateCOPulseChanTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'counter',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalWidthUnits3',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Level1',
+                'name': 'idleState',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialDelay',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowTime',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'highTime',
+                'type': 'float64'
             }
         ],
         'returns': 'int32'
@@ -164,6 +3022,734 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateTEDSAIAccelChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIBridgeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TEDSUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAICurrentChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TEDSUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentShuntResistorLocationWithDefault',
+                'name': 'shuntResistorLoc',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'extShuntResistorVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIForceBridgeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIMicrophoneChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SoundPressureUnits1',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxSndPressLevel',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIPosLVDTChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LengthUnits2',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitFreq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ACExcitWireMode',
+                'name': 'acExcitWireMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIPosRVDTChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AngleUnits1',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitFreq',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ACExcitWireMode',
+                'name': 'acExcitWireMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIPressureBridgeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PressureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIResistanceChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TEDSUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIStrainGageChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainUnits1',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'initialBridgeVoltage',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'leadWireResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAITorqueBridgeChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TorqueUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIVoltageChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TEDSUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIVoltageChanWithExcit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TEDSUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateTask': {
         'init_method': True,
         'parameters': [
@@ -177,6 +3763,110 @@ functions = {
                 'direction': 'out',
                 'name': 'task',
                 'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalCalDate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'year',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'month',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'day',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'hour',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'minute',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalExpDate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'year',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'month',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'day',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'hour',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'minute',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetErrorString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'errorCode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorString',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -407,6 +4097,86 @@ functions = {
                 'name': 'reserved',
                 'pass_null': True,
                 'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalCalDate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'year',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'month',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'day',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'hour',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minute',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalExpDate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'year',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'month',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'day',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'hour',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minute',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
