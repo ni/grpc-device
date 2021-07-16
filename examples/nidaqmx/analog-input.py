@@ -12,8 +12,10 @@ client = grpc_nidaqmx.NiDAQmxStub(channel)
 # Raise an exception if an error was returned
 def RaiseIfError(response):
     if response.status != 0:
-        # TODO - get error string
-        raise Exception(f"Error: {response.status}")
+        response = client.GetErrorString(nidaqmx_types.GetErrorStringRequest(
+            error_code=response.status, buffer_size=2048))
+        error_string = response.error_string.strip(' \0')
+        raise Exception(f"Error: {error_string}")
 
 
 response = client.CreateTask(
