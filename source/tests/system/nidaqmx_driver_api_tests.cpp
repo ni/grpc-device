@@ -132,7 +132,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateAOVoltageChan(&context, request, &response);
   }
 
-  ::grpc::Status create_di_chan(CreateDIChanResponse& response)
+  ::grpc::Status create_di_chan(CreateDIChanResponse& response = ThrowawayResponse<CreateDIChanResponse>::response())
   {
     ::grpc::ClientContext context;
     CreateDIChanRequest request;
@@ -143,7 +143,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateDIChan(&context, request, &response);
   }
 
-  ::grpc::Status create_do_chan(CreateDOChanResponse& response)
+  ::grpc::Status create_do_chan(CreateDOChanResponse& response = ThrowawayResponse<CreateDOChanResponse>::response())
   {
     ::grpc::ClientContext context;
     CreateDOChanRequest request;
@@ -205,6 +205,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_num_samps_per_chan(samps_per_chan);
     request.set_array_size_in_samps(array_size_in_samps);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    request.set_timeout(1000.0);
     return stub()->ReadAnalogF64(&context, request, &response);
   }
 
@@ -247,6 +248,17 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ReadDigitalU16(&context, request, &response);
   }
 
+    ::grpc::Status read_binary_i32(int32 samples_to_read, ReadBinaryI32Response& response)
+  {
+    ::grpc::ClientContext context;
+    ReadBinaryI32Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(samples_to_read);
+    request.set_array_size_in_samps(samples_to_read);
+    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    return stub()->ReadBinaryI32(&context, request, &response);
+  }
+
   ::grpc::Status get_nth_task_device(uint32_t index, GetNthTaskDeviceResponse& response)
   {
     ::grpc::ClientContext context;
@@ -275,6 +287,17 @@ class NiDAQmxDriverApiTests : public Test {
       set_request_session_id(request);
       request.set_action(action);
       return stub()->TaskControl(&context, request, &response);
+  }
+
+  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response) {
+    ::grpc::ClientContext context;
+    CfgSampClkTimingRequest request;
+    set_request_session_id(request);
+    request.set_rate(100.0);
+    request.set_sample_mode(AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS);
+    request.set_active_edge(Edge1::EDGE1_RISING);
+    request.set_samps_per_chan(1000);
+    return stub()->CfgSampClkTiming(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -344,8 +367,7 @@ TEST_F(NiDAQmxDriverApiTests, CreateDOChannel_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
 {
-  CreateDOChanResponse create_channel_response;
-  create_do_chan(create_channel_response);
+  create_do_chan();
   start_task();
 
   WriteDigitalU16Response response;
@@ -354,21 +376,6 @@ TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
 
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(4, response.samps_per_chan_written());
-}
-
-TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
-{
-  CreateDIChanResponse create_channel_response;
-  create_di_chan(create_channel_response);
-  start_task();
-
-  ReadDigitalU16Response response;
-  auto status = read_u16_digital_data(response);
-  stop_task();
-
-  EXPECT_EQ(0, status.error_code());
-  EXPECT_SUCCESS(status, response);
-  EXPECT_EQ(4, response.samps_per_chan_read());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadAIData_ReturnsDataInExpectedRange)
@@ -459,7 +466,6 @@ TEST_F(NiDAQmxDriverApiTests, CreateCIFreqChannel_Succeeds)
   EXPECT_SUCCESS(status, response);
 }
 
-
 TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
 {
   GetErrorStringResponse response;
@@ -467,6 +473,35 @@ TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
 
   EXPECT_SUCCESS(status, response);
   EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)
+{
+  create_ai_voltage_chan(-5.0, 5.0);
+  start_task();
+
+  ReadBinaryI32Response response;
+  const int32 NUM_SAMPS = 4;
+  auto status = read_binary_i32(NUM_SAMPS, response);
+  stop_task();
+
+  EXPECT_EQ(0, status.error_code());
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(NUM_SAMPS, response.samps_per_chan_read());
+}
+
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Succeeds)
+{
+  create_ai_voltage_chan(0.0, 1.0);
+
+  CfgSampClkTimingResponse response;
+  auto config_status = cfg_samp_clk_timing(response);
+  start_task();
+  ReadAnalogF64Response read_response;
+  auto read_status = read_analog_f64(10, 10, read_response);
+
+  EXPECT_SUCCESS(config_status, response);
+  EXPECT_SUCCESS(read_status, read_response);
 }
 }  // namespace system
 }  // namespace tests

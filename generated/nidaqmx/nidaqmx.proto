@@ -17,7 +17,15 @@ import "session.proto";
 
 service NiDAQmx {
   rpc AddGlobalChansToTask(AddGlobalChansToTaskRequest) returns (AddGlobalChansToTaskResponse);
+  rpc CfgBurstHandshakingTimingExportClock(CfgBurstHandshakingTimingExportClockRequest) returns (CfgBurstHandshakingTimingExportClockResponse);
+  rpc CfgBurstHandshakingTimingImportClock(CfgBurstHandshakingTimingImportClockRequest) returns (CfgBurstHandshakingTimingImportClockResponse);
+  rpc CfgChangeDetectionTiming(CfgChangeDetectionTimingRequest) returns (CfgChangeDetectionTimingResponse);
+  rpc CfgHandshakingTiming(CfgHandshakingTimingRequest) returns (CfgHandshakingTimingResponse);
+  rpc CfgImplicitTiming(CfgImplicitTimingRequest) returns (CfgImplicitTimingResponse);
+  rpc CfgPipelinedSampClkTiming(CfgPipelinedSampClkTimingRequest) returns (CfgPipelinedSampClkTimingResponse);
+  rpc CfgSampClkTiming(CfgSampClkTimingRequest) returns (CfgSampClkTimingResponse);
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
+  rpc ConfigureLogging(ConfigureLoggingRequest) returns (ConfigureLoggingResponse);
   rpc CreateAIAccel4WireDCVoltageChan(CreateAIAccel4WireDCVoltageChanRequest) returns (CreateAIAccel4WireDCVoltageChanResponse);
   rpc CreateAIAccelChan(CreateAIAccelChanRequest) returns (CreateAIAccelChanResponse);
   rpc CreateAIAccelChargeChan(CreateAIAccelChargeChanRequest) returns (CreateAIAccelChargeChanResponse);
@@ -37,6 +45,7 @@ service NiDAQmx {
   rpc CreateAIPressureBridgeTableChan(CreateAIPressureBridgeTableChanRequest) returns (CreateAIPressureBridgeTableChanResponse);
   rpc CreateAIPressureBridgeTwoPointLinChan(CreateAIPressureBridgeTwoPointLinChanRequest) returns (CreateAIPressureBridgeTwoPointLinChanResponse);
   rpc CreateAIResistanceChan(CreateAIResistanceChanRequest) returns (CreateAIResistanceChanResponse);
+  rpc CreateAIRosetteStrainGageChan(CreateAIRosetteStrainGageChanRequest) returns (CreateAIRosetteStrainGageChanResponse);
   rpc CreateAIStrainGageChan(CreateAIStrainGageChanRequest) returns (CreateAIStrainGageChanResponse);
   rpc CreateAITorqueBridgePolynomialChan(CreateAITorqueBridgePolynomialChanRequest) returns (CreateAITorqueBridgePolynomialChanResponse);
   rpc CreateAITorqueBridgeTableChan(CreateAITorqueBridgeTableChanRequest) returns (CreateAITorqueBridgeTableChanResponse);
@@ -87,18 +96,52 @@ service NiDAQmx {
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
   rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
+  rpc GetNthTaskReadChannel(GetNthTaskReadChannelRequest) returns (GetNthTaskReadChannelResponse);
   rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
+  rpc ReadAnalogScalarF64(ReadAnalogScalarF64Request) returns (ReadAnalogScalarF64Response);
+  rpc ReadBinaryI32(ReadBinaryI32Request) returns (ReadBinaryI32Response);
+  rpc ReadBinaryU16(ReadBinaryU16Request) returns (ReadBinaryU16Response);
+  rpc ReadBinaryU32(ReadBinaryU32Request) returns (ReadBinaryU32Response);
+  rpc ReadCounterF64(ReadCounterF64Request) returns (ReadCounterF64Response);
+  rpc ReadCounterF64Ex(ReadCounterF64ExRequest) returns (ReadCounterF64ExResponse);
+  rpc ReadCounterScalarF64(ReadCounterScalarF64Request) returns (ReadCounterScalarF64Response);
+  rpc ReadCounterScalarU32(ReadCounterScalarU32Request) returns (ReadCounterScalarU32Response);
+  rpc ReadCounterU32(ReadCounterU32Request) returns (ReadCounterU32Response);
+  rpc ReadCounterU32Ex(ReadCounterU32ExRequest) returns (ReadCounterU32ExResponse);
+  rpc ReadCtrFreq(ReadCtrFreqRequest) returns (ReadCtrFreqResponse);
+  rpc ReadCtrFreqScalar(ReadCtrFreqScalarRequest) returns (ReadCtrFreqScalarResponse);
+  rpc ReadCtrTicks(ReadCtrTicksRequest) returns (ReadCtrTicksResponse);
+  rpc ReadCtrTicksScalar(ReadCtrTicksScalarRequest) returns (ReadCtrTicksScalarResponse);
+  rpc ReadCtrTime(ReadCtrTimeRequest) returns (ReadCtrTimeResponse);
+  rpc ReadCtrTimeScalar(ReadCtrTimeScalarRequest) returns (ReadCtrTimeScalarResponse);
+  rpc ReadDigitalLines(ReadDigitalLinesRequest) returns (ReadDigitalLinesResponse);
+  rpc ReadDigitalScalarU32(ReadDigitalScalarU32Request) returns (ReadDigitalScalarU32Response);
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
+  rpc ReadDigitalU32(ReadDigitalU32Request) returns (ReadDigitalU32Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
   rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
+  rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
   rpc TaskControl(TaskControlRequest) returns (TaskControlResponse);
   rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
+  rpc WriteAnalogScalarF64(WriteAnalogScalarF64Request) returns (WriteAnalogScalarF64Response);
+  rpc WriteBinaryI32(WriteBinaryI32Request) returns (WriteBinaryI32Response);
+  rpc WriteBinaryU16(WriteBinaryU16Request) returns (WriteBinaryU16Response);
+  rpc WriteBinaryU32(WriteBinaryU32Request) returns (WriteBinaryU32Response);
+  rpc WriteCtrFreq(WriteCtrFreqRequest) returns (WriteCtrFreqResponse);
+  rpc WriteCtrFreqScalar(WriteCtrFreqScalarRequest) returns (WriteCtrFreqScalarResponse);
+  rpc WriteCtrTicks(WriteCtrTicksRequest) returns (WriteCtrTicksResponse);
+  rpc WriteCtrTicksScalar(WriteCtrTicksScalarRequest) returns (WriteCtrTicksScalarResponse);
+  rpc WriteCtrTime(WriteCtrTimeRequest) returns (WriteCtrTimeResponse);
+  rpc WriteCtrTimeScalar(WriteCtrTimeScalarRequest) returns (WriteCtrTimeScalarResponse);
+  rpc WriteDigitalLines(WriteDigitalLinesRequest) returns (WriteDigitalLinesResponse);
+  rpc WriteDigitalScalarU32(WriteDigitalScalarU32Request) returns (WriteDigitalScalarU32Response);
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
+  rpc WriteDigitalU32(WriteDigitalU32Request) returns (WriteDigitalU32Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
 }
 
@@ -132,6 +175,13 @@ enum AccelUnits2 {
   ACCEL_UNITS2_METERS_PER_SECOND_SQUARED = 12470;
   ACCEL_UNITS2_INCHES_PER_SECOND_SQUARED = 12471;
   ACCEL_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum AcquisitionType {
+  ACQUISITION_TYPE_UNSPECIFIED = 0;
+  ACQUISITION_TYPE_FINITE_SAMPS = 10178;
+  ACQUISITION_TYPE_CONT_SAMPS = 10123;
+  ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT = 12522;
 }
 
 enum AngleUnits1 {
@@ -362,6 +412,27 @@ enum LineGrouping {
   LINE_GROUPING_CHAN_PER_LINE = 0;
 }
 
+enum LoggingMode {
+  LOGGING_MODE_UNSPECIFIED = 0;
+  LOGGING_MODE_OFF = 10231;
+  LOGGING_MODE_LOG = 15844;
+  LOGGING_MODE_LOG_AND_READ = 15842;
+}
+
+enum LoggingOperation {
+  LOGGING_OPERATION_UNSPECIFIED = 0;
+  LOGGING_OPERATION_OPEN = 10437;
+  LOGGING_OPERATION_OPEN_OR_CREATE = 15846;
+  LOGGING_OPERATION_CREATE_OR_REPLACE = 15847;
+  LOGGING_OPERATION_CREATE = 15848;
+}
+
+enum Polarity2 {
+  POLARITY2_UNSPECIFIED = 0;
+  POLARITY2_ACTIVE_HIGH = 10095;
+  POLARITY2_ACTIVE_LOW = 10096;
+}
+
 enum PressureUnits {
   PRESSURE_UNITS_UNSPECIFIED = 0;
   PRESSURE_UNITS_PASCALS = 10081;
@@ -404,6 +475,13 @@ enum StrainGageBridgeType1 {
   STRAIN_GAGE_BRIDGE_TYPE1_HALF_BRIDGE_II = 10189;
   STRAIN_GAGE_BRIDGE_TYPE1_QUARTER_BRIDGE_I = 10271;
   STRAIN_GAGE_BRIDGE_TYPE1_QUARTER_BRIDGE_II = 10272;
+}
+
+enum StrainGageRosetteType {
+  STRAIN_GAGE_ROSETTE_TYPE_UNSPECIFIED = 0;
+  STRAIN_GAGE_ROSETTE_TYPE_RECTANGULAR_ROSETTE = 15968;
+  STRAIN_GAGE_ROSETTE_TYPE_DELTA_ROSETTE = 15969;
+  STRAIN_GAGE_ROSETTE_TYPE_TEE_ROSETTE = 15970;
 }
 
 enum StrainUnits1 {
@@ -480,11 +558,162 @@ message AddGlobalChansToTaskResponse {
   int32 status = 1;
 }
 
+message CfgBurstHandshakingTimingExportClockRequest {
+  nidevice_grpc.Session task = 1;
+  oneof sample_mode_enum {
+    AcquisitionType sample_mode = 2;
+    int32 sample_mode_raw = 3;
+  }
+  uint64 samps_per_chan = 4;
+  double sample_clk_rate = 5;
+  string sample_clk_outp_term = 6;
+  oneof sample_clk_pulse_polarity_enum {
+    Polarity2 sample_clk_pulse_polarity = 7;
+    int32 sample_clk_pulse_polarity_raw = 8;
+  }
+  oneof pause_when_enum {
+    Level1 pause_when = 9;
+    int32 pause_when_raw = 10;
+  }
+  oneof ready_event_active_level_enum {
+    Polarity2 ready_event_active_level = 11;
+    int32 ready_event_active_level_raw = 12;
+  }
+}
+
+message CfgBurstHandshakingTimingExportClockResponse {
+  int32 status = 1;
+}
+
+message CfgBurstHandshakingTimingImportClockRequest {
+  nidevice_grpc.Session task = 1;
+  oneof sample_mode_enum {
+    AcquisitionType sample_mode = 2;
+    int32 sample_mode_raw = 3;
+  }
+  uint64 samps_per_chan = 4;
+  double sample_clk_rate = 5;
+  string sample_clk_src = 6;
+  oneof sample_clk_active_edge_enum {
+    Edge1 sample_clk_active_edge = 7;
+    int32 sample_clk_active_edge_raw = 8;
+  }
+  oneof pause_when_enum {
+    Level1 pause_when = 9;
+    int32 pause_when_raw = 10;
+  }
+  oneof ready_event_active_level_enum {
+    Polarity2 ready_event_active_level = 11;
+    int32 ready_event_active_level_raw = 12;
+  }
+}
+
+message CfgBurstHandshakingTimingImportClockResponse {
+  int32 status = 1;
+}
+
+message CfgChangeDetectionTimingRequest {
+  nidevice_grpc.Session task = 1;
+  string rising_edge_chan = 2;
+  string falling_edge_chan = 3;
+  oneof sample_mode_enum {
+    AcquisitionType sample_mode = 4;
+    int32 sample_mode_raw = 5;
+  }
+  uint64 samps_per_chan = 6;
+}
+
+message CfgChangeDetectionTimingResponse {
+  int32 status = 1;
+}
+
+message CfgHandshakingTimingRequest {
+  nidevice_grpc.Session task = 1;
+  oneof sample_mode_enum {
+    AcquisitionType sample_mode = 2;
+    int32 sample_mode_raw = 3;
+  }
+  uint64 samps_per_chan = 4;
+}
+
+message CfgHandshakingTimingResponse {
+  int32 status = 1;
+}
+
+message CfgImplicitTimingRequest {
+  nidevice_grpc.Session task = 1;
+  oneof sample_mode_enum {
+    AcquisitionType sample_mode = 2;
+    int32 sample_mode_raw = 3;
+  }
+  uint64 samps_per_chan = 4;
+}
+
+message CfgImplicitTimingResponse {
+  int32 status = 1;
+}
+
+message CfgPipelinedSampClkTimingRequest {
+  nidevice_grpc.Session task = 1;
+  string source = 2;
+  double rate = 3;
+  oneof active_edge_enum {
+    Edge1 active_edge = 4;
+    int32 active_edge_raw = 5;
+  }
+  oneof sample_mode_enum {
+    AcquisitionType sample_mode = 6;
+    int32 sample_mode_raw = 7;
+  }
+  uint64 samps_per_chan = 8;
+}
+
+message CfgPipelinedSampClkTimingResponse {
+  int32 status = 1;
+}
+
+message CfgSampClkTimingRequest {
+  nidevice_grpc.Session task = 1;
+  string source = 2;
+  double rate = 3;
+  oneof active_edge_enum {
+    Edge1 active_edge = 4;
+    int32 active_edge_raw = 5;
+  }
+  oneof sample_mode_enum {
+    AcquisitionType sample_mode = 6;
+    int32 sample_mode_raw = 7;
+  }
+  uint64 samps_per_chan = 8;
+}
+
+message CfgSampClkTimingResponse {
+  int32 status = 1;
+}
+
 message ClearTaskRequest {
   nidevice_grpc.Session task = 1;
 }
 
 message ClearTaskResponse {
+  int32 status = 1;
+}
+
+message ConfigureLoggingRequest {
+  nidevice_grpc.Session task = 1;
+  string file_path = 2;
+  oneof logging_mode_enum {
+    LoggingMode logging_mode = 3;
+    int32 logging_mode_raw = 4;
+  }
+  string group_name = 5;
+  oneof operation_enum {
+    LoggingOperation operation = 6;
+    int32 operation_raw = 7;
+  }
+}
+
+message ConfigureLoggingResponse {
   int32 status = 1;
 }
 
@@ -1065,6 +1294,38 @@ message CreateAIResistanceChanRequest {
 }
 
 message CreateAIResistanceChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIRosetteStrainGageChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof rosette_type_enum {
+    StrainGageRosetteType rosette_type = 6;
+    int32 rosette_type_raw = 7;
+  }
+  double gage_orientation = 8;
+  repeated int32 rosette_meas_types = 9;
+  uint32 num_rosette_meas_types = 10;
+  oneof strain_config_enum {
+    StrainGageBridgeType1 strain_config = 11;
+    int32 strain_config_raw = 12;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 13;
+    int32 voltage_excit_source_raw = 14;
+  }
+  double voltage_excit_val = 15;
+  double gage_factor = 16;
+  double nominal_gage_resistance = 17;
+  double poisson_ratio = 18;
+  double lead_wire_resistance = 19;
+}
+
+message CreateAIRosetteStrainGageChanResponse {
   int32 status = 1;
 }
 
@@ -2159,6 +2420,17 @@ message GetNthTaskDeviceResponse {
   string buffer = 2;
 }
 
+message GetNthTaskReadChannelRequest {
+  nidevice_grpc.Session task = 1;
+  uint32 index = 2;
+  int32 buffer_size = 3;
+}
+
+message GetNthTaskReadChannelResponse {
+  int32 status = 1;
+  string buffer = 2;
+}
+
 message IsTaskDoneRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -2185,6 +2457,262 @@ message ReadAnalogF64Response {
   int32 samps_per_chan_read = 3;
 }
 
+message ReadAnalogScalarF64Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadAnalogScalarF64Response {
+  int32 status = 1;
+  double value = 2;
+}
+
+message ReadBinaryI32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadBinaryI32Response {
+  int32 status = 1;
+  repeated int32 read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadBinaryU16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadBinaryU16Response {
+  int32 status = 1;
+  repeated uint32 read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadBinaryU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadBinaryU32Response {
+  int32 status = 1;
+  repeated uint32 read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadCounterF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  uint32 array_size_in_samps = 4;
+}
+
+message ReadCounterF64Response {
+  int32 status = 1;
+  repeated double read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadCounterF64ExRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadCounterF64ExResponse {
+  int32 status = 1;
+  repeated double read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadCounterScalarF64Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadCounterScalarF64Response {
+  int32 status = 1;
+  double value = 2;
+}
+
+message ReadCounterScalarU32Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadCounterScalarU32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message ReadCounterU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  uint32 array_size_in_samps = 4;
+}
+
+message ReadCounterU32Response {
+  int32 status = 1;
+  repeated uint32 read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadCounterU32ExRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadCounterU32ExResponse {
+  int32 status = 1;
+  repeated uint32 read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadCtrFreqRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof interleaved_enum {
+    GroupBy interleaved = 4;
+    int32 interleaved_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadCtrFreqResponse {
+  int32 status = 1;
+  repeated double read_array_frequency = 2;
+  repeated double read_array_duty_cycle = 3;
+  int32 samps_per_chan_read = 4;
+}
+
+message ReadCtrFreqScalarRequest {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadCtrFreqScalarResponse {
+  int32 status = 1;
+  double frequency = 2;
+  double duty_cycle = 3;
+}
+
+message ReadCtrTicksRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof interleaved_enum {
+    GroupBy interleaved = 4;
+    int32 interleaved_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadCtrTicksResponse {
+  int32 status = 1;
+  repeated uint32 read_array_high_ticks = 2;
+  repeated uint32 read_array_low_ticks = 3;
+  int32 samps_per_chan_read = 4;
+}
+
+message ReadCtrTicksScalarRequest {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadCtrTicksScalarResponse {
+  int32 status = 1;
+  uint32 high_ticks = 2;
+  uint32 low_ticks = 3;
+}
+
+message ReadCtrTimeRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof interleaved_enum {
+    GroupBy interleaved = 4;
+    int32 interleaved_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadCtrTimeResponse {
+  int32 status = 1;
+  repeated double read_array_high_time = 2;
+  repeated double read_array_low_time = 3;
+  int32 samps_per_chan_read = 4;
+}
+
+message ReadCtrTimeScalarRequest {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadCtrTimeScalarResponse {
+  int32 status = 1;
+  double high_time = 2;
+  double low_time = 3;
+}
+
+message ReadDigitalLinesRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_bytes = 6;
+}
+
+message ReadDigitalLinesResponse {
+  int32 status = 1;
+  bytes read_array = 2;
+  int32 samps_per_chan_read = 3;
+  int32 num_bytes_per_samp = 4;
+}
+
+message ReadDigitalScalarU32Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadDigitalScalarU32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
 message ReadDigitalU16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -2197,6 +2725,23 @@ message ReadDigitalU16Request {
 }
 
 message ReadDigitalU16Response {
+  int32 status = 1;
+  repeated uint32 read_array = 2;
+  int32 samps_per_chan_read = 3;
+}
+
+message ReadDigitalU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadDigitalU32Response {
   int32 status = 1;
   repeated uint32 read_array = 2;
   int32 samps_per_chan_read = 3;
@@ -2244,6 +2789,15 @@ message SetAIChanCalExpDateRequest {
 }
 
 message SetAIChanCalExpDateResponse {
+  int32 status = 1;
+}
+
+message StartNewFileRequest {
+  nidevice_grpc.Session task = 1;
+  string file_path = 2;
+}
+
+message StartNewFileResponse {
   int32 status = 1;
 }
 
@@ -2301,6 +2855,186 @@ message WriteAnalogF64Response {
   int32 samps_per_chan_written = 2;
 }
 
+message WriteAnalogScalarF64Request {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+  double value = 4;
+}
+
+message WriteAnalogScalarF64Response {
+  int32 status = 1;
+}
+
+message WriteBinaryI32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated int32 write_array = 7;
+}
+
+message WriteBinaryI32Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteBinaryU16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated uint32 write_array = 7;
+}
+
+message WriteBinaryU16Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteBinaryU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated uint32 write_array = 7;
+}
+
+message WriteBinaryU32Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteCtrFreqRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated double frequency = 7;
+  repeated double duty_cycle = 8;
+}
+
+message WriteCtrFreqResponse {
+  int32 status = 1;
+  int32 num_samps_per_chan_written = 2;
+}
+
+message WriteCtrFreqScalarRequest {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+  double frequency = 4;
+  double duty_cycle = 5;
+}
+
+message WriteCtrFreqScalarResponse {
+  int32 status = 1;
+}
+
+message WriteCtrTicksRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated uint32 high_ticks = 7;
+  repeated uint32 low_ticks = 8;
+}
+
+message WriteCtrTicksResponse {
+  int32 status = 1;
+  int32 num_samps_per_chan_written = 2;
+}
+
+message WriteCtrTicksScalarRequest {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+  uint32 high_ticks = 4;
+  uint32 low_ticks = 5;
+}
+
+message WriteCtrTicksScalarResponse {
+  int32 status = 1;
+}
+
+message WriteCtrTimeRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated double high_time = 7;
+  repeated double low_time = 8;
+}
+
+message WriteCtrTimeResponse {
+  int32 status = 1;
+  int32 num_samps_per_chan_written = 2;
+}
+
+message WriteCtrTimeScalarRequest {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+  double high_time = 4;
+  double low_time = 5;
+}
+
+message WriteCtrTimeScalarResponse {
+  int32 status = 1;
+}
+
+message WriteDigitalLinesRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  bytes write_array = 7;
+}
+
+message WriteDigitalLinesResponse {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteDigitalScalarU32Request {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+  uint32 value = 4;
+}
+
+message WriteDigitalScalarU32Response {
+  int32 status = 1;
+}
+
 message WriteDigitalU16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -2314,6 +3048,23 @@ message WriteDigitalU16Request {
 }
 
 message WriteDigitalU16Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteDigitalU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated uint32 write_array = 7;
+}
+
+message WriteDigitalU32Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }

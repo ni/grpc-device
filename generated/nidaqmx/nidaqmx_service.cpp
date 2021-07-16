@@ -45,6 +45,396 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgBurstHandshakingTimingExportClock(::grpc::ServerContext* context, const CfgBurstHandshakingTimingExportClockRequest* request, CfgBurstHandshakingTimingExportClockResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 sample_mode;
+      switch (request->sample_mode_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::SampleModeEnumCase::kSampleMode: {
+          sample_mode = static_cast<int32>(request->sample_mode());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::SampleModeEnumCase::kSampleModeRaw: {
+          sample_mode = static_cast<int32>(request->sample_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::SampleModeEnumCase::SAMPLE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt64 samps_per_chan = request->samps_per_chan();
+      float64 sample_clk_rate = request->sample_clk_rate();
+      auto sample_clk_outp_term = request->sample_clk_outp_term().c_str();
+      int32 sample_clk_pulse_polarity;
+      switch (request->sample_clk_pulse_polarity_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::SampleClkPulsePolarityEnumCase::kSampleClkPulsePolarity: {
+          sample_clk_pulse_polarity = static_cast<int32>(request->sample_clk_pulse_polarity());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::SampleClkPulsePolarityEnumCase::kSampleClkPulsePolarityRaw: {
+          sample_clk_pulse_polarity = static_cast<int32>(request->sample_clk_pulse_polarity_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::SampleClkPulsePolarityEnumCase::SAMPLE_CLK_PULSE_POLARITY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_clk_pulse_polarity was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 pause_when;
+      switch (request->pause_when_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::PauseWhenEnumCase::kPauseWhen: {
+          pause_when = static_cast<int32>(request->pause_when());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::PauseWhenEnumCase::kPauseWhenRaw: {
+          pause_when = static_cast<int32>(request->pause_when_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::PauseWhenEnumCase::PAUSE_WHEN_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for pause_when was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 ready_event_active_level;
+      switch (request->ready_event_active_level_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::ReadyEventActiveLevelEnumCase::kReadyEventActiveLevel: {
+          ready_event_active_level = static_cast<int32>(request->ready_event_active_level());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::ReadyEventActiveLevelEnumCase::kReadyEventActiveLevelRaw: {
+          ready_event_active_level = static_cast<int32>(request->ready_event_active_level_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::ReadyEventActiveLevelEnumCase::READY_EVENT_ACTIVE_LEVEL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ready_event_active_level was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgBurstHandshakingTimingExportClock(task, sample_mode, samps_per_chan, sample_clk_rate, sample_clk_outp_term, sample_clk_pulse_polarity, pause_when, ready_event_active_level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgBurstHandshakingTimingImportClock(::grpc::ServerContext* context, const CfgBurstHandshakingTimingImportClockRequest* request, CfgBurstHandshakingTimingImportClockResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 sample_mode;
+      switch (request->sample_mode_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::SampleModeEnumCase::kSampleMode: {
+          sample_mode = static_cast<int32>(request->sample_mode());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::SampleModeEnumCase::kSampleModeRaw: {
+          sample_mode = static_cast<int32>(request->sample_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::SampleModeEnumCase::SAMPLE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt64 samps_per_chan = request->samps_per_chan();
+      float64 sample_clk_rate = request->sample_clk_rate();
+      auto sample_clk_src = request->sample_clk_src().c_str();
+      int32 sample_clk_active_edge;
+      switch (request->sample_clk_active_edge_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::SampleClkActiveEdgeEnumCase::kSampleClkActiveEdge: {
+          sample_clk_active_edge = static_cast<int32>(request->sample_clk_active_edge());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::SampleClkActiveEdgeEnumCase::kSampleClkActiveEdgeRaw: {
+          sample_clk_active_edge = static_cast<int32>(request->sample_clk_active_edge_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::SampleClkActiveEdgeEnumCase::SAMPLE_CLK_ACTIVE_EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_clk_active_edge was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 pause_when;
+      switch (request->pause_when_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::PauseWhenEnumCase::kPauseWhen: {
+          pause_when = static_cast<int32>(request->pause_when());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::PauseWhenEnumCase::kPauseWhenRaw: {
+          pause_when = static_cast<int32>(request->pause_when_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::PauseWhenEnumCase::PAUSE_WHEN_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for pause_when was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 ready_event_active_level;
+      switch (request->ready_event_active_level_enum_case()) {
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::ReadyEventActiveLevelEnumCase::kReadyEventActiveLevel: {
+          ready_event_active_level = static_cast<int32>(request->ready_event_active_level());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::ReadyEventActiveLevelEnumCase::kReadyEventActiveLevelRaw: {
+          ready_event_active_level = static_cast<int32>(request->ready_event_active_level_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::ReadyEventActiveLevelEnumCase::READY_EVENT_ACTIVE_LEVEL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ready_event_active_level was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgBurstHandshakingTimingImportClock(task, sample_mode, samps_per_chan, sample_clk_rate, sample_clk_src, sample_clk_active_edge, pause_when, ready_event_active_level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgChangeDetectionTiming(::grpc::ServerContext* context, const CfgChangeDetectionTimingRequest* request, CfgChangeDetectionTimingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto rising_edge_chan = request->rising_edge_chan().c_str();
+      auto falling_edge_chan = request->falling_edge_chan().c_str();
+      int32 sample_mode;
+      switch (request->sample_mode_enum_case()) {
+        case nidaqmx_grpc::CfgChangeDetectionTimingRequest::SampleModeEnumCase::kSampleMode: {
+          sample_mode = static_cast<int32>(request->sample_mode());
+          break;
+        }
+        case nidaqmx_grpc::CfgChangeDetectionTimingRequest::SampleModeEnumCase::kSampleModeRaw: {
+          sample_mode = static_cast<int32>(request->sample_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgChangeDetectionTimingRequest::SampleModeEnumCase::SAMPLE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt64 samps_per_chan = request->samps_per_chan();
+      auto status = library_->CfgChangeDetectionTiming(task, rising_edge_chan, falling_edge_chan, sample_mode, samps_per_chan);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgHandshakingTiming(::grpc::ServerContext* context, const CfgHandshakingTimingRequest* request, CfgHandshakingTimingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 sample_mode;
+      switch (request->sample_mode_enum_case()) {
+        case nidaqmx_grpc::CfgHandshakingTimingRequest::SampleModeEnumCase::kSampleMode: {
+          sample_mode = static_cast<int32>(request->sample_mode());
+          break;
+        }
+        case nidaqmx_grpc::CfgHandshakingTimingRequest::SampleModeEnumCase::kSampleModeRaw: {
+          sample_mode = static_cast<int32>(request->sample_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgHandshakingTimingRequest::SampleModeEnumCase::SAMPLE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt64 samps_per_chan = request->samps_per_chan();
+      auto status = library_->CfgHandshakingTiming(task, sample_mode, samps_per_chan);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgImplicitTiming(::grpc::ServerContext* context, const CfgImplicitTimingRequest* request, CfgImplicitTimingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 sample_mode;
+      switch (request->sample_mode_enum_case()) {
+        case nidaqmx_grpc::CfgImplicitTimingRequest::SampleModeEnumCase::kSampleMode: {
+          sample_mode = static_cast<int32>(request->sample_mode());
+          break;
+        }
+        case nidaqmx_grpc::CfgImplicitTimingRequest::SampleModeEnumCase::kSampleModeRaw: {
+          sample_mode = static_cast<int32>(request->sample_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgImplicitTimingRequest::SampleModeEnumCase::SAMPLE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt64 samps_per_chan = request->samps_per_chan();
+      auto status = library_->CfgImplicitTiming(task, sample_mode, samps_per_chan);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgPipelinedSampClkTiming(::grpc::ServerContext* context, const CfgPipelinedSampClkTimingRequest* request, CfgPipelinedSampClkTimingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto source = request->source().c_str();
+      float64 rate = request->rate();
+      int32 active_edge;
+      switch (request->active_edge_enum_case()) {
+        case nidaqmx_grpc::CfgPipelinedSampClkTimingRequest::ActiveEdgeEnumCase::kActiveEdge: {
+          active_edge = static_cast<int32>(request->active_edge());
+          break;
+        }
+        case nidaqmx_grpc::CfgPipelinedSampClkTimingRequest::ActiveEdgeEnumCase::kActiveEdgeRaw: {
+          active_edge = static_cast<int32>(request->active_edge_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgPipelinedSampClkTimingRequest::ActiveEdgeEnumCase::ACTIVE_EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for active_edge was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 sample_mode;
+      switch (request->sample_mode_enum_case()) {
+        case nidaqmx_grpc::CfgPipelinedSampClkTimingRequest::SampleModeEnumCase::kSampleMode: {
+          sample_mode = static_cast<int32>(request->sample_mode());
+          break;
+        }
+        case nidaqmx_grpc::CfgPipelinedSampClkTimingRequest::SampleModeEnumCase::kSampleModeRaw: {
+          sample_mode = static_cast<int32>(request->sample_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgPipelinedSampClkTimingRequest::SampleModeEnumCase::SAMPLE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt64 samps_per_chan = request->samps_per_chan();
+      auto status = library_->CfgPipelinedSampClkTiming(task, source, rate, active_edge, sample_mode, samps_per_chan);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgSampClkTiming(::grpc::ServerContext* context, const CfgSampClkTimingRequest* request, CfgSampClkTimingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto source = request->source().c_str();
+      float64 rate = request->rate();
+      int32 active_edge;
+      switch (request->active_edge_enum_case()) {
+        case nidaqmx_grpc::CfgSampClkTimingRequest::ActiveEdgeEnumCase::kActiveEdge: {
+          active_edge = static_cast<int32>(request->active_edge());
+          break;
+        }
+        case nidaqmx_grpc::CfgSampClkTimingRequest::ActiveEdgeEnumCase::kActiveEdgeRaw: {
+          active_edge = static_cast<int32>(request->active_edge_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgSampClkTimingRequest::ActiveEdgeEnumCase::ACTIVE_EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for active_edge was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 sample_mode;
+      switch (request->sample_mode_enum_case()) {
+        case nidaqmx_grpc::CfgSampClkTimingRequest::SampleModeEnumCase::kSampleMode: {
+          sample_mode = static_cast<int32>(request->sample_mode());
+          break;
+        }
+        case nidaqmx_grpc::CfgSampClkTimingRequest::SampleModeEnumCase::kSampleModeRaw: {
+          sample_mode = static_cast<int32>(request->sample_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgSampClkTimingRequest::SampleModeEnumCase::SAMPLE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt64 samps_per_chan = request->samps_per_chan();
+      auto status = library_->CfgSampClkTiming(task, source, rate, active_edge, sample_mode, samps_per_chan);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ClearTask(::grpc::ServerContext* context, const ClearTaskRequest* request, ClearTaskResponse* response)
   {
     if (context->IsCancelled()) {
@@ -55,6 +445,59 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       session_repository_->remove_session(task);
       auto status = library_->ClearTask(task);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ConfigureLogging(::grpc::ServerContext* context, const ConfigureLoggingRequest* request, ConfigureLoggingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto file_path = request->file_path().c_str();
+      int32 logging_mode;
+      switch (request->logging_mode_enum_case()) {
+        case nidaqmx_grpc::ConfigureLoggingRequest::LoggingModeEnumCase::kLoggingMode: {
+          logging_mode = static_cast<int32>(request->logging_mode());
+          break;
+        }
+        case nidaqmx_grpc::ConfigureLoggingRequest::LoggingModeEnumCase::kLoggingModeRaw: {
+          logging_mode = static_cast<int32>(request->logging_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ConfigureLoggingRequest::LoggingModeEnumCase::LOGGING_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for logging_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto group_name = request->group_name().c_str();
+      int32 operation;
+      switch (request->operation_enum_case()) {
+        case nidaqmx_grpc::ConfigureLoggingRequest::OperationEnumCase::kOperation: {
+          operation = static_cast<int32>(request->operation());
+          break;
+        }
+        case nidaqmx_grpc::ConfigureLoggingRequest::OperationEnumCase::kOperationRaw: {
+          operation = static_cast<int32>(request->operation_raw());
+          break;
+        }
+        case nidaqmx_grpc::ConfigureLoggingRequest::OperationEnumCase::OPERATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for operation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureLogging(task, file_path, logging_mode, group_name, operation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1672,6 +2115,85 @@ namespace nidaqmx_grpc {
       float64 current_excit_val = request->current_excit_val();
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIResistanceChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val, custom_scale_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAIRosetteStrainGageChan(::grpc::ServerContext* context, const CreateAIRosetteStrainGageChanRequest* request, CreateAIRosetteStrainGageChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 rosette_type;
+      switch (request->rosette_type_enum_case()) {
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::RosetteTypeEnumCase::kRosetteType: {
+          rosette_type = static_cast<int32>(request->rosette_type());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::RosetteTypeEnumCase::kRosetteTypeRaw: {
+          rosette_type = static_cast<int32>(request->rosette_type_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::RosetteTypeEnumCase::ROSETTE_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rosette_type was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 gage_orientation = request->gage_orientation();
+      auto rosette_meas_types = const_cast<int32*>(reinterpret_cast<const int32*>(request->rosette_meas_types().data()));
+      uInt32 num_rosette_meas_types = request->num_rosette_meas_types();
+      int32 strain_config;
+      switch (request->strain_config_enum_case()) {
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::StrainConfigEnumCase::kStrainConfig: {
+          strain_config = static_cast<int32>(request->strain_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::StrainConfigEnumCase::kStrainConfigRaw: {
+          strain_config = static_cast<int32>(request->strain_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::StrainConfigEnumCase::STRAIN_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for strain_config was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 voltage_excit_source;
+      switch (request->voltage_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::VoltageExcitSourceEnumCase::kVoltageExcitSource: {
+          voltage_excit_source = static_cast<int32>(request->voltage_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::VoltageExcitSourceEnumCase::kVoltageExcitSourceRaw: {
+          voltage_excit_source = static_cast<int32>(request->voltage_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::VoltageExcitSourceEnumCase::VOLTAGE_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for voltage_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 voltage_excit_val = request->voltage_excit_val();
+      float64 gage_factor = request->gage_factor();
+      float64 nominal_gage_resistance = request->nominal_gage_resistance();
+      float64 poisson_ratio = request->poisson_ratio();
+      float64 lead_wire_resistance = request->lead_wire_resistance();
+      auto status = library_->CreateAIRosetteStrainGageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, rosette_type, gage_orientation, rosette_meas_types, num_rosette_meas_types, strain_config, voltage_excit_source, voltage_excit_val, gage_factor, nominal_gage_resistance, poisson_ratio, lead_wire_resistance);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4588,6 +5110,34 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetNthTaskReadChannel(::grpc::ServerContext* context, const GetNthTaskReadChannelRequest* request, GetNthTaskReadChannelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      uInt32 index = request->index();
+      int32 buffer_size = request->buffer_size();
+      std::string buffer;
+      if (buffer_size > 0) {
+          buffer.resize(buffer_size-1);
+      }
+      auto status = library_->GetNthTaskReadChannel(task, index, (char*)buffer.data(), buffer_size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_buffer(buffer);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::IsTaskDone(::grpc::ServerContext* context, const IsTaskDoneRequest* request, IsTaskDoneResponse* response)
   {
     if (context->IsCancelled()) {
@@ -4656,6 +5206,666 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadAnalogScalarF64(::grpc::ServerContext* context, const ReadAnalogScalarF64Request* request, ReadAnalogScalarF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+      float64 value {};
+      auto status = library_->ReadAnalogScalarF64(task, timeout, &value, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadBinaryI32(::grpc::ServerContext* context, const ReadBinaryI32Request* request, ReadBinaryI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadBinaryI32Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryI32Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryI32Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      int32* read_array = reinterpret_cast<int32*>(response->mutable_read_array()->mutable_data());
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadBinaryU16(::grpc::ServerContext* context, const ReadBinaryU16Request* request, ReadBinaryU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadBinaryU16Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryU16Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryU16Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      std::vector<uInt16> read_array(array_size_in_samps);
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_read_array()->Clear();
+        response->mutable_read_array()->Reserve(array_size_in_samps);
+        std::transform(
+          read_array.begin(),
+          read_array.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+          [](auto x) { 
+              return x;
+          });
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadBinaryU32(::grpc::ServerContext* context, const ReadBinaryU32Request* request, ReadBinaryU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadBinaryU32Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryU32Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryU32Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCounterF64(::grpc::ServerContext* context, const ReadCounterF64Request* request, ReadCounterF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      float64* read_array = response->mutable_read_array()->mutable_data();
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCounterF64Ex(::grpc::ServerContext* context, const ReadCounterF64ExRequest* request, ReadCounterF64ExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadCounterF64ExRequest::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadCounterF64ExRequest::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadCounterF64ExRequest::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      float64* read_array = response->mutable_read_array()->mutable_data();
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCounterScalarF64(::grpc::ServerContext* context, const ReadCounterScalarF64Request* request, ReadCounterScalarF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+      float64 value {};
+      auto status = library_->ReadCounterScalarF64(task, timeout, &value, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCounterScalarU32(::grpc::ServerContext* context, const ReadCounterScalarU32Request* request, ReadCounterScalarU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+      uInt32 value {};
+      auto status = library_->ReadCounterScalarU32(task, timeout, &value, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCounterU32(::grpc::ServerContext* context, const ReadCounterU32Request* request, ReadCounterU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCounterU32Ex(::grpc::ServerContext* context, const ReadCounterU32ExRequest* request, ReadCounterU32ExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadCounterU32ExRequest::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadCounterU32ExRequest::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadCounterU32ExRequest::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCtrFreq(::grpc::ServerContext* context, const ReadCtrFreqRequest* request, ReadCtrFreqResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 interleaved;
+      switch (request->interleaved_enum_case()) {
+        case nidaqmx_grpc::ReadCtrFreqRequest::InterleavedEnumCase::kInterleaved: {
+          interleaved = static_cast<int32>(request->interleaved());
+          break;
+        }
+        case nidaqmx_grpc::ReadCtrFreqRequest::InterleavedEnumCase::kInterleavedRaw: {
+          interleaved = static_cast<int32>(request->interleaved_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadCtrFreqRequest::InterleavedEnumCase::INTERLEAVED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for interleaved was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array_frequency()->Resize(array_size_in_samps, 0);
+      float64* read_array_frequency = response->mutable_read_array_frequency()->mutable_data();
+      response->mutable_read_array_duty_cycle()->Resize(array_size_in_samps, 0);
+      float64* read_array_duty_cycle = response->mutable_read_array_duty_cycle()->mutable_data();
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadCtrFreq(task, num_samps_per_chan, timeout, interleaved, read_array_frequency, read_array_duty_cycle, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCtrFreqScalar(::grpc::ServerContext* context, const ReadCtrFreqScalarRequest* request, ReadCtrFreqScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+      float64 frequency {};
+      float64 duty_cycle {};
+      auto status = library_->ReadCtrFreqScalar(task, timeout, &frequency, &duty_cycle, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_frequency(frequency);
+        response->set_duty_cycle(duty_cycle);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCtrTicks(::grpc::ServerContext* context, const ReadCtrTicksRequest* request, ReadCtrTicksResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 interleaved;
+      switch (request->interleaved_enum_case()) {
+        case nidaqmx_grpc::ReadCtrTicksRequest::InterleavedEnumCase::kInterleaved: {
+          interleaved = static_cast<int32>(request->interleaved());
+          break;
+        }
+        case nidaqmx_grpc::ReadCtrTicksRequest::InterleavedEnumCase::kInterleavedRaw: {
+          interleaved = static_cast<int32>(request->interleaved_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadCtrTicksRequest::InterleavedEnumCase::INTERLEAVED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for interleaved was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array_high_ticks()->Resize(array_size_in_samps, 0);
+      uInt32* read_array_high_ticks = reinterpret_cast<uInt32*>(response->mutable_read_array_high_ticks()->mutable_data());
+      response->mutable_read_array_low_ticks()->Resize(array_size_in_samps, 0);
+      uInt32* read_array_low_ticks = reinterpret_cast<uInt32*>(response->mutable_read_array_low_ticks()->mutable_data());
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadCtrTicks(task, num_samps_per_chan, timeout, interleaved, read_array_high_ticks, read_array_low_ticks, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCtrTicksScalar(::grpc::ServerContext* context, const ReadCtrTicksScalarRequest* request, ReadCtrTicksScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+      uInt32 high_ticks {};
+      uInt32 low_ticks {};
+      auto status = library_->ReadCtrTicksScalar(task, timeout, &high_ticks, &low_ticks, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_high_ticks(high_ticks);
+        response->set_low_ticks(low_ticks);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCtrTime(::grpc::ServerContext* context, const ReadCtrTimeRequest* request, ReadCtrTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 interleaved;
+      switch (request->interleaved_enum_case()) {
+        case nidaqmx_grpc::ReadCtrTimeRequest::InterleavedEnumCase::kInterleaved: {
+          interleaved = static_cast<int32>(request->interleaved());
+          break;
+        }
+        case nidaqmx_grpc::ReadCtrTimeRequest::InterleavedEnumCase::kInterleavedRaw: {
+          interleaved = static_cast<int32>(request->interleaved_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadCtrTimeRequest::InterleavedEnumCase::INTERLEAVED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for interleaved was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array_high_time()->Resize(array_size_in_samps, 0);
+      float64* read_array_high_time = response->mutable_read_array_high_time()->mutable_data();
+      response->mutable_read_array_low_time()->Resize(array_size_in_samps, 0);
+      float64* read_array_low_time = response->mutable_read_array_low_time()->mutable_data();
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadCtrTime(task, num_samps_per_chan, timeout, interleaved, read_array_high_time, read_array_low_time, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadCtrTimeScalar(::grpc::ServerContext* context, const ReadCtrTimeScalarRequest* request, ReadCtrTimeScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+      float64 high_time {};
+      float64 low_time {};
+      auto status = library_->ReadCtrTimeScalar(task, timeout, &high_time, &low_time, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_high_time(high_time);
+        response->set_low_time(low_time);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadDigitalLines(::grpc::ServerContext* context, const ReadDigitalLinesRequest* request, ReadDigitalLinesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadDigitalLinesRequest::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadDigitalLinesRequest::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadDigitalLinesRequest::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_bytes = request->array_size_in_bytes();
+      auto reserved = nullptr;
+      std::string read_array(array_size_in_bytes, '\0');
+      int32 samps_per_chan_read {};
+      int32 num_bytes_per_samp {};
+      auto status = library_->ReadDigitalLines(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_bytes, &samps_per_chan_read, &num_bytes_per_samp, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_read_array(read_array);
+        response->set_samps_per_chan_read(samps_per_chan_read);
+        response->set_num_bytes_per_samp(num_bytes_per_samp);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadDigitalScalarU32(::grpc::ServerContext* context, const ReadDigitalScalarU32Request* request, ReadDigitalScalarU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+      uInt32 value {};
+      auto status = library_->ReadDigitalScalarU32(task, timeout, &value, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ReadDigitalU16(::grpc::ServerContext* context, const ReadDigitalU16Request* request, ReadDigitalU16Response* response)
   {
     if (context->IsCancelled()) {
@@ -4698,6 +5908,51 @@ namespace nidaqmx_grpc {
           [](auto x) { 
               return x;
           });
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadDigitalU32(::grpc::ServerContext* context, const ReadDigitalU32Request* request, ReadDigitalU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadDigitalU32Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadDigitalU32Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadDigitalU32Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -4794,6 +6049,26 @@ namespace nidaqmx_grpc {
       uInt32 hour = request->hour();
       uInt32 minute = request->minute();
       auto status = library_->SetAIChanCalExpDate(task, channel_name, year, month, day, hour, minute);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::StartNewFile(::grpc::ServerContext* context, const StartNewFileRequest* request, StartNewFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto file_path = request->file_path().c_str();
+      auto status = library_->StartNewFile(task, file_path);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4941,6 +6216,455 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteAnalogScalarF64(::grpc::ServerContext* context, const WriteAnalogScalarF64Request* request, WriteAnalogScalarF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      float64 value = request->value();
+      auto reserved = nullptr;
+      auto status = library_->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteBinaryI32(::grpc::ServerContext* context, const WriteBinaryI32Request* request, WriteBinaryI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteBinaryI32Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryI32Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryI32Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto write_array = const_cast<int32*>(reinterpret_cast<const int32*>(request->write_array().data()));
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteBinaryU16(::grpc::ServerContext* context, const WriteBinaryU16Request* request, WriteBinaryU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteBinaryU16Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryU16Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryU16Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto write_array_raw = request->write_array();
+      auto write_array = std::vector<uInt16>();
+      write_array.reserve(write_array_raw.size());
+      std::transform(
+        write_array_raw.begin(),
+        write_array_raw.end(),
+        std::back_inserter(write_array),
+        [](auto x) { 
+              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uInt16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uInt16>(x);
+        });
+
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteBinaryU32(::grpc::ServerContext* context, const WriteBinaryU32Request* request, WriteBinaryU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteBinaryU32Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryU32Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryU32Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto write_array = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->write_array().data()));
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteCtrFreq(::grpc::ServerContext* context, const WriteCtrFreqRequest* request, WriteCtrFreqResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteCtrFreqRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteCtrFreqRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteCtrFreqRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto frequency = const_cast<const float64*>(request->frequency().data());
+      auto duty_cycle = const_cast<const float64*>(request->duty_cycle().data());
+      auto reserved = nullptr;
+      int32 num_samps_per_chan_written {};
+      auto status = library_->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_num_samps_per_chan_written(num_samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteCtrFreqScalar(::grpc::ServerContext* context, const WriteCtrFreqScalarRequest* request, WriteCtrFreqScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      float64 frequency = request->frequency();
+      float64 duty_cycle = request->duty_cycle();
+      auto reserved = nullptr;
+      auto status = library_->WriteCtrFreqScalar(task, auto_start, timeout, frequency, duty_cycle, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteCtrTicks(::grpc::ServerContext* context, const WriteCtrTicksRequest* request, WriteCtrTicksResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteCtrTicksRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteCtrTicksRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteCtrTicksRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto high_ticks = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->high_ticks().data()));
+      auto low_ticks = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->low_ticks().data()));
+      auto reserved = nullptr;
+      int32 num_samps_per_chan_written {};
+      auto status = library_->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_num_samps_per_chan_written(num_samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteCtrTicksScalar(::grpc::ServerContext* context, const WriteCtrTicksScalarRequest* request, WriteCtrTicksScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      uInt32 high_ticks = request->high_ticks();
+      uInt32 low_ticks = request->low_ticks();
+      auto reserved = nullptr;
+      auto status = library_->WriteCtrTicksScalar(task, auto_start, timeout, high_ticks, low_ticks, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteCtrTime(::grpc::ServerContext* context, const WriteCtrTimeRequest* request, WriteCtrTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteCtrTimeRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteCtrTimeRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteCtrTimeRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto high_time = const_cast<const float64*>(request->high_time().data());
+      auto low_time = const_cast<const float64*>(request->low_time().data());
+      auto reserved = nullptr;
+      int32 num_samps_per_chan_written {};
+      auto status = library_->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_num_samps_per_chan_written(num_samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteCtrTimeScalar(::grpc::ServerContext* context, const WriteCtrTimeScalarRequest* request, WriteCtrTimeScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      float64 high_time = request->high_time();
+      float64 low_time = request->low_time();
+      auto reserved = nullptr;
+      auto status = library_->WriteCtrTimeScalar(task, auto_start, timeout, high_time, low_time, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteDigitalLines(::grpc::ServerContext* context, const WriteDigitalLinesRequest* request, WriteDigitalLinesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteDigitalLinesRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalLinesRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalLinesRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteDigitalScalarU32(::grpc::ServerContext* context, const WriteDigitalScalarU32Request* request, WriteDigitalScalarU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      uInt32 value = request->value();
+      auto reserved = nullptr;
+      auto status = library_->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::WriteDigitalU16(::grpc::ServerContext* context, const WriteDigitalU16Request* request, WriteDigitalU16Response* response)
   {
     if (context->IsCancelled()) {
@@ -5000,6 +6724,50 @@ namespace nidaqmx_grpc {
     }
     catch (nidevice_grpc::ValueOutOfRangeException& ex) {
       return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteDigitalU32(::grpc::ServerContext* context, const WriteDigitalU32Request* request, WriteDigitalU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteDigitalU32Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalU32Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteDigitalU32Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto write_array = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->write_array().data()));
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
   }
 
