@@ -378,6 +378,20 @@ TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
   EXPECT_EQ(4, response.samps_per_chan_written());
 }
 
+TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
+{
+  create_di_chan();
+  start_task();
+
+  ReadDigitalU16Response response;
+  auto status = read_u16_digital_data(response);
+  stop_task();
+
+  EXPECT_EQ(0, status.error_code());
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan_read());
+}
+
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadAIData_ReturnsDataInExpectedRange)
 {
   const double AI_MIN = 1.0;
