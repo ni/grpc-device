@@ -1,6 +1,4 @@
 import grpc
-import sys
-import os
 import nidaqmx_pb2 as nidaqmx_types
 import nidaqmx_pb2_grpc as grpc_nidaqmx
 
@@ -11,36 +9,39 @@ server_port = "31763"
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_nidaqmx.NiDAQmxStub(channel)
 
-# TODO: check for error
+# Raise an exception if an error was returned
+def RaiseIfError(response):
+    if response.status != 0:
+        # TODO - get error string
+        raise Exception(f"Error: {response.status}")
+
+
 response = client.CreateTask(
     nidaqmx_types.CreateTaskRequest(session_name="my task"))
-print(response.status)
+RaiseIfError(response)
 task = response.task
 
 try:
-    response = client.CreateAIVoltageChan(nidaqmx_types.CreateAIVoltageChanRequest(
+    RaiseIfError(client.CreateAIVoltageChan(nidaqmx_types.CreateAIVoltageChanRequest(
         task=task,
         physical_channel="Dev1/ai0",
-        name_to_assign_to_channel="ai0",
-        terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_RSE,
+        terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
         min_val=-10.0,
         max_val=10.0,
         units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS
-    ))
-    print(response.status)
+    )))
+    # TODO - configure sample timing
 
-    # TODO: check for error
-    response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
-    print(response.status)
+    RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
     response = client.ReadAnalogF64(nidaqmx_types.ReadAnalogF64Request(
         task=task,
-        num_samps_per_chan=1,
-        array_size_in_samps=1,
+        num_samps_per_chan=1000,
+        array_size_in_samps=1000,
         fill_mode=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
         timeout=10.0))
-    print(response.status)
-    print(f"Data: {response.read_array[0]}")
+    RaiseIfError(response)
+    print(f"Acquired {response.samps_per_chan_read} samples")
 finally:
-    response = client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
-    print(response.status)
+    client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
+    client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
