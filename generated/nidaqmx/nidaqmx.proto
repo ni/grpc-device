@@ -121,7 +121,6 @@ service NiDAQmx {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc GetAIChanCalCalDate(GetAIChanCalCalDateRequest) returns (GetAIChanCalCalDateResponse);
   rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
-  rpc GetAnalogPowerUpStatesWithOutputType(GetAnalogPowerUpStatesWithOutputTypeRequest) returns (GetAnalogPowerUpStatesWithOutputTypeResponse);
   rpc GetDigitalLogicFamilyPowerUpState(GetDigitalLogicFamilyPowerUpStateRequest) returns (GetDigitalLogicFamilyPowerUpStateResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetExtendedErrorInfo(GetExtendedErrorInfoRequest) returns (GetExtendedErrorInfoResponse);
@@ -157,7 +156,6 @@ service NiDAQmx {
   rpc SelfTestDevice(SelfTestDeviceRequest) returns (SelfTestDeviceResponse);
   rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
   rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
-  rpc SetAnalogPowerUpStatesWithOutputType(SetAnalogPowerUpStatesWithOutputTypeRequest) returns (SetAnalogPowerUpStatesWithOutputTypeResponse);
   rpc SetDigitalLogicFamilyPowerUpState(SetDigitalLogicFamilyPowerUpStateRequest) returns (SetDigitalLogicFamilyPowerUpStateResponse);
   rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
@@ -498,14 +496,6 @@ enum Polarity2 {
   POLARITY2_UNSPECIFIED = 0;
   POLARITY2_ACTIVE_HIGH = 10095;
   POLARITY2_ACTIVE_LOW = 10096;
-}
-
-enum PowerUpStates {
-  option allow_alias = true;
-  POWER_UP_STATES_UNSPECIFIED = 0;
-  POWER_UP_STATES_CHANNEL_VOLTAGE = 0;
-  POWER_UP_STATES_CHANNEL_CURRENT = 1;
-  POWER_UP_STATES_CHANNEL_HIGH_IMPEDANCE = 2;
 }
 
 enum PressureUnits {
@@ -2891,18 +2881,6 @@ message GetAIChanCalExpDateResponse {
   uint32 minute = 6;
 }
 
-message GetAnalogPowerUpStatesWithOutputTypeRequest {
-  string channel_names = 1;
-}
-
-message GetAnalogPowerUpStatesWithOutputTypeResponse {
-  int32 status = 1;
-  repeated double state_array = 2;
-  repeated PowerUpStates channel_type_array = 3;
-  repeated int32 channel_type_array_raw = 4;
-  uint32 array_size_ptr = 5;
-}
-
 message GetDigitalLogicFamilyPowerUpStateRequest {
   string device_name = 1;
 }
@@ -3356,18 +3334,6 @@ message SetAIChanCalExpDateRequest {
 }
 
 message SetAIChanCalExpDateResponse {
-  int32 status = 1;
-}
-
-message SetAnalogPowerUpStatesWithOutputTypeRequest {
-  string channel_names = 1;
-  repeated double state_array = 2;
-  repeated PowerUpStates channel_type_array = 3;
-  repeated int32 channel_type_array_raw = 4;
-  uint32 array_size = 5;
-}
-
-message SetAnalogPowerUpStatesWithOutputTypeResponse {
   int32 status = 1;
 }
 

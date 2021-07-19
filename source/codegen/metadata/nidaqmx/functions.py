@@ -4960,36 +4960,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'GetAnalogPowerUpStatesWithOutputType': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'channelNames',
-                'type': 'const char[]'
-            },
-            {
-                'direction': 'out',
-                'name': 'stateArray',
-                'type': 'float64[]'
-            },
-            {
-                'direction': 'out',
-                'enum': 'PowerUpStates',
-                'name': 'channelTypeArray',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'arraySizePtr'
-                },
-                'type': 'int32[]'
-            },
-            {
-                'direction': 'out',
-                'name': 'arraySizePtr',
-                'type': 'uInt32'
-            }
-        ],
-        'returns': 'int32'
-    },
     'GetDigitalLogicFamilyPowerUpState': {
         'parameters': [
             {
@@ -6283,32 +6253,6 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'minute',
-                'type': 'uInt32'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'SetAnalogPowerUpStatesWithOutputType': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'channelNames',
-                'type': 'const char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'stateArray',
-                'type': 'const float64[]'
-            },
-            {
-                'direction': 'in',
-                'enum': 'PowerUpStates',
-                'name': 'channelTypeArray',
-                'type': 'int32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
                 'type': 'uInt32'
             }
         ],

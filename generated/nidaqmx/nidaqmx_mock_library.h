@@ -122,7 +122,6 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ExportSignal, (TaskHandle task, int32 signalID, const char outputTerminal[]), (override));
   MOCK_METHOD(int32, GetAIChanCalCalDate, (TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
   MOCK_METHOD(int32, GetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
-  MOCK_METHOD(int32, GetAnalogPowerUpStatesWithOutputType, (const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr), (override));
   MOCK_METHOD(int32, GetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32* logicFamily), (override));
   MOCK_METHOD(int32, GetErrorString, (int32 errorCode, char errorString[], uInt32 bufferSize), (override));
   MOCK_METHOD(int32, GetExtendedErrorInfo, (char errorString[], uInt32 bufferSize), (override));
@@ -158,7 +157,6 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SelfTestDevice, (const char deviceName[]), (override));
   MOCK_METHOD(int32, SetAIChanCalCalDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
   MOCK_METHOD(int32, SetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
-  MOCK_METHOD(int32, SetAnalogPowerUpStatesWithOutputType, (const char channelNames[], const float64 stateArray[], int32 channelTypeArray[], uInt32 arraySize), (override));
   MOCK_METHOD(int32, SetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32 logicFamily), (override));
   MOCK_METHOD(int32, StartNewFile, (TaskHandle task, const char filePath[]), (override));
   MOCK_METHOD(int32, StartTask, (TaskHandle task), (override));

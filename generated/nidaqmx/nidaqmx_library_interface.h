@@ -120,7 +120,6 @@ class NiDAQmxLibraryInterface {
   virtual int32 ExportSignal(TaskHandle task, int32 signalID, const char outputTerminal[]) = 0;
   virtual int32 GetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
   virtual int32 GetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
-  virtual int32 GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr) = 0;
   virtual int32 GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily) = 0;
   virtual int32 GetErrorString(int32 errorCode, char errorString[], uInt32 bufferSize) = 0;
   virtual int32 GetExtendedErrorInfo(char errorString[], uInt32 bufferSize) = 0;
@@ -156,7 +155,6 @@ class NiDAQmxLibraryInterface {
   virtual int32 SelfTestDevice(const char deviceName[]) = 0;
   virtual int32 SetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
   virtual int32 SetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
-  virtual int32 SetAnalogPowerUpStatesWithOutputType(const char channelNames[], const float64 stateArray[], int32 channelTypeArray[], uInt32 arraySize) = 0;
   virtual int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily) = 0;
   virtual int32 StartNewFile(TaskHandle task, const char filePath[]) = 0;
   virtual int32 StartTask(TaskHandle task) = 0;

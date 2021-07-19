@@ -126,7 +126,6 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("DAQmxExportSignal"));
   function_pointers_.GetAIChanCalCalDate = reinterpret_cast<GetAIChanCalCalDatePtr>(shared_library_.get_function_pointer("DAQmxGetAIChanCalCalDate"));
   function_pointers_.GetAIChanCalExpDate = reinterpret_cast<GetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxGetAIChanCalExpDate"));
-  function_pointers_.GetAnalogPowerUpStatesWithOutputType = reinterpret_cast<GetAnalogPowerUpStatesWithOutputTypePtr>(shared_library_.get_function_pointer("DAQmxGetAnalogPowerUpStatesWithOutputType"));
   function_pointers_.GetDigitalLogicFamilyPowerUpState = reinterpret_cast<GetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxGetDigitalLogicFamilyPowerUpState"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("DAQmxGetErrorString"));
   function_pointers_.GetExtendedErrorInfo = reinterpret_cast<GetExtendedErrorInfoPtr>(shared_library_.get_function_pointer("DAQmxGetExtendedErrorInfo"));
@@ -162,7 +161,6 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SelfTestDevice = reinterpret_cast<SelfTestDevicePtr>(shared_library_.get_function_pointer("DAQmxSelfTestDevice"));
   function_pointers_.SetAIChanCalCalDate = reinterpret_cast<SetAIChanCalCalDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalCalDate"));
   function_pointers_.SetAIChanCalExpDate = reinterpret_cast<SetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalExpDate"));
-  function_pointers_.SetAnalogPowerUpStatesWithOutputType = reinterpret_cast<SetAnalogPowerUpStatesWithOutputTypePtr>(shared_library_.get_function_pointer("DAQmxSetAnalogPowerUpStatesWithOutputType"));
   function_pointers_.SetDigitalLogicFamilyPowerUpState = reinterpret_cast<SetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxSetDigitalLogicFamilyPowerUpState"));
   function_pointers_.StartNewFile = reinterpret_cast<StartNewFilePtr>(shared_library_.get_function_pointer("DAQmxStartNewFile"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
@@ -1460,18 +1458,6 @@ int32 NiDAQmxLibrary::GetAIChanCalExpDate(TaskHandle task, const char channelNam
 #endif
 }
 
-int32 NiDAQmxLibrary::GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr)
-{
-  if (!function_pointers_.GetAnalogPowerUpStatesWithOutputType) {
-    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAnalogPowerUpStatesWithOutputType.");
-  }
-#if defined(_MSC_VER)
-  return DAQmxGetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySizePtr);
-#else
-  return function_pointers_.GetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySizePtr);
-#endif
-}
-
 int32 NiDAQmxLibrary::GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily)
 {
   if (!function_pointers_.GetDigitalLogicFamilyPowerUpState) {
@@ -1889,18 +1875,6 @@ int32 NiDAQmxLibrary::SetAIChanCalExpDate(TaskHandle task, const char channelNam
   return DAQmxSetAIChanCalExpDate(task, channelName, year, month, day, hour, minute);
 #else
   return function_pointers_.SetAIChanCalExpDate(task, channelName, year, month, day, hour, minute);
-#endif
-}
-
-int32 NiDAQmxLibrary::SetAnalogPowerUpStatesWithOutputType(const char channelNames[], const float64 stateArray[], int32 channelTypeArray[], uInt32 arraySize)
-{
-  if (!function_pointers_.SetAnalogPowerUpStatesWithOutputType) {
-    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetAnalogPowerUpStatesWithOutputType.");
-  }
-#if defined(_MSC_VER)
-  return DAQmxSetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
-#else
-  return function_pointers_.SetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
 #endif
 }
 

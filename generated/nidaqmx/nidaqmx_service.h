@@ -133,7 +133,6 @@ public:
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status GetAIChanCalCalDate(::grpc::ServerContext* context, const GetAIChanCalCalDateRequest* request, GetAIChanCalCalDateResponse* response) override;
   ::grpc::Status GetAIChanCalExpDate(::grpc::ServerContext* context, const GetAIChanCalExpDateRequest* request, GetAIChanCalExpDateResponse* response) override;
-  ::grpc::Status GetAnalogPowerUpStatesWithOutputType(::grpc::ServerContext* context, const GetAnalogPowerUpStatesWithOutputTypeRequest* request, GetAnalogPowerUpStatesWithOutputTypeResponse* response) override;
   ::grpc::Status GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;
   ::grpc::Status GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response) override;
@@ -169,7 +168,6 @@ public:
   ::grpc::Status SelfTestDevice(::grpc::ServerContext* context, const SelfTestDeviceRequest* request, SelfTestDeviceResponse* response) override;
   ::grpc::Status SetAIChanCalCalDate(::grpc::ServerContext* context, const SetAIChanCalCalDateRequest* request, SetAIChanCalCalDateResponse* response) override;
   ::grpc::Status SetAIChanCalExpDate(::grpc::ServerContext* context, const SetAIChanCalExpDateRequest* request, SetAIChanCalExpDateResponse* response) override;
-  ::grpc::Status SetAnalogPowerUpStatesWithOutputType(::grpc::ServerContext* context, const SetAnalogPowerUpStatesWithOutputTypeRequest* request, SetAnalogPowerUpStatesWithOutputTypeResponse* response) override;
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status StartNewFile(::grpc::ServerContext* context, const StartNewFileRequest* request, StartNewFileResponse* response) override;
   ::grpc::Status StartTask(::grpc::ServerContext* context, const StartTaskRequest* request, StartTaskResponse* response) override;

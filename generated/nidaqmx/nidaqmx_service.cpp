@@ -5892,21 +5892,6 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDAQmxService::GetAnalogPowerUpStatesWithOutputType(::grpc::ServerContext* context, const GetAnalogPowerUpStatesWithOutputTypeRequest* request, GetAnalogPowerUpStatesWithOutputTypeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response)
   {
     if (context->IsCancelled()) {
@@ -7062,21 +7047,6 @@ namespace nidaqmx_grpc {
       auto status = library_->SetAIChanCalExpDate(task, channel_name, year, month, day, hour, minute);
       response->set_status(status);
       return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDAQmxService::SetAnalogPowerUpStatesWithOutputType(::grpc::ServerContext* context, const SetAnalogPowerUpStatesWithOutputTypeRequest* request, SetAnalogPowerUpStatesWithOutputTypeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

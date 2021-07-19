@@ -1082,22 +1082,6 @@ enums = {
             }
         ]
     },
-    'PowerUpStates': {
-        'values': [
-            {
-                'name': 'CHANNEL_VOLTAGE',
-                'value': 0
-            },
-            {
-                'name': 'CHANNEL_CURRENT',
-                'value': 1
-            },
-            {
-                'name': 'CHANNEL_HIGH_IMPEDANCE',
-                'value': 2
-            }
-        ]
-    },
     'PressureUnits': {
         'values': [
             {

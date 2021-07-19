@@ -61,7 +61,7 @@ def get_message_parameter_definitions(parameters, is_request_message):
     parameter_type = get_parameter_type(parameter)
     if common_helpers.is_enum(parameter):
       enum_parameters = get_enum_parameters(parameter, parameter_name, parameter_type, is_array, used_indexes)
-      if is_request_message and not is_array:
+      if is_request_message:
         # use oneof for enums in request messages
         parameter_definitions.append({
           "name": f"{parameter_name}_enum",

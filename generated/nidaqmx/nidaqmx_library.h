@@ -123,7 +123,6 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ExportSignal(TaskHandle task, int32 signalID, const char outputTerminal[]);
   int32 GetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
   int32 GetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
-  int32 GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr);
   int32 GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily);
   int32 GetErrorString(int32 errorCode, char errorString[], uInt32 bufferSize);
   int32 GetExtendedErrorInfo(char errorString[], uInt32 bufferSize);
@@ -159,7 +158,6 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SelfTestDevice(const char deviceName[]);
   int32 SetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute);
   int32 SetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute);
-  int32 SetAnalogPowerUpStatesWithOutputType(const char channelNames[], const float64 stateArray[], int32 channelTypeArray[], uInt32 arraySize);
   int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily);
   int32 StartNewFile(TaskHandle task, const char filePath[]);
   int32 StartTask(TaskHandle task);
@@ -291,7 +289,6 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ExportSignalPtr = int32 (*)(TaskHandle task, int32 signalID, const char outputTerminal[]);
   using GetAIChanCalCalDatePtr = int32 (*)(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
   using GetAIChanCalExpDatePtr = int32 (*)(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
-  using GetAnalogPowerUpStatesWithOutputTypePtr = int32 (*)(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr);
   using GetDigitalLogicFamilyPowerUpStatePtr = int32 (*)(const char deviceName[], int32* logicFamily);
   using GetErrorStringPtr = int32 (*)(int32 errorCode, char errorString[], uInt32 bufferSize);
   using GetExtendedErrorInfoPtr = int32 (*)(char errorString[], uInt32 bufferSize);
@@ -327,7 +324,6 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SelfTestDevicePtr = int32 (*)(const char deviceName[]);
   using SetAIChanCalCalDatePtr = int32 (*)(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute);
   using SetAIChanCalExpDatePtr = int32 (*)(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute);
-  using SetAnalogPowerUpStatesWithOutputTypePtr = int32 (*)(const char channelNames[], const float64 stateArray[], int32 channelTypeArray[], uInt32 arraySize);
   using SetDigitalLogicFamilyPowerUpStatePtr = int32 (*)(const char deviceName[], int32 logicFamily);
   using StartNewFilePtr = int32 (*)(TaskHandle task, const char filePath[]);
   using StartTaskPtr = int32 (*)(TaskHandle task);
@@ -459,7 +455,6 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ExportSignalPtr ExportSignal;
     GetAIChanCalCalDatePtr GetAIChanCalCalDate;
     GetAIChanCalExpDatePtr GetAIChanCalExpDate;
-    GetAnalogPowerUpStatesWithOutputTypePtr GetAnalogPowerUpStatesWithOutputType;
     GetDigitalLogicFamilyPowerUpStatePtr GetDigitalLogicFamilyPowerUpState;
     GetErrorStringPtr GetErrorString;
     GetExtendedErrorInfoPtr GetExtendedErrorInfo;
@@ -495,7 +490,6 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SelfTestDevicePtr SelfTestDevice;
     SetAIChanCalCalDatePtr SetAIChanCalCalDate;
     SetAIChanCalExpDatePtr SetAIChanCalExpDate;
-    SetAnalogPowerUpStatesWithOutputTypePtr SetAnalogPowerUpStatesWithOutputType;
     SetDigitalLogicFamilyPowerUpStatePtr SetDigitalLogicFamilyPowerUpState;
     StartNewFilePtr StartNewFile;
     StartTaskPtr StartTask;
