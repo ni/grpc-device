@@ -479,6 +479,56 @@ enums = {
             }
         ]
     },
+    'DigitalLineState': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Logic high.'
+                },
+                'name': 'HIGH',
+                'value': 10192
+            },
+            {
+                'documentation': {
+                    'description': 'Logic low.'
+                },
+                'name': 'LOW',
+                'value': 10214
+            },
+            {
+                'documentation': {
+                    'description': ' High-impedance state. You can select this state only on devices with  bidirectional lines.  You cannot select this state for dedicated digital output  lines. On some devices, you can select this value only for entire ports.'
+                },
+                'name': 'TRISTATE',
+                'value': 10310
+            },
+            {
+                'documentation': {
+                    'description': ' Do not change the state of the lines. On some devices, you can select this  value only for entire ports.'
+                },
+                'name': 'NO_CHANGE',
+                'value': 10160
+            }
+        ]
+    },
+    'DigitalPatternCondition1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Trigger when the physical channels match the specified pattern.'
+                },
+                'name': 'PATTERN_MATCHES',
+                'value': 10254
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when the physical channels do not match the specified pattern.'
+                },
+                'name': 'PATTERN_DOES_NOT_MATCH',
+                'value': 10253
+            }
+        ]
+    },
     'DigitalWidthUnits3': {
         'values': [
             {
@@ -815,6 +865,18 @@ enums = {
             }
         ]
     },
+    'InvertPolarity': {
+        'values': [
+            {
+                'name': 'DO_NOT_INVERT_POLARITY',
+                'value': 0
+            },
+            {
+                'name': 'INVERT_POLARITY',
+                'value': 1
+            }
+        ]
+    },
     'LVDTSensitivityUnits1': {
         'values': [
             {
@@ -977,6 +1039,31 @@ enums = {
             }
         ]
     },
+    'LogicFamily': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Compatible with 2.5 V CMOS signals.'
+                },
+                'name': '2POINT_5_V',
+                'value': 14620
+            },
+            {
+                'documentation': {
+                    'description': 'Compatible with LVTTL signals.'
+                },
+                'name': '3POINT_3_V',
+                'value': 14621
+            },
+            {
+                'documentation': {
+                    'description': 'Compatible with TTL and 5 V CMOS signals.'
+                },
+                'name': '5_V',
+                'value': 14619
+            }
+        ]
+    },
     'Polarity2': {
         'values': [
             {
@@ -1079,6 +1166,76 @@ enums = {
             {
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'Signal': {
+        'values': [
+            {
+                'name': 'AI_CONVERT_CLOCK',
+                'value': 12484
+            },
+            {
+                'name': '10_M_HZ_REF_CLOCK',
+                'value': 12536
+            },
+            {
+                'name': '20_M_HZ_TIMEBASE_CLOCK',
+                'value': 12486
+            },
+            {
+                'name': 'SAMPLE_CLOCK',
+                'value': 12487
+            },
+            {
+                'name': 'ADVANCE_TRIGGER',
+                'value': 12488
+            },
+            {
+                'name': 'REFERENCE_TRIGGER',
+                'value': 12490
+            },
+            {
+                'name': 'START_TRIGGER',
+                'value': 12491
+            },
+            {
+                'name': 'ADV_CMPLT_EVENT',
+                'value': 12492
+            },
+            {
+                'name': 'AI_HOLD_CMPLT_EVENT',
+                'value': 12493
+            },
+            {
+                'name': 'COUNTER_OUTPUT_EVENT',
+                'value': 12494
+            },
+            {
+                'name': 'CHANGE_DETECTION_EVENT',
+                'value': 12511
+            },
+            {
+                'name': 'WDT_EXPIRED_EVENT',
+                'value': 12512
+            }
+        ]
+    },
+    'Slope1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger on the rising slope of the signal.'
+                },
+                'name': 'RISING_SLOPE',
+                'value': 10280
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger on the falling slope of the signal.'
+                },
+                'name': 'FALLING_SLOPE',
+                'value': 10171
             }
         ]
     },
@@ -1328,6 +1485,276 @@ enums = {
             }
         ]
     },
+    'UnitsPreScaled': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Volts.'
+                },
+                'name': 'VOLTS',
+                'value': 10348
+            },
+            {
+                'documentation': {
+                    'description': 'Amperes.'
+                },
+                'name': 'AMPS',
+                'value': 10342
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees Fahrenheit.'
+                },
+                'name': 'DEG_F',
+                'value': 10144
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees Celsius.'
+                },
+                'name': 'DEG_C',
+                'value': 10143
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees Rankine.'
+                },
+                'name': 'DEG_R',
+                'value': 10145
+            },
+            {
+                'documentation': {
+                    'description': 'Kelvins.'
+                },
+                'name': 'KELVINS',
+                'value': 10325
+            },
+            {
+                'documentation': {
+                    'description': 'Strain.'
+                },
+                'name': 'STRAIN',
+                'value': 10299
+            },
+            {
+                'documentation': {
+                    'description': 'Ohms.'
+                },
+                'name': 'OHMS',
+                'value': 10384
+            },
+            {
+                'documentation': {
+                    'description': 'Hertz.'
+                },
+                'name': 'HZ',
+                'value': 10373
+            },
+            {
+                'documentation': {
+                    'description': 'Seconds.'
+                },
+                'name': 'SECONDS',
+                'value': 10364
+            },
+            {
+                'documentation': {
+                    'description': 'Meters.'
+                },
+                'name': 'METERS',
+                'value': 10219
+            },
+            {
+                'documentation': {
+                    'description': 'Inches.'
+                },
+                'name': 'INCHES',
+                'value': 10379
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees.'
+                },
+                'name': 'DEGREES',
+                'value': 10146
+            },
+            {
+                'documentation': {
+                    'description': 'Radians.'
+                },
+                'name': 'RADIANS',
+                'value': 10273
+            },
+            {
+                'documentation': {
+                    'description': 'Ticks.'
+                },
+                'name': 'TICKS',
+                'value': 10304
+            },
+            {
+                'documentation': {
+                    'description': 'Revolutions per minute.'
+                },
+                'name': 'RPM',
+                'value': 16080
+            },
+            {
+                'documentation': {
+                    'description': 'Radians per second.'
+                },
+                'name': 'RADIANS_PER_SECOND',
+                'value': 16081
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees per second.'
+                },
+                'name': 'DEGREES_PER_SECOND',
+                'value': 16082
+            },
+            {
+                'documentation': {
+                    'description': '1 g is approximately equal to 9.81 m/s/s.'
+                },
+                'name': 'G',
+                'value': 10186
+            },
+            {
+                'documentation': {
+                    'description': 'Meters per second per second.'
+                },
+                'name': 'METERS_PER_SECOND_SQUARED',
+                'value': 12470
+            },
+            {
+                'documentation': {
+                    'description': 'Inches per second per second.'
+                },
+                'name': 'INCHES_PER_SECOND_SQUARED',
+                'value': 12471
+            },
+            {
+                'documentation': {
+                    'description': 'Meters per second.'
+                },
+                'name': 'METERS_PER_SECOND',
+                'value': 15959
+            },
+            {
+                'documentation': {
+                    'description': 'Inches per second.'
+                },
+                'name': 'INCHES_PER_SECOND',
+                'value': 15960
+            },
+            {
+                'documentation': {
+                    'description': 'Pascals.'
+                },
+                'name': 'PASCALS',
+                'value': 10081
+            },
+            {
+                'documentation': {
+                    'description': 'Newtons.'
+                },
+                'name': 'NEWTONS',
+                'value': 15875
+            },
+            {
+                'documentation': {
+                    'description': 'Pounds.'
+                },
+                'name': 'POUNDS',
+                'value': 15876
+            },
+            {
+                'documentation': {
+                    'description': 'Kilograms-force.'
+                },
+                'name': 'KILOGRAM_FORCE',
+                'value': 15877
+            },
+            {
+                'documentation': {
+                    'description': 'Pounds per square inch.'
+                },
+                'name': 'POUNDS_PER_SQUARE_INCH',
+                'value': 15879
+            },
+            {
+                'documentation': {
+                    'description': 'Bar.'
+                },
+                'name': 'BAR',
+                'value': 15880
+            },
+            {
+                'documentation': {
+                    'description': 'Newton meters.'
+                },
+                'name': 'NEWTON_METERS',
+                'value': 15881
+            },
+            {
+                'documentation': {
+                    'description': 'Ounce-inches.'
+                },
+                'name': 'INCH_OUNCES',
+                'value': 15882
+            },
+            {
+                'documentation': {
+                    'description': 'Pound-inches.'
+                },
+                'name': 'INCH_POUNDS',
+                'value': 15883
+            },
+            {
+                'documentation': {
+                    'description': 'Pound-feet.'
+                },
+                'name': 'FOOT_POUNDS',
+                'value': 15884
+            },
+            {
+                'documentation': {
+                    'description': 'Volts per volt.'
+                },
+                'name': 'VOLTS_PER_VOLT',
+                'value': 15896
+            },
+            {
+                'documentation': {
+                    'description': 'Millivolts per volt.'
+                },
+                'name': 'M_VOLTS_PER_VOLT',
+                'value': 15897
+            },
+            {
+                'documentation': {
+                    'description': 'Coulombs.'
+                },
+                'name': 'COULOMBS',
+                'value': 16102
+            },
+            {
+                'documentation': {
+                    'description': 'PicoCoulombs.'
+                },
+                'name': 'PICO_COULOMBS',
+                'value': 16103
+            },
+            {
+                'documentation': {
+                    'description': ' Units defined by TEDS information associated with the channel.'
+                },
+                'name': 'FROM_TEDS',
+                'value': 12516
+            }
+        ]
+    },
     'VelocityIEPESensorSensitivityUnits': {
         'values': [
             {
@@ -1386,6 +1813,24 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'WindowTriggerCondition1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger when the signal enters the window.'
+                },
+                'name': 'ENTERING_WIN',
+                'value': 10163
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger when the signal leaves the window.'
+                },
+                'name': 'LEAVING_WIN',
+                'value': 10208
             }
         ]
     }
