@@ -289,14 +289,33 @@ class NiDAQmxDriverApiTests : public Test {
       return stub()->TaskControl(&context, request, &response);
   }
 
-  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response) {
-    ::grpc::ClientContext context;
+  auto register_done_event(::grpc::ClientContext& context)
+  {
+    RegisterDoneEventRequest request;
+    set_request_session_id(request);
+    return stub()->RegisterDoneEvent(&context, request);
+  }
+
+  CfgSampClkTimingRequest create_cfg_samp_clk_timing_request(double rate, Edge1 active_edge, AcquisitionType sample_mode, uInt64 samples_per_chan)
+  {
     CfgSampClkTimingRequest request;
     set_request_session_id(request);
-    request.set_rate(100.0);
-    request.set_sample_mode(AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS);
-    request.set_active_edge(Edge1::EDGE1_RISING);
-    request.set_samps_per_chan(1000);
+    request.set_rate(rate);
+    request.set_active_edge(active_edge);
+    request.set_sample_mode(sample_mode);
+    request.set_samps_per_chan(samples_per_chan);
+    return request;
+  }
+
+  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response)
+  {
+    auto request = create_cfg_samp_clk_timing_request(100.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1000UL);
+    return cfg_samp_clk_timing(request, response);
+  }
+
+  ::grpc::Status cfg_samp_clk_timing(const CfgSampClkTimingRequest& request, CfgSampClkTimingResponse& response = ThrowawayResponse<CfgSampClkTimingResponse>::response())
+  {
+    ::grpc::ClientContext context;
     return stub()->CfgSampClkTiming(&context, request, &response);
   }
 
@@ -518,6 +537,25 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
   EXPECT_SUCCESS(config_status, response);
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(NUM_SAMPS, read_response.samps_per_chan_read());
+}
+
+TEST_F(NiDAQmxDriverApiTests, ChannelWIthDoneEventRegistered_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
+{
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_done_event(reader_context);
+
+  auto FINITE_SAMPLE_COUNT = 10UL;
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
+  start_task();
+  ReadAnalogF64Response read_response;
+  auto read_status = read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT, read_response);
+  EXPECT_SUCCESS(read_status, read_response);
+
+  RegisterDoneEventResponse response;
+  reader->Read(&response);
+  EXPECT_EQ(DAQmxSuccess, response.status());
 }
 }  // namespace system
 }  // namespace tests
