@@ -14,12 +14,289 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CfgBurstHandshakingTimingExportClock': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionType',
+                'name': 'sampleMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampsPerChan',
+                'type': 'uInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampleClkRate',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampleClkOutpTerm',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Polarity2',
+                'name': 'sampleClkPulsePolarity',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Level1',
+                'name': 'pauseWhen',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Polarity2',
+                'name': 'readyEventActiveLevel',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgBurstHandshakingTimingImportClock': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionType',
+                'name': 'sampleMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampsPerChan',
+                'type': 'uInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampleClkRate',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampleClkSrc',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'sampleClkActiveEdge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Level1',
+                'name': 'pauseWhen',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Polarity2',
+                'name': 'readyEventActiveLevel',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgChangeDetectionTiming': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'risingEdgeChan',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'fallingEdgeChan',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionType',
+                'name': 'sampleMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampsPerChan',
+                'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgHandshakingTiming': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionType',
+                'name': 'sampleMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampsPerChan',
+                'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgImplicitTiming': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionType',
+                'name': 'sampleMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampsPerChan',
+                'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgPipelinedSampClkTiming': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'source',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rate',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'activeEdge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionType',
+                'name': 'sampleMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampsPerChan',
+                'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgSampClkTiming': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'source',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rate',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'activeEdge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionType',
+                'name': 'sampleMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampsPerChan',
+                'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ClearTask': {
         'parameters': [
             {
                 'direction': 'in',
                 'name': 'task',
                 'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ConfigureLogging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LoggingMode',
+                'name': 'loggingMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'groupName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LoggingOperation',
+                'name': 'operation',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
@@ -1384,6 +1661,94 @@ functions = {
                 'direction': 'in',
                 'name': 'customScaleName',
                 'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIRosetteStrainGageChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainGageRosetteType',
+                'name': 'rosetteType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'gageOrientation',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'rosetteMeasTypes',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numRosetteMeasTypes',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainGageBridgeType1',
+                'name': 'strainConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'gageFactor',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'nominalGageResistance',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'poissonRatio',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'leadWireResistance',
+                'type': 'float64'
             }
         ],
         'returns': 'int32'
@@ -3929,6 +4294,35 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetNthTaskReadChannel': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'index',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'buffer',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IsTaskDone': {
         'parameters': [
             {
@@ -3996,6 +4390,803 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ReadAnalogScalarF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadBinaryI32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadBinaryU16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt16[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadBinaryU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCounterF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCounterF64Ex': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCounterScalarF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCounterScalarU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCounterU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCounterU32Ex': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCtrFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'interleaved',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayFrequency',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayDutyCycle',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCtrFreqScalar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'frequency',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dutyCycle',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCtrTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'interleaved',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayHighTicks',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayLowTicks',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCtrTicksScalar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'highTicks',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'lowTicks',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCtrTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'interleaved',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayHighTime',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayLowTime',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadCtrTimeScalar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'highTime',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'lowTime',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadDigitalLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInBytes'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInBytes',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'numBytesPerSamp',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadDigitalScalarU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ReadDigitalU16': {
         'parameters': [
             {
@@ -4028,6 +5219,58 @@ functions = {
                     'value': 'arraySizeInSamps'
                 },
                 'type': 'uInt16[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadDigitalU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'uInt32[]'
             },
             {
                 'direction': 'in',
@@ -4181,6 +5424,21 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'StartNewFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'StartTask': {
         'parameters': [
             {
@@ -4280,6 +5538,533 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'WriteAnalogScalarF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteBinaryI32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteBinaryU16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'const uInt16[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteBinaryU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'const uInt32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteCtrFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequency',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutyCycle',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numSampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteCtrFreqScalar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequency',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutyCycle',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteCtrTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'highTicks',
+                'type': 'const uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowTicks',
+                'type': 'const uInt32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numSampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteCtrTicksScalar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'highTicks',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowTicks',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteCtrTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'highTime',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowTime',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numSampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteCtrTimeScalar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'highTime',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'lowTime',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteDigitalLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'const uInt8[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteDigitalScalarU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'WriteDigitalU16': {
         'parameters': [
             {
@@ -4313,6 +6098,54 @@ functions = {
                 'direction': 'in',
                 'name': 'writeArray',
                 'type': 'const uInt16[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteDigitalU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'const uInt32[]'
             },
             {
                 'direction': 'out',
