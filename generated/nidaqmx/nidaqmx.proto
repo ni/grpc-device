@@ -42,6 +42,7 @@ service NiDAQmx {
   rpc CfgWatchdogDOExpirStates(CfgWatchdogDOExpirStatesRequest) returns (CfgWatchdogDOExpirStatesResponse);
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
   rpc ConfigureLogging(ConfigureLoggingRequest) returns (ConfigureLoggingResponse);
+  rpc ConnectTerms(ConnectTermsRequest) returns (ConnectTermsResponse);
   rpc CreateAIAccel4WireDCVoltageChan(CreateAIAccel4WireDCVoltageChanRequest) returns (CreateAIAccel4WireDCVoltageChanResponse);
   rpc CreateAIAccelChan(CreateAIAccelChanRequest) returns (CreateAIAccelChanResponse);
   rpc CreateAIAccelChargeChan(CreateAIAccelChargeChanRequest) returns (CreateAIAccelChargeChanResponse);
@@ -428,6 +429,13 @@ enum InputTermCfgWithDefault {
   INPUT_TERM_CFG_WITH_DEFAULT_NRSE = 10078;
   INPUT_TERM_CFG_WITH_DEFAULT_DIFF = 10106;
   INPUT_TERM_CFG_WITH_DEFAULT_PSEUDO_DIFF = 12529;
+}
+
+enum InvertPolarity {
+  option allow_alias = true;
+  INVERT_POLARITY_UNSPECIFIED = 0;
+  INVERT_POLARITY_DO_NOT_INVERT_POLARITY = 0;
+  INVERT_POLARITY_INVERT_POLARITY = 1;
 }
 
 enum LVDTSensitivityUnits1 {
@@ -1057,6 +1065,19 @@ message ConfigureLoggingRequest {
 }
 
 message ConfigureLoggingResponse {
+  int32 status = 1;
+}
+
+message ConnectTermsRequest {
+  string source_terminal = 1;
+  string destination_terminal = 2;
+  oneof signal_modifiers_enum {
+    InvertPolarity signal_modifiers = 3;
+    int32 signal_modifiers_raw = 4;
+  }
+}
+
+message ConnectTermsResponse {
   int32 status = 1;
 }
 

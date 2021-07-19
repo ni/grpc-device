@@ -865,6 +865,18 @@ enums = {
             }
         ]
     },
+    'InvertPolarity': {
+        'values': [
+            {
+                'name': 'DO_NOT_INVERT_POLARITY',
+                'value': 0
+            },
+            {
+                'name': 'INVERT_POLARITY',
+                'value': 1
+            }
+        ]
+    },
     'LVDTSensitivityUnits1': {
         'values': [
             {

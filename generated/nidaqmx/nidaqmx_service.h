@@ -54,6 +54,7 @@ public:
   ::grpc::Status CfgWatchdogDOExpirStates(::grpc::ServerContext* context, const CfgWatchdogDOExpirStatesRequest* request, CfgWatchdogDOExpirStatesResponse* response) override;
   ::grpc::Status ClearTask(::grpc::ServerContext* context, const ClearTaskRequest* request, ClearTaskResponse* response) override;
   ::grpc::Status ConfigureLogging(::grpc::ServerContext* context, const ConfigureLoggingRequest* request, ConfigureLoggingResponse* response) override;
+  ::grpc::Status ConnectTerms(::grpc::ServerContext* context, const ConnectTermsRequest* request, ConnectTermsResponse* response) override;
   ::grpc::Status CreateAIAccel4WireDCVoltageChan(::grpc::ServerContext* context, const CreateAIAccel4WireDCVoltageChanRequest* request, CreateAIAccel4WireDCVoltageChanResponse* response) override;
   ::grpc::Status CreateAIAccelChan(::grpc::ServerContext* context, const CreateAIAccelChanRequest* request, CreateAIAccelChanResponse* response) override;
   ::grpc::Status CreateAIAccelChargeChan(::grpc::ServerContext* context, const CreateAIAccelChargeChanRequest* request, CreateAIAccelChargeChanResponse* response) override;

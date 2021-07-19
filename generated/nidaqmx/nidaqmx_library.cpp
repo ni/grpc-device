@@ -47,6 +47,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CfgWatchdogDOExpirStates = reinterpret_cast<CfgWatchdogDOExpirStatesPtr>(shared_library_.get_function_pointer("DAQmxCfgWatchdogDOExpirStates"));
   function_pointers_.ClearTask = reinterpret_cast<ClearTaskPtr>(shared_library_.get_function_pointer("DAQmxClearTask"));
   function_pointers_.ConfigureLogging = reinterpret_cast<ConfigureLoggingPtr>(shared_library_.get_function_pointer("DAQmxConfigureLogging"));
+  function_pointers_.ConnectTerms = reinterpret_cast<ConnectTermsPtr>(shared_library_.get_function_pointer("DAQmxConnectTerms"));
   function_pointers_.CreateAIAccel4WireDCVoltageChan = reinterpret_cast<CreateAIAccel4WireDCVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIAccel4WireDCVoltageChan"));
   function_pointers_.CreateAIAccelChan = reinterpret_cast<CreateAIAccelChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIAccelChan"));
   function_pointers_.CreateAIAccelChargeChan = reinterpret_cast<CreateAIAccelChargeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIAccelChargeChan"));
@@ -508,6 +509,18 @@ int32 NiDAQmxLibrary::ConfigureLogging(TaskHandle task, const char filePath[], i
   return DAQmxConfigureLogging(task, filePath, loggingMode, groupName, operation);
 #else
   return function_pointers_.ConfigureLogging(task, filePath, loggingMode, groupName, operation);
+#endif
+}
+
+int32 NiDAQmxLibrary::ConnectTerms(const char sourceTerminal[], const char destinationTerminal[], int32 signalModifiers)
+{
+  if (!function_pointers_.ConnectTerms) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxConnectTerms.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxConnectTerms(sourceTerminal, destinationTerminal, signalModifiers);
+#else
+  return function_pointers_.ConnectTerms(sourceTerminal, destinationTerminal, signalModifiers);
 #endif
 }
 

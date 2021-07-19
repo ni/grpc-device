@@ -991,6 +991,41 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ConnectTerms(::grpc::ServerContext* context, const ConnectTermsRequest* request, ConnectTermsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto source_terminal = request->source_terminal().c_str();
+      auto destination_terminal = request->destination_terminal().c_str();
+      int32 signal_modifiers;
+      switch (request->signal_modifiers_enum_case()) {
+        case nidaqmx_grpc::ConnectTermsRequest::SignalModifiersEnumCase::kSignalModifiers: {
+          signal_modifiers = static_cast<int32>(request->signal_modifiers());
+          break;
+        }
+        case nidaqmx_grpc::ConnectTermsRequest::SignalModifiersEnumCase::kSignalModifiersRaw: {
+          signal_modifiers = static_cast<int32>(request->signal_modifiers_raw());
+          break;
+        }
+        case nidaqmx_grpc::ConnectTermsRequest::SignalModifiersEnumCase::SIGNAL_MODIFIERS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_modifiers was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConnectTerms(source_terminal, destination_terminal, signal_modifiers);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateAIAccel4WireDCVoltageChan(::grpc::ServerContext* context, const CreateAIAccel4WireDCVoltageChanRequest* request, CreateAIAccel4WireDCVoltageChanResponse* response)
   {
     if (context->IsCancelled()) {

@@ -44,6 +44,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize);
   int32 ClearTask(TaskHandle task);
   int32 ConfigureLogging(TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation);
+  int32 ConnectTerms(const char sourceTerminal[], const char destinationTerminal[], int32 signalModifiers);
   int32 CreateAIAccel4WireDCVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[]);
   int32 CreateAIAccelChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[]);
   int32 CreateAIAccelChargeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[]);
@@ -211,6 +212,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using CfgWatchdogDOExpirStatesPtr = int32 (*)(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize);
   using ClearTaskPtr = int32 (*)(TaskHandle task);
   using ConfigureLoggingPtr = int32 (*)(TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation);
+  using ConnectTermsPtr = int32 (*)(const char sourceTerminal[], const char destinationTerminal[], int32 signalModifiers);
   using CreateAIAccel4WireDCVoltageChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[]);
   using CreateAIAccelChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[]);
   using CreateAIAccelChargeChanPtr = int32 (*)(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[]);
@@ -378,6 +380,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     CfgWatchdogDOExpirStatesPtr CfgWatchdogDOExpirStates;
     ClearTaskPtr ClearTask;
     ConfigureLoggingPtr ConfigureLogging;
+    ConnectTermsPtr ConnectTerms;
     CreateAIAccel4WireDCVoltageChanPtr CreateAIAccel4WireDCVoltageChan;
     CreateAIAccelChanPtr CreateAIAccelChan;
     CreateAIAccelChargeChanPtr CreateAIAccelChargeChan;

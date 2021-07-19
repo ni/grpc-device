@@ -743,6 +743,27 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ConnectTerms': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sourceTerminal',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'destinationTerminal',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InvertPolarity',
+                'name': 'signalModifiers',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateAIAccel4WireDCVoltageChan': {
         'parameters': [
             {

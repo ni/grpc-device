@@ -43,6 +43,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, CfgWatchdogDOExpirStates, (TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize), (override));
   MOCK_METHOD(int32, ClearTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, ConfigureLogging, (TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation), (override));
+  MOCK_METHOD(int32, ConnectTerms, (const char sourceTerminal[], const char destinationTerminal[], int32 signalModifiers), (override));
   MOCK_METHOD(int32, CreateAIAccel4WireDCVoltageChan, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[]), (override));
   MOCK_METHOD(int32, CreateAIAccelChan, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[]), (override));
   MOCK_METHOD(int32, CreateAIAccelChargeChan, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[]), (override));
