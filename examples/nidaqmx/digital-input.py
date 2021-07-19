@@ -24,7 +24,7 @@ RaiseIfError(response)
 task = response.task
 
 try:
-    RaiseIfError(client.CreateDOChan(nidaqmx_types.CreateDOChanRequest(
+    RaiseIfError(client.CreateDIChan(nidaqmx_types.CreateDIChanRequest(
         task=task,
         lines="Dev1/port0",
         line_grouping=nidaqmx_types.LINE_GROUPING_CHAN_FOR_ALL_LINES
