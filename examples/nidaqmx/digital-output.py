@@ -63,8 +63,7 @@ try:
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
-    # TODO - write U32 instead
-    RaiseIfError(client.WriteDigitalU16(nidaqmx_types.WriteDigitalU16Request(
+    RaiseIfError(client.WriteDigitalU32(nidaqmx_types.WriteDigitalU32Request(
         task=task,
         num_samps_per_chan=1,
         auto_start=True,

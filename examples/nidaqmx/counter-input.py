@@ -66,8 +66,12 @@ try:
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
-    RaiseIfError(client.ReadCounterScalarF64(nidaqmx_types.ReadCounterScalarF64Request(
-    )))
+    response = client.ReadCounterScalarF64(nidaqmx_types.ReadCounterScalarF64Request(
+        task=task,
+        timeout=10.0
+    ))
+    RaiseIfError(response)
+    print(f"Frequency: {response.value} Hz")
 finally:
     client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
     client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))

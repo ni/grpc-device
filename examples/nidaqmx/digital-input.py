@@ -61,8 +61,7 @@ try:
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
-    # TODO - read U32 instead
-    response = client.ReadDigitalU16(nidaqmx_types.ReadDigitalU16Request(
+    response = client.ReadDigitalU32(nidaqmx_types.ReadDigitalU32Request(
         task=task,
         num_samps_per_chan=1,
         array_size_in_samps=1,

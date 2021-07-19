@@ -61,7 +61,13 @@ try:
         max_val=10.0,
         units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS
     )))
-    # TODO - configure sample timing
+
+    RaiseIfError(client.CfgSampClkTiming(nidaqmx_types.CfgSampClkTimingRequest(
+        task=task,
+        rate=10000.0,
+        active_edge=nidaqmx_types.EDGE1_RISING,
+        sample_mode=nidaqmx_types.ACQUISITION_TYPE_FINITE_SAMPS,
+        samps_per_chan=1000)))
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
