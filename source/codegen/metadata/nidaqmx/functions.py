@@ -14,6 +14,234 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AddNetworkDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'ipAddress',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'attemptReservation',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'deviceNameOut',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'deviceNameOutBufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'deviceNameOutBufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgAnlgEdgeRefTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Slope1',
+                'name': 'triggerSlope',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerLevel',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgAnlgEdgeStartTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Slope1',
+                'name': 'triggerSlope',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerLevel',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgAnlgMultiEdgeRefTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSources',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSlopeArray',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerLevelArray',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgAnlgMultiEdgeStartTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSources',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSlopeArray',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerLevelArray',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgAnlgWindowRefTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WindowTriggerCondition1',
+                'name': 'triggerWhen',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'windowTop',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'windowBottom',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgAnlgWindowStartTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WindowTriggerCondition1',
+                'name': 'triggerWhen',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'windowTop',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'windowBottom',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CfgBurstHandshakingTimingExportClock': {
         'parameters': [
             {
@@ -143,6 +371,110 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CfgDigEdgeRefTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'triggerEdge',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgDigEdgeStartTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'triggerEdge',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgDigPatternRefTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerPattern',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalPatternCondition1',
+                'name': 'triggerWhen',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgDigPatternStartTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerSource',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerPattern',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalPatternCondition1',
+                'name': 'triggerWhen',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CfgHandshakingTiming': {
         'parameters': [
             {
@@ -181,6 +513,36 @@ functions = {
                 'direction': 'in',
                 'name': 'sampsPerChan',
                 'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgInputBuffer': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgOutputBuffer': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -255,6 +617,86 @@ functions = {
                 'direction': 'in',
                 'name': 'sampsPerChan',
                 'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgWatchdogAOExpirStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'expirStateArray',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'outputTypeArray',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgWatchdogCOExpirStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'expirStateArray',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgWatchdogDOExpirStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'expirStateArray',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -3387,6 +3829,119 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateLinScale': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'name',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'slope',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'yIntercept',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'UnitsPreScaled',
+                'name': 'preScaledUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'scaledUnits',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateMapScale': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'name',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'prescaledMin',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'prescaledMax',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'scaledMin',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'scaledMax',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'UnitsPreScaled',
+                'name': 'preScaledUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'scaledUnits',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreatePolynomialScale': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'name',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'forwardCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numForwardCoeffsIn',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reverseCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numReverseCoeffsIn',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'UnitsPreScaled',
+                'name': 'preScaledUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'scaledUnits',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateTEDSAIAccelChan': {
         'parameters': [
             {
@@ -4115,6 +4670,47 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateTableScale': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'name',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'prescaledVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numPrescaledValsIn',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'scaledVals',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numScaledValsIn',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'UnitsPreScaled',
+                'name': 'preScaledUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'scaledUnits',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateTask': {
         'init_method': True,
         'parameters': [
@@ -4128,6 +4724,137 @@ functions = {
                 'direction': 'out',
                 'name': 'task',
                 'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateWatchdogTimerTask': {
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'is_session_name': True,
+                'name': 'sessionName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalLineState',
+                'name': 'expState',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateWatchdogTimerTaskEx': {
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'is_session_name': True,
+                'name': 'sessionName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DeleteNetworkDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DisableRefTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DisableStartTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DisconnectTerms': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sourceTerminal',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'destinationTerminal',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ExportSignal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Signal',
+                'name': 'signalID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'outputTerminal',
+                'type': 'const char[]'
             }
         ],
         'returns': 'int32'
@@ -4212,6 +4939,51 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetAnalogPowerUpStatesWithOutputType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'stateArray',
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'PowerUpStates',
+                'name': 'channelTypeArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizePtr'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'arraySizePtr',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDigitalLogicFamilyPowerUpState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'logicFamily',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetErrorString': {
         'parameters': [
             {
@@ -4219,6 +4991,25 @@ functions = {
                 'name': 'errorCode',
                 'type': 'int32'
             },
+            {
+                'direction': 'out',
+                'name': 'errorString',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExtendedErrorInfo': {
+        'parameters': [
             {
                 'direction': 'out',
                 'name': 'errorString',
@@ -4334,6 +5125,23 @@ functions = {
                 'direction': 'out',
                 'name': 'isTaskDone',
                 'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'LoadTask': {
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'is_session_name': True,
+                'name': 'sessionName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'task',
+                'type': 'TaskHandle'
             }
         ],
         'returns': 'int32'
@@ -5344,6 +6152,41 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ReserveNetworkDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'overrideReservation',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SelfTestDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetAIChanCalCalDate': {
         'parameters': [
             {
@@ -5424,6 +6267,48 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetAnalogPowerUpStatesWithOutputType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'stateArray',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PowerUpStates',
+                'name': 'channelTypeArray',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDigitalLogicFamilyPowerUpState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicFamily',
+                'name': 'logicFamily',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'StartNewFile': {
         'parameters': [
             {
@@ -5471,6 +6356,26 @@ functions = {
                 'enum': 'TaskControlAction',
                 'name': 'action',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TristateOutputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'outputTerminal',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'UnreserveNetworkDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
             }
         ],
         'returns': 'int32'
