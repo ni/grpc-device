@@ -1,4 +1,4 @@
-# Demonstrates how to acquire a finite amount of data using the DAQ device's internal clock.
+# Demonstrates how to output a single Voltage Update (Sample) to an Analog Output Channel.
 #
 # The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
 # C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
