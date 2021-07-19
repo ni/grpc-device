@@ -44,22 +44,16 @@ def get_enum_definitions(enums_to_define, enums):
     enum_definitions.update({enum_name: enum_definition})
   return enum_definitions
 
-def get_message_parameter_definitions(parameters, is_request_message):
+def get_message_parameter_definitions(parameters):
   """Get simplified list of all parameters that can be used for definiing request/respones messages in proto file."""
   parameter_definitions = []
   used_indexes = []
-  if not is_request_message:
-    parameter_definitions.append({
-      "name": "status",
-      "type": "int32",
-      "grpc_field_number": "1"
-    })
-    used_indexes = [1]
   for parameter in parameters:
     is_array = common_helpers.is_array(parameter["type"])
     parameter_name = common_helpers.camel_to_snake(parameter["name"])
     parameter_type = get_parameter_type(parameter)
     if common_helpers.is_enum(parameter):
+      is_request_message = parameter['direction'] == 'in'
       enum_parameters = get_enum_parameters(parameter, parameter_name, parameter_type, is_array, used_indexes)
       if is_request_message:
         # use oneof for enums in request messages
@@ -109,6 +103,8 @@ def get_enum_parameters(parameter, parameter_name, parameter_type, is_array, use
 
 
 def get_parameter_type(parameter):
+  if 'grpc_type' not in parameter:
+    raise KeyError(f"grpc_type not in {parameter['name']} with {parameter['type']}")
   return parameter['grpc_type']
 
 
@@ -125,6 +121,32 @@ def get_parameters(function):
       session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString', 'grpc_type': 'string'}
       input_parameters.insert(0, session_name_param)
 
-  output_parameters = [p for p in parameter_array if common_helpers.is_output_parameter(p)]
+  default_status_param = {'name': 'status', 'type': 'int32', 'grpc_type': 'int32'}
+  output_parameters = [default_status_param]
+
+  callback_parameters = get_callback_output_params(function)
+
+  if callback_parameters:
+    output_parameters.extend(callback_parameters)
+  else:
+    output_parameters.extend(
+      [p for p in parameter_array if common_helpers.is_output_parameter(p)]
+    )
 
   return (input_parameters, output_parameters)
+
+
+def get_callback_output_params(function):
+  """
+  Looks for a parameter that specifies callback_params and returns those params
+  These will be used as the outputs of a streaming response.
+  """
+  params = [p for p in function['parameters'] if 'callback_params' in p]
+  if params:
+    return params[0]['callback_params']
+  else:
+    return []
+
+
+def get_streaming_response_qualifier(function):
+  return 'stream ' if common_helpers.has_streaming_response(function) else ''

@@ -125,6 +125,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadDigitalU16 = reinterpret_cast<ReadDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU16"));
   function_pointers_.ReadDigitalU32 = reinterpret_cast<ReadDigitalU32Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU32"));
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
+  function_pointers_.RegisterDoneEvent = reinterpret_cast<RegisterDoneEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterDoneEvent"));
   function_pointers_.SetAIChanCalCalDate = reinterpret_cast<SetAIChanCalCalDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalCalDate"));
   function_pointers_.SetAIChanCalExpDate = reinterpret_cast<SetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalExpDate"));
   function_pointers_.StartNewFile = reinterpret_cast<StartNewFilePtr>(shared_library_.get_function_pointer("DAQmxStartNewFile"));
@@ -1406,6 +1407,18 @@ int32 NiDAQmxLibrary::ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, floa
   return DAQmxReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
 #else
   return function_pointers_.ReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+#endif
+}
+
+int32 NiDAQmxLibrary::RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.RegisterDoneEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterDoneEvent.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxRegisterDoneEvent(task, options, callbackFunction, callbackData);
+#else
+  return function_pointers_.RegisterDoneEvent(task, options, callbackFunction, callbackData);
 #endif
 }
 

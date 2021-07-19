@@ -28,6 +28,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.OutputArraysWithNarrowIntegerTypes = reinterpret_cast<OutputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithNarrowIntegerTypes"));
   function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
   function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
+  function_pointers_.RegisterCallback = reinterpret_cast<RegisterCallbackPtr>(shared_library_.get_function_pointer("niFakeNonIvi_RegisterCallback"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -122,6 +123,18 @@ int32 NiFakeNonIviLibrary::OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u
   return niFakeNonIvi_OutputArrayOfBytes(numberOfU8Samples, u8Data);
 #else
   return function_pointers_.OutputArrayOfBytes(numberOfU8Samples, u8Data);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::RegisterCallback(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.RegisterCallback) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_RegisterCallback.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_RegisterCallback(inputData, callbackFunction, callbackData);
+#else
+  return function_pointers_.RegisterCallback(inputData, callbackFunction, callbackData);
 #endif
 }
 

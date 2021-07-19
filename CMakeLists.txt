@@ -266,6 +266,7 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 
 add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/unit/callback_router_tests.cpp"
     "source/tests/unit/session_resource_repository_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"

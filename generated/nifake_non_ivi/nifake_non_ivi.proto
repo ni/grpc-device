@@ -23,6 +23,7 @@ service NiFakeNonIvi {
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
   rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
   rpc OutputArrayOfBytes(OutputArrayOfBytesRequest) returns (OutputArrayOfBytesResponse);
+  rpc RegisterCallback(RegisterCallbackRequest) returns (RegisterCallbackResponse);
 }
 
 enum NiFakeNonIviAttributes {
@@ -93,5 +94,14 @@ message OutputArrayOfBytesRequest {
 message OutputArrayOfBytesResponse {
   int32 status = 1;
   bytes u8_data = 2;
+}
+
+message RegisterCallbackRequest {
+  int32 input_data = 1;
+}
+
+message RegisterCallbackResponse {
+  int32 status = 1;
+  int32 echo_data = 2;
 }
 

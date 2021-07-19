@@ -119,6 +119,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
+  virtual int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData) = 0;
   virtual int32 SetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
   virtual int32 SetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
   virtual int32 StartNewFile(TaskHandle task, const char filePath[]) = 0;
