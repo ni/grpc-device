@@ -43,29 +43,27 @@ TestStatus fail_on_callback(...)
 
 TEST(CallbackRouterTests, IntCallbackHandlerRegistered_HandleCallback_CallsHandler)
 {
-  auto& router = IntCallbackRouter::instance();
   MockIntHandler handler;
   const int32_t CALLBACK_VAL = 0x1234;
   auto registration = IntCallbackRouter::register_handler(handler.AsStdFunction());
 
   EXPECT_CALLBACK(handler, CALLBACK_VAL);
-  auto result = router.handle_callback(CALLBACK_VAL, registration.token());
+  auto result = IntCallbackRouter::handle_callback(CALLBACK_VAL, registration.token());
 
   EXPECT_EQ(TEST_SUCCESS, result);
 }
 
 TEST(CallbackRouterTests, IntCallbackHandlerRegistered_HandleCallbackMultipleTimes_CallsHandlerMultipleTimes)
 {
-  auto& router = IntCallbackRouter::instance();
   MockIntHandler handler;
   auto registration = IntCallbackRouter::register_handler(handler.AsStdFunction());
 
   const int32_t FIRST_CALLBACK_VAL = 0x1234;
   EXPECT_CALLBACK(handler, FIRST_CALLBACK_VAL);
-  auto first_result = router.handle_callback(FIRST_CALLBACK_VAL, registration.token());
+  auto first_result = IntCallbackRouter::handle_callback(FIRST_CALLBACK_VAL, registration.token());
   const int32_t SECOND_CALLBACK_VAL = 0x1234;
   EXPECT_CALLBACK(handler, SECOND_CALLBACK_VAL);
-  auto second_result = router.handle_callback(SECOND_CALLBACK_VAL, registration.token());
+  auto second_result = IntCallbackRouter::handle_callback(SECOND_CALLBACK_VAL, registration.token());
 
   EXPECT_EQ(TEST_SUCCESS, first_result);
   EXPECT_EQ(TEST_SUCCESS, second_result);
@@ -73,32 +71,29 @@ TEST(CallbackRouterTests, IntCallbackHandlerRegistered_HandleCallbackMultipleTim
 
 TEST(CallbackRouterTests, BoolAndStringCallbackHandlerRegistered_HandleCallback_CallsHandler)
 {
-  auto& router = BoolAndStringCallbackRouter::instance();
   MockBoolAndStringHandler handler;
   auto registration = BoolAndStringCallbackRouter::register_handler(handler.AsStdFunction());
 
   const bool CALLBACK_BOOL = true;
   const std::string CALLBACK_STRING = "HelloCallback";
   EXPECT_CALLBACK(handler, CALLBACK_BOOL, CALLBACK_STRING);
-  auto result = router.handle_callback(CALLBACK_BOOL, CALLBACK_STRING, registration.token());
+  auto result = BoolAndStringCallbackRouter::handle_callback(CALLBACK_BOOL, CALLBACK_STRING, registration.token());
 
   EXPECT_EQ(TEST_SUCCESS, result);
 }
 
 TEST(CallbackRouterTests, BoolAndStringCallbackHandlerRegistered_HandleCallbackWithBogusToken_DoesNotCallHandler)
 {
-  auto& router = BoolAndStringCallbackRouter::instance();
   auto registration = BoolAndStringCallbackRouter::register_handler(
       fail_on_callback);
 
-  auto result = router.handle_callback(false, "MessageToNoOne", BOGUS_TOKEN);
+  auto result = BoolAndStringCallbackRouter::handle_callback(false, "MessageToNoOne", BOGUS_TOKEN);
 
   EXPECT_EQ(TEST_SUCCESS, result);
 }
 
 TEST(CallbackRouterTests, MultipleHandlersRegistered_HandleOneCallback_SignalsCorrectHandler)
 {
-  auto& router = BoolAndStringCallbackRouter::instance();
   MockBoolAndStringHandler handler;
   auto first_registration = BoolAndStringCallbackRouter::register_handler(
       fail_on_callback);
@@ -108,14 +103,13 @@ TEST(CallbackRouterTests, MultipleHandlersRegistered_HandleOneCallback_SignalsCo
   const bool CALLBACK_BOOL = true;
   const std::string CALLBACK_STRING = "HelloSecondHandler";
   EXPECT_CALLBACK(handler, CALLBACK_BOOL, CALLBACK_STRING);
-  auto result = router.handle_callback(CALLBACK_BOOL, CALLBACK_STRING, second_registration.token());
+  auto result = BoolAndStringCallbackRouter::handle_callback(CALLBACK_BOOL, CALLBACK_STRING, second_registration.token());
 
   EXPECT_EQ(TEST_SUCCESS, result);
 }
 
 TEST(CallbackRouterTests, MultipleHandlersRegistered_HandleBothCallbacks_SignalsBothHandler)
 {
-  auto& router = BoolAndStringCallbackRouter::instance();
   MockBoolAndStringHandler first_handler;
   MockBoolAndStringHandler second_handler;
   auto first_registration = BoolAndStringCallbackRouter::register_handler(
@@ -126,11 +120,11 @@ TEST(CallbackRouterTests, MultipleHandlersRegistered_HandleBothCallbacks_Signals
   const bool FIRST_CALLBACK_BOOL = false;
   const std::string FIRST_CALLBACK_STRING = "HelloFirstHandler";
   EXPECT_CALLBACK(first_handler, FIRST_CALLBACK_BOOL, FIRST_CALLBACK_STRING);
-  auto first_result = router.handle_callback(FIRST_CALLBACK_BOOL, FIRST_CALLBACK_STRING, first_registration.token());
+  auto first_result = BoolAndStringCallbackRouter::handle_callback(FIRST_CALLBACK_BOOL, FIRST_CALLBACK_STRING, first_registration.token());
   const bool SECOND_CALLBACK_BOOL = true;
   const std::string SECOND_CALLBACK_STRING = "HelloSecondHandler";
   EXPECT_CALLBACK(second_handler, SECOND_CALLBACK_BOOL, SECOND_CALLBACK_STRING);
-  auto second_result = router.handle_callback(SECOND_CALLBACK_BOOL, SECOND_CALLBACK_STRING, second_registration.token());
+  auto second_result = BoolAndStringCallbackRouter::handle_callback(SECOND_CALLBACK_BOOL, SECOND_CALLBACK_STRING, second_registration.token());
 
   EXPECT_EQ(TEST_SUCCESS, first_result);
   EXPECT_EQ(TEST_SUCCESS, second_result);
@@ -138,7 +132,6 @@ TEST(CallbackRouterTests, MultipleHandlersRegistered_HandleBothCallbacks_Signals
 
 TEST(CallbackRouterTests, CallbackRegisteredAndUnregistered_HandleCallback_DoesNotCallHandler)
 {
-  auto& router = BoolAndStringCallbackRouter::instance();
   BoolAndStringCallbackRouter::Token token;
   {
     auto registration = BoolAndStringCallbackRouter::register_handler(
@@ -146,7 +139,7 @@ TEST(CallbackRouterTests, CallbackRegisteredAndUnregistered_HandleCallback_DoesN
     token = registration.token();
   }
 
-  auto result = router.handle_callback(false, "MessageToNoOne", token);
+  auto result = BoolAndStringCallbackRouter::handle_callback(false, "MessageToNoOne", token);
 
   EXPECT_EQ(TEST_SUCCESS, result);
 }

@@ -1,6 +1,8 @@
 #include <nidaqmx/nidaqmx_service.h>
 #include <server/callback_router.h>
 
+#include <thread>
+
 namespace nidaqmx_grpc {
 
 using DoneEventCallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32>;

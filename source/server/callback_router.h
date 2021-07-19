@@ -18,16 +18,24 @@ class CallbackRouter {
   using Handler = std::function<TReturn(TArgs...)>;
   using Token = void*;
 
+  // Move-only RAII type exposed through register_handler, to auto-unregister_handler when leaving scope.
   class CallbackRegistration {
    public:
+    CallbackRegistration() : token_(0) {}
     CallbackRegistration(Token token) : token_(token) {}
     CallbackRegistration(const CallbackRegistration&) = delete;
     CallbackRegistration& operator=(const CallbackRegistration&) = delete;
-    CallbackRegistration(CallbackRegistration&&) = delete;
-    CallbackRegistration& operator=(CallbackRegistration&&) = delete;
+    CallbackRegistration(CallbackRegistration&& rhs) : token_(rhs.token_) { rhs.token_ = reinterpret_cast<Token>(0); }
+    CallbackRegistration& operator=(CallbackRegistration&& rhs)
+    {
+      std::swap(token_, rhs.token_);
+      return *this;
+    }
     ~CallbackRegistration()
     {
-      instance().unregister_handler(token_);
+      if (token_) {
+        instance().unregister_handler(token_);
+      }
     }
 
     Token token()
@@ -38,12 +46,6 @@ class CallbackRouter {
    private:
     Token token_;
   };
-
-  static CallbackRouter& instance()
-  {
-    static CallbackRouter instance;
-    return instance;
-  }
 
   static CallbackRegistration register_handler(const Handler& handler)
   {
@@ -62,6 +64,13 @@ class CallbackRouter {
   CallbackRouter& operator=(const CallbackRouter&) = delete;
   CallbackRouter(CallbackRouter&&) = delete;
   CallbackRouter& operator=(CallbackRouter&&) = delete;
+
+  static CallbackRouter& instance()
+  {
+    static CallbackRouter instance;
+    return instance;
+  }
+
   Token allocate_token_for_handler(const Handler& handler)
   {
     LockGuard guard(mutex_);
@@ -69,6 +78,7 @@ class CallbackRouter {
     handlers_[token] = handler;
     return token;
   }
+
   TReturn route_callback_to_handler(TArgs... args, Token token)
   {
     Handler handler;
