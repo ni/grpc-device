@@ -21,7 +21,8 @@ config = {
         'int16': 'int32',
         'uInt16': 'uint32',
         'int8': 'int32',
-        'uInt8[]': 'bytes'
+        'uInt8[]': 'bytes',
+        'uInt64': 'uint64'
     },
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [

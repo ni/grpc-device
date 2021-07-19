@@ -99,6 +99,31 @@ enums = {
             }
         ]
     },
+    'AcquisitionType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Acquire or generate a finite number of samples.'
+                },
+                'name': 'FINITE_SAMPS',
+                'value': 10178
+            },
+            {
+                'documentation': {
+                    'description': 'Acquire or generate samples until you stop the task.'
+                },
+                'name': 'CONT_SAMPS',
+                'value': 10123
+            },
+            {
+                'documentation': {
+                    'description': ' Acquire or generate samples continuously using hardware timing without a  buffer. Hardware timed single point sample mode is supported only for the  sample clock and change detection timing types.'
+                },
+                'name': 'HW_TIMED_SINGLE_POINT',
+                'value': 12522
+            }
+        ]
+    },
     'AngleUnits1': {
         'values': [
             {
@@ -895,6 +920,81 @@ enums = {
             }
         ]
     },
+    'LoggingMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Disable logging for the task.'
+                },
+                'name': 'OFF',
+                'value': 10231
+            },
+            {
+                'documentation': {
+                    'description': ' Enable logging for the task. You cannot read data using an NI-DAQmx Read  function when using this mode. If you require access to the data, read from the  TDMS file.'
+                },
+                'name': 'LOG',
+                'value': 15844
+            },
+            {
+                'documentation': {
+                    'description': ' Enable both logging and reading data for the task. You must use an NI-DAQmx  Read function to read samples for NI-DAQmx to stream them to disk.'
+                },
+                'name': 'LOG_AND_READ',
+                'value': 15842
+            }
+        ]
+    },
+    'LoggingOperation': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Open an existing TDMS file, and append data to that file. If the file does not  exist, NI-DAQmx returns an error.'
+                },
+                'name': 'OPEN',
+                'value': 10437
+            },
+            {
+                'documentation': {
+                    'description': ' Open an existing TDMS file, and append data to that file. If the file does not  exist, NI-DAQmx creates a new TDMS file.'
+                },
+                'name': 'OPEN_OR_CREATE',
+                'value': 15846
+            },
+            {
+                'documentation': {
+                    'description': 'Create a new TDMS file, or replace an existing TDMS file.'
+                },
+                'name': 'CREATE_OR_REPLACE',
+                'value': 15847
+            },
+            {
+                'documentation': {
+                    'description': ' Create a new TDMS file. If the file already exists, NI-DAQmx returns an error.'
+                },
+                'name': 'CREATE',
+                'value': 15848
+            }
+        ]
+    },
+    'Polarity2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'High state is the active state.'
+                },
+                'name': 'ACTIVE_HIGH',
+                'value': 10095
+            },
+            {
+                'documentation': {
+                    'description': 'Low state is the active state.'
+                },
+                'name': 'ACTIVE_LOW',
+                'value': 10096
+            }
+        ]
+    },
     'PressureUnits': {
         'values': [
             {
@@ -1050,6 +1150,31 @@ enums = {
                 },
                 'name': 'QUARTER_BRIDGE_II',
                 'value': 10272
+            }
+        ]
+    },
+    'StrainGageRosetteType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' A rectangular rosette consists of three strain gages, each separated by a 45  degree angle.'
+                },
+                'name': 'RECTANGULAR_ROSETTE',
+                'value': 15968
+            },
+            {
+                'documentation': {
+                    'description': ' A delta rosette consists of three strain gages, each separated by a 60 degree  angle.'
+                },
+                'name': 'DELTA_ROSETTE',
+                'value': 15969
+            },
+            {
+                'documentation': {
+                    'description': ' A tee rosette consists of two gages oriented at 90 degrees with respect to each  other.'
+                },
+                'name': 'TEE_ROSETTE',
+                'value': 15970
             }
         ]
     },
