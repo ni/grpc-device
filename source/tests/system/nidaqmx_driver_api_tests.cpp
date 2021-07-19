@@ -105,9 +105,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ClearTask(&context, request, &response);
   }
 
-  ::grpc::Status create_ai_voltage_chan(double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
-  {
-    ::grpc::ClientContext context;
+  CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "") {
     CreateAIVoltageChanRequest request;
     set_request_session_id(request);
     request.set_physical_channel("gRPCSystemTestDAQ/ai0");
@@ -115,8 +113,26 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
     request.set_min_val(min_val);
     request.set_max_val(max_val);
-    request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
+    if (custom_scale_name.empty()) {
+      request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
+    }
+    else {
+      request.set_custom_scale_name(custom_scale_name);
+      request.set_units(VoltageUnits2::VOLTAGE_UNITS2_FROM_CUSTOM_SCALE);
+    }
+    return request;
+  }
+
+  ::grpc::Status create_ai_voltage_chan(const CreateAIVoltageChanRequest& request, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
+  {
+    ::grpc::ClientContext context;
     return stub()->CreateAIVoltageChan(&context, request, &response);
+  }
+
+  ::grpc::Status create_ai_voltage_chan(double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
+  {
+    auto request = create_ai_voltage_request(min_val, max_val);
+    return create_ai_voltage_chan(request, response);
   }
 
   ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
@@ -300,6 +316,38 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CfgSampClkTiming(&context, request, &response);
   }
 
+  ::grpc::Status cfg_input_buffer(CfgInputBufferResponse& response) {
+    ::grpc::ClientContext context;
+    CfgInputBufferRequest request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(1024U);
+    return stub()->CfgInputBuffer(&context, request, &response);
+  }
+
+  ::grpc::Status cfg_output_buffer(CfgOutputBufferResponse& response) {
+    ::grpc::ClientContext context;
+    CfgOutputBufferRequest request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(1024U);
+    return stub()->CfgOutputBuffer(&context, request, &response);
+  }
+
+  ::grpc::Status self_test_device(SelfTestDeviceResponse& response) {
+    ::grpc::ClientContext context;
+    SelfTestDeviceRequest request;
+    request.set_device_name(DEVICE_NAME);
+    return stub()->SelfTestDevice(&context, request, &response);
+  }
+
+  ::grpc::Status create_lin_scale(const std::string& name, double slope, CreateLinScaleResponse& response) {
+    ::grpc::ClientContext context;
+    CreateLinScaleRequest request;
+    request.set_name(name);
+    request.set_slope(slope);
+    request.set_pre_scaled_units(UnitsPreScaled::UNITS_PRE_SCALED_VOLTS);
+    return stub()->CreateLinScale(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -394,23 +442,51 @@ TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadAIData_ReturnsDataInExpectedRange)
 {
-  const double AI_MIN = 1.0;
-  const double AI_MAX = 10.0;
+  const auto AI_MIN = 1.0;
+  const auto AI_MAX = 10.0;
+  const auto NUM_SAMPS = 100;
   create_ai_voltage_chan(AI_MIN, AI_MAX);
 
   StartTaskResponse start_response;
   auto start_status = start_task(start_response);
   ReadAnalogF64Response read_response;
-  auto read_status = read_analog_f64(100, 100, read_response);
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
   StopTaskResponse stop_response;
   auto stop_status = stop_task(stop_response);
 
-  EXPECT_EQ(read_response.read_array_size(), 100);
+  EXPECT_EQ(read_response.read_array_size(), NUM_SAMPS);
   EXPECT_THAT(read_response.read_array(), Each(Not(Lt(AI_MIN))));
   EXPECT_THAT(read_response.read_array(), Each(Not(Gt(AI_MAX))));
   EXPECT_SUCCESS(start_status, start_response);
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_SUCCESS(stop_status, stop_response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannelWithLinearScale_ReadAIData_ReturnsDataInExpectedRange)
+{
+  const auto SCALE_NAME = std::string("TestScale");
+  const auto AI_MIN = 1.0;
+  const auto AI_MAX = 2.0;
+  const auto NUM_SAMPS = 1000;
+  CreateLinScaleResponse scale_response;
+  auto scale_status = create_lin_scale(SCALE_NAME, 0.5, scale_response);
+  EXPECT_SUCCESS(scale_status, scale_response);
+  auto request = create_ai_voltage_request(AI_MIN, AI_MAX, SCALE_NAME);
+  CreateAIVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ai_voltage_chan(request, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  ReadAnalogF64Response read_response;
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.read_array_size(), NUM_SAMPS);
+  // NOTE: linear scaling on simulated channels isn't really observable.
+  // Either way you get a sine wave filling the min/max range.
+  EXPECT_THAT(read_response.read_array(), Each(Not(Lt(AI_MIN))));
+  EXPECT_THAT(read_response.read_array(), Each(Not(Gt(AI_MAX))));
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
@@ -518,6 +594,34 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
   EXPECT_SUCCESS(config_status, response);
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(NUM_SAMPS, read_response.samps_per_chan_read());
+}
+
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ConfigureInputBuffer_Succeeds)
+{
+  create_ai_voltage_chan(0.0, 1.0);
+
+  CfgInputBufferResponse response;
+  auto status = cfg_input_buffer(response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_ConfigureOutputBuffer_Succeeds)
+{
+  create_ao_voltage_chan(0.0, 1.0);
+
+  CfgOutputBufferResponse response;
+  auto status = cfg_output_buffer(response);
+  
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, SelfTestDevice_Succeeds)
+{
+  SelfTestDeviceResponse response;
+  auto status = self_test_device(response);
+  
+  EXPECT_SUCCESS(status, response);
 }
 }  // namespace system
 }  // namespace tests
