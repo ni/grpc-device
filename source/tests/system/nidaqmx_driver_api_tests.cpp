@@ -495,11 +495,10 @@ TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)
   start_task();
 
   ReadBinaryI32Response response;
-  const int32 NUM_SAMPS = 4;
+  const auto NUM_SAMPS = 4;
   auto status = read_binary_i32(NUM_SAMPS, response);
   stop_task();
 
-  EXPECT_EQ(0, status.error_code());
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(NUM_SAMPS, response.samps_per_chan_read());
 }
@@ -512,10 +511,13 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
   auto config_status = cfg_samp_clk_timing(response);
   start_task();
   ReadAnalogF64Response read_response;
-  auto read_status = read_analog_f64(10, 10, read_response);
+  const auto NUM_SAMPS = 10;
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+  stop_task();
 
   EXPECT_SUCCESS(config_status, response);
   EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(NUM_SAMPS, read_response.samps_per_chan_read());
 }
 }  // namespace system
 }  // namespace tests
