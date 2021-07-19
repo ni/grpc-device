@@ -6,6 +6,18 @@ The server and the client APIs allow NI's instrumentation to be accessed and con
 
 For more detailed information on the server and API design refer to the [wiki](https://github.com/ni/grpc-device/wiki).
 
+## Supported NI drivers
+
+|NI Driver|Minimum Version Tested (Windows)|Minimum Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Minimum Version Tested (Linux RT)|
+| :------------------------ | :------| :------------ | :------------ |
+| NI-DCPOWER                | 20.6.0 | 20.1.0        | 20.7.0        |
+| NI-DIGITAL PATTERN DRIVER | 20.6.0 | Not Supported | Not Supported |
+| NI-DMM                    | 20.0.0 | 20.1.0        | 20.5.0        |
+| NI-FGEN                   | 20.0.0 | Not Supported | Not Supported |
+| NI-SCOPE                  | 20.7.0 | 20.1.0        | 20.7.0        |
+| NI-SWITCH                 | 20.0.0 | 20.1.0        | 20.5.0        |
+| NI-TCLK                   | 20.7.0 | 20.0.0        | 20.7.0        |
+
 ## Build Status
 ![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
 ![NI Linux Real-Time Build](https://github.com/ni/grpc-device/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
