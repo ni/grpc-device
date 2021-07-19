@@ -1087,9 +1087,8 @@ TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnOscillatorWithFrequency_Returns
 
 TEST_F(NiSyncDriver6683Test, SetTimeWithValidTimeSource_ReturnsSuccess)
 {
-  // SetTime isn't implemented on Linux RT, yet.
   #if defined(__GNUC__)
-  GTEST_SKIP();	
+  GTEST_SKIP() << "SetTime isn't implemented on Linux RT, see AzDo Feature #1418853";
   #endif
 
   ViStatus viStatus;
@@ -1107,9 +1106,8 @@ TEST_F(NiSyncDriver6683Test, SetTimeWithValidTimeSource_ReturnsSuccess)
 
 TEST_F(NiSyncDriver6683Test, SetTimeWithInvalidTimeSource_ReturnsError)
 {
-  // SetTime isn't implemented on Linux RT, yet.
   #if defined(__GNUC__)
-  GTEST_SKIP();
+  GTEST_SKIP() << "SetTime isn't implemented on Linux RT, see AzDo Feature #1418853";
   #endif
 
   ViStatus viStatus;
