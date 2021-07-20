@@ -55,6 +55,7 @@ public:
   ::grpc::Status ClearTask(::grpc::ServerContext* context, const ClearTaskRequest* request, ClearTaskResponse* response) override;
   ::grpc::Status ConfigureLogging(::grpc::ServerContext* context, const ConfigureLoggingRequest* request, ConfigureLoggingResponse* response) override;
   ::grpc::Status ConnectTerms(::grpc::ServerContext* context, const ConnectTermsRequest* request, ConnectTermsResponse* response) override;
+  ::grpc::Status ControlWatchdogTask(::grpc::ServerContext* context, const ControlWatchdogTaskRequest* request, ControlWatchdogTaskResponse* response) override;
   ::grpc::Status CreateAIAccel4WireDCVoltageChan(::grpc::ServerContext* context, const CreateAIAccel4WireDCVoltageChanRequest* request, CreateAIAccel4WireDCVoltageChanResponse* response) override;
   ::grpc::Status CreateAIAccelChan(::grpc::ServerContext* context, const CreateAIAccelChanRequest* request, CreateAIAccelChanResponse* response) override;
   ::grpc::Status CreateAIAccelChargeChan(::grpc::ServerContext* context, const CreateAIAccelChargeChanRequest* request, CreateAIAccelChargeChanResponse* response) override;
@@ -65,6 +66,7 @@ public:
   ::grpc::Status CreateAIForceBridgePolynomialChan(::grpc::ServerContext* context, const CreateAIForceBridgePolynomialChanRequest* request, CreateAIForceBridgePolynomialChanResponse* response) override;
   ::grpc::Status CreateAIForceBridgeTableChan(::grpc::ServerContext* context, const CreateAIForceBridgeTableChanRequest* request, CreateAIForceBridgeTableChanResponse* response) override;
   ::grpc::Status CreateAIForceBridgeTwoPointLinChan(::grpc::ServerContext* context, const CreateAIForceBridgeTwoPointLinChanRequest* request, CreateAIForceBridgeTwoPointLinChanResponse* response) override;
+  ::grpc::Status CreateAIForceIEPEChan(::grpc::ServerContext* context, const CreateAIForceIEPEChanRequest* request, CreateAIForceIEPEChanResponse* response) override;
   ::grpc::Status CreateAIFreqVoltageChan(::grpc::ServerContext* context, const CreateAIFreqVoltageChanRequest* request, CreateAIFreqVoltageChanResponse* response) override;
   ::grpc::Status CreateAIMicrophoneChan(::grpc::ServerContext* context, const CreateAIMicrophoneChanRequest* request, CreateAIMicrophoneChanResponse* response) override;
   ::grpc::Status CreateAIPosEddyCurrProxProbeChan(::grpc::ServerContext* context, const CreateAIPosEddyCurrProxProbeChanRequest* request, CreateAIPosEddyCurrProxProbeChanResponse* response) override;
@@ -73,9 +75,14 @@ public:
   ::grpc::Status CreateAIPressureBridgePolynomialChan(::grpc::ServerContext* context, const CreateAIPressureBridgePolynomialChanRequest* request, CreateAIPressureBridgePolynomialChanResponse* response) override;
   ::grpc::Status CreateAIPressureBridgeTableChan(::grpc::ServerContext* context, const CreateAIPressureBridgeTableChanRequest* request, CreateAIPressureBridgeTableChanResponse* response) override;
   ::grpc::Status CreateAIPressureBridgeTwoPointLinChan(::grpc::ServerContext* context, const CreateAIPressureBridgeTwoPointLinChanRequest* request, CreateAIPressureBridgeTwoPointLinChanResponse* response) override;
+  ::grpc::Status CreateAIRTDChan(::grpc::ServerContext* context, const CreateAIRTDChanRequest* request, CreateAIRTDChanResponse* response) override;
   ::grpc::Status CreateAIResistanceChan(::grpc::ServerContext* context, const CreateAIResistanceChanRequest* request, CreateAIResistanceChanResponse* response) override;
   ::grpc::Status CreateAIRosetteStrainGageChan(::grpc::ServerContext* context, const CreateAIRosetteStrainGageChanRequest* request, CreateAIRosetteStrainGageChanResponse* response) override;
   ::grpc::Status CreateAIStrainGageChan(::grpc::ServerContext* context, const CreateAIStrainGageChanRequest* request, CreateAIStrainGageChanResponse* response) override;
+  ::grpc::Status CreateAITempBuiltInSensorChan(::grpc::ServerContext* context, const CreateAITempBuiltInSensorChanRequest* request, CreateAITempBuiltInSensorChanResponse* response) override;
+  ::grpc::Status CreateAIThrmcplChan(::grpc::ServerContext* context, const CreateAIThrmcplChanRequest* request, CreateAIThrmcplChanResponse* response) override;
+  ::grpc::Status CreateAIThrmstrChanIex(::grpc::ServerContext* context, const CreateAIThrmstrChanIexRequest* request, CreateAIThrmstrChanIexResponse* response) override;
+  ::grpc::Status CreateAIThrmstrChanVex(::grpc::ServerContext* context, const CreateAIThrmstrChanVexRequest* request, CreateAIThrmstrChanVexResponse* response) override;
   ::grpc::Status CreateAITorqueBridgePolynomialChan(::grpc::ServerContext* context, const CreateAITorqueBridgePolynomialChanRequest* request, CreateAITorqueBridgePolynomialChanResponse* response) override;
   ::grpc::Status CreateAITorqueBridgeTableChan(::grpc::ServerContext* context, const CreateAITorqueBridgeTableChanRequest* request, CreateAITorqueBridgeTableChanResponse* response) override;
   ::grpc::Status CreateAITorqueBridgeTwoPointLinChan(::grpc::ServerContext* context, const CreateAITorqueBridgeTwoPointLinChanRequest* request, CreateAITorqueBridgeTwoPointLinChanResponse* response) override;
@@ -113,12 +120,17 @@ public:
   ::grpc::Status CreateTEDSAIBridgeChan(::grpc::ServerContext* context, const CreateTEDSAIBridgeChanRequest* request, CreateTEDSAIBridgeChanResponse* response) override;
   ::grpc::Status CreateTEDSAICurrentChan(::grpc::ServerContext* context, const CreateTEDSAICurrentChanRequest* request, CreateTEDSAICurrentChanResponse* response) override;
   ::grpc::Status CreateTEDSAIForceBridgeChan(::grpc::ServerContext* context, const CreateTEDSAIForceBridgeChanRequest* request, CreateTEDSAIForceBridgeChanResponse* response) override;
+  ::grpc::Status CreateTEDSAIForceIEPEChan(::grpc::ServerContext* context, const CreateTEDSAIForceIEPEChanRequest* request, CreateTEDSAIForceIEPEChanResponse* response) override;
   ::grpc::Status CreateTEDSAIMicrophoneChan(::grpc::ServerContext* context, const CreateTEDSAIMicrophoneChanRequest* request, CreateTEDSAIMicrophoneChanResponse* response) override;
   ::grpc::Status CreateTEDSAIPosLVDTChan(::grpc::ServerContext* context, const CreateTEDSAIPosLVDTChanRequest* request, CreateTEDSAIPosLVDTChanResponse* response) override;
   ::grpc::Status CreateTEDSAIPosRVDTChan(::grpc::ServerContext* context, const CreateTEDSAIPosRVDTChanRequest* request, CreateTEDSAIPosRVDTChanResponse* response) override;
   ::grpc::Status CreateTEDSAIPressureBridgeChan(::grpc::ServerContext* context, const CreateTEDSAIPressureBridgeChanRequest* request, CreateTEDSAIPressureBridgeChanResponse* response) override;
+  ::grpc::Status CreateTEDSAIRTDChan(::grpc::ServerContext* context, const CreateTEDSAIRTDChanRequest* request, CreateTEDSAIRTDChanResponse* response) override;
   ::grpc::Status CreateTEDSAIResistanceChan(::grpc::ServerContext* context, const CreateTEDSAIResistanceChanRequest* request, CreateTEDSAIResistanceChanResponse* response) override;
   ::grpc::Status CreateTEDSAIStrainGageChan(::grpc::ServerContext* context, const CreateTEDSAIStrainGageChanRequest* request, CreateTEDSAIStrainGageChanResponse* response) override;
+  ::grpc::Status CreateTEDSAIThrmcplChan(::grpc::ServerContext* context, const CreateTEDSAIThrmcplChanRequest* request, CreateTEDSAIThrmcplChanResponse* response) override;
+  ::grpc::Status CreateTEDSAIThrmstrChanIex(::grpc::ServerContext* context, const CreateTEDSAIThrmstrChanIexRequest* request, CreateTEDSAIThrmstrChanIexResponse* response) override;
+  ::grpc::Status CreateTEDSAIThrmstrChanVex(::grpc::ServerContext* context, const CreateTEDSAIThrmstrChanVexRequest* request, CreateTEDSAIThrmstrChanVexResponse* response) override;
   ::grpc::Status CreateTEDSAITorqueBridgeChan(::grpc::ServerContext* context, const CreateTEDSAITorqueBridgeChanRequest* request, CreateTEDSAITorqueBridgeChanResponse* response) override;
   ::grpc::Status CreateTEDSAIVoltageChan(::grpc::ServerContext* context, const CreateTEDSAIVoltageChanRequest* request, CreateTEDSAIVoltageChanResponse* response) override;
   ::grpc::Status CreateTEDSAIVoltageChanWithExcit(::grpc::ServerContext* context, const CreateTEDSAIVoltageChanWithExcitRequest* request, CreateTEDSAIVoltageChanWithExcitResponse* response) override;
@@ -143,6 +155,7 @@ public:
   ::grpc::Status LoadTask(::grpc::ServerContext* context, const LoadTaskRequest* request, LoadTaskResponse* response) override;
   ::grpc::Status ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response) override;
   ::grpc::Status ReadAnalogScalarF64(::grpc::ServerContext* context, const ReadAnalogScalarF64Request* request, ReadAnalogScalarF64Response* response) override;
+  ::grpc::Status ReadBinaryI16(::grpc::ServerContext* context, const ReadBinaryI16Request* request, ReadBinaryI16Response* response) override;
   ::grpc::Status ReadBinaryI32(::grpc::ServerContext* context, const ReadBinaryI32Request* request, ReadBinaryI32Response* response) override;
   ::grpc::Status ReadBinaryU16(::grpc::ServerContext* context, const ReadBinaryU16Request* request, ReadBinaryU16Response* response) override;
   ::grpc::Status ReadBinaryU32(::grpc::ServerContext* context, const ReadBinaryU32Request* request, ReadBinaryU32Response* response) override;
@@ -178,6 +191,7 @@ public:
   ::grpc::Status WaitUntilTaskDone(::grpc::ServerContext* context, const WaitUntilTaskDoneRequest* request, WaitUntilTaskDoneResponse* response) override;
   ::grpc::Status WriteAnalogF64(::grpc::ServerContext* context, const WriteAnalogF64Request* request, WriteAnalogF64Response* response) override;
   ::grpc::Status WriteAnalogScalarF64(::grpc::ServerContext* context, const WriteAnalogScalarF64Request* request, WriteAnalogScalarF64Response* response) override;
+  ::grpc::Status WriteBinaryI16(::grpc::ServerContext* context, const WriteBinaryI16Request* request, WriteBinaryI16Response* response) override;
   ::grpc::Status WriteBinaryI32(::grpc::ServerContext* context, const WriteBinaryI32Request* request, WriteBinaryI32Response* response) override;
   ::grpc::Status WriteBinaryU16(::grpc::ServerContext* context, const WriteBinaryU16Request* request, WriteBinaryU16Response* response) override;
   ::grpc::Status WriteBinaryU32(::grpc::ServerContext* context, const WriteBinaryU32Request* request, WriteBinaryU32Response* response) override;

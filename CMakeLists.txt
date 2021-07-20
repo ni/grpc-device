@@ -299,11 +299,11 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
 )
 
-# ni_fake_service_tests.cpp exceeds the MSVC limit for the number of sections in an obj file defined by PE-COFF.
-# This disables that requirement for just the ni_fake_service_tests.cpp file.
+# ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections 
+# in an obj file defined by PE-COFF. This line disables the limit.
 if(MSVC)
-  set_source_files_properties("source/tests/unit/ni_fake_service_tests.cpp" PROPERTIES COMPILE_FLAGS /bigobj)
-endif()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
+endif(MSVC)
 
 target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake"
