@@ -167,6 +167,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved);
   int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
   int32 ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation);
   int32 ResetDevice(const char deviceName[]);
@@ -198,6 +199,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 WriteDigitalU32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
+  int32 WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
  private:
   using AddGlobalChansToTaskPtr = int32 (*)(TaskHandle task, const char channelNames[]);
@@ -349,6 +351,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ReadDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadDigitalU32Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  using ReadRawPtr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved);
   using RegisterDoneEventPtr = int32 (*)(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
   using ReserveNetworkDevicePtr = int32 (*)(const char deviceName[], bool32 overrideReservation);
   using ResetDevicePtr = int32 (*)(const char deviceName[]);
@@ -380,6 +383,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using WriteDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using WriteDigitalU32Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using WriteDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
+  using WriteRawPtr = int32 (*)(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
   typedef struct FunctionPointers {
     AddGlobalChansToTaskPtr AddGlobalChansToTask;
@@ -531,6 +535,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ReadDigitalU16Ptr ReadDigitalU16;
     ReadDigitalU32Ptr ReadDigitalU32;
     ReadDigitalU8Ptr ReadDigitalU8;
+    ReadRawPtr ReadRaw;
     RegisterDoneEventPtr RegisterDoneEvent;
     ReserveNetworkDevicePtr ReserveNetworkDevice;
     ResetDevicePtr ResetDevice;
@@ -562,6 +567,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     WriteDigitalU16Ptr WriteDigitalU16;
     WriteDigitalU32Ptr WriteDigitalU32;
     WriteDigitalU8Ptr WriteDigitalU8;
+    WriteRawPtr WriteRaw;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

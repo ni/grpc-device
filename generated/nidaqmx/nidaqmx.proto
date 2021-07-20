@@ -165,6 +165,7 @@ service NiDAQmx {
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
   rpc ReadDigitalU32(ReadDigitalU32Request) returns (ReadDigitalU32Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
+  rpc ReadRaw(ReadRawRequest) returns (ReadRawResponse);
   rpc RegisterDoneEvent(RegisterDoneEventRequest) returns (stream RegisterDoneEventResponse);
   rpc ReserveNetworkDevice(ReserveNetworkDeviceRequest) returns (ReserveNetworkDeviceResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
@@ -196,6 +197,7 @@ service NiDAQmx {
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
   rpc WriteDigitalU32(WriteDigitalU32Request) returns (WriteDigitalU32Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
+  rpc WriteRaw(WriteRawRequest) returns (WriteRawResponse);
 }
 
 enum NiDAQmxAttributes {
@@ -3683,6 +3685,20 @@ message ReadDigitalU8Response {
   int32 samps_per_chan_read = 3;
 }
 
+message ReadRawRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  uint32 array_size_in_bytes = 4;
+}
+
+message ReadRawResponse {
+  int32 status = 1;
+  bytes read_array = 2;
+  int32 samps_read = 3;
+  int32 num_bytes_per_samp = 4;
+}
+
 message RegisterDoneEventRequest {
   nidevice_grpc.Session task = 1;
   uint32 options = 2;
@@ -4080,6 +4096,19 @@ message WriteDigitalU8Request {
 }
 
 message WriteDigitalU8Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteRawRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  bytes write_array = 5;
+}
+
+message WriteRawResponse {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }
