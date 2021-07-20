@@ -539,7 +539,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
   EXPECT_EQ(NUM_SAMPS, read_response.samps_per_chan_read());
 }
 
-TEST_F(NiDAQmxDriverApiTests, ChannelWIthDoneEventRegistered_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
+TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
 {
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
