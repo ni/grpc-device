@@ -22,6 +22,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 Init(const char sessionName[], FakeHandle* handle);
   int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle);
   int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
+  int32 IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[]);
   int32 OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]);
   int32 InputArrayOfBytes(const myUInt8 u8Array[]);
   int32 OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[]);
@@ -31,6 +32,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using InitPtr = int32 (*)(const char sessionName[], FakeHandle* handle);
   using InitWithHandleNameAsSessionNamePtr = int32 (*)(const char handleName[], FakeHandle* handle);
   using InputArraysWithNarrowIntegerTypesPtr = int32 (*)(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
+  using IotaWithCustomSizePtr = int32 (*)(int32 sizeOne, int32 sizeTwo, int32 data[]);
   using OutputArraysWithNarrowIntegerTypesPtr = int32 (*)(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]);
   using InputArrayOfBytesPtr = int32 (*)(const myUInt8 u8Array[]);
   using OutputArrayOfBytesPtr = int32 (*)(int32 numberOfU8Samples, myUInt8 u8Data[]);
@@ -40,6 +42,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     InitPtr Init;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
     InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;
+    IotaWithCustomSizePtr IotaWithCustomSize;
     OutputArraysWithNarrowIntegerTypesPtr OutputArraysWithNarrowIntegerTypes;
     InputArrayOfBytesPtr InputArrayOfBytes;
     OutputArrayOfBytesPtr OutputArrayOfBytes;

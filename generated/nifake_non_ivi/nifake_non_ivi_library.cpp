@@ -25,6 +25,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFakeNonIvi_Init"));
   function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
   function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
+  function_pointers_.IotaWithCustomSize = reinterpret_cast<IotaWithCustomSizePtr>(shared_library_.get_function_pointer("niFakeNonIvi_IotaWithCustomSize"));
   function_pointers_.OutputArraysWithNarrowIntegerTypes = reinterpret_cast<OutputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithNarrowIntegerTypes"));
   function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
   function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
@@ -86,6 +87,18 @@ int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const myUInt16 u16A
   return niFakeNonIvi_InputArraysWithNarrowIntegerTypes(u16Array, i16Array, i8Array);
 #else
   return function_pointers_.InputArraysWithNarrowIntegerTypes(u16Array, i16Array, i8Array);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[])
+{
+  if (!function_pointers_.IotaWithCustomSize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_IotaWithCustomSize.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_IotaWithCustomSize(sizeOne, sizeTwo, data);
+#else
+  return function_pointers_.IotaWithCustomSize(sizeOne, sizeTwo, data);
 #endif
 }
 

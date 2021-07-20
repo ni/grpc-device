@@ -67,6 +67,30 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IotaWithCustomSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sizeOne',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sizeTwo',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': '(sizeOne == -1) ? sizeTwo : sizeOne + 1'
+                },
+                'type': 'int32[]'
+            },
+        ],
+        'returns': 'int32'
+    },
     'OutputArraysWithNarrowIntegerTypes': {
         'parameters': [
             {

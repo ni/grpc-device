@@ -20,6 +20,7 @@ service NiFakeNonIvi {
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
   rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
+  rpc IotaWithCustomSize(IotaWithCustomSizeRequest) returns (IotaWithCustomSizeResponse);
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
   rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
   rpc OutputArrayOfBytes(OutputArrayOfBytesRequest) returns (OutputArrayOfBytesResponse);
@@ -63,6 +64,16 @@ message InputArraysWithNarrowIntegerTypesRequest {
 
 message InputArraysWithNarrowIntegerTypesResponse {
   int32 status = 1;
+}
+
+message IotaWithCustomSizeRequest {
+  int32 size_one = 1;
+  int32 size_two = 2;
+}
+
+message IotaWithCustomSizeResponse {
+  int32 status = 1;
+  repeated int32 data = 2;
 }
 
 message OutputArraysWithNarrowIntegerTypesRequest {

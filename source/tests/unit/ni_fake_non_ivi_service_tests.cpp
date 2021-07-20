@@ -5,6 +5,7 @@
 #include <server/session_resource_repository.h>
 
 #include <iostream>
+#include <numeric>
 #include <string>
 
 using namespace nifake_non_ivi_grpc;
@@ -128,6 +129,25 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     service_.Close(&context, &request, &response);
 
     return response.status();
+  }
+
+  void setup_iota_with_custom_size() {
+    auto set_iota_data = [](int32 size_one, int32 size_two, int32* data) {
+      auto out_size = (size_one == -1) ? size_two : size_one + 1;
+      std::iota(data, data + out_size, 0);
+    };
+
+    EXPECT_CALL(library_, IotaWithCustomSize(_, _, _))
+        .WillOnce(DoAll(
+            Invoke(set_iota_data),
+            Return(kDriverSuccess)));
+  }
+
+  static void EXPECT_IOTA_OF_SIZE(IotaWithCustomSizeResponse response, size_t size) {
+    std::vector<int32> expected(size);
+    std::iota(expected.begin(), expected.end(), 0);
+    std::vector<int32> actual{response.data().cbegin(), response.data().cend()};
+    EXPECT_THAT(actual, ContainerEq(expected));
   }
 };
 
@@ -382,6 +402,37 @@ TEST_F(NiFakeNonIviServiceTests, OutputArrayOfBytes)
   EXPECT_EQ(16, (myUInt8)response.u8_data()[2]);
   auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingFirstSizeOption_ReturnsIotaDataOfFirstSizePlusOne)
+{
+  const auto SIZE_ONE = 10;
+  setup_iota_with_custom_size();
+  ::grpc::ServerContext context;
+  IotaWithCustomSizeRequest request;
+  request.set_size_one(SIZE_ONE);
+  request.set_size_two(100000);
+  IotaWithCustomSizeResponse response;
+  service_.IotaWithCustomSize(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_IOTA_OF_SIZE(response, SIZE_ONE + 1);
+}
+
+TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingSecondSizeOption_ReturnsIotaDataOfSecondSize)
+{
+  const auto SIZE_TWO = 20;
+  setup_iota_with_custom_size();
+  ::grpc::ServerContext context;
+  IotaWithCustomSizeRequest request;
+  request.set_size_one(-1);
+  request.set_size_two(SIZE_TWO);
+  IotaWithCustomSizeResponse response;
+
+  service_.IotaWithCustomSize(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_IOTA_OF_SIZE(response, SIZE_TWO);
 }
 
 }  // namespace unit
