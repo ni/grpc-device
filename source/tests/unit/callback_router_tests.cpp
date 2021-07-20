@@ -61,7 +61,7 @@ TEST(CallbackRouterTests, IntCallbackHandlerRegistered_HandleCallbackMultipleTim
   const int32_t FIRST_CALLBACK_VAL = 0x1234;
   EXPECT_CALLBACK(handler, FIRST_CALLBACK_VAL);
   auto first_result = IntCallbackRouter::handle_callback(FIRST_CALLBACK_VAL, registration.token());
-  const int32_t SECOND_CALLBACK_VAL = 0x1234;
+  const int32_t SECOND_CALLBACK_VAL = 0xABAB;
   EXPECT_CALLBACK(handler, SECOND_CALLBACK_VAL);
   auto second_result = IntCallbackRouter::handle_callback(SECOND_CALLBACK_VAL, registration.token());
 
