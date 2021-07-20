@@ -730,7 +730,7 @@ TEST_F(NiDAQmxDriverApiTests, SelfTestDevice_Succeeds)
 }
 
 TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithNegativeOneReverseOrder_ReturnsCoefficientsSizedToForwardCoefficients) {
-  auto const FORWARD_COEFFICIENTS = std::vector{1.0, 3.0, 8.0};
+  auto const FORWARD_COEFFICIENTS = std::vector<double>{1.0, 3.0, 8.0};
   auto const REVERSE_ORDER = -1;
   auto request = create_calculate_reverse_poly_coeff_request(
     FORWARD_COEFFICIENTS,
