@@ -48,6 +48,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ClearTask = reinterpret_cast<ClearTaskPtr>(shared_library_.get_function_pointer("DAQmxClearTask"));
   function_pointers_.ConfigureLogging = reinterpret_cast<ConfigureLoggingPtr>(shared_library_.get_function_pointer("DAQmxConfigureLogging"));
   function_pointers_.ConnectTerms = reinterpret_cast<ConnectTermsPtr>(shared_library_.get_function_pointer("DAQmxConnectTerms"));
+  function_pointers_.ControlWatchdogTask = reinterpret_cast<ControlWatchdogTaskPtr>(shared_library_.get_function_pointer("DAQmxControlWatchdogTask"));
   function_pointers_.CreateAIAccel4WireDCVoltageChan = reinterpret_cast<CreateAIAccel4WireDCVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIAccel4WireDCVoltageChan"));
   function_pointers_.CreateAIAccelChan = reinterpret_cast<CreateAIAccelChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIAccelChan"));
   function_pointers_.CreateAIAccelChargeChan = reinterpret_cast<CreateAIAccelChargeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIAccelChargeChan"));
@@ -58,6 +59,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateAIForceBridgePolynomialChan = reinterpret_cast<CreateAIForceBridgePolynomialChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIForceBridgePolynomialChan"));
   function_pointers_.CreateAIForceBridgeTableChan = reinterpret_cast<CreateAIForceBridgeTableChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIForceBridgeTableChan"));
   function_pointers_.CreateAIForceBridgeTwoPointLinChan = reinterpret_cast<CreateAIForceBridgeTwoPointLinChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIForceBridgeTwoPointLinChan"));
+  function_pointers_.CreateAIForceIEPEChan = reinterpret_cast<CreateAIForceIEPEChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIForceIEPEChan"));
   function_pointers_.CreateAIFreqVoltageChan = reinterpret_cast<CreateAIFreqVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIFreqVoltageChan"));
   function_pointers_.CreateAIMicrophoneChan = reinterpret_cast<CreateAIMicrophoneChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIMicrophoneChan"));
   function_pointers_.CreateAIPosEddyCurrProxProbeChan = reinterpret_cast<CreateAIPosEddyCurrProxProbeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPosEddyCurrProxProbeChan"));
@@ -66,9 +68,14 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateAIPressureBridgePolynomialChan = reinterpret_cast<CreateAIPressureBridgePolynomialChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgePolynomialChan"));
   function_pointers_.CreateAIPressureBridgeTableChan = reinterpret_cast<CreateAIPressureBridgeTableChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgeTableChan"));
   function_pointers_.CreateAIPressureBridgeTwoPointLinChan = reinterpret_cast<CreateAIPressureBridgeTwoPointLinChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgeTwoPointLinChan"));
+  function_pointers_.CreateAIRTDChan = reinterpret_cast<CreateAIRTDChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIRTDChan"));
   function_pointers_.CreateAIResistanceChan = reinterpret_cast<CreateAIResistanceChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIResistanceChan"));
   function_pointers_.CreateAIRosetteStrainGageChan = reinterpret_cast<CreateAIRosetteStrainGageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIRosetteStrainGageChan"));
   function_pointers_.CreateAIStrainGageChan = reinterpret_cast<CreateAIStrainGageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIStrainGageChan"));
+  function_pointers_.CreateAITempBuiltInSensorChan = reinterpret_cast<CreateAITempBuiltInSensorChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAITempBuiltInSensorChan"));
+  function_pointers_.CreateAIThrmcplChan = reinterpret_cast<CreateAIThrmcplChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIThrmcplChan"));
+  function_pointers_.CreateAIThrmstrChanIex = reinterpret_cast<CreateAIThrmstrChanIexPtr>(shared_library_.get_function_pointer("DAQmxCreateAIThrmstrChanIex"));
+  function_pointers_.CreateAIThrmstrChanVex = reinterpret_cast<CreateAIThrmstrChanVexPtr>(shared_library_.get_function_pointer("DAQmxCreateAIThrmstrChanVex"));
   function_pointers_.CreateAITorqueBridgePolynomialChan = reinterpret_cast<CreateAITorqueBridgePolynomialChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAITorqueBridgePolynomialChan"));
   function_pointers_.CreateAITorqueBridgeTableChan = reinterpret_cast<CreateAITorqueBridgeTableChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAITorqueBridgeTableChan"));
   function_pointers_.CreateAITorqueBridgeTwoPointLinChan = reinterpret_cast<CreateAITorqueBridgeTwoPointLinChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAITorqueBridgeTwoPointLinChan"));
@@ -106,12 +113,17 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateTEDSAIBridgeChan = reinterpret_cast<CreateTEDSAIBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIBridgeChan"));
   function_pointers_.CreateTEDSAICurrentChan = reinterpret_cast<CreateTEDSAICurrentChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAICurrentChan"));
   function_pointers_.CreateTEDSAIForceBridgeChan = reinterpret_cast<CreateTEDSAIForceBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIForceBridgeChan"));
+  function_pointers_.CreateTEDSAIForceIEPEChan = reinterpret_cast<CreateTEDSAIForceIEPEChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIForceIEPEChan"));
   function_pointers_.CreateTEDSAIMicrophoneChan = reinterpret_cast<CreateTEDSAIMicrophoneChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIMicrophoneChan"));
   function_pointers_.CreateTEDSAIPosLVDTChan = reinterpret_cast<CreateTEDSAIPosLVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIPosLVDTChan"));
   function_pointers_.CreateTEDSAIPosRVDTChan = reinterpret_cast<CreateTEDSAIPosRVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIPosRVDTChan"));
   function_pointers_.CreateTEDSAIPressureBridgeChan = reinterpret_cast<CreateTEDSAIPressureBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIPressureBridgeChan"));
+  function_pointers_.CreateTEDSAIRTDChan = reinterpret_cast<CreateTEDSAIRTDChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIRTDChan"));
   function_pointers_.CreateTEDSAIResistanceChan = reinterpret_cast<CreateTEDSAIResistanceChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIResistanceChan"));
   function_pointers_.CreateTEDSAIStrainGageChan = reinterpret_cast<CreateTEDSAIStrainGageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIStrainGageChan"));
+  function_pointers_.CreateTEDSAIThrmcplChan = reinterpret_cast<CreateTEDSAIThrmcplChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIThrmcplChan"));
+  function_pointers_.CreateTEDSAIThrmstrChanIex = reinterpret_cast<CreateTEDSAIThrmstrChanIexPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIThrmstrChanIex"));
+  function_pointers_.CreateTEDSAIThrmstrChanVex = reinterpret_cast<CreateTEDSAIThrmstrChanVexPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIThrmstrChanVex"));
   function_pointers_.CreateTEDSAITorqueBridgeChan = reinterpret_cast<CreateTEDSAITorqueBridgeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAITorqueBridgeChan"));
   function_pointers_.CreateTEDSAIVoltageChan = reinterpret_cast<CreateTEDSAIVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIVoltageChan"));
   function_pointers_.CreateTEDSAIVoltageChanWithExcit = reinterpret_cast<CreateTEDSAIVoltageChanWithExcitPtr>(shared_library_.get_function_pointer("DAQmxCreateTEDSAIVoltageChanWithExcit"));
@@ -136,6 +148,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.LoadTask = reinterpret_cast<LoadTaskPtr>(shared_library_.get_function_pointer("DAQmxLoadTask"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
   function_pointers_.ReadAnalogScalarF64 = reinterpret_cast<ReadAnalogScalarF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogScalarF64"));
+  function_pointers_.ReadBinaryI16 = reinterpret_cast<ReadBinaryI16Ptr>(shared_library_.get_function_pointer("DAQmxReadBinaryI16"));
   function_pointers_.ReadBinaryI32 = reinterpret_cast<ReadBinaryI32Ptr>(shared_library_.get_function_pointer("DAQmxReadBinaryI32"));
   function_pointers_.ReadBinaryU16 = reinterpret_cast<ReadBinaryU16Ptr>(shared_library_.get_function_pointer("DAQmxReadBinaryU16"));
   function_pointers_.ReadBinaryU32 = reinterpret_cast<ReadBinaryU32Ptr>(shared_library_.get_function_pointer("DAQmxReadBinaryU32"));
@@ -171,6 +184,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.WaitUntilTaskDone = reinterpret_cast<WaitUntilTaskDonePtr>(shared_library_.get_function_pointer("DAQmxWaitUntilTaskDone"));
   function_pointers_.WriteAnalogF64 = reinterpret_cast<WriteAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogF64"));
   function_pointers_.WriteAnalogScalarF64 = reinterpret_cast<WriteAnalogScalarF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogScalarF64"));
+  function_pointers_.WriteBinaryI16 = reinterpret_cast<WriteBinaryI16Ptr>(shared_library_.get_function_pointer("DAQmxWriteBinaryI16"));
   function_pointers_.WriteBinaryI32 = reinterpret_cast<WriteBinaryI32Ptr>(shared_library_.get_function_pointer("DAQmxWriteBinaryI32"));
   function_pointers_.WriteBinaryU16 = reinterpret_cast<WriteBinaryU16Ptr>(shared_library_.get_function_pointer("DAQmxWriteBinaryU16"));
   function_pointers_.WriteBinaryU32 = reinterpret_cast<WriteBinaryU32Ptr>(shared_library_.get_function_pointer("DAQmxWriteBinaryU32"));
@@ -522,6 +536,18 @@ int32 NiDAQmxLibrary::ConnectTerms(const char sourceTerminal[], const char desti
 #endif
 }
 
+int32 NiDAQmxLibrary::ControlWatchdogTask(TaskHandle task, int32 action)
+{
+  if (!function_pointers_.ControlWatchdogTask) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxControlWatchdogTask.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxControlWatchdogTask(task, action);
+#else
+  return function_pointers_.ControlWatchdogTask(task, action);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateAIAccel4WireDCVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[])
 {
   if (!function_pointers_.CreateAIAccel4WireDCVoltageChan) {
@@ -642,6 +668,18 @@ int32 NiDAQmxLibrary::CreateAIForceBridgeTwoPointLinChan(TaskHandle task, const 
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateAIForceIEPEChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAIForceIEPEChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceIEPEChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateAIFreqVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 thresholdLevel, float64 hysteresis, const char customScaleName[])
 {
   if (!function_pointers_.CreateAIFreqVoltageChan) {
@@ -738,6 +776,18 @@ int32 NiDAQmxLibrary::CreateAIPressureBridgeTwoPointLinChan(TaskHandle task, con
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateAIRTDChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 rtdType, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, float64 r0)
+{
+  if (!function_pointers_.CreateAIRTDChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIRTDChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, rtdType, resistanceConfig, currentExcitSource, currentExcitVal, r0);
+#else
+  return function_pointers_.CreateAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, rtdType, resistanceConfig, currentExcitSource, currentExcitVal, r0);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateAIResistanceChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
 {
   if (!function_pointers_.CreateAIResistanceChan) {
@@ -771,6 +821,54 @@ int32 NiDAQmxLibrary::CreateAIStrainGageChan(TaskHandle task, const char physica
   return DAQmxCreateAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, strainConfig, voltageExcitSource, voltageExcitVal, gageFactor, initialBridgeVoltage, nominalGageResistance, poissonRatio, leadWireResistance, customScaleName);
 #else
   return function_pointers_.CreateAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, strainConfig, voltageExcitSource, voltageExcitVal, gageFactor, initialBridgeVoltage, nominalGageResistance, poissonRatio, leadWireResistance, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAITempBuiltInSensorChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 units)
+{
+  if (!function_pointers_.CreateAITempBuiltInSensorChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITempBuiltInSensorChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAITempBuiltInSensorChan(task, physicalChannel, nameToAssignToChannel, units);
+#else
+  return function_pointers_.CreateAITempBuiltInSensorChan(task, physicalChannel, nameToAssignToChannel, units);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIThrmcplChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 thermocoupleType, int32 cjcSource, float64 cjcVal, const char cjcChannel[])
+{
+  if (!function_pointers_.CreateAIThrmcplChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIThrmcplChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, thermocoupleType, cjcSource, cjcVal, cjcChannel);
+#else
+  return function_pointers_.CreateAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, thermocoupleType, cjcSource, cjcVal, cjcChannel);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIThrmstrChanIex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, float64 a, float64 b, float64 c)
+{
+  if (!function_pointers_.CreateAIThrmstrChanIex) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIThrmstrChanIex.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, a, b, c);
+#else
+  return function_pointers_.CreateAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, a, b, c);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateAIThrmstrChanVex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 a, float64 b, float64 c, float64 r1)
+{
+  if (!function_pointers_.CreateAIThrmstrChanVex) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIThrmstrChanVex.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, a, b, c, r1);
+#else
+  return function_pointers_.CreateAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, a, b, c, r1);
 #endif
 }
 
@@ -1218,6 +1316,18 @@ int32 NiDAQmxLibrary::CreateTEDSAIForceBridgeChan(TaskHandle task, const char ph
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateTEDSAIForceIEPEChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateTEDSAIForceIEPEChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIForceIEPEChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, currentExcitSource, currentExcitVal, customScaleName);
+#else
+  return function_pointers_.CreateTEDSAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, currentExcitSource, currentExcitVal, customScaleName);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateTEDSAIMicrophoneChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, int32 units, float64 maxSndPressLevel, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
 {
   if (!function_pointers_.CreateTEDSAIMicrophoneChan) {
@@ -1266,6 +1376,18 @@ int32 NiDAQmxLibrary::CreateTEDSAIPressureBridgeChan(TaskHandle task, const char
 #endif
 }
 
+int32 NiDAQmxLibrary::CreateTEDSAIRTDChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal)
+{
+  if (!function_pointers_.CreateTEDSAIRTDChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIRTDChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
+#else
+  return function_pointers_.CreateTEDSAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
+#endif
+}
+
 int32 NiDAQmxLibrary::CreateTEDSAIResistanceChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
 {
   if (!function_pointers_.CreateTEDSAIResistanceChan) {
@@ -1287,6 +1409,42 @@ int32 NiDAQmxLibrary::CreateTEDSAIStrainGageChan(TaskHandle task, const char phy
   return DAQmxCreateTEDSAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, initialBridgeVoltage, leadWireResistance, customScaleName);
 #else
   return function_pointers_.CreateTEDSAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, initialBridgeVoltage, leadWireResistance, customScaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAIThrmcplChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 cjcSource, float64 cjcVal, const char cjcChannel[])
+{
+  if (!function_pointers_.CreateTEDSAIThrmcplChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIThrmcplChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, cjcSource, cjcVal, cjcChannel);
+#else
+  return function_pointers_.CreateTEDSAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, cjcSource, cjcVal, cjcChannel);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAIThrmstrChanIex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal)
+{
+  if (!function_pointers_.CreateTEDSAIThrmstrChanIex) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIThrmstrChanIex.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
+#else
+  return function_pointers_.CreateTEDSAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
+#endif
+}
+
+int32 NiDAQmxLibrary::CreateTEDSAIThrmstrChanVex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 r1)
+{
+  if (!function_pointers_.CreateTEDSAIThrmstrChanVex) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIThrmstrChanVex.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCreateTEDSAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, r1);
+#else
+  return function_pointers_.CreateTEDSAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, r1);
 #endif
 }
 
@@ -1575,6 +1733,18 @@ int32 NiDAQmxLibrary::ReadAnalogScalarF64(TaskHandle task, float64 timeout, floa
   return DAQmxReadAnalogScalarF64(task, timeout, value, reserved);
 #else
   return function_pointers_.ReadAnalogScalarF64(task, timeout, value, reserved);
+#endif
+}
+
+int32 NiDAQmxLibrary::ReadBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  if (!function_pointers_.ReadBinaryI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadBinaryI16.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxReadBinaryI16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+#else
+  return function_pointers_.ReadBinaryI16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
 #endif
 }
 
@@ -1995,6 +2165,18 @@ int32 NiDAQmxLibrary::WriteAnalogScalarF64(TaskHandle task, bool32 autoStart, fl
   return DAQmxWriteAnalogScalarF64(task, autoStart, timeout, value, reserved);
 #else
   return function_pointers_.WriteAnalogScalarF64(task, autoStart, timeout, value, reserved);
+#endif
+}
+
+int32 NiDAQmxLibrary::WriteBinaryI16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, int16 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
+{
+  if (!function_pointers_.WriteBinaryI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteBinaryI16.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWriteBinaryI16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
+#else
+  return function_pointers_.WriteBinaryI16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
 #endif
 }
 

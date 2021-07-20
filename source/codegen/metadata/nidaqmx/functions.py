@@ -764,6 +764,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ControlWatchdogTask': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WatchdogControlAction',
+                'name': 'action',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateAIAccel4WireDCVoltageChan': {
         'parameters': [
             {
@@ -1476,6 +1492,75 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateAIForceIEPEChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceIEPEUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sensitivity',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceIEPESensorSensitivityUnits',
+                'name': 'sensitivityUnits',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateAIFreqVoltageChan': {
         'parameters': [
             {
@@ -2070,6 +2155,70 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateAIRTDChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'RTDType1',
+                'name': 'rtdType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'r0',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateAIResistanceChan': {
         'parameters': [
             {
@@ -2295,6 +2444,231 @@ functions = {
                 'direction': 'in',
                 'name': 'customScaleName',
                 'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAITempBuiltInSensorChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIThrmcplChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ThermocoupleType1',
+                'name': 'thermocoupleType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CJCSource1',
+                'name': 'cjcSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'cjcVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'cjcChannel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIThrmstrChanIex': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'a',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'b',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'c',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateAIThrmstrChanVex': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'a',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'b',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'c',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'r1',
+                'type': 'float64'
             }
         ],
         'returns': 'int32'
@@ -4183,6 +4557,64 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateTEDSAIForceIEPEChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfgWithDefault',
+                'name': 'terminalConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceIEPEUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'customScaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateTEDSAIMicrophoneChan': {
         'parameters': [
             {
@@ -4414,6 +4846,59 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateTEDSAIRTDChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateTEDSAIResistanceChan': {
         'parameters': [
             {
@@ -4530,6 +5015,169 @@ functions = {
                 'direction': 'in',
                 'name': 'customScaleName',
                 'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIThrmcplChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CJCSource1',
+                'name': 'cjcSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'cjcVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'cjcChannel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIThrmstrChanIex': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'currentExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentExcitVal',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateTEDSAIThrmstrChanVex': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits',
+                'name': 'units',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'resistanceConfig',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'voltageExcitSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageExcitVal',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'r1',
+                'type': 'float64'
             }
         ],
         'returns': 'int32'
@@ -5205,6 +5853,59 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadBinaryI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'int16[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
             },
             {
                 'direction': 'in',
@@ -6429,6 +7130,55 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteBinaryI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'dataLayout',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'int16[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
             },
             {
                 'direction': 'in',

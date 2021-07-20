@@ -1026,6 +1026,41 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ControlWatchdogTask(::grpc::ServerContext* context, const ControlWatchdogTaskRequest* request, ControlWatchdogTaskResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 action;
+      switch (request->action_enum_case()) {
+        case nidaqmx_grpc::ControlWatchdogTaskRequest::ActionEnumCase::kAction: {
+          action = static_cast<int32>(request->action());
+          break;
+        }
+        case nidaqmx_grpc::ControlWatchdogTaskRequest::ActionEnumCase::kActionRaw: {
+          action = static_cast<int32>(request->action_raw());
+          break;
+        }
+        case nidaqmx_grpc::ControlWatchdogTaskRequest::ActionEnumCase::ACTION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for action was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ControlWatchdogTask(task, action);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateAIAccel4WireDCVoltageChan(::grpc::ServerContext* context, const CreateAIAccel4WireDCVoltageChanRequest* request, CreateAIAccel4WireDCVoltageChanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1886,6 +1921,96 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAIForceIEPEChan(::grpc::ServerContext* context, const CreateAIForceIEPEChanRequest* request, CreateAIForceIEPEChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      int32 terminal_config;
+      switch (request->terminal_config_enum_case()) {
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::TerminalConfigEnumCase::kTerminalConfig: {
+          terminal_config = static_cast<int32>(request->terminal_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::TerminalConfigEnumCase::kTerminalConfigRaw: {
+          terminal_config = static_cast<int32>(request->terminal_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::TerminalConfigEnumCase::TERMINAL_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for terminal_config was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 sensitivity = request->sensitivity();
+      int32 sensitivity_units;
+      switch (request->sensitivity_units_enum_case()) {
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::SensitivityUnitsEnumCase::kSensitivityUnits: {
+          sensitivity_units = static_cast<int32>(request->sensitivity_units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::SensitivityUnitsEnumCase::kSensitivityUnitsRaw: {
+          sensitivity_units = static_cast<int32>(request->sensitivity_units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::SensitivityUnitsEnumCase::SENSITIVITY_UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sensitivity_units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 current_excit_source;
+      switch (request->current_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSource: {
+          current_excit_source = static_cast<int32>(request->current_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSourceRaw: {
+          current_excit_source = static_cast<int32>(request->current_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIForceIEPEChanRequest::CurrentExcitSourceEnumCase::CURRENT_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for current_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 current_excit_val = request->current_excit_val();
+      auto custom_scale_name = request->custom_scale_name().c_str();
+      auto status = library_->CreateAIForceIEPEChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, sensitivity, sensitivity_units, current_excit_source, current_excit_val, custom_scale_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateAIFreqVoltageChan(::grpc::ServerContext* context, const CreateAIFreqVoltageChanRequest* request, CreateAIFreqVoltageChanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2570,6 +2695,95 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAIRTDChan(::grpc::ServerContext* context, const CreateAIRTDChanRequest* request, CreateAIRTDChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAIRTDChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 rtd_type;
+      switch (request->rtd_type_enum_case()) {
+        case nidaqmx_grpc::CreateAIRTDChanRequest::RtdTypeEnumCase::kRtdType: {
+          rtd_type = static_cast<int32>(request->rtd_type());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::RtdTypeEnumCase::kRtdTypeRaw: {
+          rtd_type = static_cast<int32>(request->rtd_type_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::RtdTypeEnumCase::RTD_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rtd_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 resistance_config;
+      switch (request->resistance_config_enum_case()) {
+        case nidaqmx_grpc::CreateAIRTDChanRequest::ResistanceConfigEnumCase::kResistanceConfig: {
+          resistance_config = static_cast<int32>(request->resistance_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::ResistanceConfigEnumCase::kResistanceConfigRaw: {
+          resistance_config = static_cast<int32>(request->resistance_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::ResistanceConfigEnumCase::RESISTANCE_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for resistance_config was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 current_excit_source;
+      switch (request->current_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateAIRTDChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSource: {
+          current_excit_source = static_cast<int32>(request->current_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSourceRaw: {
+          current_excit_source = static_cast<int32>(request->current_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIRTDChanRequest::CurrentExcitSourceEnumCase::CURRENT_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for current_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 current_excit_val = request->current_excit_val();
+      float64 r0 = request->r0();
+      auto status = library_->CreateAIRTDChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, rtd_type, resistance_config, current_excit_source, current_excit_val, r0);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateAIResistanceChan(::grpc::ServerContext* context, const CreateAIResistanceChanRequest* request, CreateAIResistanceChanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2790,6 +3004,267 @@ namespace nidaqmx_grpc {
       float64 lead_wire_resistance = request->lead_wire_resistance();
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIStrainGageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, strain_config, voltage_excit_source, voltage_excit_val, gage_factor, initial_bridge_voltage, nominal_gage_resistance, poisson_ratio, lead_wire_resistance, custom_scale_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAITempBuiltInSensorChan(::grpc::ServerContext* context, const CreateAITempBuiltInSensorChanRequest* request, CreateAITempBuiltInSensorChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAITempBuiltInSensorChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAITempBuiltInSensorChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAITempBuiltInSensorChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateAITempBuiltInSensorChan(task, physical_channel, name_to_assign_to_channel, units);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAIThrmcplChan(::grpc::ServerContext* context, const CreateAIThrmcplChanRequest* request, CreateAIThrmcplChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 thermocouple_type;
+      switch (request->thermocouple_type_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::ThermocoupleTypeEnumCase::kThermocoupleType: {
+          thermocouple_type = static_cast<int32>(request->thermocouple_type());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::ThermocoupleTypeEnumCase::kThermocoupleTypeRaw: {
+          thermocouple_type = static_cast<int32>(request->thermocouple_type_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::ThermocoupleTypeEnumCase::THERMOCOUPLE_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for thermocouple_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 cjc_source;
+      switch (request->cjc_source_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::CjcSourceEnumCase::kCjcSource: {
+          cjc_source = static_cast<int32>(request->cjc_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::CjcSourceEnumCase::kCjcSourceRaw: {
+          cjc_source = static_cast<int32>(request->cjc_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmcplChanRequest::CjcSourceEnumCase::CJC_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cjc_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 cjc_val = request->cjc_val();
+      auto cjc_channel = request->cjc_channel().c_str();
+      auto status = library_->CreateAIThrmcplChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, thermocouple_type, cjc_source, cjc_val, cjc_channel);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAIThrmstrChanIex(::grpc::ServerContext* context, const CreateAIThrmstrChanIexRequest* request, CreateAIThrmstrChanIexResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 resistance_config;
+      switch (request->resistance_config_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::ResistanceConfigEnumCase::kResistanceConfig: {
+          resistance_config = static_cast<int32>(request->resistance_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::ResistanceConfigEnumCase::kResistanceConfigRaw: {
+          resistance_config = static_cast<int32>(request->resistance_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::ResistanceConfigEnumCase::RESISTANCE_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for resistance_config was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 current_excit_source;
+      switch (request->current_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::CurrentExcitSourceEnumCase::kCurrentExcitSource: {
+          current_excit_source = static_cast<int32>(request->current_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::CurrentExcitSourceEnumCase::kCurrentExcitSourceRaw: {
+          current_excit_source = static_cast<int32>(request->current_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanIexRequest::CurrentExcitSourceEnumCase::CURRENT_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for current_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 current_excit_val = request->current_excit_val();
+      float64 a = request->a();
+      float64 b = request->b();
+      float64 c = request->c();
+      auto status = library_->CreateAIThrmstrChanIex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val, a, b, c);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAIThrmstrChanVex(::grpc::ServerContext* context, const CreateAIThrmstrChanVexRequest* request, CreateAIThrmstrChanVexResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 resistance_config;
+      switch (request->resistance_config_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::ResistanceConfigEnumCase::kResistanceConfig: {
+          resistance_config = static_cast<int32>(request->resistance_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::ResistanceConfigEnumCase::kResistanceConfigRaw: {
+          resistance_config = static_cast<int32>(request->resistance_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::ResistanceConfigEnumCase::RESISTANCE_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for resistance_config was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 voltage_excit_source;
+      switch (request->voltage_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::VoltageExcitSourceEnumCase::kVoltageExcitSource: {
+          voltage_excit_source = static_cast<int32>(request->voltage_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::VoltageExcitSourceEnumCase::kVoltageExcitSourceRaw: {
+          voltage_excit_source = static_cast<int32>(request->voltage_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAIThrmstrChanVexRequest::VoltageExcitSourceEnumCase::VOLTAGE_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for voltage_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 voltage_excit_val = request->voltage_excit_val();
+      float64 a = request->a();
+      float64 b = request->b();
+      float64 c = request->c();
+      float64 r1 = request->r1();
+      auto status = library_->CreateAIThrmstrChanVex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, voltage_excit_source, voltage_excit_val, a, b, c, r1);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4972,6 +5447,79 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateTEDSAIForceIEPEChan(::grpc::ServerContext* context, const CreateTEDSAIForceIEPEChanRequest* request, CreateTEDSAIForceIEPEChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      int32 terminal_config;
+      switch (request->terminal_config_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::TerminalConfigEnumCase::kTerminalConfig: {
+          terminal_config = static_cast<int32>(request->terminal_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::TerminalConfigEnumCase::kTerminalConfigRaw: {
+          terminal_config = static_cast<int32>(request->terminal_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::TerminalConfigEnumCase::TERMINAL_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for terminal_config was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 current_excit_source;
+      switch (request->current_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSource: {
+          current_excit_source = static_cast<int32>(request->current_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSourceRaw: {
+          current_excit_source = static_cast<int32>(request->current_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIForceIEPEChanRequest::CurrentExcitSourceEnumCase::CURRENT_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for current_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 current_excit_val = request->current_excit_val();
+      auto custom_scale_name = request->custom_scale_name().c_str();
+      auto status = library_->CreateTEDSAIForceIEPEChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, current_excit_source, current_excit_val, custom_scale_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateTEDSAIMicrophoneChan(::grpc::ServerContext* context, const CreateTEDSAIMicrophoneChanRequest* request, CreateTEDSAIMicrophoneChanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5249,6 +5797,78 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateTEDSAIRTDChan(::grpc::ServerContext* context, const CreateTEDSAIRTDChanRequest* request, CreateTEDSAIRTDChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 resistance_config;
+      switch (request->resistance_config_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::ResistanceConfigEnumCase::kResistanceConfig: {
+          resistance_config = static_cast<int32>(request->resistance_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::ResistanceConfigEnumCase::kResistanceConfigRaw: {
+          resistance_config = static_cast<int32>(request->resistance_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::ResistanceConfigEnumCase::RESISTANCE_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for resistance_config was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 current_excit_source;
+      switch (request->current_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSource: {
+          current_excit_source = static_cast<int32>(request->current_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::CurrentExcitSourceEnumCase::kCurrentExcitSourceRaw: {
+          current_excit_source = static_cast<int32>(request->current_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIRTDChanRequest::CurrentExcitSourceEnumCase::CURRENT_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for current_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 current_excit_val = request->current_excit_val();
+      auto status = library_->CreateTEDSAIRTDChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateTEDSAIResistanceChan(::grpc::ServerContext* context, const CreateTEDSAIResistanceChanRequest* request, CreateTEDSAIResistanceChanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5371,6 +5991,208 @@ namespace nidaqmx_grpc {
       float64 lead_wire_resistance = request->lead_wire_resistance();
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIStrainGageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, initial_bridge_voltage, lead_wire_resistance, custom_scale_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateTEDSAIThrmcplChan(::grpc::ServerContext* context, const CreateTEDSAIThrmcplChanRequest* request, CreateTEDSAIThrmcplChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmcplChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmcplChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmcplChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 cjc_source;
+      switch (request->cjc_source_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmcplChanRequest::CjcSourceEnumCase::kCjcSource: {
+          cjc_source = static_cast<int32>(request->cjc_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmcplChanRequest::CjcSourceEnumCase::kCjcSourceRaw: {
+          cjc_source = static_cast<int32>(request->cjc_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmcplChanRequest::CjcSourceEnumCase::CJC_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cjc_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 cjc_val = request->cjc_val();
+      auto cjc_channel = request->cjc_channel().c_str();
+      auto status = library_->CreateTEDSAIThrmcplChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, cjc_source, cjc_val, cjc_channel);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateTEDSAIThrmstrChanIex(::grpc::ServerContext* context, const CreateTEDSAIThrmstrChanIexRequest* request, CreateTEDSAIThrmstrChanIexResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 resistance_config;
+      switch (request->resistance_config_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::ResistanceConfigEnumCase::kResistanceConfig: {
+          resistance_config = static_cast<int32>(request->resistance_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::ResistanceConfigEnumCase::kResistanceConfigRaw: {
+          resistance_config = static_cast<int32>(request->resistance_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::ResistanceConfigEnumCase::RESISTANCE_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for resistance_config was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 current_excit_source;
+      switch (request->current_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::CurrentExcitSourceEnumCase::kCurrentExcitSource: {
+          current_excit_source = static_cast<int32>(request->current_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::CurrentExcitSourceEnumCase::kCurrentExcitSourceRaw: {
+          current_excit_source = static_cast<int32>(request->current_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanIexRequest::CurrentExcitSourceEnumCase::CURRENT_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for current_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 current_excit_val = request->current_excit_val();
+      auto status = library_->CreateTEDSAIThrmstrChanIex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateTEDSAIThrmstrChanVex(::grpc::ServerContext* context, const CreateTEDSAIThrmstrChanVexRequest* request, CreateTEDSAIThrmstrChanVexResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto physical_channel = request->physical_channel().c_str();
+      auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
+      float64 min_val = request->min_val();
+      float64 max_val = request->max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 resistance_config;
+      switch (request->resistance_config_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::ResistanceConfigEnumCase::kResistanceConfig: {
+          resistance_config = static_cast<int32>(request->resistance_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::ResistanceConfigEnumCase::kResistanceConfigRaw: {
+          resistance_config = static_cast<int32>(request->resistance_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::ResistanceConfigEnumCase::RESISTANCE_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for resistance_config was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 voltage_excit_source;
+      switch (request->voltage_excit_source_enum_case()) {
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::VoltageExcitSourceEnumCase::kVoltageExcitSource: {
+          voltage_excit_source = static_cast<int32>(request->voltage_excit_source());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::VoltageExcitSourceEnumCase::kVoltageExcitSourceRaw: {
+          voltage_excit_source = static_cast<int32>(request->voltage_excit_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateTEDSAIThrmstrChanVexRequest::VoltageExcitSourceEnumCase::VOLTAGE_EXCIT_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for voltage_excit_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 voltage_excit_val = request->voltage_excit_val();
+      float64 r1 = request->r1();
+      auto status = library_->CreateTEDSAIThrmstrChanVex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, voltage_excit_source, voltage_excit_val, r1);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -6162,6 +6984,59 @@ namespace nidaqmx_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadBinaryI16(::grpc::ServerContext* context, const ReadBinaryI16Request* request, ReadBinaryI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadBinaryI16Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryI16Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadBinaryI16Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+      std::vector<int16> read_array(array_size_in_samps);
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_read_array()->Clear();
+        response->mutable_read_array()->Reserve(array_size_in_samps);
+        std::transform(
+          read_array.begin(),
+          read_array.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+          [](auto x) { 
+              return x;
+          });
+        response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
     }
@@ -7300,6 +8175,70 @@ namespace nidaqmx_grpc {
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteBinaryI16(::grpc::ServerContext* context, const WriteBinaryI16Request* request, WriteBinaryI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::WriteBinaryI16Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryI16Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::WriteBinaryI16Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto write_array_raw = request->write_array();
+      auto write_array = std::vector<int16>();
+      write_array.reserve(write_array_raw.size());
+      std::transform(
+        write_array_raw.begin(),
+        write_array_raw.end(),
+        std::back_inserter(write_array),
+        [](auto x) { 
+              if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int16>(x);
+        });
+
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
   }
 
