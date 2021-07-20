@@ -1470,7 +1470,7 @@ TEST_F(NiSyncDriver6683Test, GivenOneTrigger_ReadMultipleTriggerTimeStamp_Return
   CreateFutureTimeEvent(terminal, NISYNC_VAL_LEVEL_LOW, 0, 0, 0);
 
   ViStatus viStatusRead;
-  ViReal64 timeout = 0.0;
+  ViReal64 timeout = 1.0;
   const ViUInt32 timestampsToRead = 5;
   ViUInt32 timeSeconds[timestampsToRead] = {}, timeNanoseconds[timestampsToRead] = {};
   ViUInt16 timeFractionalNanoseconds[timestampsToRead] = {};
@@ -1510,7 +1510,7 @@ TEST_F(NiSyncDriver6683Test, GivenFiveTriggers_ReadMultipleTriggerTimeStamp_Retu
   }
 
   ViStatus viStatusRead;
-  ViReal64 timeout = 0.0;
+  ViReal64 timeout = 1.0;
   const ViUInt32 timestampsToRead = 5;
   ViUInt32 timeSeconds[timestampsToRead] = {}, timeNanoseconds[timestampsToRead] = {};
   ViUInt16 timeFractionalNanoseconds[timestampsToRead] = {};
