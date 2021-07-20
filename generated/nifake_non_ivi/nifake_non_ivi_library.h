@@ -25,6 +25,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]);
   int32 InputArrayOfBytes(const myUInt8 u8Array[]);
   int32 OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[]);
+  int32 InputTimestamp(CVIAbsoluteTime when);
 
  private:
   using ClosePtr = int32 (*)(FakeHandle handle);
@@ -34,6 +35,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using OutputArraysWithNarrowIntegerTypesPtr = int32 (*)(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]);
   using InputArrayOfBytesPtr = int32 (*)(const myUInt8 u8Array[]);
   using OutputArrayOfBytesPtr = int32 (*)(int32 numberOfU8Samples, myUInt8 u8Data[]);
+  using InputTimestampPtr = int32 (*)(CVIAbsoluteTime when);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
@@ -43,6 +45,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     OutputArraysWithNarrowIntegerTypesPtr OutputArraysWithNarrowIntegerTypes;
     InputArrayOfBytesPtr InputArrayOfBytes;
     OutputArrayOfBytesPtr OutputArrayOfBytes;
+    InputTimestampPtr InputTimestamp;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

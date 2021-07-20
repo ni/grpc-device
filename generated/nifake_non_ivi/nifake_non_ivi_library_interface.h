@@ -22,6 +22,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]) = 0;
   virtual int32 InputArrayOfBytes(const myUInt8 u8Array[]) = 0;
   virtual int32 OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[]) = 0;
+  virtual int32 InputTimestamp(CVIAbsoluteTime when) = 0;
 };
 
 }  // namespace nifake_non_ivi_grpc

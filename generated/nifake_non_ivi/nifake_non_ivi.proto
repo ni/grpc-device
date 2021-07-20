@@ -14,6 +14,7 @@ option csharp_namespace = "NationalInstruments.Grpc.FakeNonIvi";
 package nifake_non_ivi_grpc;
 
 import "session.proto";
+import "google/protobuf/timestamp.proto";
 
 service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
@@ -23,6 +24,7 @@ service NiFakeNonIvi {
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
   rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
   rpc OutputArrayOfBytes(OutputArrayOfBytesRequest) returns (OutputArrayOfBytesResponse);
+  rpc InputTimestamp(InputTimestampRequest) returns (InputTimestampResponse);
 }
 
 enum NiFakeNonIviAttributes {
@@ -93,5 +95,13 @@ message OutputArrayOfBytesRequest {
 message OutputArrayOfBytesResponse {
   int32 status = 1;
   bytes u8_data = 2;
+}
+
+message InputTimestampRequest {
+  google.protobuf.Timestamp when = 1;
+}
+
+message InputTimestampResponse {
+  int32 status = 1;
 }
 

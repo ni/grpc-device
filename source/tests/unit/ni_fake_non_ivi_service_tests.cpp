@@ -69,6 +69,12 @@ void SetU8Data(Unused, myUInt8* u8_data)
   u8_data[2] = 16;
 }
 
+MATCHER_P(CVIAbsoluteTimeEq, lhs, "")
+{
+  return lhs.cviTime.msb == arg.cviTime.msb &&
+      lhs.cviTime.lsb == arg.cviTime.lsb;
+}
+
 class NiFakeNonIviServiceTests : public ::testing::Test {
  protected:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
@@ -382,6 +388,26 @@ TEST_F(NiFakeNonIviServiceTests, OutputArrayOfBytes)
   EXPECT_EQ(16, (myUInt8)response.u8_data()[2]);
   auto status = response.status();
   EXPECT_EQ(kDriverSuccess, status);
+}
+
+const int64 SecondsFromCVI1900EpochTo1970Epoch = 2208988800LL;
+TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpoch)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1900EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0;
+  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputTimestampRequest request;
+  google::protobuf::Timestamp* timestamp_pb = request.mutable_when();
+  timestamp_pb->set_seconds(0);
+  timestamp_pb->set_nanos(0);
+  InputTimestampResponse response;
+
+  service_.InputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
 }
 
 }  // namespace unit
