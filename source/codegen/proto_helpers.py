@@ -53,7 +53,7 @@ def get_message_parameter_definitions(parameters):
     parameter_name = common_helpers.camel_to_snake(parameter["name"])
     parameter_type = get_parameter_type(parameter)
     if common_helpers.is_enum(parameter):
-      is_request_message = parameter['direction'] == 'in'
+      is_request_message = common_helpers.is_input_parameter(parameter)
       enum_parameters = get_enum_parameters(parameter, parameter_name, parameter_type, is_array, used_indexes)
       if is_request_message:
         # use oneof for enums in request messages
