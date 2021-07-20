@@ -53,6 +53,50 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalculateReversePolyCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'forwardCoeffs',
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numForwardCoeffsIn',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minValX',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxValX',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numPointsToCompute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reversePolyOrder',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'reverseCoeffs',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': '(reversePolyOrder == -1) ? numForwardCoeffsIn : reversePolyOrder + 1'
+                },
+                'type': 'float64[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CfgAnlgEdgeRefTrig': {
         'parameters': [
             {

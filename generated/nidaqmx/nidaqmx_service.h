@@ -30,6 +30,7 @@ public:
   
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;
+  ::grpc::Status CalculateReversePolyCoeff(::grpc::ServerContext* context, const CalculateReversePolyCoeffRequest* request, CalculateReversePolyCoeffResponse* response) override;
   ::grpc::Status CfgAnlgEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgEdgeRefTrigRequest* request, CfgAnlgEdgeRefTrigResponse* response) override;
   ::grpc::Status CfgAnlgEdgeStartTrig(::grpc::ServerContext* context, const CfgAnlgEdgeStartTrigRequest* request, CfgAnlgEdgeStartTrigResponse* response) override;
   ::grpc::Status CfgAnlgMultiEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgMultiEdgeRefTrigRequest* request, CfgAnlgMultiEdgeRefTrigResponse* response) override;

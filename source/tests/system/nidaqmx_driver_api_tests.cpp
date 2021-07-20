@@ -383,6 +383,27 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateAIThrmcplChan(&context, request, &response);
   }
 
+  CalculateReversePolyCoeffRequest create_calculate_reverse_poly_coeff_request(
+    const std::vector<double> forward_coeffs,
+    double min_val_x,
+    double max_val_x,
+    int32_t num_points_to_compute,
+    int32_t reverse_poly_order)
+  {
+    CalculateReversePolyCoeffRequest request;
+    request.mutable_forward_coeffs()->CopyFrom({forward_coeffs.cbegin(), forward_coeffs.cend()});
+    request.set_num_forward_coeffs_in(forward_coeffs.size());
+    request.set_min_val_x(min_val_x);
+    request.set_max_val_x(max_val_x);
+    request.set_num_points_to_compute(num_points_to_compute);
+    request.set_reverse_poly_order(reverse_poly_order);
+    return request;
+  }
+  ::grpc::Status calculate_reverse_poly_coeff(const CalculateReversePolyCoeffRequest& request, CalculateReversePolyCoeffResponse& response)  {
+    ::grpc::ClientContext context;
+    return stub()->CalculateReversePolyCoeff(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -706,6 +727,38 @@ TEST_F(NiDAQmxDriverApiTests, SelfTestDevice_Succeeds)
   auto status = self_test_device(response);
   
   EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithNegativeOneReverseOrder_ReturnsCoefficientsSizedToForwardCoefficients) {
+  auto const FORWARD_COEFFICIENTS = std::vector{1.0, 3.0, 8.0};
+  auto const REVERSE_ORDER = -1;
+  auto request = create_calculate_reverse_poly_coeff_request(
+    FORWARD_COEFFICIENTS,
+    0.0,
+    10.0,
+    100,
+    REVERSE_ORDER);
+  auto response = CalculateReversePolyCoeffResponse{};
+  auto status = calculate_reverse_poly_coeff(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(FORWARD_COEFFICIENTS.size(), response.reverse_coeffs().size());
+}
+
+
+TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithPositiveReverseOrder_ReturnsCoefficientsSizedToReverseOrderPlusOne) {
+  auto const REVERSE_ORDER = 10;
+  auto request = create_calculate_reverse_poly_coeff_request(
+    {1.0, 3.0, 8.0},
+    0.0,
+    10.0,
+    100,
+    REVERSE_ORDER);
+  auto response = CalculateReversePolyCoeffResponse{};
+  auto status = calculate_reverse_poly_coeff(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(REVERSE_ORDER + 1, response.reverse_coeffs().size());
 }
 }  // namespace system
 }  // namespace tests

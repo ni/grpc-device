@@ -47,7 +47,7 @@ def is_unsupported_parameter(parameter):
       or is_unsupported_scalar_array(parameter)
 
 def is_unsupported_size_mechanism(parameter):
-  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', None}
+  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code', None}
 
 def is_unsupported_scalar_array(parameter):
   return is_array(parameter['type']) and is_unsupported_enum_array(parameter)

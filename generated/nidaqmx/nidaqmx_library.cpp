@@ -23,6 +23,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.AddGlobalChansToTask = reinterpret_cast<AddGlobalChansToTaskPtr>(shared_library_.get_function_pointer("DAQmxAddGlobalChansToTask"));
   function_pointers_.AddNetworkDevice = reinterpret_cast<AddNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxAddNetworkDevice"));
+  function_pointers_.CalculateReversePolyCoeff = reinterpret_cast<CalculateReversePolyCoeffPtr>(shared_library_.get_function_pointer("DAQmxCalculateReversePolyCoeff"));
   function_pointers_.CfgAnlgEdgeRefTrig = reinterpret_cast<CfgAnlgEdgeRefTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgEdgeRefTrig"));
   function_pointers_.CfgAnlgEdgeStartTrig = reinterpret_cast<CfgAnlgEdgeStartTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgEdgeStartTrig"));
   function_pointers_.CfgAnlgMultiEdgeRefTrig = reinterpret_cast<CfgAnlgMultiEdgeRefTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgMultiEdgeRefTrig"));
@@ -233,6 +234,18 @@ int32 NiDAQmxLibrary::AddNetworkDevice(const char ipAddress[], const char device
   return DAQmxAddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
 #else
   return function_pointers_.AddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::CalculateReversePolyCoeff(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[])
+{
+  if (!function_pointers_.CalculateReversePolyCoeff) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCalculateReversePolyCoeff.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCalculateReversePolyCoeff(forwardCoeffs, numForwardCoeffsIn, minValX, maxValX, numPointsToCompute, reversePolyOrder, reverseCoeffs);
+#else
+  return function_pointers_.CalculateReversePolyCoeff(forwardCoeffs, numForwardCoeffsIn, minValX, maxValX, numPointsToCompute, reversePolyOrder, reverseCoeffs);
 #endif
 }
 

@@ -18,6 +18,7 @@ import "session.proto";
 service NiDAQmx {
   rpc AddGlobalChansToTask(AddGlobalChansToTaskRequest) returns (AddGlobalChansToTaskResponse);
   rpc AddNetworkDevice(AddNetworkDeviceRequest) returns (AddNetworkDeviceResponse);
+  rpc CalculateReversePolyCoeff(CalculateReversePolyCoeffRequest) returns (CalculateReversePolyCoeffResponse);
   rpc CfgAnlgEdgeRefTrig(CfgAnlgEdgeRefTrigRequest) returns (CfgAnlgEdgeRefTrigResponse);
   rpc CfgAnlgEdgeStartTrig(CfgAnlgEdgeStartTrigRequest) returns (CfgAnlgEdgeStartTrigResponse);
   rpc CfgAnlgMultiEdgeRefTrig(CfgAnlgMultiEdgeRefTrigRequest) returns (CfgAnlgMultiEdgeRefTrigResponse);
@@ -776,6 +777,20 @@ message AddNetworkDeviceRequest {
 message AddNetworkDeviceResponse {
   int32 status = 1;
   string device_name_out = 2;
+}
+
+message CalculateReversePolyCoeffRequest {
+  repeated double forward_coeffs = 1;
+  uint32 num_forward_coeffs_in = 2;
+  double min_val_x = 3;
+  double max_val_x = 4;
+  int32 num_points_to_compute = 5;
+  int32 reverse_poly_order = 6;
+}
+
+message CalculateReversePolyCoeffResponse {
+  int32 status = 1;
+  repeated double reverse_coeffs = 2;
 }
 
 message CfgAnlgEdgeRefTrigRequest {
