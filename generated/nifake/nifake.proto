@@ -108,10 +108,10 @@ enum FloatEnum {
 }
 
 enum MobileOSNames {
-  MOBILE_O_S_NAMES_UNSPECIFIED = 0;
-  MOBILE_O_S_NAMES_ANDROID = 1;
-  MOBILE_O_S_NAMES_IOS = 2;
-  MOBILE_O_S_NAMES_NONE = 3;
+  MOBILE_OS_NAMES_UNSPECIFIED = 0;
+  MOBILE_OS_NAMES_ANDROID = 1;
+  MOBILE_OS_NAMES_IOS = 2;
+  MOBILE_OS_NAMES_NONE = 3;
 }
 
 enum Turtle {
@@ -650,9 +650,9 @@ message SetCustomTypeArrayResponse {
 
 message StringValuedEnumInputFunctionWithDefaultsRequest {
   nidevice_grpc.Session vi = 1;
-  oneof a_mobile_o_s_name_enum {
-    MobileOSNames a_mobile_o_s_name_mapped = 2;
-    string a_mobile_o_s_name_raw = 3;
+  oneof a_mobile_os_name_enum {
+    MobileOSNames a_mobile_os_name_mapped = 2;
+    string a_mobile_os_name_raw = 3;
   }
 }
 

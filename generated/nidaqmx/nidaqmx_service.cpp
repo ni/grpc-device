@@ -5800,24 +5800,24 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      int32 signal_i_d;
-      switch (request->signal_i_d_enum_case()) {
-        case nidaqmx_grpc::ExportSignalRequest::SignalIDEnumCase::kSignalID: {
-          signal_i_d = static_cast<int32>(request->signal_i_d());
+      int32 signal_id;
+      switch (request->signal_id_enum_case()) {
+        case nidaqmx_grpc::ExportSignalRequest::SignalIdEnumCase::kSignalId: {
+          signal_id = static_cast<int32>(request->signal_id());
           break;
         }
-        case nidaqmx_grpc::ExportSignalRequest::SignalIDEnumCase::kSignalIDRaw: {
-          signal_i_d = static_cast<int32>(request->signal_i_d_raw());
+        case nidaqmx_grpc::ExportSignalRequest::SignalIdEnumCase::kSignalIdRaw: {
+          signal_id = static_cast<int32>(request->signal_id_raw());
           break;
         }
-        case nidaqmx_grpc::ExportSignalRequest::SignalIDEnumCase::SIGNAL_I_D_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_i_d was not specified or out of range");
+        case nidaqmx_grpc::ExportSignalRequest::SignalIdEnumCase::SIGNAL_ID_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_id was not specified or out of range");
           break;
         }
       }
 
       auto output_terminal = request->output_terminal().c_str();
-      auto status = library_->ExportSignal(task, signal_i_d, output_terminal);
+      auto status = library_->ExportSignal(task, signal_id, output_terminal);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
