@@ -63,11 +63,11 @@ def camel_to_snake(camel_string):
   '''Returns a snake_string for a given camelString.'''
   # Add _ before Words: 
   # someDeviceIPAddress -> some_DeviceIP_Address
-  s1 = re.sub(r"([^_])([A-Z][a-z]+)", r"\1_\2", camel_string)
+  s1 = re.sub(r"([^_])([A-Z][a-z]+[0-9]*)", r"\1_\2", camel_string)
   # Add _ before any capital letters not already preceded by _ and convert to lower:
   # some_DeviceIP_Address -> some_Device_IP_Address
   # some_Device_IP_Address -> some_device_ip_address
-  return re.sub(r"([^_])([A-Z]+)", r"\1_\2", s1).lower()
+  return re.sub(r"([^_])([A-Z]+[0-9]*)", r"\1_\2", s1).lower()
 
 def snake_to_pascal(snake_string):
   '''Returns a PascalString for a given snake_string.'''
@@ -83,13 +83,13 @@ def snake_to_pascal(snake_string):
 
 def pascal_to_camel(pascal_string):
   '''Returns a camelString for a given PascalString.'''
-  # Full string all-caps: IEPE -> iepe
-  match = re.fullmatch(r"([A-Z]+)", pascal_string)
+  # Full string all-caps: IEPE -> iepe. HTTP2 -> http2.
+  match = re.fullmatch(r"([A-Z]+[0-9]*)", pascal_string)
   if match:
     return match[1].lower()
   
-  # Leading all-caps: IPAddress -> ipAddress
-  match = re.fullmatch(r"([A-Z]+)([A-Z].*)", pascal_string)
+  # Leading all-caps: IPAddress -> ipAddress. HTTP2Stream -> http2Stream.
+  match = re.fullmatch(r"([A-Z]+[0-9]*)([A-Z].*)", pascal_string)
   if match:
     return match[1].lower() + match[2]
 
