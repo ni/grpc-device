@@ -11,7 +11,6 @@ module_name = config["module_name"]
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
-uses_timestamp = common_helpers.any_function_uses_timestamp(functions)
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
 
@@ -27,8 +26,10 @@ uses_timestamp = common_helpers.any_function_uses_timestamp(functions)
 #include <iostream>
 #include <atomic>
 #include <vector>
-% if uses_timestamp:
-#include "custom/nidaqmx_conversions.h"
+% if "additional_headers" in config:
+% for additional_header in config["additional_headers"]:
+#include "${additional_header}"
+% endfor
 % endif
 
 namespace ${config["namespace_component"]}_grpc {
