@@ -1033,7 +1033,10 @@ TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViReal64_ReturnsValue)
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  EXPECT_DOUBLE_EQ(expectedValue, value);
+  // 6674T has up to 16.8mV of resolution for PFI threshold. We'll loosen our
+  // validation to a bit more than twice that to ensure we aren't testing
+  // driver implementation details.
+  EXPECT_NEAR(expectedValue, value, 50e-3);
 }
 
 TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsNoFrequency)
