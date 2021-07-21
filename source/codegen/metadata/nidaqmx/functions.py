@@ -90,7 +90,7 @@ functions = {
                 'name': 'reverseCoeffs',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': '(reversePolyOrder == -1) ? numForwardCoeffsIn : reversePolyOrder + 1'
+                    'value': '(reversePolyOrder < 0) ? numForwardCoeffsIn : reversePolyOrder + 1'
                 },
                 'type': 'float64[]'
             }

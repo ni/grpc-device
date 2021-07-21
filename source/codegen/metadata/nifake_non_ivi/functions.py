@@ -84,7 +84,7 @@ functions = {
                 'name': 'data',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': '(sizeOne == -1) ? sizeTwo : sizeOne + 1'
+                    'value': '(sizeOne < 0) ? sizeTwo : sizeOne + 1'
                 },
                 'type': 'int32[]'
             },

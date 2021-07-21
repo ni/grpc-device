@@ -187,7 +187,7 @@ namespace nifake_non_ivi_grpc {
     try {
       int32 size_one = request->size_one();
       int32 size_two = request->size_two();
-      response->mutable_data()->Resize((size_one == -1) ? size_two : size_one + 1, 0);
+      response->mutable_data()->Resize((size_one < 0) ? size_two : size_one + 1, 0);
       int32* data = reinterpret_cast<int32*>(response->mutable_data()->mutable_data());
       auto status = library_->IotaWithCustomSize(size_one, size_two, data);
       response->set_status(status);

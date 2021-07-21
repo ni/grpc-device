@@ -86,7 +86,7 @@ namespace nidaqmx_grpc {
       float64 max_val_x = request->max_val_x();
       int32 num_points_to_compute = request->num_points_to_compute();
       int32 reverse_poly_order = request->reverse_poly_order();
-      response->mutable_reverse_coeffs()->Resize((reverse_poly_order == -1) ? num_forward_coeffs_in : reverse_poly_order + 1, 0);
+      response->mutable_reverse_coeffs()->Resize((reverse_poly_order < 0) ? num_forward_coeffs_in : reverse_poly_order + 1, 0);
       float64* reverse_coeffs = response->mutable_reverse_coeffs()->mutable_data();
       auto status = library_->CalculateReversePolyCoeff(forward_coeffs, num_forward_coeffs_in, min_val_x, max_val_x, num_points_to_compute, reverse_poly_order, reverse_coeffs);
       response->set_status(status);
