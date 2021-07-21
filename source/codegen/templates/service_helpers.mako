@@ -384,7 +384,7 @@ ${initialize_standard_input_param(function_name, parameter)}\
         auto session_id = session_repository_->resolve_session_id(${parameter_name});
         response->mutable_${parameter_name}()->set_id(session_id);
 %   elif parameter['type'] == 'CVIAbsoluteTime':
-        response->set_${parameter_name}(convert_to_grpc(${parameter_name}));
+        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   else:
         response->set_${parameter_name}(${parameter_name});
 %   endif

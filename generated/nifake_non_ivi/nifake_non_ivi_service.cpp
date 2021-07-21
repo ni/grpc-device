@@ -288,5 +288,26 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputTimestamp(::grpc::ServerContext* context, const OutputTimestampRequest* request, OutputTimestampResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      CVIAbsoluteTime when {};
+      auto status = library_->OutputTimestamp(&when);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(when, response->mutable_when());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 } // namespace nifake_non_ivi_grpc
 

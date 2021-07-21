@@ -29,6 +29,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
   function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
   function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
+  function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputTimestamp"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -135,6 +136,18 @@ int32 NiFakeNonIviLibrary::InputTimestamp(CVIAbsoluteTime when)
   return niFakeNonIvi_InputTimestamp(when);
 #else
   return function_pointers_.InputTimestamp(when);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::OutputTimestamp(CVIAbsoluteTime* when)
+{
+  if (!function_pointers_.OutputTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputTimestamp.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_OutputTimestamp(when);
+#else
+  return function_pointers_.OutputTimestamp(when);
 #endif
 }
 

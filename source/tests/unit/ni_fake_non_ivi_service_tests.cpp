@@ -410,6 +410,61 @@ TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpoch)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpochWithFractionalSeconds)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1900EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0x8000000000000000LL;
+  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputTimestampRequest request;
+  google::protobuf::Timestamp* timestamp_pb = request.mutable_when();
+  timestamp_pb->set_seconds(0);
+  // exactly .5 seconds
+  timestamp_pb->set_nanos(500 * 1000 * 1000);
+  InputTimestampResponse response;
+
+  service_.InputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_UnixEpoch)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1900EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0;
+  EXPECT_CALL(library_, OutputTimestamp(_))
+      .WillOnce(DoAll(SetArgPointee<0>(timestamp), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputTimestampRequest request;
+  OutputTimestampResponse response;
+
+  service_.OutputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(0, response.when().seconds());
+  EXPECT_EQ(0, response.when().nanos());
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_UnixEpochWithFractionalSeconds)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1900EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0x8000000000000000LL;
+  EXPECT_CALL(library_, OutputTimestamp(_))
+      .WillOnce(DoAll(SetArgPointee<0>(timestamp), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputTimestampRequest request;
+  OutputTimestampResponse response;
+
+  service_.OutputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(0, response.when().seconds());
+  EXPECT_EQ(500 * 1000 * 1000, response.when().nanos());
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

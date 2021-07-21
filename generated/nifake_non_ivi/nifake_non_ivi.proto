@@ -25,6 +25,7 @@ service NiFakeNonIvi {
   rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
   rpc OutputArrayOfBytes(OutputArrayOfBytesRequest) returns (OutputArrayOfBytesResponse);
   rpc InputTimestamp(InputTimestampRequest) returns (InputTimestampResponse);
+  rpc OutputTimestamp(OutputTimestampRequest) returns (OutputTimestampResponse);
 }
 
 enum NiFakeNonIviAttributes {
@@ -103,5 +104,13 @@ message InputTimestampRequest {
 
 message InputTimestampResponse {
   int32 status = 1;
+}
+
+message OutputTimestampRequest {
+}
+
+message OutputTimestampResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp when = 2;
 }
 

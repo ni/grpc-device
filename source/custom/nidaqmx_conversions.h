@@ -4,9 +4,9 @@
 #include "NIDAQmx.h"
 
 template <typename CType, typename GrpcType>
-GrpcType convert_to_grpc(const CType& value)
+void convert_to_grpc(const CType& value, GrpcType* value_out)
 {
-  return static_cast<GrpcType>(value);
+  *value_out = static_cast<GrpcType>(value);
 }
 
 template <typename CType, typename GrpcType>
@@ -16,16 +16,22 @@ CType convert_from_grpc(const GrpcType& value)
 }
 
 const int64 SecondsFromCVI1900EpochTo1970Epoch = 2208988800LL;
+const double TwoToSixtyFour = (double)(1 << 31) * (double)(1 << 31) * (double)(1 << 2);
+const double NanosecondsPerSecond = 1000000000.0;
 
 template <>
-google::protobuf::Timestamp convert_to_grpc(const CVIAbsoluteTime& value)
+void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* timestamp)
 {
   // msb is whole seconds after 12:00 a.m., Friday, January 1, 1904, Universal Time
-  time_t unixTime = (time_t)(value.cviTime.msb - SecondsFromCVI1900EpochTo1970Epoch);
-  google::protobuf::Timestamp timestamp = google::protobuf::util::TimeUtil::TimeTToTimestamp(unixTime);
+  time_t unixTime = static_cast<time_t>(value.cviTime.msb - SecondsFromCVI1900EpochTo1970Epoch);
+  google::protobuf::Timestamp temp_timestamp = google::protobuf::util::TimeUtil::TimeTToTimestamp(unixTime);
 
-  //TODO
-  return timestamp;
+  timestamp->set_seconds(temp_timestamp.seconds());
+  // lsb is positive fractions (2^64) of a second
+  // This is losing some precision since doubles have 52 bits of precision.
+  // But there are only 10^9 nanoseconds in a second which is ~31 bits of precision,
+  // so it's still good enough for our purposes.
+  timestamp->set_nanos((static_cast<double>(value.cviTime.lsb) * NanosecondsPerSecond) / TwoToSixtyFour);
 }
 
 template <>
@@ -33,7 +39,7 @@ CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& value)
 {
   time_t unixTime = google::protobuf::util::TimeUtil::TimestampToTimeT(value);
   CVIAbsoluteTime cviTime;
-  cviTime.cviTime.msb = (int64)(unixTime + SecondsFromCVI1900EpochTo1970Epoch);
-  //TODO
+  cviTime.cviTime.msb = static_cast<int64>(unixTime + SecondsFromCVI1900EpochTo1970Epoch);
+  cviTime.cviTime.lsb = static_cast<uInt64>((static_cast<double>(value.nanos()) / NanosecondsPerSecond) * TwoToSixtyFour);
   return cviTime;
 }

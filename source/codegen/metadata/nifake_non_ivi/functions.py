@@ -157,4 +157,15 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OutputTimestamp': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'when',
+                'type': 'CVIAbsoluteTime',
+                'grpc_type': 'google.protobuf.Timestamp',
+            },
+        ],
+        'returns': 'int32'
+    },
 }
