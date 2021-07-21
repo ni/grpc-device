@@ -19,6 +19,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
   MOCK_METHOD(int32, AddGlobalChansToTask, (TaskHandle task, const char channelNames[]), (override));
   MOCK_METHOD(int32, AddNetworkDevice, (const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize), (override));
+  MOCK_METHOD(int32, CalculateReversePolyCoeff, (const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]), (override));
   MOCK_METHOD(int32, CfgAnlgEdgeRefTrig, (TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples), (override));
   MOCK_METHOD(int32, CfgAnlgEdgeStartTrig, (TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel), (override));
   MOCK_METHOD(int32, CfgAnlgMultiEdgeRefTrig, (TaskHandle task, const char triggerSources[], int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize), (override));

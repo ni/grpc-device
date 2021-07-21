@@ -74,6 +74,33 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CalculateReversePolyCoeff(::grpc::ServerContext* context, const CalculateReversePolyCoeffRequest* request, CalculateReversePolyCoeffResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto forward_coeffs = const_cast<const float64*>(request->forward_coeffs().data());
+      uInt32 num_forward_coeffs_in = request->num_forward_coeffs_in();
+      float64 min_val_x = request->min_val_x();
+      float64 max_val_x = request->max_val_x();
+      int32 num_points_to_compute = request->num_points_to_compute();
+      int32 reverse_poly_order = request->reverse_poly_order();
+      response->mutable_reverse_coeffs()->Resize((reverse_poly_order < 0) ? num_forward_coeffs_in : reverse_poly_order + 1, 0);
+      float64* reverse_coeffs = response->mutable_reverse_coeffs()->mutable_data();
+      auto status = library_->CalculateReversePolyCoeff(forward_coeffs, num_forward_coeffs_in, min_val_x, max_val_x, num_points_to_compute, reverse_poly_order, reverse_coeffs);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CfgAnlgEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgEdgeRefTrigRequest* request, CfgAnlgEdgeRefTrigResponse* response)
   {
     if (context->IsCancelled()) {

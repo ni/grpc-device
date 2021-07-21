@@ -20,6 +20,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AddGlobalChansToTask(TaskHandle task, const char channelNames[]);
   int32 AddNetworkDevice(const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize);
+  int32 CalculateReversePolyCoeff(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]);
   int32 CfgAnlgEdgeRefTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples);
   int32 CfgAnlgEdgeStartTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel);
   int32 CfgAnlgMultiEdgeRefTrig(TaskHandle task, const char triggerSources[], int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize);
@@ -201,6 +202,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  private:
   using AddGlobalChansToTaskPtr = int32 (*)(TaskHandle task, const char channelNames[]);
   using AddNetworkDevicePtr = int32 (*)(const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize);
+  using CalculateReversePolyCoeffPtr = int32 (*)(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]);
   using CfgAnlgEdgeRefTrigPtr = int32 (*)(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples);
   using CfgAnlgEdgeStartTrigPtr = int32 (*)(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel);
   using CfgAnlgMultiEdgeRefTrigPtr = int32 (*)(TaskHandle task, const char triggerSources[], int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize);
@@ -382,6 +384,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   typedef struct FunctionPointers {
     AddGlobalChansToTaskPtr AddGlobalChansToTask;
     AddNetworkDevicePtr AddNetworkDevice;
+    CalculateReversePolyCoeffPtr CalculateReversePolyCoeff;
     CfgAnlgEdgeRefTrigPtr CfgAnlgEdgeRefTrig;
     CfgAnlgEdgeStartTrigPtr CfgAnlgEdgeStartTrig;
     CfgAnlgMultiEdgeRefTrigPtr CfgAnlgMultiEdgeRefTrig;

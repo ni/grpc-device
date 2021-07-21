@@ -17,6 +17,7 @@ class NiDAQmxLibraryInterface {
 
   virtual int32 AddGlobalChansToTask(TaskHandle task, const char channelNames[]) = 0;
   virtual int32 AddNetworkDevice(const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize) = 0;
+  virtual int32 CalculateReversePolyCoeff(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]) = 0;
   virtual int32 CfgAnlgEdgeRefTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples) = 0;
   virtual int32 CfgAnlgEdgeStartTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel) = 0;
   virtual int32 CfgAnlgMultiEdgeRefTrig(TaskHandle task, const char triggerSources[], int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize) = 0;
