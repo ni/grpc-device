@@ -878,12 +878,7 @@ TEST_F(NiSyncDriver6674Test, SendSoftwareTriggerOnInvalidTerminal_ReturnsInvalid
   auto grpcStatus = call_SendSoftwareTrigger(srcTerminal, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  // Bug 1459796: 6674T SendSoftwareTrigger has different error behavior on Linux RT
-  #if defined(_MSC_VER)
   EXPECT_EQ(NISYNC_ERROR_SRC_TERMINAL_INVALID, viStatus);
-  #else
-  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
-  #endif
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectTrigTerminals_ReturnsSuccess)
