@@ -6,7 +6,6 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
-
 #include "nidaqmx/nidaqmx_service.h"
 
 using namespace ::testing;
@@ -56,13 +55,12 @@ class NiDAQmxDriverApiTests : public Test {
     close_driver_session();
   }
 
-  bool are_all_devices_present(std::unordered_map<std::string, std::string> required_devices) 
+  bool are_all_devices_present(std::unordered_map<std::string, std::string> required_devices)
   {
-    for(const auto& device : EnumerateDevices()) {
+    for (const auto& device : EnumerateDevices()) {
       auto matched_required_device = required_devices.find(device.name());
-      if (matched_required_device != required_devices.cend()
-        && matched_required_device->second == device.model()) {
-          required_devices.erase(matched_required_device);
+      if (matched_required_device != required_devices.cend() && matched_required_device->second == device.model()) {
+        required_devices.erase(matched_required_device);
       }
     }
 
@@ -105,7 +103,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ClearTask(&context, request, &response);
   }
 
-  CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "") {
+  CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  {
     CreateAIVoltageChanRequest request;
     set_request_session_id(request);
     request.set_physical_channel("gRPCSystemTestDAQ/ai0");
@@ -170,7 +169,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateDOChan(&context, request, &response);
   }
 
-  ::grpc::Status create_ci_freq_chan(CreateCIFreqChanResponse& response){
+  ::grpc::Status create_ci_freq_chan(CreateCIFreqChanResponse& response)
+  {
     ::grpc::ClientContext context;
     CreateCIFreqChanRequest request;
     set_request_session_id(request);
@@ -186,7 +186,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateCIFreqChan(&context, request, &response);
   }
 
-  ::grpc::Status get_error_string(int32 error_code, GetErrorStringResponse& response) {
+  ::grpc::Status get_error_string(int32 error_code, GetErrorStringResponse& response)
+  {
     ::grpc::ClientContext context;
     GetErrorStringRequest request;
     request.set_buffer_size(4096);
@@ -275,7 +276,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ReadBinaryI32(&context, request, &response);
   }
 
-  ::grpc::Status read_binary_i16(int32 samples_to_read, ReadBinaryI16Response& response) {
+  ::grpc::Status read_binary_i16(int32 samples_to_read, ReadBinaryI16Response& response)
+  {
     ::grpc::ClientContext context;
     ReadBinaryI16Request request;
     set_request_session_id(request);
@@ -285,7 +287,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ReadBinaryI16(&context, request, &response);
   }
 
-  ::grpc::Status write_binary_i16(const std::vector<int16>& data, WriteBinaryI16Response& response) {
+  ::grpc::Status write_binary_i16(const std::vector<int16>& data, WriteBinaryI16Response& response)
+  {
     ::grpc::ClientContext context;
     WriteBinaryI16Request request;
     set_request_session_id(request);
@@ -302,11 +305,12 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     request.set_index(index);
     request.set_buffer_size(256);
-    
+
     return stub()->GetNthTaskDevice(&context, request, &response);
   }
 
-  bool is_task_done() {
+  bool is_task_done()
+  {
     ::grpc::ClientContext context;
     IsTaskDoneRequest request;
     set_request_session_id(request);
@@ -318,25 +322,45 @@ class NiDAQmxDriverApiTests : public Test {
 
   ::grpc::Status task_control(TaskControlAction action, TaskControlResponse& response)
   {
-      ::grpc::ClientContext context;
-      TaskControlRequest request;
-      set_request_session_id(request);
-      request.set_action(action);
-      return stub()->TaskControl(&context, request, &response);
+    ::grpc::ClientContext context;
+    TaskControlRequest request;
+    set_request_session_id(request);
+    request.set_action(action);
+    return stub()->TaskControl(&context, request, &response);
   }
 
-  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response) {
-    ::grpc::ClientContext context;
+  auto register_done_event(::grpc::ClientContext& context)
+  {
+    RegisterDoneEventRequest request;
+    set_request_session_id(request);
+    return stub()->RegisterDoneEvent(&context, request);
+  }
+
+  CfgSampClkTimingRequest create_cfg_samp_clk_timing_request(double rate, Edge1 active_edge, AcquisitionType sample_mode, uInt64 samples_per_chan)
+  {
     CfgSampClkTimingRequest request;
     set_request_session_id(request);
-    request.set_rate(100.0);
-    request.set_sample_mode(AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS);
-    request.set_active_edge(Edge1::EDGE1_RISING);
-    request.set_samps_per_chan(1000);
+    request.set_rate(rate);
+    request.set_active_edge(active_edge);
+    request.set_sample_mode(sample_mode);
+    request.set_samps_per_chan(samples_per_chan);
+    return request;
+  }
+
+  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response)
+  {
+    auto request = create_cfg_samp_clk_timing_request(100.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1000UL);
+    return cfg_samp_clk_timing(request, response);
+  }
+
+  ::grpc::Status cfg_samp_clk_timing(const CfgSampClkTimingRequest& request, CfgSampClkTimingResponse& response = ThrowawayResponse<CfgSampClkTimingResponse>::response())
+  {
+    ::grpc::ClientContext context;
     return stub()->CfgSampClkTiming(&context, request, &response);
   }
 
-  ::grpc::Status cfg_input_buffer(CfgInputBufferResponse& response) {
+  ::grpc::Status cfg_input_buffer(CfgInputBufferResponse& response)
+  {
     ::grpc::ClientContext context;
     CfgInputBufferRequest request;
     set_request_session_id(request);
@@ -344,7 +368,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CfgInputBuffer(&context, request, &response);
   }
 
-  ::grpc::Status cfg_output_buffer(CfgOutputBufferResponse& response) {
+  ::grpc::Status cfg_output_buffer(CfgOutputBufferResponse& response)
+  {
     ::grpc::ClientContext context;
     CfgOutputBufferRequest request;
     set_request_session_id(request);
@@ -352,14 +377,16 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CfgOutputBuffer(&context, request, &response);
   }
 
-  ::grpc::Status self_test_device(SelfTestDeviceResponse& response) {
+  ::grpc::Status self_test_device(SelfTestDeviceResponse& response)
+  {
     ::grpc::ClientContext context;
     SelfTestDeviceRequest request;
     request.set_device_name(DEVICE_NAME);
     return stub()->SelfTestDevice(&context, request, &response);
   }
 
-  ::grpc::Status create_lin_scale(const std::string& name, double slope, CreateLinScaleResponse& response) {
+  ::grpc::Status create_lin_scale(const std::string& name, double slope, CreateLinScaleResponse& response)
+  {
     ::grpc::ClientContext context;
     CreateLinScaleRequest request;
     request.set_name(name);
@@ -423,7 +450,8 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   template <typename T>
-  void EXPECT_DATA_IN_RANGE(const ::google::protobuf::RepeatedField<T>& data, T min_val, T max_val) {
+  void EXPECT_DATA_IN_RANGE(const ::google::protobuf::RepeatedField<T>& data, T min_val, T max_val)
+  {
     EXPECT_THAT(data, Each(Not(Lt(min_val))));
     EXPECT_THAT(data, Each(Not(Gt(max_val))));
   }
@@ -701,6 +729,25 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
   EXPECT_EQ(NUM_SAMPS, read_response.samps_per_chan_read());
 }
 
+TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
+{
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_done_event(reader_context);
+
+  auto FINITE_SAMPLE_COUNT = 10UL;
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
+  start_task();
+  ReadAnalogF64Response read_response;
+  auto read_status = read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT, read_response);
+  EXPECT_SUCCESS(read_status, read_response);
+
+  RegisterDoneEventResponse response;
+  reader->Read(&response);
+  EXPECT_EQ(DAQmxSuccess, response.status());
+}
+
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ConfigureInputBuffer_Succeeds)
 {
   create_ai_voltage_chan(0.0, 1.0);
@@ -717,7 +764,7 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_ConfigureOutputBuffer_Succeeds)
 
   CfgOutputBufferResponse response;
   auto status = cfg_output_buffer(response);
-  
+
   EXPECT_SUCCESS(status, response);
 }
 
@@ -725,7 +772,7 @@ TEST_F(NiDAQmxDriverApiTests, SelfTestDevice_Succeeds)
 {
   SelfTestDeviceResponse response;
   auto status = self_test_device(response);
-  
+
   EXPECT_SUCCESS(status, response);
 }
 

@@ -170,4 +170,33 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'RegisterCallback': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'inputData',
+                'type': 'myInt16'
+            },
+            {
+                'callback_params': [
+                    {
+                        'name': 'echoData',
+                        'type': 'myInt16'
+                    },
+                ],
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'callbackFunction',
+                'type': 'CallbackPtr'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'callbackData',
+                'type': 'void'
+            }
+        ],
+        'returns': 'int32'
+    }
 }

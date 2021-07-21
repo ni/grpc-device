@@ -167,6 +167,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
   int32 ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation);
   int32 ResetDevice(const char deviceName[]);
   int32 SelfTestDevice(const char deviceName[]);
@@ -348,6 +349,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ReadDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadDigitalU32Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  using RegisterDoneEventPtr = int32 (*)(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
   using ReserveNetworkDevicePtr = int32 (*)(const char deviceName[], bool32 overrideReservation);
   using ResetDevicePtr = int32 (*)(const char deviceName[]);
   using SelfTestDevicePtr = int32 (*)(const char deviceName[]);
@@ -529,6 +531,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ReadDigitalU16Ptr ReadDigitalU16;
     ReadDigitalU32Ptr ReadDigitalU32;
     ReadDigitalU8Ptr ReadDigitalU8;
+    RegisterDoneEventPtr RegisterDoneEvent;
     ReserveNetworkDevicePtr ReserveNetworkDevice;
     ResetDevicePtr ResetDevice;
     SelfTestDevicePtr SelfTestDevice;

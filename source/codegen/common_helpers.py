@@ -187,3 +187,6 @@ def get_ivi_dance_with_a_twist_params(parameters):
 
 def is_init_method(function_data):
   return function_data.get('init_method', False)
+
+def has_streaming_response(function_data):
+  return function_data.get('stream_response', False)

@@ -9,4 +9,6 @@ using myUInt16 = uint16_t;
 using myInt8 = int8_t;
 using myUInt8 = uint8_t;
 
+using CallbackPtr = int32(int32_t, void*);
+
 #endif /* NIFAKE_NON_IVI_H */

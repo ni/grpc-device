@@ -105,10 +105,12 @@ namespace ${config["namespace_component"]}_grpc {
     function_data = functions[function_name]
     method_name = common_helpers.snake_to_pascal(function_name)
     parameters = function_data['parameters']
+    request_param = service_helpers.get_request_param(method_name, function_data)
+    response_param = service_helpers.get_response_param(method_name, function_data)
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response)
+  ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;

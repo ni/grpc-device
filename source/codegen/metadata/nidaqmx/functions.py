@@ -6888,6 +6888,37 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'RegisterDoneEvent': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'options',
+                'type': 'uInt32'
+            },
+            {
+                'callback_params': [
+                ],
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'callbackFunction',
+                'type': 'DAQmxDoneEventCallbackPtr'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'callbackData',
+                'type': 'void'
+            }
+        ],
+        'returns': 'int32',
+        'stream_response': True
+    },
     'ReserveNetworkDevice': {
         'parameters': [
             {
