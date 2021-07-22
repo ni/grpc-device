@@ -6888,6 +6888,57 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ReadRaw': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInBytes'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInBytes',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'numBytesPerSamp',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'RegisterDoneEvent': {
         'codegen_method': 'CustomCode',
         'parameters': [
@@ -7884,6 +7935,48 @@ functions = {
                 'enum': 'GroupBy',
                 'name': 'dataLayout',
                 'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'writeArray',
+                'type': 'const uInt8[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanWritten',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pass_null': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteRaw': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSamps',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoStart',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
             },
             {
                 'direction': 'in',

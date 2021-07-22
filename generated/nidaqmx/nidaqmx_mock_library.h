@@ -166,6 +166,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ReadDigitalU16, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadDigitalU32, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadDigitalU8, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
+  MOCK_METHOD(int32, ReadRaw, (TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved), (override));
   MOCK_METHOD(int32, RegisterDoneEvent, (TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData), (override));
   MOCK_METHOD(int32, ReserveNetworkDevice, (const char deviceName[], bool32 overrideReservation), (override));
   MOCK_METHOD(int32, ResetDevice, (const char deviceName[]), (override));
@@ -197,6 +198,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, WriteDigitalU16, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteDigitalU32, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteDigitalU8, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
+  MOCK_METHOD(int32, WriteRaw, (TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
 };
 
 }  // namespace unit

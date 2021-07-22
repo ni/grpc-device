@@ -7852,6 +7852,37 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadRaw(::grpc::ServerContext* context, const ReadRawRequest* request, ReadRawResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      uInt32 array_size_in_bytes = request->array_size_in_bytes();
+      auto reserved = nullptr;
+      std::string read_array(array_size_in_bytes, '\0');
+      int32 samps_read {};
+      int32 num_bytes_per_samp {};
+      auto status = library_->ReadRaw(task, num_samps_per_chan, timeout, (uInt8*)read_array.data(), array_size_in_bytes, &samps_read, &num_bytes_per_samp, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_read_array(read_array);
+        response->set_samps_read(samps_read);
+        response->set_num_bytes_per_samp(num_bytes_per_samp);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8836,6 +8867,34 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_written(samps_per_chan_written);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteRaw(::grpc::ServerContext* context, const WriteRawRequest* request, WriteRawResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps = request->num_samps();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+      auto reserved = nullptr;
+      int32 samps_per_chan_written {};
+      auto status = library_->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status == 0) {
         response->set_samps_per_chan_written(samps_per_chan_written);
