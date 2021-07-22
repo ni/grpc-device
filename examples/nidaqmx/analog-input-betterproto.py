@@ -97,7 +97,7 @@ async def main():
         await raise_if_error(response)
 
         print(f"Acquired {response.samps_per_chan_read} samples.")
-        print(response.read_array)
+        print(f"First 5 samples: {response.read_array[:5]}")
     finally:
         if task:
             await daq_service.stop_task(task=task)
