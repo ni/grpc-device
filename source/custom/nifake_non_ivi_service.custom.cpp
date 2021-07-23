@@ -16,7 +16,7 @@ namespace nifake_non_ivi_grpc {
     auto registration = FakeCallbackRouter::register_handler([&](int32 val) { 
       response->set_echo_data(request->input_data());
       return 0; });
-    auto status = library_->RegisterCallback(request->input_data(), FakeCallbackRouter::handle_callback, registration.token());
+    auto status = library_->RegisterCallback(request->input_data(), FakeCallbackRouter::handle_callback, registration->token());
     response->set_status(status);
     return ::grpc::Status::OK;
   }

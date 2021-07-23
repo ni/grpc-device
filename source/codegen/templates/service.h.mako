@@ -18,6 +18,12 @@ if len(config["custom_types"]) > 0:
 resource_handle_type = config.get("resource_handle_type", "ViSession")
 resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
 resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
+
+async_functions = service_helpers.get_async_functions(functions)
+has_async_functions = any(async_functions)
+base_class_name = f"{service_class_prefix}::Service"
+for async_function in async_functions.keys():
+  base_class_name = f"{service_class_prefix}::WithAsyncMethod_{async_function}<{base_class_name}>"
 %>\
 
 //---------------------------------------------------------------------
@@ -37,18 +43,33 @@ resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
+%if has_async_functions:
+#include <server/async_method_context.h>
+%endif
 
 #include "${config["module_name"]}_library_interface.h"
 
 namespace ${config["namespace_component"]}_grpc {
 
-class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
+class ${service_class_prefix}Service final : public ${base_class_name} {
 public:
   using ResourceRepositorySharedPtr = ${resource_repository_ptr};
 
   ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~${service_class_prefix}Service();
   
+%if has_async_functions:
+  void register_async_functions(::grpc::ServerCompletionQueue* completion_queue);
+%endif
+% for function in async_functions.keys():
+<%
+  method_name = common_helpers.snake_to_pascal(function)
+  request_param_type = service_helpers.get_request_type(method_name)
+  response_param_type = service_helpers.get_response_type(method_name)
+%>\
+  using ${method_name}MethodContext = nidevice_grpc::AsyncMethodContext<${request_param_type}, ${response_param_type}>;
+  using ${method_name}MethodContextPtr = std::shared_ptr<${method_name}MethodContext>;
+% endfor
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
@@ -56,7 +77,11 @@ public:
   request_param = service_helpers.get_request_param(method_name, f)
   response_param = service_helpers.get_response_param(method_name, f)
 %>\
+% if function in async_functions:
+  ::grpc::Status process_${method_name}(const ${method_name}MethodContextPtr& async_method_context);
+% else:
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param}) override;
+% endif
 % endfor
 private:
   ${service_class_prefix}LibraryInterface* library_;

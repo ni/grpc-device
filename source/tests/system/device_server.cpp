@@ -16,9 +16,13 @@
 #include <nisync/nisync_service.h>
 #include <nitclk/nitclk_library.h>
 #include <nitclk/nitclk_service.h>
+#include <server/async_processing_loop.h>
 #include <server/device_enumerator.h>
 #include <server/session_utilities_service.h>
 #include <server/syscfg_library.h>
+
+#include <memory>
+#include <thread>
 
 namespace ni {
 namespace tests {
@@ -29,7 +33,7 @@ DeviceServerInterface::~DeviceServerInterface() {}
 class DeviceServer : public DeviceServerInterface {
  public:
   DeviceServer();
-  ~DeviceServer() override{};
+  ~DeviceServer() override;
 
   // DeviceServerInterface overrides
   void ResetServer() override;
@@ -60,6 +64,8 @@ class DeviceServer : public DeviceServerInterface {
   nidaqmx_grpc::NiDAQmxLibrary nidaqmx_library_;
   nidaqmx_grpc::NiDAQmxService nidaqmx_service_;
 
+  std::unique_ptr<::grpc::ServerCompletionQueue> completion_queue_;
+  std::thread callback_thread_;
   std::unique_ptr<::grpc::Server> server_;
   std::shared_ptr<::grpc::Channel> channel_;
 };
@@ -97,7 +103,17 @@ DeviceServer::DeviceServer()
   builder.RegisterService(&nifgen_service_);
   builder.RegisterService(&nitclk_service_);
   builder.RegisterService(&nidaqmx_service_);
+
+  completion_queue_ = builder.AddCompletionQueue();
   server_ = builder.BuildAndStart();
+  callback_thread_ = std::thread([&]() { nidevice_grpc::run_async_processing_loop(completion_queue_.get(), nidaqmx_service_); });
+}
+
+DeviceServer::~DeviceServer()
+{
+  server_->Shutdown();
+  completion_queue_->Shutdown();
+  callback_thread_.join();
 }
 
 void DeviceServer::ResetServer()

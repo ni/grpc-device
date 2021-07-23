@@ -19,6 +19,7 @@
 
 #include <mutex>
 
+#include "async_processing_loop.h"
 #include "feature_toggles.h"
 #include "logging.h"
 #include "server_configuration_parser.h"
@@ -136,7 +137,7 @@ static void RunServer(const ServerConfiguration& config)
   if (daq_feature_state == FeatureState::kEnabled) {
     builder.RegisterService(&nidaqmx_service);
   }
-
+  auto completion_queue = builder.AddCompletionQueue();
   // Assemble the server.
   {
     std::lock_guard<std::mutex> guard(server_mutex);
@@ -171,6 +172,8 @@ static void RunServer(const ServerConfiguration& config)
   nidevice_grpc::logging::log(
       nidevice_grpc::logging::Level_Info,
       "Security is configured with %s%s.", security_description, tls_description);
+
+  nidevice_grpc::run_async_processing_loop(completion_queue.get(), nidaqmx_service);
   // This call will block until another thread shuts down the server.
   server->Wait();
   // This code is currently unreachable, but if the call to wait exits, we need to clean up the service here.

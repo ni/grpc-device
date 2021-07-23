@@ -16,18 +16,22 @@
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
+#include <server/async_method_context.h>
 
 #include "nidaqmx_library_interface.h"
 
 namespace nidaqmx_grpc {
 
-class NiDAQmxService final : public NiDAQmx::Service {
+class NiDAQmxService final : public NiDAQmx::WithAsyncMethod_RegisterDoneEvent<NiDAQmx::Service> {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>;
 
   NiDAQmxService(NiDAQmxLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiDAQmxService();
   
+  void register_async_functions(::grpc::ServerCompletionQueue* completion_queue);
+  using RegisterDoneEventMethodContext = nidevice_grpc::AsyncMethodContext<RegisterDoneEventRequest, RegisterDoneEventResponse>;
+  using RegisterDoneEventMethodContextPtr = std::shared_ptr<RegisterDoneEventMethodContext>;
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;
   ::grpc::Status CfgAnlgEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgEdgeRefTrigRequest* request, CfgAnlgEdgeRefTrigResponse* response) override;
@@ -176,7 +180,7 @@ public:
   ::grpc::Status ReadDigitalU16(::grpc::ServerContext* context, const ReadDigitalU16Request* request, ReadDigitalU16Response* response) override;
   ::grpc::Status ReadDigitalU32(::grpc::ServerContext* context, const ReadDigitalU32Request* request, ReadDigitalU32Response* response) override;
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
-  ::grpc::Status RegisterDoneEvent(::grpc::ServerContext* context, const RegisterDoneEventRequest* request, ::grpc::ServerWriter<RegisterDoneEventResponse>* writer) override;
+  ::grpc::Status process_RegisterDoneEvent(const RegisterDoneEventMethodContextPtr& async_method_context);
   ::grpc::Status ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
   ::grpc::Status SelfTestDevice(::grpc::ServerContext* context, const SelfTestDeviceRequest* request, SelfTestDeviceResponse* response) override;
