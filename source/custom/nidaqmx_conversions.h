@@ -15,7 +15,7 @@ CType convert_from_grpc(const GrpcType& value)
   return static_cast<CType>(value);
 }
 
-const int64 SecondsFromCVI1900EpochTo1970Epoch = 2208988800LL;
+const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
 const double TwoToSixtyFour = (double)(1 << 31) * (double)(1 << 31) * (double)(1 << 2);
 const double NanosecondsPerSecond = 1000000000.0;
 
@@ -23,7 +23,7 @@ template <>
 void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* timestamp)
 {
   // msb is whole seconds after 12:00 a.m., Friday, January 1, 1904, Universal Time
-  time_t unixTime = static_cast<time_t>(value.cviTime.msb - SecondsFromCVI1900EpochTo1970Epoch);
+  time_t unixTime = static_cast<time_t>(value.cviTime.msb - SecondsFromCVI1904EpochTo1970Epoch);
   google::protobuf::Timestamp temp_timestamp = google::protobuf::util::TimeUtil::TimeTToTimestamp(unixTime);
 
   timestamp->set_seconds(temp_timestamp.seconds());
@@ -39,7 +39,7 @@ CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& value)
 {
   time_t unixTime = google::protobuf::util::TimeUtil::TimestampToTimeT(value);
   CVIAbsoluteTime cviTime;
-  cviTime.cviTime.msb = static_cast<int64>(unixTime + SecondsFromCVI1900EpochTo1970Epoch);
+  cviTime.cviTime.msb = static_cast<int64>(unixTime + SecondsFromCVI1904EpochTo1970Epoch);
   cviTime.cviTime.lsb = static_cast<uInt64>((static_cast<double>(value.nanos()) / NanosecondsPerSecond) * TwoToSixtyFour);
   return cviTime;
 }
