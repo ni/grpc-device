@@ -240,6 +240,31 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->WriteAnalogF64(&context, request, &response);
   }
 
+  ::grpc::Status write_u32_digital_data(WriteDigitalU32Response& response)
+  {
+    ::grpc::ClientContext context;
+    WriteDigitalU32Request request;
+    set_request_session_id(request);
+    request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    request.set_num_samps_per_chan(4);
+    request.add_write_array(1000000);
+    request.add_write_array(10000);
+    request.add_write_array(1);
+    request.add_write_array(0);
+    return stub()->WriteDigitalU32(&context, request, &response);
+  }
+
+  ::grpc::Status read_u32_digital_data(ReadDigitalU32Response& response)
+  {
+    ::grpc::ClientContext context;
+    ReadDigitalU32Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(4);
+    request.set_array_size_in_samps(4);
+    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    return stub()->ReadDigitalU32(&context, request, &response);
+  }
+
   ::grpc::Status write_u16_digital_data(WriteDigitalU16Response& response)
   {
     ::grpc::ClientContext context;
@@ -247,7 +272,7 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     request.set_num_samps_per_chan(4);
-    request.add_write_array(100);
+    request.add_write_array(65535);
     request.add_write_array(10);
     request.add_write_array(1);
     request.add_write_array(0);
@@ -263,6 +288,29 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     return stub()->ReadDigitalU16(&context, request, &response);
+  }
+
+  ::grpc::Status write_u8_digital_data(WriteDigitalU8Response& response)
+  {
+    ::grpc::ClientContext context;
+    WriteDigitalU8Request request;
+    set_request_session_id(request);
+    request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    request.set_num_samps_per_chan(4);
+    uint8_t data[4] = {255, 10, 1, 0};
+    request.set_write_array(data, sizeof(data));
+    return stub()->WriteDigitalU8(&context, request, &response);
+  }
+
+  ::grpc::Status read_u8_digital_data(ReadDigitalU8Response& response)
+  {
+    ::grpc::ClientContext context;
+    ReadDigitalU8Request request;
+    set_request_session_id(request);
+    request.set_num_samps_per_chan(4);
+    request.set_array_size_in_samps(4);
+    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    return stub()->ReadDigitalU8(&context, request, &response);
   }
 
   ::grpc::Status read_binary_i32(int32 samples_to_read, ReadBinaryI32Response& response)
@@ -528,6 +576,33 @@ TEST_F(NiDAQmxDriverApiTests, CreateDOChannel_Succeeds)
   EXPECT_SUCCESS(status, response);
 }
 
+TEST_F(NiDAQmxDriverApiTests, WriteU32DigitalData_Succeeds)
+{
+  create_do_chan();
+  start_task();
+
+  WriteDigitalU32Response response;
+  auto status = write_u32_digital_data(response);
+  stop_task();
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan_written());
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadU32DigitalData_Succeeds)
+{
+  create_di_chan();
+  start_task();
+
+  ReadDigitalU32Response response;
+  auto status = read_u32_digital_data(response);
+  stop_task();
+
+  EXPECT_EQ(0, status.error_code());
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan_read());
+}
+
 TEST_F(NiDAQmxDriverApiTests, WriteU16DigitalData_Succeeds)
 {
   create_do_chan();
@@ -548,6 +623,33 @@ TEST_F(NiDAQmxDriverApiTests, ReadU16DigitalData_Succeeds)
 
   ReadDigitalU16Response response;
   auto status = read_u16_digital_data(response);
+  stop_task();
+
+  EXPECT_EQ(0, status.error_code());
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan_read());
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteU8DigitalData_Succeeds)
+{
+  create_do_chan();
+  start_task();
+
+  WriteDigitalU8Response response;
+  auto status = write_u8_digital_data(response);
+  stop_task();
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(4, response.samps_per_chan_written());
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadU8DigitalData_Succeeds)
+{
+  create_di_chan();
+  start_task();
+
+  ReadDigitalU8Response response;
+  auto status = read_u8_digital_data(response);
   stop_task();
 
   EXPECT_EQ(0, status.error_code());
