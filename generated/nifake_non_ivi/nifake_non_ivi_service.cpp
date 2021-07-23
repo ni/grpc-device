@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nidaqmx_conversions.h"
 
 namespace nifake_non_ivi_grpc {
 
@@ -284,6 +285,45 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_u8_data(u8_data);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      CVIAbsoluteTime when = convert_from_grpc<CVIAbsoluteTime>(request->when());
+      auto status = library_->InputTimestamp(when);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputTimestamp(::grpc::ServerContext* context, const OutputTimestampRequest* request, OutputTimestampResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      CVIAbsoluteTime when {};
+      auto status = library_->OutputTimestamp(&when);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(when, response->mutable_when());
       }
       return ::grpc::Status::OK;
     }

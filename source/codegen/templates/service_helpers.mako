@@ -279,6 +279,8 @@ ${initialize_standard_input_param(function_name, parameter)}\
         });
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
+% elif c_type == 'CVIAbsoluteTime':
+      ${c_type} ${parameter_name} = convert_from_grpc<${c_type}>(${request_snippet});\
 % else:
       ${c_type} ${parameter_name} = ${request_snippet};\
 % endif
@@ -381,6 +383,8 @@ ${initialize_standard_input_param(function_name, parameter)}\
 %   elif parameter['type'] == 'ViSession':
         auto session_id = session_repository_->resolve_session_id(${parameter_name});
         response->mutable_${parameter_name}()->set_id(session_id);
+%   elif parameter['type'] == 'CVIAbsoluteTime':
+        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   else:
         response->set_${parameter_name}(${parameter_name});
 %   endif

@@ -24,6 +24,8 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 InputArrayOfBytes(const myUInt8 u8Array[]) = 0;
   virtual int32 OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[]) = 0;
   virtual int32 RegisterCallback(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData) = 0;
+  virtual int32 InputTimestamp(CVIAbsoluteTime when) = 0;
+  virtual int32 OutputTimestamp(CVIAbsoluteTime* when) = 0;
 };
 
 }  // namespace nifake_non_ivi_grpc

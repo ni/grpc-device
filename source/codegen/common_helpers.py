@@ -19,6 +19,13 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
+
+def any_function_uses_timestamp(functions):
+  for function in functions:
+    if any(p['grpc_type'] == 'google.protobuf.Timestamp' for p in functions[function]['parameters']):
+      return True
+  return False
+
 def get_input_and_output_custom_types(functions):
   '''Returns a set of custom types used by input and output parameters separately.'''
   input_custom_types = set()

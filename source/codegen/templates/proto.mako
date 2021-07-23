@@ -9,6 +9,7 @@ functions = data["functions"]
 
 service_class_prefix = config["service_class_prefix"]
 function_enums = common_helpers.get_function_enums(functions)
+uses_timestamp = common_helpers.any_function_uses_timestamp(functions)
 %>\
 <%namespace name="mako_helper" file="/proto_helpers.mako"/>\
 
@@ -27,6 +28,9 @@ option csharp_namespace = "${config["csharp_namespace"]}";
 package ${config["namespace_component"]}_grpc;
 
 import "session.proto";
+% if uses_timestamp:
+import "google/protobuf/timestamp.proto";
+% endif
 
 service ${service_class_prefix} {
 % for function in common_helpers.filter_proto_rpc_functions(functions):

@@ -26,6 +26,11 @@ if len(config["custom_types"]) > 0:
 #include <iostream>
 #include <atomic>
 #include <vector>
+% if "additional_headers" in config:
+% for additional_header in config["additional_headers"]:
+#include "${additional_header}"
+% endfor
+% endif
 
 namespace ${config["namespace_component"]}_grpc {
 
