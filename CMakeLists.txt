@@ -303,7 +303,7 @@ add_executable(UnitTestsRunner
 # ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections 
 # in an obj file defined by PE-COFF. This line disables the limit.
 if(MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /D_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING")
 endif(MSVC)
 
 target_include_directories(UnitTestsRunner
