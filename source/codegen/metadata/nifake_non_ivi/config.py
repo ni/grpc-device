@@ -19,7 +19,8 @@ config = {
         'myInt16': 'int32',
         'myUInt16': 'uint32',
         'myInt8': 'int32',
-        'myUInt8[]': 'bytes'
+        'myUInt8[]': 'bytes',
+        'CallbackPtr': 'void'
     },
     'library_info': {
         'Linux': {

@@ -125,6 +125,8 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
 def populate_grpc_types(parameters, config):
     service_class_prefix = config["service_class_prefix"]
     for parameter in parameters:
+        if 'callback_params' in parameter:
+            populate_grpc_types(parameter['callback_params'], config)
         if 'grpc_type' in parameter:
           continue
         if 'type_to_grpc_type' in config:

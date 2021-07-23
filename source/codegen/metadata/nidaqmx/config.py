@@ -23,7 +23,8 @@ config = {
         'uInt16': 'uint32',
         'int8': 'int32',
         'uInt8[]': 'bytes',
-        'uInt64': 'uint64'
+        'uInt64': 'uint64',
+        'DAQmxDoneEventCallbackPtr': 'void'
     },
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [

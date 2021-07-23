@@ -878,12 +878,7 @@ TEST_F(NiSyncDriver6674Test, SendSoftwareTriggerOnInvalidTerminal_ReturnsInvalid
   auto grpcStatus = call_SendSoftwareTrigger(srcTerminal, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  // Bug 1459796: 6674T SendSoftwareTrigger has different error behavior on Linux RT
-  #if defined(_MSC_VER)
   EXPECT_EQ(NISYNC_ERROR_SRC_TERMINAL_INVALID, viStatus);
-  #else
-  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
-  #endif
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectTrigTerminals_ReturnsSuccess)
@@ -1038,7 +1033,10 @@ TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViReal64_ReturnsValue)
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  EXPECT_DOUBLE_EQ(expectedValue, value);
+  // 6674T has up to 16.8mV of resolution for PFI threshold. We'll loosen our
+  // validation to a bit more than twice that to ensure we aren't testing
+  // driver implementation details.
+  EXPECT_NEAR(expectedValue, value, 50e-3);
 }
 
 TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnTerminalWithNoFrequency_ReturnsNoFrequency)
@@ -1087,9 +1085,8 @@ TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnOscillatorWithFrequency_Returns
 
 TEST_F(NiSyncDriver6683Test, SetTimeWithValidTimeSource_ReturnsSuccess)
 {
-  // SetTime isn't implemented on Linux RT, yet.
   #if defined(__GNUC__)
-  GTEST_SKIP();	
+  GTEST_SKIP() << "SetTime isn't implemented on Linux RT, see AzDo Feature #1418853";
   #endif
 
   ViStatus viStatus;
@@ -1107,9 +1104,8 @@ TEST_F(NiSyncDriver6683Test, SetTimeWithValidTimeSource_ReturnsSuccess)
 
 TEST_F(NiSyncDriver6683Test, SetTimeWithInvalidTimeSource_ReturnsError)
 {
-  // SetTime isn't implemented on Linux RT, yet.
   #if defined(__GNUC__)
-  GTEST_SKIP();
+  GTEST_SKIP() << "SetTime isn't implemented on Linux RT, see AzDo Feature #1418853";
   #endif
 
   ViStatus viStatus;
@@ -1470,7 +1466,7 @@ TEST_F(NiSyncDriver6683Test, GivenOneTrigger_ReadMultipleTriggerTimeStamp_Return
   CreateFutureTimeEvent(terminal, NISYNC_VAL_LEVEL_LOW, 0, 0, 0);
 
   ViStatus viStatusRead;
-  ViReal64 timeout = 0.0;
+  ViReal64 timeout = 1.0;
   const ViUInt32 timestampsToRead = 5;
   ViUInt32 timeSeconds[timestampsToRead] = {}, timeNanoseconds[timestampsToRead] = {};
   ViUInt16 timeFractionalNanoseconds[timestampsToRead] = {};
@@ -1510,7 +1506,7 @@ TEST_F(NiSyncDriver6683Test, GivenFiveTriggers_ReadMultipleTriggerTimeStamp_Retu
   }
 
   ViStatus viStatusRead;
-  ViReal64 timeout = 0.0;
+  ViReal64 timeout = 1.0;
   const ViUInt32 timestampsToRead = 5;
   ViUInt32 timeSeconds[timestampsToRead] = {}, timeNanoseconds[timestampsToRead] = {};
   ViUInt16 timeFractionalNanoseconds[timestampsToRead] = {};

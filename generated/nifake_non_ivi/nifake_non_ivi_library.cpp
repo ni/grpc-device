@@ -25,9 +25,11 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFakeNonIvi_Init"));
   function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
   function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
+  function_pointers_.IotaWithCustomSize = reinterpret_cast<IotaWithCustomSizePtr>(shared_library_.get_function_pointer("niFakeNonIvi_IotaWithCustomSize"));
   function_pointers_.OutputArraysWithNarrowIntegerTypes = reinterpret_cast<OutputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithNarrowIntegerTypes"));
   function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
   function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
+  function_pointers_.RegisterCallback = reinterpret_cast<RegisterCallbackPtr>(shared_library_.get_function_pointer("niFakeNonIvi_RegisterCallback"));
   function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
   function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputTimestamp"));
 }
@@ -91,6 +93,18 @@ int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const myUInt16 u16A
 #endif
 }
 
+int32 NiFakeNonIviLibrary::IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[])
+{
+  if (!function_pointers_.IotaWithCustomSize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_IotaWithCustomSize.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_IotaWithCustomSize(sizeOne, sizeTwo, data);
+#else
+  return function_pointers_.IotaWithCustomSize(sizeOne, sizeTwo, data);
+#endif
+}
+
 int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[])
 {
   if (!function_pointers_.OutputArraysWithNarrowIntegerTypes) {
@@ -124,6 +138,18 @@ int32 NiFakeNonIviLibrary::OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u
   return niFakeNonIvi_OutputArrayOfBytes(numberOfU8Samples, u8Data);
 #else
   return function_pointers_.OutputArrayOfBytes(numberOfU8Samples, u8Data);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::RegisterCallback(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.RegisterCallback) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_RegisterCallback.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_RegisterCallback(inputData, callbackFunction, callbackData);
+#else
+  return function_pointers_.RegisterCallback(inputData, callbackFunction, callbackData);
 #endif
 }
 

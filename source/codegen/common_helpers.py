@@ -54,7 +54,7 @@ def is_unsupported_parameter(parameter):
       or is_unsupported_scalar_array(parameter)
 
 def is_unsupported_size_mechanism(parameter):
-  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', None}
+  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code', None}
 
 def is_unsupported_scalar_array(parameter):
   return is_array(parameter['type']) and is_unsupported_enum_array(parameter)
@@ -194,3 +194,6 @@ def get_ivi_dance_with_a_twist_params(parameters):
 
 def is_init_method(function_data):
   return function_data.get('init_method', False)
+
+def has_streaming_response(function_data):
+  return function_data.get('stream_response', False)

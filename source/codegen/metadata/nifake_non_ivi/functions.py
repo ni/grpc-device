@@ -67,6 +67,30 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IotaWithCustomSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sizeOne',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sizeTwo',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': '(sizeOne < 0) ? sizeTwo : sizeOne + 1'
+                },
+                'type': 'int32[]'
+            },
+        ],
+        'returns': 'int32'
+    },
     'OutputArraysWithNarrowIntegerTypes': {
         'parameters': [
             {
@@ -146,6 +170,35 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'RegisterCallback': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'inputData',
+                'type': 'myInt16'
+            },
+            {
+                'callback_params': [
+                    {
+                        'name': 'echoData',
+                        'type': 'myInt16'
+                    },
+                ],
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'callbackFunction',
+                'type': 'CallbackPtr'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'callbackData',
+                'type': 'void'
+            }
+        ],
+        'returns': 'int32'
+    },
     'InputTimestamp': {
         'parameters': [
             {
@@ -167,5 +220,5 @@ functions = {
             },
         ],
         'returns': 'int32'
-    },
+    }
 }
