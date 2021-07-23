@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nidaqmx_conversions.h"
 
 namespace nidaqmx_grpc {
 
