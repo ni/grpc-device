@@ -176,7 +176,7 @@ static void RunServer(const ServerConfiguration& config)
   nidevice_grpc::run_async_processing_loop(completion_queue.get(), nidaqmx_service);
   // This call will block until another thread shuts down the server.
   server->Wait();
-  // This code is currently unreachable, but if the call to wait exits, we need to clean up the service here.
+  completion_queue->Shutdown();
   session_repository.reset_server();
   device_enumerator.clear_syscfg_session();
 }
