@@ -30,8 +30,6 @@ public:
   virtual ~NiDAQmxService();
   
   void register_async_functions(::grpc::ServerCompletionQueue* completion_queue);
-  using RegisterDoneEventMethodContext = nidevice_grpc::AsyncMethodContextT<RegisterDoneEventRequest, RegisterDoneEventResponse>;
-  using RegisterDoneEventMethodContextPtr = std::shared_ptr<RegisterDoneEventMethodContext>;
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;
   ::grpc::Status CfgAnlgEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgEdgeRefTrigRequest* request, CfgAnlgEdgeRefTrigResponse* response) override;
@@ -180,6 +178,8 @@ public:
   ::grpc::Status ReadDigitalU16(::grpc::ServerContext* context, const ReadDigitalU16Request* request, ReadDigitalU16Response* response) override;
   ::grpc::Status ReadDigitalU32(::grpc::ServerContext* context, const ReadDigitalU32Request* request, ReadDigitalU32Response* response) override;
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
+  using RegisterDoneEventMethodContext = nidevice_grpc::AsyncMethodContextT<RegisterDoneEventRequest, RegisterDoneEventResponse>;
+  using RegisterDoneEventMethodContextPtr = std::shared_ptr<RegisterDoneEventMethodContext>;
   void process_RegisterDoneEvent(const RegisterDoneEventMethodContextPtr& async_method_context);
   ::grpc::Status ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
