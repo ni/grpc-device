@@ -1,3 +1,4 @@
+#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
@@ -504,6 +505,28 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->WriteRaw(&context, request, &response);
   }
 
+  ::grpc::Status wait_for_valid_timestamp(WaitForValidTimestampResponse& response) {
+    ::grpc::ClientContext context;
+    WaitForValidTimestampRequest request;
+    set_request_session_id(request);
+    request.set_timestamp_event(TimestampEvent::TIMESTAMP_EVENT_FIRST_SAMPLE_TIMESTAMP);
+    request.set_timeout(1.000);
+    return stub()->WaitForValidTimestamp(&context, request, &response);
+  }
+
+  ::grpc::Status cfg_time_start_trig(CfgTimeStartTrigResponse& response) {
+    ::grpc::ClientContext context;
+    CfgTimeStartTrigRequest request;
+    set_request_session_id(request);
+    auto time = google::protobuf::util::TimeUtil::GetCurrentTime();
+    auto duration = google::protobuf::Duration{};
+    duration.set_seconds(10);
+    time += duration;
+    request.mutable_when()->CopyFrom(time);
+    request.set_timescale(Timescale2::TIMESCALE2_IO_DEVICE_TIME);
+    return stub()->CfgTimeStartTrig(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -519,6 +542,13 @@ class NiDAQmxDriverApiTests : public Test {
   void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
   {
     EXPECT_EQ(DAQmxSuccess, response.status());
+    EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
+  }
+
+  template <typename TResponse>
+  void EXPECT_DAQ_ERROR(int32_t expected_error, const ::grpc::Status& status, const TResponse& response)
+  {
+    EXPECT_EQ(expected_error, response.status());
     EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
   }
 
@@ -792,7 +822,7 @@ TEST_F(NiDAQmxDriverApiTests, CreateCIFreqChannel_Succeeds)
 TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
 {
   GetErrorStringResponse response;
-  auto status = get_error_string(-200077, response);
+  auto status = get_error_string(DAQmxErrorInvalidAttributeValue, response);
 
   EXPECT_SUCCESS(status, response);
   EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
@@ -966,6 +996,25 @@ TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithPositiveRevers
 
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(REVERSE_ORDER + 1, response.reverse_coeffs().size());
+}
+
+
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsError) {
+  create_ai_voltage_chan(0.0, 1.0);
+
+  auto response = WaitForValidTimestampResponse{};
+  auto status = wait_for_valid_timestamp(response);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorWaitForValidTimestampNotSupported, status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError) {
+  create_ai_voltage_chan(0.0, 1.0);
+
+  auto response = CfgTimeStartTrigResponse{};
+  auto status = cfg_time_start_trig(response);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorInvalidAttributeValue, status, response);
 }
 }  // namespace system
 }  // namespace tests

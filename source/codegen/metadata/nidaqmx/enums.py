@@ -1638,6 +1638,44 @@ enums = {
             }
         ]
     },
+    'Timescale2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the host device.'
+                },
+                'name': 'HOST_TIME',
+                'value': 16126
+            },
+            {
+                'documentation': {
+                    'description': 'Use the I/O device.'
+                },
+                'name': 'IO_DEVICE_TIME',
+                'value': 16127
+            }
+        ]
+    },
+    'TimestampEvent': {
+        'values': [
+            {
+                'name': 'START_TRIGGER',
+                'value': 12491
+            },
+            {
+                'name': 'REFERENCE_TRIGGER',
+                'value': 12490
+            },
+            {
+                'name': 'ARM_START_TRIGGER',
+                'value': 14641
+            },
+            {
+                'name': 'FIRST_SAMPLE_TIMESTAMP',
+                'value': 16130
+            }
+        ]
+    },
     'TorqueUnits': {
         'values': [
             {

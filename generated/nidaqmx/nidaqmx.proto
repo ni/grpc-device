@@ -14,6 +14,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiDAQmx";
 package nidaqmx_grpc;
 
 import "session.proto";
+import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {
   rpc AddGlobalChansToTask(AddGlobalChansToTaskRequest) returns (AddGlobalChansToTaskResponse);
@@ -38,6 +39,7 @@ service NiDAQmx {
   rpc CfgOutputBuffer(CfgOutputBufferRequest) returns (CfgOutputBufferResponse);
   rpc CfgPipelinedSampClkTiming(CfgPipelinedSampClkTimingRequest) returns (CfgPipelinedSampClkTimingResponse);
   rpc CfgSampClkTiming(CfgSampClkTimingRequest) returns (CfgSampClkTimingResponse);
+  rpc CfgTimeStartTrig(CfgTimeStartTrigRequest) returns (CfgTimeStartTrigResponse);
   rpc CfgWatchdogAOExpirStates(CfgWatchdogAOExpirStatesRequest) returns (CfgWatchdogAOExpirStatesResponse);
   rpc CfgWatchdogCOExpirStates(CfgWatchdogCOExpirStatesRequest) returns (CfgWatchdogCOExpirStatesResponse);
   rpc CfgWatchdogDOExpirStates(CfgWatchdogDOExpirStatesRequest) returns (CfgWatchdogDOExpirStatesResponse);
@@ -134,12 +136,20 @@ service NiDAQmx {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc GetAIChanCalCalDate(GetAIChanCalCalDateRequest) returns (GetAIChanCalCalDateResponse);
   rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
+  rpc GetArmStartTrigTimestampVal(GetArmStartTrigTimestampValRequest) returns (GetArmStartTrigTimestampValResponse);
+  rpc GetArmStartTrigTrigWhen(GetArmStartTrigTrigWhenRequest) returns (GetArmStartTrigTrigWhenResponse);
   rpc GetDigitalLogicFamilyPowerUpState(GetDigitalLogicFamilyPowerUpStateRequest) returns (GetDigitalLogicFamilyPowerUpStateResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetExtendedErrorInfo(GetExtendedErrorInfoRequest) returns (GetExtendedErrorInfoResponse);
+  rpc GetFirstSampClkWhen(GetFirstSampClkWhenRequest) returns (GetFirstSampClkWhenResponse);
+  rpc GetFirstSampTimestampVal(GetFirstSampTimestampValRequest) returns (GetFirstSampTimestampValResponse);
   rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
   rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
   rpc GetNthTaskReadChannel(GetNthTaskReadChannelRequest) returns (GetNthTaskReadChannelResponse);
+  rpc GetRefTrigTimestampVal(GetRefTrigTimestampValRequest) returns (GetRefTrigTimestampValResponse);
+  rpc GetStartTrigTimestampVal(GetStartTrigTimestampValRequest) returns (GetStartTrigTimestampValResponse);
+  rpc GetStartTrigTrigWhen(GetStartTrigTrigWhenRequest) returns (GetStartTrigTrigWhenResponse);
+  rpc GetSyncPulseTimeWhen(GetSyncPulseTimeWhenRequest) returns (GetSyncPulseTimeWhenResponse);
   rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc LoadTask(LoadTaskRequest) returns (LoadTaskResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
@@ -172,13 +182,18 @@ service NiDAQmx {
   rpc SelfTestDevice(SelfTestDeviceRequest) returns (SelfTestDeviceResponse);
   rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
   rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
+  rpc SetArmStartTrigTrigWhen(SetArmStartTrigTrigWhenRequest) returns (SetArmStartTrigTrigWhenResponse);
   rpc SetDigitalLogicFamilyPowerUpState(SetDigitalLogicFamilyPowerUpStateRequest) returns (SetDigitalLogicFamilyPowerUpStateResponse);
+  rpc SetFirstSampClkWhen(SetFirstSampClkWhenRequest) returns (SetFirstSampClkWhenResponse);
+  rpc SetStartTrigTrigWhen(SetStartTrigTrigWhenRequest) returns (SetStartTrigTrigWhenResponse);
+  rpc SetSyncPulseTimeWhen(SetSyncPulseTimeWhenRequest) returns (SetSyncPulseTimeWhenResponse);
   rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
   rpc TaskControl(TaskControlRequest) returns (TaskControlResponse);
   rpc TristateOutputTerm(TristateOutputTermRequest) returns (TristateOutputTermResponse);
   rpc UnreserveNetworkDevice(UnreserveNetworkDeviceRequest) returns (UnreserveNetworkDeviceResponse);
+  rpc WaitForValidTimestamp(WaitForValidTimestampRequest) returns (WaitForValidTimestampResponse);
   rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
   rpc WriteAnalogScalarF64(WriteAnalogScalarF64Request) returns (WriteAnalogScalarF64Response);
@@ -677,6 +692,20 @@ enum TimeUnits3 {
   TIME_UNITS3_FROM_CUSTOM_SCALE = 10065;
 }
 
+enum Timescale2 {
+  TIMESCALE2_UNSPECIFIED = 0;
+  TIMESCALE2_HOST_TIME = 16126;
+  TIMESCALE2_IO_DEVICE_TIME = 16127;
+}
+
+enum TimestampEvent {
+  TIMESTAMP_EVENT_UNSPECIFIED = 0;
+  TIMESTAMP_EVENT_START_TRIGGER = 12491;
+  TIMESTAMP_EVENT_REFERENCE_TRIGGER = 12490;
+  TIMESTAMP_EVENT_ARM_START_TRIGGER = 14641;
+  TIMESTAMP_EVENT_FIRST_SAMPLE_TIMESTAMP = 16130;
+}
+
 enum TorqueUnits {
   TORQUE_UNITS_UNSPECIFIED = 0;
   TORQUE_UNITS_NEWTON_METERS = 15881;
@@ -1085,6 +1114,19 @@ message CfgSampClkTimingRequest {
 }
 
 message CfgSampClkTimingResponse {
+  int32 status = 1;
+}
+
+message CfgTimeStartTrigRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp when = 2;
+  oneof timescale_enum {
+    Timescale2 timescale = 3;
+    int32 timescale_raw = 4;
+  }
+}
+
+message CfgTimeStartTrigResponse {
   int32 status = 1;
 }
 
@@ -3265,6 +3307,24 @@ message GetAIChanCalExpDateResponse {
   uint32 minute = 6;
 }
 
+message GetArmStartTrigTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetArmStartTrigTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetArmStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetArmStartTrigTrigWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
 message GetDigitalLogicFamilyPowerUpStateRequest {
   string device_name = 1;
 }
@@ -3291,6 +3351,24 @@ message GetExtendedErrorInfoRequest {
 message GetExtendedErrorInfoResponse {
   int32 status = 1;
   string error_string = 2;
+}
+
+message GetFirstSampClkWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetFirstSampClkWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetFirstSampTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetFirstSampTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
 }
 
 message GetNthTaskChannelRequest {
@@ -3324,6 +3402,42 @@ message GetNthTaskReadChannelRequest {
 message GetNthTaskReadChannelResponse {
   int32 status = 1;
   string buffer = 2;
+}
+
+message GetRefTrigTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetRefTrigTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetStartTrigTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetStartTrigTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetStartTrigTrigWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetSyncPulseTimeWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetSyncPulseTimeWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
 }
 
 message IsTaskDoneRequest {
@@ -3761,6 +3875,15 @@ message SetAIChanCalExpDateResponse {
   int32 status = 1;
 }
 
+message SetArmStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetArmStartTrigTrigWhenResponse {
+  int32 status = 1;
+}
+
 message SetDigitalLogicFamilyPowerUpStateRequest {
   string device_name = 1;
   oneof logic_family_enum {
@@ -3770,6 +3893,33 @@ message SetDigitalLogicFamilyPowerUpStateRequest {
 }
 
 message SetDigitalLogicFamilyPowerUpStateResponse {
+  int32 status = 1;
+}
+
+message SetFirstSampClkWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetFirstSampClkWhenResponse {
+  int32 status = 1;
+}
+
+message SetStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetStartTrigTrigWhenResponse {
+  int32 status = 1;
+}
+
+message SetSyncPulseTimeWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetSyncPulseTimeWhenResponse {
   int32 status = 1;
 }
 
@@ -3824,6 +3974,20 @@ message UnreserveNetworkDeviceRequest {
 
 message UnreserveNetworkDeviceResponse {
   int32 status = 1;
+}
+
+message WaitForValidTimestampRequest {
+  nidevice_grpc.Session task = 1;
+  oneof timestamp_event_enum {
+    TimestampEvent timestamp_event = 2;
+    int32 timestamp_event_raw = 3;
+  }
+  double timeout = 4;
+}
+
+message WaitForValidTimestampResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp timestamp = 2;
 }
 
 message WaitUntilTaskDoneRequest {

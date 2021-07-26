@@ -665,6 +665,27 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CfgTimeStartTrig': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'when',
+                'type': 'CVIAbsoluteTime'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Timescale2',
+                'name': 'timescale',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CfgWatchdogAOExpirStates': {
         'parameters': [
             {
@@ -5652,6 +5673,36 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetArmStartTrigTimestampVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetArmStartTrigTrigWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetDigitalLogicFamilyPowerUpState': {
         'parameters': [
             {
@@ -5706,6 +5757,36 @@ functions = {
                 'direction': 'in',
                 'name': 'bufferSize',
                 'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetFirstSampClkWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetFirstSampTimestampVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
             }
         ],
         'returns': 'int32'
@@ -5793,6 +5874,66 @@ functions = {
                 'direction': 'in',
                 'name': 'bufferSize',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetRefTrigTimestampVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetStartTrigTimestampVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetStartTrigTrigWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSyncPulseTimeWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
             }
         ],
         'returns': 'int32'
@@ -7085,6 +7226,21 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetArmStartTrigTrigWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetDigitalLogicFamilyPowerUpState': {
         'parameters': [
             {
@@ -7097,6 +7253,51 @@ functions = {
                 'enum': 'LogicFamily',
                 'name': 'logicFamily',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetFirstSampClkWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetStartTrigTrigWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetSyncPulseTimeWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'CVIAbsoluteTime'
             }
         ],
         'returns': 'int32'
@@ -7168,6 +7369,32 @@ functions = {
                 'direction': 'in',
                 'name': 'deviceName',
                 'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WaitForValidTimestamp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimestampEvent',
+                'name': 'timestampEvent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'timestamp',
+                'type': 'CVIAbsoluteTime'
             }
         ],
         'returns': 'int32'
