@@ -598,7 +598,6 @@ TEST_F(NiDAQmxDriverApiTests, ReadU32DigitalData_Succeeds)
   auto status = read_u32_digital_data(response);
   stop_task();
 
-  EXPECT_EQ(0, status.error_code());
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(4, response.samps_per_chan_read());
 }
