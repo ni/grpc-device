@@ -12,48 +12,24 @@ using nidevice_grpc::SharedMethodContextPtr;
 
 namespace nidevice_grpc {
 
-template <typename TRequest, typename TResponse>
 class FailOperation : public nidevice_grpc::CompletionQueueElement {
  public:
-  static void register_completion_queue_element(const ::grpc::Status& status, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-  {
-    new FailOperation(status, method_context);
-  }
-
-  void process(bool ok)
-  {
-    delete this;
-  }
+  static void register_completion_queue_element(const ::grpc::Status& status, const SharedMethodContextPtr& method_context);
+  void process(bool ok);
 
  private:
-  FailOperation(const ::grpc::Status& status, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-      : method_context_(method_context)
-  {
-    method_context_->writer.Finish(status, this);
-  }
-  SharedMethodContextPtr<TRequest, TResponse> method_context_;
+  FailOperation(const ::grpc::Status& status, const SharedMethodContextPtr& method_context);
+  SharedMethodContextPtr method_context_;
 };
 
-template <typename TRequest, typename TResponse>
 class SendInitialMetadataOperation : public nidevice_grpc::CompletionQueueElement {
  public:
-  static void register_completion_queue_element(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-  {
-    new SendInitialMetadataOperation(method_context);
-  }
-
-  void process(bool ok)
-  {
-    delete this;
-  }
+  static void register_completion_queue_element(const SharedMethodContextPtr& method_context);
+  void process(bool ok);
 
  private:
-  SendInitialMetadataOperation(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-      : method_context_(method_context)
-  {
-    method_context_->writer.SendInitialMetadata(this);
-  }
-  SharedMethodContextPtr<TRequest, TResponse> method_context_;
+  SendInitialMetadataOperation(const SharedMethodContextPtr& method_context);
+  SharedMethodContextPtr method_context_;
 };
 
 // Calls Write on response.
@@ -62,7 +38,8 @@ class SendInitialMetadataOperation : public nidevice_grpc::CompletionQueueElemen
 template <typename TRequest, typename TResponse>
 class WriteOperation : public nidevice_grpc::CompletionQueueElement {
  public:
-  static void register_completion_queue_element(const TResponse& response, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+  using SharedMethodContextPtrT = nidevice_grpc::SharedMethodContextPtrT<TRequest, TResponse>;
+  static void register_completion_queue_element(const TResponse& response, const SharedMethodContextPtrT& method_context)
   {
     new WriteOperation(response, method_context);
   }
@@ -73,66 +50,26 @@ class WriteOperation : public nidevice_grpc::CompletionQueueElement {
   }
 
  private:
-  WriteOperation(const TResponse& response, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+  WriteOperation(const TResponse& response, const SharedMethodContextPtrT& method_context)
       : method_context_(method_context)
   {
-    method_context_->writer.Write(response, this);
+    method_context_->write(response, this);
   }
-  SharedMethodContextPtr<TRequest, TResponse> method_context_;
-};
-
-// Calls writer.Finish and then releases the method_context_.
-template <typename TRequest, typename TResponse>
-class CloseCompleteOperation : public nidevice_grpc::CompletionQueueElement {
- public:
-  static void register_completion_queue_element(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-  {
-    new CloseCompleteOperation(method_context);
-  }
-
-  void process(bool ok)
-  {
-    // Release method_context_.
-    delete this;
-  }
-
- private:
-  CloseCompleteOperation(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-      : method_context_(method_context)
-  {
-    method_context_->writer.Finish(::grpc::Status::OK, this);
-  }
-  SharedMethodContextPtr<TRequest, TResponse> method_context_;
+  SharedMethodContextPtrT method_context_;
 };
 
 // Registered when the listener starts, calls context.AsyncNotifyWhenDone,
 // process is called when the client cancels/finishes the stream.
 // Ends the response by releasing the AsyncOperationRegistration and calling
 // registering CloseCompleteOperation.
-template <typename TRequest, typename TResponse>
 class FinishCallbackOperation : public nidevice_grpc::CompletionQueueElement {
  public:
-  static void register_completion_queue_element(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-  {
-    new FinishCallbackOperation(method_context);
-  }
-
-  void process(bool ok)
-  {
-    // Allow any driver code to start cleaning up and release it's references back to the
-    // method_context_ (i.e., to access writer.Write).
-    method_context_->registration.reset();
-    CloseCompleteOperation<TRequest, TResponse>::register_completion_queue_element(method_context_);
-    delete this;
-  }
+  static void register_completion_queue_element(const SharedMethodContextPtr& method_context);
+  void process(bool ok);
 
  private:
-  FinishCallbackOperation(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
-      : method_context_(method_context)
-  {
-    method_context->context.AsyncNotifyWhenDone(this);
-  }
-  SharedMethodContextPtr<TRequest, TResponse> method_context_;
+  FinishCallbackOperation(const SharedMethodContextPtr& method_context);
+  SharedMethodContextPtr method_context_;
 };
 }  // namespace nidevice_grpc
 #endif  // NIDEVICE_GRPC_DEVICE_ASYNC_OPERATION_H

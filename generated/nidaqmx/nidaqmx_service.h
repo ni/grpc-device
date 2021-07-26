@@ -30,7 +30,7 @@ public:
   virtual ~NiDAQmxService();
   
   void register_async_functions(::grpc::ServerCompletionQueue* completion_queue);
-  using RegisterDoneEventMethodContext = nidevice_grpc::AsyncMethodContext<RegisterDoneEventRequest, RegisterDoneEventResponse>;
+  using RegisterDoneEventMethodContext = nidevice_grpc::AsyncMethodContextT<RegisterDoneEventRequest, RegisterDoneEventResponse>;
   using RegisterDoneEventMethodContextPtr = std::shared_ptr<RegisterDoneEventMethodContext>;
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;

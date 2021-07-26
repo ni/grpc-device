@@ -67,7 +67,7 @@ public:
   request_param_type = service_helpers.get_request_type(method_name)
   response_param_type = service_helpers.get_response_type(method_name)
 %>\
-  using ${method_name}MethodContext = nidevice_grpc::AsyncMethodContext<${request_param_type}, ${response_param_type}>;
+  using ${method_name}MethodContext = nidevice_grpc::AsyncMethodContextT<${request_param_type}, ${response_param_type}>;
   using ${method_name}MethodContextPtr = std::shared_ptr<${method_name}MethodContext>;
 % endfor
 % for function in common_helpers.filter_proto_rpc_functions(functions):

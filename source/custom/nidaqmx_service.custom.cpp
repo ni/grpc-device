@@ -22,7 +22,7 @@ class DoneEventCallbackOperation : public nidevice_grpc::CompletionQueueElement 
     if (ok) {
       service_->process_RegisterDoneEvent(method_context_);
       // Start another DoneEventCallbackOperation listener.
-      register_completion_queue_element(service_, method_context_->completion_queue);
+      register_completion_queue_element(service_, method_context_->completion_queue());
     }
     delete this;
   }
@@ -32,14 +32,13 @@ class DoneEventCallbackOperation : public nidevice_grpc::CompletionQueueElement 
       : method_context_(std::make_shared<NiDAQmxService::RegisterDoneEventMethodContext>(completion_queue)),
         service_(service)
   {
-    using FinishOperation = nidevice_grpc::FinishCallbackOperation<RegisterDoneEventRequest, RegisterDoneEventResponse>;
-    FinishOperation::register_completion_queue_element(method_context_);
+    nidevice_grpc::FinishCallbackOperation::register_completion_queue_element(method_context_);
     service_->RequestRegisterDoneEvent(
-        &method_context_->context,
-        &method_context_->request,
-        &method_context_->writer,
-        method_context_->completion_queue,
-        method_context_->completion_queue,
+        method_context_->context_ptr(),
+        method_context_->request_ptr(),
+        method_context_->writer_ptr(),
+        method_context_->completion_queue(),
+        method_context_->completion_queue(),
         this);
   }
   NiDAQmxService::RegisterDoneEventMethodContextPtr method_context_;
@@ -55,14 +54,14 @@ void NiDAQmxService::register_async_functions(::grpc::ServerCompletionQueue* com
 //---------------------------------------------------------------------
 void NiDAQmxService::process_RegisterDoneEvent(const RegisterDoneEventMethodContextPtr& async_method_context)
 {
-  if (async_method_context->context.IsCancelled()) {
+  if (async_method_context->is_cancelled()) {
     return;
   }
   using WriteOperation = nidevice_grpc::WriteOperation<RegisterDoneEventRequest, RegisterDoneEventResponse>;
-  using FailOperation = nidevice_grpc::FailOperation<RegisterDoneEventRequest, RegisterDoneEventResponse>;
-  using SendInitialMetadataOperation = nidevice_grpc::SendInitialMetadataOperation<RegisterDoneEventRequest, RegisterDoneEventResponse>;
+  using FailOperation = nidevice_grpc::FailOperation;
+  using SendInitialMetadataOperation = nidevice_grpc::SendInitialMetadataOperation;
 
-  auto& request = async_method_context->request;
+  auto& request = async_method_context->request();
   try {
     auto task_grpc_session = request.task();
     TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
@@ -70,16 +69,16 @@ void NiDAQmxService::process_RegisterDoneEvent(const RegisterDoneEventMethodCont
 
     SendInitialMetadataOperation::register_completion_queue_element(async_method_context);
 
-    async_method_context->registration = DoneEventCallbackRouter::register_handler(
+    async_method_context->track_registration(DoneEventCallbackRouter::register_handler(
         [async_method_context]  // Copy the shared_ptr to ensure the callback has access to the writer.
         (TaskHandle task, int32 callback_status) {
           RegisterDoneEventResponse callback_response;
           callback_response.set_status(callback_status);
           WriteOperation::register_completion_queue_element(callback_response, async_method_context);
           return DAQmxSuccess;
-        });
+        }));
 
-    auto status = library_->RegisterDoneEvent(task, options, DoneEventCallbackRouter::handle_callback, async_method_context->registration->token());
+    auto status = library_->RegisterDoneEvent(task, options, DoneEventCallbackRouter::handle_callback, async_method_context->registration_token());
 
     if (status) {
       RegisterDoneEventResponse failed_to_register_response;

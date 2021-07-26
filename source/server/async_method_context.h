@@ -14,27 +14,65 @@ struct AsyncOperationRegistration {
   virtual AsyncOperationToken token() { return reinterpret_cast<AsyncOperationToken>(0); }
 };
 
+struct AsyncMethodContext {
+  virtual ~AsyncMethodContext() {}
+  virtual bool is_cancelled() const { return false; }
+  virtual void async_notify_when_done(void* tag) {}
+
+  virtual void send_initial_metadata(void* tag) {}
+  virtual void finish(const ::grpc::Status& status, void* tag) {}
+
+  virtual ::grpc::ServerCompletionQueue* completion_queue() { return nullptr; }
+
+  virtual void track_registration(std::unique_ptr<AsyncOperationRegistration>&& registration) {}
+  virtual void release_registration() {}
+  virtual AsyncOperationToken registration_token() const { return reinterpret_cast<AsyncOperationToken>(0); }
+};
+
 // Holds all the objects needed for the various stages of an async streaming response method call.
 // Managed as a shared object with SharedMethodContextPtr.
 template <typename TRequest, typename TResponse>
-struct AsyncMethodContext {
-  AsyncMethodContext(::grpc::ServerCompletionQueue* completion_queue)
-      : context(),
-        request(),
-        writer(&context),
-        completion_queue(completion_queue)
+class AsyncMethodContextT : public AsyncMethodContext {
+ public:
+  AsyncMethodContextT(::grpc::ServerCompletionQueue* completion_queue)
+      : context_(),
+        request_(),
+        writer_(&context_),
+        completion_queue_(completion_queue)
   {
   }
 
-  ::grpc::ServerContext context;
-  TRequest request;
-  ::grpc::ServerAsyncWriter<TResponse> writer;
-  ::grpc::ServerCompletionQueue* completion_queue;
-  std::unique_ptr<AsyncOperationRegistration> registration{};
+  ::grpc::ServerContext* context_ptr() { return &context_; }
+  TRequest* request_ptr() { return &request_; }
+  ::grpc::ServerAsyncWriter<TResponse>* writer_ptr() { return &writer_; }
+
+  bool is_cancelled() const override { return context_.IsCancelled(); }
+  void async_notify_when_done(void* tag) override { return context_.AsyncNotifyWhenDone(tag); }
+
+  const TRequest& request() const { return request_; }
+  TRequest& mutable_request() { return request_; }
+
+  void send_initial_metadata(void* tag) override { writer_.SendInitialMetadata(tag); }
+  void write(const TResponse& response, void* tag) { writer_.Write(response, tag); }
+  void finish(const ::grpc::Status& status, void* tag) override { writer_.Finish(status, tag); }
+
+  ::grpc::ServerCompletionQueue* completion_queue() override { return completion_queue_; }
+
+  void track_registration(std::unique_ptr<AsyncOperationRegistration>&& registration) override { registration_ = std::move(registration); }
+  void release_registration() override { registration_.reset(); }
+  AsyncOperationToken registration_token() const override { return registration_->token(); }
+
+ private:
+  ::grpc::ServerContext context_;
+  TRequest request_;
+  ::grpc::ServerAsyncWriter<TResponse> writer_;
+  ::grpc::ServerCompletionQueue* completion_queue_;
+  std::unique_ptr<AsyncOperationRegistration> registration_{};
 };
 
+using SharedMethodContextPtr = std::shared_ptr<nidevice_grpc::AsyncMethodContext>;
 template <typename TRequest, typename TResponse>
-using SharedMethodContextPtr = std::shared_ptr<nidevice_grpc::AsyncMethodContext<TRequest, TResponse>>;
+using SharedMethodContextPtrT = std::shared_ptr<nidevice_grpc::AsyncMethodContextT<TRequest, TResponse>>;
 }  // namespace nidevice_grpc
 
 #endif  // NIDEVICE_GRPC_DEVICE_ASYNC_METHOD_CONTEXT_H
