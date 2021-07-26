@@ -23,6 +23,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.AddGlobalChansToTask = reinterpret_cast<AddGlobalChansToTaskPtr>(shared_library_.get_function_pointer("DAQmxAddGlobalChansToTask"));
   function_pointers_.AddNetworkDevice = reinterpret_cast<AddNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxAddNetworkDevice"));
+  function_pointers_.CalculateReversePolyCoeff = reinterpret_cast<CalculateReversePolyCoeffPtr>(shared_library_.get_function_pointer("DAQmxCalculateReversePolyCoeff"));
   function_pointers_.CfgAnlgEdgeRefTrig = reinterpret_cast<CfgAnlgEdgeRefTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgEdgeRefTrig"));
   function_pointers_.CfgAnlgEdgeStartTrig = reinterpret_cast<CfgAnlgEdgeStartTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgEdgeStartTrig"));
   function_pointers_.CfgAnlgMultiEdgeRefTrig = reinterpret_cast<CfgAnlgMultiEdgeRefTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgMultiEdgeRefTrig"));
@@ -169,6 +170,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadDigitalU16 = reinterpret_cast<ReadDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU16"));
   function_pointers_.ReadDigitalU32 = reinterpret_cast<ReadDigitalU32Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU32"));
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
+  function_pointers_.ReadRaw = reinterpret_cast<ReadRawPtr>(shared_library_.get_function_pointer("DAQmxReadRaw"));
   function_pointers_.RegisterDoneEvent = reinterpret_cast<RegisterDoneEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterDoneEvent"));
   function_pointers_.ReserveNetworkDevice = reinterpret_cast<ReserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxReserveNetworkDevice"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
@@ -200,6 +202,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteDigitalU16 = reinterpret_cast<WriteDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU16"));
   function_pointers_.WriteDigitalU32 = reinterpret_cast<WriteDigitalU32Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU32"));
   function_pointers_.WriteDigitalU8 = reinterpret_cast<WriteDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU8"));
+  function_pointers_.WriteRaw = reinterpret_cast<WriteRawPtr>(shared_library_.get_function_pointer("DAQmxWriteRaw"));
 }
 
 NiDAQmxLibrary::~NiDAQmxLibrary()
@@ -234,6 +237,18 @@ int32 NiDAQmxLibrary::AddNetworkDevice(const char ipAddress[], const char device
   return DAQmxAddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
 #else
   return function_pointers_.AddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::CalculateReversePolyCoeff(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[])
+{
+  if (!function_pointers_.CalculateReversePolyCoeff) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCalculateReversePolyCoeff.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCalculateReversePolyCoeff(forwardCoeffs, numForwardCoeffsIn, minValX, maxValX, numPointsToCompute, reversePolyOrder, reverseCoeffs);
+#else
+  return function_pointers_.CalculateReversePolyCoeff(forwardCoeffs, numForwardCoeffsIn, minValX, maxValX, numPointsToCompute, reversePolyOrder, reverseCoeffs);
 #endif
 }
 
@@ -1989,6 +2004,18 @@ int32 NiDAQmxLibrary::ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, floa
 #endif
 }
 
+int32 NiDAQmxLibrary::ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved)
+{
+  if (!function_pointers_.ReadRaw) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadRaw.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxReadRaw(task, numSampsPerChan, timeout, readArray, arraySizeInBytes, sampsRead, numBytesPerSamp, reserved);
+#else
+  return function_pointers_.ReadRaw(task, numSampsPerChan, timeout, readArray, arraySizeInBytes, sampsRead, numBytesPerSamp, reserved);
+#endif
+}
+
 int32 NiDAQmxLibrary::RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData)
 {
   if (!function_pointers_.RegisterDoneEvent) {
@@ -2358,6 +2385,18 @@ int32 NiDAQmxLibrary::WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, boo
   return DAQmxWriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
 #else
   return function_pointers_.WriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
+#endif
+}
+
+int32 NiDAQmxLibrary::WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
+{
+  if (!function_pointers_.WriteRaw) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteRaw.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWriteRaw(task, numSamps, autoStart, timeout, writeArray, sampsPerChanWritten, reserved);
+#else
+  return function_pointers_.WriteRaw(task, numSamps, autoStart, timeout, writeArray, sampsPerChanWritten, reserved);
 #endif
 }
 

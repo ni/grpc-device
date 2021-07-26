@@ -32,6 +32,7 @@ public:
   void register_async_functions(::grpc::ServerCompletionQueue* completion_queue);
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;
+  ::grpc::Status CalculateReversePolyCoeff(::grpc::ServerContext* context, const CalculateReversePolyCoeffRequest* request, CalculateReversePolyCoeffResponse* response) override;
   ::grpc::Status CfgAnlgEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgEdgeRefTrigRequest* request, CfgAnlgEdgeRefTrigResponse* response) override;
   ::grpc::Status CfgAnlgEdgeStartTrig(::grpc::ServerContext* context, const CfgAnlgEdgeStartTrigRequest* request, CfgAnlgEdgeStartTrigResponse* response) override;
   ::grpc::Status CfgAnlgMultiEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgMultiEdgeRefTrigRequest* request, CfgAnlgMultiEdgeRefTrigResponse* response) override;
@@ -178,6 +179,7 @@ public:
   ::grpc::Status ReadDigitalU16(::grpc::ServerContext* context, const ReadDigitalU16Request* request, ReadDigitalU16Response* response) override;
   ::grpc::Status ReadDigitalU32(::grpc::ServerContext* context, const ReadDigitalU32Request* request, ReadDigitalU32Response* response) override;
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
+  ::grpc::Status ReadRaw(::grpc::ServerContext* context, const ReadRawRequest* request, ReadRawResponse* response) override;
   using RegisterDoneEventMethodContext = nidevice_grpc::AsyncMethodContextT<RegisterDoneEventRequest, RegisterDoneEventResponse>;
   using RegisterDoneEventMethodContextPtr = std::shared_ptr<RegisterDoneEventMethodContext>;
   void process_RegisterDoneEvent(const RegisterDoneEventMethodContextPtr& async_method_context);
@@ -211,6 +213,7 @@ public:
   ::grpc::Status WriteDigitalU16(::grpc::ServerContext* context, const WriteDigitalU16Request* request, WriteDigitalU16Response* response) override;
   ::grpc::Status WriteDigitalU32(::grpc::ServerContext* context, const WriteDigitalU32Request* request, WriteDigitalU32Response* response) override;
   ::grpc::Status WriteDigitalU8(::grpc::ServerContext* context, const WriteDigitalU8Request* request, WriteDigitalU8Response* response) override;
+  ::grpc::Status WriteRaw(::grpc::ServerContext* context, const WriteRawRequest* request, WriteRawResponse* response) override;
 private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

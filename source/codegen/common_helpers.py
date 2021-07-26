@@ -19,6 +19,13 @@ def is_enum(parameter):
 def is_struct(parameter):
   return parameter["type"].startswith("struct")
 
+
+def any_function_uses_timestamp(functions):
+  for function in functions:
+    if any(p['grpc_type'] == 'google.protobuf.Timestamp' for p in functions[function]['parameters']):
+      return True
+  return False
+
 def get_input_and_output_custom_types(functions):
   '''Returns a set of custom types used by input and output parameters separately.'''
   input_custom_types = set()
@@ -47,7 +54,7 @@ def is_unsupported_parameter(parameter):
       or is_unsupported_scalar_array(parameter)
 
 def is_unsupported_size_mechanism(parameter):
-  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', None}
+  return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code', None}
 
 def is_unsupported_scalar_array(parameter):
   return is_array(parameter['type']) and is_unsupported_enum_array(parameter)

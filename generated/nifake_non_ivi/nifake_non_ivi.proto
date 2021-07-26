@@ -14,16 +14,20 @@ option csharp_namespace = "NationalInstruments.Grpc.FakeNonIvi";
 package nifake_non_ivi_grpc;
 
 import "session.proto";
+import "google/protobuf/timestamp.proto";
 
 service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
   rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
+  rpc IotaWithCustomSize(IotaWithCustomSizeRequest) returns (IotaWithCustomSizeResponse);
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
   rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
   rpc OutputArrayOfBytes(OutputArrayOfBytesRequest) returns (OutputArrayOfBytesResponse);
   rpc RegisterCallback(RegisterCallbackRequest) returns (RegisterCallbackResponse);
+  rpc InputTimestamp(InputTimestampRequest) returns (InputTimestampResponse);
+  rpc OutputTimestamp(OutputTimestampRequest) returns (OutputTimestampResponse);
 }
 
 enum NiFakeNonIviAttributes {
@@ -66,6 +70,16 @@ message InputArraysWithNarrowIntegerTypesResponse {
   int32 status = 1;
 }
 
+message IotaWithCustomSizeRequest {
+  int32 size_one = 1;
+  int32 size_two = 2;
+}
+
+message IotaWithCustomSizeResponse {
+  int32 status = 1;
+  repeated int32 data = 2;
+}
+
 message OutputArraysWithNarrowIntegerTypesRequest {
   int32 number_of_u16_samples = 1;
   int32 number_of_i16_samples = 2;
@@ -103,5 +117,21 @@ message RegisterCallbackRequest {
 message RegisterCallbackResponse {
   int32 status = 1;
   int32 echo_data = 2;
+}
+
+message InputTimestampRequest {
+  google.protobuf.Timestamp when = 1;
+}
+
+message InputTimestampResponse {
+  int32 status = 1;
+}
+
+message OutputTimestampRequest {
+}
+
+message OutputTimestampResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp when = 2;
 }
 

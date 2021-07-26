@@ -20,6 +20,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AddGlobalChansToTask(TaskHandle task, const char channelNames[]);
   int32 AddNetworkDevice(const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize);
+  int32 CalculateReversePolyCoeff(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]);
   int32 CfgAnlgEdgeRefTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples);
   int32 CfgAnlgEdgeStartTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel);
   int32 CfgAnlgMultiEdgeRefTrig(TaskHandle task, const char triggerSources[], int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize);
@@ -166,6 +167,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved);
   int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
   int32 ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation);
   int32 ResetDevice(const char deviceName[]);
@@ -197,10 +199,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 WriteDigitalU32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   int32 WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
+  int32 WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
  private:
   using AddGlobalChansToTaskPtr = int32 (*)(TaskHandle task, const char channelNames[]);
   using AddNetworkDevicePtr = int32 (*)(const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize);
+  using CalculateReversePolyCoeffPtr = int32 (*)(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]);
   using CfgAnlgEdgeRefTrigPtr = int32 (*)(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples);
   using CfgAnlgEdgeStartTrigPtr = int32 (*)(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel);
   using CfgAnlgMultiEdgeRefTrigPtr = int32 (*)(TaskHandle task, const char triggerSources[], int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize);
@@ -347,6 +351,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ReadDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadDigitalU32Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  using ReadRawPtr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved);
   using RegisterDoneEventPtr = int32 (*)(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
   using ReserveNetworkDevicePtr = int32 (*)(const char deviceName[], bool32 overrideReservation);
   using ResetDevicePtr = int32 (*)(const char deviceName[]);
@@ -378,10 +383,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using WriteDigitalU16Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using WriteDigitalU32Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
   using WriteDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
+  using WriteRawPtr = int32 (*)(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved);
 
   typedef struct FunctionPointers {
     AddGlobalChansToTaskPtr AddGlobalChansToTask;
     AddNetworkDevicePtr AddNetworkDevice;
+    CalculateReversePolyCoeffPtr CalculateReversePolyCoeff;
     CfgAnlgEdgeRefTrigPtr CfgAnlgEdgeRefTrig;
     CfgAnlgEdgeStartTrigPtr CfgAnlgEdgeStartTrig;
     CfgAnlgMultiEdgeRefTrigPtr CfgAnlgMultiEdgeRefTrig;
@@ -528,6 +535,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ReadDigitalU16Ptr ReadDigitalU16;
     ReadDigitalU32Ptr ReadDigitalU32;
     ReadDigitalU8Ptr ReadDigitalU8;
+    ReadRawPtr ReadRaw;
     RegisterDoneEventPtr RegisterDoneEvent;
     ReserveNetworkDevicePtr ReserveNetworkDevice;
     ResetDevicePtr ResetDevice;
@@ -559,6 +567,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     WriteDigitalU16Ptr WriteDigitalU16;
     WriteDigitalU32Ptr WriteDigitalU32;
     WriteDigitalU8Ptr WriteDigitalU8;
+    WriteRawPtr WriteRaw;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

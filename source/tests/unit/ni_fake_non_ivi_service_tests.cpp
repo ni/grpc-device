@@ -1,3 +1,4 @@
+#include <google/protobuf/util/time_util.h>
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
 #include <nifake_non_ivi/nifake_non_ivi_mock_library.h>
@@ -5,6 +6,7 @@
 #include <server/session_resource_repository.h>
 
 #include <iostream>
+#include <numeric>
 #include <string>
 
 using namespace nifake_non_ivi_grpc;
@@ -69,6 +71,12 @@ void SetU8Data(Unused, myUInt8* u8_data)
   u8_data[2] = 16;
 }
 
+MATCHER_P(CVIAbsoluteTimeEq, lhs, "")
+{
+  return lhs.cviTime.msb == arg.cviTime.msb &&
+      lhs.cviTime.lsb == arg.cviTime.lsb;
+}
+
 class NiFakeNonIviServiceTests : public ::testing::Test {
  protected:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
@@ -128,6 +136,25 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     service_.Close(&context, &request, &response);
 
     return response.status();
+  }
+
+  void setup_iota_with_custom_size() {
+    auto set_iota_data = [](int32 size_one, int32 size_two, int32* data) {
+      auto out_size = (size_one == -1) ? size_two : size_one + 1;
+      std::iota(data, data + out_size, 0);
+    };
+
+    EXPECT_CALL(library_, IotaWithCustomSize(_, _, _))
+        .WillOnce(DoAll(
+            Invoke(set_iota_data),
+            Return(kDriverSuccess)));
+  }
+
+  static void EXPECT_IOTA_OF_SIZE(IotaWithCustomSizeResponse response, size_t size) {
+    std::vector<int32> expected(size);
+    std::iota(expected.begin(), expected.end(), 0);
+    std::vector<int32> actual{response.data().cbegin(), response.data().cend()};
+    EXPECT_THAT(actual, ContainerEq(expected));
   }
 };
 
@@ -384,6 +411,37 @@ TEST_F(NiFakeNonIviServiceTests, OutputArrayOfBytes)
   EXPECT_EQ(kDriverSuccess, status);
 }
 
+TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingFirstSizeOption_ReturnsIotaDataOfFirstSizePlusOne)
+{
+  const auto SIZE_ONE = 10;
+  setup_iota_with_custom_size();
+  ::grpc::ServerContext context;
+  IotaWithCustomSizeRequest request;
+  request.set_size_one(SIZE_ONE);
+  request.set_size_two(100000);
+  IotaWithCustomSizeResponse response;
+  service_.IotaWithCustomSize(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_IOTA_OF_SIZE(response, SIZE_ONE + 1);
+}
+
+TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingSecondSizeOption_ReturnsIotaDataOfSecondSize)
+{
+  const auto SIZE_TWO = 20;
+  setup_iota_with_custom_size();
+  ::grpc::ServerContext context;
+  IotaWithCustomSizeRequest request;
+  request.set_size_one(-1);
+  request.set_size_two(SIZE_TWO);
+  IotaWithCustomSizeResponse response;
+
+  service_.IotaWithCustomSize(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_IOTA_OF_SIZE(response, SIZE_TWO);
+}
+
 ACTION(ImmediatelyCallCallback)
 {
   auto& callback_function = arg1;
@@ -405,6 +463,118 @@ TEST_F(NiFakeNonIviServiceTests, RegisterCallbackAndImmediatelyCall_CallbackData
   service_.RegisterCallback(&context, &request, &response);
 
   EXPECT_EQ(TEST_VALUE, response.echo_data());
+}
+
+const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
+TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpoch)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0;
+  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputTimestampRequest request;
+  google::protobuf::Timestamp* timestamp_pb = request.mutable_when();
+  timestamp_pb->set_seconds(0);
+  timestamp_pb->set_nanos(0);
+  InputTimestampResponse response;
+
+  service_.InputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpochWithFractionalSeconds)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0x8000000000000000LL;
+  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputTimestampRequest request;
+  google::protobuf::Timestamp* timestamp_pb = request.mutable_when();
+  timestamp_pb->set_seconds(0);
+  // exactly .5 seconds
+  timestamp_pb->set_nanos(500 * 1000 * 1000);
+  InputTimestampResponse response;
+
+  service_.InputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+// Determined from CVI:
+// CVIAbsoluteTime msb: 3709898694
+// UTC time string: "2021-07-23T15:24:54.00Z
+CVIAbsoluteTime cviKnownTimestamp = {0, 3709898694LL};
+const std::string cviKnownTimestampString = "2021-07-23T15:24:54.00Z";
+
+TEST_F(NiFakeNonIviServiceTests, InputTimestamp_KnownValue)
+{
+  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(cviKnownTimestamp)))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputTimestampRequest request;
+  google::protobuf::util::TimeUtil::FromString(cviKnownTimestampString, request.mutable_when());
+  InputTimestampResponse response;
+
+  service_.InputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_UnixEpoch)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0;
+  EXPECT_CALL(library_, OutputTimestamp(_))
+      .WillOnce(DoAll(SetArgPointee<0>(timestamp), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputTimestampRequest request;
+  OutputTimestampResponse response;
+
+  service_.OutputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(0, response.when().seconds());
+  EXPECT_EQ(0, response.when().nanos());
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_UnixEpochWithFractionalSeconds)
+{
+  CVIAbsoluteTime timestamp;
+  timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
+  timestamp.cviTime.lsb = 0x8000000000000000LL;
+  EXPECT_CALL(library_, OutputTimestamp(_))
+      .WillOnce(DoAll(SetArgPointee<0>(timestamp), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputTimestampRequest request;
+  OutputTimestampResponse response;
+
+  service_.OutputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(0, response.when().seconds());
+  EXPECT_EQ(500 * 1000 * 1000, response.when().nanos());
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_KnownValue)
+{
+  EXPECT_CALL(library_, OutputTimestamp(_))
+      .WillOnce(DoAll(SetArgPointee<0>(cviKnownTimestamp), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputTimestampRequest request;
+  OutputTimestampResponse response;
+
+  service_.OutputTimestamp(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  google::protobuf::Timestamp timestamp;
+  google::protobuf::util::TimeUtil::FromString(cviKnownTimestampString, &timestamp);
+  EXPECT_EQ(timestamp, response.when());
 }
 }  // namespace unit
 }  // namespace tests

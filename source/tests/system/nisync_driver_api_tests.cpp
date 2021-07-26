@@ -1228,7 +1228,12 @@ TEST_F(NiSyncDriver6683Test, SetTimeReference8021AS_ReturnsSuccess)
   auto grpcStatus = call_SetTimeReference8021AS(&viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
+  #if defined(_MSC_VER)
+  // SetTimeReference8021AS is only supported on Linux RT targets.
+  EXPECT_EQ(NISYNC_ERROR_FEATURE_NOT_SUPPORTED, viStatus);
+  #else
   EXPECT_EQ(VI_SUCCESS, viStatus);
+  #endif
 }
 
 TEST_F(NiSyncDriver6683Test, CreateClearFutureTimeEvent_ReturnsSuccess)

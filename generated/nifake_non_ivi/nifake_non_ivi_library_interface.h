@@ -19,10 +19,13 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 Init(const char sessionName[], FakeHandle* handle) = 0;
   virtual int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle) = 0;
   virtual int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]) = 0;
+  virtual int32 IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[]) = 0;
   virtual int32 OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]) = 0;
   virtual int32 InputArrayOfBytes(const myUInt8 u8Array[]) = 0;
   virtual int32 OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[]) = 0;
   virtual int32 RegisterCallback(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData) = 0;
+  virtual int32 InputTimestamp(CVIAbsoluteTime when) = 0;
+  virtual int32 OutputTimestamp(CVIAbsoluteTime* when) = 0;
 };
 
 }  // namespace nifake_non_ivi_grpc

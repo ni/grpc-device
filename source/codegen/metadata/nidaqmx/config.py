@@ -10,6 +10,7 @@ config = {
     'close_function': 'ClearTask',
     'custom_types': [
     ],
+    'additional_headers': ['custom/nidaqmx_conversions.h'],
     'type_to_grpc_type': {
         'TaskHandle': 'nidevice_grpc.Session',
         'const char[]': 'string',
