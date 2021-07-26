@@ -12,13 +12,15 @@ config = {
     'driver_name': 'NI-FAKE-NON-IVI',
     'resource_handle_type': 'FakeHandle',
     'custom_types': [],
+    'additional_headers': ['custom/nidaqmx_conversions.h'],
     'type_to_grpc_type': {
         'FakeHandle': 'nidevice_grpc.Session',
         'const char[]': 'string',
         'myInt16': 'int32',
         'myUInt16': 'uint32',
         'myInt8': 'int32',
-        'myUInt8[]': 'bytes'
+        'myUInt8[]': 'bytes',
+        'CallbackPtr': 'void'
     },
     'library_info': {
         'Linux': {

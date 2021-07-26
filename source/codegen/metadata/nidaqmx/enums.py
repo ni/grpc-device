@@ -369,6 +369,31 @@ enums = {
             }
         ]
     },
+    'CJCSource1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Use a cold-junction compensation channel built into the terminal block.'
+                },
+                'name': 'BUILT_IN',
+                'value': 10200
+            },
+            {
+                'documentation': {
+                    'description': 'You must specify the cold-junction temperature.'
+                },
+                'name': 'CONST_VAL',
+                'value': 10116
+            },
+            {
+                'documentation': {
+                    'description': 'Use a channel for cold-junction compensation.'
+                },
+                'name': 'CHAN',
+                'value': 10113
+            }
+        ]
+    },
     'ChargeUnits': {
         'values': [
             {
@@ -683,6 +708,40 @@ enums = {
                 },
                 'name': 'NONE',
                 'value': 10230
+            }
+        ]
+    },
+    'ForceIEPESensorSensitivityUnits': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Millivolts per newton.'
+                },
+                'name': 'M_VOLTS_PER_NEWTON',
+                'value': 15891
+            },
+            {
+                'documentation': {
+                    'description': 'Millivolts per pound.'
+                },
+                'name': 'M_VOLTS_PER_POUND',
+                'value': 15892
+            }
+        ]
+    },
+    'ForceIEPEUnits': {
+        'values': [
+            {
+                'name': 'NEWTONS',
+                'value': 15875
+            },
+            {
+                'name': 'POUNDS',
+                'value': 15876
+            },
+            {
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
             }
         ]
     },
@@ -1114,6 +1173,59 @@ enums = {
             }
         ]
     },
+    'RTDType1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Pt3750.'
+                },
+                'name': 'PT_3750',
+                'value': 12481
+            },
+            {
+                'documentation': {
+                    'description': 'Pt3851.'
+                },
+                'name': 'PT_3851',
+                'value': 10071
+            },
+            {
+                'documentation': {
+                    'description': 'Pt3911.'
+                },
+                'name': 'PT_3911',
+                'value': 12482
+            },
+            {
+                'documentation': {
+                    'description': 'Pt3916.'
+                },
+                'name': 'PT_3916',
+                'value': 10069
+            },
+            {
+                'documentation': {
+                    'description': 'Pt3920.'
+                },
+                'name': 'PT_3920',
+                'value': 10053
+            },
+            {
+                'documentation': {
+                    'description': 'Pt3928.'
+                },
+                'name': 'PT_3928',
+                'value': 12483
+            },
+            {
+                'documentation': {
+                    'description': ' You must use DAQmx_AI_RTD_A, DAQmx_AI_RTD_B, and DAQmx_AI_RTD_C to supply the  coefficients for the Callendar-Van Dusen equation.'
+                },
+                'name': 'CUSTOM',
+                'value': 10137
+            }
+        ]
+    },
     'RVDTSensitivityUnits1': {
         'values': [
             {
@@ -1403,6 +1515,86 @@ enums = {
             }
         ]
     },
+    'TemperatureUnits': {
+        'values': [
+            {
+                'name': 'DEG_C',
+                'value': 10143
+            },
+            {
+                'name': 'DEG_F',
+                'value': 10144
+            },
+            {
+                'name': 'KELVINS',
+                'value': 10325
+            },
+            {
+                'name': 'DEG_R',
+                'value': 10145
+            }
+        ]
+    },
+    'ThermocoupleType1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'J-type thermocouple.'
+                },
+                'name': 'J_TYPE_TC',
+                'value': 10072
+            },
+            {
+                'documentation': {
+                    'description': 'K-type thermocouple.'
+                },
+                'name': 'K_TYPE_TC',
+                'value': 10073
+            },
+            {
+                'documentation': {
+                    'description': 'N-type thermocouple.'
+                },
+                'name': 'N_TYPE_TC',
+                'value': 10077
+            },
+            {
+                'documentation': {
+                    'description': 'R-type thermocouple.'
+                },
+                'name': 'R_TYPE_TC',
+                'value': 10082
+            },
+            {
+                'documentation': {
+                    'description': 'S-type thermocouple.'
+                },
+                'name': 'S_TYPE_TC',
+                'value': 10085
+            },
+            {
+                'documentation': {
+                    'description': 'T-type thermocouple.'
+                },
+                'name': 'T_TYPE_TC',
+                'value': 10086
+            },
+            {
+                'documentation': {
+                    'description': 'B-type thermocouple.'
+                },
+                'name': 'B_TYPE_TC',
+                'value': 10047
+            },
+            {
+                'documentation': {
+                    'description': 'E-type thermocouple.'
+                },
+                'name': 'E_TYPE_TC',
+                'value': 10055
+            }
+        ]
+    },
     'TimeUnits': {
         'values': [
             {
@@ -1443,6 +1635,44 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'Timescale2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the host device.'
+                },
+                'name': 'HOST_TIME',
+                'value': 16126
+            },
+            {
+                'documentation': {
+                    'description': 'Use the I/O device.'
+                },
+                'name': 'IO_DEVICE_TIME',
+                'value': 16127
+            }
+        ]
+    },
+    'TimestampEvent': {
+        'values': [
+            {
+                'name': 'START_TRIGGER',
+                'value': 12491
+            },
+            {
+                'name': 'REFERENCE_TRIGGER',
+                'value': 12490
+            },
+            {
+                'name': 'ARM_START_TRIGGER',
+                'value': 14641
+            },
+            {
+                'name': 'FIRST_SAMPLE_TIMESTAMP',
+                'value': 16130
             }
         ]
     },
@@ -1813,6 +2043,18 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'WatchdogControlAction': {
+        'values': [
+            {
+                'name': 'RESET_TIMER',
+                'value': 0
+            },
+            {
+                'name': 'CLEAR_EXPIRATION',
+                'value': 1
             }
         ]
     },

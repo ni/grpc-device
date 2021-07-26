@@ -10,6 +10,7 @@ config = {
     'close_function': 'ClearTask',
     'custom_types': [
     ],
+    'additional_headers': ['custom/nidaqmx_conversions.h'],
     'type_to_grpc_type': {
         'TaskHandle': 'nidevice_grpc.Session',
         'const char[]': 'string',
@@ -22,7 +23,9 @@ config = {
         'uInt16': 'uint32',
         'int8': 'int32',
         'uInt8[]': 'bytes',
-        'uInt64': 'uint64'
+        'uInt64': 'uint64',
+        'DAQmxDoneEventCallbackPtr': 'void',
+        'CVIAbsoluteTime': 'google.protobuf.Timestamp'
     },
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [

@@ -53,8 +53,10 @@ public:
 <%
   f = functions[function]
   method_name = common_helpers.snake_to_pascal(function)
+  request_param = service_helpers.get_request_param(method_name, f)
+  response_param = service_helpers.get_response_param(method_name, f)
 %>\
-  ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${method_name}Request* request, ${method_name}Response* response) override;
+  ::grpc::Status ${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param}) override;
 % endfor
 private:
   ${service_class_prefix}LibraryInterface* library_;

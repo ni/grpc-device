@@ -14,10 +14,12 @@ option csharp_namespace = "NationalInstruments.Grpc.NiDAQmx";
 package nidaqmx_grpc;
 
 import "session.proto";
+import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {
   rpc AddGlobalChansToTask(AddGlobalChansToTaskRequest) returns (AddGlobalChansToTaskResponse);
   rpc AddNetworkDevice(AddNetworkDeviceRequest) returns (AddNetworkDeviceResponse);
+  rpc CalculateReversePolyCoeff(CalculateReversePolyCoeffRequest) returns (CalculateReversePolyCoeffResponse);
   rpc CfgAnlgEdgeRefTrig(CfgAnlgEdgeRefTrigRequest) returns (CfgAnlgEdgeRefTrigResponse);
   rpc CfgAnlgEdgeStartTrig(CfgAnlgEdgeStartTrigRequest) returns (CfgAnlgEdgeStartTrigResponse);
   rpc CfgAnlgMultiEdgeRefTrig(CfgAnlgMultiEdgeRefTrigRequest) returns (CfgAnlgMultiEdgeRefTrigResponse);
@@ -37,12 +39,14 @@ service NiDAQmx {
   rpc CfgOutputBuffer(CfgOutputBufferRequest) returns (CfgOutputBufferResponse);
   rpc CfgPipelinedSampClkTiming(CfgPipelinedSampClkTimingRequest) returns (CfgPipelinedSampClkTimingResponse);
   rpc CfgSampClkTiming(CfgSampClkTimingRequest) returns (CfgSampClkTimingResponse);
+  rpc CfgTimeStartTrig(CfgTimeStartTrigRequest) returns (CfgTimeStartTrigResponse);
   rpc CfgWatchdogAOExpirStates(CfgWatchdogAOExpirStatesRequest) returns (CfgWatchdogAOExpirStatesResponse);
   rpc CfgWatchdogCOExpirStates(CfgWatchdogCOExpirStatesRequest) returns (CfgWatchdogCOExpirStatesResponse);
   rpc CfgWatchdogDOExpirStates(CfgWatchdogDOExpirStatesRequest) returns (CfgWatchdogDOExpirStatesResponse);
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
   rpc ConfigureLogging(ConfigureLoggingRequest) returns (ConfigureLoggingResponse);
   rpc ConnectTerms(ConnectTermsRequest) returns (ConnectTermsResponse);
+  rpc ControlWatchdogTask(ControlWatchdogTaskRequest) returns (ControlWatchdogTaskResponse);
   rpc CreateAIAccel4WireDCVoltageChan(CreateAIAccel4WireDCVoltageChanRequest) returns (CreateAIAccel4WireDCVoltageChanResponse);
   rpc CreateAIAccelChan(CreateAIAccelChanRequest) returns (CreateAIAccelChanResponse);
   rpc CreateAIAccelChargeChan(CreateAIAccelChargeChanRequest) returns (CreateAIAccelChargeChanResponse);
@@ -53,6 +57,7 @@ service NiDAQmx {
   rpc CreateAIForceBridgePolynomialChan(CreateAIForceBridgePolynomialChanRequest) returns (CreateAIForceBridgePolynomialChanResponse);
   rpc CreateAIForceBridgeTableChan(CreateAIForceBridgeTableChanRequest) returns (CreateAIForceBridgeTableChanResponse);
   rpc CreateAIForceBridgeTwoPointLinChan(CreateAIForceBridgeTwoPointLinChanRequest) returns (CreateAIForceBridgeTwoPointLinChanResponse);
+  rpc CreateAIForceIEPEChan(CreateAIForceIEPEChanRequest) returns (CreateAIForceIEPEChanResponse);
   rpc CreateAIFreqVoltageChan(CreateAIFreqVoltageChanRequest) returns (CreateAIFreqVoltageChanResponse);
   rpc CreateAIMicrophoneChan(CreateAIMicrophoneChanRequest) returns (CreateAIMicrophoneChanResponse);
   rpc CreateAIPosEddyCurrProxProbeChan(CreateAIPosEddyCurrProxProbeChanRequest) returns (CreateAIPosEddyCurrProxProbeChanResponse);
@@ -61,9 +66,14 @@ service NiDAQmx {
   rpc CreateAIPressureBridgePolynomialChan(CreateAIPressureBridgePolynomialChanRequest) returns (CreateAIPressureBridgePolynomialChanResponse);
   rpc CreateAIPressureBridgeTableChan(CreateAIPressureBridgeTableChanRequest) returns (CreateAIPressureBridgeTableChanResponse);
   rpc CreateAIPressureBridgeTwoPointLinChan(CreateAIPressureBridgeTwoPointLinChanRequest) returns (CreateAIPressureBridgeTwoPointLinChanResponse);
+  rpc CreateAIRTDChan(CreateAIRTDChanRequest) returns (CreateAIRTDChanResponse);
   rpc CreateAIResistanceChan(CreateAIResistanceChanRequest) returns (CreateAIResistanceChanResponse);
   rpc CreateAIRosetteStrainGageChan(CreateAIRosetteStrainGageChanRequest) returns (CreateAIRosetteStrainGageChanResponse);
   rpc CreateAIStrainGageChan(CreateAIStrainGageChanRequest) returns (CreateAIStrainGageChanResponse);
+  rpc CreateAITempBuiltInSensorChan(CreateAITempBuiltInSensorChanRequest) returns (CreateAITempBuiltInSensorChanResponse);
+  rpc CreateAIThrmcplChan(CreateAIThrmcplChanRequest) returns (CreateAIThrmcplChanResponse);
+  rpc CreateAIThrmstrChanIex(CreateAIThrmstrChanIexRequest) returns (CreateAIThrmstrChanIexResponse);
+  rpc CreateAIThrmstrChanVex(CreateAIThrmstrChanVexRequest) returns (CreateAIThrmstrChanVexResponse);
   rpc CreateAITorqueBridgePolynomialChan(CreateAITorqueBridgePolynomialChanRequest) returns (CreateAITorqueBridgePolynomialChanResponse);
   rpc CreateAITorqueBridgeTableChan(CreateAITorqueBridgeTableChanRequest) returns (CreateAITorqueBridgeTableChanResponse);
   rpc CreateAITorqueBridgeTwoPointLinChan(CreateAITorqueBridgeTwoPointLinChanRequest) returns (CreateAITorqueBridgeTwoPointLinChanResponse);
@@ -101,12 +111,17 @@ service NiDAQmx {
   rpc CreateTEDSAIBridgeChan(CreateTEDSAIBridgeChanRequest) returns (CreateTEDSAIBridgeChanResponse);
   rpc CreateTEDSAICurrentChan(CreateTEDSAICurrentChanRequest) returns (CreateTEDSAICurrentChanResponse);
   rpc CreateTEDSAIForceBridgeChan(CreateTEDSAIForceBridgeChanRequest) returns (CreateTEDSAIForceBridgeChanResponse);
+  rpc CreateTEDSAIForceIEPEChan(CreateTEDSAIForceIEPEChanRequest) returns (CreateTEDSAIForceIEPEChanResponse);
   rpc CreateTEDSAIMicrophoneChan(CreateTEDSAIMicrophoneChanRequest) returns (CreateTEDSAIMicrophoneChanResponse);
   rpc CreateTEDSAIPosLVDTChan(CreateTEDSAIPosLVDTChanRequest) returns (CreateTEDSAIPosLVDTChanResponse);
   rpc CreateTEDSAIPosRVDTChan(CreateTEDSAIPosRVDTChanRequest) returns (CreateTEDSAIPosRVDTChanResponse);
   rpc CreateTEDSAIPressureBridgeChan(CreateTEDSAIPressureBridgeChanRequest) returns (CreateTEDSAIPressureBridgeChanResponse);
+  rpc CreateTEDSAIRTDChan(CreateTEDSAIRTDChanRequest) returns (CreateTEDSAIRTDChanResponse);
   rpc CreateTEDSAIResistanceChan(CreateTEDSAIResistanceChanRequest) returns (CreateTEDSAIResistanceChanResponse);
   rpc CreateTEDSAIStrainGageChan(CreateTEDSAIStrainGageChanRequest) returns (CreateTEDSAIStrainGageChanResponse);
+  rpc CreateTEDSAIThrmcplChan(CreateTEDSAIThrmcplChanRequest) returns (CreateTEDSAIThrmcplChanResponse);
+  rpc CreateTEDSAIThrmstrChanIex(CreateTEDSAIThrmstrChanIexRequest) returns (CreateTEDSAIThrmstrChanIexResponse);
+  rpc CreateTEDSAIThrmstrChanVex(CreateTEDSAIThrmstrChanVexRequest) returns (CreateTEDSAIThrmstrChanVexResponse);
   rpc CreateTEDSAITorqueBridgeChan(CreateTEDSAITorqueBridgeChanRequest) returns (CreateTEDSAITorqueBridgeChanResponse);
   rpc CreateTEDSAIVoltageChan(CreateTEDSAIVoltageChanRequest) returns (CreateTEDSAIVoltageChanResponse);
   rpc CreateTEDSAIVoltageChanWithExcit(CreateTEDSAIVoltageChanWithExcitRequest) returns (CreateTEDSAIVoltageChanWithExcitResponse);
@@ -121,16 +136,25 @@ service NiDAQmx {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc GetAIChanCalCalDate(GetAIChanCalCalDateRequest) returns (GetAIChanCalCalDateResponse);
   rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
+  rpc GetArmStartTrigTimestampVal(GetArmStartTrigTimestampValRequest) returns (GetArmStartTrigTimestampValResponse);
+  rpc GetArmStartTrigTrigWhen(GetArmStartTrigTrigWhenRequest) returns (GetArmStartTrigTrigWhenResponse);
   rpc GetDigitalLogicFamilyPowerUpState(GetDigitalLogicFamilyPowerUpStateRequest) returns (GetDigitalLogicFamilyPowerUpStateResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetExtendedErrorInfo(GetExtendedErrorInfoRequest) returns (GetExtendedErrorInfoResponse);
+  rpc GetFirstSampClkWhen(GetFirstSampClkWhenRequest) returns (GetFirstSampClkWhenResponse);
+  rpc GetFirstSampTimestampVal(GetFirstSampTimestampValRequest) returns (GetFirstSampTimestampValResponse);
   rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
   rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
   rpc GetNthTaskReadChannel(GetNthTaskReadChannelRequest) returns (GetNthTaskReadChannelResponse);
+  rpc GetRefTrigTimestampVal(GetRefTrigTimestampValRequest) returns (GetRefTrigTimestampValResponse);
+  rpc GetStartTrigTimestampVal(GetStartTrigTimestampValRequest) returns (GetStartTrigTimestampValResponse);
+  rpc GetStartTrigTrigWhen(GetStartTrigTrigWhenRequest) returns (GetStartTrigTrigWhenResponse);
+  rpc GetSyncPulseTimeWhen(GetSyncPulseTimeWhenRequest) returns (GetSyncPulseTimeWhenResponse);
   rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc LoadTask(LoadTaskRequest) returns (LoadTaskResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
   rpc ReadAnalogScalarF64(ReadAnalogScalarF64Request) returns (ReadAnalogScalarF64Response);
+  rpc ReadBinaryI16(ReadBinaryI16Request) returns (ReadBinaryI16Response);
   rpc ReadBinaryI32(ReadBinaryI32Request) returns (ReadBinaryI32Response);
   rpc ReadBinaryU16(ReadBinaryU16Request) returns (ReadBinaryU16Response);
   rpc ReadBinaryU32(ReadBinaryU32Request) returns (ReadBinaryU32Response);
@@ -151,21 +175,29 @@ service NiDAQmx {
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
   rpc ReadDigitalU32(ReadDigitalU32Request) returns (ReadDigitalU32Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
+  rpc ReadRaw(ReadRawRequest) returns (ReadRawResponse);
+  rpc RegisterDoneEvent(RegisterDoneEventRequest) returns (stream RegisterDoneEventResponse);
   rpc ReserveNetworkDevice(ReserveNetworkDeviceRequest) returns (ReserveNetworkDeviceResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
   rpc SelfTestDevice(SelfTestDeviceRequest) returns (SelfTestDeviceResponse);
   rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
   rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
+  rpc SetArmStartTrigTrigWhen(SetArmStartTrigTrigWhenRequest) returns (SetArmStartTrigTrigWhenResponse);
   rpc SetDigitalLogicFamilyPowerUpState(SetDigitalLogicFamilyPowerUpStateRequest) returns (SetDigitalLogicFamilyPowerUpStateResponse);
+  rpc SetFirstSampClkWhen(SetFirstSampClkWhenRequest) returns (SetFirstSampClkWhenResponse);
+  rpc SetStartTrigTrigWhen(SetStartTrigTrigWhenRequest) returns (SetStartTrigTrigWhenResponse);
+  rpc SetSyncPulseTimeWhen(SetSyncPulseTimeWhenRequest) returns (SetSyncPulseTimeWhenResponse);
   rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
   rpc TaskControl(TaskControlRequest) returns (TaskControlResponse);
   rpc TristateOutputTerm(TristateOutputTermRequest) returns (TristateOutputTermResponse);
   rpc UnreserveNetworkDevice(UnreserveNetworkDeviceRequest) returns (UnreserveNetworkDeviceResponse);
+  rpc WaitForValidTimestamp(WaitForValidTimestampRequest) returns (WaitForValidTimestampResponse);
   rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
   rpc WriteAnalogScalarF64(WriteAnalogScalarF64Request) returns (WriteAnalogScalarF64Response);
+  rpc WriteBinaryI16(WriteBinaryI16Request) returns (WriteBinaryI16Response);
   rpc WriteBinaryI32(WriteBinaryI32Request) returns (WriteBinaryI32Response);
   rpc WriteBinaryU16(WriteBinaryU16Request) returns (WriteBinaryU16Response);
   rpc WriteBinaryU32(WriteBinaryU32Request) returns (WriteBinaryU32Response);
@@ -180,6 +212,7 @@ service NiDAQmx {
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
   rpc WriteDigitalU32(WriteDigitalU32Request) returns (WriteDigitalU32Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
+  rpc WriteRaw(WriteRawRequest) returns (WriteRawResponse);
 }
 
 enum NiDAQmxAttributes {
@@ -280,6 +313,13 @@ enum BridgeUnits {
   BRIDGE_UNITS_FROM_TEDS = 12516;
 }
 
+enum CJCSource1 {
+  C_J_C_SOURCE1_UNSPECIFIED = 0;
+  C_J_C_SOURCE1_BUILT_IN = 10200;
+  C_J_C_SOURCE1_CONST_VAL = 10116;
+  C_J_C_SOURCE1_CHAN = 10113;
+}
+
 enum ChargeUnits {
   CHARGE_UNITS_UNSPECIFIED = 0;
   CHARGE_UNITS_COULOMBS = 16102;
@@ -370,6 +410,19 @@ enum ExcitationSource {
   EXCITATION_SOURCE_INTERNAL = 10200;
   EXCITATION_SOURCE_EXTERNAL = 10167;
   EXCITATION_SOURCE_NONE = 10230;
+}
+
+enum ForceIEPESensorSensitivityUnits {
+  FORCE_I_E_P_E_SENSOR_SENSITIVITY_UNITS_UNSPECIFIED = 0;
+  FORCE_I_E_P_E_SENSOR_SENSITIVITY_UNITS_M_VOLTS_PER_NEWTON = 15891;
+  FORCE_I_E_P_E_SENSOR_SENSITIVITY_UNITS_M_VOLTS_PER_POUND = 15892;
+}
+
+enum ForceIEPEUnits {
+  FORCE_I_E_P_E_UNITS_UNSPECIFIED = 0;
+  FORCE_I_E_P_E_UNITS_NEWTONS = 15875;
+  FORCE_I_E_P_E_UNITS_POUNDS = 15876;
+  FORCE_I_E_P_E_UNITS_FROM_CUSTOM_SCALE = 10065;
 }
 
 enum ForceUnits {
@@ -506,6 +559,17 @@ enum PressureUnits {
   PRESSURE_UNITS_FROM_CUSTOM_SCALE = 10065;
 }
 
+enum RTDType1 {
+  R_T_D_TYPE1_UNSPECIFIED = 0;
+  R_T_D_TYPE1_PT_3750 = 12481;
+  R_T_D_TYPE1_PT_3851 = 10071;
+  R_T_D_TYPE1_PT_3911 = 12482;
+  R_T_D_TYPE1_PT_3916 = 10069;
+  R_T_D_TYPE1_PT_3920 = 10053;
+  R_T_D_TYPE1_PT_3928 = 12483;
+  R_T_D_TYPE1_CUSTOM = 10137;
+}
+
 enum RVDTSensitivityUnits1 {
   RVDT_SENSITIVITY_UNITS1_UNSPECIFIED = 0;
   RVDT_SENSITIVITY_UNITS1_M_VOLTS_PER_VOLT_PER_DEGREE = 12507;
@@ -595,6 +659,26 @@ enum TaskControlAction {
   TASK_CONTROL_ACTION_TASK_ABORT = 6;
 }
 
+enum TemperatureUnits {
+  TEMPERATURE_UNITS_UNSPECIFIED = 0;
+  TEMPERATURE_UNITS_DEG_C = 10143;
+  TEMPERATURE_UNITS_DEG_F = 10144;
+  TEMPERATURE_UNITS_KELVINS = 10325;
+  TEMPERATURE_UNITS_DEG_R = 10145;
+}
+
+enum ThermocoupleType1 {
+  THERMOCOUPLE_TYPE1_UNSPECIFIED = 0;
+  THERMOCOUPLE_TYPE1_J_TYPE_TC = 10072;
+  THERMOCOUPLE_TYPE1_K_TYPE_TC = 10073;
+  THERMOCOUPLE_TYPE1_N_TYPE_TC = 10077;
+  THERMOCOUPLE_TYPE1_R_TYPE_TC = 10082;
+  THERMOCOUPLE_TYPE1_S_TYPE_TC = 10085;
+  THERMOCOUPLE_TYPE1_T_TYPE_TC = 10086;
+  THERMOCOUPLE_TYPE1_B_TYPE_TC = 10047;
+  THERMOCOUPLE_TYPE1_E_TYPE_TC = 10055;
+}
+
 enum TimeUnits {
   TIME_UNITS_UNSPECIFIED = 0;
   TIME_UNITS_SECONDS = 10364;
@@ -606,6 +690,20 @@ enum TimeUnits3 {
   TIME_UNITS3_SECONDS = 10364;
   TIME_UNITS3_TICKS = 10304;
   TIME_UNITS3_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum Timescale2 {
+  TIMESCALE2_UNSPECIFIED = 0;
+  TIMESCALE2_HOST_TIME = 16126;
+  TIMESCALE2_IO_DEVICE_TIME = 16127;
+}
+
+enum TimestampEvent {
+  TIMESTAMP_EVENT_UNSPECIFIED = 0;
+  TIMESTAMP_EVENT_START_TRIGGER = 12491;
+  TIMESTAMP_EVENT_REFERENCE_TRIGGER = 12490;
+  TIMESTAMP_EVENT_ARM_START_TRIGGER = 14641;
+  TIMESTAMP_EVENT_FIRST_SAMPLE_TIMESTAMP = 16130;
 }
 
 enum TorqueUnits {
@@ -678,6 +776,13 @@ enum VoltageUnits2 {
   VOLTAGE_UNITS2_FROM_CUSTOM_SCALE = 10065;
 }
 
+enum WatchdogControlAction {
+  option allow_alias = true;
+  WATCHDOG_CONTROL_ACTION_UNSPECIFIED = 0;
+  WATCHDOG_CONTROL_ACTION_RESET_TIMER = 0;
+  WATCHDOG_CONTROL_ACTION_CLEAR_EXPIRATION = 1;
+}
+
 enum WindowTriggerCondition1 {
   WINDOW_TRIGGER_CONDITION1_UNSPECIFIED = 0;
   WINDOW_TRIGGER_CONDITION1_ENTERING_WIN = 10163;
@@ -704,6 +809,20 @@ message AddNetworkDeviceRequest {
 message AddNetworkDeviceResponse {
   int32 status = 1;
   string device_name_out = 2;
+}
+
+message CalculateReversePolyCoeffRequest {
+  repeated double forward_coeffs = 1;
+  uint32 num_forward_coeffs_in = 2;
+  double min_val_x = 3;
+  double max_val_x = 4;
+  int32 num_points_to_compute = 5;
+  int32 reverse_poly_order = 6;
+}
+
+message CalculateReversePolyCoeffResponse {
+  int32 status = 1;
+  repeated double reverse_coeffs = 2;
 }
 
 message CfgAnlgEdgeRefTrigRequest {
@@ -998,6 +1117,19 @@ message CfgSampClkTimingResponse {
   int32 status = 1;
 }
 
+message CfgTimeStartTrigRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp when = 2;
+  oneof timescale_enum {
+    Timescale2 timescale = 3;
+    int32 timescale_raw = 4;
+  }
+}
+
+message CfgTimeStartTrigResponse {
+  int32 status = 1;
+}
+
 message CfgWatchdogAOExpirStatesRequest {
   nidevice_grpc.Session task = 1;
   string channel_names = 2;
@@ -1068,6 +1200,18 @@ message ConnectTermsRequest {
 }
 
 message ConnectTermsResponse {
+  int32 status = 1;
+}
+
+message ControlWatchdogTaskRequest {
+  nidevice_grpc.Session task = 1;
+  oneof action_enum {
+    WatchdogControlAction action = 2;
+    int32 action_raw = 3;
+  }
+}
+
+message ControlWatchdogTaskResponse {
   int32 status = 1;
 }
 
@@ -1377,6 +1521,37 @@ message CreateAIForceBridgeTwoPointLinChanResponse {
   int32 status = 1;
 }
 
+message CreateAIForceIEPEChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    ForceIEPEUnits units = 8;
+    int32 units_raw = 9;
+  }
+  double sensitivity = 10;
+  oneof sensitivity_units_enum {
+    ForceIEPESensorSensitivityUnits sensitivity_units = 11;
+    int32 sensitivity_units_raw = 12;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 13;
+    int32 current_excit_source_raw = 14;
+  }
+  double current_excit_val = 15;
+  string custom_scale_name = 16;
+}
+
+message CreateAIForceIEPEChanResponse {
+  int32 status = 1;
+}
+
 message CreateAIFreqVoltageChanRequest {
   nidevice_grpc.Session task = 1;
   string physical_channel = 2;
@@ -1625,6 +1800,36 @@ message CreateAIPressureBridgeTwoPointLinChanResponse {
   int32 status = 1;
 }
 
+message CreateAIRTDChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof rtd_type_enum {
+    RTDType1 rtd_type = 8;
+    int32 rtd_type_raw = 9;
+  }
+  oneof resistance_config_enum {
+    ResistanceConfiguration resistance_config = 10;
+    int32 resistance_config_raw = 11;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 12;
+    int32 current_excit_source_raw = 13;
+  }
+  double current_excit_val = 14;
+  double r0 = 15;
+}
+
+message CreateAIRTDChanResponse {
+  int32 status = 1;
+}
+
 message CreateAIResistanceChanRequest {
   nidevice_grpc.Session task = 1;
   string physical_channel = 2;
@@ -1711,6 +1916,103 @@ message CreateAIStrainGageChanRequest {
 }
 
 message CreateAIStrainGageChanResponse {
+  int32 status = 1;
+}
+
+message CreateAITempBuiltInSensorChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof units_enum {
+    TemperatureUnits units = 4;
+    int32 units_raw = 5;
+  }
+}
+
+message CreateAITempBuiltInSensorChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIThrmcplChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof thermocouple_type_enum {
+    ThermocoupleType1 thermocouple_type = 8;
+    int32 thermocouple_type_raw = 9;
+  }
+  oneof cjc_source_enum {
+    CJCSource1 cjc_source = 10;
+    int32 cjc_source_raw = 11;
+  }
+  double cjc_val = 12;
+  string cjc_channel = 13;
+}
+
+message CreateAIThrmcplChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIThrmstrChanIexRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof resistance_config_enum {
+    ResistanceConfiguration resistance_config = 8;
+    int32 resistance_config_raw = 9;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 10;
+    int32 current_excit_source_raw = 11;
+  }
+  double current_excit_val = 12;
+  double a = 13;
+  double b = 14;
+  double c = 15;
+}
+
+message CreateAIThrmstrChanIexResponse {
+  int32 status = 1;
+}
+
+message CreateAIThrmstrChanVexRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof resistance_config_enum {
+    ResistanceConfiguration resistance_config = 8;
+    int32 resistance_config_raw = 9;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 10;
+    int32 voltage_excit_source_raw = 11;
+  }
+  double voltage_excit_val = 12;
+  double a = 13;
+  double b = 14;
+  double c = 15;
+  double r1 = 16;
+}
+
+message CreateAIThrmstrChanVexResponse {
   int32 status = 1;
 }
 
@@ -2534,6 +2836,32 @@ message CreateTEDSAIForceBridgeChanResponse {
   int32 status = 1;
 }
 
+message CreateTEDSAIForceIEPEChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  oneof terminal_config_enum {
+    InputTermCfgWithDefault terminal_config = 4;
+    int32 terminal_config_raw = 5;
+  }
+  double min_val = 6;
+  double max_val = 7;
+  oneof units_enum {
+    ForceIEPEUnits units = 8;
+    int32 units_raw = 9;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 10;
+    int32 current_excit_source_raw = 11;
+  }
+  double current_excit_val = 12;
+  string custom_scale_name = 13;
+}
+
+message CreateTEDSAIForceIEPEChanResponse {
+  int32 status = 1;
+}
+
 message CreateTEDSAIMicrophoneChanRequest {
   nidevice_grpc.Session task = 1;
   string physical_channel = 2;
@@ -2635,6 +2963,31 @@ message CreateTEDSAIPressureBridgeChanResponse {
   int32 status = 1;
 }
 
+message CreateTEDSAIRTDChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof resistance_config_enum {
+    ResistanceConfiguration resistance_config = 8;
+    int32 resistance_config_raw = 9;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 10;
+    int32 current_excit_source_raw = 11;
+  }
+  double current_excit_val = 12;
+}
+
+message CreateTEDSAIRTDChanResponse {
+  int32 status = 1;
+}
+
 message CreateTEDSAIResistanceChanRequest {
   nidevice_grpc.Session task = 1;
   string physical_channel = 2;
@@ -2682,6 +3035,79 @@ message CreateTEDSAIStrainGageChanRequest {
 }
 
 message CreateTEDSAIStrainGageChanResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAIThrmcplChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof cjc_source_enum {
+    CJCSource1 cjc_source = 8;
+    int32 cjc_source_raw = 9;
+  }
+  double cjc_val = 10;
+  string cjc_channel = 11;
+}
+
+message CreateTEDSAIThrmcplChanResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAIThrmstrChanIexRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof resistance_config_enum {
+    ResistanceConfiguration resistance_config = 8;
+    int32 resistance_config_raw = 9;
+  }
+  oneof current_excit_source_enum {
+    ExcitationSource current_excit_source = 10;
+    int32 current_excit_source_raw = 11;
+  }
+  double current_excit_val = 12;
+}
+
+message CreateTEDSAIThrmstrChanIexResponse {
+  int32 status = 1;
+}
+
+message CreateTEDSAIThrmstrChanVexRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double min_val = 4;
+  double max_val = 5;
+  oneof units_enum {
+    TemperatureUnits units = 6;
+    int32 units_raw = 7;
+  }
+  oneof resistance_config_enum {
+    ResistanceConfiguration resistance_config = 8;
+    int32 resistance_config_raw = 9;
+  }
+  oneof voltage_excit_source_enum {
+    ExcitationSource voltage_excit_source = 10;
+    int32 voltage_excit_source_raw = 11;
+  }
+  double voltage_excit_val = 12;
+  double r1 = 13;
+}
+
+message CreateTEDSAIThrmstrChanVexResponse {
   int32 status = 1;
 }
 
@@ -2881,6 +3307,24 @@ message GetAIChanCalExpDateResponse {
   uint32 minute = 6;
 }
 
+message GetArmStartTrigTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetArmStartTrigTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetArmStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetArmStartTrigTrigWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
 message GetDigitalLogicFamilyPowerUpStateRequest {
   string device_name = 1;
 }
@@ -2907,6 +3351,24 @@ message GetExtendedErrorInfoRequest {
 message GetExtendedErrorInfoResponse {
   int32 status = 1;
   string error_string = 2;
+}
+
+message GetFirstSampClkWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetFirstSampClkWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetFirstSampTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetFirstSampTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
 }
 
 message GetNthTaskChannelRequest {
@@ -2940,6 +3402,42 @@ message GetNthTaskReadChannelRequest {
 message GetNthTaskReadChannelResponse {
   int32 status = 1;
   string buffer = 2;
+}
+
+message GetRefTrigTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetRefTrigTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetStartTrigTimestampValRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetStartTrigTimestampValResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetStartTrigTrigWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message GetSyncPulseTimeWhenRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetSyncPulseTimeWhenResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp data = 2;
 }
 
 message IsTaskDoneRequest {
@@ -2985,6 +3483,23 @@ message ReadAnalogScalarF64Request {
 message ReadAnalogScalarF64Response {
   int32 status = 1;
   double value = 2;
+}
+
+message ReadBinaryI16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadBinaryI16Response {
+  int32 status = 1;
+  repeated int32 read_array = 2;
+  int32 samps_per_chan_read = 3;
 }
 
 message ReadBinaryI32Request {
@@ -3284,6 +3799,29 @@ message ReadDigitalU8Response {
   int32 samps_per_chan_read = 3;
 }
 
+message ReadRawRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  uint32 array_size_in_bytes = 4;
+}
+
+message ReadRawResponse {
+  int32 status = 1;
+  bytes read_array = 2;
+  int32 samps_read = 3;
+  int32 num_bytes_per_samp = 4;
+}
+
+message RegisterDoneEventRequest {
+  nidevice_grpc.Session task = 1;
+  uint32 options = 2;
+}
+
+message RegisterDoneEventResponse {
+  int32 status = 1;
+}
+
 message ReserveNetworkDeviceRequest {
   string device_name = 1;
   bool override_reservation = 2;
@@ -3337,6 +3875,15 @@ message SetAIChanCalExpDateResponse {
   int32 status = 1;
 }
 
+message SetArmStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetArmStartTrigTrigWhenResponse {
+  int32 status = 1;
+}
+
 message SetDigitalLogicFamilyPowerUpStateRequest {
   string device_name = 1;
   oneof logic_family_enum {
@@ -3346,6 +3893,33 @@ message SetDigitalLogicFamilyPowerUpStateRequest {
 }
 
 message SetDigitalLogicFamilyPowerUpStateResponse {
+  int32 status = 1;
+}
+
+message SetFirstSampClkWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetFirstSampClkWhenResponse {
+  int32 status = 1;
+}
+
+message SetStartTrigTrigWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetStartTrigTrigWhenResponse {
+  int32 status = 1;
+}
+
+message SetSyncPulseTimeWhenRequest {
+  nidevice_grpc.Session task = 1;
+  google.protobuf.Timestamp data = 2;
+}
+
+message SetSyncPulseTimeWhenResponse {
   int32 status = 1;
 }
 
@@ -3402,6 +3976,20 @@ message UnreserveNetworkDeviceResponse {
   int32 status = 1;
 }
 
+message WaitForValidTimestampRequest {
+  nidevice_grpc.Session task = 1;
+  oneof timestamp_event_enum {
+    TimestampEvent timestamp_event = 2;
+    int32 timestamp_event_raw = 3;
+  }
+  double timeout = 4;
+}
+
+message WaitForValidTimestampResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp timestamp = 2;
+}
+
 message WaitUntilTaskDoneRequest {
   nidevice_grpc.Session task = 1;
   double time_to_wait = 2;
@@ -3437,6 +4025,23 @@ message WriteAnalogScalarF64Request {
 
 message WriteAnalogScalarF64Response {
   int32 status = 1;
+}
+
+message WriteBinaryI16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+  repeated int32 write_array = 7;
+}
+
+message WriteBinaryI16Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
 }
 
 message WriteBinaryI32Request {
@@ -3655,6 +4260,19 @@ message WriteDigitalU8Request {
 }
 
 message WriteDigitalU8Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message WriteRawRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  bytes write_array = 5;
+}
+
+message WriteRawResponse {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }
