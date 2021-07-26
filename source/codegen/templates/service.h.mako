@@ -78,7 +78,7 @@ public:
   response_param = service_helpers.get_response_param(method_name, f)
 %>\
 % if function in async_functions:
-  ::grpc::Status process_${method_name}(const ${method_name}MethodContextPtr& async_method_context);
+  void process_${method_name}(const ${method_name}MethodContextPtr& async_method_context);
 % else:
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param}) override;
 % endif

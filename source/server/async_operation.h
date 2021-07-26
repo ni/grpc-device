@@ -11,6 +11,76 @@
 using nidevice_grpc::SharedMethodContextPtr;
 
 namespace nidevice_grpc {
+
+template <typename TRequest, typename TResponse>
+class FailOperation : public nidevice_grpc::CompletionQueueElement {
+ public:
+  static void register_completion_queue_element(const ::grpc::Status& status, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+  {
+    new FailOperation(status, method_context);
+  }
+
+  void process(bool ok)
+  {
+    delete this;
+  }
+
+ private:
+  FailOperation(const ::grpc::Status& status, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+      : method_context_(method_context)
+  {
+    method_context_->writer.Finish(status, this);
+  }
+  SharedMethodContextPtr<TRequest, TResponse> method_context_;
+};
+
+template <typename TRequest, typename TResponse>
+class SendInitialMetadataOperation : public nidevice_grpc::CompletionQueueElement {
+ public:
+  static void register_completion_queue_element(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+  {
+    new SendInitialMetadataOperation(method_context);
+  }
+
+  void process(bool ok)
+  {
+    delete this;
+  }
+
+ private:
+  SendInitialMetadataOperation(const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+      : method_context_(method_context)
+  {
+    method_context_->writer.SendInitialMetadata(this);
+  }
+  SharedMethodContextPtr<TRequest, TResponse> method_context_;
+};
+
+// Calls Write on response.
+// Primarily ensures that each write has a unique tag, as required by grpc.
+// Also ensures that method_context_ stays in memory until the write completes.
+template <typename TRequest, typename TResponse>
+class WriteOperation : public nidevice_grpc::CompletionQueueElement {
+ public:
+  static void register_completion_queue_element(const TResponse& response, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+  {
+    new WriteOperation(response, method_context);
+  }
+
+  void process(bool ok)
+  {
+    delete this;
+  }
+
+ private:
+  WriteOperation(const TResponse& response, const SharedMethodContextPtr<TRequest, TResponse>& method_context)
+      : method_context_(method_context)
+  {
+    method_context_->writer.Write(response, this);
+  }
+  SharedMethodContextPtr<TRequest, TResponse> method_context_;
+};
+
 // Calls writer.Finish and then releases the method_context_.
 template <typename TRequest, typename TResponse>
 class CloseCompleteOperation : public nidevice_grpc::CompletionQueueElement {
@@ -20,7 +90,7 @@ class CloseCompleteOperation : public nidevice_grpc::CompletionQueueElement {
     new CloseCompleteOperation(method_context);
   }
 
-  void process()
+  void process(bool ok)
   {
     // Release method_context_.
     delete this;
@@ -47,7 +117,7 @@ class FinishCallbackOperation : public nidevice_grpc::CompletionQueueElement {
     new FinishCallbackOperation(method_context);
   }
 
-  void process()
+  void process(bool ok)
   {
     // Allow any driver code to start cleaning up and release it's references back to the
     // method_context_ (i.e., to access writer.Write).
