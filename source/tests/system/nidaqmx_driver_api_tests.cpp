@@ -470,7 +470,6 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CfgTimeStartTrigRequest request;
     set_request_session_id(request);
-    // google::protobuf::util::TimeUtil::FromString(cviKnownTimestampString, request.mutable_when());
     auto time = google::protobuf::util::TimeUtil::GetCurrentTime();
     auto duration = google::protobuf::Duration{};
     duration.set_seconds(10);
