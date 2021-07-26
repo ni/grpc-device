@@ -55,9 +55,9 @@ void NiDAQmxService::register_async_functions(::grpc::ServerCompletionQueue* com
 //---------------------------------------------------------------------
 void NiDAQmxService::process_RegisterDoneEvent(const RegisterDoneEventMethodContextPtr& async_method_context)
 {
-  //if (context->IsCancelled()) {
-  //  return ::grpc::Status::CANCELLED;
-  //}
+  if (async_method_context->context.IsCancelled()) {
+    return;
+  }
   using WriteOperation = nidevice_grpc::WriteOperation<RegisterDoneEventRequest, RegisterDoneEventResponse>;
   using FailOperation = nidevice_grpc::FailOperation<RegisterDoneEventRequest, RegisterDoneEventResponse>;
   using SendInitialMetadataOperation = nidevice_grpc::SendInitialMetadataOperation<RegisterDoneEventRequest, RegisterDoneEventResponse>;
