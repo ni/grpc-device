@@ -16,18 +16,20 @@
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
+#include <server/async_method_context.h>
 
 #include "nifake_non_ivi_library_interface.h"
 
 namespace nifake_non_ivi_grpc {
 
-class NiFakeNonIviService final : public NiFakeNonIvi::Service {
+class NiFakeNonIviService final : public NiFakeNonIvi::WithAsyncMethod_ReadStream<NiFakeNonIvi::Service> {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>;
 
   NiFakeNonIviService(NiFakeNonIviLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiFakeNonIviService();
   
+  void register_async_functions(::grpc::ServerCompletionQueue* completion_queue);
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status InitWithHandleNameAsSessionName(::grpc::ServerContext* context, const InitWithHandleNameAsSessionNameRequest* request, InitWithHandleNameAsSessionNameResponse* response) override;
@@ -37,6 +39,9 @@ public:
   ::grpc::Status InputArrayOfBytes(::grpc::ServerContext* context, const InputArrayOfBytesRequest* request, InputArrayOfBytesResponse* response) override;
   ::grpc::Status OutputArrayOfBytes(::grpc::ServerContext* context, const OutputArrayOfBytesRequest* request, OutputArrayOfBytesResponse* response) override;
   ::grpc::Status RegisterCallback(::grpc::ServerContext* context, const RegisterCallbackRequest* request, RegisterCallbackResponse* response) override;
+  using ReadStreamMethodContext = nidevice_grpc::AsyncMethodContextT<ReadStreamRequest, ReadStreamResponse>;
+  using ReadStreamMethodContextPtr = std::shared_ptr<ReadStreamMethodContext>;
+  void process_ReadStream(const ReadStreamMethodContextPtr& async_method_context);
   ::grpc::Status InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response) override;
   ::grpc::Status OutputTimestamp(::grpc::ServerContext* context, const OutputTimestampRequest* request, OutputTimestampResponse* response) override;
 private:

@@ -26,6 +26,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, InputArrayOfBytes, (const myUInt8 u8Array[]), (override));
   MOCK_METHOD(int32, OutputArrayOfBytes, (int32 numberOfU8Samples, myUInt8 u8Data[]), (override));
   MOCK_METHOD(int32, RegisterCallback, (myInt16 inputData, CallbackPtr callbackFunction, void* callbackData), (override));
+  MOCK_METHOD(int32, ReadStream, (int32 start, int32 stop, int32* value), (override));
   MOCK_METHOD(int32, InputTimestamp, (CVIAbsoluteTime when), (override));
   MOCK_METHOD(int32, OutputTimestamp, (CVIAbsoluteTime* when), (override));
 };

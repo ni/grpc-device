@@ -5,6 +5,8 @@
 
 #include <memory>
 
+#include "async_server_write_queue.h"
+
 namespace nidevice_grpc {
 using AsyncOperationToken = void*;
 // Type erasing abstract base class to allow managing driver-specific operation
@@ -38,6 +40,7 @@ class AsyncMethodContextT : public AsyncMethodContext {
       : context_(),
         request_(),
         writer_(&context_),
+        write_queue_(writer_),
         completion_queue_(completion_queue)
   {
   }
@@ -53,7 +56,8 @@ class AsyncMethodContextT : public AsyncMethodContext {
   TRequest& mutable_request() { return request_; }
 
   void send_initial_metadata(void* tag) override { writer_.SendInitialMetadata(tag); }
-  void write(const TResponse& response, void* tag) { writer_.Write(response, tag); }
+  void begin_write(const TResponse& response, void* tag) { write_queue_.begin_write(response, tag); }
+  void finish_write(void* tag) { write_queue_.finish_write(tag); }
   void finish(const ::grpc::Status& status, void* tag) override { writer_.Finish(status, tag); }
 
   ::grpc::ServerCompletionQueue* completion_queue() override { return completion_queue_; }
@@ -66,6 +70,7 @@ class AsyncMethodContextT : public AsyncMethodContext {
   ::grpc::ServerContext context_;
   TRequest request_;
   ::grpc::ServerAsyncWriter<TResponse> writer_;
+  AsyncServerWriteQueue<TResponse> write_queue_;
   ::grpc::ServerCompletionQueue* completion_queue_;
   std::unique_ptr<AsyncOperationRegistration> registration_{};
 };

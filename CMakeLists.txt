@@ -240,15 +240,22 @@ endif()
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/integration/ni_fake_non_ivi_service_tests_endtoend.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
     "source/tests/integration/session_utilities_service_tests_endtoend.cpp"
+    "source/server/async_operation.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
     ${session_proto_srcs}
-    ${session_grpc_srcs})
+    ${session_grpc_srcs}
+    "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
+    "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
+    "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
+    "${custom_dir}/nifake_non_ivi_service.custom.cpp"
+)
 
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
@@ -277,6 +284,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
+    "source/server/async_operation.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
     "source/server/semaphore.cpp"

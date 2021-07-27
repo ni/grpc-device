@@ -46,6 +46,9 @@ class WriteOperation : public nidevice_grpc::CompletionQueueElement {
 
   void process(bool ok)
   {
+    if (ok) {
+      method_context_->finish_write(this);
+    }
     delete this;
   }
 
@@ -53,7 +56,7 @@ class WriteOperation : public nidevice_grpc::CompletionQueueElement {
   WriteOperation(const TResponse& response, const SharedMethodContextPtrT& method_context)
       : method_context_(method_context)
   {
-    method_context_->write(response, this);
+    method_context_->begin_write(response, this);
   }
   SharedMethodContextPtrT method_context_;
 };
