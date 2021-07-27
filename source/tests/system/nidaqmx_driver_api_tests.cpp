@@ -924,8 +924,9 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAc
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   auto reader = register_done_event(reader_context);
+  reader->WaitForInitialMetadata();
 
-  auto FINITE_SAMPLE_COUNT = 10UL;
+  const auto FINITE_SAMPLE_COUNT = 10UL;
   cfg_samp_clk_timing(
       create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   start_task();
@@ -948,7 +949,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
   auto second_reader = register_done_event(second_reader_context);
   second_reader->WaitForInitialMetadata();
 
-  auto FINITE_SAMPLE_COUNT = 10UL;
+  const auto FINITE_SAMPLE_COUNT = 10UL;
   cfg_samp_clk_timing(
       create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   start_task();

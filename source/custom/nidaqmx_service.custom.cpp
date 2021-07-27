@@ -67,8 +67,6 @@ void NiDAQmxService::process_RegisterDoneEvent(const RegisterDoneEventMethodCont
     TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
     uInt32 options = request.options();
 
-    SendInitialMetadataOperation::register_completion_queue_element(async_method_context);
-
     async_method_context->track_registration(DoneEventCallbackRouter::register_handler(
         [async_method_context]  // Copy the shared_ptr to ensure the callback has access to the writer.
         (TaskHandle task, int32 callback_status) {
@@ -79,6 +77,9 @@ void NiDAQmxService::process_RegisterDoneEvent(const RegisterDoneEventMethodCont
         }));
 
     auto status = library_->RegisterDoneEvent(task, options, DoneEventCallbackRouter::handle_callback, async_method_context->registration_token());
+
+    // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
+    SendInitialMetadataOperation::register_completion_queue_element(async_method_context);
 
     if (status) {
       RegisterDoneEventResponse failed_to_register_response;
