@@ -1,3 +1,5 @@
+import re
+
 def is_output_parameter(parameter):
   return "out" in parameter["direction"]
 
@@ -64,17 +66,15 @@ def is_unsupported_enum_array(parameter):
     return not (is_output_parameter(parameter) and is_string_arg(parameter))
   return False
 
-def camel_to_snake(camelString):
+def camel_to_snake(camel_string):
   '''Returns a snake_string for a given camelString.'''
-  camelString = list(camelString)
-  index = 0
-  for x in camelString :
-      if x.isupper():
-          camelString[index] = camelString[index].lower()
-          camelString.insert(index, "_")
-
-      index = index + 1
-  return ("".join(camelString))
+  # Add _ before Words: 
+  # someDeviceIPAddress -> some_DeviceIP_Address
+  s1 = re.sub(r"([^_])([A-Z][a-z]+[0-9]*)", r"\1_\2", camel_string)
+  # Add _ before any capital letters not already preceded by _ and convert to lower:
+  # some_DeviceIP_Address -> some_Device_IP_Address
+  # some_Device_IP_Address -> some_device_ip_address
+  return re.sub(r"([^_])([A-Z]+[0-9]*)", r"\1_\2", s1).lower()
 
 def snake_to_pascal(snake_string):
   '''Returns a PascalString for a given snake_string.'''
@@ -90,9 +90,19 @@ def snake_to_pascal(snake_string):
 
 def pascal_to_camel(pascal_string):
   '''Returns a camelString for a given PascalString.'''
-  pascal_string = list(pascal_string)
-  pascal_string[0] = pascal_string[0].lower()
-  return ("".join(pascal_string))
+  # Full string all-caps: IEPE -> iepe. HTTP2 -> http2.
+  match = re.fullmatch(r"([A-Z]+[0-9]*)", pascal_string)
+  if match:
+    return match[1].lower()
+  
+  # Leading all-caps: IPAddress -> ipAddress. HTTP2Stream -> http2Stream.
+  match = re.fullmatch(r"([A-Z]+[0-9]*)([A-Z].*)", pascal_string)
+  if match:
+    return match[1].lower() + match[2]
+
+  # Normal case: NormalCase -> normalCase
+  match = re.fullmatch(r"([A-Z])(.*)", pascal_string)
+  return match[1].lower() + match[2]
 
 def pascal_to_snake(pascal_string):
   '''Returns a snake_string for a given PascalString.'''
