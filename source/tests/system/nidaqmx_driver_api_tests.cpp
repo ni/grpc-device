@@ -454,7 +454,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_min_val(min_val);
     request.set_max_val(max_val);
     request.set_thermocouple_type(ThermocoupleType1::THERMOCOUPLE_TYPE1_J_TYPE_TC);
-    request.set_cjc_source(CJCSource1::C_J_C_SOURCE1_CONST_VAL);
+    request.set_cjc_source(CJCSource1::CJC_SOURCE1_CONST_VAL);
     request.set_cjc_val(25.0);
     return stub()->CreateAIThrmcplChan(&context, request, &response);
   }
