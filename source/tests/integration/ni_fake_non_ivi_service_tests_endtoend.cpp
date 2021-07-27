@@ -3,8 +3,9 @@
 #include <nifake_non_ivi/nifake_non_ivi_service.h>
 #include <server/async_processing_loop.h>
 
-#include <chrono>
 #include <memory>
+#include <thread>
+
 namespace ni {
 namespace tests {
 namespace integration {

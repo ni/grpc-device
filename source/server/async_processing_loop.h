@@ -21,4 +21,4 @@ void run_async_processing_loop(::grpc::ServerCompletionQueue* completion_queue, 
   }
 }
 }  // namespace nidevice_grpc
-#endif NIDEVICE_GRPC_DEVICE_RUN_ASYNC_LOOP_H
+#endif  // NIDEVICE_GRPC_DEVICE_RUN_ASYNC_LOOP_H
