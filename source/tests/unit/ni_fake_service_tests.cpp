@@ -1111,14 +1111,14 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_O_S_NAMES_UNSPECIFIED;
+  nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_OS_NAMES_UNSPECIFIED;
   EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults)
       .Times(0);
 
   ::grpc::ServerContext context;
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
   request.mutable_vi()->set_id(session_id);
-  request.set_a_mobile_o_s_name_mapped(a_mobile_o_s_name);
+  request.set_a_mobile_os_name_mapped(a_mobile_o_s_name);
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsResponse response;
   ::grpc::Status status = service.StringValuedEnumInputFunctionWithDefaults(&context, &request, &response);
 
@@ -1133,7 +1133,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_O_S_NAMES_ANDROID;
+  nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_OS_NAMES_ANDROID;
   const char* expected_enum_value = NIFAKE_VAL_ANDROID;
   EXPECT_CALL(library, StringValuedEnumInputFunctionWithDefaults(kTestViSession, Pointee(*expected_enum_value)))
       .WillOnce(Return(kDriverSuccess));
@@ -1141,7 +1141,7 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
   ::grpc::ServerContext context;
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest request;
   request.mutable_vi()->set_id(session_id);
-  request.set_a_mobile_o_s_name_mapped(a_mobile_o_s_name);
+  request.set_a_mobile_os_name_mapped(a_mobile_o_s_name);
   nifake_grpc::StringValuedEnumInputFunctionWithDefaultsResponse response;
   ::grpc::Status status = service.StringValuedEnumInputFunctionWithDefaults(&context, &request, &response);
 
