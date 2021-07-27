@@ -194,7 +194,7 @@ def get_request_type(method_name):
 
 
 def get_request_param(method_name, function_data):
-    return f'const {method_name}Request* request'
+    return f'const {get_request_type(method_name)}* request'
 
 
 def get_response_type(method_name):
@@ -202,7 +202,7 @@ def get_response_type(method_name):
 
 def get_response_param(method_name, function_data):
     is_streaming = common_helpers.has_streaming_response(function_data)
-    response_type = f'{method_name}Response'
+    response_type = get_response_type(method_name)
     return f'::grpc::ServerAsyncWriter<{response_type}>* writer' if is_streaming else f'{response_type}* response'
 
 
