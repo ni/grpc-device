@@ -43,6 +43,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CfgOutputBuffer = reinterpret_cast<CfgOutputBufferPtr>(shared_library_.get_function_pointer("DAQmxCfgOutputBuffer"));
   function_pointers_.CfgPipelinedSampClkTiming = reinterpret_cast<CfgPipelinedSampClkTimingPtr>(shared_library_.get_function_pointer("DAQmxCfgPipelinedSampClkTiming"));
   function_pointers_.CfgSampClkTiming = reinterpret_cast<CfgSampClkTimingPtr>(shared_library_.get_function_pointer("DAQmxCfgSampClkTiming"));
+  function_pointers_.CfgTimeStartTrig = reinterpret_cast<CfgTimeStartTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgTimeStartTrig"));
   function_pointers_.CfgWatchdogAOExpirStates = reinterpret_cast<CfgWatchdogAOExpirStatesPtr>(shared_library_.get_function_pointer("DAQmxCfgWatchdogAOExpirStates"));
   function_pointers_.CfgWatchdogCOExpirStates = reinterpret_cast<CfgWatchdogCOExpirStatesPtr>(shared_library_.get_function_pointer("DAQmxCfgWatchdogCOExpirStates"));
   function_pointers_.CfgWatchdogDOExpirStates = reinterpret_cast<CfgWatchdogDOExpirStatesPtr>(shared_library_.get_function_pointer("DAQmxCfgWatchdogDOExpirStates"));
@@ -139,12 +140,20 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("DAQmxExportSignal"));
   function_pointers_.GetAIChanCalCalDate = reinterpret_cast<GetAIChanCalCalDatePtr>(shared_library_.get_function_pointer("DAQmxGetAIChanCalCalDate"));
   function_pointers_.GetAIChanCalExpDate = reinterpret_cast<GetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxGetAIChanCalExpDate"));
+  function_pointers_.GetArmStartTrigTimestampVal = reinterpret_cast<GetArmStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTimestampVal"));
+  function_pointers_.GetArmStartTrigTrigWhen = reinterpret_cast<GetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTrigWhen"));
   function_pointers_.GetDigitalLogicFamilyPowerUpState = reinterpret_cast<GetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxGetDigitalLogicFamilyPowerUpState"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("DAQmxGetErrorString"));
   function_pointers_.GetExtendedErrorInfo = reinterpret_cast<GetExtendedErrorInfoPtr>(shared_library_.get_function_pointer("DAQmxGetExtendedErrorInfo"));
+  function_pointers_.GetFirstSampClkWhen = reinterpret_cast<GetFirstSampClkWhenPtr>(shared_library_.get_function_pointer("DAQmxGetFirstSampClkWhen"));
+  function_pointers_.GetFirstSampTimestampVal = reinterpret_cast<GetFirstSampTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetFirstSampTimestampVal"));
   function_pointers_.GetNthTaskChannel = reinterpret_cast<GetNthTaskChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskChannel"));
   function_pointers_.GetNthTaskDevice = reinterpret_cast<GetNthTaskDevicePtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskDevice"));
   function_pointers_.GetNthTaskReadChannel = reinterpret_cast<GetNthTaskReadChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskReadChannel"));
+  function_pointers_.GetRefTrigTimestampVal = reinterpret_cast<GetRefTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetRefTrigTimestampVal"));
+  function_pointers_.GetStartTrigTimestampVal = reinterpret_cast<GetStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTimestampVal"));
+  function_pointers_.GetStartTrigTrigWhen = reinterpret_cast<GetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTrigWhen"));
+  function_pointers_.GetSyncPulseTimeWhen = reinterpret_cast<GetSyncPulseTimeWhenPtr>(shared_library_.get_function_pointer("DAQmxGetSyncPulseTimeWhen"));
   function_pointers_.IsTaskDone = reinterpret_cast<IsTaskDonePtr>(shared_library_.get_function_pointer("DAQmxIsTaskDone"));
   function_pointers_.LoadTask = reinterpret_cast<LoadTaskPtr>(shared_library_.get_function_pointer("DAQmxLoadTask"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
@@ -177,13 +186,18 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SelfTestDevice = reinterpret_cast<SelfTestDevicePtr>(shared_library_.get_function_pointer("DAQmxSelfTestDevice"));
   function_pointers_.SetAIChanCalCalDate = reinterpret_cast<SetAIChanCalCalDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalCalDate"));
   function_pointers_.SetAIChanCalExpDate = reinterpret_cast<SetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalExpDate"));
+  function_pointers_.SetArmStartTrigTrigWhen = reinterpret_cast<SetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxSetArmStartTrigTrigWhen"));
   function_pointers_.SetDigitalLogicFamilyPowerUpState = reinterpret_cast<SetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxSetDigitalLogicFamilyPowerUpState"));
+  function_pointers_.SetFirstSampClkWhen = reinterpret_cast<SetFirstSampClkWhenPtr>(shared_library_.get_function_pointer("DAQmxSetFirstSampClkWhen"));
+  function_pointers_.SetStartTrigTrigWhen = reinterpret_cast<SetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxSetStartTrigTrigWhen"));
+  function_pointers_.SetSyncPulseTimeWhen = reinterpret_cast<SetSyncPulseTimeWhenPtr>(shared_library_.get_function_pointer("DAQmxSetSyncPulseTimeWhen"));
   function_pointers_.StartNewFile = reinterpret_cast<StartNewFilePtr>(shared_library_.get_function_pointer("DAQmxStartNewFile"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
   function_pointers_.TaskControl = reinterpret_cast<TaskControlPtr>(shared_library_.get_function_pointer("DAQmxTaskControl"));
   function_pointers_.TristateOutputTerm = reinterpret_cast<TristateOutputTermPtr>(shared_library_.get_function_pointer("DAQmxTristateOutputTerm"));
   function_pointers_.UnreserveNetworkDevice = reinterpret_cast<UnreserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxUnreserveNetworkDevice"));
+  function_pointers_.WaitForValidTimestamp = reinterpret_cast<WaitForValidTimestampPtr>(shared_library_.get_function_pointer("DAQmxWaitForValidTimestamp"));
   function_pointers_.WaitUntilTaskDone = reinterpret_cast<WaitUntilTaskDonePtr>(shared_library_.get_function_pointer("DAQmxWaitUntilTaskDone"));
   function_pointers_.WriteAnalogF64 = reinterpret_cast<WriteAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogF64"));
   function_pointers_.WriteAnalogScalarF64 = reinterpret_cast<WriteAnalogScalarF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogScalarF64"));
@@ -477,6 +491,18 @@ int32 NiDAQmxLibrary::CfgSampClkTiming(TaskHandle task, const char source[], flo
   return DAQmxCfgSampClkTiming(task, source, rate, activeEdge, sampleMode, sampsPerChan);
 #else
   return function_pointers_.CfgSampClkTiming(task, source, rate, activeEdge, sampleMode, sampsPerChan);
+#endif
+}
+
+int32 NiDAQmxLibrary::CfgTimeStartTrig(TaskHandle task, CVIAbsoluteTime when, int32 timescale)
+{
+  if (!function_pointers_.CfgTimeStartTrig) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgTimeStartTrig.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxCfgTimeStartTrig(task, when, timescale);
+#else
+  return function_pointers_.CfgTimeStartTrig(task, when, timescale);
 #endif
 }
 
@@ -1632,6 +1658,30 @@ int32 NiDAQmxLibrary::GetAIChanCalExpDate(TaskHandle task, const char channelNam
 #endif
 }
 
+int32 NiDAQmxLibrary::GetArmStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetArmStartTrigTimestampVal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetArmStartTrigTimestampVal.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetArmStartTrigTimestampVal(task, data);
+#else
+  return function_pointers_.GetArmStartTrigTimestampVal(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetArmStartTrigTrigWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetArmStartTrigTrigWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetArmStartTrigTrigWhen(task, data);
+#else
+  return function_pointers_.GetArmStartTrigTrigWhen(task, data);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily)
 {
   if (!function_pointers_.GetDigitalLogicFamilyPowerUpState) {
@@ -1668,6 +1718,30 @@ int32 NiDAQmxLibrary::GetExtendedErrorInfo(char errorString[], uInt32 bufferSize
 #endif
 }
 
+int32 NiDAQmxLibrary::GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetFirstSampClkWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetFirstSampClkWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetFirstSampClkWhen(task, data);
+#else
+  return function_pointers_.GetFirstSampClkWhen(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetFirstSampTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetFirstSampTimestampVal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetFirstSampTimestampVal.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetFirstSampTimestampVal(task, data);
+#else
+  return function_pointers_.GetFirstSampTimestampVal(task, data);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetNthTaskChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize)
 {
   if (!function_pointers_.GetNthTaskChannel) {
@@ -1701,6 +1775,54 @@ int32 NiDAQmxLibrary::GetNthTaskReadChannel(TaskHandle task, uInt32 index, char 
   return DAQmxGetNthTaskReadChannel(task, index, buffer, bufferSize);
 #else
   return function_pointers_.GetNthTaskReadChannel(task, index, buffer, bufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetRefTrigTimestampVal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRefTrigTimestampVal.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetRefTrigTimestampVal(task, data);
+#else
+  return function_pointers_.GetRefTrigTimestampVal(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetStartTrigTimestampVal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetStartTrigTimestampVal.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetStartTrigTimestampVal(task, data);
+#else
+  return function_pointers_.GetStartTrigTimestampVal(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetStartTrigTrigWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetStartTrigTrigWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetStartTrigTrigWhen(task, data);
+#else
+  return function_pointers_.GetStartTrigTrigWhen(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* data)
+{
+  if (!function_pointers_.GetSyncPulseTimeWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSyncPulseTimeWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetSyncPulseTimeWhen(task, data);
+#else
+  return function_pointers_.GetSyncPulseTimeWhen(task, data);
 #endif
 }
 
@@ -2088,6 +2210,18 @@ int32 NiDAQmxLibrary::SetAIChanCalExpDate(TaskHandle task, const char channelNam
 #endif
 }
 
+int32 NiDAQmxLibrary::SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data)
+{
+  if (!function_pointers_.SetArmStartTrigTrigWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetArmStartTrigTrigWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetArmStartTrigTrigWhen(task, data);
+#else
+  return function_pointers_.SetArmStartTrigTrigWhen(task, data);
+#endif
+}
+
 int32 NiDAQmxLibrary::SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily)
 {
   if (!function_pointers_.SetDigitalLogicFamilyPowerUpState) {
@@ -2097,6 +2231,42 @@ int32 NiDAQmxLibrary::SetDigitalLogicFamilyPowerUpState(const char deviceName[],
   return DAQmxSetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
 #else
   return function_pointers_.SetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
+{
+  if (!function_pointers_.SetFirstSampClkWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetFirstSampClkWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetFirstSampClkWhen(task, data);
+#else
+  return function_pointers_.SetFirstSampClkWhen(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data)
+{
+  if (!function_pointers_.SetStartTrigTrigWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetStartTrigTrigWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetStartTrigTrigWhen(task, data);
+#else
+  return function_pointers_.SetStartTrigTrigWhen(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data)
+{
+  if (!function_pointers_.SetSyncPulseTimeWhen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetSyncPulseTimeWhen.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetSyncPulseTimeWhen(task, data);
+#else
+  return function_pointers_.SetSyncPulseTimeWhen(task, data);
 #endif
 }
 
@@ -2169,6 +2339,18 @@ int32 NiDAQmxLibrary::UnreserveNetworkDevice(const char deviceName[])
   return DAQmxUnreserveNetworkDevice(deviceName);
 #else
   return function_pointers_.UnreserveNetworkDevice(deviceName);
+#endif
+}
+
+int32 NiDAQmxLibrary::WaitForValidTimestamp(TaskHandle task, int32 timestampEvent, float64 timeout, CVIAbsoluteTime* timestamp)
+{
+  if (!function_pointers_.WaitForValidTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWaitForValidTimestamp.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWaitForValidTimestamp(task, timestampEvent, timeout, timestamp);
+#else
+  return function_pointers_.WaitForValidTimestamp(task, timestampEvent, timeout, timestamp);
 #endif
 }
 

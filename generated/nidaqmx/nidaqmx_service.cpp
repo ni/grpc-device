@@ -879,6 +879,42 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CfgTimeStartTrig(::grpc::ServerContext* context, const CfgTimeStartTrigRequest* request, CfgTimeStartTrigResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime when = convert_from_grpc<CVIAbsoluteTime>(request->when());
+      int32 timescale;
+      switch (request->timescale_enum_case()) {
+        case nidaqmx_grpc::CfgTimeStartTrigRequest::TimescaleEnumCase::kTimescale: {
+          timescale = static_cast<int32>(request->timescale());
+          break;
+        }
+        case nidaqmx_grpc::CfgTimeStartTrigRequest::TimescaleEnumCase::kTimescaleRaw: {
+          timescale = static_cast<int32>(request->timescale_raw());
+          break;
+        }
+        case nidaqmx_grpc::CfgTimeStartTrigRequest::TimescaleEnumCase::TIMESCALE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timescale was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgTimeStartTrig(task, when, timescale);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CfgWatchdogAOExpirStates(::grpc::ServerContext* context, const CfgWatchdogAOExpirStatesRequest* request, CfgWatchdogAOExpirStatesResponse* response)
   {
     if (context->IsCancelled()) {
@@ -6742,6 +6778,52 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetArmStartTrigTimestampVal(::grpc::ServerContext* context, const GetArmStartTrigTimestampValRequest* request, GetArmStartTrigTimestampValResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetArmStartTrigTimestampVal(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetArmStartTrigTrigWhen(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response)
   {
     if (context->IsCancelled()) {
@@ -6805,6 +6887,52 @@ namespace nidaqmx_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_error_string(error_string);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetFirstSampClkWhen(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetFirstSampTimestampVal(::grpc::ServerContext* context, const GetFirstSampTimestampValRequest* request, GetFirstSampTimestampValResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetFirstSampTimestampVal(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
     }
@@ -6889,6 +7017,98 @@ namespace nidaqmx_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_buffer(buffer);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetRefTrigTimestampVal(::grpc::ServerContext* context, const GetRefTrigTimestampValRequest* request, GetRefTrigTimestampValResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetRefTrigTimestampVal(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetStartTrigTimestampVal(::grpc::ServerContext* context, const GetStartTrigTimestampValRequest* request, GetStartTrigTimestampValResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetStartTrigTimestampVal(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetStartTrigTrigWhen(::grpc::ServerContext* context, const GetStartTrigTrigWhenRequest* request, GetStartTrigTrigWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetStartTrigTrigWhen(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetSyncPulseTimeWhen(::grpc::ServerContext* context, const GetSyncPulseTimeWhenRequest* request, GetSyncPulseTimeWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data {};
+      auto status = library_->GetSyncPulseTimeWhen(task, &data);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
     }
@@ -7989,6 +8209,26 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto status = library_->SetArmStartTrigTrigWhen(task, data);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8013,6 +8253,66 @@ namespace nidaqmx_grpc {
       }
 
       auto status = library_->SetDigitalLogicFamilyPowerUpState(device_name, logic_family);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetFirstSampClkWhen(::grpc::ServerContext* context, const SetFirstSampClkWhenRequest* request, SetFirstSampClkWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto status = library_->SetFirstSampClkWhen(task, data);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetStartTrigTrigWhen(::grpc::ServerContext* context, const SetStartTrigTrigWhenRequest* request, SetStartTrigTrigWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto status = library_->SetStartTrigTrigWhen(task, data);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetSyncPulseTimeWhen(::grpc::ServerContext* context, const SetSyncPulseTimeWhenRequest* request, SetSyncPulseTimeWhenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto status = library_->SetSyncPulseTimeWhen(task, data);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8143,6 +8443,46 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto status = library_->UnreserveNetworkDevice(device_name);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WaitForValidTimestamp(::grpc::ServerContext* context, const WaitForValidTimestampRequest* request, WaitForValidTimestampResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 timestamp_event;
+      switch (request->timestamp_event_enum_case()) {
+        case nidaqmx_grpc::WaitForValidTimestampRequest::TimestampEventEnumCase::kTimestampEvent: {
+          timestamp_event = static_cast<int32>(request->timestamp_event());
+          break;
+        }
+        case nidaqmx_grpc::WaitForValidTimestampRequest::TimestampEventEnumCase::kTimestampEventRaw: {
+          timestamp_event = static_cast<int32>(request->timestamp_event_raw());
+          break;
+        }
+        case nidaqmx_grpc::WaitForValidTimestampRequest::TimestampEventEnumCase::TIMESTAMP_EVENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timestamp_event was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 timeout = request->timeout();
+      CVIAbsoluteTime timestamp {};
+      auto status = library_->WaitForValidTimestamp(task, timestamp_event, timeout, &timestamp);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(timestamp, response->mutable_timestamp());
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
