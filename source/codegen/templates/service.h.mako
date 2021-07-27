@@ -58,9 +58,9 @@ public:
   ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~${service_class_prefix}Service();
   
-%if has_async_functions:
+% if has_async_functions:
   void register_async_functions(::grpc::ServerCompletionQueue* completion_queue);
-%endif
+% endif
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
