@@ -30,6 +30,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
   function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
   function_pointers_.RegisterCallback = reinterpret_cast<RegisterCallbackPtr>(shared_library_.get_function_pointer("niFakeNonIvi_RegisterCallback"));
+  function_pointers_.ReadStream = reinterpret_cast<ReadStreamPtr>(shared_library_.get_function_pointer("niFakeNonIvi_ReadStream"));
   function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
   function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputTimestamp"));
 }
@@ -150,6 +151,18 @@ int32 NiFakeNonIviLibrary::RegisterCallback(myInt16 inputData, CallbackPtr callb
   return niFakeNonIvi_RegisterCallback(inputData, callbackFunction, callbackData);
 #else
   return function_pointers_.RegisterCallback(inputData, callbackFunction, callbackData);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::ReadStream(int32 start, int32 stop, int32* value)
+{
+  if (!function_pointers_.ReadStream) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_ReadStream.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_ReadStream(start, stop, value);
+#else
+  return function_pointers_.ReadStream(start, stop, value);
 #endif
 }
 

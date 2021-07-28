@@ -21,7 +21,7 @@
 
 namespace nidaqmx_grpc {
 
-class NiDAQmxService final : public NiDAQmx::Service {
+class NiDAQmxService final : public NiDAQmx::ExperimentalWithCallbackMethod_RegisterDoneEvent<NiDAQmx::Service> {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>;
 
@@ -187,7 +187,7 @@ public:
   ::grpc::Status ReadDigitalU32(::grpc::ServerContext* context, const ReadDigitalU32Request* request, ReadDigitalU32Response* response) override;
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
   ::grpc::Status ReadRaw(::grpc::ServerContext* context, const ReadRawRequest* request, ReadRawResponse* response) override;
-  ::grpc::Status RegisterDoneEvent(::grpc::ServerContext* context, const RegisterDoneEventRequest* request, ::grpc::ServerWriter<RegisterDoneEventResponse>* writer) override;
+  ::grpc::experimental::ServerWriteReactor<RegisterDoneEventResponse>* RegisterDoneEvent(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request) override;
   ::grpc::Status ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
   ::grpc::Status SelfTestDevice(::grpc::ServerContext* context, const SelfTestDeviceRequest* request, SelfTestDeviceResponse* response) override;

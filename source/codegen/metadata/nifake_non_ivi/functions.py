@@ -199,6 +199,28 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ReadStream': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'start',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'stop',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            }
+        ],
+        'stream_response': True,
+        'returns': 'int32'
+    },
     'InputTimestamp': {
         'parameters': [
             {

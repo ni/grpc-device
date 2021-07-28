@@ -18,6 +18,12 @@ if len(config["custom_types"]) > 0:
 resource_handle_type = config.get("resource_handle_type", "ViSession")
 resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
 resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
+
+async_functions = service_helpers.get_async_functions(functions)
+has_async_functions = any(async_functions)
+base_class_name = f"{service_class_prefix}::Service"
+for async_function in async_functions.keys():
+  base_class_name = f"{service_class_prefix}::ExperimentalWithCallbackMethod_{async_function}<{base_class_name}>"
 %>\
 
 //---------------------------------------------------------------------
@@ -42,7 +48,7 @@ resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
 
 namespace ${config["namespace_component"]}_grpc {
 
-class ${service_class_prefix}Service final : public ${service_class_prefix}::Service {
+class ${service_class_prefix}Service final : public ${base_class_name} {
 public:
   using ResourceRepositorySharedPtr = ${resource_repository_ptr};
 
@@ -53,10 +59,14 @@ public:
 <%
   f = functions[function]
   method_name = common_helpers.snake_to_pascal(function)
-  request_param = service_helpers.get_request_param(method_name, f)
-  response_param = service_helpers.get_response_param(method_name, f)
+  request_type = service_helpers.get_request_type(method_name)
+  response_type = service_helpers.get_response_type(method_name)
 %>\
-  ::grpc::Status ${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param}) override;
+% if function in async_functions:
+  ::grpc::experimental::ServerWriteReactor<${response_type}>* ${method_name}(::grpc::CallbackServerContext* context, const ${request_type}* request) override;
+% else:
+  ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${request_type}* request, ${response_type}* response) override;
+% endif
 % endfor
 private:
   ${service_class_prefix}LibraryInterface* library_;

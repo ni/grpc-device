@@ -27,6 +27,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 InputArrayOfBytes(const myUInt8 u8Array[]);
   int32 OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[]);
   int32 RegisterCallback(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData);
+  int32 ReadStream(int32 start, int32 stop, int32* value);
   int32 InputTimestamp(CVIAbsoluteTime when);
   int32 OutputTimestamp(CVIAbsoluteTime* when);
 
@@ -40,6 +41,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using InputArrayOfBytesPtr = int32 (*)(const myUInt8 u8Array[]);
   using OutputArrayOfBytesPtr = int32 (*)(int32 numberOfU8Samples, myUInt8 u8Data[]);
   using RegisterCallbackPtr = int32 (*)(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData);
+  using ReadStreamPtr = int32 (*)(int32 start, int32 stop, int32* value);
   using InputTimestampPtr = int32 (*)(CVIAbsoluteTime when);
   using OutputTimestampPtr = int32 (*)(CVIAbsoluteTime* when);
 
@@ -53,6 +55,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     InputArrayOfBytesPtr InputArrayOfBytes;
     OutputArrayOfBytesPtr OutputArrayOfBytes;
     RegisterCallbackPtr RegisterCallback;
+    ReadStreamPtr ReadStream;
     InputTimestampPtr InputTimestamp;
     OutputTimestampPtr OutputTimestamp;
   } FunctionLoadStatus;
