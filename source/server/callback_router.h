@@ -75,7 +75,7 @@ class CallbackRouter {
   Token allocate_token_for_handler(const Handler& handler)
   {
     LockGuard guard(mutex_);
-    auto token = reinterpret_cast<Token>(callback_id_++);
+    auto token = reinterpret_cast<Token>(++callback_id_);
     handlers_[token] = std::make_shared<Handler>(handler);
     return token;
   }

@@ -21,8 +21,9 @@ namespace nifake_non_ivi_grpc {
   };
   class ReadStreamReactor : public nidevice_grpc::ServerWriterReactor<ReadStreamResponse, AutoJoinThread> {
    public:
-    ReadStreamReactor(int32 start, int32 stop) : start_(start),
-                                                 stop_(stop)
+    ReadStreamReactor(int32 start, int32 stop)
+        : start_(start),
+          stop_(stop)
     {
       thread_ = start_thread();
     }

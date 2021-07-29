@@ -29,7 +29,7 @@ NiDAQmxService::RegisterDoneEvent(::grpc::CallbackServerContext* context, const 
         TaskHandle task = session_repository->access_session(task_grpc_session.id(), task_grpc_session.name());
         uInt32 options = request.options();
 
-        auto handler = DoneEventCallbackRouter::register_handler(
+        handler = DoneEventCallbackRouter::register_handler(
             [this](TaskHandle task, int32 callback_status) {
               RegisterDoneEventResponse callback_response;
               callback_response.set_status(callback_status);

@@ -16,23 +16,29 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
   using LockGuard = std::lock_guard<std::recursive_mutex>;
 
  public:
-  virtual ~ServerWriterReactor() {}
+  virtual ~ServerWriterReactor()
+  {
+  }
 
   void OnDone() override
   {
     delete this;
   }
 
-  void OnWriteDone(bool /*ok*/) override
+  void OnWriteDone(bool ok) override
   {
     LockGuard lock(mutex_);
-    write_ready = true;
+    write_ready_ = true;
     pending_send_.pop();
-    next_write();
+    if (ok) {
+      next_write();
+    }
   }
 
   void OnCancel() override
   {
+    LockGuard lock(mutex_);
+    done_ = true;
     Finish(::grpc::Status::OK);
   }
 
@@ -43,14 +49,13 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
     next_write();
   }
 
-  std::unique_ptr<TJoinable> thread_;
-
  private:
   void next_write()
   {
     LockGuard lock(mutex_);
-    if (write_ready && !pending_send_.empty()) {
-      write_ready = false;
+
+    if (!done_ && write_ready_ && !pending_send_.empty()) {
+      write_ready_ = false;
       auto& response = pending_send_.front();
       StartWrite(&response);
     }
@@ -59,7 +64,11 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
   std::recursive_mutex mutex_;
   // This class relies on: std::deque does not invalidate on push/pop.
   std::queue<TResponse, std::deque<TResponse>> pending_send_;
-  bool write_ready = true;
+  bool write_ready_{true};
+  bool done_{false};
+
+ public:
+  std::unique_ptr<TJoinable> thread_;
 };
 }  // namespace nidevice_grpc
 #endif  // NIDEVICE_GRPC_DEVICE_ASYNC_OPERATION_H
