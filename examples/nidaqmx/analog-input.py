@@ -26,15 +26,6 @@ server_address = "localhost"
 server_port = "31763"
 physical_channel = "Dev1/ai0"
 
-# Raise an exception if an error was returned
-def RaiseIfError(response):
-    if response.status != 0:
-        response = client.GetErrorString(nidaqmx_types.GetErrorStringRequest(
-            error_code=response.status, buffer_size=2048))
-        error_string = response.error_string.strip(' \0')
-        raise Exception(f"Error: {error_string}")
-
-
 if len(sys.argv) >= 2:
     server_address = sys.argv[1]
 if len(sys.argv) >= 3:
@@ -45,6 +36,15 @@ if len(sys.argv) >= 4:
 # Create a gRPC channel + client.
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_nidaqmx.NiDAQmxStub(channel)
+
+
+# Raise an exception if an error was returned
+def RaiseIfError(response):
+    if response.status != 0:
+        response = client.GetErrorString(nidaqmx_types.GetErrorStringRequest(
+            error_code=response.status, buffer_size=2048))
+        error_string = response.error_string.strip(' \0')
+        raise Exception(f"Error: {error_string}")
 
 
 response = client.CreateTask(
@@ -79,6 +79,13 @@ try:
         timeout=10.0))
     RaiseIfError(response)
     print(f"Acquired {response.samps_per_chan_read} samples")
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE :
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
+    print(f"{error_message}") 
 finally:
     client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
     client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))

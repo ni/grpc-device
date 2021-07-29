@@ -35,6 +35,13 @@ server_address = "localhost"
 server_port = "31763"
 lines = "Dev1/port0"
 
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    physical_channel = sys.argv[3]
+
 
 async def main():
     # Create a gRPC channel + await daq_service.
@@ -76,6 +83,13 @@ async def main():
         await raise_if_error(response)
 
         print(f"Data acquired: {hex(response.read_array[0])}")
+    except Exception as e:
+        error_message = e.args[1]
+        if e.args[0] == 22:
+            error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        elif e.status.name == "UNIMPLEMENTED":
+            error_message = "The operation is not implemented or is not supported/enabled in this service"
+        print(error_message)
     finally:
         if task:
             await daq_service.stop_task(task=task)
