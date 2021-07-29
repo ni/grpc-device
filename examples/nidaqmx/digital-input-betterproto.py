@@ -40,7 +40,7 @@ if len(sys.argv) >= 2:
 if len(sys.argv) >= 3:
     server_port = sys.argv[2]
 if len(sys.argv) >= 4:
-    physical_channel = sys.argv[3]
+    lines = sys.argv[3]
 
 
 async def main():
