@@ -21,8 +21,11 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
+  function_pointers_.AddCDAQSyncConnection = reinterpret_cast<AddCDAQSyncConnectionPtr>(shared_library_.get_function_pointer("DAQmxAddCDAQSyncConnection"));
   function_pointers_.AddGlobalChansToTask = reinterpret_cast<AddGlobalChansToTaskPtr>(shared_library_.get_function_pointer("DAQmxAddGlobalChansToTask"));
   function_pointers_.AddNetworkDevice = reinterpret_cast<AddNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxAddNetworkDevice"));
+  function_pointers_.AreConfiguredCDAQSyncPortsDisconnected = reinterpret_cast<AreConfiguredCDAQSyncPortsDisconnectedPtr>(shared_library_.get_function_pointer("DAQmxAreConfiguredCDAQSyncPortsDisconnected"));
+  function_pointers_.AutoConfigureCDAQSyncConnections = reinterpret_cast<AutoConfigureCDAQSyncConnectionsPtr>(shared_library_.get_function_pointer("DAQmxAutoConfigureCDAQSyncConnections"));
   function_pointers_.CalculateReversePolyCoeff = reinterpret_cast<CalculateReversePolyCoeffPtr>(shared_library_.get_function_pointer("DAQmxCalculateReversePolyCoeff"));
   function_pointers_.CfgAnlgEdgeRefTrig = reinterpret_cast<CfgAnlgEdgeRefTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgEdgeRefTrig"));
   function_pointers_.CfgAnlgEdgeStartTrig = reinterpret_cast<CfgAnlgEdgeStartTrigPtr>(shared_library_.get_function_pointer("DAQmxCfgAnlgEdgeStartTrig"));
@@ -47,8 +50,10 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CfgWatchdogAOExpirStates = reinterpret_cast<CfgWatchdogAOExpirStatesPtr>(shared_library_.get_function_pointer("DAQmxCfgWatchdogAOExpirStates"));
   function_pointers_.CfgWatchdogCOExpirStates = reinterpret_cast<CfgWatchdogCOExpirStatesPtr>(shared_library_.get_function_pointer("DAQmxCfgWatchdogCOExpirStates"));
   function_pointers_.CfgWatchdogDOExpirStates = reinterpret_cast<CfgWatchdogDOExpirStatesPtr>(shared_library_.get_function_pointer("DAQmxCfgWatchdogDOExpirStates"));
+  function_pointers_.ClearTEDS = reinterpret_cast<ClearTEDSPtr>(shared_library_.get_function_pointer("DAQmxClearTEDS"));
   function_pointers_.ClearTask = reinterpret_cast<ClearTaskPtr>(shared_library_.get_function_pointer("DAQmxClearTask"));
   function_pointers_.ConfigureLogging = reinterpret_cast<ConfigureLoggingPtr>(shared_library_.get_function_pointer("DAQmxConfigureLogging"));
+  function_pointers_.ConfigureTEDS = reinterpret_cast<ConfigureTEDSPtr>(shared_library_.get_function_pointer("DAQmxConfigureTEDS"));
   function_pointers_.ConnectTerms = reinterpret_cast<ConnectTermsPtr>(shared_library_.get_function_pointer("DAQmxConnectTerms"));
   function_pointers_.ControlWatchdogTask = reinterpret_cast<ControlWatchdogTaskPtr>(shared_library_.get_function_pointer("DAQmxControlWatchdogTask"));
   function_pointers_.CreateAIAccel4WireDCVoltageChan = reinterpret_cast<CreateAIAccel4WireDCVoltageChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIAccel4WireDCVoltageChan"));
@@ -134,6 +139,10 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateWatchdogTimerTask = reinterpret_cast<CreateWatchdogTimerTaskPtr>(shared_library_.get_function_pointer("DAQmxCreateWatchdogTimerTask"));
   function_pointers_.CreateWatchdogTimerTaskEx = reinterpret_cast<CreateWatchdogTimerTaskExPtr>(shared_library_.get_function_pointer("DAQmxCreateWatchdogTimerTaskEx"));
   function_pointers_.DeleteNetworkDevice = reinterpret_cast<DeleteNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxDeleteNetworkDevice"));
+  function_pointers_.DeleteSavedGlobalChan = reinterpret_cast<DeleteSavedGlobalChanPtr>(shared_library_.get_function_pointer("DAQmxDeleteSavedGlobalChan"));
+  function_pointers_.DeleteSavedScale = reinterpret_cast<DeleteSavedScalePtr>(shared_library_.get_function_pointer("DAQmxDeleteSavedScale"));
+  function_pointers_.DeleteSavedTask = reinterpret_cast<DeleteSavedTaskPtr>(shared_library_.get_function_pointer("DAQmxDeleteSavedTask"));
+  function_pointers_.DeviceSupportsCal = reinterpret_cast<DeviceSupportsCalPtr>(shared_library_.get_function_pointer("DAQmxDeviceSupportsCal"));
   function_pointers_.DisableRefTrig = reinterpret_cast<DisableRefTrigPtr>(shared_library_.get_function_pointer("DAQmxDisableRefTrig"));
   function_pointers_.DisableStartTrig = reinterpret_cast<DisableStartTrigPtr>(shared_library_.get_function_pointer("DAQmxDisableStartTrig"));
   function_pointers_.DisconnectTerms = reinterpret_cast<DisconnectTermsPtr>(shared_library_.get_function_pointer("DAQmxDisconnectTerms"));
@@ -142,7 +151,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAIChanCalExpDate = reinterpret_cast<GetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxGetAIChanCalExpDate"));
   function_pointers_.GetArmStartTrigTimestampVal = reinterpret_cast<GetArmStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTimestampVal"));
   function_pointers_.GetArmStartTrigTrigWhen = reinterpret_cast<GetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTrigWhen"));
+  function_pointers_.GetAutoConfiguredCDAQSyncConnections = reinterpret_cast<GetAutoConfiguredCDAQSyncConnectionsPtr>(shared_library_.get_function_pointer("DAQmxGetAutoConfiguredCDAQSyncConnections"));
   function_pointers_.GetDigitalLogicFamilyPowerUpState = reinterpret_cast<GetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxGetDigitalLogicFamilyPowerUpState"));
+  function_pointers_.GetDisconnectedCDAQSyncPorts = reinterpret_cast<GetDisconnectedCDAQSyncPortsPtr>(shared_library_.get_function_pointer("DAQmxGetDisconnectedCDAQSyncPorts"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("DAQmxGetErrorString"));
   function_pointers_.GetExtendedErrorInfo = reinterpret_cast<GetExtendedErrorInfoPtr>(shared_library_.get_function_pointer("DAQmxGetExtendedErrorInfo"));
   function_pointers_.GetFirstSampClkWhen = reinterpret_cast<GetFirstSampClkWhenPtr>(shared_library_.get_function_pointer("DAQmxGetFirstSampClkWhen"));
@@ -151,6 +162,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetNthTaskDevice = reinterpret_cast<GetNthTaskDevicePtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskDevice"));
   function_pointers_.GetNthTaskReadChannel = reinterpret_cast<GetNthTaskReadChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskReadChannel"));
   function_pointers_.GetRefTrigTimestampVal = reinterpret_cast<GetRefTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetRefTrigTimestampVal"));
+  function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_.get_function_pointer("DAQmxGetSelfCalLastDateAndTime"));
   function_pointers_.GetStartTrigTimestampVal = reinterpret_cast<GetStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTimestampVal"));
   function_pointers_.GetStartTrigTrigWhen = reinterpret_cast<GetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTrigWhen"));
   function_pointers_.GetSyncPulseTimeWhen = reinterpret_cast<GetSyncPulseTimeWhenPtr>(shared_library_.get_function_pointer("DAQmxGetSyncPulseTimeWhen"));
@@ -181,8 +193,13 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
   function_pointers_.ReadRaw = reinterpret_cast<ReadRawPtr>(shared_library_.get_function_pointer("DAQmxReadRaw"));
   function_pointers_.RegisterDoneEvent = reinterpret_cast<RegisterDoneEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterDoneEvent"));
+  function_pointers_.RemoveCDAQSyncConnection = reinterpret_cast<RemoveCDAQSyncConnectionPtr>(shared_library_.get_function_pointer("DAQmxRemoveCDAQSyncConnection"));
   function_pointers_.ReserveNetworkDevice = reinterpret_cast<ReserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxReserveNetworkDevice"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
+  function_pointers_.SaveGlobalChan = reinterpret_cast<SaveGlobalChanPtr>(shared_library_.get_function_pointer("DAQmxSaveGlobalChan"));
+  function_pointers_.SaveScale = reinterpret_cast<SaveScalePtr>(shared_library_.get_function_pointer("DAQmxSaveScale"));
+  function_pointers_.SaveTask = reinterpret_cast<SaveTaskPtr>(shared_library_.get_function_pointer("DAQmxSaveTask"));
+  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_.get_function_pointer("DAQmxSelfCal"));
   function_pointers_.SelfTestDevice = reinterpret_cast<SelfTestDevicePtr>(shared_library_.get_function_pointer("DAQmxSelfTestDevice"));
   function_pointers_.SetAIChanCalCalDate = reinterpret_cast<SetAIChanCalCalDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalCalDate"));
   function_pointers_.SetAIChanCalExpDate = reinterpret_cast<SetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalExpDate"));
@@ -197,6 +214,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.TaskControl = reinterpret_cast<TaskControlPtr>(shared_library_.get_function_pointer("DAQmxTaskControl"));
   function_pointers_.TristateOutputTerm = reinterpret_cast<TristateOutputTermPtr>(shared_library_.get_function_pointer("DAQmxTristateOutputTerm"));
   function_pointers_.UnreserveNetworkDevice = reinterpret_cast<UnreserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxUnreserveNetworkDevice"));
+  function_pointers_.WaitForNextSampleClock = reinterpret_cast<WaitForNextSampleClockPtr>(shared_library_.get_function_pointer("DAQmxWaitForNextSampleClock"));
   function_pointers_.WaitForValidTimestamp = reinterpret_cast<WaitForValidTimestampPtr>(shared_library_.get_function_pointer("DAQmxWaitForValidTimestamp"));
   function_pointers_.WaitUntilTaskDone = reinterpret_cast<WaitUntilTaskDonePtr>(shared_library_.get_function_pointer("DAQmxWaitUntilTaskDone"));
   function_pointers_.WriteAnalogF64 = reinterpret_cast<WriteAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxWriteAnalogF64"));
@@ -217,6 +235,8 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteDigitalU32 = reinterpret_cast<WriteDigitalU32Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU32"));
   function_pointers_.WriteDigitalU8 = reinterpret_cast<WriteDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxWriteDigitalU8"));
   function_pointers_.WriteRaw = reinterpret_cast<WriteRawPtr>(shared_library_.get_function_pointer("DAQmxWriteRaw"));
+  function_pointers_.WriteToTEDSFromArray = reinterpret_cast<WriteToTEDSFromArrayPtr>(shared_library_.get_function_pointer("DAQmxWriteToTEDSFromArray"));
+  function_pointers_.WriteToTEDSFromFile = reinterpret_cast<WriteToTEDSFromFilePtr>(shared_library_.get_function_pointer("DAQmxWriteToTEDSFromFile"));
 }
 
 NiDAQmxLibrary::~NiDAQmxLibrary()
@@ -228,6 +248,18 @@ NiDAQmxLibrary::~NiDAQmxLibrary()
   return shared_library_.function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+}
+
+int32 NiDAQmxLibrary::AddCDAQSyncConnection(const char portList[])
+{
+  if (!function_pointers_.AddCDAQSyncConnection) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAddCDAQSyncConnection.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxAddCDAQSyncConnection(portList);
+#else
+  return function_pointers_.AddCDAQSyncConnection(portList);
+#endif
 }
 
 int32 NiDAQmxLibrary::AddGlobalChansToTask(TaskHandle task, const char channelNames[])
@@ -251,6 +283,30 @@ int32 NiDAQmxLibrary::AddNetworkDevice(const char ipAddress[], const char device
   return DAQmxAddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
 #else
   return function_pointers_.AddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::AreConfiguredCDAQSyncPortsDisconnected(const char chassisDevicesPorts[], float64 timeout, bool32* disconnectedPortsExist)
+{
+  if (!function_pointers_.AreConfiguredCDAQSyncPortsDisconnected) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAreConfiguredCDAQSyncPortsDisconnected.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxAreConfiguredCDAQSyncPortsDisconnected(chassisDevicesPorts, timeout, disconnectedPortsExist);
+#else
+  return function_pointers_.AreConfiguredCDAQSyncPortsDisconnected(chassisDevicesPorts, timeout, disconnectedPortsExist);
+#endif
+}
+
+int32 NiDAQmxLibrary::AutoConfigureCDAQSyncConnections(const char chassisDevicesPorts[], float64 timeout)
+{
+  if (!function_pointers_.AutoConfigureCDAQSyncConnections) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAutoConfigureCDAQSyncConnections.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxAutoConfigureCDAQSyncConnections(chassisDevicesPorts, timeout);
+#else
+  return function_pointers_.AutoConfigureCDAQSyncConnections(chassisDevicesPorts, timeout);
 #endif
 }
 
@@ -542,6 +598,18 @@ int32 NiDAQmxLibrary::CfgWatchdogDOExpirStates(TaskHandle task, const char chann
 #endif
 }
 
+int32 NiDAQmxLibrary::ClearTEDS(const char physicalChannel[])
+{
+  if (!function_pointers_.ClearTEDS) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxClearTEDS.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxClearTEDS(physicalChannel);
+#else
+  return function_pointers_.ClearTEDS(physicalChannel);
+#endif
+}
+
 int32 NiDAQmxLibrary::ClearTask(TaskHandle task)
 {
   if (!function_pointers_.ClearTask) {
@@ -563,6 +631,18 @@ int32 NiDAQmxLibrary::ConfigureLogging(TaskHandle task, const char filePath[], i
   return DAQmxConfigureLogging(task, filePath, loggingMode, groupName, operation);
 #else
   return function_pointers_.ConfigureLogging(task, filePath, loggingMode, groupName, operation);
+#endif
+}
+
+int32 NiDAQmxLibrary::ConfigureTEDS(const char physicalChannel[], const char filePath[])
+{
+  if (!function_pointers_.ConfigureTEDS) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxConfigureTEDS.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxConfigureTEDS(physicalChannel, filePath);
+#else
+  return function_pointers_.ConfigureTEDS(physicalChannel, filePath);
 #endif
 }
 
@@ -1586,6 +1666,54 @@ int32 NiDAQmxLibrary::DeleteNetworkDevice(const char deviceName[])
 #endif
 }
 
+int32 NiDAQmxLibrary::DeleteSavedGlobalChan(const char channelName[])
+{
+  if (!function_pointers_.DeleteSavedGlobalChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeleteSavedGlobalChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxDeleteSavedGlobalChan(channelName);
+#else
+  return function_pointers_.DeleteSavedGlobalChan(channelName);
+#endif
+}
+
+int32 NiDAQmxLibrary::DeleteSavedScale(const char scaleName[])
+{
+  if (!function_pointers_.DeleteSavedScale) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeleteSavedScale.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxDeleteSavedScale(scaleName);
+#else
+  return function_pointers_.DeleteSavedScale(scaleName);
+#endif
+}
+
+int32 NiDAQmxLibrary::DeleteSavedTask(const char taskName[])
+{
+  if (!function_pointers_.DeleteSavedTask) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeleteSavedTask.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxDeleteSavedTask(taskName);
+#else
+  return function_pointers_.DeleteSavedTask(taskName);
+#endif
+}
+
+int32 NiDAQmxLibrary::DeviceSupportsCal(const char deviceName[], bool32* calSupported)
+{
+  if (!function_pointers_.DeviceSupportsCal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeviceSupportsCal.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxDeviceSupportsCal(deviceName, calSupported);
+#else
+  return function_pointers_.DeviceSupportsCal(deviceName, calSupported);
+#endif
+}
+
 int32 NiDAQmxLibrary::DisableRefTrig(TaskHandle task)
 {
   if (!function_pointers_.DisableRefTrig) {
@@ -1682,6 +1810,18 @@ int32 NiDAQmxLibrary::GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* 
 #endif
 }
 
+int32 NiDAQmxLibrary::GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize)
+{
+  if (!function_pointers_.GetAutoConfiguredCDAQSyncConnections) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAutoConfiguredCDAQSyncConnections.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetAutoConfiguredCDAQSyncConnections(portList, portListSize);
+#else
+  return function_pointers_.GetAutoConfiguredCDAQSyncConnections(portList, portListSize);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily)
 {
   if (!function_pointers_.GetDigitalLogicFamilyPowerUpState) {
@@ -1691,6 +1831,18 @@ int32 NiDAQmxLibrary::GetDigitalLogicFamilyPowerUpState(const char deviceName[],
   return DAQmxGetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
 #else
   return function_pointers_.GetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDisconnectedCDAQSyncPorts(char portList[], uInt32 portListSize)
+{
+  if (!function_pointers_.GetDisconnectedCDAQSyncPorts) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDisconnectedCDAQSyncPorts.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDisconnectedCDAQSyncPorts(portList, portListSize);
+#else
+  return function_pointers_.GetDisconnectedCDAQSyncPorts(portList, portListSize);
 #endif
 }
 
@@ -1787,6 +1939,18 @@ int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* d
   return DAQmxGetRefTrigTimestampVal(task, data);
 #else
   return function_pointers_.GetRefTrigTimestampVal(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetSelfCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute)
+{
+  if (!function_pointers_.GetSelfCalLastDateAndTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSelfCalLastDateAndTime.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetSelfCalLastDateAndTime(deviceName, year, month, day, hour, minute);
+#else
+  return function_pointers_.GetSelfCalLastDateAndTime(deviceName, year, month, day, hour, minute);
 #endif
 }
 
@@ -2150,6 +2314,18 @@ int32 NiDAQmxLibrary::RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDo
 #endif
 }
 
+int32 NiDAQmxLibrary::RemoveCDAQSyncConnection(const char portList[])
+{
+  if (!function_pointers_.RemoveCDAQSyncConnection) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRemoveCDAQSyncConnection.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxRemoveCDAQSyncConnection(portList);
+#else
+  return function_pointers_.RemoveCDAQSyncConnection(portList);
+#endif
+}
+
 int32 NiDAQmxLibrary::ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation)
 {
   if (!function_pointers_.ReserveNetworkDevice) {
@@ -2171,6 +2347,54 @@ int32 NiDAQmxLibrary::ResetDevice(const char deviceName[])
   return DAQmxResetDevice(deviceName);
 #else
   return function_pointers_.ResetDevice(deviceName);
+#endif
+}
+
+int32 NiDAQmxLibrary::SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options)
+{
+  if (!function_pointers_.SaveGlobalChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSaveGlobalChan.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSaveGlobalChan(task, channelName, saveAs, author, options);
+#else
+  return function_pointers_.SaveGlobalChan(task, channelName, saveAs, author, options);
+#endif
+}
+
+int32 NiDAQmxLibrary::SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options)
+{
+  if (!function_pointers_.SaveScale) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSaveScale.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSaveScale(scaleName, saveAs, author, options);
+#else
+  return function_pointers_.SaveScale(scaleName, saveAs, author, options);
+#endif
+}
+
+int32 NiDAQmxLibrary::SaveTask(TaskHandle task, const char saveAs[], const char author[], uInt32 options)
+{
+  if (!function_pointers_.SaveTask) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSaveTask.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSaveTask(task, saveAs, author, options);
+#else
+  return function_pointers_.SaveTask(task, saveAs, author, options);
+#endif
+}
+
+int32 NiDAQmxLibrary::SelfCal(const char deviceName[])
+{
+  if (!function_pointers_.SelfCal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSelfCal.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSelfCal(deviceName);
+#else
+  return function_pointers_.SelfCal(deviceName);
 #endif
 }
 
@@ -2339,6 +2563,18 @@ int32 NiDAQmxLibrary::UnreserveNetworkDevice(const char deviceName[])
   return DAQmxUnreserveNetworkDevice(deviceName);
 #else
   return function_pointers_.UnreserveNetworkDevice(deviceName);
+#endif
+}
+
+int32 NiDAQmxLibrary::WaitForNextSampleClock(TaskHandle task, float64 timeout, bool32* isLate)
+{
+  if (!function_pointers_.WaitForNextSampleClock) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWaitForNextSampleClock.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWaitForNextSampleClock(task, timeout, isLate);
+#else
+  return function_pointers_.WaitForNextSampleClock(task, timeout, isLate);
 #endif
 }
 
@@ -2579,6 +2815,30 @@ int32 NiDAQmxLibrary::WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart
   return DAQmxWriteRaw(task, numSamps, autoStart, timeout, writeArray, sampsPerChanWritten, reserved);
 #else
   return function_pointers_.WriteRaw(task, numSamps, autoStart, timeout, writeArray, sampsPerChanWritten, reserved);
+#endif
+}
+
+int32 NiDAQmxLibrary::WriteToTEDSFromArray(const char physicalChannel[], const uInt8 bitStream[], uInt32 arraySize, int32 basicTEDSOptions)
+{
+  if (!function_pointers_.WriteToTEDSFromArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteToTEDSFromArray.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWriteToTEDSFromArray(physicalChannel, bitStream, arraySize, basicTEDSOptions);
+#else
+  return function_pointers_.WriteToTEDSFromArray(physicalChannel, bitStream, arraySize, basicTEDSOptions);
+#endif
+}
+
+int32 NiDAQmxLibrary::WriteToTEDSFromFile(const char physicalChannel[], const char filePath[], int32 basicTEDSOptions)
+{
+  if (!function_pointers_.WriteToTEDSFromFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteToTEDSFromFile.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxWriteToTEDSFromFile(physicalChannel, filePath, basicTEDSOptions);
+#else
+  return function_pointers_.WriteToTEDSFromFile(physicalChannel, filePath, basicTEDSOptions);
 #endif
 }
 

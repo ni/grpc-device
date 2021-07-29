@@ -1281,6 +1281,22 @@ enums = {
             }
         ]
     },
+    'SaveOptions': {
+        'values': [
+            {
+                'name': 'OVERWRITE',
+                'value': 1
+            },
+            {
+                'name': 'ALLOW_INTERACTIVE_EDITING',
+                'value': 2
+            },
+            {
+                'name': 'ALLOW_INTERACTIVE_DELETION',
+                'value': 4
+            }
+        ]
+    },
     'Signal': {
         'values': [
             {
@@ -2073,6 +2089,31 @@ enums = {
                 },
                 'name': 'LEAVING_WIN',
                 'value': 10208
+            }
+        ]
+    },
+    'WriteBasicTEDSOptions': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'blah'
+                },
+                'name': 'WRITE_TO_EEPROM',
+                'value': 12538
+            },
+            {
+                'documentation': {
+                    'description': 'blah'
+                },
+                'name': 'WRITE_TO_PROM',
+                'value': 12539
+            },
+            {
+                'documentation': {
+                    'description': 'blah'
+                },
+                'name': 'DO_NOT_WRITE',
+                'value': 12540
             }
         ]
     }

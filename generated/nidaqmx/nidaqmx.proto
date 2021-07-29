@@ -17,8 +17,11 @@ import "session.proto";
 import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {
+  rpc AddCDAQSyncConnection(AddCDAQSyncConnectionRequest) returns (AddCDAQSyncConnectionResponse);
   rpc AddGlobalChansToTask(AddGlobalChansToTaskRequest) returns (AddGlobalChansToTaskResponse);
   rpc AddNetworkDevice(AddNetworkDeviceRequest) returns (AddNetworkDeviceResponse);
+  rpc AreConfiguredCDAQSyncPortsDisconnected(AreConfiguredCDAQSyncPortsDisconnectedRequest) returns (AreConfiguredCDAQSyncPortsDisconnectedResponse);
+  rpc AutoConfigureCDAQSyncConnections(AutoConfigureCDAQSyncConnectionsRequest) returns (AutoConfigureCDAQSyncConnectionsResponse);
   rpc CalculateReversePolyCoeff(CalculateReversePolyCoeffRequest) returns (CalculateReversePolyCoeffResponse);
   rpc CfgAnlgEdgeRefTrig(CfgAnlgEdgeRefTrigRequest) returns (CfgAnlgEdgeRefTrigResponse);
   rpc CfgAnlgEdgeStartTrig(CfgAnlgEdgeStartTrigRequest) returns (CfgAnlgEdgeStartTrigResponse);
@@ -43,8 +46,10 @@ service NiDAQmx {
   rpc CfgWatchdogAOExpirStates(CfgWatchdogAOExpirStatesRequest) returns (CfgWatchdogAOExpirStatesResponse);
   rpc CfgWatchdogCOExpirStates(CfgWatchdogCOExpirStatesRequest) returns (CfgWatchdogCOExpirStatesResponse);
   rpc CfgWatchdogDOExpirStates(CfgWatchdogDOExpirStatesRequest) returns (CfgWatchdogDOExpirStatesResponse);
+  rpc ClearTEDS(ClearTEDSRequest) returns (ClearTEDSResponse);
   rpc ClearTask(ClearTaskRequest) returns (ClearTaskResponse);
   rpc ConfigureLogging(ConfigureLoggingRequest) returns (ConfigureLoggingResponse);
+  rpc ConfigureTEDS(ConfigureTEDSRequest) returns (ConfigureTEDSResponse);
   rpc ConnectTerms(ConnectTermsRequest) returns (ConnectTermsResponse);
   rpc ControlWatchdogTask(ControlWatchdogTaskRequest) returns (ControlWatchdogTaskResponse);
   rpc CreateAIAccel4WireDCVoltageChan(CreateAIAccel4WireDCVoltageChanRequest) returns (CreateAIAccel4WireDCVoltageChanResponse);
@@ -130,6 +135,10 @@ service NiDAQmx {
   rpc CreateWatchdogTimerTask(CreateWatchdogTimerTaskRequest) returns (CreateWatchdogTimerTaskResponse);
   rpc CreateWatchdogTimerTaskEx(CreateWatchdogTimerTaskExRequest) returns (CreateWatchdogTimerTaskExResponse);
   rpc DeleteNetworkDevice(DeleteNetworkDeviceRequest) returns (DeleteNetworkDeviceResponse);
+  rpc DeleteSavedGlobalChan(DeleteSavedGlobalChanRequest) returns (DeleteSavedGlobalChanResponse);
+  rpc DeleteSavedScale(DeleteSavedScaleRequest) returns (DeleteSavedScaleResponse);
+  rpc DeleteSavedTask(DeleteSavedTaskRequest) returns (DeleteSavedTaskResponse);
+  rpc DeviceSupportsCal(DeviceSupportsCalRequest) returns (DeviceSupportsCalResponse);
   rpc DisableRefTrig(DisableRefTrigRequest) returns (DisableRefTrigResponse);
   rpc DisableStartTrig(DisableStartTrigRequest) returns (DisableStartTrigResponse);
   rpc DisconnectTerms(DisconnectTermsRequest) returns (DisconnectTermsResponse);
@@ -138,7 +147,9 @@ service NiDAQmx {
   rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
   rpc GetArmStartTrigTimestampVal(GetArmStartTrigTimestampValRequest) returns (GetArmStartTrigTimestampValResponse);
   rpc GetArmStartTrigTrigWhen(GetArmStartTrigTrigWhenRequest) returns (GetArmStartTrigTrigWhenResponse);
+  rpc GetAutoConfiguredCDAQSyncConnections(GetAutoConfiguredCDAQSyncConnectionsRequest) returns (GetAutoConfiguredCDAQSyncConnectionsResponse);
   rpc GetDigitalLogicFamilyPowerUpState(GetDigitalLogicFamilyPowerUpStateRequest) returns (GetDigitalLogicFamilyPowerUpStateResponse);
+  rpc GetDisconnectedCDAQSyncPorts(GetDisconnectedCDAQSyncPortsRequest) returns (GetDisconnectedCDAQSyncPortsResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetExtendedErrorInfo(GetExtendedErrorInfoRequest) returns (GetExtendedErrorInfoResponse);
   rpc GetFirstSampClkWhen(GetFirstSampClkWhenRequest) returns (GetFirstSampClkWhenResponse);
@@ -147,6 +158,7 @@ service NiDAQmx {
   rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
   rpc GetNthTaskReadChannel(GetNthTaskReadChannelRequest) returns (GetNthTaskReadChannelResponse);
   rpc GetRefTrigTimestampVal(GetRefTrigTimestampValRequest) returns (GetRefTrigTimestampValResponse);
+  rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetStartTrigTimestampVal(GetStartTrigTimestampValRequest) returns (GetStartTrigTimestampValResponse);
   rpc GetStartTrigTrigWhen(GetStartTrigTrigWhenRequest) returns (GetStartTrigTrigWhenResponse);
   rpc GetSyncPulseTimeWhen(GetSyncPulseTimeWhenRequest) returns (GetSyncPulseTimeWhenResponse);
@@ -177,8 +189,13 @@ service NiDAQmx {
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc ReadRaw(ReadRawRequest) returns (ReadRawResponse);
   rpc RegisterDoneEvent(RegisterDoneEventRequest) returns (stream RegisterDoneEventResponse);
+  rpc RemoveCDAQSyncConnection(RemoveCDAQSyncConnectionRequest) returns (RemoveCDAQSyncConnectionResponse);
   rpc ReserveNetworkDevice(ReserveNetworkDeviceRequest) returns (ReserveNetworkDeviceResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
+  rpc SaveGlobalChan(SaveGlobalChanRequest) returns (SaveGlobalChanResponse);
+  rpc SaveScale(SaveScaleRequest) returns (SaveScaleResponse);
+  rpc SaveTask(SaveTaskRequest) returns (SaveTaskResponse);
+  rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
   rpc SelfTestDevice(SelfTestDeviceRequest) returns (SelfTestDeviceResponse);
   rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
   rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
@@ -193,6 +210,7 @@ service NiDAQmx {
   rpc TaskControl(TaskControlRequest) returns (TaskControlResponse);
   rpc TristateOutputTerm(TristateOutputTermRequest) returns (TristateOutputTermResponse);
   rpc UnreserveNetworkDevice(UnreserveNetworkDeviceRequest) returns (UnreserveNetworkDeviceResponse);
+  rpc WaitForNextSampleClock(WaitForNextSampleClockRequest) returns (WaitForNextSampleClockResponse);
   rpc WaitForValidTimestamp(WaitForValidTimestampRequest) returns (WaitForValidTimestampResponse);
   rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
@@ -213,6 +231,8 @@ service NiDAQmx {
   rpc WriteDigitalU32(WriteDigitalU32Request) returns (WriteDigitalU32Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
   rpc WriteRaw(WriteRawRequest) returns (WriteRawResponse);
+  rpc WriteToTEDSFromArray(WriteToTEDSFromArrayRequest) returns (WriteToTEDSFromArrayResponse);
+  rpc WriteToTEDSFromFile(WriteToTEDSFromFileRequest) returns (WriteToTEDSFromFileResponse);
 }
 
 enum NiDAQmxAttributes {
@@ -589,6 +609,13 @@ enum ResistanceUnits2 {
   RESISTANCE_UNITS2_FROM_CUSTOM_SCALE = 10065;
 }
 
+enum SaveOptions {
+  SAVE_OPTIONS_UNSPECIFIED = 0;
+  SAVE_OPTIONS_OVERWRITE = 1;
+  SAVE_OPTIONS_ALLOW_INTERACTIVE_EDITING = 2;
+  SAVE_OPTIONS_ALLOW_INTERACTIVE_DELETION = 4;
+}
+
 enum Signal {
   SIGNAL_UNSPECIFIED = 0;
   SIGNAL_AI_CONVERT_CLOCK = 12484;
@@ -789,6 +816,21 @@ enum WindowTriggerCondition1 {
   WINDOW_TRIGGER_CONDITION1_LEAVING_WIN = 10208;
 }
 
+enum WriteBasicTEDSOptions {
+  WRITE_BASIC_TEDS_OPTIONS_UNSPECIFIED = 0;
+  WRITE_BASIC_TEDS_OPTIONS_WRITE_TO_EEPROM = 12538;
+  WRITE_BASIC_TEDS_OPTIONS_WRITE_TO_PROM = 12539;
+  WRITE_BASIC_TEDS_OPTIONS_DO_NOT_WRITE = 12540;
+}
+
+message AddCDAQSyncConnectionRequest {
+  string port_list = 1;
+}
+
+message AddCDAQSyncConnectionResponse {
+  int32 status = 1;
+}
+
 message AddGlobalChansToTaskRequest {
   nidevice_grpc.Session task = 1;
   string channel_names = 2;
@@ -809,6 +851,25 @@ message AddNetworkDeviceRequest {
 message AddNetworkDeviceResponse {
   int32 status = 1;
   string device_name_out = 2;
+}
+
+message AreConfiguredCDAQSyncPortsDisconnectedRequest {
+  string chassis_devices_ports = 1;
+  double timeout = 2;
+}
+
+message AreConfiguredCDAQSyncPortsDisconnectedResponse {
+  int32 status = 1;
+  bool disconnected_ports_exist = 2;
+}
+
+message AutoConfigureCDAQSyncConnectionsRequest {
+  string chassis_devices_ports = 1;
+  double timeout = 2;
+}
+
+message AutoConfigureCDAQSyncConnectionsResponse {
+  int32 status = 1;
 }
 
 message CalculateReversePolyCoeffRequest {
@@ -1164,6 +1225,14 @@ message CfgWatchdogDOExpirStatesResponse {
   int32 status = 1;
 }
 
+message ClearTEDSRequest {
+  string physical_channel = 1;
+}
+
+message ClearTEDSResponse {
+  int32 status = 1;
+}
+
 message ClearTaskRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -1187,6 +1256,15 @@ message ConfigureLoggingRequest {
 }
 
 message ConfigureLoggingResponse {
+  int32 status = 1;
+}
+
+message ConfigureTEDSRequest {
+  string physical_channel = 1;
+  string file_path = 2;
+}
+
+message ConfigureTEDSResponse {
   int32 status = 1;
 }
 
@@ -3241,6 +3319,39 @@ message DeleteNetworkDeviceResponse {
   int32 status = 1;
 }
 
+message DeleteSavedGlobalChanRequest {
+  string channel_name = 1;
+}
+
+message DeleteSavedGlobalChanResponse {
+  int32 status = 1;
+}
+
+message DeleteSavedScaleRequest {
+  string scale_name = 1;
+}
+
+message DeleteSavedScaleResponse {
+  int32 status = 1;
+}
+
+message DeleteSavedTaskRequest {
+  string task_name = 1;
+}
+
+message DeleteSavedTaskResponse {
+  int32 status = 1;
+}
+
+message DeviceSupportsCalRequest {
+  string device_name = 1;
+}
+
+message DeviceSupportsCalResponse {
+  int32 status = 1;
+  bool cal_supported = 2;
+}
+
 message DisableRefTrigRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -3325,6 +3436,15 @@ message GetArmStartTrigTrigWhenResponse {
   google.protobuf.Timestamp data = 2;
 }
 
+message GetAutoConfiguredCDAQSyncConnectionsRequest {
+  uint32 port_list_size = 1;
+}
+
+message GetAutoConfiguredCDAQSyncConnectionsResponse {
+  int32 status = 1;
+  string port_list = 2;
+}
+
 message GetDigitalLogicFamilyPowerUpStateRequest {
   string device_name = 1;
 }
@@ -3332,6 +3452,15 @@ message GetDigitalLogicFamilyPowerUpStateRequest {
 message GetDigitalLogicFamilyPowerUpStateResponse {
   int32 status = 1;
   int32 logic_family = 2;
+}
+
+message GetDisconnectedCDAQSyncPortsRequest {
+  uint32 port_list_size = 1;
+}
+
+message GetDisconnectedCDAQSyncPortsResponse {
+  int32 status = 1;
+  string port_list = 2;
 }
 
 message GetErrorStringRequest {
@@ -3411,6 +3540,19 @@ message GetRefTrigTimestampValRequest {
 message GetRefTrigTimestampValResponse {
   int32 status = 1;
   google.protobuf.Timestamp data = 2;
+}
+
+message GetSelfCalLastDateAndTimeRequest {
+  string device_name = 1;
+}
+
+message GetSelfCalLastDateAndTimeResponse {
+  int32 status = 1;
+  uint32 year = 2;
+  uint32 month = 3;
+  uint32 day = 4;
+  uint32 hour = 5;
+  uint32 minute = 6;
 }
 
 message GetStartTrigTimestampValRequest {
@@ -3822,6 +3964,14 @@ message RegisterDoneEventResponse {
   int32 status = 1;
 }
 
+message RemoveCDAQSyncConnectionRequest {
+  string port_list = 1;
+}
+
+message RemoveCDAQSyncConnectionResponse {
+  int32 status = 1;
+}
+
 message ReserveNetworkDeviceRequest {
   string device_name = 1;
   bool override_reservation = 2;
@@ -3836,6 +3986,57 @@ message ResetDeviceRequest {
 }
 
 message ResetDeviceResponse {
+  int32 status = 1;
+}
+
+message SaveGlobalChanRequest {
+  nidevice_grpc.Session task = 1;
+  string channel_name = 2;
+  string save_as = 3;
+  string author = 4;
+  oneof options_enum {
+    SaveOptions options = 5;
+    uint32 options_raw = 6;
+  }
+}
+
+message SaveGlobalChanResponse {
+  int32 status = 1;
+}
+
+message SaveScaleRequest {
+  string scale_name = 1;
+  string save_as = 2;
+  string author = 3;
+  oneof options_enum {
+    SaveOptions options = 4;
+    uint32 options_raw = 5;
+  }
+}
+
+message SaveScaleResponse {
+  int32 status = 1;
+}
+
+message SaveTaskRequest {
+  nidevice_grpc.Session task = 1;
+  string save_as = 2;
+  string author = 3;
+  oneof options_enum {
+    SaveOptions options = 4;
+    uint32 options_raw = 5;
+  }
+}
+
+message SaveTaskResponse {
+  int32 status = 1;
+}
+
+message SelfCalRequest {
+  string device_name = 1;
+}
+
+message SelfCalResponse {
   int32 status = 1;
 }
 
@@ -3974,6 +4175,16 @@ message UnreserveNetworkDeviceRequest {
 
 message UnreserveNetworkDeviceResponse {
   int32 status = 1;
+}
+
+message WaitForNextSampleClockRequest {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message WaitForNextSampleClockResponse {
+  int32 status = 1;
+  bool is_late = 2;
 }
 
 message WaitForValidTimestampRequest {
@@ -4275,5 +4486,32 @@ message WriteRawRequest {
 message WriteRawResponse {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
+}
+
+message WriteToTEDSFromArrayRequest {
+  string physical_channel = 1;
+  bytes bit_stream = 2;
+  uint32 array_size = 3;
+  oneof basic_teds_options_enum {
+    WriteBasicTEDSOptions basic_teds_options = 4;
+    int32 basic_teds_options_raw = 5;
+  }
+}
+
+message WriteToTEDSFromArrayResponse {
+  int32 status = 1;
+}
+
+message WriteToTEDSFromFileRequest {
+  string physical_channel = 1;
+  string file_path = 2;
+  oneof basic_teds_options_enum {
+    WriteBasicTEDSOptions basic_teds_options = 3;
+    int32 basic_teds_options_raw = 4;
+  }
+}
+
+message WriteToTEDSFromFileResponse {
+  int32 status = 1;
 }
 
