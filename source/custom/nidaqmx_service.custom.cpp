@@ -11,7 +11,7 @@ using DoneEventCallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle,
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-::grpc::experimental::ServerWriteReactor<RegisterDoneEventResponse>*
+::grpc::ServerWriteReactor<RegisterDoneEventResponse>*
 NiDAQmxService::RegisterDoneEvent(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request)
 {
   class RegisterDoneEventReactor : public nidevice_grpc::ServerWriterReactor<RegisterDoneEventResponse, nidevice_grpc::CallbackRegistration> {
