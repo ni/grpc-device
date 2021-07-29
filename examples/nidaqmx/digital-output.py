@@ -36,6 +36,7 @@ if len(sys.argv) >= 4:
 # Create a gRPC channel + client.
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_nidaqmx.NiDAQmxStub(channel)
+task = None
 
 
 # Raise an exception if an error was returned
@@ -47,12 +48,12 @@ def RaiseIfError(response):
         raise Exception(f"Error: {error_string}")
 
 
-response = client.CreateTask(
-    nidaqmx_types.CreateTaskRequest(session_name="my task"))
-RaiseIfError(response)
-task = response.task
-
 try:
+    response = client.CreateTask(
+        nidaqmx_types.CreateTaskRequest(session_name="my task"))
+    RaiseIfError(response)
+    task = response.task
+
     RaiseIfError(client.CreateDOChan(nidaqmx_types.CreateDOChanRequest(
         task=task,
         lines=lines,
@@ -79,5 +80,6 @@ except grpc.RpcError as rpc_error:
         error_message = "The operation is not implemented or is not supported/enabled in this service"
     print(f"{error_message}") 
 finally:
-    client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
-    client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+    if task:
+        client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
+        client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
