@@ -49,7 +49,7 @@ NiDAQmxService::RegisterDoneEvent(::grpc::CallbackServerContext* context, const 
         }
       }
       catch (nidevice_grpc::LibraryLoadException& ex) {
-        Finish(::grpc::Status(::grpc::NOT_FOUND, ex.what()));
+        this->Finish(::grpc::Status(::grpc::NOT_FOUND, ex.what()));
       }
 
       return handler;

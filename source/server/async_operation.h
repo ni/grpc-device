@@ -39,7 +39,7 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
   {
     LockGuard lock(mutex_);
     done_ = true;
-    Finish(::grpc::Status::OK);
+    this->Finish(::grpc::Status::OK);
   }
 
   void queue_write(const TResponse& response)
@@ -57,7 +57,7 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
     if (!done_ && write_ready_ && !pending_send_.empty()) {
       write_ready_ = false;
       auto& response = pending_send_.front();
-      StartWrite(&response);
+      this->StartWrite(&response);
     }
   }
 
