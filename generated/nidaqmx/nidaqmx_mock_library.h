@@ -17,8 +17,11 @@ namespace unit {
 
 class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
+  MOCK_METHOD(int32, AddCDAQSyncConnection, (const char portList[]), (override));
   MOCK_METHOD(int32, AddGlobalChansToTask, (TaskHandle task, const char channelNames[]), (override));
   MOCK_METHOD(int32, AddNetworkDevice, (const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize), (override));
+  MOCK_METHOD(int32, AreConfiguredCDAQSyncPortsDisconnected, (const char chassisDevicesPorts[], float64 timeout, bool32* disconnectedPortsExist), (override));
+  MOCK_METHOD(int32, AutoConfigureCDAQSyncConnections, (const char chassisDevicesPorts[], float64 timeout), (override));
   MOCK_METHOD(int32, CalculateReversePolyCoeff, (const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]), (override));
   MOCK_METHOD(int32, CfgAnlgEdgeRefTrig, (TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples), (override));
   MOCK_METHOD(int32, CfgAnlgEdgeStartTrig, (TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel), (override));
@@ -43,8 +46,10 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, CfgWatchdogAOExpirStates, (TaskHandle task, const char channelNames[], const float64 expirStateArray[], int32 outputTypeArray[], uInt32 arraySize), (override));
   MOCK_METHOD(int32, CfgWatchdogCOExpirStates, (TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize), (override));
   MOCK_METHOD(int32, CfgWatchdogDOExpirStates, (TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize), (override));
+  MOCK_METHOD(int32, ClearTEDS, (const char physicalChannel[]), (override));
   MOCK_METHOD(int32, ClearTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, ConfigureLogging, (TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation), (override));
+  MOCK_METHOD(int32, ConfigureTEDS, (const char physicalChannel[], const char filePath[]), (override));
   MOCK_METHOD(int32, ConnectTerms, (const char sourceTerminal[], const char destinationTerminal[], int32 signalModifiers), (override));
   MOCK_METHOD(int32, ControlWatchdogTask, (TaskHandle task, int32 action), (override));
   MOCK_METHOD(int32, CreateAIAccel4WireDCVoltageChan, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[]), (override));
@@ -130,6 +135,10 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, CreateWatchdogTimerTask, (const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout, const char lines[], int32 expState), (override));
   MOCK_METHOD(int32, CreateWatchdogTimerTaskEx, (const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout), (override));
   MOCK_METHOD(int32, DeleteNetworkDevice, (const char deviceName[]), (override));
+  MOCK_METHOD(int32, DeleteSavedGlobalChan, (const char channelName[]), (override));
+  MOCK_METHOD(int32, DeleteSavedScale, (const char scaleName[]), (override));
+  MOCK_METHOD(int32, DeleteSavedTask, (const char taskName[]), (override));
+  MOCK_METHOD(int32, DeviceSupportsCal, (const char deviceName[], bool32* calSupported), (override));
   MOCK_METHOD(int32, DisableRefTrig, (TaskHandle task), (override));
   MOCK_METHOD(int32, DisableStartTrig, (TaskHandle task), (override));
   MOCK_METHOD(int32, DisconnectTerms, (const char sourceTerminal[], const char destinationTerminal[]), (override));
@@ -138,7 +147,9 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
   MOCK_METHOD(int32, GetArmStartTrigTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
+  MOCK_METHOD(int32, GetAutoConfiguredCDAQSyncConnections, (char portList[], uInt32 portListSize), (override));
   MOCK_METHOD(int32, GetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32* logicFamily), (override));
+  MOCK_METHOD(int32, GetDisconnectedCDAQSyncPorts, (char portList[], uInt32 portListSize), (override));
   MOCK_METHOD(int32, GetErrorString, (int32 errorCode, char errorString[], uInt32 bufferSize), (override));
   MOCK_METHOD(int32, GetExtendedErrorInfo, (char errorString[], uInt32 bufferSize), (override));
   MOCK_METHOD(int32, GetFirstSampClkWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
@@ -147,6 +158,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetNthTaskDevice, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
   MOCK_METHOD(int32, GetNthTaskReadChannel, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
   MOCK_METHOD(int32, GetRefTrigTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
+  MOCK_METHOD(int32, GetSelfCalLastDateAndTime, (const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
   MOCK_METHOD(int32, GetStartTrigTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetSyncPulseTimeWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
@@ -177,8 +189,13 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ReadDigitalU8, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadRaw, (TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved), (override));
   MOCK_METHOD(int32, RegisterDoneEvent, (TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData), (override));
+  MOCK_METHOD(int32, RemoveCDAQSyncConnection, (const char portList[]), (override));
   MOCK_METHOD(int32, ReserveNetworkDevice, (const char deviceName[], bool32 overrideReservation), (override));
   MOCK_METHOD(int32, ResetDevice, (const char deviceName[]), (override));
+  MOCK_METHOD(int32, SaveGlobalChan, (TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options), (override));
+  MOCK_METHOD(int32, SaveScale, (const char scaleName[], const char saveAs[], const char author[], uInt32 options), (override));
+  MOCK_METHOD(int32, SaveTask, (TaskHandle task, const char saveAs[], const char author[], uInt32 options), (override));
+  MOCK_METHOD(int32, SelfCal, (const char deviceName[]), (override));
   MOCK_METHOD(int32, SelfTestDevice, (const char deviceName[]), (override));
   MOCK_METHOD(int32, SetAIChanCalCalDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
   MOCK_METHOD(int32, SetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
@@ -193,6 +210,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, TaskControl, (TaskHandle task, int32 action), (override));
   MOCK_METHOD(int32, TristateOutputTerm, (const char outputTerminal[]), (override));
   MOCK_METHOD(int32, UnreserveNetworkDevice, (const char deviceName[]), (override));
+  MOCK_METHOD(int32, WaitForNextSampleClock, (TaskHandle task, float64 timeout, bool32* isLate), (override));
   MOCK_METHOD(int32, WaitForValidTimestamp, (TaskHandle task, int32 timestampEvent, float64 timeout, CVIAbsoluteTime* timestamp), (override));
   MOCK_METHOD(int32, WaitUntilTaskDone, (TaskHandle task, float64 timeToWait), (override));
   MOCK_METHOD(int32, WriteAnalogF64, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
@@ -213,6 +231,8 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, WriteDigitalU32, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteDigitalU8, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteRaw, (TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
+  MOCK_METHOD(int32, WriteToTEDSFromArray, (const char physicalChannel[], const uInt8 bitStream[], uInt32 arraySize, int32 basicTEDSOptions), (override));
+  MOCK_METHOD(int32, WriteToTEDSFromFile, (const char physicalChannel[], const char filePath[], int32 basicTEDSOptions), (override));
 };
 
 }  // namespace unit

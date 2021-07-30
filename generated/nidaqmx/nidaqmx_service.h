@@ -28,8 +28,11 @@ public:
   NiDAQmxService(NiDAQmxLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiDAQmxService();
   
+  ::grpc::Status AddCDAQSyncConnection(::grpc::ServerContext* context, const AddCDAQSyncConnectionRequest* request, AddCDAQSyncConnectionResponse* response) override;
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;
+  ::grpc::Status AreConfiguredCDAQSyncPortsDisconnected(::grpc::ServerContext* context, const AreConfiguredCDAQSyncPortsDisconnectedRequest* request, AreConfiguredCDAQSyncPortsDisconnectedResponse* response) override;
+  ::grpc::Status AutoConfigureCDAQSyncConnections(::grpc::ServerContext* context, const AutoConfigureCDAQSyncConnectionsRequest* request, AutoConfigureCDAQSyncConnectionsResponse* response) override;
   ::grpc::Status CalculateReversePolyCoeff(::grpc::ServerContext* context, const CalculateReversePolyCoeffRequest* request, CalculateReversePolyCoeffResponse* response) override;
   ::grpc::Status CfgAnlgEdgeRefTrig(::grpc::ServerContext* context, const CfgAnlgEdgeRefTrigRequest* request, CfgAnlgEdgeRefTrigResponse* response) override;
   ::grpc::Status CfgAnlgEdgeStartTrig(::grpc::ServerContext* context, const CfgAnlgEdgeStartTrigRequest* request, CfgAnlgEdgeStartTrigResponse* response) override;
@@ -54,8 +57,10 @@ public:
   ::grpc::Status CfgWatchdogAOExpirStates(::grpc::ServerContext* context, const CfgWatchdogAOExpirStatesRequest* request, CfgWatchdogAOExpirStatesResponse* response) override;
   ::grpc::Status CfgWatchdogCOExpirStates(::grpc::ServerContext* context, const CfgWatchdogCOExpirStatesRequest* request, CfgWatchdogCOExpirStatesResponse* response) override;
   ::grpc::Status CfgWatchdogDOExpirStates(::grpc::ServerContext* context, const CfgWatchdogDOExpirStatesRequest* request, CfgWatchdogDOExpirStatesResponse* response) override;
+  ::grpc::Status ClearTEDS(::grpc::ServerContext* context, const ClearTEDSRequest* request, ClearTEDSResponse* response) override;
   ::grpc::Status ClearTask(::grpc::ServerContext* context, const ClearTaskRequest* request, ClearTaskResponse* response) override;
   ::grpc::Status ConfigureLogging(::grpc::ServerContext* context, const ConfigureLoggingRequest* request, ConfigureLoggingResponse* response) override;
+  ::grpc::Status ConfigureTEDS(::grpc::ServerContext* context, const ConfigureTEDSRequest* request, ConfigureTEDSResponse* response) override;
   ::grpc::Status ConnectTerms(::grpc::ServerContext* context, const ConnectTermsRequest* request, ConnectTermsResponse* response) override;
   ::grpc::Status ControlWatchdogTask(::grpc::ServerContext* context, const ControlWatchdogTaskRequest* request, ControlWatchdogTaskResponse* response) override;
   ::grpc::Status CreateAIAccel4WireDCVoltageChan(::grpc::ServerContext* context, const CreateAIAccel4WireDCVoltageChanRequest* request, CreateAIAccel4WireDCVoltageChanResponse* response) override;
@@ -141,6 +146,10 @@ public:
   ::grpc::Status CreateWatchdogTimerTask(::grpc::ServerContext* context, const CreateWatchdogTimerTaskRequest* request, CreateWatchdogTimerTaskResponse* response) override;
   ::grpc::Status CreateWatchdogTimerTaskEx(::grpc::ServerContext* context, const CreateWatchdogTimerTaskExRequest* request, CreateWatchdogTimerTaskExResponse* response) override;
   ::grpc::Status DeleteNetworkDevice(::grpc::ServerContext* context, const DeleteNetworkDeviceRequest* request, DeleteNetworkDeviceResponse* response) override;
+  ::grpc::Status DeleteSavedGlobalChan(::grpc::ServerContext* context, const DeleteSavedGlobalChanRequest* request, DeleteSavedGlobalChanResponse* response) override;
+  ::grpc::Status DeleteSavedScale(::grpc::ServerContext* context, const DeleteSavedScaleRequest* request, DeleteSavedScaleResponse* response) override;
+  ::grpc::Status DeleteSavedTask(::grpc::ServerContext* context, const DeleteSavedTaskRequest* request, DeleteSavedTaskResponse* response) override;
+  ::grpc::Status DeviceSupportsCal(::grpc::ServerContext* context, const DeviceSupportsCalRequest* request, DeviceSupportsCalResponse* response) override;
   ::grpc::Status DisableRefTrig(::grpc::ServerContext* context, const DisableRefTrigRequest* request, DisableRefTrigResponse* response) override;
   ::grpc::Status DisableStartTrig(::grpc::ServerContext* context, const DisableStartTrigRequest* request, DisableStartTrigResponse* response) override;
   ::grpc::Status DisconnectTerms(::grpc::ServerContext* context, const DisconnectTermsRequest* request, DisconnectTermsResponse* response) override;
@@ -149,7 +158,9 @@ public:
   ::grpc::Status GetAIChanCalExpDate(::grpc::ServerContext* context, const GetAIChanCalExpDateRequest* request, GetAIChanCalExpDateResponse* response) override;
   ::grpc::Status GetArmStartTrigTimestampVal(::grpc::ServerContext* context, const GetArmStartTrigTimestampValRequest* request, GetArmStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
+  ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
   ::grpc::Status GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response) override;
+  ::grpc::Status GetDisconnectedCDAQSyncPorts(::grpc::ServerContext* context, const GetDisconnectedCDAQSyncPortsRequest* request, GetDisconnectedCDAQSyncPortsResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;
   ::grpc::Status GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response) override;
   ::grpc::Status GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response) override;
@@ -158,6 +169,7 @@ public:
   ::grpc::Status GetNthTaskDevice(::grpc::ServerContext* context, const GetNthTaskDeviceRequest* request, GetNthTaskDeviceResponse* response) override;
   ::grpc::Status GetNthTaskReadChannel(::grpc::ServerContext* context, const GetNthTaskReadChannelRequest* request, GetNthTaskReadChannelResponse* response) override;
   ::grpc::Status GetRefTrigTimestampVal(::grpc::ServerContext* context, const GetRefTrigTimestampValRequest* request, GetRefTrigTimestampValResponse* response) override;
+  ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetStartTrigTimestampVal(::grpc::ServerContext* context, const GetStartTrigTimestampValRequest* request, GetStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetStartTrigTrigWhen(::grpc::ServerContext* context, const GetStartTrigTrigWhenRequest* request, GetStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetSyncPulseTimeWhen(::grpc::ServerContext* context, const GetSyncPulseTimeWhenRequest* request, GetSyncPulseTimeWhenResponse* response) override;
@@ -188,8 +200,13 @@ public:
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
   ::grpc::Status ReadRaw(::grpc::ServerContext* context, const ReadRawRequest* request, ReadRawResponse* response) override;
   ::grpc::Status RegisterDoneEvent(::grpc::ServerContext* context, const RegisterDoneEventRequest* request, ::grpc::ServerWriter<RegisterDoneEventResponse>* writer) override;
+  ::grpc::Status RemoveCDAQSyncConnection(::grpc::ServerContext* context, const RemoveCDAQSyncConnectionRequest* request, RemoveCDAQSyncConnectionResponse* response) override;
   ::grpc::Status ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
+  ::grpc::Status SaveGlobalChan(::grpc::ServerContext* context, const SaveGlobalChanRequest* request, SaveGlobalChanResponse* response) override;
+  ::grpc::Status SaveScale(::grpc::ServerContext* context, const SaveScaleRequest* request, SaveScaleResponse* response) override;
+  ::grpc::Status SaveTask(::grpc::ServerContext* context, const SaveTaskRequest* request, SaveTaskResponse* response) override;
+  ::grpc::Status SelfCal(::grpc::ServerContext* context, const SelfCalRequest* request, SelfCalResponse* response) override;
   ::grpc::Status SelfTestDevice(::grpc::ServerContext* context, const SelfTestDeviceRequest* request, SelfTestDeviceResponse* response) override;
   ::grpc::Status SetAIChanCalCalDate(::grpc::ServerContext* context, const SetAIChanCalCalDateRequest* request, SetAIChanCalCalDateResponse* response) override;
   ::grpc::Status SetAIChanCalExpDate(::grpc::ServerContext* context, const SetAIChanCalExpDateRequest* request, SetAIChanCalExpDateResponse* response) override;
@@ -204,6 +221,7 @@ public:
   ::grpc::Status TaskControl(::grpc::ServerContext* context, const TaskControlRequest* request, TaskControlResponse* response) override;
   ::grpc::Status TristateOutputTerm(::grpc::ServerContext* context, const TristateOutputTermRequest* request, TristateOutputTermResponse* response) override;
   ::grpc::Status UnreserveNetworkDevice(::grpc::ServerContext* context, const UnreserveNetworkDeviceRequest* request, UnreserveNetworkDeviceResponse* response) override;
+  ::grpc::Status WaitForNextSampleClock(::grpc::ServerContext* context, const WaitForNextSampleClockRequest* request, WaitForNextSampleClockResponse* response) override;
   ::grpc::Status WaitForValidTimestamp(::grpc::ServerContext* context, const WaitForValidTimestampRequest* request, WaitForValidTimestampResponse* response) override;
   ::grpc::Status WaitUntilTaskDone(::grpc::ServerContext* context, const WaitUntilTaskDoneRequest* request, WaitUntilTaskDoneResponse* response) override;
   ::grpc::Status WriteAnalogF64(::grpc::ServerContext* context, const WriteAnalogF64Request* request, WriteAnalogF64Response* response) override;
@@ -224,6 +242,8 @@ public:
   ::grpc::Status WriteDigitalU32(::grpc::ServerContext* context, const WriteDigitalU32Request* request, WriteDigitalU32Response* response) override;
   ::grpc::Status WriteDigitalU8(::grpc::ServerContext* context, const WriteDigitalU8Request* request, WriteDigitalU8Response* response) override;
   ::grpc::Status WriteRaw(::grpc::ServerContext* context, const WriteRawRequest* request, WriteRawResponse* response) override;
+  ::grpc::Status WriteToTEDSFromArray(::grpc::ServerContext* context, const WriteToTEDSFromArrayRequest* request, WriteToTEDSFromArrayResponse* response) override;
+  ::grpc::Status WriteToTEDSFromFile(::grpc::ServerContext* context, const WriteToTEDSFromFileRequest* request, WriteToTEDSFromFileResponse* response) override;
 private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
