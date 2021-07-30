@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-DAQMX
 //---------------------------------------------------------------------
-#ifndef NIDAQMX_LIBRARY_INTERFACE
-#define NIDAQMX_LIBRARY_INTERFACE
+#ifndef NIDAQMX_GRPC_LIBRARY_WRAPPER_H
+#define NIDAQMX_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <NIDAQmx.h>
@@ -234,4 +234,4 @@ class NiDAQmxLibraryInterface {
 };
 
 }  // namespace nidaqmx_grpc
-#endif /* NIDAQMX_LIBRARY_INTERFACE */
+#endif  // NIDAQMX_GRPC_LIBRARY_WRAPPER_H

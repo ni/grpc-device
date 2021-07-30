@@ -556,11 +556,18 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->SelfCal(&context, request, &response);
   }
 
-  ::grpc::Status get_self_cal_last_date_and_time(GetSelfCalLastDateAndTimeResponse& response) {
+  ::grpc::Status add_network_device(const std::string& ip_address, AddNetworkDeviceResponse& response) {
     ::grpc::ClientContext context;
-    GetSelfCalLastDateAndTimeRequest request;
-    // request.set_device_name();
-    return stub()->GetSelfCalLastDateAndTime(&context, request, &response);
+    AddNetworkDeviceRequest request;
+    request.set_ip_address(ip_address);
+    return stub()->AddNetworkDevice(&context, request, &response);
+  }
+
+  ::grpc::Status configure_teds(ConfigureTEDSResponse& response) {
+    ::grpc::ClientContext context;
+    ConfigureTEDSRequest request;
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
+    return stub()->ConfigureTEDS(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -1081,17 +1088,20 @@ TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds) {
   EXPECT_SUCCESS(status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, GetSelfCalLastDateAndTime) {
-  auto response = GetSelfCalLastDateAndTimeResponse{};
-  auto status = get_self_cal_last_date_and_time(response);
+TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetworkDeviceProperties) {
+  auto response = AddNetworkDeviceResponse{};
+  auto status = add_network_device("0.0.0.0", response);
 
-  EXPECT_SUCCESS(status, response);
-  EXPECT_EQ(0, response.year());
-  EXPECT_EQ(0, response.month());
-  EXPECT_EQ(0, response.day());
-  EXPECT_EQ(0, response.hour());
-  EXPECT_EQ(0, response.minute());
+  EXPECT_DAQ_ERROR(DAQmxErrorRetrievingNetworkDeviceProperties, status, response);
 }
+
+TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected) {
+  auto response = ConfigureTEDSResponse{};
+  auto status = configure_teds(response);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorTEDSSensorNotDetected, status, response);
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
