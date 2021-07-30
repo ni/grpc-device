@@ -1,6 +1,6 @@
 #include <nidaqmx/nidaqmx_service.h>
-#include <server/async_operation.h>
 #include <server/callback_router.h>
+#include <server/server_reactor.h>
 
 #include <memory>
 #include <thread>
@@ -18,7 +18,8 @@ NiDAQmxService::RegisterDoneEvent(::grpc::CallbackServerContext* context, const 
    public:
     RegisterDoneEventReactor(const RegisterDoneEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
     {
-      thread_ = start(request, library, session_repository);
+      this->set_producer(
+          start(request, library, session_repository));
     }
 
     std::unique_ptr<nidevice_grpc::CallbackRegistration> start(const RegisterDoneEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)

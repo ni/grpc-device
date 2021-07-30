@@ -94,7 +94,7 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadPartialStream_ReturnsExpectedSeque
   }
 }
 
-TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadTwoStreamsAlternating_ReturnsExpectedSequences)
+TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadTwoStreamsConsecutively_ReturnsExpectedSequences)
 {
   ::grpc::ClientContext context;
   const auto START = 0;
@@ -189,7 +189,6 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, StartReadStream_ShutdownBeforeRead_Cle
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 10;
-  const auto OFFSET = 100;
   ReadStreamRequest request;
   request.set_start(START);
   request.set_stop(STOP);
@@ -203,7 +202,6 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, WaitForMetadata_Cancel_CleanShutdown)
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 10;
-  const auto OFFSET = 100;
   ReadStreamRequest request;
   request.set_start(START);
   request.set_stop(STOP);
@@ -218,7 +216,6 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, WaitForMetadata_ShutdownAndRead_CleanS
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 10;
-  const auto OFFSET = 100;
   ReadStreamRequest request;
   request.set_start(START);
   request.set_stop(STOP);

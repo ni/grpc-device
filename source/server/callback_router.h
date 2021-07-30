@@ -76,39 +76,31 @@ class CallbackRouter {
   {
     LockGuard guard(mutex_);
     auto token = reinterpret_cast<Token>(++callback_id_);
-    handlers_[token] = std::make_shared<Handler>(handler);
+    handlers_[token] = handler;
     return token;
   }
 
   TReturn route_callback_to_handler(TArgs... args, Token token)
   {
-    // shared_ptr in this method scope ensures that the callback is not deleted
-    // while it's being called.
-    auto handler_shared_ptr = get_handler(token);
-    Handler* handler_ptr = handler_shared_ptr.get();
-    if (!handler_ptr) return 0;
-
-    return (*handler_ptr)(args...);
-  }
-
-  std::shared_ptr<Handler> get_handler(Token token)
-  {
     LockGuard guard(mutex_);
     auto handler_it = handlers_.find(token);
-    if (handler_it == handlers_.end()) {
-      return {};
+    if (handler_it != handlers_.end()) {
+      auto& handler = handler_it->second;
+      return (handler)(args...);
     }
-    return handler_it->second;
+    return 0;
   }
 
   void unregister_handler(Token token)
   {
+    // Blocking unregister while callback is in progress ensures that the callback (and
+    // its dependant state) remain valid during the call.
     LockGuard guard(mutex_);
     handlers_.erase(token);
   }
 
   using LockGuard = std::lock_guard<std::mutex>;
-  using HandlerMap = std::unordered_map<Token, std::shared_ptr<Handler>>;
+  using HandlerMap = std::unordered_map<Token, Handler>;
   std::atomic<size_t> callback_id_{0};
   std::mutex mutex_;
   HandlerMap handlers_;

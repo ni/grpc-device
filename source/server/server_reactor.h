@@ -1,5 +1,5 @@
-#ifndef NIDEVICE_GRPC_DEVICE_ASYNC_OPERATION_H
-#define NIDEVICE_GRPC_DEVICE_ASYNC_OPERATION_H
+#ifndef NIDEVICE_GRPC_DEVICE_SERVER_REACTOR_H
+#define NIDEVICE_GRPC_DEVICE_SERVER_REACTOR_H
 
 #include <grpcpp/alarm.h>
 #include <grpcpp/grpcpp.h>
@@ -11,7 +11,8 @@
 
 namespace nidevice_grpc {
 
-template <typename TResponse, typename TJoinable>
+// ServerWriteReactor implementation to support async response streaming.
+template <typename TResponse, typename TProducer>
 class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
   using LockGuard = std::lock_guard<std::recursive_mutex>;
 
@@ -42,11 +43,17 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
     this->Finish(::grpc::Status::OK);
   }
 
+ protected:
   void queue_write(const TResponse& response)
   {
     LockGuard lock(mutex_);
     pending_send_.push(response);
     next_write();
+  }
+
+  void set_producer(std::unique_ptr<TProducer>&& producer)
+  {
+    producer_ = std::move(producer);
   }
 
  private:
@@ -66,9 +73,7 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
   std::queue<TResponse, std::deque<TResponse>> pending_send_;
   bool write_ready_{true};
   bool done_{false};
-
- public:
-  std::unique_ptr<TJoinable> thread_;
+  std::unique_ptr<TProducer> producer_;
 };
 }  // namespace nidevice_grpc
-#endif  // NIDEVICE_GRPC_DEVICE_ASYNC_OPERATION_H
+#endif  // NIDEVICE_GRPC_DEVICE_SERVER_REACTOR_H

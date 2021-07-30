@@ -1,6 +1,6 @@
 #include <nifake_non_ivi/nifake_non_ivi_service.h>
-#include <server/async_operation.h>
 #include <server/callback_router.h>
+#include <server/server_reactor.h>
 
 #include <memory>
 #include <thread>
@@ -8,6 +8,7 @@ namespace nifake_non_ivi_grpc {
 
 ::grpc::experimental::ServerWriteReactor<ReadStreamResponse>* NiFakeNonIviService::ReadStream(::grpc::CallbackServerContext* context, const ReadStreamRequest* request)
 {
+  // Wraps a thread to call join on destruct.
   struct AutoJoinThread {
     static std::unique_ptr<AutoJoinThread> make_auto_join(std::thread&& thread)
     {
@@ -19,13 +20,15 @@ namespace nifake_non_ivi_grpc {
     ~AutoJoinThread() { thread_.join(); }
     std::thread thread_;
   };
+
   class ReadStreamReactor : public nidevice_grpc::ServerWriterReactor<ReadStreamResponse, AutoJoinThread> {
    public:
     ReadStreamReactor(int32 start, int32 stop)
         : start_(start),
           stop_(stop)
     {
-      thread_ = start_thread();
+      this->set_producer(
+          start_thread());
     }
 
     std::unique_ptr<AutoJoinThread> start_thread()
