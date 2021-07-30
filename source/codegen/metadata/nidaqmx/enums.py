@@ -2095,23 +2095,14 @@ enums = {
     'WriteBasicTEDSOptions': {
         'values': [
             {
-                'documentation': {
-                    'description': 'blah'
-                },
                 'name': 'WRITE_TO_EEPROM',
                 'value': 12538
             },
             {
-                'documentation': {
-                    'description': 'blah'
-                },
                 'name': 'WRITE_TO_PROM',
                 'value': 12539
             },
             {
-                'documentation': {
-                    'description': 'blah'
-                },
                 'name': 'DO_NOT_WRITE',
                 'value': 12540
             }
