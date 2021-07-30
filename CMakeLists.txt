@@ -22,6 +22,11 @@ if(CMAKE_CROSSCOMPILING)
   endif()
 
 else()
+  # Workaround for: https://bugs.chromium.org/p/boringssl/issues/detail?id=423
+  # add zlib before the rest of grpc. Then unset AMD64 to unbreak the processor checks in boringssl.
+  add_subdirectory(third_party/grpc/third_party/zlib ${CMAKE_CURRENT_BINARY_DIR}/third_party/grpc/third_party/zlib EXCLUDE_FROM_ALL)
+  unset(AMD64 CACHE)
+
   add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
   set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
   set(_REFLECTION grpc++_reflection)
