@@ -560,6 +560,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     AddNetworkDeviceRequest request;
     request.set_ip_address(ip_address);
+    request.set_device_name_out_buffer_size(1024);
     return stub()->AddNetworkDevice(&context, request, &response);
   }
 
