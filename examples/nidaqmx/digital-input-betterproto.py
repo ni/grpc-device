@@ -35,6 +35,13 @@ server_address = "localhost"
 server_port = "31763"
 lines = "Dev1/port0"
 
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    lines = sys.argv[3]
+
 
 async def main():
     # Create a gRPC channel + await daq_service.

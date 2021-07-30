@@ -31,7 +31,6 @@ from nidevice import nidaqmx_grpc
 import sys
 from grpclib.client import Channel
 
-
 server_address = "localhost"
 server_port = "31763"
 physical_channel = "Dev1/ai0"
