@@ -26,12 +26,12 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
     delete this;
   }
 
-  void OnWriteDone(bool ok) override
+  void OnWriteDone(bool write_succeeded) override
   {
     LockGuard lock(mutex_);
     write_ready_ = true;
     pending_send_.pop();
-    if (ok) {
+    if (write_succeeded) {
       next_write();
     }
   }
