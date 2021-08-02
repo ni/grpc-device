@@ -110,8 +110,8 @@ namespace ${config["namespace_component"]}_grpc {
     function_data = functions[function_name]
     method_name = common_helpers.snake_to_pascal(function_name)
     parameters = function_data['parameters']
-    request_param = service_helpers.get_request_param(method_name, function_data)
-    response_param = service_helpers.get_response_param(method_name, function_data)
+    request_param = service_helpers.get_request_param(method_name)
+    response_param = service_helpers.get_response_param(method_name)
 %>\
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------

@@ -188,14 +188,27 @@ def is_custom_close_method(function_data):
 
 def requires_checked_conversion(parameters):
     return any([is_input_array_that_needs_coercion(p) for p in parameters])
-  
-
-def get_request_param(method_name, function_data):
-    return f'const {method_name}Request* request'
 
 
-def get_response_param(method_name, function_data):
-    is_streaming = common_helpers.has_streaming_response(function_data)
-    response_type = f'{method_name}Response'
-    return f'::grpc::ServerWriter<{response_type}>* writer' if is_streaming else f'{response_type}* response'
+def get_request_param(method_name):
+    return f'const {get_request_type(method_name)}* request'
 
+
+def get_request_type(method_name):
+    return f"{method_name}Request"
+
+
+def get_response_param(method_name):
+    return f'{get_response_type(method_name)}* response'
+
+
+def get_response_type(method_name):
+    return f'{method_name}Response'
+
+
+def get_async_functions(functions):
+    return {
+        name: data 
+        for name, data in functions.items() 
+        if common_helpers.has_streaming_response(data)
+    }
