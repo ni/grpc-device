@@ -1,4 +1,14 @@
 functions = {
+    'AddCDAQSyncConnection': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'portList',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AddGlobalChansToTask': {
         'parameters': [
             {
@@ -49,6 +59,41 @@ functions = {
                 'direction': 'in',
                 'name': 'deviceNameOutBufferSize',
                 'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AreConfiguredCDAQSyncPortsDisconnected': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'chassisDevicesPorts',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'disconnectedPortsExist',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AutoConfigureCDAQSyncConnections': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'chassisDevicesPorts',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
             }
         ],
         'returns': 'int32'
@@ -766,6 +811,16 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ClearTEDS': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ClearTask': {
         'parameters': [
             {
@@ -804,6 +859,21 @@ functions = {
                 'enum': 'LoggingOperation',
                 'name': 'operation',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ConfigureTEDS': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'const char[]'
             }
         ],
         'returns': 'int32'
@@ -5537,6 +5607,51 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DeleteSavedGlobalChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DeleteSavedScale': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DeleteSavedTask': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'taskName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DeviceSupportsCal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'calSupported',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DisableRefTrig': {
         'parameters': [
             {
@@ -5703,6 +5818,25 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetAutoConfiguredCDAQSyncConnections': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'portList',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'portListSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'portListSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetDigitalLogicFamilyPowerUpState': {
         'parameters': [
             {
@@ -5714,6 +5848,25 @@ functions = {
                 'direction': 'out',
                 'name': 'logicFamily',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDisconnectedCDAQSyncPorts': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'portList',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'portListSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'portListSize',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -5889,6 +6042,41 @@ functions = {
                 'direction': 'out',
                 'name': 'data',
                 'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSelfCalLastDateAndTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'year',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'month',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'day',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'hour',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'minute',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -7111,6 +7299,16 @@ functions = {
         'returns': 'int32',
         'stream_response': True
     },
+    'RemoveCDAQSyncConnection': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'portList',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ReserveNetworkDevice': {
         'parameters': [
             {
@@ -7127,6 +7325,99 @@ functions = {
         'returns': 'int32'
     },
     'ResetDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SaveGlobalChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'saveAs',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'author',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SaveOptions',
+                'name': 'options',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SaveScale': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'saveAs',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'author',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SaveOptions',
+                'name': 'options',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SaveTask': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'saveAs',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'author',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SaveOptions',
+                'name': 'options',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SelfCal': {
         'parameters': [
             {
                 'direction': 'in',
@@ -7369,6 +7660,26 @@ functions = {
                 'direction': 'in',
                 'name': 'deviceName',
                 'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WaitForNextSampleClock': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'isLate',
+                'type': 'bool32'
             }
         ],
         'returns': 'int32'
@@ -8221,6 +8532,53 @@ functions = {
                 'name': 'reserved',
                 'pass_null': True,
                 'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteToTEDSFromArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bitStream',
+                'type': 'const uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WriteBasicTEDSOptions',
+                'name': 'basicTEDSOptions',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WriteToTEDSFromFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'WriteBasicTEDSOptions',
+                'name': 'basicTEDSOptions',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'

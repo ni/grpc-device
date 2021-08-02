@@ -15,8 +15,11 @@ class NiDAQmxLibraryInterface {
  public:
   virtual ~NiDAQmxLibraryInterface() {}
 
+  virtual int32 AddCDAQSyncConnection(const char portList[]) = 0;
   virtual int32 AddGlobalChansToTask(TaskHandle task, const char channelNames[]) = 0;
   virtual int32 AddNetworkDevice(const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize) = 0;
+  virtual int32 AreConfiguredCDAQSyncPortsDisconnected(const char chassisDevicesPorts[], float64 timeout, bool32* disconnectedPortsExist) = 0;
+  virtual int32 AutoConfigureCDAQSyncConnections(const char chassisDevicesPorts[], float64 timeout) = 0;
   virtual int32 CalculateReversePolyCoeff(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[]) = 0;
   virtual int32 CfgAnlgEdgeRefTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples) = 0;
   virtual int32 CfgAnlgEdgeStartTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel) = 0;
@@ -41,8 +44,10 @@ class NiDAQmxLibraryInterface {
   virtual int32 CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], int32 outputTypeArray[], uInt32 arraySize) = 0;
   virtual int32 CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize) = 0;
   virtual int32 CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize) = 0;
+  virtual int32 ClearTEDS(const char physicalChannel[]) = 0;
   virtual int32 ClearTask(TaskHandle task) = 0;
   virtual int32 ConfigureLogging(TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation) = 0;
+  virtual int32 ConfigureTEDS(const char physicalChannel[], const char filePath[]) = 0;
   virtual int32 ConnectTerms(const char sourceTerminal[], const char destinationTerminal[], int32 signalModifiers) = 0;
   virtual int32 ControlWatchdogTask(TaskHandle task, int32 action) = 0;
   virtual int32 CreateAIAccel4WireDCVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[]) = 0;
@@ -128,6 +133,10 @@ class NiDAQmxLibraryInterface {
   virtual int32 CreateWatchdogTimerTask(const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout, const char lines[], int32 expState) = 0;
   virtual int32 CreateWatchdogTimerTaskEx(const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout) = 0;
   virtual int32 DeleteNetworkDevice(const char deviceName[]) = 0;
+  virtual int32 DeleteSavedGlobalChan(const char channelName[]) = 0;
+  virtual int32 DeleteSavedScale(const char scaleName[]) = 0;
+  virtual int32 DeleteSavedTask(const char taskName[]) = 0;
+  virtual int32 DeviceSupportsCal(const char deviceName[], bool32* calSupported) = 0;
   virtual int32 DisableRefTrig(TaskHandle task) = 0;
   virtual int32 DisableStartTrig(TaskHandle task) = 0;
   virtual int32 DisconnectTerms(const char sourceTerminal[], const char destinationTerminal[]) = 0;
@@ -136,7 +145,9 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
   virtual int32 GetArmStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
+  virtual int32 GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize) = 0;
   virtual int32 GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily) = 0;
+  virtual int32 GetDisconnectedCDAQSyncPorts(char portList[], uInt32 portListSize) = 0;
   virtual int32 GetErrorString(int32 errorCode, char errorString[], uInt32 bufferSize) = 0;
   virtual int32 GetExtendedErrorInfo(char errorString[], uInt32 bufferSize) = 0;
   virtual int32 GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
@@ -145,6 +156,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
   virtual int32 GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
   virtual int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
+  virtual int32 GetSelfCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
   virtual int32 GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
@@ -175,8 +187,13 @@ class NiDAQmxLibraryInterface {
   virtual int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved) = 0;
   virtual int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData) = 0;
+  virtual int32 RemoveCDAQSyncConnection(const char portList[]) = 0;
   virtual int32 ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation) = 0;
   virtual int32 ResetDevice(const char deviceName[]) = 0;
+  virtual int32 SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options) = 0;
+  virtual int32 SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options) = 0;
+  virtual int32 SaveTask(TaskHandle task, const char saveAs[], const char author[], uInt32 options) = 0;
+  virtual int32 SelfCal(const char deviceName[]) = 0;
   virtual int32 SelfTestDevice(const char deviceName[]) = 0;
   virtual int32 SetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
   virtual int32 SetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
@@ -191,6 +208,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 TaskControl(TaskHandle task, int32 action) = 0;
   virtual int32 TristateOutputTerm(const char outputTerminal[]) = 0;
   virtual int32 UnreserveNetworkDevice(const char deviceName[]) = 0;
+  virtual int32 WaitForNextSampleClock(TaskHandle task, float64 timeout, bool32* isLate) = 0;
   virtual int32 WaitForValidTimestamp(TaskHandle task, int32 timestampEvent, float64 timeout, CVIAbsoluteTime* timestamp) = 0;
   virtual int32 WaitUntilTaskDone(TaskHandle task, float64 timeToWait) = 0;
   virtual int32 WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;
@@ -211,6 +229,8 @@ class NiDAQmxLibraryInterface {
   virtual int32 WriteDigitalU32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;
   virtual int32 WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;
   virtual int32 WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved) = 0;
+  virtual int32 WriteToTEDSFromArray(const char physicalChannel[], const uInt8 bitStream[], uInt32 arraySize, int32 basicTEDSOptions) = 0;
+  virtual int32 WriteToTEDSFromFile(const char physicalChannel[], const char filePath[], int32 basicTEDSOptions) = 0;
 };
 
 }  // namespace nidaqmx_grpc

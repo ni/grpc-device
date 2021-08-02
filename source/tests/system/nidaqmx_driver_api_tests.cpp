@@ -96,7 +96,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateTask(&context, request, &response);
   }
 
-  ::grpc::Status clear_task(ClearTaskResponse& response)
+  ::grpc::Status clear_task(ClearTaskResponse& response = ThrowawayResponse<ClearTaskResponse>::response())
   {
     ::grpc::ClientContext context;
     ClearTaskRequest request;
@@ -525,6 +525,50 @@ class NiDAQmxDriverApiTests : public Test {
     request.mutable_when()->CopyFrom(time);
     request.set_timescale(Timescale2::TIMESCALE2_IO_DEVICE_TIME);
     return stub()->CfgTimeStartTrig(&context, request, &response);
+  }
+
+  ::grpc::Status save_task(SaveTaskResponse& response){
+    ::grpc::ClientContext context;
+    SaveTaskRequest request;
+    set_request_session_id(request);
+    request.set_author("grpc.tester@ni.com");
+    request.set_options_raw(SaveOptions::SAVE_OPTIONS_OVERWRITE | SaveOptions::SAVE_OPTIONS_ALLOW_INTERACTIVE_DELETION);
+    request.set_save_as("saved_task");
+    return stub()->SaveTask(&context, request, &response);
+  }
+
+  ::grpc::Status load_task(LoadTaskResponse& response){
+    ::grpc::ClientContext context;
+    LoadTaskRequest request;
+    request.set_session_name("saved_task");
+    auto status = stub()->LoadTask(&context, request, &response);
+    if (status.ok()) {
+      EXPECT_NE(driver_session_->id(), response.task().id());
+      driver_session_ = std::make_unique<nidevice_grpc::Session>(response.task());
+    }
+    return status;
+  }
+
+  ::grpc::Status self_cal(SelfCalResponse& response) {
+    ::grpc::ClientContext context;
+    SelfCalRequest request;
+    request.set_device_name(DEVICE_NAME);
+    return stub()->SelfCal(&context, request, &response);
+  }
+
+  ::grpc::Status add_network_device(const std::string& ip_address, AddNetworkDeviceResponse& response) {
+    ::grpc::ClientContext context;
+    AddNetworkDeviceRequest request;
+    request.set_ip_address(ip_address);
+    request.set_device_name_out_buffer_size(1024);
+    return stub()->AddNetworkDevice(&context, request, &response);
+  }
+
+  ::grpc::Status configure_teds(ConfigureTEDSResponse& response) {
+    ::grpc::ClientContext context;
+    ConfigureTEDSRequest request;
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
+    return stub()->ConfigureTEDS(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -1042,6 +1086,49 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError) {
 
   EXPECT_DAQ_ERROR(DAQmxErrorInvalidAttributeValue, status, response);
 }
+
+TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpectedRange) {
+  const auto AI_MIN = 0.0;
+  const auto AI_MAX = 1.0;
+  const auto NUM_SAMPS = 10;
+  create_ai_voltage_chan(AI_MIN, AI_MAX);
+  auto save_response = SaveTaskResponse{};
+  auto status = save_task(save_response);
+  EXPECT_SUCCESS(status, save_response);
+  clear_task();
+  auto load_response = LoadTaskResponse{};
+  status = load_task(load_response);
+  EXPECT_SUCCESS(status, load_response);
+
+  auto read_response = ReadAnalogF64Response{};
+  status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+
+  EXPECT_SUCCESS(status, read_response);
+  EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
+}
+
+
+TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds) {
+  auto response = SelfCalResponse{};
+  auto status = self_cal(response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetworkDeviceProperties) {
+  auto response = AddNetworkDeviceResponse{};
+  auto status = add_network_device("0.0.0.0", response);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorRetrievingNetworkDeviceProperties, status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected) {
+  auto response = ConfigureTEDSResponse{};
+  auto status = configure_teds(response);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorTEDSSensorNotDetected, status, response);
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni

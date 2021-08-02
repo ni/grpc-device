@@ -30,7 +30,7 @@ import asyncio
 from nidevice import nidaqmx_grpc
 import sys
 from grpclib.client import Channel
-
+from grpclib.exceptions import GRPCError
 
 server_address = "localhost"
 server_port = "31763"
@@ -98,6 +98,13 @@ async def main():
 
         print(f"Acquired {response.samps_per_chan_read} samples.")
         print(f"First 5 samples: {response.read_array[:5]}")
+    except GRPCError as e:
+        if e.status.name == "UNIMPLEMENTED":
+            print("The operation is not implemented or is not supported/enabled in this service")
+        else:
+            print(f"GRPCError: {str(e)}")
+    except Exception as e:
+        print(str(e))
     finally:
         if task:
             await daq_service.stop_task(task=task)
