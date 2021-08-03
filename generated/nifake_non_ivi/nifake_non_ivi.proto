@@ -25,7 +25,7 @@ service NiFakeNonIvi {
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
   rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
   rpc OutputArrayOfBytes(OutputArrayOfBytesRequest) returns (OutputArrayOfBytesResponse);
-  rpc RegisterCallback(RegisterCallbackRequest) returns (RegisterCallbackResponse);
+  rpc RegisterCallback(RegisterCallbackRequest) returns (stream RegisterCallbackResponse);
   rpc ReadStream(ReadStreamRequest) returns (stream ReadStreamResponse);
   rpc InputTimestamp(InputTimestampRequest) returns (InputTimestampResponse);
   rpc OutputTimestamp(OutputTimestampRequest) returns (OutputTimestampResponse);

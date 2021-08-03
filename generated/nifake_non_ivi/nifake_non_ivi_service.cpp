@@ -295,6 +295,59 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  ::grpc::experimental::ServerWriteReactor<RegisterCallbackResponse>*
+  NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request)
+  {
+    using CallbackRouter = nidevice_grpc::CallbackRouter<int32, myInt16>;
+    class RegisterCallbackReactor : public nidevice_grpc::ServerWriterReactor<RegisterCallbackResponse, nidevice_grpc::CallbackRegistration> {
+    public:
+    RegisterCallbackReactor(const RegisterCallbackRequest& request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    {
+      auto status = start(&request, library, session_repository);
+      if (!status.ok()) {
+        this->Finish(status);
+      }
+    }
+
+    ::grpc::Status start(const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    {
+      try {
+
+        auto handler = CallbackRouter::register_handler(
+          [this](myInt16 echo_data) {
+          RegisterCallbackResponse callback_response;
+          auto response = &callback_response;
+          response->set_echo_data(echo_data);
+          queue_write(callback_response);
+          return 0;
+        });
+
+        myInt16 input_data = request->input_data();
+  
+        auto status = library->RegisterCallback(input_data, CallbackRouter::handle_callback, handler->token());
+
+        // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
+        StartSendInitialMetadata();
+
+        if (status) {
+          RegisterCallbackResponse failed_to_register_response;
+          failed_to_register_response.set_status(status);
+          queue_write(failed_to_register_response);
+        }
+
+        this->set_producer(std::move(handler));
+      }
+      catch (nidevice_grpc::LibraryLoadException& ex) {
+         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+      }
+
+      return ::grpc::Status::OK;
+    }
+    };
+
+    return new RegisterCallbackReactor(*request, library_, session_repository_);
+
+  }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response)

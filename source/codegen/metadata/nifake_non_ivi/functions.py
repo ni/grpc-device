@@ -171,7 +171,6 @@ functions = {
         'returns': 'int32'
     },
     'RegisterCallback': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -181,6 +180,7 @@ functions = {
             {
                 'callback_params': [
                     {
+                        'direction': 'out',
                         'name': 'echoData',
                         'type': 'myInt16'
                     },
@@ -191,12 +191,14 @@ functions = {
                 'type': 'CallbackPtr'
             },
             {
+                'callback_token': True,
                 'direction': 'out',
                 'include_in_proto': False,
                 'name': 'callbackData',
                 'type': 'void'
             }
         ],
+        'stream_response': True,
         'returns': 'int32'
     },
     'ReadStream': {
