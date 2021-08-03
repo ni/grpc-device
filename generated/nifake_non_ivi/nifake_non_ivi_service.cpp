@@ -12,6 +12,8 @@
 #include <atomic>
 #include <vector>
 #include "custom/nidaqmx_conversions.h"
+#include <server/callback_router.h>
+#include <server/server_reactor.h>
 
 namespace nifake_non_ivi_grpc {
 

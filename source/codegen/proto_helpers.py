@@ -127,7 +127,11 @@ def get_parameters(function):
   callback_parameters = get_callback_output_params(function)
 
   if callback_parameters:
-    output_parameters.extend(callback_parameters)
+    if any((p for p in callback_parameters if p['name'] == 'status')):
+      # if the callback provides a status, it can override default_status_param.
+      output_parameters = callback_parameters
+    else:
+      output_parameters.extend(callback_parameters)
   else:
     output_parameters.extend(
       [p for p in parameter_array if common_helpers.is_output_parameter(p)]

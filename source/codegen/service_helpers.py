@@ -3,6 +3,7 @@ import common_helpers
 
 def get_include_guard_name(config, suffix):
     include_guard_name = config['namespace_component'] + "_grpc" + suffix
+    print(include_guard_name.upper())
     return include_guard_name.upper()
 
 
@@ -29,6 +30,12 @@ def is_output_array_that_needs_coercion(parameter):
     return common_helpers.is_output_parameter(parameter) and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
 
 
+def create_args_for_callback(parameters):
+    return ", ".join([
+        f'{p["type"]} {common_helpers.camel_to_snake(p["name"])}'
+        for p in parameters
+    ])
+
 def create_args(parameters):
     result = ''
     is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(
@@ -48,6 +55,10 @@ def create_args(parameters):
             result = f'{result}{parameter_name}.data(), '
         elif parameter.get('is_size_param', False) and is_twist_mechanism:
             result = f'{result}{twist_value_name}, '
+        elif 'callback_params' in parameter:
+            result = f'{result}CallbackRouter::handle_callback, '
+        elif 'callback_token' in parameter:
+            result =  f'{result}handler->token(), '
         else:
             if is_array and common_helpers.is_struct(parameter):
                 parameter_name = parameter_name + ".data()"
@@ -212,3 +223,20 @@ def get_async_functions(functions):
         for name, data in functions.items() 
         if common_helpers.has_streaming_response(data)
     }
+
+
+def get_callback_method_parameters(function_data):
+    parameters = function_data['parameters']
+    input_parameters = [
+        p
+        for p in parameters
+        if common_helpers.is_input_parameter(p)
+    ]
+    callback_ptr_parameter = next((p for p in parameters if 'callback_params' in p))
+    output_parameters = callback_ptr_parameter['callback_params']
+
+    return input_parameters, output_parameters
+
+
+def create_param_type_list(parameters):
+    return ', '.join([p['type'] for p in parameters])

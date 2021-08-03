@@ -25,6 +25,8 @@ config = {
         'uInt8[]': 'bytes',
         'uInt64': 'uint64',
         'DAQmxDoneEventCallbackPtr': 'void',
+        'DAQmxEveryNSamplesEventCallbackPtr': 'void',
+        'DAQmxSignalEventCallbackPtr': 'void',
         'CVIAbsoluteTime': 'google.protobuf.Timestamp'
     },
     'driver_name': 'NI-DAQMX',

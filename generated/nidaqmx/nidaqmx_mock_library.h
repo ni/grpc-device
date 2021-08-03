@@ -189,6 +189,8 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ReadDigitalU8, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadRaw, (TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved), (override));
   MOCK_METHOD(int32, RegisterDoneEvent, (TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData), (override));
+  MOCK_METHOD(int32, RegisterEveryNSamplesEvent, (TaskHandle task, int32 everyNsamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData), (override));
+  MOCK_METHOD(int32, RegisterSignalEvent, (TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData), (override));
   MOCK_METHOD(int32, RemoveCDAQSyncConnection, (const char portList[]), (override));
   MOCK_METHOD(int32, ReserveNetworkDevice, (const char deviceName[], bool32 overrideReservation), (override));
   MOCK_METHOD(int32, ResetDevice, (const char deviceName[]), (override));

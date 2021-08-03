@@ -9,8 +9,11 @@ def is_input_parameter(parameter):
 def is_pass_null_parameter(parameter):
   return parameter.get('pass_null', False)
 
+def is_callback_token_parameter(parameter):
+  return parameter.get('callback_token', False)
+
 def is_pointer_parameter(parameter):
-  return is_output_parameter(parameter) or is_pass_null_parameter(parameter)
+  return is_output_parameter(parameter) or is_pass_null_parameter(parameter) or is_callback_token_parameter(parameter)
 
 def is_array(dataType):
   return dataType.endswith("[]")
@@ -207,3 +210,30 @@ def is_init_method(function_data):
 
 def has_streaming_response(function_data):
   return function_data.get('stream_response', False)
+
+
+def has_callback_param(function_data):
+  return any((p for p in function_data['parameters'] if 'callback_params' in p))
+
+
+def has_async_streaming_response(function_data):
+  return has_streaming_response(function_data) and has_callback_param(function_data)
+
+
+def get_library_interface_type_name(config):
+  service_class_prefix = config["service_class_prefix"]
+  return f'{service_class_prefix}LibraryInterface'
+
+
+def indent(level):
+  '''For use as a mako filter.'''
+  '''Returns a function that indents a block of text to the provided level.'''
+  def indent_text_to_level(text, level):
+    result = ""
+    indentation = level * "  "
+    for line in text.splitlines(True):
+      result = result + indentation + line
+    return result
+
+  return lambda text: indent_text_to_level(text, level)
+      

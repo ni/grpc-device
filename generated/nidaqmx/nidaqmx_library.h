@@ -190,6 +190,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved);
   int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
+  int32 RegisterEveryNSamplesEvent(TaskHandle task, int32 everyNsamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData);
+  int32 RegisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData);
   int32 RemoveCDAQSyncConnection(const char portList[]);
   int32 ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation);
   int32 ResetDevice(const char deviceName[]);
@@ -408,6 +410,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ReadDigitalU8Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   using ReadRawPtr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved);
   using RegisterDoneEventPtr = int32 (*)(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
+  using RegisterEveryNSamplesEventPtr = int32 (*)(TaskHandle task, int32 everyNsamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData);
+  using RegisterSignalEventPtr = int32 (*)(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData);
   using RemoveCDAQSyncConnectionPtr = int32 (*)(const char portList[]);
   using ReserveNetworkDevicePtr = int32 (*)(const char deviceName[], bool32 overrideReservation);
   using ResetDevicePtr = int32 (*)(const char deviceName[]);
@@ -626,6 +630,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ReadDigitalU8Ptr ReadDigitalU8;
     ReadRawPtr ReadRaw;
     RegisterDoneEventPtr RegisterDoneEvent;
+    RegisterEveryNSamplesEventPtr RegisterEveryNSamplesEvent;
+    RegisterSignalEventPtr RegisterSignalEvent;
     RemoveCDAQSyncConnectionPtr RemoveCDAQSyncConnection;
     ReserveNetworkDevicePtr ReserveNetworkDevice;
     ResetDevicePtr ResetDevice;

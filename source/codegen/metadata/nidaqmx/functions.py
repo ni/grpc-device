@@ -7269,7 +7269,6 @@ functions = {
         'returns': 'int32'
     },
     'RegisterDoneEvent': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -7283,6 +7282,16 @@ functions = {
             },
             {
                 'callback_params': [
+                    {
+                        'direction': 'out',
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'direction': 'out',
+                        'name': 'status',
+                        'type': 'int32'
+                    },
                 ],
                 'direction': 'in',
                 'include_in_proto': False,
@@ -7290,7 +7299,113 @@ functions = {
                 'type': 'DAQmxDoneEventCallbackPtr'
             },
             {
-                'direction': 'out',
+                'callback_token': True,
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'callbackData',
+                'type': 'void'
+            }
+        ],
+        'returns': 'int32',
+        'stream_response': True
+    },
+    'RegisterEveryNSamplesEvent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EveryNSamplesEventType',
+                'name': 'everyNsamplesEventType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'nSamples',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'options',
+                'type': 'uInt32'
+            },
+            {
+                'callback_params': [
+                    {
+                        'direction': 'out',
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'direction': 'out',
+                        'enum': 'EveryNSamplesEventType',
+                        'name': 'everyNsamplesEventType',
+                        'type': 'int32'
+                    },
+                    {
+                        'direction': 'out',
+                        'name': 'nSamples',
+                        'type': 'uInt32'
+                    }
+                ],
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'callbackFunction',
+                'type': 'DAQmxEveryNSamplesEventCallbackPtr'
+            },
+            {
+                'callback_token': True,
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'callbackData',
+                'type': 'void'
+            }
+        ],
+        'returns': 'int32',
+        'stream_response': True
+    },
+    'RegisterSignalEvent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Signal2',
+                'name': 'signalID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'options',
+                'type': 'uInt32'
+            },
+            {
+                'callback_params': [
+                    {
+                        'direction': 'out',
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'direction': 'out',
+                        'name': 'signalID',
+                        'type': 'int32'
+                    }
+                ],
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'callbackFunction',
+                'type': 'DAQmxSignalEventCallbackPtr'
+            },
+            {
+                'callback_token': True,
+                'direction': 'in',
                 'include_in_proto': False,
                 'name': 'callbackData',
                 'type': 'void'

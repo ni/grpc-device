@@ -11,6 +11,7 @@ module_name = config["module_name"]
 if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
+has_async_functions = any(service_helpers.get_async_functions(functions))
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
 
@@ -30,6 +31,10 @@ if len(config["custom_types"]) > 0:
 % for additional_header in config["additional_headers"]:
 #include "${additional_header}"
 % endfor
+% endif
+% if has_async_functions:
+#include <server/callback_router.h>
+#include <server/server_reactor.h>
 % endif
 
 namespace ${config["namespace_component"]}_grpc {
@@ -112,7 +117,16 @@ namespace ${config["namespace_component"]}_grpc {
     parameters = function_data['parameters']
     request_param = service_helpers.get_request_param(method_name)
     response_param = service_helpers.get_response_param(method_name)
+    response_type = service_helpers.get_response_type(method_name)
+    is_async_streaming = common_helpers.has_async_streaming_response(function_data)
 %>\
+% if is_async_streaming:
+  ::grpc::experimental::ServerWriteReactor<${response_type}>*
+  ${service_class_prefix}Service::${method_name}(::grpc::CallbackServerContext* context, ${request_param})
+  {
+${mako_helper.define_async_callback_method_body(function_name=function_name, function_data=function_data, parameters=parameters, config=config)}
+  }
+% else:
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
@@ -143,6 +157,7 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
 % endif
   }
 
+% endif
 % endfor
 } // namespace ${config["namespace_component"]}_grpc
 
