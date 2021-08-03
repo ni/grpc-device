@@ -72,26 +72,21 @@ namespace nifake_non_ivi_grpc {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
-template <size_t N, typename VarArgsTuple>
-const char* get_string_if(const google::protobuf::RepeatedPtrField<VarArgsTuple>& vector)
-{
-  if (vector.size() > N) {
-    return vector[N].mystring().c_str();
-  }
-  return nullptr;
-}
-
-template <size_t N, typename VarArgsTuple>
-const BeautifulColor get_enum_if(const google::protobuf::RepeatedPtrField<VarArgsTuple>& vector)
-{
-  if (vector.size() > N) {
-    return vector[N].myenum();
-  }
-  return static_cast<BeautifulColor>(0);
-}
 
 ::grpc::Status NiFakeNonIviService::InputVarArgs(::grpc::ServerContext* context, const InputVarArgsRequest* request, InputVarArgsResponse* response)
 {
+  auto get_string_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> const char* {
+    if (vector.size() > n) {
+      return vector[n].mystring().c_str();
+    }
+    return nullptr;
+  };
+  auto get_enum_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> BeautifulColor {
+    if (vector.size() > n) {
+      return vector[n].myenum();
+    }
+    return static_cast<BeautifulColor>(0);
+  };
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
@@ -104,7 +99,7 @@ const BeautifulColor get_enum_if(const google::protobuf::RepeatedPtrField<VarArg
     if (varargs.size() > 5) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 5 values for string_and_enums were specified");
     }
-    auto status = library_->InputVarArgs(name.c_str(), get_string_if<0>(varargs), get_enum_if<0>(varargs), get_string_if<1>(varargs), get_enum_if<1>(varargs), get_string_if<2>(varargs), get_enum_if<2>(varargs), get_string_if<3>(varargs), get_enum_if<3>(varargs), get_string_if<4>(varargs), get_enum_if<4>(varargs));
+    auto status = library_->InputVarArgs(name.c_str(), get_string_if(varargs, 0), get_enum_if(varargs, 0), get_string_if(varargs, 1), get_enum_if(varargs, 1), get_string_if(varargs, 2), get_enum_if(varargs, 2), get_string_if(varargs, 3), get_enum_if(varargs, 3), get_string_if(varargs, 4), get_enum_if(varargs, 4));
     response->set_status(status);
     return ::grpc::Status::OK;
   }
