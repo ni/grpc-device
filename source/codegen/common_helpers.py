@@ -226,8 +226,8 @@ def get_library_interface_type_name(config):
 
 
 def indent(level):
-  '''For use as a mako filter.'''
-  '''Returns a function that indents a block of text to the provided level.'''
+  """For use as a mako filter.
+     Returns a function that indents a block of text to the provided level."""
   def indent_text_to_level(text, level):
     result = ""
     indentation = level * "  "
@@ -237,3 +237,8 @@ def indent(level):
 
   return lambda text: indent_text_to_level(text, level)
       
+
+def filter_parameters_for_grpc_fields(parameters):
+  """Filter out the parameters that shouldn't be represented by a field on a grpc message.
+     For example, get rid of any parameters whose values should be determined from another parameter."""
+  return [p for p in parameters if p.get('include_in_proto', True)]

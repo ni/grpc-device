@@ -315,11 +315,11 @@ namespace nifake_non_ivi_grpc {
 
         auto handler = CallbackRouter::register_handler(
           [this](myInt16 echo_data) {
-          RegisterCallbackResponse callback_response;
-          auto response = &callback_response;
-          response->set_echo_data(echo_data);
-          queue_write(callback_response);
-          return 0;
+            RegisterCallbackResponse callback_response;
+            auto response = &callback_response;
+            response->set_echo_data(echo_data);
+            queue_write(callback_response);
+            return 0;
         });
 
         myInt16 input_data = request->input_data();

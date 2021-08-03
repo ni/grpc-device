@@ -3,7 +3,6 @@ import common_helpers
 
 def get_include_guard_name(config, suffix):
     include_guard_name = config['namespace_component'] + "_grpc" + suffix
-    print(include_guard_name.upper())
     return include_guard_name.upper()
 
 

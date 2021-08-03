@@ -389,7 +389,7 @@ class NiDAQmxDriverApiTests : public Test {
     RegisterEveryNSamplesEventRequest request;
     set_request_session_id(request);
     request.set_n_samples(n_samples);
-    request.set_every_nsamples_event_type(EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER);
+    request.set_every_n_samples_event_type(EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER);
     return stub()->RegisterEveryNSamplesEvent(&context, request);
   }
 

@@ -3,8 +3,8 @@
 //---------------------------------------------------------------------
 // Library wrapper for implementing interactions with NI-DAQMX
 //---------------------------------------------------------------------
-#ifndef NIDAQMX_LIBRARY_INTERFACE
-#define NIDAQMX_LIBRARY_INTERFACE
+#ifndef NIDAQMX_GRPC_LIBRARY_WRAPPER_H
+#define NIDAQMX_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
 #include <NIDAQmx.h>
@@ -187,7 +187,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved) = 0;
   virtual int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData) = 0;
-  virtual int32 RegisterEveryNSamplesEvent(TaskHandle task, int32 everyNsamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData) = 0;
+  virtual int32 RegisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData) = 0;
   virtual int32 RegisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData) = 0;
   virtual int32 RemoveCDAQSyncConnection(const char portList[]) = 0;
   virtual int32 ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation) = 0;
@@ -236,4 +236,4 @@ class NiDAQmxLibraryInterface {
 };
 
 }  // namespace nidaqmx_grpc
-#endif /* NIDAQMX_LIBRARY_INTERFACE */
+#endif  // NIDAQMX_GRPC_LIBRARY_WRAPPER_H

@@ -89,7 +89,7 @@ ${set_response_values(output_parameters)}\
 <%def name="define_async_callback_method_body(function_name, function_data, parameters, config)">\
 <%
   (input_parameters, callback_parameters) = service_helpers.get_callback_method_parameters(function_data)
-  response_parameters = [p for p in callback_parameters if p['grpc_type'] != 'nidevice_grpc.Session']
+  response_parameters = common_helpers.filter_parameters_for_grpc_fields(callback_parameters)
   request_type = service_helpers.get_request_type(function_name)
   response_type = service_helpers.get_response_type(function_name)
   driver_library_interface = common_helpers.get_library_interface_type_name(config)
@@ -111,13 +111,13 @@ ${set_response_values(output_parameters)}\
 
         auto handler = CallbackRouter::register_handler(
           [this](${service_helpers.create_args_for_callback(callback_parameters)}) {
-          ${response_type} callback_response;
-          auto response = &callback_response;
-<%block filter="common_helpers.indent(1)">\
+            ${response_type} callback_response;
+            auto response = &callback_response;
+<%block filter="common_helpers.indent(2)">\
 ${set_response_values(output_parameters=response_parameters)}\
 </%block>\
-          queue_write(callback_response);
-          return 0;
+            queue_write(callback_response);
+            return 0;
         });
 
 <%block filter="common_helpers.indent(1)">\

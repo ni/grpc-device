@@ -8377,11 +8377,11 @@ namespace nidaqmx_grpc {
 
         auto handler = CallbackRouter::register_handler(
           [this](TaskHandle task, int32 status) {
-          RegisterDoneEventResponse callback_response;
-          auto response = &callback_response;
-          response->set_status(status);
-          queue_write(callback_response);
-          return 0;
+            RegisterDoneEventResponse callback_response;
+            auto response = &callback_response;
+            response->set_status(status);
+            queue_write(callback_response);
+            return 0;
         });
 
         auto task_grpc_session = request->task();
@@ -8432,30 +8432,30 @@ namespace nidaqmx_grpc {
       try {
 
         auto handler = CallbackRouter::register_handler(
-          [this](TaskHandle task, int32 every_nsamples_event_type, uInt32 n_samples) {
-          RegisterEveryNSamplesEventResponse callback_response;
-          auto response = &callback_response;
-          response->set_every_nsamples_event_type(static_cast<nidaqmx_grpc::EveryNSamplesEventType>(every_nsamples_event_type));
-          response->set_every_nsamples_event_type_raw(every_nsamples_event_type);
-          response->set_n_samples(n_samples);
-          queue_write(callback_response);
-          return 0;
+          [this](TaskHandle task, int32 every_n_samples_event_type, uInt32 n_samples) {
+            RegisterEveryNSamplesEventResponse callback_response;
+            auto response = &callback_response;
+            response->set_every_n_samples_event_type(static_cast<nidaqmx_grpc::EveryNSamplesEventType>(every_n_samples_event_type));
+            response->set_every_n_samples_event_type_raw(every_n_samples_event_type);
+            response->set_n_samples(n_samples);
+            queue_write(callback_response);
+            return 0;
         });
 
         auto task_grpc_session = request->task();
         TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-        int32 every_nsamples_event_type;
-        switch (request->every_nsamples_event_type_enum_case()) {
-          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNsamplesEventTypeEnumCase::kEveryNsamplesEventType: {
-            every_nsamples_event_type = static_cast<int32>(request->every_nsamples_event_type());
+        int32 every_n_samples_event_type;
+        switch (request->every_n_samples_event_type_enum_case()) {
+          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::kEveryNSamplesEventType: {
+            every_n_samples_event_type = static_cast<int32>(request->every_n_samples_event_type());
             break;
           }
-          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNsamplesEventTypeEnumCase::kEveryNsamplesEventTypeRaw: {
-            every_nsamples_event_type = static_cast<int32>(request->every_nsamples_event_type_raw());
+          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::kEveryNSamplesEventTypeRaw: {
+            every_n_samples_event_type = static_cast<int32>(request->every_n_samples_event_type_raw());
             break;
           }
-          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNsamplesEventTypeEnumCase::EVERY_NSAMPLES_EVENT_TYPE_ENUM_NOT_SET: {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for every_nsamples_event_type was not specified or out of range");
+          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::EVERY_N_SAMPLES_EVENT_TYPE_ENUM_NOT_SET: {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for every_n_samples_event_type was not specified or out of range");
             break;
           }
         }
@@ -8464,7 +8464,7 @@ namespace nidaqmx_grpc {
         uInt32 options = request->options();
   
   
-        auto status = library->RegisterEveryNSamplesEvent(task, every_nsamples_event_type, n_samples, options, CallbackRouter::handle_callback, handler->token());
+        auto status = library->RegisterEveryNSamplesEvent(task, every_n_samples_event_type, n_samples, options, CallbackRouter::handle_callback, handler->token());
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
@@ -8508,11 +8508,11 @@ namespace nidaqmx_grpc {
 
         auto handler = CallbackRouter::register_handler(
           [this](TaskHandle task, int32 signal_id) {
-          RegisterSignalEventResponse callback_response;
-          auto response = &callback_response;
-          response->set_signal_id(signal_id);
-          queue_write(callback_response);
-          return 0;
+            RegisterSignalEventResponse callback_response;
+            auto response = &callback_response;
+            response->set_signal_id(signal_id);
+            queue_write(callback_response);
+            return 0;
         });
 
         auto task_grpc_session = request->task();

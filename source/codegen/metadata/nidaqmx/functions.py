@@ -7284,6 +7284,7 @@ functions = {
                 'callback_params': [
                     {
                         'direction': 'out',
+                        'include_in_proto': False,
                         'name': 'task',
                         'type': 'TaskHandle'
                     },
@@ -7291,7 +7292,7 @@ functions = {
                         'direction': 'out',
                         'name': 'status',
                         'type': 'int32'
-                    },
+                    }
                 ],
                 'direction': 'in',
                 'include_in_proto': False,
@@ -7319,7 +7320,7 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'EveryNSamplesEventType',
-                'name': 'everyNsamplesEventType',
+                'name': 'everyNSamplesEventType',
                 'type': 'int32'
             },
             {
@@ -7336,13 +7337,14 @@ functions = {
                 'callback_params': [
                     {
                         'direction': 'out',
+                        'include_in_proto': False,
                         'name': 'task',
                         'type': 'TaskHandle'
                     },
                     {
                         'direction': 'out',
                         'enum': 'EveryNSamplesEventType',
-                        'name': 'everyNsamplesEventType',
+                        'name': 'everyNSamplesEventType',
                         'type': 'int32'
                     },
                     {
@@ -7389,6 +7391,7 @@ functions = {
                 'callback_params': [
                     {
                         'direction': 'out',
+                        'include_in_proto': False,
                         'name': 'task',
                         'type': 'TaskHandle'
                     },
