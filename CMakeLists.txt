@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.12.0)
 
 project(ni_grpc_device_server C CXX)
 
+# Workaround for: https://bugs.chromium.org/p/boringssl/issues/detail?id=423
+if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
+  set(CMAKE_SYSTEM_PROCESSOR "amd64")
+endif()
+
 #----------------------------------------------------------------------
 # Use the grpc targets directly from this build, only when not cross-compiling.
 #----------------------------------------------------------------------

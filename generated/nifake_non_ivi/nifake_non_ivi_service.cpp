@@ -295,7 +295,7 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
-  ::grpc::experimental::ServerWriteReactor<RegisterCallbackResponse>*
+  ::grpc::ServerWriteReactor<RegisterCallbackResponse>*
   NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request)
   {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, myInt16>;

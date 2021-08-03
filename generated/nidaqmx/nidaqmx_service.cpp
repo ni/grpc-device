@@ -8357,7 +8357,7 @@ namespace nidaqmx_grpc {
     }
   }
 
-  ::grpc::experimental::ServerWriteReactor<RegisterDoneEventResponse>*
+  ::grpc::ServerWriteReactor<RegisterDoneEventResponse>*
   NiDAQmxService::RegisterDoneEvent(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request)
   {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32>;
@@ -8410,7 +8410,7 @@ namespace nidaqmx_grpc {
 
     return new RegisterDoneEventReactor(*request, library_, session_repository_);
   }
-  ::grpc::experimental::ServerWriteReactor<RegisterEveryNSamplesEventResponse>*
+  ::grpc::ServerWriteReactor<RegisterEveryNSamplesEventResponse>*
   NiDAQmxService::RegisterEveryNSamplesEvent(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request)
   {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32, uInt32>;
@@ -8482,7 +8482,7 @@ namespace nidaqmx_grpc {
 
     return new RegisterEveryNSamplesEventReactor(*request, library_, session_repository_);
   }
-  ::grpc::experimental::ServerWriteReactor<RegisterSignalEventResponse>*
+  ::grpc::ServerWriteReactor<RegisterSignalEventResponse>*
   NiDAQmxService::RegisterSignalEvent(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request)
   {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32>;

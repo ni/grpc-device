@@ -24,7 +24,7 @@ async_functions = service_helpers.get_async_functions(functions)
 has_async_functions = any(async_functions)
 base_class_name = f"{service_class_prefix}::Service"
 for async_function in async_functions.keys():
-  base_class_name = f"{service_class_prefix}::ExperimentalWithCallbackMethod_{async_function}<{base_class_name}>"
+  base_class_name = f"{service_class_prefix}::WithCallbackMethod_{async_function}<{base_class_name}>"
 %>\
 
 //---------------------------------------------------------------------
@@ -64,7 +64,7 @@ public:
   response_type = service_helpers.get_response_type(method_name)
 %>\
 % if function in async_functions:
-  ::grpc::experimental::ServerWriteReactor<${response_type}>* ${method_name}(::grpc::CallbackServerContext* context, const ${request_type}* request) override;
+  ::grpc::ServerWriteReactor<${response_type}>* ${method_name}(::grpc::CallbackServerContext* context, const ${request_type}* request) override;
 % else:
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${request_type}* request, ${response_type}* response) override;
 % endif

@@ -121,7 +121,7 @@ namespace ${config["namespace_component"]}_grpc {
     is_async_streaming = common_helpers.has_async_streaming_response(function_data)
 %>\
 % if is_async_streaming:
-  ::grpc::experimental::ServerWriteReactor<${response_type}>*
+  ::grpc::ServerWriteReactor<${response_type}>*
   ${service_class_prefix}Service::${method_name}(::grpc::CallbackServerContext* context, ${request_param})
   {
 ${mako_helper.define_async_callback_method_body(function_name=function_name, function_data=function_data, parameters=parameters, config=config)}\

@@ -6,7 +6,7 @@
 #include <thread>
 namespace nifake_non_ivi_grpc {
 
-::grpc::experimental::ServerWriteReactor<ReadStreamResponse>* NiFakeNonIviService::ReadStream(::grpc::CallbackServerContext* context, const ReadStreamRequest* request)
+::grpc::ServerWriteReactor<ReadStreamResponse>* NiFakeNonIviService::ReadStream(::grpc::CallbackServerContext* context, const ReadStreamRequest* request)
 {
   // Wraps a thread to call join on destruct.
   struct AutoJoinThread {
