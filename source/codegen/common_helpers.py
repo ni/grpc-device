@@ -12,6 +12,9 @@ def is_pass_null_parameter(parameter):
 def is_pointer_parameter(parameter):
   return is_output_parameter(parameter) or is_pass_null_parameter(parameter)
 
+def is_varargs(parameter):
+  return parameter.get('var_args', False)
+
 def is_array(dataType):
   return dataType.endswith("[]")
 

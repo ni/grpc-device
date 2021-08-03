@@ -89,8 +89,8 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
     return result[:-2]
 
 
-def create_params(parameters):
-    return ', '.join(create_param(p) for p in parameters)
+def create_params(parameters, expand_varargs=True):
+    return ', '.join(create_param(p, expand_varargs) for p in parameters)
 
 
 def get_array_param_size(parameter) -> str:
@@ -100,7 +100,22 @@ def get_array_param_size(parameter) -> str:
     return ''
 
 
-def create_param(parameter):
+def expand_varargs_parameters(parameters):
+    if not any([common_helpers.is_varargs(p) for p in parameters]):
+        return parameters
+    # omit the varargs parameter that we're going to expand
+    new_parameters = parameters[:-1]
+    varargs_parameter = parameters[-1]
+    assert common_helpers.is_varargs(varargs_parameter)
+    max_length = varargs_parameter['max_length']
+    # TODO - use list comprehension or something fancy
+    for i in range(max_length):
+        for field in varargs_parameter['varargs_type']['fields']:
+            new_parameters.append({'cppName': f'{field["name"]}{i}'})
+    return new_parameters
+
+
+def create_param(parameter, expand_varargs=True):
     type = parameter['type']
     name = parameter['cppName']
     if common_helpers.is_struct(parameter):
@@ -110,6 +125,22 @@ def create_param(parameter):
         return f'{type[:-2]} {name}[{array_size}]'
     elif common_helpers.is_pointer_parameter(parameter):
         return f'{type}* {name}'
+    elif common_helpers.is_varargs(parameter):
+        if expand_varargs:
+            max_length = parameter['max_length']
+            # TODO - use list comprehension or something fancy
+            s = ''
+            for i in range(max_length):
+                for field in parameter['varargs_type']['fields']:
+                    # TODO - sigh, refactor this to do a recursive call
+                    if common_helpers.is_array(field['type']):
+                        array_size = get_array_param_size(field)
+                        s += f'{field["type"][:-2]} {field["name"]}{i}[{array_size}], '
+                    else:
+                        s += f'{field["type"]} {field["name"]}{i}, '
+            return s[:-2]
+        else:
+            return '...'
     else:
         return f'{type} {name}'
 

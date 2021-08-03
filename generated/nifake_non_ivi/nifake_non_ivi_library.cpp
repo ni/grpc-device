@@ -33,6 +33,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadStream = reinterpret_cast<ReadStreamPtr>(shared_library_.get_function_pointer("niFakeNonIvi_ReadStream"));
   function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
   function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputTimestamp"));
+  function_pointers_.InputVarArgs = reinterpret_cast<InputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputVarArgs"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -187,6 +188,18 @@ int32 NiFakeNonIviLibrary::OutputTimestamp(CVIAbsoluteTime* when)
   return niFakeNonIvi_OutputTimestamp(when);
 #else
   return function_pointers_.OutputTimestamp(when);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char channelName[], int32 color, const char myString0[], int32 myEnum0, const char myString1[], int32 myEnum1, const char myString2[], int32 myEnum2, const char myString3[], int32 myEnum3)
+{
+  if (!function_pointers_.InputVarArgs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputVarArgs.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2, myString3, myEnum3);
+#else
+  return function_pointers_.InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2, myString3, myEnum3);
 #endif
 }
 

@@ -28,6 +28,22 @@ def sanitize_names(parameters):
         if parameter['cppName'] in RESERVED_WORDS:
             parameter['cppName'] += 'Parameter'
 
+
+def set_var_args_types(parameters, config):
+    """TODO"""
+    for parameter in parameters:
+        if common_helpers.is_varargs(parameter):
+            # TODO - maybe don't need this part?
+            parameter['type'] = '...'
+            if not parameter['grpc_type'].startswith('repeated '):
+                raise Exception("varargs grpc_type " +
+                                parameter['grpc_type'] + " must be repeated")
+            stripped_grpc_type = parameter['grpc_type'][len('repeated '):]
+            custom_param = [t for t in config['custom_types']
+                            if t['grpc_name'] == stripped_grpc_type][0]
+            parameter['varargs_type'] = custom_param
+
+
 def mark_size_params(parameters):
     """Marks the size parameters in the metadata."""
     for param in parameters:

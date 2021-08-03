@@ -242,5 +242,36 @@ functions = {
             },
         ],
         'returns': 'int32'
-    }
+    },
+    'InputVarArgs': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'inputName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'enum': 'BeautifulColor',
+                'name': 'color',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'var_args': True,
+                'name': 'stringAndEnums',
+                'grpc_type': 'repeated StringAndEnum',
+                'max_length': 4
+            }
+        ],
+        'returns': 'int32'
+    },
 }

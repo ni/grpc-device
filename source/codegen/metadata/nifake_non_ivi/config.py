@@ -11,7 +11,25 @@ config = {
     'close_function': 'Close',
     'driver_name': 'NI-FAKE-NON-IVI',
     'resource_handle_type': 'FakeHandle',
-    'custom_types': [],
+    'custom_types': [
+        {
+            'name': 'StringAndEnum',
+            'grpc_name': 'StringAndEnum',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'myString',
+                    'grpc_name': 'myString'
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'BeautifulColor',
+                    'name': 'myEnum',
+                    'grpc_name': 'myEnum'
+                }
+            ]
+        }
+    ],
     'additional_headers': ['custom/nidaqmx_conversions.h'],
     'type_to_grpc_type': {
         'FakeHandle': 'nidevice_grpc.Session',

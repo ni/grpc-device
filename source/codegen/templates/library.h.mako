@@ -34,7 +34,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
   parameters = f['parameters']
   return_type = f['returns']
 %>\
-  ${return_type} ${method_name}(${service_helpers.create_params(parameters)});
+  ${return_type} ${method_name}(${service_helpers.create_params(parameters, expand_varargs=False)});
 % endfor
 
  private:
@@ -44,7 +44,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
   parameters = f['parameters']
   return_type = f['returns']
 %>\
-  using ${method_name}Ptr = ${return_type} (*)(${service_helpers.create_params(parameters)});
+  using ${method_name}Ptr = ${return_type} (*)(${service_helpers.create_params(parameters, expand_varargs=False)});
 % endfor
 
   typedef struct FunctionPointers {

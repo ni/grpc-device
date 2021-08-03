@@ -30,6 +30,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 ReadStream(int32 start, int32 stop, int32* value);
   int32 InputTimestamp(CVIAbsoluteTime when);
   int32 OutputTimestamp(CVIAbsoluteTime* when);
+  int32 InputVarArgs(const char inputName[], const char channelName[], int32 color, ...);
 
  private:
   using ClosePtr = int32 (*)(FakeHandle handle);
@@ -44,6 +45,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using ReadStreamPtr = int32 (*)(int32 start, int32 stop, int32* value);
   using InputTimestampPtr = int32 (*)(CVIAbsoluteTime when);
   using OutputTimestampPtr = int32 (*)(CVIAbsoluteTime* when);
+  using InputVarArgsPtr = int32 (*)(const char inputName[], const char channelName[], int32 color, ...);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
@@ -58,6 +60,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     ReadStreamPtr ReadStream;
     InputTimestampPtr InputTimestamp;
     OutputTimestampPtr OutputTimestamp;
+    InputVarArgsPtr InputVarArgs;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

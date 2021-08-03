@@ -72,4 +72,44 @@ namespace nifake_non_ivi_grpc {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
+template <size_t N, typename VarArgsTuple>
+const char* get_string_if(const google::protobuf::RepeatedPtrField<VarArgsTuple>& vector)
+{
+  if (vector.size() > N) {
+    return vector[N].mystring().c_str();
+  }
+  return nullptr;
+}
+
+template <size_t N, typename VarArgsTuple>
+const BeautifulColor get_enum_if(const google::protobuf::RepeatedPtrField<VarArgsTuple>& vector)
+{
+  if (vector.size() > N) {
+    return vector[N].myenum();
+  }
+  return static_cast<BeautifulColor>(0);
+}
+
+::grpc::Status NiFakeNonIviService::InputVarArgs(::grpc::ServerContext* context, const InputVarArgsRequest* request, InputVarArgsResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto name = request->input_name();
+    auto varargs = request->string_and_enums();
+    if (varargs.size() == 0) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for string_and_enums were specified");
+    }
+    if (varargs.size() > 5) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 5 values for string_and_enums were specified");
+    }
+    auto status = library_->InputVarArgs(name.c_str(), get_string_if<0>(varargs), get_enum_if<0>(varargs), get_string_if<1>(varargs), get_enum_if<1>(varargs), get_string_if<2>(varargs), get_enum_if<2>(varargs), get_string_if<3>(varargs), get_enum_if<3>(varargs), get_string_if<4>(varargs), get_enum_if<4>(varargs));
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::LibraryLoadException& ex) {
+    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  }
+}
 }  // namespace nifake_non_ivi_grpc
