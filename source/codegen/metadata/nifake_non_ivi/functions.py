@@ -181,7 +181,7 @@ functions = {
                 'callback_params': [
                     {
                         'direction': 'out',
-                        'name': 'echoData',
+                        'name': 'dataOut',
                         'type': 'myInt16'
                     },
                 ],

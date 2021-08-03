@@ -228,11 +228,12 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, WaitForMetadata_ShutdownAndRead_CleanS
   reader->Read(&response);
 }
 
+const auto CALLBACK_DATA_OUT = 1234;
 ACTION(ImmediatelyCallCallback)
 {
   auto& callback_function = arg1;
   auto& callback_token = arg2;
-  callback_function(1234, callback_token);
+  callback_function(CALLBACK_DATA_OUT, callback_token);
 }
 
 TEST_F(NiFakeNonIviServiceTests_EndToEnd, RegisterCallbackAndImmediatelyCall_ReadAsyncResponse_CallbackDataIncludedInResponse) {
@@ -251,7 +252,7 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, RegisterCallbackAndImmediatelyCall_Rea
   auto status = reader->Read(&response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_EQ(TEST_VALUE, response.echo_data());
+  EXPECT_EQ(CALLBACK_DATA_OUT, response.data_out());
 }
 
 }  // namespace integration
