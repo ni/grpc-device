@@ -108,7 +108,6 @@ ${set_response_values(output_parameters)}\
     ::grpc::Status start(const ${request_type}* request, ${driver_library_interface}* library, const ResourceRepositorySharedPtr& session_repository_)
     {
       try {
-
         auto handler = CallbackRouter::register_handler(
           [this](${service_helpers.create_args_for_callback(callback_parameters)}) {
             ${response_type} callback_response;
@@ -123,6 +122,7 @@ ${set_response_values(output_parameters=response_parameters)}\
 <%block filter="common_helpers.indent(1)">\
 ${initialize_input_params(function_name, parameters)}\
 </%block>\
+
         auto status = library->${function_name}(${service_helpers.create_args(parameters)});
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
@@ -174,21 +174,21 @@ ${set_response_values(output_parameters=output_parameters)}\
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
-${initialize_input_param(function_name, parameter)}
+${initialize_input_param(function_name, parameter)}\
 % endfor
 </%def>
 
 ## Initialize an input parameter for an API call.
 <%def name="initialize_input_param(function_name, parameter)">\
 % if common_helpers.is_enum(parameter):
-${initialize_enum_input_param(function_name, parameter)}\
+${initialize_enum_input_param(function_name, parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
-${initialize_len_input_param(parameter)}\
+${initialize_len_input_param(parameter)}
 % elif common_helpers.is_pass_null_parameter(parameter):
-${initialize_pass_null_param(parameter)}\
+${initialize_pass_null_param(parameter)}
 % else:
-${initialize_standard_input_param(function_name, parameter)}\
+${initialize_standard_input_param(function_name, parameter)}
 % endif
 </%def>
 

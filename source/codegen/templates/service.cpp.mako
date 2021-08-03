@@ -124,7 +124,7 @@ namespace ${config["namespace_component"]}_grpc {
   ::grpc::experimental::ServerWriteReactor<${response_type}>*
   ${service_class_prefix}Service::${method_name}(::grpc::CallbackServerContext* context, ${request_param})
   {
-${mako_helper.define_async_callback_method_body(function_name=function_name, function_data=function_data, parameters=parameters, config=config)}
+${mako_helper.define_async_callback_method_body(function_name=function_name, function_data=function_data, parameters=parameters, config=config)}\
   }
 % else:
   //---------------------------------------------------------------------

@@ -312,7 +312,6 @@ namespace nifake_non_ivi_grpc {
     ::grpc::Status start(const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
     {
       try {
-
         auto handler = CallbackRouter::register_handler(
           [this](myInt16 data_out) {
             RegisterCallbackResponse callback_response;
@@ -323,7 +322,7 @@ namespace nifake_non_ivi_grpc {
         });
 
         myInt16 input_data = request->input_data();
-  
+
         auto status = library->RegisterCallback(input_data, CallbackRouter::handle_callback, handler->token());
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
@@ -346,7 +345,6 @@ namespace nifake_non_ivi_grpc {
     };
 
     return new RegisterCallbackReactor(*request, library_, session_repository_);
-
   }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------

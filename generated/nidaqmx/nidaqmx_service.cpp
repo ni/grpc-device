@@ -8374,7 +8374,6 @@ namespace nidaqmx_grpc {
     ::grpc::Status start(const RegisterDoneEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
     {
       try {
-
         auto handler = CallbackRouter::register_handler(
           [this](TaskHandle task, int32 status) {
             RegisterDoneEventResponse callback_response;
@@ -8387,8 +8386,7 @@ namespace nidaqmx_grpc {
         auto task_grpc_session = request->task();
         TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
         uInt32 options = request->options();
-  
-  
+
         auto status = library->RegisterDoneEvent(task, options, CallbackRouter::handle_callback, handler->token());
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
@@ -8411,7 +8409,6 @@ namespace nidaqmx_grpc {
     };
 
     return new RegisterDoneEventReactor(*request, library_, session_repository_);
-
   }
   ::grpc::experimental::ServerWriteReactor<RegisterEveryNSamplesEventResponse>*
   NiDAQmxService::RegisterEveryNSamplesEvent(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request)
@@ -8430,7 +8427,6 @@ namespace nidaqmx_grpc {
     ::grpc::Status start(const RegisterEveryNSamplesEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
     {
       try {
-
         auto handler = CallbackRouter::register_handler(
           [this](TaskHandle task, int32 every_n_samples_event_type, uInt32 n_samples) {
             RegisterEveryNSamplesEventResponse callback_response;
@@ -8462,8 +8458,7 @@ namespace nidaqmx_grpc {
   
         uInt32 n_samples = request->n_samples();
         uInt32 options = request->options();
-  
-  
+
         auto status = library->RegisterEveryNSamplesEvent(task, every_n_samples_event_type, n_samples, options, CallbackRouter::handle_callback, handler->token());
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
@@ -8486,7 +8481,6 @@ namespace nidaqmx_grpc {
     };
 
     return new RegisterEveryNSamplesEventReactor(*request, library_, session_repository_);
-
   }
   ::grpc::experimental::ServerWriteReactor<RegisterSignalEventResponse>*
   NiDAQmxService::RegisterSignalEvent(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request)
@@ -8505,7 +8499,6 @@ namespace nidaqmx_grpc {
     ::grpc::Status start(const RegisterSignalEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
     {
       try {
-
         auto handler = CallbackRouter::register_handler(
           [this](TaskHandle task, int32 signal_id) {
             RegisterSignalEventResponse callback_response;
@@ -8534,8 +8527,7 @@ namespace nidaqmx_grpc {
         }
   
         uInt32 options = request->options();
-  
-  
+
         auto status = library->RegisterSignalEvent(task, signal_id, options, CallbackRouter::handle_callback, handler->token());
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
@@ -8558,7 +8550,6 @@ namespace nidaqmx_grpc {
     };
 
     return new RegisterSignalEventReactor(*request, library_, session_repository_);
-
   }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
