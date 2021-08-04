@@ -332,5 +332,43 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputVarArgs(::grpc::ServerContext* context, const InputVarArgsRequest* request, InputVarArgsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto input_name = request->input_name().c_str();
+      auto string_and_enums = request->string_and_enums();
+      if (string_and_enums.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for stringAndEnums were specified");
+      }
+      if (string_and_enums.size() > 4) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 4 values for stringAndEnums were specified");
+      }
+      auto get_myString_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> const char* {
+            if (vector.size() > static_cast<int>(n)) {
+                  return vector[n].mystring().c_str();
+            }
+            return nullptr;
+      };
+      auto get_myEnum_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> int32 {
+            if (vector.size() > static_cast<int>(n)) {
+                  return vector[n].myenum();
+            }
+            return 0;
+      };
+
+      auto status = library_->InputVarArgs(input_name, get_myString_if(string_and_enums, 0), get_myEnum_if(string_and_enums, 0), get_myString_if(string_and_enums, 1), get_myEnum_if(string_and_enums, 1), get_myString_if(string_and_enums, 2), get_myEnum_if(string_and_enums, 2), get_myString_if(string_and_enums, 3), get_myEnum_if(string_and_enums, 3));
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 } // namespace nifake_non_ivi_grpc
 

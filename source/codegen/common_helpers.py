@@ -12,7 +12,8 @@ def is_pass_null_parameter(parameter):
 def is_pointer_parameter(parameter):
   return is_output_parameter(parameter) or is_pass_null_parameter(parameter)
 
-def is_varargs(parameter):
+
+def is_varargs_parameter(parameter):
   return parameter.get('var_args', False)
 
 def is_array(dataType):
@@ -46,6 +47,12 @@ def get_input_and_output_custom_types(functions):
 
 def is_string_arg(parameter):
   return parameter['grpc_type'] in ['string', 'bytes']
+
+
+def strip_repeated_from_grpc_type(grpc_type):
+  if not grpc_type.startswith('repeated '):
+      raise Exception("varargs grpc_type " + grpc_type + " must be repeated")
+  return grpc_type[len('repeated '):]
 
 def get_underlying_type_name(parameter_type):
   '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
@@ -180,6 +187,10 @@ def is_ivi_dance_array_param(parameter):
 
 def has_ivi_dance_param(parameters):
   return any(is_ivi_dance_array_param(p) for p in parameters)
+
+
+def has_varargs_parameter(parameters):
+  return any(is_varargs_parameter(p) for p in parameters)
 
 def get_ivi_dance_params(parameters):
   array_param = next((p for p in parameters if is_ivi_dance_array_param(p)), None)

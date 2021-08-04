@@ -244,7 +244,6 @@ functions = {
         'returns': 'int32'
     },
     'InputVarArgs': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',

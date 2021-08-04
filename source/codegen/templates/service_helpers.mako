@@ -85,6 +85,24 @@ ${set_response_values(output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
+## Generate the core method body for a method with varargs. This should be what gets included within the try block in the service method.
+<%def name="define_varargs_method_body(function_name, function_data, parameters)">\
+<%
+  config = data['config']
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+%>\
+${initialize_input_params(function_name, [p for p in parameters if p.get('include_in_proto', True)] )}\
+${initialize_output_params(output_parameters)}\
+      auto status = library_->${function_name}(${service_helpers.create_args_for_varargs(parameters)});
+      response->set_status(status);
+% if output_parameters:
+      if (status == 0) {
+${set_response_values(output_parameters=output_parameters)}\
+      }
+% endif
+      return ::grpc::Status::OK;\
+</%def>
+
 ## Generate the core method body for an ivi-dance method. This should be what gets included within the try block in the service method.
 <%def name="define_simple_method_body(function_name, function_data, parameters)">\
 <%
@@ -124,9 +142,54 @@ ${initialize_enum_input_param(function_name, parameter)}\
 ${initialize_len_input_param(parameter)}\
 % elif common_helpers.is_pass_null_parameter(parameter):
 ${initialize_pass_null_param(parameter)}\
+% elif common_helpers.is_varargs_parameter(parameter):
+${initialize_varargs_param(parameter)}\
 % else:
 ${initialize_standard_input_param(function_name, parameter)}\
 % endif
+</%def>
+
+<%def name="initialize_varargs_param(parameter)">\
+<%
+  config = data['config']
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  field_name = common_helpers.camel_to_snake(parameter["name"])
+  stripped_grpc_type = common_helpers.strip_repeated_from_grpc_type(parameter['grpc_type'])
+  request_snippet = f'request->{field_name}()'
+  c_type = parameter['type']
+  c_type_pointer = c_type.replace('[]','*')
+  max_vector_size = parameter['max_length']
+%>\
+      auto ${parameter_name} = request->${field_name}();
+      if (${parameter_name}.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for ${parameter["name"]} were specified");
+      }
+      if (${parameter_name}.size() > ${max_vector_size}) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than ${max_vector_size} values for ${parameter["name"]} were specified");
+      }
+% for member in parameter['varargs_type']['fields']:
+<%
+  member_c_type = member['type']
+  member_c_type_pointer = member_c_type.replace('[]','*')
+  # In gRPC fields, the names of the fields in the struct are lowercase
+  member_name = member['name'].lower()
+%>\
+      auto get_${member['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, size_t n) -> ${member_c_type_pointer} {
+            if (vector.size() > static_cast<int>(n)) {
+% if common_helpers.is_string_arg(member):
+                  return vector[n].${member_name}().c_str();
+% else:
+                  return vector[n].${member_name}();
+% endif            
+            }
+% if common_helpers.is_string_arg(member):
+            return nullptr;
+% else:
+            return 0;
+% endif
+      };
+% endfor
+      ## TODO
 </%def>
 
 ## Initialize an enum input parameter for an API call.

@@ -191,15 +191,15 @@ int32 NiFakeNonIviLibrary::OutputTimestamp(CVIAbsoluteTime* when)
 #endif
 }
 
-int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char channelName[], int32 color, const char myString0[], int32 myEnum0, const char myString1[], int32 myEnum1, const char myString2[], int32 myEnum2, const char myString3[], int32 myEnum3)
+int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char channelName[], int32 color, const char myString0[], int32 myEnum0, const char myString1[], int32 myEnum1, const char myString2[], int32 myEnum2)
 {
   if (!function_pointers_.InputVarArgs) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputVarArgs.");
   }
 #if defined(_MSC_VER)
-  return niFakeNonIvi_InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2, myString3, myEnum3);
+  return niFakeNonIvi_InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2);
 #else
-  return function_pointers_.InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2, myString3, myEnum3);
+  return function_pointers_.InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2);
 #endif
 }
 

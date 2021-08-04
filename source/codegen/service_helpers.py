@@ -89,8 +89,26 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
     return result[:-2]
 
 
+def create_args_for_varargs(parameters):
+    result = ''
+    for parameter in parameters:
+        name = common_helpers.camel_to_snake(parameter['cppName'])
+        if not parameter.get('include_in_proto', True):
+            continue
+        if common_helpers.is_varargs_parameter(parameter):
+            max_length = parameter['max_length']
+            # TODO - use list comprehension or something fancy
+            for i in range(max_length):
+                for field in parameter['varargs_type']['fields']:
+                    result += f'get_{field["name"]}_if({name}, {i}), '
+        else:
+            result += f'{name}, '
+    return result[:-2]
+
+
 def create_params(parameters, expand_varargs=True):
-    return ', '.join(create_param(p, expand_varargs) for p in parameters)
+    any_not_include_in_proto = any([p for p in parameters if not p.get('include_in_proto', True)])
+    return ', '.join(create_param(p, expand_varargs, any_not_include_in_proto) for p in parameters)
 
 
 def get_array_param_size(parameter) -> str:
@@ -101,13 +119,16 @@ def get_array_param_size(parameter) -> str:
 
 
 def expand_varargs_parameters(parameters):
-    if not any([common_helpers.is_varargs(p) for p in parameters]):
+    if not common_helpers.has_varargs_parameter(parameters):
         return parameters
     # omit the varargs parameter that we're going to expand
     new_parameters = parameters[:-1]
     varargs_parameter = parameters[-1]
-    assert common_helpers.is_varargs(varargs_parameter)
+    assert common_helpers.is_varargs_parameter(varargs_parameter)
     max_length = varargs_parameter['max_length']
+    # TODO - document
+    if any([p for p in parameters if not p.get('include_in_proto', True)]):
+        max_length -= 1
     # TODO - use list comprehension or something fancy
     for i in range(max_length):
         for field in varargs_parameter['varargs_type']['fields']:
@@ -115,7 +136,7 @@ def expand_varargs_parameters(parameters):
     return new_parameters
 
 
-def create_param(parameter, expand_varargs=True):
+def create_param(parameter, expand_varargs=True, any_not_include_in_proto=False):
     type = parameter['type']
     name = parameter['cppName']
     if common_helpers.is_struct(parameter):
@@ -125,9 +146,11 @@ def create_param(parameter, expand_varargs=True):
         return f'{type[:-2]} {name}[{array_size}]'
     elif common_helpers.is_pointer_parameter(parameter):
         return f'{type}* {name}'
-    elif common_helpers.is_varargs(parameter):
+    elif common_helpers.is_varargs_parameter(parameter):
         if expand_varargs:
             max_length = parameter['max_length']
+            if any_not_include_in_proto:
+                max_length -= 1
             # TODO - use list comprehension or something fancy
             s = ''
             for i in range(max_length):
@@ -239,7 +262,7 @@ def get_response_type(method_name):
 
 def get_async_functions(functions):
     return {
-        name: data 
-        for name, data in functions.items() 
+        name: data
+        for name, data in functions.items()
         if common_helpers.has_streaming_response(data)
     }

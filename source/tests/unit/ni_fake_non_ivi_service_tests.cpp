@@ -467,7 +467,7 @@ TEST_F(NiFakeNonIviServiceTests, RegisterCallbackAndImmediatelyCall_CallbackData
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
 {
-  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel"), BEAUTIFUL_COLOR_PINK, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED))
+  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel"), BEAUTIFUL_COLOR_PINK, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -484,7 +484,7 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED))
+  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -502,9 +502,9 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FiveArgumentPairs)
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, StrEq("channel2"), BEAUTIFUL_COLOR_GREEN, StrEq("channel3"), BEAUTIFUL_COLOR_PINK, StrEq("channel4"), BEAUTIFUL_COLOR_BLACK))
+  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, StrEq("channel2"), BEAUTIFUL_COLOR_GREEN, StrEq("channel3"), BEAUTIFUL_COLOR_BLACK))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -520,9 +520,6 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FiveArgumentPairs)
   arg->set_myenum(BEAUTIFUL_COLOR_GREEN);
   arg = request.add_string_and_enums();
   arg->set_mystring("channel3");
-  arg->set_myenum(BEAUTIFUL_COLOR_PINK);
-  arg = request.add_string_and_enums();
-  arg->set_mystring("channel4");
   arg->set_myenum(BEAUTIFUL_COLOR_BLACK);
   InputVarArgsResponse response;
 
@@ -533,7 +530,7 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FiveArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_NoArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _))
+  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -545,14 +542,14 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_NoArgumentPairs)
   EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
 }
 
-TEST_F(NiFakeNonIviServiceTests, InputVarArgs_SixArgumentPairs)
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FiveArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _))
+  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
   request.set_input_name("inputName");
-  for (auto i = 0; i < 6; i++) {
+  for (auto i = 0; i < 5; i++) {
     request.add_string_and_enums();
   }
   InputVarArgsResponse response;

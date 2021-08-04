@@ -29,7 +29,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, ReadStream, (int32 start, int32 stop, int32* value), (override));
   MOCK_METHOD(int32, InputTimestamp, (CVIAbsoluteTime when), (override));
   MOCK_METHOD(int32, OutputTimestamp, (CVIAbsoluteTime* when), (override));
-  MOCK_METHOD(int32, InputVarArgs, (const char inputName[], const char channelName[], int32 color, const char myString0[], int32 myEnum0, const char myString1[], int32 myEnum1, const char myString2[], int32 myEnum2, const char myString3[], int32 myEnum3), (override));
+  MOCK_METHOD(int32, InputVarArgs, (const char inputName[], const char channelName[], int32 color, const char myString0[], int32 myEnum0, const char myString1[], int32 myEnum1, const char myString2[], int32 myEnum2), (override));
 };
 
 }  // namespace unit
