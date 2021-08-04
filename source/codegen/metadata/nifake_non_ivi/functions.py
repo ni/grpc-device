@@ -265,6 +265,12 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
+                'name': 'powerUpState',
+                'type': 'double'
+            },
+            {
+                'direction': 'in',
                 'var_args': True,
                 'name': 'stringAndEnums',
                 'grpc_type': 'repeated StringAndEnum',

@@ -360,8 +360,14 @@ namespace nifake_non_ivi_grpc {
             }
             return 0;
       };
+      auto get_powerUpState_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> double {
+            if (vector.size() > static_cast<int>(n)) {
+                  return vector[n].powerupstate();
+            }
+            return 0;
+      };
 
-      auto status = library_->InputVarArgs(input_name, get_myString_if(string_and_enums, 0), get_myEnum_if(string_and_enums, 0), get_myString_if(string_and_enums, 1), get_myEnum_if(string_and_enums, 1), get_myString_if(string_and_enums, 2), get_myEnum_if(string_and_enums, 2), get_myString_if(string_and_enums, 3), get_myEnum_if(string_and_enums, 3));
+      auto status = library_->InputVarArgs(input_name, get_myString_if(string_and_enums, 0), get_myEnum_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_myString_if(string_and_enums, 1), get_myEnum_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_myString_if(string_and_enums, 2), get_myEnum_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_myString_if(string_and_enums, 3), get_myEnum_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
       response->set_status(status);
       return ::grpc::Status::OK;
     }

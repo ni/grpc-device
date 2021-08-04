@@ -191,15 +191,15 @@ int32 NiFakeNonIviLibrary::OutputTimestamp(CVIAbsoluteTime* when)
 #endif
 }
 
-int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char channelName[], int32 color, const char myString0[], int32 myEnum0, const char myString1[], int32 myEnum1, const char myString2[], int32 myEnum2)
+int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char myString0[], int32 myEnum0, double powerUpState0, const char myString1[], int32 myEnum1, double powerUpState1, const char myString2[], int32 myEnum2, double powerUpState2)
 {
   if (!function_pointers_.InputVarArgs) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputVarArgs.");
   }
 #if defined(_MSC_VER)
-  return niFakeNonIvi_InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2);
+  return niFakeNonIvi_InputVarArgs(inputName, channelName, color, powerUpState, myString0, myEnum0, powerUpState0, myString1, myEnum1, powerUpState1, myString2, myEnum2, powerUpState2);
 #else
-  return function_pointers_.InputVarArgs(inputName, channelName, color, myString0, myEnum0, myString1, myEnum1, myString2, myEnum2);
+  return function_pointers_.InputVarArgs(inputName, channelName, color, powerUpState, myString0, myEnum0, powerUpState0, myString1, myEnum1, powerUpState1, myString2, myEnum2, powerUpState2);
 #endif
 }
 

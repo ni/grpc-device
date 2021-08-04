@@ -26,7 +26,12 @@ config = {
                     'enum': 'BeautifulColor',
                     'name': 'myEnum',
                     'grpc_name': 'myEnum'
-                }
+                },
+                {
+                    'type': 'double',
+                    'name': 'powerUpState',
+                    'grpc_name': 'powerUpState'
+                },
             ]
         }
     ],
