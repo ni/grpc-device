@@ -10,6 +10,7 @@ namespace ni {
 namespace tests {
 namespace integration {
 
+using namespace ::testing;
 using namespace nifake_non_ivi_grpc;
 
 // Test NiFakeNonIviService using a client stub.
@@ -225,6 +226,33 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, WaitForMetadata_ShutdownAndRead_CleanS
   shutdown();
   ReadStreamResponse response;
   reader->Read(&response);
+}
+
+const auto CALLBACK_DATA_OUT = 1234;
+ACTION(ImmediatelyCallCallback)
+{
+  auto& callback_function = arg1;
+  auto& callback_token = arg2;
+  callback_function(CALLBACK_DATA_OUT, callback_token);
+}
+
+TEST_F(NiFakeNonIviServiceTests_EndToEnd, RegisterCallbackAndImmediatelyCall_ReadAsyncResponse_CallbackDataIncludedInResponse) {
+  const myInt16 TEST_VALUE = 25;
+  ::grpc::ClientContext context;
+  RegisterCallbackRequest request;
+  request.set_input_data(TEST_VALUE);
+  EXPECT_CALL(library_, RegisterCallback(TEST_VALUE, _, _))
+      .WillOnce(DoAll(
+          ImmediatelyCallCallback(),
+          Return(kDriverSuccess)));
+  auto reader = stub()->RegisterCallback(&context, request);
+  reader->WaitForInitialMetadata();
+
+  RegisterCallbackResponse response;
+  auto status = reader->Read(&response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(CALLBACK_DATA_OUT, response.data_out());
 }
 
 }  // namespace integration

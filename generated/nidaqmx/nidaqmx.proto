@@ -189,6 +189,8 @@ service NiDAQmx {
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc ReadRaw(ReadRawRequest) returns (ReadRawResponse);
   rpc RegisterDoneEvent(RegisterDoneEventRequest) returns (stream RegisterDoneEventResponse);
+  rpc RegisterEveryNSamplesEvent(RegisterEveryNSamplesEventRequest) returns (stream RegisterEveryNSamplesEventResponse);
+  rpc RegisterSignalEvent(RegisterSignalEventRequest) returns (stream RegisterSignalEventResponse);
   rpc RemoveCDAQSyncConnection(RemoveCDAQSyncConnectionRequest) returns (RemoveCDAQSyncConnectionResponse);
   rpc ReserveNetworkDevice(ReserveNetworkDeviceRequest) returns (ReserveNetworkDeviceResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
@@ -425,6 +427,12 @@ enum EncoderZIndexPhase1 {
   ENCODER_Z_INDEX_PHASE1_A_LOW_B_LOW = 10043;
 }
 
+enum EveryNSamplesEventType {
+  EVERY_N_SAMPLES_EVENT_TYPE_UNSPECIFIED = 0;
+  EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER = 1;
+  EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER = 2;
+}
+
 enum ExcitationSource {
   EXCITATION_SOURCE_UNSPECIFIED = 0;
   EXCITATION_SOURCE_INTERNAL = 10200;
@@ -630,6 +638,14 @@ enum Signal {
   SIGNAL_COUNTER_OUTPUT_EVENT = 12494;
   SIGNAL_CHANGE_DETECTION_EVENT = 12511;
   SIGNAL_WDT_EXPIRED_EVENT = 12512;
+}
+
+enum Signal2 {
+  SIGNAL2_UNSPECIFIED = 0;
+  SIGNAL2_SAMPLE_COMPLETE_EVENT = 12530;
+  SIGNAL2_COUNTER_OUTPUT_EVENT = 12494;
+  SIGNAL2_CHANGE_DETECTION_EVENT = 12511;
+  SIGNAL2_SAMPLE_CLOCK = 12487;
 }
 
 enum Slope1 {
@@ -3962,6 +3978,37 @@ message RegisterDoneEventRequest {
 
 message RegisterDoneEventResponse {
   int32 status = 1;
+}
+
+message RegisterEveryNSamplesEventRequest {
+  nidevice_grpc.Session task = 1;
+  oneof every_n_samples_event_type_enum {
+    EveryNSamplesEventType every_n_samples_event_type = 2;
+    int32 every_n_samples_event_type_raw = 3;
+  }
+  uint32 n_samples = 4;
+  uint32 options = 5;
+}
+
+message RegisterEveryNSamplesEventResponse {
+  int32 status = 1;
+  EveryNSamplesEventType every_n_samples_event_type = 2;
+  int32 every_n_samples_event_type_raw = 3;
+  uint32 n_samples = 4;
+}
+
+message RegisterSignalEventRequest {
+  nidevice_grpc.Session task = 1;
+  oneof signal_id_enum {
+    Signal2 signal_id = 2;
+    int32 signal_id_raw = 3;
+  }
+  uint32 options = 4;
+}
+
+message RegisterSignalEventResponse {
+  int32 status = 1;
+  int32 signal_id = 2;
 }
 
 message RemoveCDAQSyncConnectionRequest {

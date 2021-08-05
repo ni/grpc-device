@@ -12,9 +12,6 @@
 using namespace nifake_non_ivi_grpc;
 using namespace ::testing;
 
-const int32 kDriverSuccess = 0;
-const int32 kDriverFailure = 1;
-
 namespace ni {
 namespace tests {
 namespace unit {
@@ -440,29 +437,6 @@ TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingSecondSizeOption_Returns
 
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_IOTA_OF_SIZE(response, SIZE_TWO);
-}
-
-ACTION(ImmediatelyCallCallback)
-{
-  auto& callback_function = arg1;
-  auto& callback_token = arg2;
-  callback_function(1234, callback_token);
-}
-
-TEST_F(NiFakeNonIviServiceTests, RegisterCallbackAndImmediatelyCall_CallbackDataIncludedInResponse)
-{
-  const int16_t TEST_VALUE = 25;
-  ::grpc::ServerContext context;
-  RegisterCallbackRequest request;
-  request.set_input_data(TEST_VALUE);
-  RegisterCallbackResponse response;
-  EXPECT_CALL(library_, RegisterCallback(TEST_VALUE, _, _))
-      .WillOnce(DoAll(
-          ImmediatelyCallCallback(),
-          Return(kDriverSuccess)));
-  service_.RegisterCallback(&context, &request, &response);
-
-  EXPECT_EQ(TEST_VALUE, response.echo_data());
 }
 
 const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
