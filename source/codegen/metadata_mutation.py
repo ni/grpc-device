@@ -39,6 +39,9 @@ def set_var_args_types(parameters, config):
             custom_param = [t for t in config['custom_types']
                             if t['grpc_name'] == stripped_grpc_type][0]
             populate_grpc_types(custom_param['fields'], config)
+            sanitize_names(custom_param['fields'])
+            for field in custom_param['fields']:
+                field['direction'] = parameter['direction']
             parameter['varargs_type'] = custom_param
 
 

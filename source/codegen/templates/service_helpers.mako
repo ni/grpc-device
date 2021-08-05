@@ -189,7 +189,6 @@ ${initialize_standard_input_param(function_name, parameter)}\
 % endif
       };
 % endfor
-      ## TODO
 </%def>
 
 ## Initialize an enum input parameter for an API call.

@@ -97,7 +97,6 @@ def create_args_for_varargs(parameters):
             continue
         if common_helpers.is_varargs_parameter(parameter):
             max_length = parameter['max_length']
-            # TODO - use list comprehension or something fancy
             for i in range(max_length):
                 for field in parameter['varargs_type']['fields']:
                     result += f'get_{field["name"]}_if({name}, {i}), '
@@ -126,10 +125,11 @@ def expand_varargs_parameters(parameters):
     varargs_parameter = parameters[-1]
     assert common_helpers.is_varargs_parameter(varargs_parameter)
     max_length = varargs_parameter['max_length']
-    # TODO - document
+    # Many (all?) functions that take varargs take the first set of parameter as
+    # non-varargs. If this is the case, we need one fewer set of parameters in the varargs
+    # section.
     if any([p for p in parameters if not p.get('include_in_proto', True)]):
         max_length -= 1
-    # TODO - use list comprehension or something fancy
     for i in range(max_length):
         for field in varargs_parameter['varargs_type']['fields']:
             new_parameters.append({'cppName': f'{field["name"]}{i}'})
@@ -154,12 +154,10 @@ def create_param(parameter, expand_varargs=True, any_not_include_in_proto=False)
             s = ''
             for i in range(max_length):
                 for field in parameter['varargs_type']['fields']:
-                    # TODO - sigh, refactor this to do a recursive call
-                    if common_helpers.is_array(field['type']):
-                        array_size = get_array_param_size(field)
-                        s += f'{field["type"][:-2]} {field["name"]}{i}[{array_size}], '
-                    else:
-                        s += f'{field["type"]} {field["name"]}{i}, '
+                    real_field_name = field['cppName']
+                    field['cppName'] = f'{real_field_name}{i}'
+                    s += create_param(field, expand_varargs=False) + ', '
+                    field['cppName'] = real_field_name
             return s[:-2]
         else:
             return '...'
