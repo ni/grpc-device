@@ -36,6 +36,11 @@ jobs:
     - name: Install mako
       run: python -m pip install mako
 
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 10
+
     # The URL used to download this toolchain may change in the future as
     # improvements to hosting and exports of the NILRT toolchain are made.
     - name: Install NI Linux RT CC Toolchain

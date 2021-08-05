@@ -25,11 +25,11 @@ jobs:
             name: "Windows Build", artifact: "Windows.tar.xz",
             os: windows-latest,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-            cmake_platform: "-A x64"
+            cmake_platform: ""
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
-            os: ubuntu-16.04,
+            os: ubuntu-latest,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: ""
           }
@@ -55,7 +55,12 @@ jobs:
     - name: Install Ninja
       if: runner.os == 'Linux'
       run: sudo apt-get install -y ninja-build
-          
+      
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 10
+
     - name: Update Submodules
       run: git submodule update --init --recursive
 
