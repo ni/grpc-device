@@ -56,12 +56,6 @@ jobs:
       if: runner.os == 'Linux'
       run: sudo apt-get install -y ninja-build
 
-    - name: Set Swap Space
-      if: runner.os == 'Linux'
-      uses: pierotofy/set-swap-space@master
-      with:
-        swap-size-gb: 10
-
     - name: Update Submodules
       run: git submodule update --init --recursive
 

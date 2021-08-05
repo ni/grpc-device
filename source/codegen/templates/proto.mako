@@ -19,6 +19,9 @@ uses_timestamp = common_helpers.any_function_uses_timestamp(functions)
 // Proto file for the ${config["driver_name"]} Metadata
 //---------------------------------------------------------------------
 syntax = "proto3";
+% if service_class_prefix == "NiDAQmx":
+option optimize_for = CODE_SIZE;
+% endif
 
 option java_multiple_files = true;
 option java_package = "${config["java_package"]}";
