@@ -151,7 +151,6 @@ def create_param(parameter, expand_varargs=True, any_not_include_in_proto=False)
             max_length = parameter['max_length']
             if any_not_include_in_proto:
                 max_length -= 1
-            # TODO - use list comprehension or something fancy
             s = ''
             for i in range(max_length):
                 for field in parameter['varargs_type']['fields']:
