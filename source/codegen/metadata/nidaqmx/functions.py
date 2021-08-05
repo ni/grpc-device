@@ -5708,6 +5708,900 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetAIACExcitFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIACExcitSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIACExcitWireMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ACExcitWireMode',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIADCCustomTimingMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIADCTimingMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ADCTimingMode',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAccel4WireDCVoltageSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAccel4WireDCVoltageSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AccelSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAccelChargeSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAccelChargeSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AccelChargeSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAccelSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAccelSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AccelSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAccelUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AccelUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAcceldBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAtten': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAutoZeroMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AutoZeroType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIAveragingWinSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeBalanceCoarsePot': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeBalanceFinePot': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'BridgeConfiguration1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeElectricalUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeInitialRatio': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeInitialVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeNomResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgePhysicalUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgePolyForwardCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgePolyReverseCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ScaleType4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalGainAdjust': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalSelect': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ShuntCalSelect',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalShuntCalAActualResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalShuntCalAResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalShuntCalASrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'BridgeShuntCalSource',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalShuntCalBActualResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeShuntCalShuntCalBResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeTableElectricalVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeTablePhysicalVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeTwoPointLinFirstElectricalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeTwoPointLinFirstPhysicalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeTwoPointLinSecondElectricalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeTwoPointLinSecondPhysicalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIBridgeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'BridgeUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalApplyCalIfExp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetAIChanCalCalDate': {
         'parameters': [
             {
@@ -5748,6 +6642,55 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetAIChanCalDesc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalEnableCal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetAIChanCalExpDate': {
         'parameters': [
             {
@@ -5784,6 +6727,3997 @@ functions = {
                 'direction': 'out',
                 'name': 'minute',
                 'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalHasValidCalInfo': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalOperatorName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalPolyForwardCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalPolyReverseCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ScaleType3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalTablePreScaledVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalTableScaledVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalVerifAcqVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChanCalVerifRefVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChargeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ChargeUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIChopEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAICoupling': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Coupling1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAICurrentACRMSUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CurrentUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAICurrentShuntLoc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CurrentShuntResistorLocation1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAICurrentShuntResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAICurrentUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CurrentUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAICustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDCOffset': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDataXferCustomThreshold': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDataXferMaxRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDevScalingCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrBandpassCenterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrBandpassWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrHighpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrLowpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrNotchCenterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrNotchWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FilterResponse',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDigFltrType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FilterType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIDitherEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIEddyCurrentProxProbeSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIEddyCurrentProxProbeSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'EddyCurrentProxProbeSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIEddyCurrentProxProbeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LengthUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIEnhancedAliasRejectionEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitActualVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitDCorAC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ExcitationDCorAC',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitIdleOutputBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ExcitationIdleOutputBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitSense': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Sense',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ExcitationSource',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitUseForScaling': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitUseMultiplexed': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIExcitVoltageOrCurrent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ExcitationVoltageOrCurrent',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFilterDelayAdjustment': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalWidthUnits4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFilterEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFilterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFilterOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFilterResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FilterResponse1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIForceIEPESensorSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIForceIEPESensorSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ForceIEPESensorSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIForceReadFromChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIForceUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ForceUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFreqHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFreqThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FrequencyUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIInputLimitsFaultDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIInputLimitsFaultDetectLowerLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIInputLimitsFaultDetectUpperLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIInputSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIIsTEDS': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILVDTSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILVDTSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LVDTSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILVDTUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LengthUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILeadWireResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILossyLSBRemovalCompressedSampSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILowpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILowpassEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILowpassSwitchCapClkSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SourceSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILowpassSwitchCapExtClkDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILowpassSwitchCapExtClkFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAILowpassSwitchCapOutClkDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIMeasType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AIMeasurementType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIMicrophoneSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIOpenChanDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIOpenThrmcplDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIOvercurrentDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIPowerSupplyFaultDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIPressureUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'PressureUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIProbeAtten': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRTDA': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRTDB': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRTDC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRTDR0': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRTDType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'RTDType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRVDTSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRVDTSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'RVDTSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRVDTUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AngleUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRawDataCompressionType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'RawDataCompressionType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRawSampJustification': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DataJustification1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRawSampSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRemoveFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIResistanceCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ResistanceConfiguration',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIResistanceUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ResistanceUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIResolution': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIResolutionUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ResolutionType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRngHigh': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRngLow': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRosetteStrainGageOrientation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRosetteStrainGageRosetteMeasType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'StrainGageRosetteMeasurementType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRosetteStrainGageRosetteType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'StrainGageRosetteType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIRosetteStrainGageStrainChans': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAISampAndHoldEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAISensorPowerCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SensorPowerCfg',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAISensorPowerType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SensorPowerType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAISensorPowerVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAISoundPressureMaxSoundPressureLvl': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAISoundPressureUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SoundPressureUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAISoundPressuredBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIStrainGageCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'StrainGageBridgeType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIStrainGageForceReadFromChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIStrainGageGageFactor': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIStrainGagePoissonRatio': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIStrainUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'StrainUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAITEDSUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAITempUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TemperatureUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAITermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmcplCJCChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmcplCJCSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CJCSource1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmcplCJCVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmcplLeadOffsetVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmcplScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ScaleType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmcplType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ThermocoupleType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmstrA': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmstrB': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmstrC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIThrmstrR1': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAITorqueUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TorqueUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIVelocityIEPESensorSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIVelocityIEPESensorSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'VelocityIEPESensorSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIVelocityIEPESensordBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIVelocityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'VelocityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIVoltageACRMSUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'VoltageUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIVoltageUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'VoltageUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAIVoltagedBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOCurrentUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CurrentUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOCustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACOffsetExtSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACOffsetSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SourceSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACOffsetVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACRefAllowConnToGnd': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACRefConnToGnd': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACRefExtSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACRefSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SourceSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACRefVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACRngHigh': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODACRngLow': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'OutputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAODevScalingCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOEnhancedImageRejectionEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFilterDelayAdjustment': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalWidthUnits4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFuncGenAmplitude': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFuncGenFMDeviation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFuncGenFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFuncGenModulationType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ModulationType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFuncGenOffset': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFuncGenSquareDutyCycle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOFuncGenType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FuncGenType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOIdleOutputBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AOIdleOutputBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOLoadImpedance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOOutputImpedance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOOutputType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AOOutputChannelType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOReglitchEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOResolution': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOResolutionUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ResolutionType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'OutputTermCfg',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOVoltageCurrentLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAOVoltageUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'VoltageUnits2',
+                'name': 'data',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
@@ -5833,6 +10767,7134 @@ functions = {
                 'direction': 'in',
                 'name': 'portListSize',
                 'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetBufInputBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetBufInputOnbrdBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetBufOutputBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetBufOutputOnbrdBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIAngEncoderInitialAngle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIAngEncoderPulsesPerRev': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIAngEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AngleUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountDirThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetResetCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesCountResetThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesDir': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CountDirection1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesDirTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesGateWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Level1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesInitialCnt': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICountEdgesThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseMasterTimebaseDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICtrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCICustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDupCountPrevent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIDutyCycleTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderAInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderBInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderDecodingType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'EncoderType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZIndexEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZIndexPhase': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'EncoderZIndexPhase1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZIndexVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIEncoderZInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalWidthUnits4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFilterEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFilterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFilterOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFilterResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FilterResponse1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqEnableAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqMeasMeth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CounterFrequencyMethod',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FrequencyUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIGPSSyncMethod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'GpsSignalType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIGPSSyncSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCILinEncoderDistPerPulse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCILinEncoderInitialPos': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCILinEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LengthUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIMaxMeasPeriod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIMeasType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CIMeasurementType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCINumPossiblyInvalidSamps': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIOutputState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Level1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodEnableAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodMeasMeth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CounterFrequencyMethod',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPeriodUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPrescaler': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FrequencyUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTicksTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseTimeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TimeUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIPulseWidthUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISampClkOverrunBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SampClkOverrunBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISampClkOverrunSentinelVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCISemiPeriodUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITCReached': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITimestampInitialSeconds': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITimestampUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TimeUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepFirstTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepSecondTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCITwoEdgeSepUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityAngEncoderPulsesPerRev': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityAngEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'AngularVelocityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderAInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderAInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderAInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderAInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderAInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderAInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderAInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderBInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderBInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderBInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderBInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderBInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderBInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderBInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityEncoderDecodingType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'EncoderType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityLinEncoderDistPerPulse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityLinEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'VelocityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCIVelocityMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOAutoIncrCnt': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOConstrainedGenMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ConstrainedGenMode',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseMasterTimebaseDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOCtrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'OutputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOEnableInitialDelayOnRetrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOOutputState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Level1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOOutputType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'COOutputType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPrescaler': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseDone': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseDutyCyc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseFreqInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'FrequencyUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseHighTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseHighTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseIdleState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'Level1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseLowTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseLowTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseTicksInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseTimeInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOPulseTimeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'TimeUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCORdyForNewVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalAccConnectionCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalDevTemp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalRecommendedAccConnectionCountLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalUserDefinedInfo': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalUserDefinedInfoMaxSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetChanDescr': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetChanIsGlobal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetChanSyncUnlockBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SyncUnlockBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetChanType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ChannelType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIAcquireOn': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SampleClockActiveOrInactiveEdgeSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'InputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDigFltrEnableBusMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIInvertLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDILogicFamily': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicFamily',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDINumLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDITristate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'OutputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOGenerateOn': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SampleClockActiveOrInactiveEdgeSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOInvertLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOLineStatesDoneState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalLineState',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOLineStatesPausedState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalLineState',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOLineStatesStartState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalLineState',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOLogicFamily': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'LogicFamily',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDONumLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOOutputDriveType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalDriveType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOOvercurrentAutoReenable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOOvercurrentLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOOvercurrentReenablePeriod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOTristate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetDOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
             }
         ],
         'returns': 'int32'
@@ -5890,6 +17952,36 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExtCalLastTemp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExtCalRecommendedInterval': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
                 'type': 'uInt32'
             }
         ],
@@ -6031,6 +18123,35 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetPhysicalChanName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetRefTrigTimestampVal': {
         'parameters': [
             {
@@ -6077,6 +18198,36 @@ functions = {
                 'direction': 'out',
                 'name': 'minute',
                 'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSelfCalLastTemp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSelfCalSupported': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'bool32'
             }
         ],
         'returns': 'int32'
@@ -7442,6 +19593,7941 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ResetAIACExcitFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIACExcitSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIACExcitWireMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIADCCustomTimingMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIADCTimingMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAccel4WireDCVoltageSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAccel4WireDCVoltageSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAccelChargeSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAccelChargeSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAccelSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAccelSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAccelUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAcceldBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAtten': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAutoZeroMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIAveragingWinSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeBalanceCoarsePot': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeBalanceFinePot': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeElectricalUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeInitialRatio': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeInitialVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeNomResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgePhysicalUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgePolyForwardCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgePolyReverseCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalGainAdjust': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalSelect': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalShuntCalAActualResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalShuntCalAResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalShuntCalASrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalShuntCalBActualResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeShuntCalShuntCalBResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeTableElectricalVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeTablePhysicalVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeTwoPointLinFirstElectricalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeTwoPointLinFirstPhysicalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeTwoPointLinSecondElectricalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeTwoPointLinSecondPhysicalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIBridgeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalApplyCalIfExp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalDesc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalEnableCal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalOperatorName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalPolyForwardCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalPolyReverseCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalTablePreScaledVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalTableScaledVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalVerifAcqVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChanCalVerifRefVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChargeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIChopEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAICoupling': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAICurrentACRMSUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAICurrentShuntLoc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAICurrentShuntResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAICurrentUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAICustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDCOffset': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDataXferCustomThreshold': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDataXferMaxRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrBandpassCenterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrBandpassWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrHighpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrLowpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrNotchCenterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrNotchWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDigFltrType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIDitherEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIEddyCurrentProxProbeSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIEddyCurrentProxProbeSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIEddyCurrentProxProbeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIEnhancedAliasRejectionEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitActualVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitDCorAC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitIdleOutputBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitSense': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitUseForScaling': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitUseMultiplexed': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIExcitVoltageOrCurrent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFilterDelayAdjustment': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFilterEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFilterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFilterOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFilterResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIForceIEPESensorSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIForceIEPESensorSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIForceReadFromChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIForceUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFreqHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFreqThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIImpedance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIInputLimitsFaultDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIInputLimitsFaultDetectLowerLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIInputLimitsFaultDetectUpperLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIInputSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILVDTSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILVDTSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILVDTUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILeadWireResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILossyLSBRemovalCompressedSampSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILowpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILowpassEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILowpassSwitchCapClkSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILowpassSwitchCapExtClkDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILowpassSwitchCapExtClkFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAILowpassSwitchCapOutClkDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIMicrophoneSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIOpenChanDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIOpenThrmcplDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIOvercurrentDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIPowerSupplyFaultDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIPressureUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIProbeAtten': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRTDA': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRTDB': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRTDC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRTDR0': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRTDType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRVDTSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRVDTSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRVDTUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRawDataCompressionType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRemoveFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIResistanceCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIResistanceUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRngHigh': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRngLow': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRosetteStrainGageOrientation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIRosetteStrainGageRosetteMeasType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAISampAndHoldEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAISensorPowerCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAISensorPowerType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAISensorPowerVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAISoundPressureMaxSoundPressureLvl': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAISoundPressureUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAISoundPressuredBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIStrainGageCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIStrainGageForceReadFromChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIStrainGageGageFactor': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIStrainGagePoissonRatio': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIStrainUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAITempUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAITermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmcplCJCVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmcplLeadOffsetVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmcplScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmcplType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmstrA': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmstrB': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmstrC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIThrmstrR1': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAITorqueUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIVelocityIEPESensorSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIVelocityIEPESensorSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIVelocityIEPESensordBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIVelocityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIVoltageACRMSUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIVoltageUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAIVoltagedBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOCurrentUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOCustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACOffsetExtSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACOffsetSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACOffsetVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACRefAllowConnToGnd': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACRefConnToGnd': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACRefExtSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACRefSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACRefVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACRngHigh': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODACRngLow': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOEnhancedImageRejectionEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFilterDelayAdjustment': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFuncGenAmplitude': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFuncGenFMDeviation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFuncGenFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFuncGenModulationType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFuncGenOffset': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFuncGenSquareDutyCycle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOFuncGenType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOIdleOutputBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOLoadImpedance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOOutputImpedance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOReglitchEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOResolutionUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOVoltageCurrentLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAOVoltageUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetBufInputBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetBufOutputBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetBufOutputOnbrdBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIAngEncoderInitialAngle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIAngEncoderPulsesPerRev': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIAngEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountDirThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetResetCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesCountResetThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesDir': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesDirTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesGateWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesInitialCnt': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICountEdgesThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseMasterTimebaseDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICtrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCICustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDupCountPrevent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIDutyCycleTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderAInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderBInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderDecodingType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZIndexEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZIndexPhase': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZIndexVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIEncoderZInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFilterEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFilterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFilterOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFilterResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqEnableAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqMeasMeth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIGPSSyncMethod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIGPSSyncSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCILinEncoderDistPerPulse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCILinEncoderInitialPos': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCILinEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIMaxMeasPeriod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodEnableAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodMeasMeth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPeriodUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPrescaler': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTicksTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseTimeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIPulseWidthUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISampClkOverrunBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISampClkOverrunSentinelVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCISemiPeriodUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITimestampInitialSeconds': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITimestampUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepFirstTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepSecondTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCITwoEdgeSepUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityAngEncoderPulsesPerRev': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityAngEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderAInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderAInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderAInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderAInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderAInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderAInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderAInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderBInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderBInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderBInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderBInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderBInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderBInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderBInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityEncoderDecodingType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityLinEncoderDistPerPulse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityLinEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCIVelocityMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOAutoIncrCnt': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOConstrainedGenMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseMasterTimebaseDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOCtrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOEnableInitialDelayOnRetrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPrescaler': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseDutyCyc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseFreqInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseHighTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseHighTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseIdleState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseLowTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseLowTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseTicksInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseTimeInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOPulseTimeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetCOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetChanDescr': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetChanSyncUnlockBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIAcquireOn': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDigFltrEnableBusMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIInvertLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDILogicFamily': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDITristate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOGenerateOn': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOInvertLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOLineStatesDoneState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOLineStatesPausedState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOLineStatesStartState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOLogicFamily': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOOutputDriveType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOOvercurrentAutoReenable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOOvercurrentLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOOvercurrentReenablePeriod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOTristate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ResetDevice': {
         'parameters': [
             {
@@ -7555,6 +27641,900 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetAIACExcitFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIACExcitSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIACExcitWireMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ACExcitWireMode',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIADCCustomTimingMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIADCTimingMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ADCTimingMode',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAccel4WireDCVoltageSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAccel4WireDCVoltageSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAccelChargeSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAccelChargeSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelChargeSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAccelSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAccelSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAccelUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AccelUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAcceldBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAtten': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAutoZeroMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AutoZeroType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIAveragingWinSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeBalanceCoarsePot': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeBalanceFinePot': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeConfiguration1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeElectricalUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeElectricalUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeInitialRatio': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeInitialVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeNomResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgePhysicalUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgePhysicalUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgePolyForwardCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgePolyReverseCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ScaleType4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalGainAdjust': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalSelect': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ShuntCalSelect',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalShuntCalAActualResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalShuntCalAResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalShuntCalASrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeShuntCalSource',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalShuntCalBActualResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeShuntCalShuntCalBResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeTableElectricalVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeTablePhysicalVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeTwoPointLinFirstElectricalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeTwoPointLinFirstPhysicalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeTwoPointLinSecondElectricalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeTwoPointLinSecondPhysicalVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIBridgeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'BridgeUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalApplyCalIfExp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetAIChanCalCalDate': {
         'parameters': [
             {
@@ -7591,6 +28571,46 @@ functions = {
                 'direction': 'in',
                 'name': 'minute',
                 'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalDesc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalEnableCal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
             }
         ],
         'returns': 'int32'
@@ -7635,6 +28655,3560 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetAIChanCalOperatorName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalPolyForwardCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalPolyReverseCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ScaleType3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalTablePreScaledVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalTableScaledVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalVerifAcqVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChanCalVerifRefVals': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChargeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ChargeUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIChopEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAICoupling': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Coupling1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAICurrentACRMSUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAICurrentShuntLoc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentShuntResistorLocation1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAICurrentShuntResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAICurrentUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAICustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDCOffset': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDataXferCustomThreshold': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDataXferMaxRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrBandpassCenterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrBandpassWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrCoeff': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInElements',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrHighpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrLowpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrNotchCenterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrNotchWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FilterResponse',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDigFltrType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FilterType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIDitherEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIEddyCurrentProxProbeSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIEddyCurrentProxProbeSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EddyCurrentProxProbeSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIEddyCurrentProxProbeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LengthUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIEnhancedAliasRejectionEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitActualVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitDCorAC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationDCorAC',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitIdleOutputBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationIdleOutputBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitSense': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Sense',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationSource',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitUseForScaling': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitUseMultiplexed': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIExcitVoltageOrCurrent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExcitationVoltageOrCurrent',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFilterDelayAdjustment': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalWidthUnits4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFilterEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFilterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFilterOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFilterResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FilterResponse1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIForceIEPESensorSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIForceIEPESensorSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceIEPESensorSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIForceReadFromChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIForceUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ForceUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFreqHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFreqThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIInputLimitsFaultDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIInputLimitsFaultDetectLowerLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIInputLimitsFaultDetectUpperLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIInputSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILVDTSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILVDTSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LVDTSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILVDTUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LengthUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILeadWireResistance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILossyLSBRemovalCompressedSampSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILowpassCutoffFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILowpassEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILowpassSwitchCapClkSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SourceSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILowpassSwitchCapExtClkDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILowpassSwitchCapExtClkFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAILowpassSwitchCapOutClkDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIMicrophoneSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIOpenChanDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIOpenThrmcplDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIOvercurrentDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIPowerSupplyFaultDetectEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIPressureUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PressureUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIProbeAtten': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRTDA': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRTDB': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRTDC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRTDR0': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRTDType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'RTDType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRVDTSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRVDTSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'RVDTSensitivityUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRVDTUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AngleUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRawDataCompressionType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'RawDataCompressionType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRemoveFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIResistanceCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceConfiguration',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIResistanceUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResistanceUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRngHigh': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRngLow': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRosetteStrainGageOrientation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIRosetteStrainGageRosetteMeasType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainGageRosetteMeasurementType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAISampAndHoldEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAISensorPowerCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SensorPowerCfg',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAISensorPowerType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SensorPowerType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAISensorPowerVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAISoundPressureMaxSoundPressureLvl': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAISoundPressureUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SoundPressureUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAISoundPressuredBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIStrainGageCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainGageBridgeType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIStrainGageForceReadFromChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIStrainGageGageFactor': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIStrainGagePoissonRatio': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIStrainUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'StrainUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAITempUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TemperatureUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAITermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmcplCJCVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmcplLeadOffsetVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmcplScaleType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ScaleType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmcplType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ThermocoupleType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmstrA': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmstrB': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmstrC': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIThrmstrR1': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAITorqueUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TorqueUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIVelocityIEPESensorSensitivity': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIVelocityIEPESensorSensitivityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VelocityIEPESensorSensitivityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIVelocityIEPESensordBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIVelocityUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VelocityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIVoltageACRMSUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VoltageUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIVoltageUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VoltageUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAIVoltagedBRef': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOCurrentUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CurrentUnits1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOCustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACOffsetExtSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACOffsetSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SourceSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACOffsetVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACRefAllowConnToGnd': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACRefConnToGnd': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACRefExtSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACRefSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SourceSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACRefVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACRngHigh': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODACRngLow': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'OutputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOEnhancedImageRejectionEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFilterDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFilterDelayAdjustment': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalWidthUnits4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFuncGenAmplitude': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFuncGenFMDeviation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFuncGenFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFuncGenModulationType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ModulationType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFuncGenOffset': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFuncGenSquareDutyCycle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOFuncGenType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FuncGenType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOIdleOutputBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AOIdleOutputBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOLoadImpedance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOOutputImpedance': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOReglitchEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOResolutionUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ResolutionType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'OutputTermCfg',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOVoltageCurrentLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAOVoltageUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VoltageUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetArmStartTrigTrigWhen': {
         'parameters': [
             {
@@ -7646,6 +32220,6337 @@ functions = {
                 'direction': 'in',
                 'name': 'data',
                 'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetBufInputBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetBufOutputBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetBufOutputOnbrdBufSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIAngEncoderInitialAngle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIAngEncoderPulsesPerRev': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIAngEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AngleUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountDirThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetResetCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesCountResetThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesDir': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CountDirection1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesDirTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesGateWhen': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Level1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesInitialCnt': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICountEdgesThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseMasterTimebaseDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICtrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCICustomScaleName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDupCountPrevent': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIDutyCycleTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderAInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderBInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderDecodingType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZIndexEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZIndexPhase': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderZIndexPhase1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZIndexVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIEncoderZInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFilterDelayUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalWidthUnits4',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFilterEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFilterFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFilterOrder': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFilterResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FilterResponse1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqEnableAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqMeasMeth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CounterFrequencyMethod',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIGPSSyncMethod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GpsSignalType1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIGPSSyncSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCILinEncoderDistPerPulse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCILinEncoderInitialPos': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCILinEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LengthUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIMax': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIMaxMeasPeriod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIMin': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodEnableAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodHyst': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodMeasMeth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CounterFrequencyMethod',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPeriodUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPrescaler': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTicksTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeStartEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseTimeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIPulseWidthUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISampClkOverrunBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SampClkOverrunBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISampClkOverrunSentinelVal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodStartingEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCISemiPeriodUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIThreshVoltage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITimestampInitialSeconds': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITimestampUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepFirstTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepSecondTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCITwoEdgeSepUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits3',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityAngEncoderPulsesPerRev': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityAngEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AngularVelocityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderAInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderAInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderAInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderAInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderAInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderAInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderAInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderBInputDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderBInputDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderBInputDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderBInputDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderBInputLogicLvlBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicLvlBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderBInputTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderBInputTermCfg': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputTermCfg2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityEncoderDecodingType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'EncoderType2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityLinEncoderDistPerPulse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityLinEncoderUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VelocityUnits',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCIVelocityMeasTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOAutoIncrCnt': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOConstrainedGenMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ConstrainedGenMode',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseActiveEdge': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Edge1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseMasterTimebaseDiv': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOCtrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'OutputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOEnableInitialDelayOnRetrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPrescaler': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseDutyCyc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseFreq': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseFreqInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseFreqUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseHighTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseHighTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseIdleState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Level1',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseLowTicks': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseLowTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseTerm': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseTicksInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseTimeInitialDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOPulseTimeUnits': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TimeUnits2',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCalAccConnectionCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCalUserDefinedInfo': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetChanDescr': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetChanSyncUnlockBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SyncUnlockBehavior',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIAcquireOn': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SampleClockActiveOrInactiveEdgeSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'InputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDigFltrEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDigFltrEnableBusMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDigFltrMinPulseWidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDigFltrTimebaseRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDigFltrTimebaseSrc': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIDigSyncEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIInvertLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDILogicFamily': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicFamily',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDITristate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDIUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDODataXferMech': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DataTransferMechanism',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDODataXferReqCond': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'OutputDataTransferCondition',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOGenerateOn': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SampleClockActiveOrInactiveEdgeSelection',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOInvertLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOLineStatesDoneState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalLineState',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOLineStatesPausedState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalLineState',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOLineStatesStartState': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalLineState',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOLogicFamily': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LogicFamily',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOMemMapEnable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOOutputDriveType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalDriveType',
+                'name': 'data',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOOvercurrentAutoReenable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOOvercurrentLimit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOOvercurrentReenablePeriod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOTristate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOUsbXferReqCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOUsbXferReqSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetDOUseOnlyOnBrdMem': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'bool32'
             }
         ],
         'returns': 'int32'
@@ -7677,6 +38582,26 @@ functions = {
                 'direction': 'in',
                 'name': 'data',
                 'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetPhysicalChanName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'data',
+                'type': 'const char[]'
             }
         ],
         'returns': 'int32'

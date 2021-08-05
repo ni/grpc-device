@@ -150,7 +150,9 @@ function(GenerateGrpcSources proto_file proto_path proto_srcs proto_hdrs grpc_sr
       -I ${CMAKE_SOURCE_DIR}/source/protobuf
       --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
       "${proto_file}"
-    DEPENDS "${proto_file}" "${session_proto}")
+    COMMAND "${Python3_EXECUTABLE}"
+    ARGS "${codegen_dir}/fixup_pb.py" "${grpc_hdrs}"
+    DEPENDS "${proto_file}" "${session_proto}" "${codegen_dir}/fixup_pb.py")
 endfunction()
 
 set(session_proto_srcs "${proto_srcs_dir}/session.pb.cc")
