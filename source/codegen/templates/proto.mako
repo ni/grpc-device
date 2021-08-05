@@ -20,7 +20,7 @@ uses_timestamp = common_helpers.any_function_uses_timestamp(functions)
 //---------------------------------------------------------------------
 syntax = "proto3";
 % if service_class_prefix == "NiDAQmx":
-option optimize_for = CODE_SIZE;
+option optimize_for = LITE_RUNTIME;
 % endif
 
 option java_multiple_files = true;
