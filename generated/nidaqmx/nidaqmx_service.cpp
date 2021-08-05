@@ -8357,6 +8357,8 @@ namespace nidaqmx_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::ServerWriteReactor<RegisterDoneEventResponse>*
   NiDAQmxService::RegisterDoneEvent(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request)
   {
@@ -8410,6 +8412,9 @@ namespace nidaqmx_grpc {
 
     return new RegisterDoneEventReactor(*request, library_, session_repository_);
   }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::ServerWriteReactor<RegisterEveryNSamplesEventResponse>*
   NiDAQmxService::RegisterEveryNSamplesEvent(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request)
   {
@@ -8482,6 +8487,9 @@ namespace nidaqmx_grpc {
 
     return new RegisterEveryNSamplesEventReactor(*request, library_, session_repository_);
   }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::ServerWriteReactor<RegisterSignalEventResponse>*
   NiDAQmxService::RegisterSignalEvent(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request)
   {
@@ -8551,6 +8559,7 @@ namespace nidaqmx_grpc {
 
     return new RegisterSignalEventReactor(*request, library_, session_repository_);
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::RemoveCDAQSyncConnection(::grpc::ServerContext* context, const RemoveCDAQSyncConnectionRequest* request, RemoveCDAQSyncConnectionResponse* response)

@@ -120,6 +120,8 @@ namespace ${config["namespace_component"]}_grpc {
     response_type = service_helpers.get_response_type(method_name)
     is_async_streaming = common_helpers.has_async_streaming_response(function_data)
 %>\
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
 % if is_async_streaming:
   ::grpc::ServerWriteReactor<${response_type}>*
   ${service_class_prefix}Service::${method_name}(::grpc::CallbackServerContext* context, ${request_param})
@@ -127,8 +129,6 @@ namespace ${config["namespace_component"]}_grpc {
 ${mako_helper.define_async_callback_method_body(function_name=function_name, function_data=function_data, parameters=parameters, config=config)}\
   }
 % else:
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
   {
     if (context->IsCancelled()) {
@@ -156,8 +156,8 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
     }
 % endif
   }
-
 % endif
+
 % endfor
 } // namespace ${config["namespace_component"]}_grpc
 

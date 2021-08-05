@@ -295,6 +295,8 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::ServerWriteReactor<RegisterCallbackResponse>*
   NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request)
   {
@@ -346,6 +348,7 @@ namespace nifake_non_ivi_grpc {
 
     return new RegisterCallbackReactor(*request, library_, session_repository_);
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response)
