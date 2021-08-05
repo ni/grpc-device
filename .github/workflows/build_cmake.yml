@@ -55,8 +55,9 @@ jobs:
     - name: Install Ninja
       if: runner.os == 'Linux'
       run: sudo apt-get install -y ninja-build
-      
+
     - name: Set Swap Space
+      if: runner.os == 'Linux'
       uses: pierotofy/set-swap-space@master
       with:
         swap-size-gb: 10
