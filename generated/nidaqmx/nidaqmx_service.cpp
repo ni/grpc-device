@@ -8624,20 +8624,20 @@ namespace nidaqmx_grpc {
       if (power_up_states.size() > 96) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 96 values for powerUpStates were specified");
       }
-      auto get_channelNames_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpState>& vector, size_t n) -> const char* {
-            if (vector.size() > static_cast<int>(n)) {
+      auto get_channelNames_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpState>& vector, int n) -> const char* {
+            if (vector.size() > n) {
                   return vector[n].channelnames().c_str();
             }
             return nullptr;
       };
-      auto get_state_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpState>& vector, size_t n) -> double {
-            if (vector.size() > static_cast<int>(n)) {
+      auto get_state_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpState>& vector, int n) -> double {
+            if (vector.size() > n) {
                   return vector[n].state();
             }
             return 0;
       };
-      auto get_channelType_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpState>& vector, size_t n) -> int32 {
-            if (vector.size() > static_cast<int>(n)) {
+      auto get_channelType_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpState>& vector, int n) -> int32 {
+            if (vector.size() > n) {
                   return vector[n].channeltype();
             }
             return 0;

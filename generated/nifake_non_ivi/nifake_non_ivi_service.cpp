@@ -348,20 +348,20 @@ namespace nifake_non_ivi_grpc {
       if (string_and_enums.size() > 4) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 4 values for stringAndEnums were specified");
       }
-      auto get_myString_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> const char* {
-            if (vector.size() > static_cast<int>(n)) {
+      auto get_myString_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
+            if (vector.size() > n) {
                   return vector[n].mystring().c_str();
             }
             return nullptr;
       };
-      auto get_myEnum_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> int32 {
-            if (vector.size() > static_cast<int>(n)) {
+      auto get_myEnum_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> int32 {
+            if (vector.size() > n) {
                   return vector[n].myenum();
             }
             return 0;
       };
-      auto get_powerUpState_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, size_t n) -> double {
-            if (vector.size() > static_cast<int>(n)) {
+      auto get_powerUpState_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> double {
+            if (vector.size() > n) {
                   return vector[n].powerupstate();
             }
             return 0;

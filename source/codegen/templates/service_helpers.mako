@@ -178,8 +178,8 @@ ${initialize_standard_input_param(function_name, parameter)}\
   # In gRPC fields, the names of the fields in the struct are lowercase
   member_name = member['name'].lower()
 %>\
-      auto get_${member['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, size_t n) -> ${member_c_type_pointer} {
-            if (vector.size() > static_cast<int>(n)) {
+      auto get_${member['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${member_c_type_pointer} {
+            if (vector.size() > n) {
 % if common_helpers.is_string_arg(member):
                   return vector[n].${member_name}().c_str();
 % else:
