@@ -93,7 +93,11 @@ ${set_response_values(output_parameters)}\
 %>\
 ${initialize_input_params(function_name, [p for p in parameters if p.get('include_in_proto', True)] )}\
 ${initialize_output_params(output_parameters)}\
+% if common_helpers.can_mock_function(parameters):
       auto status = library_->${function_name}(${service_helpers.create_args_for_varargs(parameters)});
+% else:
+      auto status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args_for_varargs(parameters)});
+% endif
       response->set_status(status);
 % if output_parameters:
       if (status == 0) {

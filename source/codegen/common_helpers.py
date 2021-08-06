@@ -192,6 +192,21 @@ def has_ivi_dance_param(parameters):
 def has_varargs_parameter(parameters):
   return any(is_varargs_parameter(p) for p in parameters)
 
+# Google Mock can't handle the case where a function has a variable number of arguments
+# and there's also a limit on the max number of arguments.
+def can_mock_function(parameters):
+  # I'm not sure this is exactly right, but it does enough to distinguish between
+  # non-varargs functions and varargs functions that take > 100 parameters.
+  MAX_PARAM_LEN = 20
+  varargs_parameters = [p for p in parameters if is_varargs_parameter(p)]
+  parameters_not_in_proto = len(
+      [p for p in parameters if not p.get('include_in_proto', True)])
+  if not any(varargs_parameters):
+    return len(parameters) - parameters_not_in_proto <= MAX_PARAM_LEN
+  # This assumes that parmaeters_not_in_proto matches the members of the varargs struct
+  varargs_parameter = varargs_parameters[0]
+  return len(parameters) - parameters_not_in_proto - len(varargs_parameters) + (parameters_not_in_proto * varargs_parameter['max_length']) <= MAX_PARAM_LEN
+
 def get_ivi_dance_params(parameters):
   array_param = next((p for p in parameters if is_ivi_dance_array_param(p)), None)
   size_param = next(p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None

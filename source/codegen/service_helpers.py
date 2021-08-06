@@ -212,9 +212,15 @@ def get_output_lookup_values(enum_data):
     return out_value_format
 
 
-def filter_api_functions(functions):
+def filter_api_functions(functions, only_mockable_functions=True):
     '''Returns function metadata only for those functions to include for generating the function types to the API library'''
-    return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']
+    def filter_function(function):
+        if function.get('codegen_method', '') == 'no':
+            return False
+        if only_mockable_functions and not common_helpers.can_mock_function(function['parameters']):
+            return False
+        return True
+    return [name for name, function in functions.items() if filter_function(function)]
 
 
 def filter_proto_rpc_functions_to_generate(functions):

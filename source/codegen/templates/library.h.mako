@@ -28,17 +28,17 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
   virtual ~${service_class_prefix}Library();
 
   ::grpc::Status check_function_exists(std::string functionName);
-% for method_name in service_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
 <%
   f = functions[method_name]
   parameters = f['parameters']
   return_type = f['returns']
 %>\
-  ${return_type} ${method_name}(${service_helpers.create_params(parameters, expand_varargs=False)});
+  ${return_type} ${method_name}(${service_helpers.create_params(parameters, expand_varargs=True)});
 % endfor
 
  private:
-% for method_name in service_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
 <%
   f = functions[method_name]
   parameters = f['parameters']
@@ -48,7 +48,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
 % endfor
 
   typedef struct FunctionPointers {
-% for method_name in service_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
     ${method_name}Ptr ${method_name};
 % endfor
   } FunctionLoadStatus;

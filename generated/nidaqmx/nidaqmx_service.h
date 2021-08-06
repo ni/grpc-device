@@ -210,6 +210,7 @@ public:
   ::grpc::Status SelfTestDevice(::grpc::ServerContext* context, const SelfTestDeviceRequest* request, SelfTestDeviceResponse* response) override;
   ::grpc::Status SetAIChanCalCalDate(::grpc::ServerContext* context, const SetAIChanCalCalDateRequest* request, SetAIChanCalCalDateResponse* response) override;
   ::grpc::Status SetAIChanCalExpDate(::grpc::ServerContext* context, const SetAIChanCalExpDateRequest* request, SetAIChanCalExpDateResponse* response) override;
+  ::grpc::Status SetAnalogPowerUpStates(::grpc::ServerContext* context, const SetAnalogPowerUpStatesRequest* request, SetAnalogPowerUpStatesResponse* response) override;
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status SetFirstSampClkWhen(::grpc::ServerContext* context, const SetFirstSampClkWhenRequest* request, SetFirstSampClkWhenResponse* response) override;
