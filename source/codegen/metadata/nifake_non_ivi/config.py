@@ -19,18 +19,15 @@ config = {
                 {
                     'type': 'const char[]',
                     'name': 'myString',
-                    'grpc_name': 'myString'
                 },
                 {
                     'type': 'int32',
                     'enum': 'BeautifulColor',
                     'name': 'myEnum',
-                    'grpc_name': 'myEnum'
                 },
                 {
                     'type': 'double',
                     'name': 'powerUpState',
-                    'grpc_name': 'powerUpState'
                 },
             ]
         }

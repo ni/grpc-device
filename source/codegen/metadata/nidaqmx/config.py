@@ -16,18 +16,15 @@ config = {
                 {
                     'type': 'const char[]',
                     'name': 'channelNames',
-                    'grpc_name': 'channelNames'
                 },
                 {
                     'type': 'double',
                     'name': 'state',
-                    'grpc_name': 'state'
                 },
                 {
                     'type': 'int32',
                     'enum': 'PowerUpStates',
                     'name': 'channelType',
-                    'grpc_name': 'channelType'
                 }
             ]
         }
