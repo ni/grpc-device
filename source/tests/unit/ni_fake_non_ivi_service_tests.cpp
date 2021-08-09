@@ -439,22 +439,6 @@ TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingSecondSizeOption_Returns
   EXPECT_IOTA_OF_SIZE(response, SIZE_TWO);
 }
 
-TEST_F(NiFakeNonIviServiceTests, RegisterCallbackAndImmediatelyCall_CallbackDataIncludedInResponse)
-{
-  const int16_t TEST_VALUE = 25;
-  ::grpc::ServerContext context;
-  RegisterCallbackRequest request;
-  request.set_input_data(TEST_VALUE);
-  RegisterCallbackResponse response;
-  EXPECT_CALL(library_, RegisterCallback(TEST_VALUE, _, _))
-      .WillOnce(DoAll(
-          ImmediatelyCallCallback(),
-          Return(kDriverSuccess)));
-  service_.RegisterCallback(&context, &request, &response);
-
-  EXPECT_EQ(TEST_VALUE, response.echo_data());
-}
-
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
 {
   EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel"), BEAUTIFUL_COLOR_PINK, 1.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
