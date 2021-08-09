@@ -238,12 +238,12 @@ def can_mock_function(parameters):
     MAX_MOCK_PARAM_LEN = 20
     repeated_varargs_parameters = [
         p for p in parameters if is_repeated_varargs_parameter(p)]
-    first_repating_parameters = len(
+    first_repeating_parameters = len(
         [p for p in parameters if p.get('repeating_var_arg', False)])
     if not any(repeated_varargs_parameters):
-        return len(parameters) - first_repating_parameters <= MAX_MOCK_PARAM_LEN
+        return len(parameters) - first_repeating_parameters <= MAX_MOCK_PARAM_LEN
     varargs_parameter = repeated_varargs_parameters[0]
-    return len(parameters) - first_repating_parameters - len(repeated_varargs_parameters) + (first_repating_parameters * varargs_parameter['max_length']) <= MAX_MOCK_PARAM_LEN
+    return len(parameters) - first_repeating_parameters - len(repeated_varargs_parameters) + (first_repeating_parameters * varargs_parameter['max_length']) <= MAX_MOCK_PARAM_LEN
 
 
 def get_ivi_dance_params(parameters):
