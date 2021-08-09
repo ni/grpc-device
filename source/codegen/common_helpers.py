@@ -235,15 +235,15 @@ def has_repeated_varargs_parameter(parameters):
 def can_mock_function(parameters):
     # I'm not sure this is exactly right, but it does enough to distinguish between
     # non-varargs functions and varargs functions that take > 100 parameters.
-    MAX_PARAM_LEN = 20
+    MAX_MOCK_PARAM_LEN = 20
     repeated_varargs_parameters = [
         p for p in parameters if is_repeated_varargs_parameter(p)]
     first_repating_parameters = len(
         [p for p in parameters if p.get('repeating_var_arg', False)])
     if not any(repeated_varargs_parameters):
-        return len(parameters) - first_repating_parameters <= MAX_PARAM_LEN
+        return len(parameters) - first_repating_parameters <= MAX_MOCK_PARAM_LEN
     varargs_parameter = repeated_varargs_parameters[0]
-    return len(parameters) - first_repating_parameters - len(repeated_varargs_parameters) + (first_repating_parameters * varargs_parameter['max_length']) <= MAX_PARAM_LEN
+    return len(parameters) - first_repating_parameters - len(repeated_varargs_parameters) + (first_repating_parameters * varargs_parameter['max_length']) <= MAX_MOCK_PARAM_LEN
 
 
 def get_ivi_dance_params(parameters):
