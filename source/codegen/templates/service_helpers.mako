@@ -247,6 +247,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 % if common_helpers.is_string_arg(member):
                   return vector[n].${member_name}().c_str();
 % else:
+## Note that this code will not handle every datatype, but it works for all
+## the ones we currently use with repeated varargs.
                   return vector[n].${member_name}();
 % endif            
             }
