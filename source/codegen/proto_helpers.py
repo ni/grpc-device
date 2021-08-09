@@ -8,11 +8,6 @@ def should_allow_alias(enums):
       return True
   return False
 
-def filter_parameters_for_grpc_fields(parameters):
-  """Filter out the parameters that shouldn't be represented by a field on a grpc message.
-     For example, get rid of any parameters whose values should be determined from another parameter."""
-  return [p for p in parameters if p.get('include_in_proto', True)]
-
 def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
   """Get unique field number for field corresponding to this parameter in proto file.
      If field number is not stored in metadata of parameter, get the next unused integer value."""
@@ -113,7 +108,7 @@ def is_session_name(parameter):
 
 
 def get_parameters(function):
-  parameter_array = filter_parameters_for_grpc_fields(function['parameters'])
+  parameter_array = common_helpers.filter_parameters_for_grpc_fields(function['parameters'])
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
   if common_helpers.is_init_method(function):
     has_session_input = any(is_session_name(param) for param in input_parameters)
@@ -127,7 +122,11 @@ def get_parameters(function):
   callback_parameters = get_callback_output_params(function)
 
   if callback_parameters:
-    output_parameters.extend(callback_parameters)
+    if any((p for p in callback_parameters if p['name'] == 'status')):
+      # if the callback provides a status, it can override default_status_param.
+      output_parameters = callback_parameters
+    else:
+      output_parameters.extend(callback_parameters)
   else:
     output_parameters.extend(
       [p for p in parameter_array if common_helpers.is_output_parameter(p)]
@@ -143,7 +142,8 @@ def get_callback_output_params(function):
   """
   params = [p for p in function['parameters'] if 'callback_params' in p]
   if params:
-    return params[0]['callback_params']
+    return common_helpers.filter_parameters_for_grpc_fields(
+      params[0]['callback_params'])
   else:
     return []
 

@@ -21,7 +21,7 @@
 
 namespace nidaqmx_grpc {
 
-class NiDAQmxService final : public NiDAQmx::WithCallbackMethod_RegisterDoneEvent<NiDAQmx::Service> {
+class NiDAQmxService final : public NiDAQmx::WithCallbackMethod_RegisterSignalEvent<NiDAQmx::WithCallbackMethod_RegisterEveryNSamplesEvent<NiDAQmx::WithCallbackMethod_RegisterDoneEvent<NiDAQmx::Service>>> {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>;
 
@@ -200,6 +200,8 @@ public:
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
   ::grpc::Status ReadRaw(::grpc::ServerContext* context, const ReadRawRequest* request, ReadRawResponse* response) override;
   ::grpc::ServerWriteReactor<RegisterDoneEventResponse>* RegisterDoneEvent(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request) override;
+  ::grpc::ServerWriteReactor<RegisterEveryNSamplesEventResponse>* RegisterEveryNSamplesEvent(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request) override;
+  ::grpc::ServerWriteReactor<RegisterSignalEventResponse>* RegisterSignalEvent(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request) override;
   ::grpc::Status RemoveCDAQSyncConnection(::grpc::ServerContext* context, const RemoveCDAQSyncConnectionRequest* request, RemoveCDAQSyncConnectionResponse* response) override;
   ::grpc::Status ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;

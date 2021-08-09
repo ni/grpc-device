@@ -14,7 +14,7 @@ RESERVED_WORDS = [
     'object', 'operator', 'out', 'override',
     'params', 'private', 'protected', 'public',
     'readonly', 'ref', 'return',
-    'sbyte', 'sealed', 'short', 'sizeof', 'stackalloc', 'static', 'status', 'string', 'struct', 'switch',
+    'sbyte', 'sealed', 'short', 'sizeof', 'stackalloc', 'static', 'string', 'struct', 'switch',
     'this', 'throw', 'true', 'try', 'typeof',
     'uint', 'ulong', 'unchecked', 'unsafe', 'ushort', 'using',
     'virtual', 'void', 'volatile',
@@ -24,6 +24,8 @@ RESERVED_WORDS = [
 def sanitize_names(parameters):
     """Sanitizes name fields on a list of parameter objects and populates the cppname field with the sanitized value."""
     for parameter in parameters:
+        if 'callback_params' in parameter:
+            sanitize_names(parameter['callback_params'])
         parameter['cppName'] = parameter['name']
         if parameter['cppName'] in RESERVED_WORDS:
             parameter['cppName'] += 'Parameter'

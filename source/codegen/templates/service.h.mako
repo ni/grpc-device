@@ -10,6 +10,7 @@ functions = data['functions']
 function_enums = common_helpers.get_function_enums(functions)
 enums_to_map = [e for e in function_enums if enums[e].get("generate-mappings", False)]
 service_class_prefix = config["service_class_prefix"]
+driver_library_interface = common_helpers.get_library_interface_type_name(config)
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = config["namespace_component"] + "_grpc::"
 if len(config["custom_types"]) > 0:
@@ -69,7 +70,7 @@ public:
 % endif
 % endfor
 private:
-  ${service_class_prefix}LibraryInterface* library_;
+  ${driver_library_interface}* library_;
   ResourceRepositorySharedPtr session_repository_;
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);

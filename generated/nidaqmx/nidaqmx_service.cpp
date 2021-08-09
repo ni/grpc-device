@@ -12,6 +12,8 @@
 #include <atomic>
 #include <vector>
 #include "custom/nidaqmx_conversions.h"
+#include <server/callback_router.h>
+#include <server/server_reactor.h>
 #include "nidaqmx_library.h"
 
 namespace nidaqmx_grpc {
@@ -8354,6 +8356,209 @@ namespace nidaqmx_grpc {
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::ServerWriteReactor<RegisterDoneEventResponse>*
+  NiDAQmxService::RegisterDoneEvent(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request)
+  {
+    using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32>;
+    class RegisterDoneEventReactor : public nidevice_grpc::ServerWriterReactor<RegisterDoneEventResponse, nidevice_grpc::CallbackRegistration> {
+    public:
+    RegisterDoneEventReactor(const RegisterDoneEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    {
+      auto status = start(&request, library, session_repository);
+      if (!status.ok()) {
+        this->Finish(status);
+      }
+    }
+
+    ::grpc::Status start(const RegisterDoneEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    {
+      try {
+        auto handler = CallbackRouter::register_handler(
+          [this](TaskHandle task, int32 status) {
+            RegisterDoneEventResponse callback_response;
+            auto response = &callback_response;
+            response->set_status(status);
+            queue_write(callback_response);
+            return 0;
+        });
+
+        auto task_grpc_session = request->task();
+        TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+        uInt32 options = request->options();
+
+        auto status = library->RegisterDoneEvent(task, options, CallbackRouter::handle_callback, handler->token());
+
+        // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
+        StartSendInitialMetadata();
+
+        if (status) {
+          RegisterDoneEventResponse failed_to_register_response;
+          failed_to_register_response.set_status(status);
+          queue_write(failed_to_register_response);
+        }
+
+        this->set_producer(std::move(handler));
+      }
+      catch (nidevice_grpc::LibraryLoadException& ex) {
+         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+      }
+
+      return ::grpc::Status::OK;
+    }
+    };
+
+    return new RegisterDoneEventReactor(*request, library_, session_repository_);
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::ServerWriteReactor<RegisterEveryNSamplesEventResponse>*
+  NiDAQmxService::RegisterEveryNSamplesEvent(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request)
+  {
+    using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32, uInt32>;
+    class RegisterEveryNSamplesEventReactor : public nidevice_grpc::ServerWriterReactor<RegisterEveryNSamplesEventResponse, nidevice_grpc::CallbackRegistration> {
+    public:
+    RegisterEveryNSamplesEventReactor(const RegisterEveryNSamplesEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    {
+      auto status = start(&request, library, session_repository);
+      if (!status.ok()) {
+        this->Finish(status);
+      }
+    }
+
+    ::grpc::Status start(const RegisterEveryNSamplesEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    {
+      try {
+        auto handler = CallbackRouter::register_handler(
+          [this](TaskHandle task, int32 every_n_samples_event_type, uInt32 n_samples) {
+            RegisterEveryNSamplesEventResponse callback_response;
+            auto response = &callback_response;
+            response->set_every_n_samples_event_type(static_cast<nidaqmx_grpc::EveryNSamplesEventType>(every_n_samples_event_type));
+            response->set_every_n_samples_event_type_raw(every_n_samples_event_type);
+            response->set_n_samples(n_samples);
+            queue_write(callback_response);
+            return 0;
+        });
+
+        auto task_grpc_session = request->task();
+        TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+        int32 every_n_samples_event_type;
+        switch (request->every_n_samples_event_type_enum_case()) {
+          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::kEveryNSamplesEventType: {
+            every_n_samples_event_type = static_cast<int32>(request->every_n_samples_event_type());
+            break;
+          }
+          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::kEveryNSamplesEventTypeRaw: {
+            every_n_samples_event_type = static_cast<int32>(request->every_n_samples_event_type_raw());
+            break;
+          }
+          case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::EVERY_N_SAMPLES_EVENT_TYPE_ENUM_NOT_SET: {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for every_n_samples_event_type was not specified or out of range");
+            break;
+          }
+        }
+  
+        uInt32 n_samples = request->n_samples();
+        uInt32 options = request->options();
+
+        auto status = library->RegisterEveryNSamplesEvent(task, every_n_samples_event_type, n_samples, options, CallbackRouter::handle_callback, handler->token());
+
+        // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
+        StartSendInitialMetadata();
+
+        if (status) {
+          RegisterEveryNSamplesEventResponse failed_to_register_response;
+          failed_to_register_response.set_status(status);
+          queue_write(failed_to_register_response);
+        }
+
+        this->set_producer(std::move(handler));
+      }
+      catch (nidevice_grpc::LibraryLoadException& ex) {
+         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+      }
+
+      return ::grpc::Status::OK;
+    }
+    };
+
+    return new RegisterEveryNSamplesEventReactor(*request, library_, session_repository_);
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::ServerWriteReactor<RegisterSignalEventResponse>*
+  NiDAQmxService::RegisterSignalEvent(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request)
+  {
+    using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32>;
+    class RegisterSignalEventReactor : public nidevice_grpc::ServerWriterReactor<RegisterSignalEventResponse, nidevice_grpc::CallbackRegistration> {
+    public:
+    RegisterSignalEventReactor(const RegisterSignalEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    {
+      auto status = start(&request, library, session_repository);
+      if (!status.ok()) {
+        this->Finish(status);
+      }
+    }
+
+    ::grpc::Status start(const RegisterSignalEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    {
+      try {
+        auto handler = CallbackRouter::register_handler(
+          [this](TaskHandle task, int32 signal_id) {
+            RegisterSignalEventResponse callback_response;
+            auto response = &callback_response;
+            response->set_signal_id(signal_id);
+            queue_write(callback_response);
+            return 0;
+        });
+
+        auto task_grpc_session = request->task();
+        TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+        int32 signal_id;
+        switch (request->signal_id_enum_case()) {
+          case nidaqmx_grpc::RegisterSignalEventRequest::SignalIdEnumCase::kSignalId: {
+            signal_id = static_cast<int32>(request->signal_id());
+            break;
+          }
+          case nidaqmx_grpc::RegisterSignalEventRequest::SignalIdEnumCase::kSignalIdRaw: {
+            signal_id = static_cast<int32>(request->signal_id_raw());
+            break;
+          }
+          case nidaqmx_grpc::RegisterSignalEventRequest::SignalIdEnumCase::SIGNAL_ID_ENUM_NOT_SET: {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_id was not specified or out of range");
+            break;
+          }
+        }
+  
+        uInt32 options = request->options();
+
+        auto status = library->RegisterSignalEvent(task, signal_id, options, CallbackRouter::handle_callback, handler->token());
+
+        // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
+        StartSendInitialMetadata();
+
+        if (status) {
+          RegisterSignalEventResponse failed_to_register_response;
+          failed_to_register_response.set_status(status);
+          queue_write(failed_to_register_response);
+        }
+
+        this->set_producer(std::move(handler));
+      }
+      catch (nidevice_grpc::LibraryLoadException& ex) {
+         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+      }
+
+      return ::grpc::Status::OK;
+    }
+    };
+
+    return new RegisterSignalEventReactor(*request, library_, session_repository_);
   }
 
   //---------------------------------------------------------------------

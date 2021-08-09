@@ -215,7 +215,7 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status read_analog_f64(
       int32 samps_per_chan,
       uint32 array_size_in_samps,
-      ReadAnalogF64Response& response)
+      ReadAnalogF64Response& response = ThrowawayResponse<ReadAnalogF64Response>::response())
   {
     ::grpc::ClientContext context;
     ReadAnalogF64Request request;
@@ -385,6 +385,21 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->RegisterDoneEvent(&context, request);
   }
 
+  auto register_every_n_samples_event(::grpc::ClientContext& context, uint32 n_samples) {
+    RegisterEveryNSamplesEventRequest request;
+    set_request_session_id(request);
+    request.set_n_samples(n_samples);
+    request.set_every_n_samples_event_type(EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER);
+    return stub()->RegisterEveryNSamplesEvent(&context, request);
+  }
+
+  auto register_signal_event(::grpc::ClientContext& context, Signal2 signal_id) {
+    RegisterSignalEventRequest request;
+    set_request_session_id(request);
+    request.set_signal_id(Signal2::SIGNAL2_SAMPLE_CLOCK);
+    return stub()->RegisterSignalEvent(&context, request);
+  }
+
   CfgSampClkTimingRequest create_cfg_samp_clk_timing_request(double rate, Edge1 active_edge, AcquisitionType sample_mode, uInt64 samples_per_chan)
   {
     CfgSampClkTimingRequest request;
@@ -406,6 +421,21 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     return stub()->CfgSampClkTiming(&context, request, &response);
+  }
+
+  CfgChangeDetectionTimingRequest create_cfg_change_detection_timing(const std::string& channel)
+  {
+    CfgChangeDetectionTimingRequest request;
+    set_request_session_id(request);
+    request.set_falling_edge_chan(channel);
+    request.set_rising_edge_chan(channel);
+    request.set_sample_mode(AcquisitionType::ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT);
+    return request;
+  }
+
+  ::grpc::Status cfg_change_detection_timing(const CfgChangeDetectionTimingRequest& request, CfgChangeDetectionTimingResponse& response = ThrowawayResponse<CfgChangeDetectionTimingResponse>::response()) {
+    ::grpc::ClientContext context;
+    return stub()->CfgChangeDetectionTiming(&context, request, &response);
   }
 
   ::grpc::Status cfg_input_buffer(CfgInputBufferResponse& response)
@@ -983,6 +1013,28 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAc
   EXPECT_EQ(DAQmxSuccess, response.status());
 }
 
+TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSamplesMultipleTimes_Succeeds)
+{
+  const auto N_SAMPLES = 10UL;
+  const auto N_READS = 10;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
+  reader->WaitForInitialMetadata();
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
+
+  start_task();
+  RegisterEveryNSamplesEventResponse response;
+  for (auto i = 0; i < N_READS; ++i) {
+    reader->Read(&response);
+    read_analog_f64(N_SAMPLES, N_SAMPLES);
+
+    EXPECT_EQ(N_SAMPLES, response.n_samples());
+    EXPECT_EQ(DAQmxSuccess, response.status());
+  }
+}
+
 TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
 {
   create_ai_voltage_chan(0.0, 1.0);
@@ -1106,7 +1158,6 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_SUCCESS(status, read_response);
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
 }
-
 
 TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds) {
   auto response = SelfCalResponse{};

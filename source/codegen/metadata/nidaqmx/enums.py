@@ -686,6 +686,18 @@ enums = {
             }
         ]
     },
+    'EveryNSamplesEventType': {
+        'values': [
+            {
+                'name': 'ACQUIRED_INTO_BUFFER',
+                'value': 1
+            },
+            {
+                'name': 'TRANSFERRED_FROM_BUFFER',
+                'value': 2
+            }
+        ]
+    },
     'ExcitationSource': {
         'values': [
             {
@@ -1364,6 +1376,38 @@ enums = {
             {
                 'name': 'WDT_EXPIRED_EVENT',
                 'value': 12512
+            }
+        ]
+    },
+    'Signal2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Timed Loop executes each time the Sample Complete Event occurs.'
+                },
+                'name': 'SAMPLE_COMPLETE_EVENT',
+                'value': 12530
+            },
+            {
+                'documentation': {
+                    'description': ' Timed Loop executes each time the Counter Output Event occurs.'
+                },
+                'name': 'COUNTER_OUTPUT_EVENT',
+                'value': 12494
+            },
+            {
+                'documentation': {
+                    'description': ' Timed Loop executes each time the Change Detection Event occurs.'
+                },
+                'name': 'CHANGE_DETECTION_EVENT',
+                'value': 12511
+            },
+            {
+                'documentation': {
+                    'description': 'Timed Loop executes on each active edge of the Sample Clock.'
+                },
+                'name': 'SAMPLE_CLOCK',
+                'value': 12487
             }
         ]
     },

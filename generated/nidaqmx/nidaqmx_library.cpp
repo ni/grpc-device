@@ -193,6 +193,8 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
   function_pointers_.ReadRaw = reinterpret_cast<ReadRawPtr>(shared_library_.get_function_pointer("DAQmxReadRaw"));
   function_pointers_.RegisterDoneEvent = reinterpret_cast<RegisterDoneEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterDoneEvent"));
+  function_pointers_.RegisterEveryNSamplesEvent = reinterpret_cast<RegisterEveryNSamplesEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterEveryNSamplesEvent"));
+  function_pointers_.RegisterSignalEvent = reinterpret_cast<RegisterSignalEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterSignalEvent"));
   function_pointers_.RemoveCDAQSyncConnection = reinterpret_cast<RemoveCDAQSyncConnectionPtr>(shared_library_.get_function_pointer("DAQmxRemoveCDAQSyncConnection"));
   function_pointers_.ReserveNetworkDevice = reinterpret_cast<ReserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxReserveNetworkDevice"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
@@ -2312,6 +2314,30 @@ int32 NiDAQmxLibrary::RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDo
   return DAQmxRegisterDoneEvent(task, options, callbackFunction, callbackData);
 #else
   return function_pointers_.RegisterDoneEvent(task, options, callbackFunction, callbackData);
+#endif
+}
+
+int32 NiDAQmxLibrary::RegisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.RegisterEveryNSamplesEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterEveryNSamplesEvent.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxRegisterEveryNSamplesEvent(task, everyNSamplesEventType, nSamples, options, callbackFunction, callbackData);
+#else
+  return function_pointers_.RegisterEveryNSamplesEvent(task, everyNSamplesEventType, nSamples, options, callbackFunction, callbackData);
+#endif
+}
+
+int32 NiDAQmxLibrary::RegisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.RegisterSignalEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterSignalEvent.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxRegisterSignalEvent(task, signalID, options, callbackFunction, callbackData);
+#else
+  return function_pointers_.RegisterSignalEvent(task, signalID, options, callbackFunction, callbackData);
 #endif
 }
 

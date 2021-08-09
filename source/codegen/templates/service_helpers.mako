@@ -85,6 +85,68 @@ ${set_response_values(output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
+
+<%def name="define_async_callback_method_body(function_name, function_data, parameters, config)">\
+<%
+  (input_parameters, callback_parameters) = service_helpers.get_callback_method_parameters(function_data)
+  response_parameters = common_helpers.filter_parameters_for_grpc_fields(callback_parameters)
+  request_type = service_helpers.get_request_type(function_name)
+  response_type = service_helpers.get_response_type(function_name)
+  driver_library_interface = common_helpers.get_library_interface_type_name(config)
+%>\
+    using CallbackRouter = nidevice_grpc::CallbackRouter<int32, ${service_helpers.create_param_type_list(callback_parameters)}>;
+    class ${function_name}Reactor : public nidevice_grpc::ServerWriterReactor<${response_type}, nidevice_grpc::CallbackRegistration> {
+    public:
+    ${function_name}Reactor(const ${request_type}& request, ${driver_library_interface}* library, const ResourceRepositorySharedPtr& session_repository)
+    {
+      auto status = start(&request, library, session_repository);
+      if (!status.ok()) {
+        this->Finish(status);
+      }
+    }
+
+    ::grpc::Status start(const ${request_type}* request, ${driver_library_interface}* library, const ResourceRepositorySharedPtr& session_repository_)
+    {
+      try {
+        auto handler = CallbackRouter::register_handler(
+          [this](${service_helpers.create_args_for_callback(callback_parameters)}) {
+            ${response_type} callback_response;
+            auto response = &callback_response;
+<%block filter="common_helpers.indent(2)">\
+${set_response_values(output_parameters=response_parameters)}\
+</%block>\
+            queue_write(callback_response);
+            return 0;
+        });
+
+<%block filter="common_helpers.indent(1)">\
+${initialize_input_params(function_name, parameters)}\
+</%block>\
+
+        auto status = library->${function_name}(${service_helpers.create_args(parameters)});
+
+        // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
+        StartSendInitialMetadata();
+
+        if (status) {
+          ${response_type} failed_to_register_response;
+          failed_to_register_response.set_status(status);
+          queue_write(failed_to_register_response);
+        }
+
+        this->set_producer(std::move(handler));
+      }
+      catch (nidevice_grpc::LibraryLoadException& ex) {
+         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+      }
+
+      return ::grpc::Status::OK;
+    }
+    };
+
+    return new ${function_name}Reactor(*request, library_, session_repository_);
+</%def>
+
 ## Generate the core method body for a method with varargs. This should be what gets included within the try block in the service method.
 <%def name="define_varargs_method_body(function_name, function_data, parameters)">\
 <%
@@ -134,22 +196,23 @@ ${set_response_values(output_parameters=output_parameters)}\
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in input_parameters:
-${initialize_input_param(function_name, parameter)}
+${initialize_input_param(function_name, parameter)}\
 % endfor
 </%def>
 
 ## Initialize an input parameter for an API call.
 <%def name="initialize_input_param(function_name, parameter)">\
 % if common_helpers.is_enum(parameter):
-${initialize_enum_input_param(function_name, parameter)}\
+${initialize_enum_input_param(function_name, parameter)}
+% elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
-${initialize_len_input_param(parameter)}\
+${initialize_len_input_param(parameter)}
 % elif common_helpers.is_pass_null_parameter(parameter):
-${initialize_pass_null_param(parameter)}\
+${initialize_pass_null_param(parameter)}
 % elif common_helpers.is_varargs_parameter(parameter):
-${initialize_varargs_param(parameter)}\
+${initialize_varargs_param(parameter)}
 % else:
-${initialize_standard_input_param(function_name, parameter)}\
+${initialize_standard_input_param(function_name, parameter)}
 % endif
 </%def>
 
