@@ -13,6 +13,8 @@ if len(config["custom_types"]) > 0:
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
 has_async_functions = any(service_helpers.get_async_functions(functions))
 function_names = service_helpers.filter_proto_rpc_functions_to_generate(functions)
+# If there are any non-mockable functions, we need to call the library directly, which
+# means we need another include file
 any_non_mockable_functions = any([not common_helpers.can_mock_function(functions[name]['parameters']) for name in function_names])
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
