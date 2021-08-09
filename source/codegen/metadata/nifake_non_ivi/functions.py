@@ -255,12 +255,14 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'repeating_var_arg': True,
                 'name': 'channelName',
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'repeating_var_arg': True,
                 'enum': 'BeautifulColor',
                 'name': 'color',
                 'type': 'int32'
@@ -268,12 +270,13 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'repeating_var_arg': True,
                 'name': 'powerUpState',
                 'type': 'double'
             },
             {
                 'direction': 'in',
-                'var_args': True,
+                'repeated_var_args': True,
                 'name': 'stringAndEnums',
                 'grpc_type': 'repeated StringAndEnum',
                 'max_length': 4

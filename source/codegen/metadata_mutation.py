@@ -34,7 +34,7 @@ def sanitize_names(parameters):
 def set_var_args_types(parameters, config):
     """Sets information about varargs parameters in the metadata."""
     for parameter in parameters:
-        if common_helpers.is_varargs_parameter(parameter):
+        if common_helpers.is_repeated_varargs_parameter(parameter):
             parameter['type'] = '...'
             stripped_grpc_type = common_helpers.strip_repeated_from_grpc_type(
                 parameter['grpc_type'])

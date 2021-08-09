@@ -105,7 +105,7 @@ def create_args_for_varargs(parameters):
         name = common_helpers.camel_to_snake(parameter['cppName'])
         if not parameter.get('include_in_proto', True):
             continue
-        if common_helpers.is_varargs_parameter(parameter):
+        if common_helpers.is_repeated_varargs_parameter(parameter):
             max_length = parameter['max_length']
             for i in range(max_length):
                 for field in parameter['varargs_type']['fields']:
@@ -128,12 +128,12 @@ def get_array_param_size(parameter) -> str:
 
 
 def expand_varargs_parameters(parameters):
-    if not common_helpers.has_varargs_parameter(parameters):
+    if not common_helpers.has_repeated_varargs_parameter(parameters):
         return parameters
     # omit the varargs parameter that we're going to expand
     new_parameters = parameters[:-1]
     varargs_parameter = parameters[-1]
-    assert common_helpers.is_varargs_parameter(varargs_parameter)
+    assert common_helpers.is_repeated_varargs_parameter(varargs_parameter)
     max_length = varargs_parameter['max_length']
     # Many (all?) functions that take varargs take the first set of parameter as
     # non-varargs. If this is the case, we need one fewer set of parameters in the varargs
@@ -156,7 +156,7 @@ def create_param(parameter, expand_varargs=True, any_not_include_in_proto=False)
         return f'{type[:-2]} {name}[{array_size}]'
     elif common_helpers.is_pointer_parameter(parameter):
         return f'{type}* {name}'
-    elif common_helpers.is_varargs_parameter(parameter):
+    elif common_helpers.is_repeated_varargs_parameter(parameter):
         if expand_varargs:
             max_length = parameter['max_length']
             if any_not_include_in_proto:

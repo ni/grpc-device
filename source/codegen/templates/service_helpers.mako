@@ -147,8 +147,9 @@ ${initialize_input_params(function_name, parameters)}\
     return new ${function_name}Reactor(*request, library_, session_repository_);
 </%def>
 
-## Generate the core method body for a method with varargs. This should be what gets included within the try block in the service method.
-<%def name="define_varargs_method_body(function_name, function_data, parameters)">\
+## Generate the core method body for a method with repeated varargs.
+## This should be what gets included within the try block in the service method.
+<%def name="define_repeated_varargs_method_body(function_name, function_data, parameters)">\
 <%
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
@@ -209,14 +210,14 @@ ${initialize_enum_input_param(function_name, parameter)}
 ${initialize_len_input_param(parameter)}
 % elif common_helpers.is_pass_null_parameter(parameter):
 ${initialize_pass_null_param(parameter)}
-% elif common_helpers.is_varargs_parameter(parameter):
-${initialize_varargs_param(parameter)}
+% elif common_helpers.is_repeated_varargs_parameter(parameter):
+${initialize_repeated_varargs_param(parameter)}
 % else:
 ${initialize_standard_input_param(function_name, parameter)}
 % endif
 </%def>
 
-<%def name="initialize_varargs_param(parameter)">\
+<%def name="initialize_repeated_varargs_param(parameter)">\
 <%
   config = data['config']
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])

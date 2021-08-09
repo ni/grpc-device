@@ -7645,25 +7645,28 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'repeating_var_arg': True,
                 'name': 'channelNames',
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'repeating_var_arg': True,
                 'name': 'state',
                 'type': 'float64'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'repeating_var_arg': True,
                 'enum': 'PowerUpStates',
                 'name': 'channelType',
                 'type': 'int32'
             },
             {
                 'direction': 'in',
-                'var_args': True,
+                'repeated_var_args': True,
                 'name': 'powerUpStates',
                 'grpc_type': 'repeated AnalogPowerUpState',
                 'max_length': 96
