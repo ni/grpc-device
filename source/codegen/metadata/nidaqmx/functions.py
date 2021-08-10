@@ -6246,9 +6246,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6273,9 +6274,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6326,9 +6328,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6378,9 +6381,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6431,9 +6435,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6483,9 +6488,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6529,9 +6535,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6581,9 +6588,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6608,9 +6616,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6635,9 +6644,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6681,9 +6691,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6733,9 +6744,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6794,9 +6806,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6826,9 +6839,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6887,9 +6901,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6919,9 +6934,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -6980,9 +6996,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7012,9 +7029,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7069,9 +7087,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7096,9 +7115,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7149,9 +7169,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7201,9 +7222,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7253,9 +7275,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7304,9 +7327,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -7321,6 +7345,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
                 'name': 'options',
                 'type': 'uInt32'
             },
@@ -7348,6 +7374,7 @@ functions = {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'callbackData',
+                'pointer': True,
                 'type': 'void'
             }
         ],
@@ -7374,6 +7401,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
                 'name': 'options',
                 'type': 'uInt32'
             },
@@ -7407,6 +7436,7 @@ functions = {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'callbackData',
+                'pointer': True,
                 'type': 'void'
             }
         ],
@@ -7428,6 +7458,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
                 'name': 'options',
                 'type': 'uInt32'
             },
@@ -7455,6 +7487,7 @@ functions = {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'callbackData',
+                'pointer': True,
                 'type': 'void'
             }
         ],
@@ -8010,9 +8043,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8042,9 +8076,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8091,9 +8126,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8139,9 +8175,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8188,9 +8225,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8236,9 +8274,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8289,9 +8328,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8326,9 +8366,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8379,9 +8420,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8416,9 +8458,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8469,9 +8512,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8506,9 +8550,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8554,9 +8599,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8586,9 +8632,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8635,9 +8682,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8683,9 +8731,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8731,9 +8780,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],
@@ -8773,9 +8823,10 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
                 'type': 'bool32'
             }
         ],

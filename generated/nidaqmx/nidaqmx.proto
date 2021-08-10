@@ -4070,7 +4070,6 @@ message ReadRawResponse {
 
 message RegisterDoneEventRequest {
   nidevice_grpc.Session task = 1;
-  uint32 options = 2;
 }
 
 message RegisterDoneEventResponse {
@@ -4084,7 +4083,6 @@ message RegisterEveryNSamplesEventRequest {
     int32 every_n_samples_event_type_raw = 3;
   }
   uint32 n_samples = 4;
-  uint32 options = 5;
 }
 
 message RegisterEveryNSamplesEventResponse {
@@ -4100,7 +4098,6 @@ message RegisterSignalEventRequest {
     Signal2 signal_id = 2;
     int32 signal_id_raw = 3;
   }
-  uint32 options = 4;
 }
 
 message RegisterSignalEventResponse {

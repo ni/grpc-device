@@ -8434,7 +8434,7 @@ namespace nidaqmx_grpc {
 
         auto task_grpc_session = request->task();
         TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-        uInt32 options = request->options();
+        auto options = 0U;
 
         auto status = library->RegisterDoneEvent(task, options, CallbackRouter::handle_callback, handler->token());
 
@@ -8509,7 +8509,7 @@ namespace nidaqmx_grpc {
         }
   
         uInt32 n_samples = request->n_samples();
-        uInt32 options = request->options();
+        auto options = 0U;
 
         auto status = library->RegisterEveryNSamplesEvent(task, every_n_samples_event_type, n_samples, options, CallbackRouter::handle_callback, handler->token());
 
@@ -8581,7 +8581,7 @@ namespace nidaqmx_grpc {
           }
         }
   
-        uInt32 options = request->options();
+        auto options = 0U;
 
         auto status = library->RegisterSignalEvent(task, signal_id, options, CallbackRouter::handle_callback, handler->token());
 

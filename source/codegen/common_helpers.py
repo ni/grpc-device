@@ -10,16 +10,12 @@ def is_input_parameter(parameter):
     return "in" in parameter["direction"]
 
 
-def is_pass_null_parameter(parameter):
-    return parameter.get('pass_null', False)
-
-
 def is_callback_token_parameter(parameter):
     return parameter.get('callback_token', False)
 
 
 def is_pointer_parameter(parameter):
-    return is_output_parameter(parameter) or is_pass_null_parameter(parameter) or is_callback_token_parameter(parameter)
+    return is_output_parameter(parameter) or parameter.get('pointer', False)
 
 
 # This means the parameter follows a specific varargs convention where
