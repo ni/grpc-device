@@ -1,4 +1,5 @@
 <%
+import common_helpers
 import service_helpers
 
 config = data['config']
@@ -30,7 +31,7 @@ class ${service_class_prefix}LibraryInterface {
   parameters = f['parameters']
   return_type = f['returns']
 %>\
-  virtual ${return_type} ${method_name}(${service_helpers.create_params(parameters)}) = 0;
+  virtual ${return_type} ${method_name}(${service_helpers.create_params(parameters, expand_varargs=True)}) = 0;
 % endfor
 };
 

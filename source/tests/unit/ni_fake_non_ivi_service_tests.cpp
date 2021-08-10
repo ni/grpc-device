@@ -439,6 +439,107 @@ TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingSecondSizeOption_Returns
   EXPECT_IOTA_OF_SIZE(response, SIZE_TWO);
 }
 
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
+{
+  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel"), BEAUTIFUL_COLOR_PINK, 1.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputVarArgsRequest request;
+  request.set_input_name("inputName");
+  auto arg = request.add_string_and_enums();
+  arg->set_mystring("channel");
+  arg->set_myenum(BEAUTIFUL_COLOR_PINK);
+  arg->set_powerupstate(1.0);
+  InputVarArgsResponse response;
+
+  service_.InputVarArgs(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
+{
+  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputVarArgsRequest request;
+  request.set_input_name("inputName");
+  auto arg = request.add_string_and_enums();
+  arg->set_mystring("channel0");
+  arg->set_myenum(BEAUTIFUL_COLOR_PINK);
+  arg->set_powerupstate(1.0);
+  arg = request.add_string_and_enums();
+  arg->set_mystring("channel1");
+  arg->set_myenum(BEAUTIFUL_COLOR_AQUA);
+  arg->set_powerupstate(2.0);
+  InputVarArgsResponse response;
+
+  service_.InputVarArgs(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
+{
+  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, StrEq("channel2"), BEAUTIFUL_COLOR_GREEN, 3.0, StrEq("channel3"), BEAUTIFUL_COLOR_BLACK, 4.0))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  InputVarArgsRequest request;
+  request.set_input_name("inputName");
+  auto arg = request.add_string_and_enums();
+  arg->set_mystring("channel0");
+  arg->set_myenum(BEAUTIFUL_COLOR_PINK);
+  arg->set_powerupstate(1.0);
+  arg = request.add_string_and_enums();
+  arg->set_mystring("channel1");
+  arg->set_myenum(BEAUTIFUL_COLOR_AQUA);
+  arg->set_powerupstate(2.0);
+  arg = request.add_string_and_enums();
+  arg->set_mystring("channel2");
+  arg->set_myenum(BEAUTIFUL_COLOR_GREEN);
+  arg->set_powerupstate(3.0);
+  arg = request.add_string_and_enums();
+  arg->set_mystring("channel3");
+  arg->set_myenum(BEAUTIFUL_COLOR_BLACK);
+  arg->set_powerupstate(4.0);
+  InputVarArgsResponse response;
+
+  service_.InputVarArgs(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_NoArgumentPairs)
+{
+  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  InputVarArgsRequest request;
+  request.set_input_name("inputName");
+  InputVarArgsResponse response;
+
+  auto status = service_.InputVarArgs(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FiveArgumentPairs)
+{
+  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  InputVarArgsRequest request;
+  request.set_input_name("inputName");
+  for (auto i = 0; i < 5; i++) {
+    request.add_string_and_enums();
+  }
+  InputVarArgsResponse response;
+
+  auto status = service_.InputVarArgs(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
+}
+
 const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
 TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpoch)
 {

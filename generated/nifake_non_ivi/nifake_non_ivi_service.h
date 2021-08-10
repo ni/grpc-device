@@ -40,6 +40,7 @@ public:
   ::grpc::ServerWriteReactor<ReadStreamResponse>* ReadStream(::grpc::CallbackServerContext* context, const ReadStreamRequest* request) override;
   ::grpc::Status InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response) override;
   ::grpc::Status OutputTimestamp(::grpc::ServerContext* context, const OutputTimestampRequest* request, OutputTimestampResponse* response) override;
+  ::grpc::Status InputVarArgs(::grpc::ServerContext* context, const InputVarArgsRequest* request, InputVarArgsResponse* response) override;
 private:
   NiFakeNonIviLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

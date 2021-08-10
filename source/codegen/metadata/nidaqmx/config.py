@@ -9,6 +9,25 @@ config = {
     'namespace_component': 'nidaqmx',
     'close_function': 'ClearTask',
     'custom_types': [
+        {
+            'name': 'AnalogPowerUpState',
+            'grpc_name': 'AnalogPowerUpState',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelNames',
+                },
+                {
+                    'type': 'double',
+                    'name': 'state',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'PowerUpStates',
+                    'name': 'channelType',
+                }
+            ]
+        }
     ],
     'additional_headers': ['custom/nidaqmx_conversions.h'],
     'type_to_grpc_type': {

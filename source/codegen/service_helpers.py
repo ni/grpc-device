@@ -99,8 +99,25 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
     return result[:-2]
 
 
-def create_params(parameters):
-    return ', '.join(create_param(p) for p in parameters)
+def create_args_for_varargs(parameters):
+    result = ''
+    for parameter in parameters:
+        name = common_helpers.camel_to_snake(parameter['cppName'])
+        if not parameter.get('include_in_proto', True):
+            continue
+        if common_helpers.is_repeated_varargs_parameter(parameter):
+            max_length = parameter['max_length']
+            for i in range(max_length):
+                for field in parameter['varargs_type']['fields']:
+                    result += f'get_{field["name"]}_if({name}, {i}), '
+        else:
+            result += f'{name}, '
+    return result[:-2]
+
+
+def create_params(parameters, expand_varargs=True):
+    any_not_include_in_proto = any([p for p in parameters if not p.get('include_in_proto', True)])
+    return ', '.join(create_param(p, expand_varargs, any_not_include_in_proto) for p in parameters)
 
 
 def get_array_param_size(parameter) -> str:
@@ -110,7 +127,26 @@ def get_array_param_size(parameter) -> str:
     return ''
 
 
-def create_param(parameter):
+def expand_varargs_parameters(parameters):
+    if not common_helpers.has_repeated_varargs_parameter(parameters):
+        return parameters
+    # omit the varargs parameter that we're going to expand
+    new_parameters = parameters[:-1]
+    varargs_parameter = parameters[-1]
+    assert common_helpers.is_repeated_varargs_parameter(varargs_parameter)
+    max_length = varargs_parameter['max_length']
+    # Many (all?) functions that take varargs take the first set of parameter as
+    # non-varargs. If this is the case, we need one fewer set of parameters in the varargs
+    # section.
+    if any([p for p in parameters if not p.get('include_in_proto', True)]):
+        max_length -= 1
+    for i in range(max_length):
+        for field in varargs_parameter['varargs_type']['fields']:
+            new_parameters.append({'cppName': f'{field["name"]}{i}'})
+    return new_parameters
+
+
+def create_param(parameter, expand_varargs=True, any_not_include_in_proto=False):
     type = parameter['type']
     name = parameter['cppName']
     if common_helpers.is_struct(parameter):
@@ -120,6 +156,21 @@ def create_param(parameter):
         return f'{type[:-2]} {name}[{array_size}]'
     elif common_helpers.is_pointer_parameter(parameter):
         return f'{type}* {name}'
+    elif common_helpers.is_repeated_varargs_parameter(parameter):
+        if expand_varargs:
+            max_length = parameter['max_length']
+            if any_not_include_in_proto:
+                max_length -= 1
+            s = ''
+            for i in range(max_length):
+                for field in parameter['varargs_type']['fields']:
+                    real_field_name = field['cppName']
+                    field['cppName'] = f'{real_field_name}{i}'
+                    s += create_param(field, expand_varargs=False) + ', '
+                    field['cppName'] = real_field_name
+            return s[:-2]
+        else:
+            return '...'
     else:
         return f'{type} {name}'
 
@@ -171,9 +222,15 @@ def get_output_lookup_values(enum_data):
     return out_value_format
 
 
-def filter_api_functions(functions):
+def filter_api_functions(functions, only_mockable_functions=True):
     '''Returns function metadata only for those functions to include for generating the function types to the API library'''
-    return [name for name, function in functions.items() if function.get('codegen_method', '') != 'no']
+    def filter_function(function):
+        if function.get('codegen_method', '') == 'no':
+            return False
+        if only_mockable_functions and not common_helpers.can_mock_function(function['parameters']):
+            return False
+        return True
+    return [name for name, function in functions.items() if filter_function(function)]
 
 
 def filter_proto_rpc_functions_to_generate(functions):
@@ -218,8 +275,8 @@ def get_response_type(method_name):
 
 def get_async_functions(functions):
     return {
-        name: data 
-        for name, data in functions.items() 
+        name: data
+        for name, data in functions.items()
         if common_helpers.has_streaming_response(data)
     }
 
@@ -238,4 +295,5 @@ def get_callback_method_parameters(function_data):
 
 
 def create_param_type_list(parameters):
+    return ', '.join([p['type'] for p in parameters])
     return ', '.join([p['type'] for p in parameters])

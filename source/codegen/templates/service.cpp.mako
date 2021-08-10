@@ -12,6 +12,10 @@ if len(config["custom_types"]) > 0:
   custom_types = config["custom_types"]
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
 has_async_functions = any(service_helpers.get_async_functions(functions))
+function_names = service_helpers.filter_proto_rpc_functions_to_generate(functions)
+# If there are any non-mockable functions, we need to call the library directly, which
+# means we need another include file
+any_non_mockable_functions = any([not common_helpers.can_mock_function(functions[name]['parameters']) for name in function_names])
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
 
@@ -35,6 +39,9 @@ has_async_functions = any(service_helpers.get_async_functions(functions))
 % if has_async_functions:
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
+% endif
+% if any_non_mockable_functions:
+#include "${module_name}_library.h"
 % endif
 
 namespace ${config["namespace_component"]}_grpc {
@@ -143,6 +150,8 @@ ${mako_helper.define_init_method_body(function_name=function_name, function_data
 ${mako_helper.define_ivi_dance_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   elif common_helpers.has_ivi_dance_with_a_twist_param(parameters):
 ${mako_helper.define_ivi_dance_with_a_twist_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+%   elif common_helpers.has_repeated_varargs_parameter(parameters):
+${mako_helper.define_repeated_varargs_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   else:
 ${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   endif
