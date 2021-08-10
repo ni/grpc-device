@@ -464,7 +464,7 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->SelfTestDevice(&context, request, &response);
   }
 
-  ::grpc::Status create_lin_scale(const std::string& name, double slope, CreateLinScaleResponse& response)
+  ::grpc::Status create_lin_scale(const std::string& name, double slope, CreateLinScaleResponse& response = ThrowawayResponse<CreateLinScaleResponse>::response())
   {
     ::grpc::ClientContext context;
     CreateLinScaleRequest request;
@@ -599,6 +599,50 @@ class NiDAQmxDriverApiTests : public Test {
     ConfigureTEDSRequest request;
     request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     return stub()->ConfigureTEDS(&context, request, &response);
+  }
+
+  ::grpc::Status get_scale_attribute_double(const std::string& scale_name, ScaleAttributes attribute, GetScaleAttributeDoubleResponse& response) {
+    ::grpc::ClientContext context;
+    GetScaleAttributeDoubleRequest request;
+    request.set_scale_name(scale_name);
+    request.set_attribute(attribute);
+    return stub()->GetScaleAttributeDouble(&context, request, &response);
+  }
+
+  ::grpc::Status set_scale_attribute_double(const SetScaleAttributeDoubleRequest& request, SetScaleAttributeDoubleResponse& response) {
+    ::grpc::ClientContext context;
+    return stub()->SetScaleAttributeDouble(&context, request, &response);
+  }
+
+  ::grpc::Status get_scale_attribute_i32(const std::string& scale_name, ScaleAttributes attribute, GetScaleAttributeInt32Response& response) {
+    ::grpc::ClientContext context;
+    GetScaleAttributeInt32Request request;
+    request.set_scale_name(scale_name);
+    request.set_attribute(attribute);
+    return stub()->GetScaleAttributeInt32(&context, request, &response);
+  }
+
+  template <typename TRequest, typename T>
+  TRequest create_set_scale_attribute_raw_request(const std::string& scale_name, ScaleAttributes attribute, T value) {
+    TRequest request;
+    request.set_scale_name(scale_name);
+    request.set_attribute(attribute);
+    request.set_value_raw(value);
+    return request;
+  }
+
+  template <typename TRequest, typename T>
+  TRequest create_set_scale_attribute_request(const std::string& scale_name, ScaleAttributes attribute, T value) {
+    TRequest request;
+    request.set_scale_name(scale_name);
+    request.set_attribute(attribute);
+    request.set_value(value);
+    return request;
+  }
+
+  ::grpc::Status set_scale_attribute_i32(const SetScaleAttributeInt32Request& request, SetScaleAttributeInt32Response& response) {
+    ::grpc::ClientContext context;
+    return stub()->SetScaleAttributeInt32(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -824,6 +868,59 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannelWithLinearScale_ReadAIData_Returns
   // NOTE: linear scaling on simulated channels isn't really observable.
   // Either way you get a sine wave filling the min/max range.
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
+}
+
+TEST_F(NiDAQmxDriverApiTests, LinearScale_GetSlopeAttribute_ReturnsInitialSlopeValue)
+{
+  const auto SCALE_NAME = std::string("TestScale");
+  const auto SLOPE = 0.5;
+  auto scale_status = create_lin_scale(SCALE_NAME, SLOPE);
+
+  GetScaleAttributeDoubleResponse response;
+  auto status = get_scale_attribute_double(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_LIN_SLOPE, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_NEAR(SLOPE, response.value(), .0001);
+}
+
+TEST_F(NiDAQmxDriverApiTests, SetYInterceptAttribute_GetYInterceptAttribute_ReturnsAttribute)
+{
+  const auto SCALE_NAME = std::string("TestScale");
+  const auto Y_INTERCEPT = -3.0;
+  auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
+  auto set_request = create_set_scale_attribute_request<SetScaleAttributeDoubleRequest>(
+    SCALE_NAME, 
+    ScaleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT, 
+    Y_INTERCEPT);
+  SetScaleAttributeDoubleResponse set_response;
+  auto set_status = set_scale_attribute_double(set_request, set_response);
+
+  GetScaleAttributeDoubleResponse response;
+  auto status = get_scale_attribute_double(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT, response);
+
+  EXPECT_SUCCESS(set_status, set_response);
+  EXPECT_SUCCESS(status, response);
+  EXPECT_NEAR(Y_INTERCEPT, response.value(), .0001);
+}
+
+TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribute)
+{
+  const auto SCALE_NAME = std::string("TestScale");
+  const auto Y_INTERCEPT = -3.0;
+  auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
+  auto set_request = create_set_scale_attribute_request<SetScaleAttributeInt32Request>(
+    SCALE_NAME, 
+    ScaleAttributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS, 
+    ScaleInt32AttributeValues::SCALE_INT32_RPM);
+  SetScaleAttributeInt32Response set_response;
+  auto set_status = set_scale_attribute_i32(set_request, set_response);
+
+  GetScaleAttributeInt32Response response;
+  auto status = get_scale_attribute_i32(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS, response);
+
+  EXPECT_SUCCESS(set_status, set_response);
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_RPM, response.value());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)

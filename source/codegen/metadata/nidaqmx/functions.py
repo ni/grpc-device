@@ -6046,6 +6046,50 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetScaleAttributeDouble': {
+        'cname': 'DAQmxGetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetScaleAttributeInt32': {
+        'cname': 'DAQmxGetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetSelfCalLastDateAndTime': {
         'parameters': [
             {
@@ -7677,6 +7721,50 @@ functions = {
                 'direction': 'in',
                 'name': 'data',
                 'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetScaleAttributeDouble': {
+        'cname': 'DAQmxSetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetScaleAttributeInt32': {
+        'cname': 'DAQmxSetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'

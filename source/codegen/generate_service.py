@@ -25,11 +25,44 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
   f.write(template.render(data=metadata))
   f.close()
 
+
+class AttributeValueExpander:
+  '''Wraps an _attribute_type_map of:
+  
+  group -> type -> attributes
+
+  and implements the metadata_mutations to add_attribute_values_enums and expand_attribute_function_value_param.
+  '''
+  def __init__(self, metadata):
+    self._metadata = metadata
+    self._attribute_type_map = {}
+
+    for group_name, attributes in common_helpers.get_attribute_groups(metadata).items():
+      attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(attributes)
+      metadata_mutation.add_attribute_values_enums(metadata["enums"], attribute_enums_by_type, group_name)
+      self._attribute_type_map[group_name] = attribute_enums_by_type
+
+  def get_used_attribute(self, parameters):
+    param_types = (param["grpc_type"] for param in parameters)
+    param_types = (common_helpers.strip_suffix(p, "Attributes") for p in param_types)
+    attribute_params = (p for p in param_types if p in self._attribute_type_map)
+    return next(attribute_params, None)
+
+  def expand_attribute_value_params(self, func):
+    parameters = func["parameters"]
+    used_attribute = self.get_used_attribute(parameters)
+    if used_attribute:
+      metadata_mutation.expand_attribute_function_value_param(
+        func,
+        self._metadata["enums"], 
+        self._attribute_type_map[used_attribute], 
+        used_attribute)
+
+
 def mutate_metadata(metadata):
   config = metadata["config"]
-  service_class_prefix = config["service_class_prefix"]
-  attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(metadata["attributes"])
-  metadata_mutation.add_attribute_values_enums(metadata["enums"], attribute_enums_by_type, service_class_prefix)
+  
+  attribute_expander = AttributeValueExpander(metadata)
   for function_name in metadata["functions"]:
     function = metadata["functions"][function_name]
     parameters = function["parameters"]
@@ -37,9 +70,9 @@ def mutate_metadata(metadata):
     metadata_mutation.mark_size_params(parameters)
     metadata_mutation.mark_non_proto_params(parameters)
     metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])
-    if function_name.startswith("SetAttribute") or function_name.startswith("CheckAttribute"):
-      metadata_mutation.expand_attribute_function_value_param(function, metadata["enums"], attribute_enums_by_type, service_class_prefix)
     metadata_mutation.populate_grpc_types(parameters, config)
+    attribute_expander.expand_attribute_value_params(function)
+
 
 def generate_all(metadata_dir, gen_dir):
   sys.path.append(metadata_dir)

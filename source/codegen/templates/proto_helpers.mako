@@ -3,14 +3,12 @@
   import proto_helpers
 %>
 
-## Define a proto enum capturing all attributes from the metadata.
-<%def name="define_attribute_enum(attributes)">\
+## Define a proto enum capturing attributes from the metadata.
+<%def name="define_attribute_enum(group_name, attributes)">\
 <%
-  config = data["config"]
-  service_class_prefix = config["service_class_prefix"]
-  attribute_value_prefix = service_class_prefix.upper() + "_ATTRIBUTE"
+  attribute_value_prefix = group_name.upper() + "_ATTRIBUTE"
 %>\
-enum ${service_class_prefix}Attributes {
+enum ${group_name}Attributes {
   ${attribute_value_prefix}_UNSPECIFIED = 0;
 % for attribute in attributes:
 <%
