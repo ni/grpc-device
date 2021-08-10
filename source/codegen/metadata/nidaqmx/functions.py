@@ -7635,6 +7635,45 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetAnalogPowerUpStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'repeating_var_arg': True,
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'repeating_var_arg': True,
+                'name': 'state',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'repeating_var_arg': True,
+                'enum': 'PowerUpStates',
+                'name': 'channelType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'repeated_var_args': True,
+                'name': 'powerUpStates',
+                'grpc_type': 'repeated AnalogPowerUpState',
+                'max_length': 96
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetArmStartTrigTrigWhen': {
         'parameters': [
             {

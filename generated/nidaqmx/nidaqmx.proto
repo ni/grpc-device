@@ -201,6 +201,7 @@ service NiDAQmx {
   rpc SelfTestDevice(SelfTestDeviceRequest) returns (SelfTestDeviceResponse);
   rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
   rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
+  rpc SetAnalogPowerUpStates(SetAnalogPowerUpStatesRequest) returns (SetAnalogPowerUpStatesResponse);
   rpc SetArmStartTrigTrigWhen(SetArmStartTrigTrigWhenRequest) returns (SetArmStartTrigTrigWhenResponse);
   rpc SetDigitalLogicFamilyPowerUpState(SetDigitalLogicFamilyPowerUpStateRequest) returns (SetDigitalLogicFamilyPowerUpStateResponse);
   rpc SetFirstSampClkWhen(SetFirstSampClkWhenRequest) returns (SetFirstSampClkWhenResponse);
@@ -579,6 +580,13 @@ enum Polarity2 {
   POLARITY2_ACTIVE_LOW = 10096;
 }
 
+enum PowerUpStates {
+  option allow_alias = true;
+  POWER_UP_STATES_UNSPECIFIED = 0;
+  POWER_UP_STATES_CHANNEL_VOLTAGE = 0;
+  POWER_UP_STATES_CHANNEL_CURRENT = 1;
+}
+
 enum PressureUnits {
   PRESSURE_UNITS_UNSPECIFIED = 0;
   PRESSURE_UNITS_PASCALS = 10081;
@@ -839,6 +847,11 @@ enum WriteBasicTEDSOptions {
   WRITE_BASIC_TEDS_OPTIONS_DO_NOT_WRITE = 12540;
 }
 
+message AnalogPowerUpState {
+  string channelNames = 1;
+  double state = 2;
+  PowerUpStates channelType = 3;
+}
 message AddCDAQSyncConnectionRequest {
   string port_list = 1;
 }
@@ -4120,6 +4133,15 @@ message SetAIChanCalExpDateRequest {
 }
 
 message SetAIChanCalExpDateResponse {
+  int32 status = 1;
+}
+
+message SetAnalogPowerUpStatesRequest {
+  string device_name = 1;
+  repeated AnalogPowerUpState power_up_states = 2;
+}
+
+message SetAnalogPowerUpStatesResponse {
   int32 status = 1;
 }
 

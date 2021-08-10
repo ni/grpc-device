@@ -34,6 +34,7 @@ def mutate_metadata(metadata):
     function = metadata["functions"][function_name]
     parameters = function["parameters"]
     metadata_mutation.sanitize_names(parameters)
+    metadata_mutation.set_var_args_types(parameters, config)
     metadata_mutation.mark_size_params(parameters)
     metadata_mutation.mark_non_proto_params(parameters)
     metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])

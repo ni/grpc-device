@@ -29,10 +29,25 @@ service NiFakeNonIvi {
   rpc ReadStream(ReadStreamRequest) returns (stream ReadStreamResponse);
   rpc InputTimestamp(InputTimestampRequest) returns (InputTimestampResponse);
   rpc OutputTimestamp(OutputTimestampRequest) returns (OutputTimestampResponse);
+  rpc InputVarArgs(InputVarArgsRequest) returns (InputVarArgsResponse);
 }
 
 enum NiFakeNonIviAttributes {
   NIFAKENONIVI_ATTRIBUTE_UNSPECIFIED = 0;
+}
+
+enum BeautifulColor {
+  BEAUTIFUL_COLOR_UNSPECIFIED = 0;
+  BEAUTIFUL_COLOR_PINK = 44;
+  BEAUTIFUL_COLOR_AQUA = 43;
+  BEAUTIFUL_COLOR_GREEN = 45;
+  BEAUTIFUL_COLOR_BLACK = 42;
+}
+
+message StringAndEnum {
+  string myString = 1;
+  BeautifulColor myEnum = 2;
+  double powerUpState = 3;
 }
 
 message CloseRequest {
@@ -144,5 +159,14 @@ message OutputTimestampRequest {
 message OutputTimestampResponse {
   int32 status = 1;
   google.protobuf.Timestamp when = 2;
+}
+
+message InputVarArgsRequest {
+  string input_name = 1;
+  repeated StringAndEnum string_and_enums = 2;
+}
+
+message InputVarArgsResponse {
+  int32 status = 1;
 }
 

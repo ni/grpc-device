@@ -1,4 +1,5 @@
 <%
+import common_helpers
 import service_helpers
 
 config = data['config']
@@ -33,7 +34,7 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : shared_librar
   if (!loaded) {
     return;
   }
-% for method_name in service_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
 <%
   c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
@@ -52,13 +53,13 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
-% for method_name in service_helpers.filter_api_functions(functions):
+% for method_name in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
 <%
   f = functions[method_name]
   parameters = f['parameters']
   return_type = f['returns']
-  parameter_list = service_helpers.create_params(parameters)
-  argument_list = ', '.join(p['cppName'] for p in parameters)
+  parameter_list = service_helpers.create_params(parameters, expand_varargs=True)
+  argument_list = ', '.join(p['cppName'] for p in service_helpers.expand_varargs_parameters(parameters))
   c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
 ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
