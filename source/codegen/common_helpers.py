@@ -169,6 +169,8 @@ def filter_proto_rpc_functions(functions):
 def get_attribute_enums_by_type(attributes):
   '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
   attribute_enums_by_type = defaultdict(set)
+  # For Compatibility: Pre-adding the following types to the map causes them to use value_raw
+  # params even if they have no enum values. This is part of the shipping API for MI drivers.
   for enum_type in ['ViInt32', 'ViInt64', 'ViReal64', 'ViString']:
     attribute_enums_by_type[enum_type] = set()
 
