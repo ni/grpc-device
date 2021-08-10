@@ -6064,6 +6064,13 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -6086,6 +6093,13 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -7815,6 +7829,13 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -7837,6 +7858,13 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'

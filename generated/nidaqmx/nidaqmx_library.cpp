@@ -1949,27 +1949,27 @@ int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* d
 #endif
 }
 
-int32 NiDAQmxLibrary::GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value)
+int32 NiDAQmxLibrary::GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size)
 {
   if (!function_pointers_.GetScaleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
 #if defined(_MSC_VER)
-  return DAQmxGetScaleAttribute(scaleName, attribute, value);
+  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
 #else
-  return function_pointers_.GetScaleAttributeDouble(scaleName, attribute, value);
+  return function_pointers_.GetScaleAttributeDouble(scaleName, attribute, value, size);
 #endif
 }
 
-int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value)
+int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value, uInt32 size)
 {
   if (!function_pointers_.GetScaleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
 #if defined(_MSC_VER)
-  return DAQmxGetScaleAttribute(scaleName, attribute, value);
+  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
 #else
-  return function_pointers_.GetScaleAttributeInt32(scaleName, attribute, value);
+  return function_pointers_.GetScaleAttributeInt32(scaleName, attribute, value, size);
 #endif
 }
 
@@ -2537,27 +2537,27 @@ int32 NiDAQmxLibrary::SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
 #endif
 }
 
-int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value)
+int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size)
 {
   if (!function_pointers_.SetScaleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
 #if defined(_MSC_VER)
-  return DAQmxSetScaleAttribute(scaleName, attribute, value);
+  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
 #else
-  return function_pointers_.SetScaleAttributeDouble(scaleName, attribute, value);
+  return function_pointers_.SetScaleAttributeDouble(scaleName, attribute, value, size);
 #endif
 }
 
-int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value)
+int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size)
 {
   if (!function_pointers_.SetScaleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
 #if defined(_MSC_VER)
-  return DAQmxSetScaleAttribute(scaleName, attribute, value);
+  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
 #else
-  return function_pointers_.SetScaleAttributeInt32(scaleName, attribute, value);
+  return function_pointers_.SetScaleAttributeInt32(scaleName, attribute, value, size);
 #endif
 }
 

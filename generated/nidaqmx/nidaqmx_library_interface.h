@@ -156,8 +156,8 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
   virtual int32 GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
   virtual int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
-  virtual int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value) = 0;
-  virtual int32 GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value) = 0;
+  virtual int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size) = 0;
+  virtual int32 GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value, uInt32 size) = 0;
   virtual int32 GetSelfCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
   virtual int32 GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
@@ -204,8 +204,8 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
   virtual int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily) = 0;
   virtual int32 SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
-  virtual int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value) = 0;
-  virtual int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value) = 0;
+  virtual int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size) = 0;
+  virtual int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size) = 0;
   virtual int32 SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
   virtual int32 SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
   virtual int32 StartNewFile(TaskHandle task, const char filePath[]) = 0;
