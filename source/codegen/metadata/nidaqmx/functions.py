@@ -6068,6 +6068,37 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetScaleAttributeDoubleArray': {
+        'cname': 'DAQmxGetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetScaleAttributeInt32': {
         'cname': 'DAQmxGetScaleAttribute',
         'parameters': [
@@ -6086,6 +6117,37 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetScaleAttributeString': {
+        'cname': 'DAQmxGetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -7689,31 +7751,31 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
                 'name': 'channelNames',
+                'repeating_var_arg': True,
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
                 'name': 'state',
+                'repeating_var_arg': True,
                 'type': 'float64'
             },
             {
                 'direction': 'in',
-                'include_in_proto': False,
-                'repeating_var_arg': True,
                 'enum': 'PowerUpStates',
+                'include_in_proto': False,
                 'name': 'channelType',
+                'repeating_var_arg': True,
                 'type': 'int32'
             },
             {
                 'direction': 'in',
-                'repeated_var_args': True,
-                'name': 'powerUpStates',
                 'grpc_type': 'repeated AnalogPowerUpState',
-                'max_length': 96
+                'max_length': 96,
+                'name': 'powerUpStates',
+                'repeated_var_args': True
             }
         ],
         'returns': 'int32'
@@ -7786,6 +7848,37 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetScaleAttributeDoubleArray': {
+        'cname': 'DAQmxSetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetScaleAttributeInt32': {
         'cname': 'DAQmxSetScaleAttribute',
         'parameters': [
@@ -7804,6 +7897,28 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetScaleAttributeString': {
+        'cname': 'DAQmxSetScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'const char[]'
             }
         ],
         'returns': 'int32'

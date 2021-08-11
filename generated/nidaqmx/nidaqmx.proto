@@ -159,7 +159,9 @@ service NiDAQmx {
   rpc GetNthTaskReadChannel(GetNthTaskReadChannelRequest) returns (GetNthTaskReadChannelResponse);
   rpc GetRefTrigTimestampVal(GetRefTrigTimestampValRequest) returns (GetRefTrigTimestampValResponse);
   rpc GetScaleAttributeDouble(GetScaleAttributeDoubleRequest) returns (GetScaleAttributeDoubleResponse);
+  rpc GetScaleAttributeDoubleArray(GetScaleAttributeDoubleArrayRequest) returns (GetScaleAttributeDoubleArrayResponse);
   rpc GetScaleAttributeInt32(GetScaleAttributeInt32Request) returns (GetScaleAttributeInt32Response);
+  rpc GetScaleAttributeString(GetScaleAttributeStringRequest) returns (GetScaleAttributeStringResponse);
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetStartTrigTimestampVal(GetStartTrigTimestampValRequest) returns (GetStartTrigTimestampValResponse);
   rpc GetStartTrigTrigWhen(GetStartTrigTrigWhenRequest) returns (GetStartTrigTrigWhenResponse);
@@ -208,7 +210,9 @@ service NiDAQmx {
   rpc SetDigitalLogicFamilyPowerUpState(SetDigitalLogicFamilyPowerUpStateRequest) returns (SetDigitalLogicFamilyPowerUpStateResponse);
   rpc SetFirstSampClkWhen(SetFirstSampClkWhenRequest) returns (SetFirstSampClkWhenResponse);
   rpc SetScaleAttributeDouble(SetScaleAttributeDoubleRequest) returns (SetScaleAttributeDoubleResponse);
+  rpc SetScaleAttributeDoubleArray(SetScaleAttributeDoubleArrayRequest) returns (SetScaleAttributeDoubleArrayResponse);
   rpc SetScaleAttributeInt32(SetScaleAttributeInt32Request) returns (SetScaleAttributeInt32Response);
+  rpc SetScaleAttributeString(SetScaleAttributeStringRequest) returns (SetScaleAttributeStringResponse);
   rpc SetStartTrigTrigWhen(SetStartTrigTrigWhenRequest) returns (SetStartTrigTrigWhenResponse);
   rpc SetSyncPulseTimeWhen(SetSyncPulseTimeWhenRequest) returns (SetSyncPulseTimeWhenResponse);
   rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
@@ -603,6 +607,7 @@ enum PowerUpStates {
   POWER_UP_STATES_UNSPECIFIED = 0;
   POWER_UP_STATES_CHANNEL_VOLTAGE = 0;
   POWER_UP_STATES_CHANNEL_CURRENT = 1;
+  POWER_UP_STATES_CHANNEL_HIGH_IMPEDANCE = 2;
 }
 
 enum PressureUnits {
@@ -3645,6 +3650,17 @@ message GetScaleAttributeDoubleResponse {
   double value = 2;
 }
 
+message GetScaleAttributeDoubleArrayRequest {
+  string scale_name = 1;
+  ScaleAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetScaleAttributeDoubleArrayResponse {
+  int32 status = 1;
+  repeated double value = 2;
+}
+
 message GetScaleAttributeInt32Request {
   string scale_name = 1;
   ScaleAttributes attribute = 2;
@@ -3653,6 +3669,17 @@ message GetScaleAttributeInt32Request {
 message GetScaleAttributeInt32Response {
   int32 status = 1;
   int32 value = 2;
+}
+
+message GetScaleAttributeStringRequest {
+  string scale_name = 1;
+  ScaleAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetScaleAttributeStringResponse {
+  int32 status = 1;
+  string value = 2;
 }
 
 message GetSelfCalLastDateAndTimeRequest {
@@ -4269,6 +4296,17 @@ message SetScaleAttributeDoubleResponse {
   int32 status = 1;
 }
 
+message SetScaleAttributeDoubleArrayRequest {
+  string scale_name = 1;
+  ScaleAttributes attribute = 2;
+  repeated double value = 3;
+  uint32 size = 4;
+}
+
+message SetScaleAttributeDoubleArrayResponse {
+  int32 status = 1;
+}
+
 message SetScaleAttributeInt32Request {
   string scale_name = 1;
   ScaleAttributes attribute = 2;
@@ -4279,6 +4317,16 @@ message SetScaleAttributeInt32Request {
 }
 
 message SetScaleAttributeInt32Response {
+  int32 status = 1;
+}
+
+message SetScaleAttributeStringRequest {
+  string scale_name = 1;
+  ScaleAttributes attribute = 2;
+  string value = 3;
+}
+
+message SetScaleAttributeStringResponse {
   int32 status = 1;
 }
 
