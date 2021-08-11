@@ -19,6 +19,8 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 Close(FakeHandle handle);
+  int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value);
+  int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value);
   int32 Init(const char sessionName[], FakeHandle* handle);
   int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle);
   int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
@@ -31,9 +33,13 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 InputTimestamp(CVIAbsoluteTime when);
   int32 OutputTimestamp(CVIAbsoluteTime* when);
   int32 InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char myString0[], int32 myEnum0, double powerUpState0, const char myString1[], int32 myEnum1, double powerUpState1, const char myString2[], int32 myEnum2, double powerUpState2);
+  int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value);
+  int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value);
 
  private:
   using ClosePtr = int32 (*)(FakeHandle handle);
+  using GetMarbleAttributeDoublePtr = int32 (*)(FakeHandle handle, int32 attribute, double* value);
+  using GetMarbleAttributeInt32Ptr = int32 (*)(FakeHandle handle, int32 attribute, int32* value);
   using InitPtr = int32 (*)(const char sessionName[], FakeHandle* handle);
   using InitWithHandleNameAsSessionNamePtr = int32 (*)(const char handleName[], FakeHandle* handle);
   using InputArraysWithNarrowIntegerTypesPtr = int32 (*)(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
@@ -46,9 +52,13 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using InputTimestampPtr = int32 (*)(CVIAbsoluteTime when);
   using OutputTimestampPtr = int32 (*)(CVIAbsoluteTime* when);
   using InputVarArgsPtr = int32 (*)(const char inputName[], const char channelName[], int32 color, double powerUpState, ...);
+  using SetMarbleAttributeDoublePtr = int32 (*)(FakeHandle handle, int32 attribute, double value);
+  using SetMarbleAttributeInt32Ptr = int32 (*)(FakeHandle handle, int32 attribute, int32 value);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
+    GetMarbleAttributeDoublePtr GetMarbleAttributeDouble;
+    GetMarbleAttributeInt32Ptr GetMarbleAttributeInt32;
     InitPtr Init;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
     InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;
@@ -61,6 +71,8 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     InputTimestampPtr InputTimestamp;
     OutputTimestampPtr OutputTimestamp;
     InputVarArgsPtr InputVarArgs;
+    SetMarbleAttributeDoublePtr SetMarbleAttributeDouble;
+    SetMarbleAttributeInt32Ptr SetMarbleAttributeInt32;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

@@ -651,6 +651,70 @@ TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_KnownValue)
   google::protobuf::util::TimeUtil::FromString(cviKnownTimestampString, &timestamp);
   EXPECT_EQ(timestamp, response.when());
 }
+
+TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeDouble_Succeeds)
+{
+  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_WEIGHT;
+  const auto VALUE = 1.2345;
+  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, ATTRIBUTE, VALUE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  SetMarbleAttributeDoubleRequest request;
+  request.set_attribute(ATTRIBUTE);
+  request.set_value(VALUE);
+  SetMarbleAttributeDoubleResponse response;
+  service_.SetMarbleAttributeDouble(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32_Succeeds)
+{
+  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_GREEN;
+  EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  SetMarbleAttributeInt32Request request;
+  request.set_attribute(ATTRIBUTE);
+  request.set_value(VALUE);
+  SetMarbleAttributeInt32Response response;
+  service_.SetMarbleAttributeInt32(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32Raw_Succeeds)
+{
+  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto VALUE = 9999;
+  EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  SetMarbleAttributeInt32Request request;
+  request.set_attribute(ATTRIBUTE);
+  request.set_value_raw(VALUE);
+  SetMarbleAttributeInt32Response response;
+  service_.SetMarbleAttributeInt32(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32_Succeeds)
+{
+  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_AQUA;
+  EXPECT_CALL(library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
+      .WillOnce(DoAll(SetArgPointee<2>(VALUE), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  GetMarbleAttributeInt32Request request;
+  request.set_attribute(ATTRIBUTE);
+  GetMarbleAttributeInt32Response response;
+  service_.GetMarbleAttributeInt32(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(VALUE, response.value());
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

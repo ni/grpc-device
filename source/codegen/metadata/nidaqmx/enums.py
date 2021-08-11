@@ -1327,6 +1327,38 @@ enums = {
             }
         ]
     },
+    'ScaleType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Scale values by using the equation y=mx+b, where x is a prescaled value and y  is a scaled value.'
+                },
+                'name': 'LINEAR',
+                'value': 10447
+            },
+            {
+                'documentation': {
+                    'description': ' Scale values proportionally from a range of pre-scaled values to a range of  scaled values.'
+                },
+                'name': 'MAP_RANGES',
+                'value': 10448
+            },
+            {
+                'documentation': {
+                    'description': 'Scale values by using an Nth order polynomial equation.'
+                },
+                'name': 'POLYNOMIAL',
+                'value': 10449
+            },
+            {
+                'documentation': {
+                    'description': ' Map an array of pre-scaled values to an array of corresponding scaled values,  with all other values scaled proportionally.'
+                },
+                'name': 'TABLE',
+                'value': 10450
+            }
+        ]
+    },
     'Signal': {
         'values': [
             {

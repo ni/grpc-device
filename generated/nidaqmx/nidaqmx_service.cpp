@@ -7276,6 +7276,52 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetScaleAttributeDouble(::grpc::ServerContext* context, const GetScaleAttributeDoubleRequest* request, GetScaleAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto scale_name = request->scale_name().c_str();
+      int32 attribute = request->attribute();
+      float64 value {};
+      auto status = library_->GetScaleAttributeDouble(scale_name, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetScaleAttributeInt32(::grpc::ServerContext* context, const GetScaleAttributeInt32Request* request, GetScaleAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto scale_name = request->scale_name().c_str();
+      int32 attribute = request->attribute();
+      int32 value {};
+      auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8923,6 +8969,61 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetFirstSampClkWhen(task, data);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetScaleAttributeDouble(::grpc::ServerContext* context, const SetScaleAttributeDoubleRequest* request, SetScaleAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto scale_name = request->scale_name().c_str();
+      int32 attribute = request->attribute();
+      float64 value = request->value();
+      auto status = library_->SetScaleAttributeDouble(scale_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetScaleAttributeInt32(::grpc::ServerContext* context, const SetScaleAttributeInt32Request* request, SetScaleAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto scale_name = request->scale_name().c_str();
+      int32 attribute = request->attribute();
+      int32 value;
+      switch (request->value_enum_case()) {
+        case nidaqmx_grpc::SetScaleAttributeInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<int32>(request->value());
+          break;
+        }
+        case nidaqmx_grpc::SetScaleAttributeInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<int32>(request->value_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetScaleAttributeInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetScaleAttributeInt32(scale_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

@@ -169,6 +169,8 @@ public:
   ::grpc::Status GetNthTaskDevice(::grpc::ServerContext* context, const GetNthTaskDeviceRequest* request, GetNthTaskDeviceResponse* response) override;
   ::grpc::Status GetNthTaskReadChannel(::grpc::ServerContext* context, const GetNthTaskReadChannelRequest* request, GetNthTaskReadChannelResponse* response) override;
   ::grpc::Status GetRefTrigTimestampVal(::grpc::ServerContext* context, const GetRefTrigTimestampValRequest* request, GetRefTrigTimestampValResponse* response) override;
+  ::grpc::Status GetScaleAttributeDouble(::grpc::ServerContext* context, const GetScaleAttributeDoubleRequest* request, GetScaleAttributeDoubleResponse* response) override;
+  ::grpc::Status GetScaleAttributeInt32(::grpc::ServerContext* context, const GetScaleAttributeInt32Request* request, GetScaleAttributeInt32Response* response) override;
   ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetStartTrigTimestampVal(::grpc::ServerContext* context, const GetStartTrigTimestampValRequest* request, GetStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetStartTrigTrigWhen(::grpc::ServerContext* context, const GetStartTrigTrigWhenRequest* request, GetStartTrigTrigWhenResponse* response) override;
@@ -216,6 +218,8 @@ public:
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status SetFirstSampClkWhen(::grpc::ServerContext* context, const SetFirstSampClkWhenRequest* request, SetFirstSampClkWhenResponse* response) override;
+  ::grpc::Status SetScaleAttributeDouble(::grpc::ServerContext* context, const SetScaleAttributeDoubleRequest* request, SetScaleAttributeDoubleResponse* response) override;
+  ::grpc::Status SetScaleAttributeInt32(::grpc::ServerContext* context, const SetScaleAttributeInt32Request* request, SetScaleAttributeInt32Response* response) override;
   ::grpc::Status SetStartTrigTrigWhen(::grpc::ServerContext* context, const SetStartTrigTrigWhenRequest* request, SetStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetSyncPulseTimeWhen(::grpc::ServerContext* context, const SetSyncPulseTimeWhenRequest* request, SetSyncPulseTimeWhenResponse* response) override;
   ::grpc::Status StartNewFile(::grpc::ServerContext* context, const StartNewFileRequest* request, StartNewFileResponse* response) override;

@@ -3,7 +3,6 @@ import common_helpers
 import proto_helpers
 
 config = data["config"]
-attributes = data["attributes"]
 enums = data["enums"]
 functions = data["functions"]
 
@@ -42,7 +41,9 @@ service ${service_class_prefix} {
 % endfor
 }
 
-${mako_helper.define_attribute_enum(attributes)}\
+% for group_name, attributes in common_helpers.get_attribute_groups(data).items():
+${mako_helper.define_attribute_enum(group_name, attributes)}\
+% endfor
 
 ${mako_helper.define_function_enums(function_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\

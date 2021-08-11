@@ -159,6 +159,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   int32 GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data);
+  int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value);
+  int32 GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value);
   int32 GetSelfCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
   int32 GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data);
   int32 GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data);
@@ -206,6 +208,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data);
   int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily);
   int32 SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data);
+  int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value);
+  int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value);
   int32 SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data);
   int32 SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data);
   int32 StartNewFile(TaskHandle task, const char filePath[]);
@@ -380,6 +384,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetNthTaskDevicePtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   using GetNthTaskReadChannelPtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   using GetRefTrigTimestampValPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
+  using GetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64* value);
+  using GetScaleAttributeInt32Ptr = int32 (*)(const char scaleName[], int32 attribute, int32* value);
   using GetSelfCalLastDateAndTimePtr = int32 (*)(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
   using GetStartTrigTimestampValPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
   using GetStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
@@ -427,6 +433,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetArmStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
   using SetDigitalLogicFamilyPowerUpStatePtr = int32 (*)(const char deviceName[], int32 logicFamily);
   using SetFirstSampClkWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
+  using SetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64 value);
+  using SetScaleAttributeInt32Ptr = int32 (*)(const char scaleName[], int32 attribute, int32 value);
   using SetStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
   using SetSyncPulseTimeWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
   using StartNewFilePtr = int32 (*)(TaskHandle task, const char filePath[]);
@@ -601,6 +609,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetNthTaskDevicePtr GetNthTaskDevice;
     GetNthTaskReadChannelPtr GetNthTaskReadChannel;
     GetRefTrigTimestampValPtr GetRefTrigTimestampVal;
+    GetScaleAttributeDoublePtr GetScaleAttributeDouble;
+    GetScaleAttributeInt32Ptr GetScaleAttributeInt32;
     GetSelfCalLastDateAndTimePtr GetSelfCalLastDateAndTime;
     GetStartTrigTimestampValPtr GetStartTrigTimestampVal;
     GetStartTrigTrigWhenPtr GetStartTrigTrigWhen;
@@ -648,6 +658,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SetArmStartTrigTrigWhenPtr SetArmStartTrigTrigWhen;
     SetDigitalLogicFamilyPowerUpStatePtr SetDigitalLogicFamilyPowerUpState;
     SetFirstSampClkWhenPtr SetFirstSampClkWhen;
+    SetScaleAttributeDoublePtr SetScaleAttributeDouble;
+    SetScaleAttributeInt32Ptr SetScaleAttributeInt32;
     SetStartTrigTrigWhenPtr SetStartTrigTrigWhen;
     SetSyncPulseTimeWhenPtr SetSyncPulseTimeWhen;
     StartNewFilePtr StartNewFile;

@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 
 
 def is_output_parameter(parameter):
@@ -142,6 +143,16 @@ def pascal_to_camel(pascal_string):
     return match[1].lower() + match[2]
 
 
+
+def ensure_pascal_case(pascal_or_camel_string):
+  '''Ensures that a camel/pascal case string is pascal case
+  NOTE: does not distinguish leading all-caps acronyms.'''
+  match = re.fullmatch(r'^([a-z])(.*)$', pascal_or_camel_string)
+  if match:
+    return match[1].upper() + match[2]
+  
+  return pascal_or_camel_string
+
 def pascal_to_snake(pascal_string):
     '''Returns a snake_string for a given PascalString.'''
     camel_string = pascal_to_camel(pascal_string)
@@ -156,20 +167,20 @@ def filter_proto_rpc_functions(functions):
 
 
 def get_attribute_enums_by_type(attributes):
-    '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
-    attribute_enums_by_type = {
-        'ViInt32': set(),
-        'ViInt64': set(),
-        'ViReal64': set(),
-        'ViString': set()
-    }
-    for attribute_name in attributes:
-        attribute = attributes[attribute_name]
-        if 'enum' in attribute:
-            attribute_type = attribute['type']
-            enum_name = attribute['enum']
-            attribute_enums_by_type[attribute_type].add(enum_name)
-    return attribute_enums_by_type
+  '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
+  attribute_enums_by_type = defaultdict(set)
+  # For Compatibility: Pre-adding the following types to the map causes them to use value_raw
+  # params even if they have no enum values. This is part of the shipping API for MI drivers.
+  for enum_type in ['ViInt32', 'ViInt64', 'ViReal64', 'ViString']:
+    attribute_enums_by_type[enum_type] = set()
+
+  for attribute_name in attributes:
+    attribute = attributes[attribute_name]
+    if 'enum' in attribute:
+      attribute_type = attribute['type']
+      enum_name = attribute['enum']
+      attribute_enums_by_type[attribute_type].add(enum_name)
+  return attribute_enums_by_type
 
 
 def get_function_enums(functions):
@@ -316,6 +327,28 @@ def indent(level):
 
 
 def filter_parameters_for_grpc_fields(parameters):
-    """Filter out the parameters that shouldn't be represented by a field on a grpc message.
-       For example, get rid of any parameters whose values should be determined from another parameter."""
-    return [p for p in parameters if p.get('include_in_proto', True)]
+  """Filter out the parameters that shouldn't be represented by a field on a grpc message.
+      For example, get rid of any parameters whose values should be determined from another parameter."""
+  return [p for p in parameters if p.get('include_in_proto', True)]
+
+
+def get_attribute_groups(data):
+  attributes = data['attributes']
+  config = data["config"]
+
+  # If the attributes are already in string categories: those are the groups. Return as-is.
+  first_key = next(iter(attributes), None)
+  if isinstance(first_key, str):
+    return attributes
+  
+  # If there's just one level of attributes: use the service_class_prefix as the group.
+  service_class_prefix = config['service_class_prefix']
+  return {service_class_prefix: attributes}
+
+
+def strip_prefix(s: str, prefix: str) -> str:
+  return s[len(prefix) :] if s.startswith(prefix) else s
+
+
+def strip_suffix(s: str, suffix: str) -> str:
+    return s[: -len(suffix)] if s.endswith(suffix) else s

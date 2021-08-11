@@ -176,7 +176,20 @@ def populate_grpc_types(parameters, config):
             service_class_prefix)
 
 
-def add_attribute_values_enums(enums, attribute_enums_by_type, service_class_prefix):
+def get_short_enum_type_name(type):
+    stripped_name = common_helpers.strip_prefix(type, "Vi")
+    return common_helpers.ensure_pascal_case(stripped_name,)
+
+
+def remove_leading_group_name(enum_value_name, group_name):
+    return common_helpers.strip_prefix(enum_value_name, f"{group_name.upper()}_")
+
+
+def add_leading_enum_name(enum_value_name, enum_name):
+    return f"{common_helpers.pascal_to_snake(enum_name).upper()}_" + enum_value_name
+
+
+def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
     """Update enums metadata to add new enums that will be used value parameter of SetAttribute APIs."""
     for type_name in attribute_enums_by_type:
         unmapped_values = {}
@@ -185,25 +198,33 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, service_class_pre
             enum = enums[enum_name]
             is_mapped_enum = enum.get("generate-mappings", False)
             for value in enum["values"]:
-                value_name = value['name'].replace(f"{service_class_prefix.upper()}_", f"{common_helpers.pascal_to_snake(enum_name).upper()}_")
+                # Remove the leading group name (if any) because it will be redundant in the aggregate enum.
+                value_name = remove_leading_group_name(value["name"], group_name)
+                # Add a leading enum to differentiate sub-enums within the aggregate values enum.
+                value_name = add_leading_enum_name(value_name, enum_name)
                 if is_mapped_enum:
                     mapped_values[value_name] = value["value"]
                 else:
                     unmapped_values[value_name] = value["value"]
-        enum_value_prefix = (f"{service_class_prefix}_{type_name[2:]}").upper()
-        unmapped_enum_name = get_attribute_values_enum_name(service_class_prefix, type_name)
-        mapped_enum_name = get_attribute_values_enum_name(service_class_prefix, type_name, is_mapped=True)
+
+        shortened_type_name = get_short_enum_type_name(type_name)
+        enum_value_prefix = (f"{group_name}_{shortened_type_name}").upper()
+        unmapped_enum_name = get_attribute_values_enum_name(group_name, type_name)
+        mapped_enum_name = get_attribute_values_enum_name(group_name, type_name, is_mapped=True)
         add_enum(unmapped_enum_name, unmapped_values, enums, enum_value_prefix)
         add_enum(mapped_enum_name, mapped_values, enums, enum_value_prefix, is_mapped=True)
     
 def expand_attribute_function_value_param(function, enums, attribute_enums_by_type, service_class_prefix):
     """For SetAttribute and CheckAttribute APIs, update function metadata to mark value parameter as enum."""
     value_param = get_attribute_function_value_param(function)
+    if not value_param or value_param['direction'] == 'out':
+        return
+
     if value_param["type"] == "ViConstString":
         param_type = "ViString"
     else:
         param_type = value_param["type"]
-    if value_param != None and param_type in attribute_enums_by_type:
+    if param_type in attribute_enums_by_type:
         enum_name = get_attribute_values_enum_name(service_class_prefix, param_type)
         mapped_enum_name = get_attribute_values_enum_name(service_class_prefix, param_type, is_mapped=True)
         enum_exists = enum_name in enums
@@ -220,9 +241,10 @@ def expand_attribute_function_value_param(function, enums, attribute_enums_by_ty
 def get_attribute_function_value_param(function):
     return next((param for param in function["parameters"] if param["name"] in {"value", "attributeValue"}), None)
 
-def get_attribute_values_enum_name(service_class_prefix, type, is_mapped=False):
+def get_attribute_values_enum_name(group_name, type, is_mapped=False):
     enum_name_suffix = "Mapped" if is_mapped else "" 
-    return service_class_prefix + type[2:] + "AttributeValues" + enum_name_suffix
+    shortened_type_name = get_short_enum_type_name(type)
+    return group_name + shortened_type_name + "AttributeValues" + enum_name_suffix
 
 def add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
     if not enum_values:
