@@ -10,6 +10,48 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetMarbleAttributeDouble': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'MarbleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'double'
+            },
+        ],
+        'returns': 'int32'
+    },
+    'GetMarbleAttributeInt32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'MarbleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            },
+        ],
+        'returns': 'int32'
+    },
     'Init': {
         'init_method': True,
         'parameters': [
@@ -281,6 +323,48 @@ functions = {
                 'grpc_type': 'repeated StringAndEnum',
                 'max_length': 4
             }
+        ],
+        'returns': 'int32'
+    },
+    'SetMarbleAttributeDouble': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'MarbleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'double'
+            },
+        ],
+        'returns': 'int32'
+    },
+    'SetMarbleAttributeInt32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'MarbleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'int32'
+            },
         ],
         'returns': 'int32'
     },

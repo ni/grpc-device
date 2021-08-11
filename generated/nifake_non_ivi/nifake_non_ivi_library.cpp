@@ -22,6 +22,8 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niFakeNonIvi_Close"));
+  function_pointers_.GetMarbleAttributeDouble = reinterpret_cast<GetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeDouble"));
+  function_pointers_.GetMarbleAttributeInt32 = reinterpret_cast<GetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeInt32"));
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFakeNonIvi_Init"));
   function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
   function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
@@ -34,6 +36,8 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
   function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputTimestamp"));
   function_pointers_.InputVarArgs = reinterpret_cast<InputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputVarArgs"));
+  function_pointers_.SetMarbleAttributeDouble = reinterpret_cast<SetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeDouble"));
+  function_pointers_.SetMarbleAttributeInt32 = reinterpret_cast<SetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeInt32"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -56,6 +60,30 @@ int32 NiFakeNonIviLibrary::Close(FakeHandle handle)
   return niFakeNonIvi_Close(handle);
 #else
   return function_pointers_.Close(handle);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value)
+{
+  if (!function_pointers_.GetMarbleAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetMarbleAttributeDouble.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_GetMarbleAttributeDouble(handle, attribute, value);
+#else
+  return function_pointers_.GetMarbleAttributeDouble(handle, attribute, value);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value)
+{
+  if (!function_pointers_.GetMarbleAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetMarbleAttributeInt32.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_GetMarbleAttributeInt32(handle, attribute, value);
+#else
+  return function_pointers_.GetMarbleAttributeInt32(handle, attribute, value);
 #endif
 }
 
@@ -200,6 +228,30 @@ int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char chann
   return niFakeNonIvi_InputVarArgs(inputName, channelName, color, powerUpState, myString0, myEnum0, powerUpState0, myString1, myEnum1, powerUpState1, myString2, myEnum2, powerUpState2);
 #else
   return function_pointers_.InputVarArgs(inputName, channelName, color, powerUpState, myString0, myEnum0, powerUpState0, myString1, myEnum1, powerUpState1, myString2, myEnum2, powerUpState2);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value)
+{
+  if (!function_pointers_.SetMarbleAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetMarbleAttributeDouble.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_SetMarbleAttributeDouble(handle, attribute, value);
+#else
+  return function_pointers_.SetMarbleAttributeDouble(handle, attribute, value);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value)
+{
+  if (!function_pointers_.SetMarbleAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetMarbleAttributeInt32.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_SetMarbleAttributeInt32(handle, attribute, value);
+#else
+  return function_pointers_.SetMarbleAttributeInt32(handle, attribute, value);
 #endif
 }
 

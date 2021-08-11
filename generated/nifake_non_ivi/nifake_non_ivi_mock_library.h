@@ -18,6 +18,8 @@ namespace unit {
 class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
   MOCK_METHOD(int32, Close, (FakeHandle handle), (override));
+  MOCK_METHOD(int32, GetMarbleAttributeDouble, (FakeHandle handle, int32 attribute, double* value), (override));
+  MOCK_METHOD(int32, GetMarbleAttributeInt32, (FakeHandle handle, int32 attribute, int32* value), (override));
   MOCK_METHOD(int32, Init, (const char sessionName[], FakeHandle* handle), (override));
   MOCK_METHOD(int32, InitWithHandleNameAsSessionName, (const char handleName[], FakeHandle* handle), (override));
   MOCK_METHOD(int32, InputArraysWithNarrowIntegerTypes, (const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]), (override));
@@ -30,6 +32,8 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, InputTimestamp, (CVIAbsoluteTime when), (override));
   MOCK_METHOD(int32, OutputTimestamp, (CVIAbsoluteTime* when), (override));
   MOCK_METHOD(int32, InputVarArgs, (const char inputName[], const char channelName[], int32 color, double powerUpState, const char myString0[], int32 myEnum0, double powerUpState0, const char myString1[], int32 myEnum1, double powerUpState1, const char myString2[], int32 myEnum2, double powerUpState2), (override));
+  MOCK_METHOD(int32, SetMarbleAttributeDouble, (FakeHandle handle, int32 attribute, double value), (override));
+  MOCK_METHOD(int32, SetMarbleAttributeInt32, (FakeHandle handle, int32 attribute, int32 value), (override));
 };
 
 }  // namespace unit

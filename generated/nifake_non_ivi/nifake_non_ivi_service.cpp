@@ -48,6 +48,54 @@ namespace nifake_non_ivi_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetMarbleAttributeDouble(::grpc::ServerContext* context, const GetMarbleAttributeDoubleRequest* request, GetMarbleAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute = request->attribute();
+      double value {};
+      auto status = library_->GetMarbleAttributeDouble(handle, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetMarbleAttributeInt32(::grpc::ServerContext* context, const GetMarbleAttributeInt32Request* request, GetMarbleAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute = request->attribute();
+      int32 value {};
+      auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -424,6 +472,63 @@ namespace nifake_non_ivi_grpc {
       };
 
       auto status = library_->InputVarArgs(input_name, get_myString_if(string_and_enums, 0), get_myEnum_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_myString_if(string_and_enums, 1), get_myEnum_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_myString_if(string_and_enums, 2), get_myEnum_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_myString_if(string_and_enums, 3), get_myEnum_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetMarbleAttributeDouble(::grpc::ServerContext* context, const SetMarbleAttributeDoubleRequest* request, SetMarbleAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute = request->attribute();
+      double value = request->value();
+      auto status = library_->SetMarbleAttributeDouble(handle, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetMarbleAttributeInt32(::grpc::ServerContext* context, const SetMarbleAttributeInt32Request* request, SetMarbleAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute = request->attribute();
+      int32 value;
+      switch (request->value_enum_case()) {
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<int32>(request->value());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<int32>(request->value_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetMarbleAttributeInt32(handle, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
