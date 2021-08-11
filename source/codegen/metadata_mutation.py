@@ -214,6 +214,43 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
         add_enum(unmapped_enum_name, unmapped_values, enums, enum_value_prefix)
         add_enum(mapped_enum_name, mapped_values, enums, enum_value_prefix, is_mapped=True)
     
+
+class AttributeValueExpander:
+  '''Wraps an _attribute_type_map of:
+  
+  group -> type -> attributes
+
+  and implements the metadata_mutations to add_attribute_values_enums and expand_attribute_function_value_param.
+  '''
+  def __init__(self, metadata):
+    self._metadata = metadata
+    self._attribute_type_map = {}
+
+    for group_name, attributes in common_helpers.get_attribute_groups(metadata).items():
+      attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(attributes)
+      add_attribute_values_enums(metadata["enums"], attribute_enums_by_type, group_name)
+      self._attribute_type_map[group_name] = attribute_enums_by_type
+
+
+  def get_used_attribute_group_name(self, parameters):
+    # All attribute parameters must have a grpc_type of {group_name}Attributes.
+    # In MI, this is handled during metadata mutation of ViAttr types.
+    param_types = (param["grpc_type"] for param in parameters)
+    param_types = (common_helpers.strip_suffix(p, "Attributes") for p in param_types)
+    attribute_params = (p for p in param_types if p in self._attribute_type_map)
+    return next(attribute_params, None)
+
+
+  def expand_attribute_value_params(self, func):
+    parameters = func["parameters"]
+    attribute_group_name = self.get_used_attribute_group_name(parameters)
+    if attribute_group_name:
+      expand_attribute_function_value_param(
+        func,
+        self._metadata["enums"], 
+        self._attribute_type_map[attribute_group_name], 
+        attribute_group_name)
+
 def expand_attribute_function_value_param(function, enums, attribute_enums_by_type, service_class_prefix):
     """For SetAttribute and CheckAttribute APIs, update function metadata to mark value parameter as enum."""
     value_param = get_attribute_function_value_param(function)

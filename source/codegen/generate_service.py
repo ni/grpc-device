@@ -25,48 +25,10 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
   f.write(template.render(data=metadata))
   f.close()
 
-
-class AttributeValueExpander:
-  '''Wraps an _attribute_type_map of:
-  
-  group -> type -> attributes
-
-  and implements the metadata_mutations to add_attribute_values_enums and expand_attribute_function_value_param.
-  '''
-  def __init__(self, metadata):
-    self._metadata = metadata
-    self._attribute_type_map = {}
-
-    for group_name, attributes in common_helpers.get_attribute_groups(metadata).items():
-      attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(attributes)
-      metadata_mutation.add_attribute_values_enums(metadata["enums"], attribute_enums_by_type, group_name)
-      self._attribute_type_map[group_name] = attribute_enums_by_type
-
-
-  def get_used_attribute_group_name(self, parameters):
-    # All attribute parameters must have a grpc_type of {group_name}Attributes.
-    # In MI, this is handled during metadata mutation of ViAttr types.
-    param_types = (param["grpc_type"] for param in parameters)
-    param_types = (common_helpers.strip_suffix(p, "Attributes") for p in param_types)
-    attribute_params = (p for p in param_types if p in self._attribute_type_map)
-    return next(attribute_params, None)
-
-
-  def expand_attribute_value_params(self, func):
-    parameters = func["parameters"]
-    attribute_group_name = self.get_used_attribute_group_name(parameters)
-    if attribute_group_name:
-      metadata_mutation.expand_attribute_function_value_param(
-        func,
-        self._metadata["enums"], 
-        self._attribute_type_map[attribute_group_name], 
-        attribute_group_name)
-
-
 def mutate_metadata(metadata):
   config = metadata["config"]
   
-  attribute_expander = AttributeValueExpander(metadata)
+  attribute_expander = metadata_mutation.AttributeValueExpander(metadata)
   for function_name in metadata["functions"]:
     function = metadata["functions"][function_name]
     parameters = function["parameters"]
