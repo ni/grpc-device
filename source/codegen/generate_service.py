@@ -42,21 +42,25 @@ class AttributeValueExpander:
       metadata_mutation.add_attribute_values_enums(metadata["enums"], attribute_enums_by_type, group_name)
       self._attribute_type_map[group_name] = attribute_enums_by_type
 
-  def get_used_attribute(self, parameters):
+
+  def get_used_attribute_group_name(self, parameters):
+    # All attribute parameters must have a grpc_type of {group_name}Attributes.
+    # In MI, this is handled during metadata mutation of ViAttr types.
     param_types = (param["grpc_type"] for param in parameters)
     param_types = (common_helpers.strip_suffix(p, "Attributes") for p in param_types)
     attribute_params = (p for p in param_types if p in self._attribute_type_map)
     return next(attribute_params, None)
 
+
   def expand_attribute_value_params(self, func):
     parameters = func["parameters"]
-    used_attribute = self.get_used_attribute(parameters)
-    if used_attribute:
+    attribute_group_name = self.get_used_attribute_group_name(parameters)
+    if attribute_group_name:
       metadata_mutation.expand_attribute_function_value_param(
         func,
         self._metadata["enums"], 
-        self._attribute_type_map[used_attribute], 
-        used_attribute)
+        self._attribute_type_map[attribute_group_name], 
+        attribute_group_name)
 
 
 def mutate_metadata(metadata):

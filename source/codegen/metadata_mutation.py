@@ -178,7 +178,15 @@ def populate_grpc_types(parameters, config):
 
 def get_short_enum_type_name(type):
     stripped_name = common_helpers.strip_prefix(type, "Vi")
-    return common_helpers.ensure_pascal_case(stripped_name)
+    return common_helpers.ensure_pascal_case(stripped_name,)
+
+
+def remove_leading_group_name(enum_value_name, group_name):
+    return common_helpers.strip_prefix(enum_value_name, f"{group_name.upper()}_")
+
+
+def add_leading_enum_name(enum_value_name, enum_name):
+    return f"{common_helpers.pascal_to_snake(enum_name).upper()}_" + enum_value_name
 
 
 def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
@@ -190,7 +198,10 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
             enum = enums[enum_name]
             is_mapped_enum = enum.get("generate-mappings", False)
             for value in enum["values"]:
-                value_name = value['name'].replace(f"{group_name.upper()}_", f"{common_helpers.pascal_to_snake(enum_name).upper()}_")
+                # Remove the leading group name (if any) because it will be redundant in the aggregate enum.
+                value_name = remove_leading_group_name(value["name"], group_name)
+                # Add a leading enum to differentiate sub-enums within the aggregate values enum.
+                value_name = add_leading_enum_name(value_name, enum_name)
                 if is_mapped_enum:
                     mapped_values[value_name] = value["value"]
                 else:
@@ -213,7 +224,7 @@ def expand_attribute_function_value_param(function, enums, attribute_enums_by_ty
         param_type = "ViString"
     else:
         param_type = value_param["type"]
-    if value_param != None and param_type in attribute_enums_by_type:
+    if param_type in attribute_enums_by_type:
         enum_name = get_attribute_values_enum_name(service_class_prefix, param_type)
         mapped_enum_name = get_attribute_values_enum_name(service_class_prefix, param_type, is_mapped=True)
         enum_exists = enum_name in enums

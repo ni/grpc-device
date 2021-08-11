@@ -384,7 +384,6 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     return stub()->RegisterDoneEvent(&context, request);
   }
-
   auto register_every_n_samples_event(::grpc::ClientContext& context, uint32 n_samples) {
     RegisterEveryNSamplesEventRequest request;
     set_request_session_id(request);
@@ -909,9 +908,9 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
   const auto Y_INTERCEPT = -3.0;
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
   auto set_request = create_set_scale_attribute_request<SetScaleAttributeInt32Request>(
-    SCALE_NAME, 
-    ScaleAttributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS, 
-    ScaleInt32AttributeValues::SCALE_INT32_RPM);
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS,
+      ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM);
   SetScaleAttributeInt32Response set_response;
   auto set_status = set_scale_attribute_i32(set_request, set_response);
 
@@ -920,7 +919,7 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
 
   EXPECT_SUCCESS(set_status, set_response);
   EXPECT_SUCCESS(status, response);
-  EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_RPM, response.value());
+  EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM, response.value());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
