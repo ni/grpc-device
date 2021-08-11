@@ -922,22 +922,19 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
   EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM, response.value());
 }
 
-TEST_F(NiDAQmxDriverApiTests, SetScaledUnitsAsDouble_Fails)
+TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
 {
   const auto SCALE_NAME = std::string("TestScale");
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
-  auto set_request = create_set_scale_attribute_request<SetScaleAttributeDoubleRequest>(
-    SCALE_NAME, 
-    ScaleAttributes::SCALE_ATTRIBUTE_SCALED_UNITS, 
-    ScaleInt32AttributeValues::SCALE_INT32_RPM);
-  SetScaleAttributeDoubleResponse set_response;
-  auto status = set_scale_attribute_double(set_request, set_response);
+  GetScaleAttributeDoubleResponse response;
+  auto status = get_scale_attribute_double(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_SCALED_UNITS, response);
 
-  EXPECT_NE(DAQmxSuccess, set_response.status());
-  // Setting a scalar to a non-scalar field returns a positive value because that's the convention
+
+  EXPECT_NE(DAQmxSuccess, response.status());
+  // Getting a scalar from a non-scalar field returns a positive value because that's the convention
   // when you pass in zero for the size.
   // The key result here is: don't crash.
-  EXPECT_GT(0, set_response.status());
+  EXPECT_GT(0, response.status());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
