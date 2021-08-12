@@ -447,8 +447,8 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
   InputVarArgsRequest request;
   request.set_input_name("inputName");
   auto arg = request.add_string_and_enums();
-  arg->set_mystring("channel");
-  arg->set_myenum(BEAUTIFUL_COLOR_PINK);
+  arg->set_channelname("channel");
+  arg->set_color(BEAUTIFUL_COLOR_PINK);
   arg->set_powerupstate(1.0);
   InputVarArgsResponse response;
 
@@ -465,12 +465,12 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
   InputVarArgsRequest request;
   request.set_input_name("inputName");
   auto arg = request.add_string_and_enums();
-  arg->set_mystring("channel0");
-  arg->set_myenum(BEAUTIFUL_COLOR_PINK);
+  arg->set_channelname("channel0");
+  arg->set_color(BEAUTIFUL_COLOR_PINK);
   arg->set_powerupstate(1.0);
   arg = request.add_string_and_enums();
-  arg->set_mystring("channel1");
-  arg->set_myenum(BEAUTIFUL_COLOR_AQUA);
+  arg->set_channelname("channel1");
+  arg->set_color(BEAUTIFUL_COLOR_AQUA);
   arg->set_powerupstate(2.0);
   InputVarArgsResponse response;
 
@@ -487,20 +487,20 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
   InputVarArgsRequest request;
   request.set_input_name("inputName");
   auto arg = request.add_string_and_enums();
-  arg->set_mystring("channel0");
-  arg->set_myenum(BEAUTIFUL_COLOR_PINK);
+  arg->set_channelname("channel0");
+  arg->set_color(BEAUTIFUL_COLOR_PINK);
   arg->set_powerupstate(1.0);
   arg = request.add_string_and_enums();
-  arg->set_mystring("channel1");
-  arg->set_myenum(BEAUTIFUL_COLOR_AQUA);
+  arg->set_channelname("channel1");
+  arg->set_color(BEAUTIFUL_COLOR_AQUA);
   arg->set_powerupstate(2.0);
   arg = request.add_string_and_enums();
-  arg->set_mystring("channel2");
-  arg->set_myenum(BEAUTIFUL_COLOR_GREEN);
+  arg->set_channelname("channel2");
+  arg->set_color(BEAUTIFUL_COLOR_GREEN);
   arg->set_powerupstate(3.0);
   arg = request.add_string_and_enums();
-  arg->set_mystring("channel3");
-  arg->set_myenum(BEAUTIFUL_COLOR_BLACK);
+  arg->set_channelname("channel3");
+  arg->set_color(BEAUTIFUL_COLOR_BLACK);
   arg->set_powerupstate(4.0);
   InputVarArgsResponse response;
 

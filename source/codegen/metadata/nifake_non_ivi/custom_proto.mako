@@ -1,5 +1,5 @@
 message StringAndEnum {
-  string myString = 1;
-  BeautifulColor myEnum = 2;
+  string channelName = 1;
+  BeautifulColor color = 2;
   double powerUpState = 3;
 }

@@ -29,7 +29,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 ReadStream(int32 start, int32 stop, int32* value) = 0;
   virtual int32 InputTimestamp(CVIAbsoluteTime when) = 0;
   virtual int32 OutputTimestamp(CVIAbsoluteTime* when) = 0;
-  virtual int32 InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char myString0[], int32 myEnum0, double powerUpState0, const char myString1[], int32 myEnum1, double powerUpState1, const char myString2[], int32 myEnum2, double powerUpState2) = 0;
+  virtual int32 InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char channelName0[], int32 color0, double powerUpState0, const char channelName1[], int32 color1, double powerUpState1, const char channelName2[], int32 color2, double powerUpState2) = 0;
   virtual int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value) = 0;
   virtual int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value) = 0;
 };

@@ -7807,7 +7807,7 @@ functions = {
                 'include_in_proto': False,
                 'name': 'state',
                 'repeating_var_arg': True,
-                'type': 'float64'
+                'type': 'double'
             },
             {
                 'direction': 'in',

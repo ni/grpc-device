@@ -452,15 +452,15 @@ namespace nifake_non_ivi_grpc {
       if (string_and_enums.size() > 4) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 4 values for stringAndEnums were specified");
       }
-      auto get_myString_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
+      auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
             if (vector.size() > n) {
-                  return vector[n].mystring().c_str();
+                  return vector[n].channelname().c_str();
             }
             return nullptr;
       };
-      auto get_myEnum_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> int32 {
+      auto get_color_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> int32 {
             if (vector.size() > n) {
-                  return vector[n].myenum();
+                  return vector[n].color();
             }
             return 0;
       };
@@ -471,7 +471,7 @@ namespace nifake_non_ivi_grpc {
             return 0;
       };
 
-      auto status = library_->InputVarArgs(input_name, get_myString_if(string_and_enums, 0), get_myEnum_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_myString_if(string_and_enums, 1), get_myEnum_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_myString_if(string_and_enums, 2), get_myEnum_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_myString_if(string_and_enums, 3), get_myEnum_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
+      auto status = library_->InputVarArgs(input_name, get_channelName_if(string_and_enums, 0), get_color_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_channelName_if(string_and_enums, 1), get_color_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_channelName_if(string_and_enums, 2), get_color_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_channelName_if(string_and_enums, 3), get_color_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
       response->set_status(status);
       return ::grpc::Status::OK;
     }

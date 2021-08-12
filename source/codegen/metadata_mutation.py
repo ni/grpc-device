@@ -38,8 +38,12 @@ def set_var_args_types(parameters, config):
             parameter['type'] = '...'
             stripped_grpc_type = common_helpers.strip_repeated_from_grpc_type(
                 parameter['grpc_type'])
-            custom_param = [t for t in config['custom_types']
-                            if t['grpc_name'] == stripped_grpc_type][0]
+            custom_params = [t for t in config['custom_types']
+                             if t['grpc_name'] == stripped_grpc_type]
+            if len(custom_params) == 0:
+                # assume this is a builtin type
+                continue
+            custom_param = custom_params[0]
             populate_grpc_types(custom_param['fields'], config)
             sanitize_names(custom_param['fields'])
             for field in custom_param['fields']:
