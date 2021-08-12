@@ -163,7 +163,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetNthTaskReadChannel = reinterpret_cast<GetNthTaskReadChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskReadChannel"));
   function_pointers_.GetRefTrigTimestampVal = reinterpret_cast<GetRefTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetRefTrigTimestampVal"));
   function_pointers_.GetScaleAttributeDouble = reinterpret_cast<GetScaleAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetScaleAttribute"));
+  function_pointers_.GetScaleAttributeDoubleArray = reinterpret_cast<GetScaleAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetScaleAttribute"));
   function_pointers_.GetScaleAttributeInt32 = reinterpret_cast<GetScaleAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetScaleAttribute"));
+  function_pointers_.GetScaleAttributeString = reinterpret_cast<GetScaleAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetScaleAttribute"));
   function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_.get_function_pointer("DAQmxGetSelfCalLastDateAndTime"));
   function_pointers_.GetStartTrigTimestampVal = reinterpret_cast<GetStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTimestampVal"));
   function_pointers_.GetStartTrigTrigWhen = reinterpret_cast<GetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTrigWhen"));
@@ -212,7 +214,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetDigitalLogicFamilyPowerUpState = reinterpret_cast<SetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxSetDigitalLogicFamilyPowerUpState"));
   function_pointers_.SetFirstSampClkWhen = reinterpret_cast<SetFirstSampClkWhenPtr>(shared_library_.get_function_pointer("DAQmxSetFirstSampClkWhen"));
   function_pointers_.SetScaleAttributeDouble = reinterpret_cast<SetScaleAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
+  function_pointers_.SetScaleAttributeDoubleArray = reinterpret_cast<SetScaleAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
   function_pointers_.SetScaleAttributeInt32 = reinterpret_cast<SetScaleAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
+  function_pointers_.SetScaleAttributeString = reinterpret_cast<SetScaleAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
   function_pointers_.SetStartTrigTrigWhen = reinterpret_cast<SetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxSetStartTrigTrigWhen"));
   function_pointers_.SetSyncPulseTimeWhen = reinterpret_cast<SetSyncPulseTimeWhenPtr>(shared_library_.get_function_pointer("DAQmxSetSyncPulseTimeWhen"));
   function_pointers_.StartNewFile = reinterpret_cast<StartNewFilePtr>(shared_library_.get_function_pointer("DAQmxStartNewFile"));
@@ -1961,6 +1965,18 @@ int32 NiDAQmxLibrary::GetScaleAttributeDouble(const char scaleName[], int32 attr
 #endif
 }
 
+int32 NiDAQmxLibrary::GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, float64 value[], uInt32 size)
+{
+  if (!function_pointers_.GetScaleAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
+#else
+  return function_pointers_.GetScaleAttributeDoubleArray(scaleName, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value)
 {
   if (!function_pointers_.GetScaleAttributeInt32) {
@@ -1970,6 +1986,18 @@ int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attri
   return DAQmxGetScaleAttribute(scaleName, attribute, value);
 #else
   return function_pointers_.GetScaleAttributeInt32(scaleName, attribute, value);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetScaleAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
+#else
+  return function_pointers_.GetScaleAttributeString(scaleName, attribute, value, size);
 #endif
 }
 
@@ -2549,6 +2577,18 @@ int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attr
 #endif
 }
 
+int32 NiDAQmxLibrary::SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size)
+{
+  if (!function_pointers_.SetScaleAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
+#else
+  return function_pointers_.SetScaleAttributeDoubleArray(scaleName, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value)
 {
   if (!function_pointers_.SetScaleAttributeInt32) {
@@ -2558,6 +2598,18 @@ int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attri
   return DAQmxSetScaleAttribute(scaleName, attribute, value);
 #else
   return function_pointers_.SetScaleAttributeInt32(scaleName, attribute, value);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[])
+{
+  if (!function_pointers_.SetScaleAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetScaleAttribute(scaleName, attribute, value);
+#else
+  return function_pointers_.SetScaleAttributeString(scaleName, attribute, value);
 #endif
 }
 
