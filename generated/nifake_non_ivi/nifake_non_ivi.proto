@@ -33,6 +33,7 @@ service NiFakeNonIvi {
   rpc OutputTimestamp(OutputTimestampRequest) returns (OutputTimestampResponse);
   rpc InputVarArgs(InputVarArgsRequest) returns (InputVarArgsResponse);
   rpc OutputVarArgs(OutputVarArgsRequest) returns (OutputVarArgsResponse);
+  rpc ResetMarbleAttribute(ResetMarbleAttributeRequest) returns (ResetMarbleAttributeResponse);
   rpc SetMarbleAttributeDouble(SetMarbleAttributeDoubleRequest) returns (SetMarbleAttributeDoubleResponse);
   rpc SetMarbleAttributeInt32(SetMarbleAttributeInt32Request) returns (SetMarbleAttributeInt32Response);
 }
@@ -45,6 +46,11 @@ enum MarbleInt32Attributes {
 enum MarbleDoubleAttributes {
   MARBLE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   MARBLE_ATTRIBUTE_WEIGHT = 4444;
+}
+
+enum MarbleResetAttributes {
+  MARBLE_RESET_ATTRIBUTE_UNSPECIFIED = 0;
+  MARBLE_RESET_ATTRIBUTE_WEIGHT = 4444;
 }
 
 enum BeautifulColor {
@@ -217,6 +223,15 @@ message OutputVarArgsRequest {
 message OutputVarArgsResponse {
   int32 status = 1;
   repeated BeautifulColor colors = 2;
+}
+
+message ResetMarbleAttributeRequest {
+  nidevice_grpc.Session handle = 1;
+  MarbleResetAttributes attribute = 2;
+}
+
+message ResetMarbleAttributeResponse {
+  int32 status = 1;
 }
 
 message SetMarbleAttributeDoubleRequest {

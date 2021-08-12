@@ -808,6 +808,20 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32_Succeeds)
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(VALUE, response.value());
 }
+
+TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)
+{
+  const auto ATTRIBUTE = MarbleResetAttributes::MARBLE_RESET_ATTRIBUTE_WEIGHT;
+  EXPECT_CALL(library_, ResetMarbleAttribute(_, ATTRIBUTE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  ResetMarbleAttributeRequest request;
+  request.set_attribute(ATTRIBUTE);
+  ResetMarbleAttributeResponse response;
+  service_.ResetMarbleAttribute(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
