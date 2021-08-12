@@ -36,9 +36,12 @@ service NiFakeNonIvi {
   rpc SetMarbleAttributeInt32(SetMarbleAttributeInt32Request) returns (SetMarbleAttributeInt32Response);
 }
 
-enum MarbleAttributes {
-  MARBLE_ATTRIBUTE_UNSPECIFIED = 0;
+enum MarbleAttributesInt32 {
+  MARBLE_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   MARBLE_ATTRIBUTE_COLOR = 1234;
+}
+enum MarbleAttributesDouble {
+  MARBLE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   MARBLE_ATTRIBUTE_WEIGHT = 4444;
 }
 
@@ -74,7 +77,7 @@ message CloseResponse {
 
 message GetMarbleAttributeDoubleRequest {
   nidevice_grpc.Session handle = 1;
-  MarbleAttributes attribute = 2;
+  MarbleAttributesDouble attribute = 2;
 }
 
 message GetMarbleAttributeDoubleResponse {
@@ -84,7 +87,7 @@ message GetMarbleAttributeDoubleResponse {
 
 message GetMarbleAttributeInt32Request {
   nidevice_grpc.Session handle = 1;
-  MarbleAttributes attribute = 2;
+  MarbleAttributesInt32 attribute = 2;
 }
 
 message GetMarbleAttributeInt32Response {
@@ -206,7 +209,7 @@ message InputVarArgsResponse {
 
 message SetMarbleAttributeDoubleRequest {
   nidevice_grpc.Session handle = 1;
-  MarbleAttributes attribute = 2;
+  MarbleAttributesDouble attribute = 2;
   double value = 3;
 }
 
@@ -216,7 +219,7 @@ message SetMarbleAttributeDoubleResponse {
 
 message SetMarbleAttributeInt32Request {
   nidevice_grpc.Session handle = 1;
-  MarbleAttributes attribute = 2;
+  MarbleAttributesInt32 attribute = 2;
   oneof value_enum {
     MarbleInt32AttributeValues value = 3;
     int32 value_raw = 4;

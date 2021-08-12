@@ -654,7 +654,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_KnownValue)
 
 TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeDouble_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_WEIGHT;
+  const auto ATTRIBUTE = MarbleAttributesDouble::MARBLE_ATTRIBUTE_WEIGHT;
   const auto VALUE = 1.2345;
   EXPECT_CALL(library_, SetMarbleAttributeDouble(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -670,7 +670,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeDouble_Succeeds)
 
 TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto ATTRIBUTE = MarbleAttributesInt32::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_GREEN;
   EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -686,7 +686,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32_Succeeds)
 
 TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32Raw_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto ATTRIBUTE = MarbleAttributesInt32::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = 9999;
   EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -702,7 +702,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32Raw_Succeeds)
 
 TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleAttributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto ATTRIBUTE = MarbleAttributesInt32::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_AQUA;
   EXPECT_CALL(library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArgPointee<2>(VALUE), Return(kDriverSuccess)));

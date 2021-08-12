@@ -4,12 +4,17 @@
 %>
 
 ## Define a proto enum capturing attributes from the metadata.
-<%def name="define_attribute_enum(group_name, attributes)">\
+<%def name="define_attribute_enum(group_name, data_type, attributes)">\
 <%
   attribute_value_prefix = group_name.upper() + "_ATTRIBUTE"
+
+  # When attributes are split-by-datatype, the actual attributes don't need a type-name disabiguator because
+  # the original unsplit list didn't have duplicates. However, they each need a unique-ified UNSPECIFIED param.
+  unspecified_disambiguator = "_" + common_helpers.pascal_to_snake(data_type).upper() if data_type else ""
+  unspecified_attribute_value_prefix = group_name.upper() + unspecified_disambiguator + "_ATTRIBUTE"
 %>\
-enum ${group_name}Attributes {
-  ${attribute_value_prefix}_UNSPECIFIED = 0;
+enum ${common_helpers.get_attribute_enum_name(group_name, data_type)} {
+  ${unspecified_attribute_value_prefix}_UNSPECIFIED = 0;
 % for attribute in attributes:
 <%
    attribute_name = attributes[attribute]["name"]

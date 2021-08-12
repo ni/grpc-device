@@ -28,7 +28,7 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
 def mutate_metadata(metadata):
   config = metadata["config"]
   
-  attribute_expander = metadata_mutation.AttributeValueExpander(metadata)
+  attribute_expander = metadata_mutation.AttributeAccessorExpander(metadata)
   for function_name in metadata["functions"]:
     function = metadata["functions"][function_name]
     parameters = function["parameters"]
@@ -39,6 +39,7 @@ def mutate_metadata(metadata):
     metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])
     metadata_mutation.populate_grpc_types(parameters, config)
     attribute_expander.expand_attribute_value_params(function)
+    attribute_expander.patch_attribute_enum_type(function)
 
 
 def generate_all(metadata_dir, gen_dir):
