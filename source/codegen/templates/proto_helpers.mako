@@ -8,7 +8,7 @@
 <%
   attribute_value_prefix = group_name.upper() + "_ATTRIBUTE"
 
-  # When attributes are split-by-datatype, the actual attributes don't need a type-name disabiguator because
+  # When attributes are split-by-datatype, the actual attributes don't need a type-name disambiguator because
   # the original unsplit list didn't have duplicates. However, they each need a unique-ified UNSPECIFIED param.
   unspecified_disambiguator = "_" + common_helpers.pascal_to_snake(data_type).upper() if data_type else ""
   unspecified_attribute_value_prefix = group_name.upper() + unspecified_disambiguator + "_ATTRIBUTE"
