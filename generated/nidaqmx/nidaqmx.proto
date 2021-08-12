@@ -250,7 +250,7 @@ service NiDAQmx {
   rpc WriteToTEDSFromFile(WriteToTEDSFromFileRequest) returns (WriteToTEDSFromFileResponse);
 }
 
-enum BufferUint32Attributes {
+enum BufferUInt32Attributes {
   BUFFER_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   BUFFER_ATTRIBUTE_INPUT_BUF_SIZE = 6252;
   BUFFER_ATTRIBUTE_OUTPUT_BUF_SIZE = 6253;
@@ -3582,7 +3582,7 @@ message GetAutoConfiguredCDAQSyncConnectionsResponse {
 
 message GetBufferAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  BufferUint32Attributes attribute = 2;
+  BufferUInt32Attributes attribute = 2;
 }
 
 message GetBufferAttributeUInt32Response {
@@ -4330,7 +4330,7 @@ message SetArmStartTrigTrigWhenResponse {
 
 message SetBufferAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  BufferUint32Attributes attribute = 2;
+  BufferUInt32Attributes attribute = 2;
   uint32 value = 3;
 }
 
