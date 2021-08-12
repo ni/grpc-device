@@ -7284,8 +7284,9 @@ namespace nidaqmx_grpc {
     try {
       auto scale_name = request->scale_name().c_str();
       int32 attribute = request->attribute();
+      auto size = 0U;
       float64 value {};
-      auto status = library_->GetScaleAttributeDouble(scale_name, attribute, &value);
+      auto status = library_->GetScaleAttributeDouble(scale_name, attribute, &value, size);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -7331,8 +7332,9 @@ namespace nidaqmx_grpc {
     try {
       auto scale_name = request->scale_name().c_str();
       int32 attribute = request->attribute();
+      auto size = 0U;
       int32 value {};
-      auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value);
+      auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value, size);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -8485,7 +8487,7 @@ namespace nidaqmx_grpc {
 
         auto task_grpc_session = request->task();
         TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-        uInt32 options = request->options();
+        auto options = 0U;
 
         auto status = library->RegisterDoneEvent(task, options, CallbackRouter::handle_callback, handler->token());
 
@@ -8560,7 +8562,7 @@ namespace nidaqmx_grpc {
         }
   
         uInt32 n_samples = request->n_samples();
-        uInt32 options = request->options();
+        auto options = 0U;
 
         auto status = library->RegisterEveryNSamplesEvent(task, every_n_samples_event_type, n_samples, options, CallbackRouter::handle_callback, handler->token());
 
@@ -8632,7 +8634,7 @@ namespace nidaqmx_grpc {
           }
         }
   
-        uInt32 options = request->options();
+        auto options = 0U;
 
         auto status = library->RegisterSignalEvent(task, signal_id, options, CallbackRouter::handle_callback, handler->token());
 
@@ -9039,7 +9041,8 @@ namespace nidaqmx_grpc {
       auto scale_name = request->scale_name().c_str();
       int32 attribute = request->attribute();
       float64 value = request->value();
-      auto status = library_->SetScaleAttributeDouble(scale_name, attribute, value);
+      auto size = 0U;
+      auto status = library_->SetScaleAttributeDouble(scale_name, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9095,7 +9098,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto status = library_->SetScaleAttributeInt32(scale_name, attribute, value);
+      auto size = 0U;
+      auto status = library_->SetScaleAttributeInt32(scale_name, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

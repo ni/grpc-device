@@ -208,10 +208,10 @@ ${initialize_enum_input_param(function_name, parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}
-% elif common_helpers.is_pass_null_parameter(parameter):
-${initialize_pass_null_param(parameter)}
 % elif common_helpers.is_repeated_varargs_parameter(parameter):
 ${initialize_repeated_varargs_param(parameter)}
+% elif 'hardcoded_value' in parameter:
+${initialize_hardcoded_parameter(parameter)}
 % else:
 ${initialize_standard_input_param(function_name, parameter)}
 % endif
@@ -331,10 +331,12 @@ ${initialize_standard_input_param(function_name, parameter)}
       ${parameter['type']} ${parameter_name} = request->${field_name}().size();\
 </%def>
 
-## Initialize a 'pass_null' param.
-<%def name="initialize_pass_null_param(parameter)">\
-      auto ${common_helpers.camel_to_snake(parameter['cppName'])} = nullptr;\
+
+## Initialize a 'hardcoded' param.
+<%def name="initialize_hardcoded_parameter(parameter)">\
+      auto ${common_helpers.camel_to_snake(parameter['cppName'])} = ${parameter['hardcoded_value']};\
 </%def>
+
 
 ## Initialize an input parameter for an API call.
 <%def name="initialize_standard_input_param(function_name, parameter)">\

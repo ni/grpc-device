@@ -159,9 +159,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   int32 GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data);
-  int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value);
+  int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size);
   int32 GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, float64 value[], uInt32 size);
-  int32 GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value);
+  int32 GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value, uInt32 size);
   int32 GetScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size);
   int32 GetSelfCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
   int32 GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data);
@@ -210,9 +210,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data);
   int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily);
   int32 SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data);
-  int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value);
+  int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size);
   int32 SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size);
-  int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value);
+  int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size);
   int32 SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[]);
   int32 SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data);
   int32 SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data);
@@ -388,9 +388,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetNthTaskDevicePtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   using GetNthTaskReadChannelPtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   using GetRefTrigTimestampValPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
-  using GetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64* value);
+  using GetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64* value, uInt32 size);
   using GetScaleAttributeDoubleArrayPtr = int32 (*)(const char scaleName[], int32 attribute, float64 value[], uInt32 size);
-  using GetScaleAttributeInt32Ptr = int32 (*)(const char scaleName[], int32 attribute, int32* value);
+  using GetScaleAttributeInt32Ptr = int32 (*)(const char scaleName[], int32 attribute, int32* value, uInt32 size);
   using GetScaleAttributeStringPtr = int32 (*)(const char scaleName[], int32 attribute, char value[], uInt32 size);
   using GetSelfCalLastDateAndTimePtr = int32 (*)(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute);
   using GetStartTrigTimestampValPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
@@ -439,9 +439,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetArmStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
   using SetDigitalLogicFamilyPowerUpStatePtr = int32 (*)(const char deviceName[], int32 logicFamily);
   using SetFirstSampClkWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
-  using SetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64 value);
+  using SetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64 value, uInt32 size);
   using SetScaleAttributeDoubleArrayPtr = int32 (*)(const char scaleName[], int32 attribute, const float64 value[], uInt32 size);
-  using SetScaleAttributeInt32Ptr = int32 (*)(const char scaleName[], int32 attribute, int32 value);
+  using SetScaleAttributeInt32Ptr = int32 (*)(const char scaleName[], int32 attribute, int32 value, uInt32 size);
   using SetScaleAttributeStringPtr = int32 (*)(const char scaleName[], int32 attribute, const char value[]);
   using SetStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
   using SetSyncPulseTimeWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);

@@ -186,7 +186,8 @@ functions = {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pass_null': True,
+                'pointer': True,
+                'hardcoded_value': "nullptr",
                 'type': 'ViBoolean'
             }
         ],
