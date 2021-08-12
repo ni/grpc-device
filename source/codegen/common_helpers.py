@@ -348,6 +348,8 @@ class AttributeGroup:
             data_type = get_grpc_type_name_for_identifier(
                 data['type'], self._config)
             categorized_attributes[data_type][id] = data
+            if data.get('resettable', False):
+                categorized_attributes['Reset'][id] = data
         return categorized_attributes
 
 

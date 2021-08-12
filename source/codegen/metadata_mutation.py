@@ -165,7 +165,7 @@ class AttributeAccessorExpander:
         return next(valid_references, None)
 
 
-    def patch_attribute_enum_type(self, func):
+    def patch_attribute_enum_type(self, function_name, func):
         """
         If a driver splits attribute enums by type, 
         then the referencing functions need to be updated to match:
@@ -178,11 +178,14 @@ class AttributeAccessorExpander:
         if attribute_reference:
             group = attribute_reference.attribute_group
             attribute_param = attribute_reference.parameter
-            value_param = get_attribute_function_value_param(func)
-            type_name = common_helpers.get_grpc_type_name_for_identifier(
-                value_param['type'],
-                self._config)
-            attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(group, type_name)
+            if function_name.startswith('Reset'):
+                sub_group = 'Reset'
+            else:
+                value_param = get_attribute_function_value_param(func)
+                sub_group = common_helpers.get_grpc_type_name_for_identifier(
+                    value_param['type'],
+                    self._config)
+            attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(group, sub_group)
         
 
     def expand_attribute_value_params(self, func):

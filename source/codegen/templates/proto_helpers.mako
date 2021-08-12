@@ -12,6 +12,7 @@
   # the original unsplit list didn't have duplicates. However, they each need a unique-ified UNSPECIFIED param.
   unspecified_disambiguator = "_" + common_helpers.pascal_to_snake(data_type).upper() if data_type else ""
   unspecified_attribute_value_prefix = group_name.upper() + unspecified_disambiguator + "_ATTRIBUTE"
+  attribute_value_prefix = unspecified_attribute_value_prefix if data_type == "Reset" else attribute_value_prefix
 %>\
 enum ${common_helpers.get_attribute_enum_name(group_name, data_type)} {
   ${unspecified_attribute_value_prefix}_UNSPECIFIED = 0;

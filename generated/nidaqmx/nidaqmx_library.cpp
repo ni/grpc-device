@@ -152,6 +152,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetArmStartTrigTimestampVal = reinterpret_cast<GetArmStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTimestampVal"));
   function_pointers_.GetArmStartTrigTrigWhen = reinterpret_cast<GetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTrigWhen"));
   function_pointers_.GetAutoConfiguredCDAQSyncConnections = reinterpret_cast<GetAutoConfiguredCDAQSyncConnectionsPtr>(shared_library_.get_function_pointer("DAQmxGetAutoConfiguredCDAQSyncConnections"));
+  function_pointers_.GetBufferAttributeUInt32 = reinterpret_cast<GetBufferAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetBufferAttribute"));
   function_pointers_.GetDigitalLogicFamilyPowerUpState = reinterpret_cast<GetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxGetDigitalLogicFamilyPowerUpState"));
   function_pointers_.GetDigitalPullUpPullDownStates = reinterpret_cast<GetDigitalPullUpPullDownStatesPtr>(shared_library_.get_function_pointer("DAQmxGetDigitalPullUpPullDownStates"));
   function_pointers_.GetDisconnectedCDAQSyncPorts = reinterpret_cast<GetDisconnectedCDAQSyncPortsPtr>(shared_library_.get_function_pointer("DAQmxGetDisconnectedCDAQSyncPorts"));
@@ -202,6 +203,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.RegisterSignalEvent = reinterpret_cast<RegisterSignalEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterSignalEvent"));
   function_pointers_.RemoveCDAQSyncConnection = reinterpret_cast<RemoveCDAQSyncConnectionPtr>(shared_library_.get_function_pointer("DAQmxRemoveCDAQSyncConnection"));
   function_pointers_.ReserveNetworkDevice = reinterpret_cast<ReserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxReserveNetworkDevice"));
+  function_pointers_.ResetBufferAttribute = reinterpret_cast<ResetBufferAttributePtr>(shared_library_.get_function_pointer("DAQmxResetBufferAttribute"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
   function_pointers_.SaveGlobalChan = reinterpret_cast<SaveGlobalChanPtr>(shared_library_.get_function_pointer("DAQmxSaveGlobalChan"));
   function_pointers_.SaveScale = reinterpret_cast<SaveScalePtr>(shared_library_.get_function_pointer("DAQmxSaveScale"));
@@ -212,6 +214,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAIChanCalExpDate = reinterpret_cast<SetAIChanCalExpDatePtr>(shared_library_.get_function_pointer("DAQmxSetAIChanCalExpDate"));
   function_pointers_.SetAnalogPowerUpStates = reinterpret_cast<SetAnalogPowerUpStatesPtr>(shared_library_.get_function_pointer("DAQmxSetAnalogPowerUpStates"));
   function_pointers_.SetArmStartTrigTrigWhen = reinterpret_cast<SetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxSetArmStartTrigTrigWhen"));
+  function_pointers_.SetBufferAttributeUInt32 = reinterpret_cast<SetBufferAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetBufferAttribute"));
   function_pointers_.SetDigitalLogicFamilyPowerUpState = reinterpret_cast<SetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxSetDigitalLogicFamilyPowerUpState"));
   function_pointers_.SetFirstSampClkWhen = reinterpret_cast<SetFirstSampClkWhenPtr>(shared_library_.get_function_pointer("DAQmxSetFirstSampClkWhen"));
   function_pointers_.SetScaleAttributeDouble = reinterpret_cast<SetScaleAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
@@ -1834,6 +1837,18 @@ int32 NiDAQmxLibrary::GetAutoConfiguredCDAQSyncConnections(char portList[], uInt
 #endif
 }
 
+int32 NiDAQmxLibrary::GetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
+{
+  if (!function_pointers_.GetBufferAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetBufferAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetBufferAttribute(task, attribute, value);
+#else
+  return function_pointers_.GetBufferAttributeUInt32(task, attribute, value);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily)
 {
   if (!function_pointers_.GetDigitalLogicFamilyPowerUpState) {
@@ -2434,6 +2449,18 @@ int32 NiDAQmxLibrary::ReserveNetworkDevice(const char deviceName[], bool32 overr
 #endif
 }
 
+int32 NiDAQmxLibrary::ResetBufferAttribute(TaskHandle task, int32 attribute)
+{
+  if (!function_pointers_.ResetBufferAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetBufferAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetBufferAttribute(task, attribute);
+#else
+  return function_pointers_.ResetBufferAttribute(task, attribute);
+#endif
+}
+
 int32 NiDAQmxLibrary::ResetDevice(const char deviceName[])
 {
   if (!function_pointers_.ResetDevice) {
@@ -2554,6 +2581,18 @@ int32 NiDAQmxLibrary::SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime d
 #endif
 }
 
+int32 NiDAQmxLibrary::SetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
+{
+  if (!function_pointers_.SetBufferAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetBufferAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetBufferAttribute(task, attribute, value);
+#else
+  return function_pointers_.SetBufferAttributeUInt32(task, attribute, value);
+#endif
+}
+
 int32 NiDAQmxLibrary::SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily)
 {
   if (!function_pointers_.SetDigitalLogicFamilyPowerUpState) {
@@ -2614,15 +2653,15 @@ int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attri
 #endif
 }
 
-int32 NiDAQmxLibrary::SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[])
+int32 NiDAQmxLibrary::SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[], uInt32 size)
 {
   if (!function_pointers_.SetScaleAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
 #if defined(_MSC_VER)
-  return DAQmxSetScaleAttribute(scaleName, attribute, value);
+  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
 #else
-  return function_pointers_.SetScaleAttributeString(scaleName, attribute, value);
+  return function_pointers_.SetScaleAttributeString(scaleName, attribute, value, size);
 #endif
 }
 

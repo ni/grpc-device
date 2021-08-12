@@ -148,6 +148,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetArmStartTrigTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetAutoConfiguredCDAQSyncConnections, (char portList[], uInt32 portListSize), (override));
+  MOCK_METHOD(int32, GetBufferAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value), (override));
   MOCK_METHOD(int32, GetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32* logicFamily), (override));
   MOCK_METHOD(int32, GetDisconnectedCDAQSyncPorts, (char portList[], uInt32 portListSize), (override));
   MOCK_METHOD(int32, GetErrorString, (int32 errorCode, char errorString[], uInt32 bufferSize), (override));
@@ -197,6 +198,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, RegisterSignalEvent, (TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData), (override));
   MOCK_METHOD(int32, RemoveCDAQSyncConnection, (const char portList[]), (override));
   MOCK_METHOD(int32, ReserveNetworkDevice, (const char deviceName[], bool32 overrideReservation), (override));
+  MOCK_METHOD(int32, ResetBufferAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, ResetDevice, (const char deviceName[]), (override));
   MOCK_METHOD(int32, SaveGlobalChan, (TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options), (override));
   MOCK_METHOD(int32, SaveScale, (const char scaleName[], const char saveAs[], const char author[], uInt32 options), (override));
@@ -206,12 +208,13 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SetAIChanCalCalDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
   MOCK_METHOD(int32, SetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
   MOCK_METHOD(int32, SetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
+  MOCK_METHOD(int32, SetBufferAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value), (override));
   MOCK_METHOD(int32, SetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32 logicFamily), (override));
   MOCK_METHOD(int32, SetFirstSampClkWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, SetScaleAttributeDouble, (const char scaleName[], int32 attribute, float64 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetScaleAttributeDoubleArray, (const char scaleName[], int32 attribute, const float64 value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetScaleAttributeInt32, (const char scaleName[], int32 attribute, int32 value, uInt32 size), (override));
-  MOCK_METHOD(int32, SetScaleAttributeString, (const char scaleName[], int32 attribute, const char value[]), (override));
+  MOCK_METHOD(int32, SetScaleAttributeString, (const char scaleName[], int32 attribute, const char value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, SetSyncPulseTimeWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, StartNewFile, (TaskHandle task, const char filePath[]), (override));

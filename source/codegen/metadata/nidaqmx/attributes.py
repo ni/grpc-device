@@ -1,4 +1,30 @@
 attributes = {
+    'Buffer': {
+        6252: {
+            'access': 'read-write',
+            'name': 'INPUT_BUF_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6253: {
+            'access': 'read-write',
+            'name': 'OUTPUT_BUF_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        8970: {
+            'access': 'read',
+            'name': 'INPUT_ONBRD_BUF_SIZE',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8971: {
+            'access': 'read-write',
+            'name': 'OUTPUT_ONBRD_BUF_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        }
+    },
     'Scale': {
         4646: {
             'access': 'read-write',

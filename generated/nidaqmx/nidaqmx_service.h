@@ -159,6 +159,7 @@ public:
   ::grpc::Status GetArmStartTrigTimestampVal(::grpc::ServerContext* context, const GetArmStartTrigTimestampValRequest* request, GetArmStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
+  ::grpc::Status GetBufferAttributeUInt32(::grpc::ServerContext* context, const GetBufferAttributeUInt32Request* request, GetBufferAttributeUInt32Response* response) override;
   ::grpc::Status GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status GetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const GetDigitalPullUpPullDownStatesRequest* request, GetDigitalPullUpPullDownStatesResponse* response) override;
   ::grpc::Status GetDisconnectedCDAQSyncPorts(::grpc::ServerContext* context, const GetDisconnectedCDAQSyncPortsRequest* request, GetDisconnectedCDAQSyncPortsResponse* response) override;
@@ -209,6 +210,7 @@ public:
   ::grpc::ServerWriteReactor<RegisterSignalEventResponse>* RegisterSignalEvent(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request) override;
   ::grpc::Status RemoveCDAQSyncConnection(::grpc::ServerContext* context, const RemoveCDAQSyncConnectionRequest* request, RemoveCDAQSyncConnectionResponse* response) override;
   ::grpc::Status ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response) override;
+  ::grpc::Status ResetBufferAttribute(::grpc::ServerContext* context, const ResetBufferAttributeRequest* request, ResetBufferAttributeResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
   ::grpc::Status SaveGlobalChan(::grpc::ServerContext* context, const SaveGlobalChanRequest* request, SaveGlobalChanResponse* response) override;
   ::grpc::Status SaveScale(::grpc::ServerContext* context, const SaveScaleRequest* request, SaveScaleResponse* response) override;
@@ -219,6 +221,7 @@ public:
   ::grpc::Status SetAIChanCalExpDate(::grpc::ServerContext* context, const SetAIChanCalExpDateRequest* request, SetAIChanCalExpDateResponse* response) override;
   ::grpc::Status SetAnalogPowerUpStates(::grpc::ServerContext* context, const SetAnalogPowerUpStatesRequest* request, SetAnalogPowerUpStatesResponse* response) override;
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
+  ::grpc::Status SetBufferAttributeUInt32(::grpc::ServerContext* context, const SetBufferAttributeUInt32Request* request, SetBufferAttributeUInt32Response* response) override;
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status SetFirstSampClkWhen(::grpc::ServerContext* context, const SetFirstSampClkWhenRequest* request, SetFirstSampClkWhenResponse* response) override;
   ::grpc::Status SetScaleAttributeDouble(::grpc::ServerContext* context, const SetScaleAttributeDoubleRequest* request, SetScaleAttributeDoubleResponse* response) override;
