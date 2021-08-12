@@ -348,26 +348,6 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
-  ::grpc::Status call_SetTime(
-     ViInt32 timeSource,
-     ViUInt32 timeSeconds,
-     ViUInt32 timeNanoseconds,
-     ViUInt16 timeFractionalNanoseconds,
-     ViStatus* viStatusOut)
-  {
-    ::grpc::ClientContext clientContext;
-    nisync::SetTimeRequest request;
-    nisync::SetTimeResponse response;
-    request.set_time_source(timeSource);
-    request.set_time_seconds(timeSeconds);
-    request.set_time_nanoseconds(timeNanoseconds);
-    request.set_time_fractional_nanoseconds(timeFractionalNanoseconds);
-    request.mutable_vi()->set_id(driver_session_->id());
-    auto grpcStatus = GetStub()->SetTime(&clientContext, request, &response);
-    *viStatusOut = response.status();
-    return grpcStatus;
-  }
-
   ::grpc::Status call_GetTime(
      ViUInt32* timeSeconds,
      ViUInt32* timeNanoseconds,
@@ -1081,44 +1061,6 @@ TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnOscillatorWithFrequency_Returns
   EXPECT_EQ(VI_SUCCESS, viStatus);
   EXPECT_GT(actualDuration, 0);  
   EXPECT_GT(frequency, 0);
-}
-
-TEST_F(NiSyncDriver6683Test, SetTimeWithValidTimeSource_ReturnsSuccess)
-{
-  #if defined(__GNUC__)
-  GTEST_SKIP() << "SetTime isn't implemented on Linux RT, see AzDo Feature #1418853";
-  #endif
-
-  ViStatus viStatus;
-  ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
-  auto grpcStatus = call_SetTime(
-     NISYNC_VAL_INIT_TIME_SRC_SYSTEM_CLK,
-     timeSeconds,
-     timeNanoseconds,
-     0, // timeFractionalNanoseconds, ignored
-     &viStatus);
-
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_SUCCESS, viStatus);
-}
-
-TEST_F(NiSyncDriver6683Test, SetTimeWithInvalidTimeSource_ReturnsError)
-{
-  #if defined(__GNUC__)
-  GTEST_SKIP() << "SetTime isn't implemented on Linux RT, see AzDo Feature #1418853";
-  #endif
-
-  ViStatus viStatus;
-  ViUInt32 timeSeconds = 50, timeNanoseconds = 500;
-  auto grpcStatus = call_SetTime(
-     NISYNC_VAL_INIT_TIME_SRC_SYSTEM_CLK + 5000,
-     timeSeconds,
-     timeNanoseconds,
-     0, // timeFractionalNanoseconds, ignored
-     &viStatus);
-
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(VI_ERROR_INV_PARAMETER, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, GetTime_ReturnsTime)
