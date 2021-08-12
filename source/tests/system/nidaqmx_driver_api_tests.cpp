@@ -1,5 +1,5 @@
-#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
+#include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include <algorithm>
@@ -384,7 +384,8 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     return stub()->RegisterDoneEvent(&context, request);
   }
-  auto register_every_n_samples_event(::grpc::ClientContext& context, uint32 n_samples) {
+  auto register_every_n_samples_event(::grpc::ClientContext& context, uint32 n_samples)
+  {
     RegisterEveryNSamplesEventRequest request;
     set_request_session_id(request);
     request.set_n_samples(n_samples);
@@ -392,7 +393,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->RegisterEveryNSamplesEvent(&context, request);
   }
 
-  auto register_signal_event(::grpc::ClientContext& context, Signal2 signal_id) {
+  auto register_signal_event(::grpc::ClientContext& context, Signal2 signal_id)
+  {
     RegisterSignalEventRequest request;
     set_request_session_id(request);
     request.set_signal_id(Signal2::SIGNAL2_SAMPLE_CLOCK);
@@ -432,7 +434,8 @@ class NiDAQmxDriverApiTests : public Test {
     return request;
   }
 
-  ::grpc::Status cfg_change_detection_timing(const CfgChangeDetectionTimingRequest& request, CfgChangeDetectionTimingResponse& response = ThrowawayResponse<CfgChangeDetectionTimingResponse>::response()) {
+  ::grpc::Status cfg_change_detection_timing(const CfgChangeDetectionTimingRequest& request, CfgChangeDetectionTimingResponse& response = ThrowawayResponse<CfgChangeDetectionTimingResponse>::response())
+  {
     ::grpc::ClientContext context;
     return stub()->CfgChangeDetectionTiming(&context, request, &response);
   }
@@ -473,6 +476,22 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateLinScale(&context, request, &response);
   }
 
+  ::grpc::Status create_polynomial_scale(const std::string& name, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, CreatePolynomialScaleResponse& response = ThrowawayResponse<CreatePolynomialScaleResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    CreatePolynomialScaleRequest request;
+    request.set_name(name);
+
+    request.mutable_forward_coeffs()->CopyFrom({forward_coeffs.cbegin(), forward_coeffs.cend()});
+    request.set_num_forward_coeffs_in(static_cast<int32>(forward_coeffs.size()));
+
+    request.mutable_reverse_coeffs()->CopyFrom({reverse_coeffs.cbegin(), reverse_coeffs.cend()});
+    request.set_num_reverse_coeffs_in(static_cast<int32>(reverse_coeffs.size()));
+
+    request.set_pre_scaled_units(UnitsPreScaled::UNITS_PRE_SCALED_VOLTS);
+    return stub()->CreatePolynomialScale(&context, request, &response);
+  }
+
   ::grpc::Status create_ai_thrmcpl_chan(double min_val, double max_val, CreateAIThrmcplChanResponse& response)
   {
     ::grpc::ClientContext context;
@@ -489,11 +508,11 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   CalculateReversePolyCoeffRequest create_calculate_reverse_poly_coeff_request(
-    const std::vector<double> forward_coeffs,
-    double min_val_x,
-    double max_val_x,
-    int32_t num_points_to_compute,
-    int32_t reverse_poly_order)
+      const std::vector<double> forward_coeffs,
+      double min_val_x,
+      double max_val_x,
+      int32_t num_points_to_compute,
+      int32_t reverse_poly_order)
   {
     CalculateReversePolyCoeffRequest request;
     request.mutable_forward_coeffs()->CopyFrom({forward_coeffs.cbegin(), forward_coeffs.cend()});
@@ -505,13 +524,15 @@ class NiDAQmxDriverApiTests : public Test {
     return request;
   }
 
-  ::grpc::Status calculate_reverse_poly_coeff(const CalculateReversePolyCoeffRequest& request, CalculateReversePolyCoeffResponse& response)  {
+  ::grpc::Status calculate_reverse_poly_coeff(const CalculateReversePolyCoeffRequest& request, CalculateReversePolyCoeffResponse& response)
+  {
     ::grpc::ClientContext context;
     return stub()->CalculateReversePolyCoeff(&context, request, &response);
   }
 
   template <typename TRaw>
-  ::grpc::Status read_raw(int32 samples_to_read, ReadRawResponse& response) {
+  ::grpc::Status read_raw(int32 samples_to_read, ReadRawResponse& response)
+  {
     ::grpc::ClientContext context;
     ReadRawRequest request;
     set_request_session_id(request);
@@ -522,7 +543,8 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   template <typename TRaw>
-  ::grpc::Status write_raw(const std::vector<TRaw>& data, WriteRawResponse& response) {
+  ::grpc::Status write_raw(const std::vector<TRaw>& data, WriteRawResponse& response)
+  {
     ::grpc::ClientContext context;
     WriteRawRequest request;
     set_request_session_id(request);
@@ -534,7 +556,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->WriteRaw(&context, request, &response);
   }
 
-  ::grpc::Status wait_for_valid_timestamp(WaitForValidTimestampResponse& response) {
+  ::grpc::Status wait_for_valid_timestamp(WaitForValidTimestampResponse& response)
+  {
     ::grpc::ClientContext context;
     WaitForValidTimestampRequest request;
     set_request_session_id(request);
@@ -543,7 +566,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->WaitForValidTimestamp(&context, request, &response);
   }
 
-  ::grpc::Status cfg_time_start_trig(CfgTimeStartTrigResponse& response) {
+  ::grpc::Status cfg_time_start_trig(CfgTimeStartTrigResponse& response)
+  {
     ::grpc::ClientContext context;
     CfgTimeStartTrigRequest request;
     set_request_session_id(request);
@@ -556,7 +580,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CfgTimeStartTrig(&context, request, &response);
   }
 
-  ::grpc::Status save_task(SaveTaskResponse& response){
+  ::grpc::Status save_task(SaveTaskResponse& response)
+  {
     ::grpc::ClientContext context;
     SaveTaskRequest request;
     set_request_session_id(request);
@@ -566,7 +591,8 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->SaveTask(&context, request, &response);
   }
 
-  ::grpc::Status load_task(LoadTaskResponse& response){
+  ::grpc::Status load_task(LoadTaskResponse& response)
+  {
     ::grpc::ClientContext context;
     LoadTaskRequest request;
     request.set_session_name("saved_task");
@@ -578,14 +604,16 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
-  ::grpc::Status self_cal(SelfCalResponse& response) {
+  ::grpc::Status self_cal(SelfCalResponse& response)
+  {
     ::grpc::ClientContext context;
     SelfCalRequest request;
     request.set_device_name(DEVICE_NAME);
     return stub()->SelfCal(&context, request, &response);
   }
 
-  ::grpc::Status add_network_device(const std::string& ip_address, AddNetworkDeviceResponse& response) {
+  ::grpc::Status add_network_device(const std::string& ip_address, AddNetworkDeviceResponse& response)
+  {
     ::grpc::ClientContext context;
     AddNetworkDeviceRequest request;
     request.set_ip_address(ip_address);
@@ -593,36 +621,58 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->AddNetworkDevice(&context, request, &response);
   }
 
-  ::grpc::Status configure_teds(ConfigureTEDSResponse& response) {
+  ::grpc::Status configure_teds(ConfigureTEDSResponse& response)
+  {
     ::grpc::ClientContext context;
     ConfigureTEDSRequest request;
     request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     return stub()->ConfigureTEDS(&context, request, &response);
   }
 
-  ::grpc::Status get_scale_attribute_double(const std::string& scale_name, ScaleAttributes attribute, GetScaleAttributeDoubleResponse& response) {
-    ::grpc::ClientContext context;
-    GetScaleAttributeDoubleRequest request;
+  template <typename TRequest>
+  TRequest create_get_scale_attribute_request(const std::string& scale_name, ScaleAttributes attribute)
+  {
+    TRequest request;
     request.set_scale_name(scale_name);
     request.set_attribute(attribute);
+    return request;
+  }
+
+  template <typename TRequest>
+  TRequest create_sized_get_scale_attribute_request(const std::string& scale_name, ScaleAttributes attribute, size_t size)
+  {
+    auto request = create_get_scale_attribute_request<TRequest>(scale_name, attribute);
+    request.set_size(static_cast<int32>(size));
+    return request;
+  }
+
+  ::grpc::Status get_scale_attribute_double(const GetScaleAttributeDoubleRequest& request, GetScaleAttributeDoubleResponse& response)
+  {
+    ::grpc::ClientContext context;
     return stub()->GetScaleAttributeDouble(&context, request, &response);
   }
 
-  ::grpc::Status set_scale_attribute_double(const SetScaleAttributeDoubleRequest& request, SetScaleAttributeDoubleResponse& response) {
+  ::grpc::Status get_scale_attribute_string(const GetScaleAttributeStringRequest& request, GetScaleAttributeStringResponse& response)
+  {
     ::grpc::ClientContext context;
-    return stub()->SetScaleAttributeDouble(&context, request, &response);
+    return stub()->GetScaleAttributeString(&context, request, &response);
   }
 
-  ::grpc::Status get_scale_attribute_i32(const std::string& scale_name, ScaleAttributes attribute, GetScaleAttributeInt32Response& response) {
+  ::grpc::Status get_scale_attribute_double_array(const GetScaleAttributeDoubleArrayRequest& request, GetScaleAttributeDoubleArrayResponse& response)
+  {
     ::grpc::ClientContext context;
-    GetScaleAttributeInt32Request request;
-    request.set_scale_name(scale_name);
-    request.set_attribute(attribute);
+    return stub()->GetScaleAttributeDoubleArray(&context, request, &response);
+  }
+
+  ::grpc::Status get_scale_attribute_i32(const GetScaleAttributeInt32Request& request, GetScaleAttributeInt32Response& response)
+  {
+    ::grpc::ClientContext context;
     return stub()->GetScaleAttributeInt32(&context, request, &response);
   }
 
   template <typename TRequest, typename T>
-  TRequest create_set_scale_attribute_raw_request(const std::string& scale_name, ScaleAttributes attribute, T value) {
+  TRequest create_set_scale_attribute_raw_request(const std::string& scale_name, ScaleAttributes attribute, T value)
+  {
     TRequest request;
     request.set_scale_name(scale_name);
     request.set_attribute(attribute);
@@ -631,7 +681,8 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   template <typename TRequest, typename T>
-  TRequest create_set_scale_attribute_request(const std::string& scale_name, ScaleAttributes attribute, T value) {
+  TRequest create_set_scale_attribute_request(const std::string& scale_name, ScaleAttributes attribute, T value)
+  {
     TRequest request;
     request.set_scale_name(scale_name);
     request.set_attribute(attribute);
@@ -639,9 +690,38 @@ class NiDAQmxDriverApiTests : public Test {
     return request;
   }
 
-  ::grpc::Status set_scale_attribute_i32(const SetScaleAttributeInt32Request& request, SetScaleAttributeInt32Response& response) {
+  SetScaleAttributeDoubleArrayRequest create_set_scale_attribute_double_array_request(const std::string& scale_name, ScaleAttributes attribute, const std::vector<double>& value)
+  {
+    SetScaleAttributeDoubleArrayRequest request;
+    request.set_scale_name(scale_name);
+    request.set_attribute(attribute);
+    request.mutable_value()->CopyFrom({value.begin(), value.end()});
+    request.set_size(static_cast<int32>(value.size()));
+    return request;
+  }
+
+  ::grpc::Status set_scale_attribute_i32(const SetScaleAttributeInt32Request& request, SetScaleAttributeInt32Response& response)
+  {
     ::grpc::ClientContext context;
     return stub()->SetScaleAttributeInt32(&context, request, &response);
+  }
+
+  ::grpc::Status set_scale_attribute_double(const SetScaleAttributeDoubleRequest& request, SetScaleAttributeDoubleResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetScaleAttributeDouble(&context, request, &response);
+  }
+
+  ::grpc::Status set_scale_attribute_double_array(const SetScaleAttributeDoubleArrayRequest& request, SetScaleAttributeDoubleArrayResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetScaleAttributeDoubleArray(&context, request, &response);
+  }
+
+  ::grpc::Status set_scale_attribute_string(const SetScaleAttributeStringRequest& request, SetScaleAttributeStringResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetScaleAttributeString(&context, request, &response);
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -875,8 +955,11 @@ TEST_F(NiDAQmxDriverApiTests, LinearScale_GetSlopeAttribute_ReturnsInitialSlopeV
   const auto SLOPE = 0.5;
   auto scale_status = create_lin_scale(SCALE_NAME, SLOPE);
 
+  auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_LIN_SLOPE);
   GetScaleAttributeDoubleResponse response;
-  auto status = get_scale_attribute_double(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_LIN_SLOPE, response);
+  auto status = get_scale_attribute_double(request, response);
 
   EXPECT_SUCCESS(status, response);
   EXPECT_NEAR(SLOPE, response.value(), .0001);
@@ -888,14 +971,17 @@ TEST_F(NiDAQmxDriverApiTests, SetYInterceptAttribute_GetYInterceptAttribute_Retu
   const auto Y_INTERCEPT = -3.0;
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
   auto set_request = create_set_scale_attribute_request<SetScaleAttributeDoubleRequest>(
-    SCALE_NAME, 
-    ScaleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT, 
-    Y_INTERCEPT);
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT,
+      Y_INTERCEPT);
   SetScaleAttributeDoubleResponse set_response;
   auto set_status = set_scale_attribute_double(set_request, set_response);
 
+  auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT);
   GetScaleAttributeDoubleResponse response;
-  auto status = get_scale_attribute_double(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT, response);
+  auto status = get_scale_attribute_double(request, response);
 
   EXPECT_SUCCESS(set_status, set_response);
   EXPECT_SUCCESS(status, response);
@@ -914,8 +1000,11 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
   SetScaleAttributeInt32Response set_response;
   auto set_status = set_scale_attribute_i32(set_request, set_response);
 
+  auto request = create_get_scale_attribute_request<GetScaleAttributeInt32Request>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS);
   GetScaleAttributeInt32Response response;
-  auto status = get_scale_attribute_i32(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS, response);
+  auto status = get_scale_attribute_i32(request, response);
 
   EXPECT_SUCCESS(set_status, set_response);
   EXPECT_SUCCESS(status, response);
@@ -925,16 +1014,76 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
 TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
 {
   const auto SCALE_NAME = std::string("TestScale");
+  const auto UNITS = std::string("Digits");
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
-  GetScaleAttributeDoubleResponse response;
-  auto status = get_scale_attribute_double(SCALE_NAME, ScaleAttributes::SCALE_ATTRIBUTE_SCALED_UNITS, response);
+  auto set_request = create_set_scale_attribute_request<SetScaleAttributeStringRequest>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
+      UNITS);
+  SetScaleAttributeStringResponse set_response;
+  auto set_status = set_scale_attribute_string(set_request, set_response);
 
+  auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
+  GetScaleAttributeDoubleResponse response;
+  auto status = get_scale_attribute_double(request, response);
 
   EXPECT_NE(DAQmxSuccess, response.status());
   // Getting a scalar from a non-scalar field returns a positive value because that's the convention
-  // when you pass in zero for the size.
+  // when you pass in zero for the size (returns the size).
   // The key result here is: don't crash.
-  EXPECT_GT(0, response.status());
+  EXPECT_GT(response.status(), 0);
+}
+
+TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
+{
+  const auto SCALE_NAME = std::string("TestScale");
+  const auto UNITS = std::string("Battalions");
+  auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
+  auto set_request = create_set_scale_attribute_request<SetScaleAttributeStringRequest>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
+      UNITS);
+  SetScaleAttributeStringResponse set_response;
+  auto set_status = set_scale_attribute_string(set_request, set_response);
+
+  auto request = create_sized_get_scale_attribute_request<GetScaleAttributeStringRequest>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
+      UNITS.length() + 1);
+  GetScaleAttributeStringResponse response;
+  auto status = get_scale_attribute_string(request, response);
+
+  EXPECT_SUCCESS(set_status, set_response);
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(UNITS, response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForwardCoefficients_ReturnsAttribute)
+{
+  const auto SCALE_NAME = std::string("TestPolynomialScale");
+  const auto INITIAL_COEFFICIENTS = std::vector<double>{1.0, 2.0, 3.0};
+  const auto COEFFICIENTS = std::vector<double>{1.0, 3.0, 8.0};
+  auto scale_status = create_polynomial_scale(SCALE_NAME, INITIAL_COEFFICIENTS, INITIAL_COEFFICIENTS);
+  auto set_request = create_set_scale_attribute_double_array_request(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
+      COEFFICIENTS);
+  SetScaleAttributeDoubleArrayResponse set_response;
+  auto set_status = set_scale_attribute_double_array(set_request, set_response);
+
+  auto request = create_sized_get_scale_attribute_request<GetScaleAttributeDoubleArrayRequest>(
+      SCALE_NAME,
+      ScaleAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
+      COEFFICIENTS.size());
+  GetScaleAttributeDoubleArrayResponse response;
+  auto status = get_scale_attribute_double_array(request, response);
+
+  EXPECT_SUCCESS(set_status, set_response);
+  EXPECT_SUCCESS(status, response);
+  auto actual = std::vector<double>{response.value().cbegin(), response.value().cend()};
+  EXPECT_THAT(actual, ContainerEq(COEFFICIENTS));
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
@@ -1072,9 +1221,10 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadRaw_Succeeds)
   EXPECT_THAT(data_vector, Each(Not(Eq(0))));
 }
 
-TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteRaw_Succeeds) {
+TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteRaw_Succeeds)
+{
   using TRaw = uint16_t;
-  const auto RAW_DATA = std::vector<TRaw>{ 65046, 262, 97, 902, 882, 978, 1050, 1786, 1914, 2038 };
+  const auto RAW_DATA = std::vector<TRaw>{65046, 262, 97, 902, 882, 978, 1050, 1786, 1914, 2038};
   create_ao_voltage_chan(-5.0, 5.0);
 
   start_task();
@@ -1199,15 +1349,16 @@ TEST_F(NiDAQmxDriverApiTests, SelfTestDevice_Succeeds)
   EXPECT_SUCCESS(status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithNegativeOneReverseOrder_ReturnsCoefficientsSizedToForwardCoefficients) {
+TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithNegativeOneReverseOrder_ReturnsCoefficientsSizedToForwardCoefficients)
+{
   auto const FORWARD_COEFFICIENTS = std::vector<double>{1.0, 3.0, 8.0};
   auto const REVERSE_ORDER = -1;
   auto request = create_calculate_reverse_poly_coeff_request(
-    FORWARD_COEFFICIENTS,
-    0.0,
-    10.0,
-    100,
-    REVERSE_ORDER);
+      FORWARD_COEFFICIENTS,
+      0.0,
+      10.0,
+      100,
+      REVERSE_ORDER);
   auto response = CalculateReversePolyCoeffResponse{};
   auto status = calculate_reverse_poly_coeff(request, response);
 
@@ -1215,15 +1366,15 @@ TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithNegativeOneRev
   EXPECT_EQ(FORWARD_COEFFICIENTS.size(), response.reverse_coeffs().size());
 }
 
-
-TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithPositiveReverseOrder_ReturnsCoefficientsSizedToReverseOrderPlusOne) {
+TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithPositiveReverseOrder_ReturnsCoefficientsSizedToReverseOrderPlusOne)
+{
   auto const REVERSE_ORDER = 10;
   auto request = create_calculate_reverse_poly_coeff_request(
-    {1.0, 3.0, 8.0},
-    0.0,
-    10.0,
-    100,
-    REVERSE_ORDER);
+      {1.0, 3.0, 8.0},
+      0.0,
+      10.0,
+      100,
+      REVERSE_ORDER);
   auto response = CalculateReversePolyCoeffResponse{};
   auto status = calculate_reverse_poly_coeff(request, response);
 
@@ -1231,8 +1382,8 @@ TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithPositiveRevers
   EXPECT_EQ(REVERSE_ORDER + 1, response.reverse_coeffs().size());
 }
 
-
-TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsError) {
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsError)
+{
   create_ai_voltage_chan(0.0, 1.0);
 
   auto response = WaitForValidTimestampResponse{};
@@ -1241,7 +1392,8 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsErro
   EXPECT_DAQ_ERROR(DAQmxErrorWaitForValidTimestampNotSupported, status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError) {
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
+{
   create_ai_voltage_chan(0.0, 1.0);
 
   auto response = CfgTimeStartTrigResponse{};
@@ -1250,7 +1402,8 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError) {
   EXPECT_DAQ_ERROR(DAQmxErrorInvalidAttributeValue, status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpectedRange) {
+TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpectedRange)
+{
   const auto AI_MIN = 0.0;
   const auto AI_MAX = 1.0;
   const auto NUM_SAMPS = 10;
@@ -1270,21 +1423,24 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
 }
 
-TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds) {
+TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
+{
   auto response = SelfCalResponse{};
   auto status = self_cal(response);
 
   EXPECT_SUCCESS(status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetworkDeviceProperties) {
+TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetworkDeviceProperties)
+{
   auto response = AddNetworkDeviceResponse{};
   auto status = add_network_device("0.0.0.0", response);
 
   EXPECT_DAQ_ERROR(DAQmxErrorRetrievingNetworkDeviceProperties, status, response);
 }
 
-TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected) {
+TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected)
+{
   auto response = ConfigureTEDSResponse{};
   auto status = configure_teds(response);
 
