@@ -149,6 +149,7 @@ service NiDAQmx {
   rpc GetArmStartTrigTrigWhen(GetArmStartTrigTrigWhenRequest) returns (GetArmStartTrigTrigWhenResponse);
   rpc GetAutoConfiguredCDAQSyncConnections(GetAutoConfiguredCDAQSyncConnectionsRequest) returns (GetAutoConfiguredCDAQSyncConnectionsResponse);
   rpc GetDigitalLogicFamilyPowerUpState(GetDigitalLogicFamilyPowerUpStateRequest) returns (GetDigitalLogicFamilyPowerUpStateResponse);
+  rpc GetDigitalPullUpPullDownStates(GetDigitalPullUpPullDownStatesRequest) returns (GetDigitalPullUpPullDownStatesResponse);
   rpc GetDisconnectedCDAQSyncPorts(GetDisconnectedCDAQSyncPortsRequest) returns (GetDisconnectedCDAQSyncPortsResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetExtendedErrorInfo(GetExtendedErrorInfoRequest) returns (GetExtendedErrorInfoResponse);
@@ -412,6 +413,12 @@ enum DigitalPatternCondition1 {
   DIGITAL_PATTERN_CONDITION1_UNSPECIFIED = 0;
   DIGITAL_PATTERN_CONDITION1_PATTERN_MATCHES = 10254;
   DIGITAL_PATTERN_CONDITION1_PATTERN_DOES_NOT_MATCH = 10253;
+}
+
+enum DigitalPullUpPullDownStates {
+  DIGITAL_PULL_UP_PULL_DOWN_STATES_UNSPECIFIED = 0;
+  DIGITAL_PULL_UP_PULL_DOWN_STATES_PULL_UP = 15950;
+  DIGITAL_PULL_UP_PULL_DOWN_STATES_PULL_DOWN = 15951;
 }
 
 enum DigitalWidthUnits3 {
@@ -3550,6 +3557,16 @@ message GetDigitalLogicFamilyPowerUpStateRequest {
 message GetDigitalLogicFamilyPowerUpStateResponse {
   int32 status = 1;
   int32 logic_family = 2;
+}
+
+message GetDigitalPullUpPullDownStatesRequest {
+  string device_name = 1;
+  repeated string channel_names = 2;
+}
+
+message GetDigitalPullUpPullDownStatesResponse {
+  int32 status = 1;
+  repeated DigitalPullUpPullDownStates states = 2;
 }
 
 message GetDisconnectedCDAQSyncPortsRequest {

@@ -23,6 +23,12 @@ def is_pointer_parameter(parameter):
 def is_repeated_varargs_parameter(parameter):
     return parameter.get('repeated_var_args', False)
 
+# TODO DOC
+# TODO use more places
+
+
+def is_repeating_varargs_member_parameter(parameter):
+    return parameter.get('repeating_var_arg', False)
 
 def is_array(dataType):
     return dataType.endswith("[]")

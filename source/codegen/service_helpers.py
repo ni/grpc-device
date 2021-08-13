@@ -111,11 +111,14 @@ def create_args_for_varargs(parameters):
                 continue
             have_expanded_varargs = True
             repeated_parameters = [
-                p for p in parameters if p.get('repeating_var_arg', False)]
+                p for p in parameters if common_helpers.is_repeating_varargs_member_parameter(p)]
             max_length = parameter['max_length']
             for i in range(max_length):
                 for parameter in repeated_parameters:
-                    result += f'get_{parameter["name"]}_if({name}, {i}), '
+                    if common_helpers.is_input_parameter(parameter):
+                        result += f'get_{parameter["name"]}_if({name}, {i}), '
+                    else:
+                        result += f'get_{parameter["name"]}_if({parameter["name"]}Vector, {i}), '
         else:
             result += f'{name}, '
     return result[:-2]

@@ -320,6 +320,7 @@ functions = {
                 'direction': 'in',
                 'repeated_var_args': True,
                 'name': 'stringAndEnums',
+                'is_compound_type': True,
                 'grpc_type': 'repeated StringAndEnum',
                 'max_length': 4
             }
@@ -327,7 +328,6 @@ functions = {
         'returns': 'int32'
     },
     'OutputVarArgs': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
