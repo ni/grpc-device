@@ -1153,7 +1153,7 @@ enums = {
             }
         ]
     },
-    'PowerUpStates': {
+    'PowerUpChannelType': {
         'values': [
             {
                 'name': 'CHANNEL_VOLTAGE',

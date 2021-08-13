@@ -602,12 +602,12 @@ enum Polarity2 {
   POLARITY2_ACTIVE_LOW = 10096;
 }
 
-enum PowerUpStates {
+enum PowerUpChannelType {
   option allow_alias = true;
-  POWER_UP_STATES_UNSPECIFIED = 0;
-  POWER_UP_STATES_CHANNEL_VOLTAGE = 0;
-  POWER_UP_STATES_CHANNEL_CURRENT = 1;
-  POWER_UP_STATES_CHANNEL_HIGH_IMPEDANCE = 2;
+  POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
+  POWER_UP_CHANNEL_TYPE_CHANNEL_VOLTAGE = 0;
+  POWER_UP_CHANNEL_TYPE_CHANNEL_CURRENT = 1;
+  POWER_UP_CHANNEL_TYPE_CHANNEL_HIGH_IMPEDANCE = 2;
 }
 
 enum PressureUnits {
@@ -919,7 +919,7 @@ enum ScaleInt32AttributeValues {
 message AnalogPowerUpState {
   string channelNames = 1;
   double state = 2;
-  PowerUpStates channelType = 3;
+  PowerUpChannelType channelType = 3;
 }
 message AddCDAQSyncConnectionRequest {
   string port_list = 1;
