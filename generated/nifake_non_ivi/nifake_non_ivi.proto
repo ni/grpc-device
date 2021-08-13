@@ -41,6 +41,7 @@ service NiFakeNonIvi {
 enum MarbleInt32Attributes {
   MARBLE_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   MARBLE_ATTRIBUTE_COLOR = 1234;
+  MARBLE_ATTRIBUTE_NUMBER_OF_FAILED_ATTEMPTS = 1551;
 }
 
 enum MarbleDoubleAttributes {
@@ -100,7 +101,8 @@ message GetMarbleAttributeInt32Request {
 
 message GetMarbleAttributeInt32Response {
   int32 status = 1;
-  int32 value = 2;
+  MarbleInt32AttributeValues value = 2;
+  int32 value_raw = 3;
 }
 
 message InitRequest {

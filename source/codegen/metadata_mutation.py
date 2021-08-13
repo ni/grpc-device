@@ -199,11 +199,23 @@ class AttributeAccessorExpander:
                 attribute_reference.attribute_group)
 
 
+def is_static_castable_enum_type(param):
+    grpc_type = param['grpc_type']
+    # Note: sint32 could work here but causes issue with existing attribute output accessors
+    # because it's not wire-compatible with enum. If it's added here, we need to make sure that 
+    # we're handling compatibility issues on those methods.
+    return grpc_type in ['int32', 'uint32']
+
 def expand_attribute_function_value_param(function, enums, attribute_enums_by_type, service_class_prefix):
     """For SetAttribute and CheckAttribute APIs, update function metadata to mark value parameter as enum."""
     value_param = get_attribute_function_value_param(function)
-    if not value_param or value_param['direction'] == 'out':
+    if not value_param:
         return
+    if value_param['direction'] == 'out':
+        if is_static_castable_enum_type(value_param):
+            value_param['use_checked_enum_conversion'] = True
+        else:
+            return
 
     if value_param["type"] == "ViConstString":
         param_type = "ViString"
