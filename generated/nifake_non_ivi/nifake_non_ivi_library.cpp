@@ -36,6 +36,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
   function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputTimestamp"));
   function_pointers_.InputVarArgs = reinterpret_cast<InputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputVarArgs"));
+  function_pointers_.OutputVarArgs = reinterpret_cast<OutputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputVarArgs"));
   function_pointers_.SetMarbleAttributeDouble = reinterpret_cast<SetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeDouble"));
   function_pointers_.SetMarbleAttributeInt32 = reinterpret_cast<SetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeInt32"));
 }
@@ -228,6 +229,18 @@ int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char chann
   return niFakeNonIvi_InputVarArgs(inputName, channelName, color, powerUpState, channelName0, color0, powerUpState0, channelName1, color1, powerUpState1, channelName2, color2, powerUpState2);
 #else
   return function_pointers_.InputVarArgs(inputName, channelName, color, powerUpState, channelName0, color0, powerUpState0, channelName1, color1, powerUpState1, channelName2, color2, powerUpState2);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::OutputVarArgs(const char inputName[], const char channelName[], int32* color, const char channelName0[], int32* color0, const char channelName1[], int32* color1, const char channelName2[], int32* color2)
+{
+  if (!function_pointers_.OutputVarArgs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputVarArgs.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_OutputVarArgs(inputName, channelName, color, channelName0, color0, channelName1, color1, channelName2, color2);
+#else
+  return function_pointers_.OutputVarArgs(inputName, channelName, color, channelName0, color0, channelName1, color1, channelName2, color2);
 #endif
 }
 

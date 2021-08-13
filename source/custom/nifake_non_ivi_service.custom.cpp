@@ -50,4 +50,35 @@ namespace nifake_non_ivi_grpc {
       request->start(),
       request->stop());
 }
+
+::grpc::Status NiFakeNonIviService::OutputVarArgs(::grpc::ServerContext* context, const OutputVarArgsRequest* request, OutputVarArgsResponse* response)
+{
+  auto input_name = request->input_name().c_str();
+  auto channel_names = request->channel_names();
+  if (channel_names.size() == 0) {
+    return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for channel_names were specified");
+  }
+  if (channel_names.size() > 4) {
+    return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 4 values for channel_names were specified");
+  }
+  auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<std::string>& vector, int n) -> const char* {
+    if (vector.size() > n) {
+      return vector[n].c_str();
+    }
+    return nullptr;
+  };
+  auto get_color_if = [](std::vector<int32>& vector, int n) -> int32* {
+    if (vector.size() > n) {
+      return &(vector[n]);
+    }
+    return nullptr;
+  };
+  std::vector<int32> colors(channel_names.size());
+  auto status = library_->OutputVarArgs(input_name, get_channelName_if(channel_names, 0), get_color_if(colors, 0), get_channelName_if(channel_names, 1), get_color_if(colors, 1), get_channelName_if(channel_names, 2), get_color_if(colors, 2), get_channelName_if(channel_names, 3), get_color_if(colors, 3));
+  for (int i = 0; i < channel_names.size(); ++i) {
+    response->add_colors(static_cast<BeautifulColor>(colors[i]));
+  }
+  response->set_status(status);
+  return ::grpc::Status::OK;
+}
 }  // namespace nifake_non_ivi_grpc

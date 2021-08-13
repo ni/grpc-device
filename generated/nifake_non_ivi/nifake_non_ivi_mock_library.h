@@ -32,6 +32,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, InputTimestamp, (CVIAbsoluteTime when), (override));
   MOCK_METHOD(int32, OutputTimestamp, (CVIAbsoluteTime* when), (override));
   MOCK_METHOD(int32, InputVarArgs, (const char inputName[], const char channelName[], int32 color, double powerUpState, const char channelName0[], int32 color0, double powerUpState0, const char channelName1[], int32 color1, double powerUpState1, const char channelName2[], int32 color2, double powerUpState2), (override));
+  MOCK_METHOD(int32, OutputVarArgs, (const char inputName[], const char channelName[], int32* color, const char channelName0[], int32* color0, const char channelName1[], int32* color1, const char channelName2[], int32* color2), (override));
   MOCK_METHOD(int32, SetMarbleAttributeDouble, (FakeHandle handle, int32 attribute, double value), (override));
   MOCK_METHOD(int32, SetMarbleAttributeInt32, (FakeHandle handle, int32 attribute, int32 value), (override));
 };

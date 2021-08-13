@@ -124,6 +124,9 @@ def create_args_for_varargs(parameters):
 def create_params(parameters, expand_varargs=True):
     repeated_parameters = [
         p for p in parameters if p.get('repeating_var_arg', False)]
+    # TODO - explain
+    if common_helpers.is_repeated_varargs_parameter(parameters[-1]) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
+        parameters = parameters[:-1]
     return ', '.join(create_param(p, expand_varargs, repeated_parameters) for p in parameters)
 
 
@@ -160,12 +163,7 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
     name = parameter['cppName']
     if common_helpers.is_struct(parameter):
         type = type.replace("struct ", "")
-    if common_helpers.is_array(type):
-        array_size = get_array_param_size(parameter)
-        return f'{type[:-2]} {name}[{array_size}]'
-    elif common_helpers.is_pointer_parameter(parameter):
-        return f'{type}* {name}'
-    elif common_helpers.is_repeated_varargs_parameter(parameter):
+    if common_helpers.is_repeated_varargs_parameter(parameter):
         if expand_varargs:
             # TODO - explain -1
             max_length = parameter['max_length'] - 1
@@ -179,6 +177,11 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
             return s[:-2]
         else:
             return '...'
+    elif common_helpers.is_array(type):
+        array_size = get_array_param_size(parameter)
+        return f'{type[:-2]} {name}[{array_size}]'
+    elif common_helpers.is_pointer_parameter(parameter):
+        return f'{type}* {name}'
     else:
         return f'{type} {name}'
 
@@ -303,5 +306,4 @@ def get_callback_method_parameters(function_data):
 
 
 def create_param_type_list(parameters):
-    return ', '.join([p['type'] for p in parameters])
     return ', '.join([p['type'] for p in parameters])
