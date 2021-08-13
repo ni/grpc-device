@@ -252,7 +252,7 @@ def can_mock_function(parameters):
     repeated_varargs_parameters = [
         p for p in parameters if is_repeated_varargs_parameter(p)]
     first_repeating_parameters = len(
-        [p for p in parameters if p.get('repeating_var_arg', False)])
+        [p for p in parameters if is_repeating_varargs_member_parameter(p)])
     if not any(repeated_varargs_parameters):
         return len(parameters) - first_repeating_parameters <= MAX_MOCK_PARAM_LEN
     varargs_parameter = repeated_varargs_parameters[0]
