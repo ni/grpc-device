@@ -58,9 +58,7 @@ async def main():
 
             create_response: nidaqmx_types.CreateTaskResponse = (
                 await raise_if_error_async(
-                    client.CreateTask(nidaqmx_types.CreateTaskRequest())
-                )
-            )
+                    client.CreateTask(nidaqmx_types.CreateTaskRequest())))
             task = create_response.task
 
             await raise_if_error_async(
@@ -68,7 +66,7 @@ async def main():
                     nidaqmx_types.CreateAIVoltageChanRequest(
                         task=task,
                         physical_channel=physical_channel,
-                        min_val=1.0,
+                        min_val=-10.0,
                         max_val=10.0,
                         terminal_config=nidaqmx_types.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
                         units=nidaqmx_types.VoltageUnits2.VOLTAGE_UNITS2_VOLTS)))
