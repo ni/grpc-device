@@ -31,7 +31,7 @@ void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* 
   // This is losing some precision since doubles have 52 bits of precision.
   // But there are only 10^9 nanoseconds in a second which is ~31 bits of precision,
   // so it's still good enough for our purposes.
-  timestamp->set_nanos((static_cast<double>(value.cviTime.lsb) * NanosecondsPerSecond) / TwoToSixtyFour);
+  timestamp->set_nanos(static_cast<int32>((static_cast<double>(value.cviTime.lsb) * NanosecondsPerSecond) / TwoToSixtyFour));
 }
 
 template <>
