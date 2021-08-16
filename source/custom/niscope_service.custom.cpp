@@ -486,7 +486,7 @@ void CheckStatus(int status)
     CheckStatus(library_->GetScalingCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets));
 
     std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
-    auto status = library_->GetScalingCoefficients(vi, channel_list, coefficient_info.size(), coefficient_info.data(), &number_of_coefficient_sets);
+    auto status = library_->GetScalingCoefficients(vi, channel_list, static_cast<ViInt32>(coefficient_info.size()), coefficient_info.data(), &number_of_coefficient_sets);
     response->set_status(status);
     if (status == 0) {
       response->set_number_of_coefficient_sets(number_of_coefficient_sets);
