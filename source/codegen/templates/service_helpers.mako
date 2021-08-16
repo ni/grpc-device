@@ -207,7 +207,7 @@ ${initialize_input_param(function_name, parameter, input_vararg_parameter)}\
 ## Initialize an input parameter for an API call.
 <%def name="initialize_input_param(function_name, parameter, input_vararg_parameter=None)">\
 % if common_helpers.is_repeating_parameter(parameter):
-${initialize_repeating_varargs_input_param(parameter, input_vararg_parameter)}
+${initialize_repeating_param(parameter, input_vararg_parameter)}
 % elif common_helpers.is_repeated_varargs_parameter(parameter):
 ${initialize_repeated_varargs_param(parameter)}
 % elif common_helpers.is_enum(parameter):
@@ -222,9 +222,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 % endif
 </%def>
 
-<%def name="initialize_repeating_varargs_input_param(parameter, input_vararg_parameter)">\
+<%def name="initialize_repeating_param(parameter, input_vararg_parameter)">\
 <%
-## TODO - rename this
   stripped_grpc_type = common_helpers.strip_repeated_from_grpc_type(input_vararg_parameter['grpc_type'])
   if stripped_grpc_type == 'string':
       stripped_grpc_type = 'std::string'
