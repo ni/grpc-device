@@ -479,9 +479,9 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_ThreeArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, StrEq("channel2"), BEAUTIFUL_COLOR_GREEN, 3.0, StrEq("channel3"), BEAUTIFUL_COLOR_BLACK, 4.0))
+  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, StrEq("channel2"), BEAUTIFUL_COLOR_GREEN, 3.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -498,10 +498,6 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
   arg->set_channelname("channel2");
   arg->set_color(BEAUTIFUL_COLOR_GREEN);
   arg->set_powerupstate(3.0);
-  arg = request.add_string_and_enums();
-  arg->set_channelname("channel3");
-  arg->set_color(BEAUTIFUL_COLOR_BLACK);
-  arg->set_powerupstate(4.0);
   InputVarArgsResponse response;
 
   service_.InputVarArgs(&context, &request, &response);
@@ -523,14 +519,14 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_NoArgumentPairs)
   EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
 }
 
-TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FiveArgumentPairs)
+TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
 {
   EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
   request.set_input_name("inputName");
-  for (auto i = 0; i < 5; i++) {
+  for (auto i = 0; i < 4; i++) {
     request.add_string_and_enums();
   }
   InputVarArgsResponse response;
@@ -581,14 +577,13 @@ TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_TwoArgumentPairs)
   EXPECT_EQ(BEAUTIFUL_COLOR_AQUA, response.colors(1));
 }
 
-TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_FourArgumentPairs)
+TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_ThreeArgumentPairs)
 {
-  EXPECT_CALL(library_, OutputVarArgs(StrEq("inputName"), StrEq("channel1"), _, StrEq("channel2"), _, StrEq("channel3"), _, StrEq("channel4"), _))
+  EXPECT_CALL(library_, OutputVarArgs(StrEq("inputName"), StrEq("channel1"), _, StrEq("channel2"), _, StrEq("channel3"), _, nullptr, nullptr))
       .WillOnce(DoAll(
           SetArgPointee<2>(BEAUTIFUL_COLOR_PINK),
           SetArgPointee<4>(BEAUTIFUL_COLOR_AQUA),
           SetArgPointee<6>(BEAUTIFUL_COLOR_GREEN),
-          SetArgPointee<8>(BEAUTIFUL_COLOR_BLACK),
           Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   OutputVarArgsRequest request;
@@ -596,17 +591,15 @@ TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_FourArgumentPairs)
   request.add_channel_names("channel1");
   request.add_channel_names("channel2");
   request.add_channel_names("channel3");
-  request.add_channel_names("channel4");
   OutputVarArgsResponse response;
 
   service_.OutputVarArgs(&context, &request, &response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_EQ(4, response.colors_size());
+  EXPECT_EQ(3, response.colors_size());
   EXPECT_EQ(BEAUTIFUL_COLOR_PINK, response.colors(0));
   EXPECT_EQ(BEAUTIFUL_COLOR_AQUA, response.colors(1));
   EXPECT_EQ(BEAUTIFUL_COLOR_GREEN, response.colors(2));
-  EXPECT_EQ(BEAUTIFUL_COLOR_BLACK, response.colors(3));
 }
 
 TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_NoArgumentPairs)
@@ -623,14 +616,14 @@ TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_NoArgumentPairs)
   EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
 }
 
-TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_FiveArgumentPairs)
+TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_FourArgumentPairs)
 {
   EXPECT_CALL(library_, OutputVarArgs(_, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   OutputVarArgsRequest request;
   request.set_input_name("inputName");
-  for (auto i = 0; i < 5; i++) {
+  for (auto i = 0; i < 4; i++) {
     request.add_channel_names("channel");
   }
   OutputVarArgsResponse response;

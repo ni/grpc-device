@@ -114,7 +114,9 @@ def create_args_for_varargs(parameters):
             have_expanded_varargs = True
             repeated_parameters = [
                 p for p in parameters if common_helpers.is_repeating_parameter(p)]
-            max_length = parameter['max_length']
+            # We need to pass one extra set of arguments because the last parameters have to be nullptr's
+            # so the callee knows we're done passing arguments.
+            max_length = parameter['max_length'] + 1
             for i in range(max_length):
                 for parameter in repeated_parameters:
                     if common_helpers.is_input_parameter(parameter):
@@ -152,10 +154,6 @@ def expand_varargs_parameters(parameters):
     varargs_parameters = [
         p for p in parameters if common_helpers.is_repeated_varargs_parameter(p)]
     max_length = varargs_parameters[0]['max_length']
-    # All functions that take repeated varargs take the first set of parameter as
-    # non-varargs, so we need one fewer set of parameters in the varargs
-    # section.
-    max_length -= 1
     repeated_parameters = [
         p for p in parameters if common_helpers.is_repeating_parameter(p)]
     for i in range(max_length):
@@ -171,10 +169,7 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
         type = type.replace("struct ", "")
     if common_helpers.is_repeated_varargs_parameter(parameter):
         if expand_varargs:
-            # All functions that take repeated varargs take the first set of parameter as
-            # non-varargs, so we need one fewer set of parameters in the varargs
-            # section.
-            max_length = parameter['max_length'] - 1
+            max_length = parameter['max_length']
             s = ''
             for i in range(max_length):
                 for parameter in repeated_parameters:

@@ -322,7 +322,7 @@ functions = {
                 'name': 'stringAndEnums',
                 'is_compound_type': True,
                 'grpc_type': 'repeated StringAndEnum',
-                'max_length': 4
+                'max_length': 3
             }
         ],
         'returns': 'int32'
@@ -354,7 +354,7 @@ functions = {
                 'repeated_var_args': True,
                 'name': 'channelNames',
                 'grpc_type': 'repeated string',
-                'max_length': 4
+                'max_length': 3
             },
             {
                 'direction': 'out',

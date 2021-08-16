@@ -467,8 +467,8 @@ namespace nifake_non_ivi_grpc {
       if (string_and_enums.size() == 0) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for stringAndEnums were specified");
       }
-      if (string_and_enums.size() > 4) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 4 values for stringAndEnums were specified");
+      if (string_and_enums.size() > 3) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for stringAndEnums were specified");
       }
 
       auto status = library_->InputVarArgs(input_name, get_channelName_if(string_and_enums, 0), get_color_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_channelName_if(string_and_enums, 1), get_color_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_channelName_if(string_and_enums, 2), get_color_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_channelName_if(string_and_enums, 3), get_color_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
@@ -499,8 +499,8 @@ namespace nifake_non_ivi_grpc {
       if (channel_names.size() == 0) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for channelNames were specified");
       }
-      if (channel_names.size() > 4) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 4 values for channelNames were specified");
+      if (channel_names.size() > 3) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for channelNames were specified");
       }
 
       auto get_color_if = [](std::vector<int32>& vector, int n) -> int32* {
