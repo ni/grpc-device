@@ -733,6 +733,16 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->WaitForNextSampleClock(&context, request, &response);
   }
 
+  ::grpc::Status connect_terms(const std::string& source, const std::string& destination, ConnectTermsResponse& response)
+  {
+    ::grpc::ClientContext context;
+    ConnectTermsRequest request;
+    request.set_source_terminal(source);
+    request.set_destination_terminal(destination);
+    request.set_signal_modifiers(InvertPolarity::INVERT_POLARITY_DO_NOT_INVERT_POLARITY);
+    return stub()->ConnectTerms(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -1474,6 +1484,14 @@ TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
   auto status = wait_for_next_sample_clock(response);
 
   EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, ConnectBogusTerms_FailsWithInvalidRoutingError)
+{
+  auto response = ConnectTermsResponse{};
+  auto status = connect_terms("ABC", "123", response);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorInvalidTerm_Routing, status, response);
 }
 
 }  // namespace system
