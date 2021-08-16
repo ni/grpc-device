@@ -111,7 +111,7 @@ def create_args_for_varargs(parameters):
                 continue
             have_expanded_varargs = True
             repeated_parameters = [
-                p for p in parameters if common_helpers.is_repeating_varargs_member_parameter(p)]
+                p for p in parameters if common_helpers.is_repeating_parameter(p)]
             max_length = parameter['max_length']
             for i in range(max_length):
                 for parameter in repeated_parameters:
@@ -126,7 +126,7 @@ def create_args_for_varargs(parameters):
 
 def create_params(parameters, expand_varargs=True):
     repeated_parameters = [
-        p for p in parameters if common_helpers.is_repeating_varargs_member_parameter(p)]
+        p for p in parameters if common_helpers.is_repeating_parameter(p)]
     # TODO - explain
     if common_helpers.is_repeated_varargs_parameter(parameters[-1]) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
         parameters = parameters[:-1]
@@ -154,7 +154,7 @@ def expand_varargs_parameters(parameters):
     # section.
     max_length -= 1
     repeated_parameters = [
-        p for p in parameters if common_helpers.is_repeating_varargs_member_parameter(p)]
+        p for p in parameters if common_helpers.is_repeating_parameter(p)]
     for i in range(max_length):
         for p in repeated_parameters:
             new_parameters.append({'cppName': f'{p["name"]}{i}'})

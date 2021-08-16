@@ -5862,14 +5862,14 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'name': 'channelName',
                 'type': 'const char[]'
             },
             {
                 'direction': 'out',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'enum': 'DigitalPullUpPullDownStates',
                 'name': 'state',
                 'type': 'int32'
@@ -7838,14 +7838,14 @@ functions = {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelNames',
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'state',
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'type': 'double'
             },
             {
@@ -7853,7 +7853,7 @@ functions = {
                 'enum': 'PowerUpStates',
                 'include_in_proto': False,
                 'name': 'channelType',
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'type': 'int32'
             },
             {

@@ -297,14 +297,14 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'name': 'channelName',
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'enum': 'BeautifulColor',
                 'name': 'color',
                 'type': 'int32'
@@ -312,7 +312,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'name': 'powerUpState',
                 'type': 'double'
             },
@@ -337,14 +337,14 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'name': 'channelName',
                 'type': 'const char[]'
             },
             {
                 'direction': 'out',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'enum': 'BeautifulColor',
                 'name': 'color',
                 'type': 'int32'

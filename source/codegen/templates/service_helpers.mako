@@ -206,7 +206,7 @@ ${initialize_input_param(function_name, parameter, input_vararg_parameter)}\
 
 ## Initialize an input parameter for an API call.
 <%def name="initialize_input_param(function_name, parameter, input_vararg_parameter=None)">\
-% if common_helpers.is_repeating_varargs_member_parameter(parameter):
+% if common_helpers.is_repeating_parameter(parameter):
 ${initialize_repeating_varargs_input_param(parameter, input_vararg_parameter)}
 % elif common_helpers.is_repeated_varargs_parameter(parameter):
 ${initialize_repeated_varargs_param(parameter)}
@@ -437,7 +437,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   input_vararg_parameter = [p for p in parameters if common_helpers.is_repeated_varargs_parameter(p) and common_helpers.is_input_parameter(p)][0]
   input_parameter_name = common_helpers.camel_to_snake(input_vararg_parameter['cppName'])
-  output_vararg_parameters = [p for p in parameters if common_helpers.is_repeating_varargs_member_parameter(p) and not common_helpers.is_input_parameter(p)]
+  output_vararg_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p) and not common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in output_vararg_parameters:
 <%
@@ -454,7 +454,7 @@ ${initialize_standard_input_param(function_name, parameter)}
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
 %>\
-%   if common_helpers.is_repeating_varargs_member_parameter(parameter):
+%   if common_helpers.is_repeating_parameter(parameter):
       auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
             if (vector.size() > n) {
 ## Note that this code will not handle every datatype, but it works for all
@@ -510,7 +510,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
-%   if common_helpers.is_repeating_varargs_member_parameter(parameter):
+%   if common_helpers.is_repeating_parameter(parameter):
 <%
     varargs_parameter = [p for p in output_parameters if common_helpers.is_repeated_varargs_parameter(p)][0]
     varargs_parameter_name = common_helpers.camel_to_snake(varargs_parameter['cppName'])
