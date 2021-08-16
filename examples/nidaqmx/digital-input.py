@@ -11,6 +11,8 @@
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
+# To run this example without hardware: create a simulated device in NI MAX on the server (Windows only).
+#
 # Running from command line:
 #
 # Server machine's IP address, port number, and lines name can be passed as separate command line arguments.
