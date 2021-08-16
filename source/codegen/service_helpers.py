@@ -107,6 +107,8 @@ def create_args_for_varargs(parameters):
         if not parameter.get('include_in_proto', True):
             continue
         if common_helpers.is_repeated_varargs_parameter(parameter):
+            # Some methods have both input and output repeated varargs parameters,
+            # so only expand them once.
             if have_expanded_varargs:
                 continue
             have_expanded_varargs = True
@@ -127,7 +129,8 @@ def create_args_for_varargs(parameters):
 def create_params(parameters, expand_varargs=True):
     repeated_parameters = [
         p for p in parameters if common_helpers.is_repeating_parameter(p)]
-    # TODO - explain
+    # Some methods have both input and output repeated varargs parameters,
+    # so only expand them once.
     if common_helpers.is_repeated_varargs_parameter(parameters[-1]) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
         parameters = parameters[:-1]
     return ', '.join(create_param(p, expand_varargs, repeated_parameters) for p in parameters)
@@ -168,7 +171,9 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
         type = type.replace("struct ", "")
     if common_helpers.is_repeated_varargs_parameter(parameter):
         if expand_varargs:
-            # TODO - explain -1
+            # All functions that take repeated varargs take the first set of parameter as
+            # non-varargs, so we need one fewer set of parameters in the varargs
+            # section.
             max_length = parameter['max_length'] - 1
             s = ''
             for i in range(max_length):
