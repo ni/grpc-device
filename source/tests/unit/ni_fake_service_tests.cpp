@@ -1313,7 +1313,7 @@ TEST(NiFakeServiceTests, NiFakeService_ViUInt8ArrayInputFunction_CallsViUInt8Arr
   std::string input_array;
   input_array.push_back(0);
   input_array.push_back(127);
-  input_array.push_back(0xFF);
+  input_array.push_back(static_cast<char>(0xFF));
   request.set_an_array(input_array);
   nifake_grpc::ViUInt8ArrayInputFunctionResponse response;
   ::grpc::Status status = service.ViUInt8ArrayInputFunction(&context, &request, &response);
