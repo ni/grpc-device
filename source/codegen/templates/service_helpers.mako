@@ -463,8 +463,7 @@ ${initialize_standard_input_param(function_name, parameter)}
             return nullptr;
       };
       std::vector<${underlying_param_type}> ${parameter_name}Vector;
-%   elif common_helpers.is_repeated_varargs_parameter(parameter):
-## TODO?
+%   elif common_helpers.is_repeated_varargs_parameter(parameter): # pass
 %   elif common_helpers.is_array(parameter['type']):
 <%
   size = common_helpers.get_size_expression(parameter)
@@ -514,7 +513,7 @@ ${initialize_standard_input_param(function_name, parameter)}
     varargs_parameter = [p for p in output_parameters if common_helpers.is_repeated_varargs_parameter(p)][0]
     varargs_parameter_name = common_helpers.camel_to_snake(varargs_parameter['cppName'])
 %>\
-## Note that this currently only supports one output varargs parameter.
+## Note that this currently only supports one repeated output parameter.
         for (int i = 0; i < ${parameter_name}Vector.size(); ++i) {
 %   if 'enum' in parameter:
           response->add_${varargs_parameter_name}(static_cast<${parameter['enum']}>(${parameter_name}Vector[i]));
