@@ -718,7 +718,7 @@ namespace niscope_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
-      ViInt32 number_of_coefficients = request->coefficients().size();
+      ViInt32 number_of_coefficients = static_cast<ViInt32>(request->coefficients().size());
       auto coefficients = const_cast<ViReal64*>(request->coefficients().data());
       auto status = library_->ConfigureEqualizationFilterCoefficients(vi, channel_list, number_of_coefficients, coefficients);
       response->set_status(status);
@@ -1852,7 +1852,7 @@ namespace niscope_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 size_in_bytes = request->configuration().size();
+      ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       response->set_status(status);

@@ -100,7 +100,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 count = request->delays().size();
+      ViInt32 count = static_cast<ViInt32>(request->delays().size());
       auto delays = const_cast<ViReal64*>(request->delays().data());
       auto status = library_->AcceptListOfDurationsInSeconds(vi, count, delays);
       response->set_status(status);
@@ -146,7 +146,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 array_len = request->u_int32_array().size();
+      ViInt32 array_len = static_cast<ViInt32>(request->u_int32_array().size());
       auto u_int32_array = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->u_int32_array().data()));
       auto status = library_->AcceptViUInt32Array(vi, array_len, u_int32_array);
       response->set_status(status);
@@ -239,7 +239,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 number_count = request->numbers().size();
+      ViInt32 number_count = static_cast<ViInt32>(request->numbers().size());
       auto numbers = const_cast<ViReal64*>(request->numbers().data());
       auto status = library_->DoubleAllTheNums(vi, number_count, numbers);
       response->set_status(status);
@@ -917,7 +917,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 size_in_bytes = request->configuration().size();
+      ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       response->set_status(status);
@@ -1003,7 +1003,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 output_array_size = request->output_array_size();
-      ViInt32 input_array_sizes = request->input_array_of_integers().size();
+      ViInt32 input_array_sizes = static_cast<ViInt32>(request->input_array_of_integers().size());
       auto input_array_of_floats = const_cast<ViReal64*>(request->input_array_of_floats().data());
       auto input_array_of_integers_request = request->input_array_of_integers();
       std::vector<ViInt16> input_array_of_integers;
@@ -1041,7 +1041,7 @@ namespace nifake_grpc {
       auto values2 = const_cast<ViReal64*>(request->values2().data());
       auto values3 = const_cast<ViReal64*>(request->values3().data());
       auto values4 = const_cast<ViReal64*>(request->values4().data());
-      ViInt32 size = request->values4().size();
+      ViInt32 size = static_cast<ViInt32>(request->values4().size());
       auto status = library_->MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1121,7 +1121,7 @@ namespace nifake_grpc {
         }
       }
 
-      ViInt32 string_size = request->a_string().size();
+      ViInt32 string_size = static_cast<ViInt32>(request->a_string().size());
       auto a_string = request->a_string().c_str();
       auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
       response->set_status(status);
@@ -1336,7 +1336,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 number_of_elements = request->cs().size();
+      ViInt32 number_of_elements = static_cast<ViInt32>(request->cs().size());
       auto cs_request = request->cs();
       std::vector<CustomStruct> cs;
       Copy(cs_request, &cs);
@@ -1443,7 +1443,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 number_of_samples = request->waveform().size();
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->waveform().size());
       auto waveform = const_cast<ViReal64*>(request->waveform().data());
       auto status = library_->WriteWaveform(vi, number_of_samples, waveform);
       response->set_status(status);
@@ -1550,7 +1550,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 number_of_elements = request->an_array().size();
+      ViInt32 number_of_elements = static_cast<ViInt32>(request->an_array().size());
       auto an_array_request = request->an_array();
       std::vector<ViInt16> an_array;
       std::transform(

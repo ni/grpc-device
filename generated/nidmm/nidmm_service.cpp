@@ -1870,7 +1870,7 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 size = request->configuration().size();
+      ViInt32 size = static_cast<ViInt32>(request->configuration().size());
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
       response->set_status(status);

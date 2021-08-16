@@ -524,7 +524,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto sequence_name = request->sequence_name().c_str();
-      ViInt32 attribute_id_count = request->attribute_ids().size();
+      ViInt32 attribute_id_count = static_cast<ViInt32>(request->attribute_ids().size());
       auto attribute_ids = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->attribute_ids().data()));
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
       auto status = library_->CreateAdvancedSequenceWithChannels(vi, channel_name, sequence_name, attribute_id_count, attribute_ids, set_as_active_sequence);
@@ -547,7 +547,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto sequence_name = request->sequence_name().c_str();
-      ViInt32 attribute_id_count = request->attribute_ids().size();
+      ViInt32 attribute_id_count = static_cast<ViInt32>(request->attribute_ids().size());
       auto attribute_ids = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->attribute_ids().data()));
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
       auto status = library_->CreateAdvancedSequence(vi, sequence_name, attribute_id_count, attribute_ids, set_as_active_sequence);
@@ -2746,7 +2746,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 size = request->configuration().size();
+      ViInt32 size = static_cast<ViInt32>(request->configuration().size());
       auto configuration = const_cast<ViAddr*>(reinterpret_cast<const ViAddr*>(request->configuration().data()));
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
       response->set_status(status);
@@ -3391,7 +3391,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto values = const_cast<ViReal64*>(request->values().data());
       auto source_delays = const_cast<ViReal64*>(request->source_delays().data());
-      ViUInt32 size = request->source_delays().size();
+      ViUInt32 size = static_cast<ViUInt32>(request->source_delays().size());
       auto status = library_->SetSequence(vi, channel_name, values, source_delays, size);
       response->set_status(status);
       return ::grpc::Status::OK;
