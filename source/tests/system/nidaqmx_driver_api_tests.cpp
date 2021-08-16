@@ -724,6 +724,15 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->SetScaleAttributeString(&context, request, &response);
   }
 
+  ::grpc::Status wait_for_next_sample_clock(WaitForNextSampleClockResponse& response)
+  {
+    ::grpc::ClientContext context;
+    WaitForNextSampleClockRequest request;
+    set_request_session_id(request);
+    request.set_timeout(10.0);
+    return stub()->WaitForNextSampleClock(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -1445,6 +1454,26 @@ TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDe
   auto status = configure_teds(response);
 
   EXPECT_DAQ_ERROR(DAQmxErrorTEDSSensorNotDetected, status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
+{
+  create_ao_voltage_chan(0.0, 10.0);
+  create_ai_voltage_chan(0.0, 10.0);
+  auto cfg_request = create_cfg_samp_clk_timing_request(
+      100.0,
+      Edge1::EDGE1_RISING,
+      AcquisitionType::ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT,
+      1);
+  auto cfg_response = CfgSampClkTimingResponse{};
+  auto cfg_status = cfg_samp_clk_timing(cfg_request, cfg_response);
+  EXPECT_SUCCESS(cfg_status, cfg_response);
+
+  start_task();
+  auto response = WaitForNextSampleClockResponse{};
+  auto status = wait_for_next_sample_clock(response);
+
+  EXPECT_SUCCESS(status, response);
 }
 
 }  // namespace system
