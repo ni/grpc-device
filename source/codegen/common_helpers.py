@@ -375,7 +375,11 @@ class AttributeGroup:
         self._config = config
 
 
-    def get_attributes_split_by_type(self):
+    def get_attributes_split_by_sub_group(self):
+        """
+        Splits attributes by type, with an additional "Reset" sub-group
+        for resettable attributes.
+        """
         if not get_split_attributes_by_type(self._config):
             return {'': self.attributes}
 

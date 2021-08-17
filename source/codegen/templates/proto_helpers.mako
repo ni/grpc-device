@@ -4,17 +4,21 @@
 %>
 
 ## Define a proto enum capturing attributes from the metadata.
-<%def name="define_attribute_enum(group_name, data_type, attributes)">\
+<%def name="define_attribute_enum(group_name, sub_group, attributes)">\
 <%
   attribute_value_prefix = group_name.upper() + "_ATTRIBUTE"
 
   # When attributes are split-by-datatype, the actual attributes don't need a type-name disambiguator because
-  # the original unsplit list didn't have duplicates. However, they each need a unique-ified UNSPECIFIED param.
-  unspecified_disambiguator = "_" + common_helpers.pascal_to_snake(data_type).upper() if data_type else ""
-  unspecified_attribute_value_prefix = group_name.upper() + unspecified_disambiguator + "_ATTRIBUTE"
-  attribute_value_prefix = unspecified_attribute_value_prefix if data_type == "Reset" else attribute_value_prefix
+  # the original unsplit list didn't have duplicates. 
+  # But there are 2 cases that need to be disambiguated:
+  # * Each attribute has an UNSPECIFIED placeholder.
+  # * Reset attributes overlap the data-type-specific attributes.
+  unspecified_disambiguator = "_" + common_helpers.pascal_to_snake(sub_group).upper() if sub_group else ""
+  disambiguated_attribute_value_prefix = group_name.upper() + unspecified_disambiguator + "_ATTRIBUTE"
+  unspecified_attribute_value_prefix = disambiguated_attribute_value_prefix
+  attribute_value_prefix = disambiguated_attribute_value_prefix if sub_group == "Reset" else attribute_value_prefix
 %>\
-enum ${common_helpers.get_attribute_enum_name(group_name, data_type)} {
+enum ${common_helpers.get_attribute_enum_name(group_name, sub_group)} {
   ${unspecified_attribute_value_prefix}_UNSPECIFIED = 0;
 % for attribute in attributes:
 <%
