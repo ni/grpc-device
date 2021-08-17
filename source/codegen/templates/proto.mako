@@ -41,10 +41,11 @@ service ${service_class_prefix} {
 % endfor
 }
 
-% for group_name, attributes in common_helpers.get_attribute_groups(data).items():
-${mako_helper.define_attribute_enum(group_name, attributes)}\
+% for group in common_helpers.get_attribute_groups(data):
+%   for data_type, attributes in group.get_attributes_split_by_type().items():
+${mako_helper.define_attribute_enum(group.name, data_type, attributes)}\
+%   endfor
 % endfor
-
 ${mako_helper.define_function_enums(function_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\
 % for function in common_helpers.filter_proto_rpc_functions(functions):

@@ -32,7 +32,6 @@ config = {
     'additional_headers': ['custom/nidaqmx_conversions.h'],
     'type_to_grpc_type': {
         'TaskHandle': 'nidevice_grpc.Session',
-        'const char[]': 'string',
         'char[]': 'string',
         'float64': 'double',
         'bool32': 'bool',
@@ -48,6 +47,7 @@ config = {
         'DAQmxSignalEventCallbackPtr': 'void',
         'CVIAbsoluteTime': 'google.protobuf.Timestamp'
     },
+    'split_attributes_by_type': True,
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [
     ],

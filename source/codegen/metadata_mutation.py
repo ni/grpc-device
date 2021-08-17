@@ -1,3 +1,5 @@
+from collections import namedtuple
+from typing import Optional
 import common_helpers
 
 RESERVED_WORDS = [
@@ -70,101 +72,16 @@ def mark_mapped_enum_params(parameters, enums):
             param['mapped-enum'] = enum_name
 
 
-def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
-    add_repeated = is_array
-    if 'ViSession' in type:
-        type = 'nidevice_grpc.Session'
-    if 'ViBoolean' in type:
-        type = 'bool'
-    if 'ViReal64' in type:
-        type = 'double'
-    if 'ViInt32' in type:
-        type = 'sint32'
-    if 'ViConstString' in type:
-        type = 'string'
-    if 'ViString' in type:
-        type = 'string'
-    if 'ViRsrc' in type:
-        type = 'string'
-    if 'ViChar' in type:
-        if is_array:
-            add_repeated = False
-            type = 'string'
-        else:
-            type = 'uint32'
-    if 'ViReal32' in type:
-        type = 'float'
-    if 'ViAttr' in type:
-        type = driver_name_pascal + "Attributes"
-    if 'ViInt8' in type:
-        if is_array:
-            type = "bytes"
-            add_repeated = False
-        else:
-            type = 'uint32'
-    if 'void*' in type:
-        type = 'fixed64'
-    if 'ViInt16' in type:
-        type = 'sint32'
-    if 'ViInt64' in type:
-        type = 'int64'
-    if 'ViUInt16' in type:
-        type = 'uint32'
-    if 'ViUInt32' in type:
-        type = 'uint32'
-    if 'ViUInt64' in type:
-        type = 'uint64'
-    if 'ViUInt8' in type:
-        if is_array:
-            type = "bytes"
-            add_repeated = False
-        else:
-            type = 'uint32'
-    if 'ViStatus' in type:
-        type = 'sint32'
-    if 'ViAddr' in type:
-        type = 'fixed64'
-    if 'int' == type:
-        type = 'sint32'
-    if "[]" in type:
-        type = type.replace("[]", "")
-
-    return "repeated " + type if add_repeated else type
-
-
 def populate_grpc_types(parameters, config):
-    service_class_prefix = config["service_class_prefix"]
-    for parameter in parameters:
-        if 'callback_params' in parameter:
-            populate_grpc_types(parameter['callback_params'], config)
-        if 'grpc_type' in parameter:
-          continue
-        if 'type_to_grpc_type' in config:
-          type_map = config['type_to_grpc_type']
-          stripped_type = parameter['type']
-          if stripped_type in type_map:
-            parameter['grpc_type'] = type_map[stripped_type]
-            continue
-          if stripped_type.startswith('const '):
-            stripped_type = stripped_type[len('const '):]
-          if stripped_type in type_map:
-            parameter['grpc_type'] = type_map[stripped_type]
-            continue
-          is_array = False
-          if stripped_type.endswith('*'):
-            is_array = True
-            stripped_type = stripped_type[:-1]
-          elif stripped_type.endswith('[]'):
-            is_array = True
-            stripped_type = stripped_type[:-2]
-          if stripped_type in type_map:
-            parameter['grpc_type'] = 'repeated ' + type_map[stripped_type]
-            continue
-        is_array = common_helpers.is_array(parameter["type"])
-        parameter['grpc_type'] = get_grpc_type_from_ivi(
-            parameter['type'],
-            is_array,
-            service_class_prefix)
+  for parameter in parameters:
+    if 'callback_params' in parameter:
+        populate_grpc_types(
+            parameter['callback_params'], config)
+    if 'grpc_type' in parameter:
+        continue
+    parameter['grpc_type'] = common_helpers.get_grpc_type(
+        parameter['type'],
+        config)
 
 
 def get_short_enum_type_name(type):
@@ -205,6 +122,80 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
         add_enum(unmapped_enum_name, unmapped_values, enums, enum_value_prefix)
         add_enum(mapped_enum_name, mapped_values, enums, enum_value_prefix, is_mapped=True)
     
+
+AttributeReferencingParameter = namedtuple("AttributeReferencingParameter", ["attribute_group", "parameter"])
+
+class AttributeAccessorExpander:
+    """
+    Wraps an _attribute_type_map of:
+    
+    group -> type -> attributes
+
+    and implements the metadata_mutations to add_attribute_values_enums, expand_attribute_function_value_param,
+    and patch_attribute_enum_type.
+    """
+    def __init__(self, metadata):
+        self._config = metadata['config']
+        self._enums = metadata['enums']
+        self._attribute_type_map = {}
+
+        for group in common_helpers.get_attribute_groups(metadata):
+            attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(
+                group.attributes)
+            add_attribute_values_enums(
+                self._enums,
+                attribute_enums_by_type,
+                group.name)
+            self._attribute_type_map[group.name] = attribute_enums_by_type
+
+
+    def get_attribute_reference_parameter(self, parameters) -> Optional[AttributeReferencingParameter]:
+        def try_resolve_attribute_reference(parameter) -> Optional[AttributeReferencingParameter]:
+            param_type = parameter['grpc_type']
+            # All attribute parameters must have a grpc_type of {group_name}Attributes.
+            # In MI, this is added during metadata mutation of ViAttr types.
+            potential_attribute_name = common_helpers.strip_suffix(param_type, 'Attributes')
+            if potential_attribute_name in self._attribute_type_map:
+                return AttributeReferencingParameter(potential_attribute_name, parameter)
+            return None
+
+        # Assumption: there are 0 or 1 parameters that reference an attribute per function.
+        attribute_resolve_results = (try_resolve_attribute_reference(p) for p in parameters)
+        valid_references = (ref for ref in attribute_resolve_results if ref)
+        return next(valid_references, None)
+
+
+    def patch_attribute_enum_type(self, func):
+        """
+        If a driver splits attribute enums by type, 
+        then the referencing functions need to be updated to match:
+        ScaleAttributes -> ScaleAttributesInt32, ScaleAttributesDouble, etc.
+        """
+        if not common_helpers.get_split_attributes_by_type(self._config):
+            return
+        parameters = func['parameters']
+        attribute_reference = self.get_attribute_reference_parameter(parameters)
+        if attribute_reference:
+            group = attribute_reference.attribute_group
+            attribute_param = attribute_reference.parameter
+            value_param = get_attribute_function_value_param(func)
+            type_name = common_helpers.get_grpc_type_name_for_identifier(
+                value_param['type'],
+                self._config)
+            attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(group, type_name)
+        
+
+    def expand_attribute_value_params(self, func):
+        parameters = func["parameters"]
+        attribute_reference = self.get_attribute_reference_parameter(parameters)
+        if attribute_reference:
+            expand_attribute_function_value_param(
+                func,
+                self._enums, 
+                self._attribute_type_map[attribute_reference.attribute_group], 
+                attribute_reference.attribute_group)
+
+
 def expand_attribute_function_value_param(function, enums, attribute_enums_by_type, service_class_prefix):
     """For SetAttribute and CheckAttribute APIs, update function metadata to mark value parameter as enum."""
     value_param = get_attribute_function_value_param(function)

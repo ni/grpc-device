@@ -247,21 +247,33 @@ service NiDAQmx {
   rpc WriteToTEDSFromFile(WriteToTEDSFromFileRequest) returns (WriteToTEDSFromFileResponse);
 }
 
-enum ScaleAttributes {
-  SCALE_ATTRIBUTE_UNSPECIFIED = 0;
+enum ScaleStringAttributes {
+  SCALE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_DESCR = 4646;
+  SCALE_ATTRIBUTE_SCALED_UNITS = 6427;
+}
+
+enum ScaleDoubleAttributes {
+  SCALE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_LIN_SLOPE = 4647;
   SCALE_ATTRIBUTE_LIN_Y_INTERCEPT = 4648;
   SCALE_ATTRIBUTE_MAP_SCALED_MAX = 4649;
   SCALE_ATTRIBUTE_MAP_SCALED_MIN = 4656;
   SCALE_ATTRIBUTE_MAP_PRE_SCALED_MAX = 4657;
   SCALE_ATTRIBUTE_MAP_PRE_SCALED_MIN = 4658;
+}
+
+enum ScaleDoubleArrayAttributes {
+  SCALE_DOUBLE_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_POLY_FORWARD_COEFF = 4660;
   SCALE_ATTRIBUTE_POLY_REVERSE_COEFF = 4661;
   SCALE_ATTRIBUTE_TABLE_SCALED_VALS = 4662;
   SCALE_ATTRIBUTE_TABLE_PRE_SCALED_VALS = 4663;
+}
+
+enum ScaleInt32Attributes {
+  SCALE_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_PRE_SCALED_UNITS = 6391;
-  SCALE_ATTRIBUTE_SCALED_UNITS = 6427;
   SCALE_ATTRIBUTE_TYPE = 6441;
 }
 
@@ -3659,7 +3671,7 @@ message GetRefTrigTimestampValResponse {
 
 message GetScaleAttributeDoubleRequest {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleDoubleAttributes attribute = 2;
 }
 
 message GetScaleAttributeDoubleResponse {
@@ -3669,7 +3681,7 @@ message GetScaleAttributeDoubleResponse {
 
 message GetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleDoubleArrayAttributes attribute = 2;
   uint32 size = 3;
 }
 
@@ -3680,7 +3692,7 @@ message GetScaleAttributeDoubleArrayResponse {
 
 message GetScaleAttributeInt32Request {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleInt32Attributes attribute = 2;
 }
 
 message GetScaleAttributeInt32Response {
@@ -3690,7 +3702,7 @@ message GetScaleAttributeInt32Response {
 
 message GetScaleAttributeStringRequest {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleStringAttributes attribute = 2;
   uint32 size = 3;
 }
 
@@ -4302,7 +4314,7 @@ message SetFirstSampClkWhenResponse {
 
 message SetScaleAttributeDoubleRequest {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleDoubleAttributes attribute = 2;
   double value = 3;
 }
 
@@ -4312,7 +4324,7 @@ message SetScaleAttributeDoubleResponse {
 
 message SetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleDoubleArrayAttributes attribute = 2;
   repeated double value = 3;
   uint32 size = 4;
 }
@@ -4323,7 +4335,7 @@ message SetScaleAttributeDoubleArrayResponse {
 
 message SetScaleAttributeInt32Request {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleInt32Attributes attribute = 2;
   oneof value_enum {
     ScaleInt32AttributeValues value = 3;
     int32 value_raw = 4;
@@ -4336,7 +4348,7 @@ message SetScaleAttributeInt32Response {
 
 message SetScaleAttributeStringRequest {
   string scale_name = 1;
-  ScaleAttributes attribute = 2;
+  ScaleStringAttributes attribute = 2;
   string value = 3;
 }
 

@@ -29,7 +29,7 @@ def is_repeating_parameter(parameter):
     return parameter.get('repeating_argument', False)
 
 def is_array(dataType):
-    return dataType.endswith("[]")
+    return dataType.endswith("[]") or dataType.endswith("*")
 
 
 def is_enum(parameter):
@@ -145,13 +145,13 @@ def pascal_to_camel(pascal_string):
 
 
 def ensure_pascal_case(pascal_or_camel_string):
-  '''Ensures that a camel/pascal case string is pascal case
-  NOTE: does not distinguish leading all-caps acronyms.'''
-  match = re.fullmatch(r'^([a-z])(.*)$', pascal_or_camel_string)
-  if match:
-    return match[1].upper() + match[2]
+    '''Ensures that a camel/pascal case string is pascal case
+    NOTE: does not distinguish leading all-caps acronyms.'''
+    match = re.fullmatch(r'^([a-z])(.*)$', pascal_or_camel_string)
+    if match:
+        return match[1].upper() + match[2]
   
-  return pascal_or_camel_string
+    return pascal_or_camel_string
 
 def pascal_to_snake(pascal_string):
     '''Returns a snake_string for a given PascalString.'''
@@ -167,20 +167,20 @@ def filter_proto_rpc_functions(functions):
 
 
 def get_attribute_enums_by_type(attributes):
-  '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
-  attribute_enums_by_type = defaultdict(set)
-  # For Compatibility: Pre-adding the following types to the map causes them to use value_raw
-  # params even if they have no enum values. This is part of the shipping API for MI drivers.
-  for enum_type in ['ViInt32', 'ViInt64', 'ViReal64', 'ViString']:
-    attribute_enums_by_type[enum_type] = set()
+    '''Returns a dictionary of different attribute data types that use enum alongwith set of enums used'''
+    attribute_enums_by_type = defaultdict(set)
+    # For Compatibility: Pre-adding the following types to the map causes them to use value_raw
+    # params even if they have no enum values. This is part of the shipping API for MI drivers.
+    for enum_type in ['ViInt32', 'ViInt64', 'ViReal64', 'ViString']:
+        attribute_enums_by_type[enum_type] = set()
 
-  for attribute_name in attributes:
-    attribute = attributes[attribute_name]
-    if 'enum' in attribute:
-      attribute_type = attribute['type']
-      enum_name = attribute['enum']
-      attribute_enums_by_type[attribute_type].add(enum_name)
-  return attribute_enums_by_type
+    for attribute_name in attributes:
+        attribute = attributes[attribute_name]
+        if 'enum' in attribute:
+            attribute_type = attribute['type']
+            enum_name = attribute['enum']
+            attribute_enums_by_type[attribute_type].add(enum_name)
+    return attribute_enums_by_type
 
 
 def get_function_enums(functions):
@@ -332,23 +332,147 @@ def filter_parameters_for_grpc_fields(parameters):
   return [p for p in parameters if p.get('include_in_proto', True)]
 
 
-def get_attribute_groups(data):
-  attributes = data['attributes']
-  config = data["config"]
+class AttributeGroup:
+    def __init__(self, name, attributes, config):
+        self.name = name
+        self.attributes = attributes
+        self._config = config
 
-  # If the attributes are already in string categories: those are the groups. Return as-is.
-  first_key = next(iter(attributes), None)
-  if isinstance(first_key, str):
-    return attributes
-  
-  # If there's just one level of attributes: use the service_class_prefix as the group.
-  service_class_prefix = config['service_class_prefix']
-  return {service_class_prefix: attributes}
+
+    def get_attributes_split_by_type(self):
+        if not get_split_attributes_by_type(self._config):
+            return {'': self.attributes}
+
+        categorized_attributes = defaultdict(dict)
+        for id, data in self.attributes.items():
+            data_type = get_grpc_type_name_for_identifier(
+                data['type'], self._config)
+            categorized_attributes[data_type][id] = data
+        return categorized_attributes
+
+
+def get_attribute_enum_name(group_name, data_type):
+    return f'{group_name}{data_type}Attributes'
+
+
+def get_attribute_groups(data):
+    attributes = data['attributes']
+    config = data['config']
+
+    # If the attributes are already in string categories: those are the groups. Return as-is.
+    first_key = next(iter(attributes), None)
+    if isinstance(first_key, str):
+        return [AttributeGroup(name, attributes, config) for name, attributes in attributes.items()]
+
+    # If there's just one level of attributes: use the service_class_prefix as the group.
+    service_class_prefix = config['service_class_prefix']
+    return [AttributeGroup(service_class_prefix, attributes, config)]
 
 
 def strip_prefix(s: str, prefix: str) -> str:
-  return s[len(prefix) :] if s.startswith(prefix) else s
+    return s[len(prefix):] if s.startswith(prefix) else s
 
 
 def strip_suffix(s: str, suffix: str) -> str:
     return s[: -len(suffix)] if s.endswith(suffix) else s
+
+
+def get_grpc_type_name_for_identifier(data_type, config):
+    """
+    Used to create an identifier string based on the grpc_type
+    i.e., double -> Double. repeated double -> DoubleArray.
+    """
+    grpc_type = get_grpc_type(data_type, config)
+    grpc_type = re.sub(r'^(repeated )(\w+)$', r'\2Array', grpc_type)
+    return ensure_pascal_case(grpc_type)
+
+
+def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
+    add_repeated = is_array
+    if 'ViSession' in type:
+        type = 'nidevice_grpc.Session'
+    if 'ViBoolean' in type:
+        type = 'bool'
+    if 'ViReal64' in type:
+        type = 'double'
+    if 'ViInt32' in type:
+        type = 'sint32'
+    if 'ViConstString' in type:
+        type = 'string'
+    if 'ViString' in type:
+        type = 'string'
+    if 'ViRsrc' in type:
+        type = 'string'
+    if 'ViChar' in type:
+        if is_array:
+            add_repeated = False
+            type = 'string'
+        else:
+            type = 'uint32'
+    if 'ViReal32' in type:
+        type = 'float'
+    if 'ViAttr' in type:
+        type = driver_name_pascal + "Attributes"
+    if 'ViInt8' in type:
+        if is_array:
+            type = "bytes"
+            add_repeated = False
+        else:
+            type = 'uint32'
+    if 'void*' in type:
+        type = 'fixed64'
+    if 'ViInt16' in type:
+        type = 'sint32'
+    if 'ViInt64' in type:
+        type = 'int64'
+    if 'ViUInt16' in type:
+        type = 'uint32'
+    if 'ViUInt32' in type:
+        type = 'uint32'
+    if 'ViUInt64' in type:
+        type = 'uint64'
+    if 'ViUInt8' in type:
+        if is_array:
+            type = "bytes"
+            add_repeated = False
+        else:
+            type = 'uint32'
+    if 'ViStatus' in type:
+        type = 'sint32'
+    if 'ViAddr' in type:
+        type = 'fixed64'
+    if 'int' == type:
+        type = 'sint32'
+    if "[]" in type:
+        type = type.replace("[]", "")
+
+    return "repeated " + type if add_repeated else type
+
+
+def get_grpc_type(data_type, config):
+    service_class_prefix = config['service_class_prefix']
+    if 'type_to_grpc_type' in config:
+        type_map = config['type_to_grpc_type']
+        stripped_type = strip_prefix(data_type, 'const ')
+        if stripped_type in type_map:
+            return type_map[stripped_type]
+
+        repeated = is_array(data_type)
+
+        stripped_type = strip_suffix(stripped_type, '*')
+        stripped_type = strip_suffix(stripped_type, '[]')
+
+        # Note: if we never resolve or strip anything, this will fallback
+        # to the original datatype.
+        resolved_type = type_map.get(stripped_type, stripped_type)
+
+        return f'repeated {resolved_type}' if repeated else resolved_type
+
+    return get_grpc_type_from_ivi(
+        data_type,
+        is_array(data_type),
+        service_class_prefix)
+
+
+def get_split_attributes_by_type(config):
+    return config.get('split_attributes_by_type', False)
