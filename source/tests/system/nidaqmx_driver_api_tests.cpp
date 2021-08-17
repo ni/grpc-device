@@ -1557,7 +1557,7 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
       create_watchdog_response.task(),
       start_watchdog_response);
 
-  EXPECT_SUCCESS(start_watchdog_status, start_watchdown_response);
+  EXPECT_SUCCESS(start_watchdog_status, start_watchdog_response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupportedError)
