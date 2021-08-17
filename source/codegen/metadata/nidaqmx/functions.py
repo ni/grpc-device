@@ -7811,7 +7811,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'PowerUpStates',
+                'enum': 'PowerUpChannelType',
                 'include_in_proto': False,
                 'name': 'channelType',
                 'repeating_var_arg': True,

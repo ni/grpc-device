@@ -23,7 +23,7 @@ config = {
                 },
                 {
                     'type': 'int32',
-                    'enum': 'PowerUpStates',
+                    'enum': 'PowerUpChannelType',
                     'name': 'channelType',
                 }
             ]
