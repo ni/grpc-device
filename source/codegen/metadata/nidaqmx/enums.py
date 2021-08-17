@@ -579,7 +579,7 @@ enums = {
             }
         ]
     },
-    'DigitalPullUpPullDownStates': {
+    'DigitalPullUpPullDownState': {
         'values': [
             {
                 'name': 'PULL_UP',

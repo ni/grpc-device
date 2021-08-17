@@ -5870,7 +5870,7 @@ functions = {
                 'direction': 'out',
                 'include_in_proto': False,
                 'repeating_argument': True,
-                'enum': 'DigitalPullUpPullDownStates',
+                'enum': 'DigitalPullUpPullDownState',
                 'name': 'state',
                 'type': 'int32'
             },
@@ -5885,7 +5885,7 @@ functions = {
                 'direction': 'out',
                 'repeated_var_args': True,
                 'name': 'states',
-                'grpc_type': 'repeated DigitalPullUpPullDownStates',
+                'grpc_type': 'repeated DigitalPullUpPullDownState',
                 'max_length': 96
             }
         ],
@@ -7922,7 +7922,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated DigitalPowerUpState',
+                'grpc_type': 'repeated DigitalPowerUpTypeAndChannel',
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
@@ -7931,7 +7931,39 @@ functions = {
         ],
         'returns': 'int32'
     },
-
+    'SetDigitalPullUpPullDownStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'channelNames',
+                'repeating_argument': True,
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalPullUpPullDownState',
+                'include_in_proto': False,
+                'name': 'state',
+                'repeating_argument': True,
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated DigitalPullUpPullDownStateAndChannel',
+                'is_compound_type': True,
+                'max_length': 96,
+                'name': 'pullUpPullDownStateAndChannels',
+                'repeated_var_args': True
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetFirstSampClkWhen': {
         'parameters': [
             {

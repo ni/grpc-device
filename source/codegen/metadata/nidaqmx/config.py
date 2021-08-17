@@ -29,8 +29,8 @@ config = {
             ]
         },
         {
-            'name': 'DigitalPowerUpState',
-            'grpc_name': 'DigitalPowerUpState',
+            'name': 'DigitalPowerUpTypeAndChannel',
+            'grpc_name': 'DigitalPowerUpTypeAndChannel',
             'fields': [
                 {
                     'type': 'const char[]',
@@ -39,6 +39,21 @@ config = {
                 {
                     'type': 'int32',
                     'enum': 'DigitalPowerUpChannelType',
+                    'name': 'state',
+                }
+            ]
+        },
+        {
+            'name': 'DigitalPullUpPullDownStateAndChannel',
+            'grpc_name': 'DigitalPullUpPullDownStateAndChannel',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelNames',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalPullUpPullDownState',
                     'name': 'state',
                 }
             ]
