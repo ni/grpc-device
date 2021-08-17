@@ -5,6 +5,11 @@ message AnalogPowerUpState {
 }
 
 message DigitalPowerUpTypeAndChannel {
+  string channelName = 1;
+  DigitalPowerUpChannelType state = 2;
+}
+
+message DigitalPowerUpTypeAndChannels {
   string channelNames = 1;
   DigitalPowerUpChannelType state = 2;
 }

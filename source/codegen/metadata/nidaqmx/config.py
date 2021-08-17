@@ -34,6 +34,21 @@ config = {
             'fields': [
                 {
                     'type': 'const char[]',
+                    'name': 'channelName',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalPowerUpChannelType',
+                    'name': 'state',
+                }
+            ]
+        },
+        {
+            'name': 'DigitalPowerUpTypeAndChannels',
+            'grpc_name': 'DigitalPowerUpTypeAndChannels',
+            'fields': [
+                {
+                    'type': 'const char[]',
                     'name': 'channelNames',
                 },
                 {

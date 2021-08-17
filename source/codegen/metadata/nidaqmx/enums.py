@@ -591,7 +591,6 @@ enums = {
             },
         ]
     },
-
     'DigitalWidthUnits3': {
         'values': [
             {

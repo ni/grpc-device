@@ -5852,6 +5852,45 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetDigitalPowerUpStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'channelName',
+                'repeating_argument': True,
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'DigitalPowerUpChannelType',
+                'include_in_proto': False,
+                'name': 'state',
+                'repeating_argument': True,
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated string',
+                'max_length': 96,
+                'name': 'channelName',
+                'repeated_var_args': True
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'repeated DigitalPowerUpChannelType',
+                'max_length': 96,
+                'name': 'powerUpStates',
+                'repeated_var_args': True
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetDigitalPullUpPullDownStates': {
         'parameters': [
             {
@@ -7922,7 +7961,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated DigitalPowerUpTypeAndChannel',
+                'grpc_type': 'repeated DigitalPowerUpTypeAndChannels',
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',

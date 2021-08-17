@@ -160,6 +160,7 @@ public:
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
   ::grpc::Status GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response) override;
+  ::grpc::Status GetDigitalPowerUpStates(::grpc::ServerContext* context, const GetDigitalPowerUpStatesRequest* request, GetDigitalPowerUpStatesResponse* response) override;
   ::grpc::Status GetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const GetDigitalPullUpPullDownStatesRequest* request, GetDigitalPullUpPullDownStatesResponse* response) override;
   ::grpc::Status GetDisconnectedCDAQSyncPorts(::grpc::ServerContext* context, const GetDisconnectedCDAQSyncPortsRequest* request, GetDisconnectedCDAQSyncPortsResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;

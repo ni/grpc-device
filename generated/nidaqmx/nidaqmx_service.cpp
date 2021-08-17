@@ -7047,6 +7047,51 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetDigitalPowerUpStates(::grpc::ServerContext* context, const GetDigitalPowerUpStatesRequest* request, GetDigitalPowerUpStatesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto device_name = request->device_name().c_str();
+      auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<std::string>& vector, int n) -> const char* {
+            if (vector.size() > n) {
+                  return vector[n].c_str();
+            }
+            return nullptr;
+      };
+      auto channel_name = request->channel_name();
+      if (channel_name.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for channelName were specified");
+      }
+      if (channel_name.size() > 96) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 96 values for channelName were specified");
+      }
+
+      auto get_state_if = [](std::vector<int32>& vector, int n) -> int32* {
+            if (vector.size() > n) {
+                  return &(vector[n]);
+            }
+            return nullptr;
+      };
+      std::vector<int32> stateVector;
+      stateVector.resize(channel_name.size());
+      auto status = ((NiDAQmxLibrary*)library_)->GetDigitalPowerUpStates(device_name, get_channelName_if(channel_name, 0), get_state_if(stateVector, 0), get_channelName_if(channel_name, 1), get_state_if(stateVector, 1), get_channelName_if(channel_name, 2), get_state_if(stateVector, 2), get_channelName_if(channel_name, 3), get_state_if(stateVector, 3), get_channelName_if(channel_name, 4), get_state_if(stateVector, 4), get_channelName_if(channel_name, 5), get_state_if(stateVector, 5), get_channelName_if(channel_name, 6), get_state_if(stateVector, 6), get_channelName_if(channel_name, 7), get_state_if(stateVector, 7), get_channelName_if(channel_name, 8), get_state_if(stateVector, 8), get_channelName_if(channel_name, 9), get_state_if(stateVector, 9), get_channelName_if(channel_name, 10), get_state_if(stateVector, 10), get_channelName_if(channel_name, 11), get_state_if(stateVector, 11), get_channelName_if(channel_name, 12), get_state_if(stateVector, 12), get_channelName_if(channel_name, 13), get_state_if(stateVector, 13), get_channelName_if(channel_name, 14), get_state_if(stateVector, 14), get_channelName_if(channel_name, 15), get_state_if(stateVector, 15), get_channelName_if(channel_name, 16), get_state_if(stateVector, 16), get_channelName_if(channel_name, 17), get_state_if(stateVector, 17), get_channelName_if(channel_name, 18), get_state_if(stateVector, 18), get_channelName_if(channel_name, 19), get_state_if(stateVector, 19), get_channelName_if(channel_name, 20), get_state_if(stateVector, 20), get_channelName_if(channel_name, 21), get_state_if(stateVector, 21), get_channelName_if(channel_name, 22), get_state_if(stateVector, 22), get_channelName_if(channel_name, 23), get_state_if(stateVector, 23), get_channelName_if(channel_name, 24), get_state_if(stateVector, 24), get_channelName_if(channel_name, 25), get_state_if(stateVector, 25), get_channelName_if(channel_name, 26), get_state_if(stateVector, 26), get_channelName_if(channel_name, 27), get_state_if(stateVector, 27), get_channelName_if(channel_name, 28), get_state_if(stateVector, 28), get_channelName_if(channel_name, 29), get_state_if(stateVector, 29), get_channelName_if(channel_name, 30), get_state_if(stateVector, 30), get_channelName_if(channel_name, 31), get_state_if(stateVector, 31), get_channelName_if(channel_name, 32), get_state_if(stateVector, 32), get_channelName_if(channel_name, 33), get_state_if(stateVector, 33), get_channelName_if(channel_name, 34), get_state_if(stateVector, 34), get_channelName_if(channel_name, 35), get_state_if(stateVector, 35), get_channelName_if(channel_name, 36), get_state_if(stateVector, 36), get_channelName_if(channel_name, 37), get_state_if(stateVector, 37), get_channelName_if(channel_name, 38), get_state_if(stateVector, 38), get_channelName_if(channel_name, 39), get_state_if(stateVector, 39), get_channelName_if(channel_name, 40), get_state_if(stateVector, 40), get_channelName_if(channel_name, 41), get_state_if(stateVector, 41), get_channelName_if(channel_name, 42), get_state_if(stateVector, 42), get_channelName_if(channel_name, 43), get_state_if(stateVector, 43), get_channelName_if(channel_name, 44), get_state_if(stateVector, 44), get_channelName_if(channel_name, 45), get_state_if(stateVector, 45), get_channelName_if(channel_name, 46), get_state_if(stateVector, 46), get_channelName_if(channel_name, 47), get_state_if(stateVector, 47), get_channelName_if(channel_name, 48), get_state_if(stateVector, 48), get_channelName_if(channel_name, 49), get_state_if(stateVector, 49), get_channelName_if(channel_name, 50), get_state_if(stateVector, 50), get_channelName_if(channel_name, 51), get_state_if(stateVector, 51), get_channelName_if(channel_name, 52), get_state_if(stateVector, 52), get_channelName_if(channel_name, 53), get_state_if(stateVector, 53), get_channelName_if(channel_name, 54), get_state_if(stateVector, 54), get_channelName_if(channel_name, 55), get_state_if(stateVector, 55), get_channelName_if(channel_name, 56), get_state_if(stateVector, 56), get_channelName_if(channel_name, 57), get_state_if(stateVector, 57), get_channelName_if(channel_name, 58), get_state_if(stateVector, 58), get_channelName_if(channel_name, 59), get_state_if(stateVector, 59), get_channelName_if(channel_name, 60), get_state_if(stateVector, 60), get_channelName_if(channel_name, 61), get_state_if(stateVector, 61), get_channelName_if(channel_name, 62), get_state_if(stateVector, 62), get_channelName_if(channel_name, 63), get_state_if(stateVector, 63), get_channelName_if(channel_name, 64), get_state_if(stateVector, 64), get_channelName_if(channel_name, 65), get_state_if(stateVector, 65), get_channelName_if(channel_name, 66), get_state_if(stateVector, 66), get_channelName_if(channel_name, 67), get_state_if(stateVector, 67), get_channelName_if(channel_name, 68), get_state_if(stateVector, 68), get_channelName_if(channel_name, 69), get_state_if(stateVector, 69), get_channelName_if(channel_name, 70), get_state_if(stateVector, 70), get_channelName_if(channel_name, 71), get_state_if(stateVector, 71), get_channelName_if(channel_name, 72), get_state_if(stateVector, 72), get_channelName_if(channel_name, 73), get_state_if(stateVector, 73), get_channelName_if(channel_name, 74), get_state_if(stateVector, 74), get_channelName_if(channel_name, 75), get_state_if(stateVector, 75), get_channelName_if(channel_name, 76), get_state_if(stateVector, 76), get_channelName_if(channel_name, 77), get_state_if(stateVector, 77), get_channelName_if(channel_name, 78), get_state_if(stateVector, 78), get_channelName_if(channel_name, 79), get_state_if(stateVector, 79), get_channelName_if(channel_name, 80), get_state_if(stateVector, 80), get_channelName_if(channel_name, 81), get_state_if(stateVector, 81), get_channelName_if(channel_name, 82), get_state_if(stateVector, 82), get_channelName_if(channel_name, 83), get_state_if(stateVector, 83), get_channelName_if(channel_name, 84), get_state_if(stateVector, 84), get_channelName_if(channel_name, 85), get_state_if(stateVector, 85), get_channelName_if(channel_name, 86), get_state_if(stateVector, 86), get_channelName_if(channel_name, 87), get_state_if(stateVector, 87), get_channelName_if(channel_name, 88), get_state_if(stateVector, 88), get_channelName_if(channel_name, 89), get_state_if(stateVector, 89), get_channelName_if(channel_name, 90), get_state_if(stateVector, 90), get_channelName_if(channel_name, 91), get_state_if(stateVector, 91), get_channelName_if(channel_name, 92), get_state_if(stateVector, 92), get_channelName_if(channel_name, 93), get_state_if(stateVector, 93), get_channelName_if(channel_name, 94), get_state_if(stateVector, 94), get_channelName_if(channel_name, 95), get_state_if(stateVector, 95), get_channelName_if(channel_name, 96), get_state_if(stateVector, 96));
+      response->set_status(status);
+      if (status == 0) {
+        for (int i = 0; i < stateVector.size(); ++i) {
+          response->add_power_up_states(static_cast<DigitalPowerUpChannelType>(stateVector[i]));
+        }
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const GetDigitalPullUpPullDownStatesRequest* request, GetDigitalPullUpPullDownStatesResponse* response)
   {
     if (context->IsCancelled()) {
@@ -9064,13 +9109,13 @@ namespace nidaqmx_grpc {
     }
     try {
       auto device_name = request->device_name().c_str();
-      auto get_channelNames_if = [](const google::protobuf::RepeatedPtrField<DigitalPowerUpTypeAndChannel>& vector, int n) -> const char* {
+      auto get_channelNames_if = [](const google::protobuf::RepeatedPtrField<DigitalPowerUpTypeAndChannels>& vector, int n) -> const char* {
             if (vector.size() > n) {
                   return vector[n].channelnames().c_str();
             }
             return nullptr;
       };
-      auto get_state_if = [](const google::protobuf::RepeatedPtrField<DigitalPowerUpTypeAndChannel>& vector, int n) -> int32 {
+      auto get_state_if = [](const google::protobuf::RepeatedPtrField<DigitalPowerUpTypeAndChannels>& vector, int n) -> int32 {
             if (vector.size() > n) {
                   return vector[n].state();
             }
