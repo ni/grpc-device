@@ -690,7 +690,7 @@ class NiDAQmxDriverApiTests : public Test {
     return request;
   }
 
-  SetScaleAttributeDoubleArrayRequest create_set_scale_attribute_double_array_request(const std::string& scale_name, ScaleAttributesDoubleArray attribute, const std::vector<double>& value)
+  SetScaleAttributeDoubleArrayRequest create_set_scale_attribute_double_array_request(const std::string& scale_name, ScaleDoubleArrayAttributes attribute, const std::vector<double>& value)
   {
     SetScaleAttributeDoubleArrayRequest request;
     request.set_scale_name(scale_name);
@@ -957,7 +957,7 @@ TEST_F(NiDAQmxDriverApiTests, LinearScale_GetSlopeAttribute_ReturnsInitialSlopeV
 
   auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
       SCALE_NAME,
-      ScaleAttributesDouble::SCALE_ATTRIBUTE_LIN_SLOPE);
+      ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_SLOPE);
   GetScaleAttributeDoubleResponse response;
   auto status = get_scale_attribute_double(request, response);
 
@@ -972,13 +972,13 @@ TEST_F(NiDAQmxDriverApiTests, SetYInterceptAttribute_GetYInterceptAttribute_Retu
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
   auto set_request = create_set_scale_attribute_request<SetScaleAttributeDoubleRequest>(
       SCALE_NAME,
-      ScaleAttributesDouble::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT,
+      ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT,
       Y_INTERCEPT);
   SetScaleAttributeDoubleResponse set_response;
   auto set_status = set_scale_attribute_double(set_request, set_response);
   auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
       SCALE_NAME,
-      ScaleAttributesDouble::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT);
+      ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT);
   GetScaleAttributeDoubleResponse response;
   auto status = get_scale_attribute_double(request, response);
 
@@ -994,14 +994,14 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
   auto set_request = create_set_scale_attribute_request<SetScaleAttributeInt32Request>(
       SCALE_NAME,
-      ScaleAttributesInt32::SCALE_ATTRIBUTE_PRE_SCALED_UNITS,
+      ScaleInt32Attributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS,
       ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM);
   SetScaleAttributeInt32Response set_response;
   auto set_status = set_scale_attribute_i32(set_request, set_response);
 
   auto request = create_get_scale_attribute_request<GetScaleAttributeInt32Request>(
       SCALE_NAME,
-      ScaleAttributesInt32::SCALE_ATTRIBUTE_PRE_SCALED_UNITS);
+      ScaleInt32Attributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS);
   GetScaleAttributeInt32Response response;
   auto status = get_scale_attribute_i32(request, response);
 
@@ -1017,14 +1017,14 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
   auto set_request = create_set_scale_attribute_request<SetScaleAttributeStringRequest>(
       SCALE_NAME,
-      ScaleAttributesString::SCALE_ATTRIBUTE_SCALED_UNITS,
+      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
   SetScaleAttributeStringResponse set_response;
   auto set_status = set_scale_attribute_string(set_request, set_response);
 
   auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
       SCALE_NAME,
-      (ScaleAttributesDouble)ScaleAttributesString::SCALE_ATTRIBUTE_SCALED_UNITS);
+      (ScaleDoubleAttributes)ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
   GetScaleAttributeDoubleResponse response;
   auto status = get_scale_attribute_double(request, response);
 
@@ -1042,14 +1042,14 @@ TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
   auto set_request = create_set_scale_attribute_request<SetScaleAttributeStringRequest>(
       SCALE_NAME,
-      ScaleAttributesString::SCALE_ATTRIBUTE_SCALED_UNITS,
+      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
   SetScaleAttributeStringResponse set_response;
   auto set_status = set_scale_attribute_string(set_request, set_response);
 
   auto request = create_sized_get_scale_attribute_request<GetScaleAttributeStringRequest>(
       SCALE_NAME,
-      ScaleAttributesString::SCALE_ATTRIBUTE_SCALED_UNITS,
+      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS.length() + 1);
   GetScaleAttributeStringResponse response;
   auto status = get_scale_attribute_string(request, response);
@@ -1067,14 +1067,14 @@ TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForw
   auto scale_status = create_polynomial_scale(SCALE_NAME, INITIAL_COEFFICIENTS, INITIAL_COEFFICIENTS);
   auto set_request = create_set_scale_attribute_double_array_request(
       SCALE_NAME,
-      ScaleAttributesDoubleArray::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
+      ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
       COEFFICIENTS);
   SetScaleAttributeDoubleArrayResponse set_response;
   auto set_status = set_scale_attribute_double_array(set_request, set_response);
 
   auto request = create_sized_get_scale_attribute_request<GetScaleAttributeDoubleArrayRequest>(
       SCALE_NAME,
-      ScaleAttributesDoubleArray::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
+      ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
       COEFFICIENTS.size());
   GetScaleAttributeDoubleArrayResponse response;
   auto status = get_scale_attribute_double_array(request, response);

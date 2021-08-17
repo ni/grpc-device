@@ -348,7 +348,7 @@ class AttributeGroup:
 
 
 def get_attribute_enum_name(group_name, data_type):
-    return f'{group_name}Attributes{data_type}'
+    return f'{group_name}{data_type}Attributes'
 
 
 def get_attribute_groups(data):
