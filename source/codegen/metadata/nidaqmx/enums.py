@@ -1199,10 +1199,6 @@ enums = {
             {
                 'name': 'CHANNEL_CURRENT',
                 'value': 1
-            },
-            {
-                'name': 'CHANNEL_HIGH_IMPEDANCE',
-                'value': 2
             }
         ]
     },

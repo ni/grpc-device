@@ -145,6 +145,7 @@ service NiDAQmx {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc GetAIChanCalCalDate(GetAIChanCalCalDateRequest) returns (GetAIChanCalCalDateResponse);
   rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
+  rpc GetAnalogPowerUpStates(GetAnalogPowerUpStatesRequest) returns (GetAnalogPowerUpStatesResponse);
   rpc GetArmStartTrigTimestampVal(GetArmStartTrigTimestampValRequest) returns (GetArmStartTrigTimestampValResponse);
   rpc GetArmStartTrigTrigWhen(GetArmStartTrigTrigWhenRequest) returns (GetArmStartTrigTrigWhenResponse);
   rpc GetAutoConfiguredCDAQSyncConnections(GetAutoConfiguredCDAQSyncConnectionsRequest) returns (GetAutoConfiguredCDAQSyncConnectionsResponse);
@@ -624,7 +625,6 @@ enum PowerUpChannelType {
   POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_VOLTAGE = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_CURRENT = 1;
-  POWER_UP_CHANNEL_TYPE_CHANNEL_HIGH_IMPEDANCE = 2;
 }
 
 enum PressureUnits {
@@ -952,6 +952,11 @@ message DigitalPowerUpTypeAndChannels {
 message DigitalPullUpPullDownStateAndChannel {
   string channelNames = 1;
   DigitalPullUpPullDownState state = 2;
+}
+
+message PowerUpChannelTypeAndName {
+  string channelName = 1;
+  PowerUpChannelType channelType = 2;
 }
 message AddCDAQSyncConnectionRequest {
   string port_list = 1;
@@ -3546,6 +3551,16 @@ message GetAIChanCalExpDateResponse {
   uint32 day = 4;
   uint32 hour = 5;
   uint32 minute = 6;
+}
+
+message GetAnalogPowerUpStatesRequest {
+  string device_name = 1;
+  repeated PowerUpChannelTypeAndName power_up_states = 2;
+}
+
+message GetAnalogPowerUpStatesResponse {
+  int32 status = 1;
+  repeated double states = 2;
 }
 
 message GetArmStartTrigTimestampValRequest {

@@ -156,6 +156,7 @@ public:
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status GetAIChanCalCalDate(::grpc::ServerContext* context, const GetAIChanCalCalDateRequest* request, GetAIChanCalCalDateResponse* response) override;
   ::grpc::Status GetAIChanCalExpDate(::grpc::ServerContext* context, const GetAIChanCalExpDateRequest* request, GetAIChanCalExpDateResponse* response) override;
+  ::grpc::Status GetAnalogPowerUpStates(::grpc::ServerContext* context, const GetAnalogPowerUpStatesRequest* request, GetAnalogPowerUpStatesResponse* response) override;
   ::grpc::Status GetArmStartTrigTimestampVal(::grpc::ServerContext* context, const GetArmStartTrigTimestampValRequest* request, GetArmStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;

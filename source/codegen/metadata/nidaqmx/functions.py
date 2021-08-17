@@ -5788,6 +5788,53 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetAnalogPowerUpStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'channelName',
+                'repeating_argument': True,
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'state',
+                'repeating_argument': True,
+                'type': 'double'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PowerUpChannelType',
+                'include_in_proto': False,
+                'name': 'channelType',
+                'repeating_argument': True,
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated PowerUpChannelTypeAndName',
+                'is_compound_type': True,
+                'max_length': 96,
+                'name': 'powerUpStates',
+                'repeated_var_args': True
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'repeated double',
+                'max_length': 96,
+                'name': 'states',
+                'repeated_var_args': True
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetArmStartTrigTimestampVal': {
         'parameters': [
             {

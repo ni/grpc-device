@@ -18,3 +18,8 @@ message DigitalPullUpPullDownStateAndChannel {
   string channelNames = 1;
   DigitalPullUpPullDownState state = 2;
 }
+
+message PowerUpChannelTypeAndName {
+  string channelName = 1;
+  PowerUpChannelType channelType = 2;
+}

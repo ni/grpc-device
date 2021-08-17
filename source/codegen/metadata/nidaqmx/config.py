@@ -72,6 +72,21 @@ config = {
                     'name': 'state',
                 }
             ]
+        },
+        {
+            'name': 'PowerUpChannelTypeAndName',
+            'grpc_name': 'PowerUpChannelTypeAndName',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelName'
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'PowerUpChannelType',
+                    'name': 'channelType'
+                }
+            ]
         }
     ],
     'additional_headers': ['custom/nidaqmx_conversions.h'],
