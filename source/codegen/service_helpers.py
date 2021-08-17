@@ -192,7 +192,7 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
 def python_to_c(enum):
     enum_value = enum["values"][0]["value"]
     if isinstance(enum_value, float):
-        return "float"
+        return "double"
     if isinstance(enum_value, int):
         return "std::int32_t"
     if isinstance(enum_value, str):

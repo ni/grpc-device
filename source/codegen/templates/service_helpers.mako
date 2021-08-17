@@ -340,7 +340,7 @@ ${initialize_standard_input_param(function_name, parameter)}
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   field_name = common_helpers.camel_to_snake(parameter["determine_size_from"])
 %>\
-      ${parameter['type']} ${parameter_name} = request->${field_name}().size();\
+      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${field_name}().size());\
 </%def>
 
 

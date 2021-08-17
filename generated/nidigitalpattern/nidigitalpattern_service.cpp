@@ -113,7 +113,7 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
-      ViInt32 num_offsets = request->offsets().size();
+      ViInt32 num_offsets = static_cast<ViInt32>(request->offsets().size());
       auto offsets = const_cast<ViReal64*>(request->offsets().data());
       auto status = library_->ApplyTDROffsets(vi, channel_list, num_offsets, offsets);
       response->set_status(status);
@@ -3461,7 +3461,7 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
-      ViInt32 waveform_size = request->waveform_data().size();
+      ViInt32 waveform_size = static_cast<ViInt32>(request->waveform_data().size());
       auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
       auto status = library_->WriteSourceWaveformBroadcastU32(vi, waveform_name, waveform_size, waveform_data);
       response->set_status(status);
