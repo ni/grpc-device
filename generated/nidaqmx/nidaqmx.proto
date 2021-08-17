@@ -209,6 +209,7 @@ service NiDAQmx {
   rpc SetAnalogPowerUpStates(SetAnalogPowerUpStatesRequest) returns (SetAnalogPowerUpStatesResponse);
   rpc SetArmStartTrigTrigWhen(SetArmStartTrigTrigWhenRequest) returns (SetArmStartTrigTrigWhenResponse);
   rpc SetDigitalLogicFamilyPowerUpState(SetDigitalLogicFamilyPowerUpStateRequest) returns (SetDigitalLogicFamilyPowerUpStateResponse);
+  rpc SetDigitalPowerUpStates(SetDigitalPowerUpStatesRequest) returns (SetDigitalPowerUpStatesResponse);
   rpc SetFirstSampClkWhen(SetFirstSampClkWhenRequest) returns (SetFirstSampClkWhenResponse);
   rpc SetScaleAttributeDouble(SetScaleAttributeDoubleRequest) returns (SetScaleAttributeDoubleResponse);
   rpc SetScaleAttributeDoubleArray(SetScaleAttributeDoubleArrayRequest) returns (SetScaleAttributeDoubleArrayResponse);
@@ -413,6 +414,13 @@ enum DigitalPatternCondition1 {
   DIGITAL_PATTERN_CONDITION1_UNSPECIFIED = 0;
   DIGITAL_PATTERN_CONDITION1_PATTERN_MATCHES = 10254;
   DIGITAL_PATTERN_CONDITION1_PATTERN_DOES_NOT_MATCH = 10253;
+}
+
+enum DigitalPowerUpChannelType {
+  DIGITAL_POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
+  DIGITAL_POWER_UP_CHANNEL_TYPE_HIGH = 10192;
+  DIGITAL_POWER_UP_CHANNEL_TYPE_LOW = 10214;
+  DIGITAL_POWER_UP_CHANNEL_TYPE_TRISTATE = 10310;
 }
 
 enum DigitalPullUpPullDownStates {
@@ -927,6 +935,11 @@ message AnalogPowerUpState {
   string channelNames = 1;
   double state = 2;
   PowerUpChannelType channelType = 3;
+}
+
+message DigitalPowerUpState {
+  string channelNames = 1;
+  DigitalPowerUpChannelType state = 2;
 }
 message AddCDAQSyncConnectionRequest {
   string port_list = 1;
@@ -4288,6 +4301,15 @@ message SetDigitalLogicFamilyPowerUpStateRequest {
 }
 
 message SetDigitalLogicFamilyPowerUpStateResponse {
+  int32 status = 1;
+}
+
+message SetDigitalPowerUpStatesRequest {
+  string device_name = 1;
+  repeated DigitalPowerUpState power_up_states = 2;
+}
+
+message SetDigitalPowerUpStatesResponse {
   int32 status = 1;
 }
 

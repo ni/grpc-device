@@ -27,6 +27,21 @@ config = {
                     'name': 'channelType',
                 }
             ]
+        },
+        {
+            'name': 'DigitalPowerUpState',
+            'grpc_name': 'DigitalPowerUpState',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelNames',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalPowerUpChannelType',
+                    'name': 'state',
+                }
+            ]
         }
     ],
     'additional_headers': ['custom/nidaqmx_conversions.h'],

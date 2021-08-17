@@ -220,6 +220,7 @@ public:
   ::grpc::Status SetAnalogPowerUpStates(::grpc::ServerContext* context, const SetAnalogPowerUpStatesRequest* request, SetAnalogPowerUpStatesResponse* response) override;
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
+  ::grpc::Status SetDigitalPowerUpStates(::grpc::ServerContext* context, const SetDigitalPowerUpStatesRequest* request, SetDigitalPowerUpStatesResponse* response) override;
   ::grpc::Status SetFirstSampClkWhen(::grpc::ServerContext* context, const SetFirstSampClkWhenRequest* request, SetFirstSampClkWhenResponse* response) override;
   ::grpc::Status SetScaleAttributeDouble(::grpc::ServerContext* context, const SetScaleAttributeDoubleRequest* request, SetScaleAttributeDoubleResponse* response) override;
   ::grpc::Status SetScaleAttributeDoubleArray(::grpc::ServerContext* context, const SetScaleAttributeDoubleArrayRequest* request, SetScaleAttributeDoubleArrayResponse* response) override;

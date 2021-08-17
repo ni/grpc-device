@@ -7898,6 +7898,40 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetDigitalPowerUpStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'channelNames',
+                'repeating_argument': True,
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalPowerUpChannelType',
+                'include_in_proto': False,
+                'name': 'state',
+                'repeating_argument': True,
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated DigitalPowerUpState',
+                'is_compound_type': True,
+                'max_length': 96,
+                'name': 'powerUpStates',
+                'repeated_var_args': True
+            }
+        ],
+        'returns': 'int32'
+    },
+
     'SetFirstSampClkWhen': {
         'parameters': [
             {
