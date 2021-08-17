@@ -147,7 +147,6 @@ class AttributeAccessorExpander:
         self._config = metadata['config']
         self._enums = metadata['enums']
         self._attribute_type_map = {}
-        self._spit_by_type = False
 
         for group in common_helpers.get_attribute_groups(metadata):
             attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(
