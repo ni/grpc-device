@@ -30,6 +30,7 @@ struct ThrowawayResponse {
 class NiDAQmxDriverApiTests : public Test {
  protected:
   const std::string DEVICE_NAME{"gRPCSystemTestDAQ"};
+  const std::string ANY_DEVICE_MODEL{"[[ANY_DEVICE_MODEL]]"};
 
   NiDAQmxDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
@@ -41,8 +42,10 @@ class NiDAQmxDriverApiTests : public Test {
   void SetUp() override
   {
     // In MAX, this can be set up by importing grpc-device-daq-tests.nce.
+    // Allow ANY_DEVICE_MODEL so we can run on any hardware with DEVICE_NAME configured.
+    // Tests are written for a simulated "NI PXIe-6341".
     std::unordered_map<std::string, std::string> required_devices{
-        {DEVICE_NAME, "NI PXIe-6341"}};
+        {DEVICE_NAME, ANY_DEVICE_MODEL}};
 
     if (!are_all_devices_present(required_devices)) {
       GTEST_SKIP() << "Required Device(s) not found";
@@ -60,8 +63,9 @@ class NiDAQmxDriverApiTests : public Test {
   {
     for (const auto& device : EnumerateDevices()) {
       auto matched_required_device = required_devices.find(device.name());
-      if (matched_required_device != required_devices.cend() && matched_required_device->second == device.model()) {
-        required_devices.erase(matched_required_device);
+      if (matched_required_device != required_devices.cend()) {
+        if (matched_required_device->second == device.model() || matched_required_device->second == ANY_DEVICE_MODEL)
+          required_devices.erase(matched_required_device);
       }
     }
 
