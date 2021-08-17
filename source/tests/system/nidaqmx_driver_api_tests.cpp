@@ -196,12 +196,17 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->GetErrorString(&context, request, &response);
   }
 
-  ::grpc::Status start_task(StartTaskResponse& response = ThrowawayResponse<StartTaskResponse>::response())
+  ::grpc::Status start_task(const ::nidevice_grpc::Session& session, StartTaskResponse& response)
   {
     ::grpc::ClientContext context;
     StartTaskRequest request;
-    set_request_session_id(request);
+    set_request_session_id(request, session);
     return stub()->StartTask(&context, request, &response);
+  }
+
+  ::grpc::Status start_task(StartTaskResponse& response = ThrowawayResponse<StartTaskResponse>::response())
+  {
+    return start_task(*driver_session_, response);
   }
 
   ::grpc::Status stop_task(StopTaskResponse& response = ThrowawayResponse<StopTaskResponse>::response())
@@ -743,6 +748,38 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ConnectTerms(&context, request, &response);
   }
 
+  ::grpc::Status create_watchdog_timer_task_ex(double timeout, CreateWatchdogTimerTaskExResponse& response)
+  {
+    ::grpc::ClientContext context;
+    CreateWatchdogTimerTaskExRequest request;
+
+    request.set_device_name(DEVICE_NAME);
+    request.set_timeout(timeout);
+    return stub()->CreateWatchdogTimerTaskEx(&context, request, &response);
+  }
+
+  ::grpc::Status cfg_watchdog_do_expir_states(const nidevice_grpc::Session& watchdog_session, CfgWatchdogDOExpirStatesResponse& response)
+  {
+    ::grpc::ClientContext context;
+    CfgWatchdogDOExpirStatesRequest request;
+
+    set_request_session_id(request, watchdog_session);
+    request.set_channel_names("gRPCSystemTestDAQ/port1/line0:1");
+    auto expir_states = std::vector<int32>{DAQmx_Val_High, DAQmx_Val_High};
+    request.mutable_expir_state_array()->CopyFrom({expir_states.cbegin(), expir_states.cend()});
+    request.set_array_size(2);
+    return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
+  }
+
+  ::grpc::Status auto_configure_cdaq_sync_connections(AutoConfigureCDAQSyncConnectionsResponse& response)
+  {
+    ::grpc::ClientContext context;
+    AutoConfigureCDAQSyncConnectionsRequest request;
+    request.set_chassis_devices_ports(DEVICE_NAME);
+    request.set_timeout(1.0);
+    return stub()->AutoConfigureCDAQSyncConnections(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -751,7 +788,13 @@ class NiDAQmxDriverApiTests : public Test {
   template <typename TRequest>
   void set_request_session_id(TRequest& request)
   {
-    request.mutable_task()->set_id(driver_session_->id());
+    set_request_session_id(request, *driver_session_);
+  }
+
+  template <typename TRequest>
+  void set_request_session_id(TRequest& request, const nidevice_grpc::Session& session)
+  {
+    request.mutable_task()->set_id(session.id());
   }
 
   template <typename TResponse>
@@ -1494,6 +1537,36 @@ TEST_F(NiDAQmxDriverApiTests, ConnectBogusTerms_FailsWithInvalidRoutingError)
   EXPECT_DAQ_ERROR(DAQmxErrorInvalidTerm_Routing, status, response);
 }
 
+TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
+{
+  // Note: the DO chan will be the default task in this test.
+  // The watchdog task is a separate task passed around through create_watchdog_response.
+  create_do_chan();
+  auto create_watchdog_response = CreateWatchdogTimerTaskExResponse{};
+  auto create_status = create_watchdog_timer_task_ex(.001, create_watchdog_response);
+  auto cfg_watchdog_response = CfgWatchdogDOExpirStatesResponse{};
+  auto cfg_status = cfg_watchdog_do_expir_states(
+      create_watchdog_response.task(),
+      cfg_watchdog_response);
+  EXPECT_SUCCESS(create_status, create_watchdog_response);
+  EXPECT_SUCCESS(cfg_status, cfg_watchdog_response);
+
+  start_task();
+  auto start_watchdog_response = StartTaskResponse{};
+  auto start_watchdog_status = start_task(
+      create_watchdog_response.task(),
+      start_watchdog_response);
+
+  EXPECT_SUCCESS(start_watchdog_status, start_watchdown_response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupportedError)
+{
+  auto response = AutoConfigureCDAQSyncConnectionsResponse{};
+  auto status = auto_configure_cdaq_sync_connections(response);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorDeviceDoesNotSupportCDAQSyncConnections, status, response);
+}
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
