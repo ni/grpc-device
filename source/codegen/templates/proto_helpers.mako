@@ -22,6 +22,7 @@ enum ${common_helpers.get_attribute_enum_name(group_name, data_type)} {
   ${attribute_value_prefix}_${attribute_name} = ${attribute};
 % endfor
 }
+
 </%def>
 
 ## Define enums in the proto for each metadata enum referenced in a proto message.
