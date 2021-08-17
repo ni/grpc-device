@@ -42,9 +42,9 @@ service ${service_class_prefix} {
 }
 
 % for group in common_helpers.get_attribute_groups(data):
-% for data_type, attributes in group.get_attributes_split_by_type().items():
+%   for data_type, attributes in group.get_attributes_split_by_type().items():
 ${mako_helper.define_attribute_enum(group.name, data_type, attributes)}\
-% endfor
+%   endfor
 % endfor
 ${mako_helper.define_function_enums(function_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\
