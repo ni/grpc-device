@@ -1250,14 +1250,16 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingValues_C
   ViInt32 expected_new_size = 3;
   // ivi-dance call
   EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, 0, nullptr))
-      .WillOnce(Return(expected_old_size));
-  // follow up call
-  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, 2, _))
-      .WillOnce(Return(expected_old_size));
+      .WillOnce(Return(expected_old_size))
+      .WillOnce(Return(expected_new_size));
+  // follow up call - return that the array now needs to be bigger, so the ivi-dance
+  // call will be made again.
+  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_old_size, _))
+      .WillOnce(Return(expected_new_size));
   // follow up call with size returned from ivi-dance setup.
-  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_size, _))
+  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_new_size, _))
       .WillOnce(DoAll(
-          SetArrayArgument<2>(doubles, doubles + expected_size),
+          SetArrayArgument<2>(doubles, doubles + expected_new_size),
           Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -1268,7 +1270,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingValues_C
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_THAT(response.array_out(), ElementsAreArray(doubles, expected_size));
+  EXPECT_THAT(response.array_out(), ElementsAreArray(doubles, expected_new_size));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViString)

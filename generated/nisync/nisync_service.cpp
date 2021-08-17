@@ -1062,23 +1062,29 @@ namespace nisync_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->GetTimeReferenceNames(vi, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetTimeReferenceNames(vi, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViUInt32 buffer_size = status;
+      
+        std::string time_reference_names;
+        if (buffer_size > 0) {
+            time_reference_names.resize(buffer_size-1);
+        }
+        status = library_->GetTimeReferenceNames(vi, buffer_size, (ViChar*)time_reference_names.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_time_reference_names(time_reference_names);
+        }
         return ::grpc::Status::OK;
       }
-      ViUInt32 buffer_size = status;
-
-      std::string time_reference_names;
-      if (buffer_size > 0) {
-          time_reference_names.resize(buffer_size-1);
-      }
-      status = library_->GetTimeReferenceNames(vi, buffer_size, (ViChar*)time_reference_names.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_time_reference_names(time_reference_names);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1173,23 +1179,29 @@ namespace nisync_grpc {
       auto active_item = request->active_item().c_str();
       ViAttr attribute = request->attribute();
 
-      auto status = library_->GetAttributeViString(vi, active_item, attribute, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAttributeViString(vi, active_item, attribute, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string value;
+        if (buffer_size > 0) {
+            value.resize(buffer_size-1);
+        }
+        status = library_->GetAttributeViString(vi, active_item, attribute, buffer_size, (ViChar*)value.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_value(value);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string value;
-      if (buffer_size > 0) {
-          value.resize(buffer_size-1);
-      }
-      status = library_->GetAttributeViString(vi, active_item, attribute, buffer_size, (ViChar*)value.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

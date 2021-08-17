@@ -2160,20 +2160,26 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 size = status;
+      
+        response->mutable_configuration()->Resize(size, 0);
+        ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
+        status = library_->ExportAttributeConfigurationBuffer(vi, size, configuration);
+        if (status > size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 size = status;
-
-      response->mutable_configuration()->Resize(size, 0);
-      ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
-      status = library_->ExportAttributeConfigurationBuffer(vi, size, configuration);
-      response->set_status(status);
-      if (status == 0) {
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2408,23 +2414,29 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
-      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string attribute_value;
+        if (buffer_size > 0) {
+            attribute_value.resize(buffer_size-1);
+        }
+        status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_attribute_value(attribute_value);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string attribute_value;
-      if (buffer_size > 0) {
-          attribute_value.resize(buffer_size-1);
-      }
-      status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_attribute_value(attribute_value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2443,23 +2455,29 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 index = request->index();
 
-      auto status = library_->GetChannelName(vi, index, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetChannelName(vi, index, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string channel_name;
+        if (buffer_size > 0) {
+            channel_name.resize(buffer_size-1);
+        }
+        status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_channel_name(channel_name);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string channel_name;
-      if (buffer_size > 0) {
-          channel_name.resize(buffer_size-1);
-      }
-      status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_channel_name(channel_name);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2478,23 +2496,29 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto index = request->index().c_str();
 
-      auto status = library_->GetChannelNameFromString(vi, index, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetChannelNameFromString(vi, index, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string channel_name;
+        if (buffer_size > 0) {
+            channel_name.resize(buffer_size-1);
+        }
+        status = library_->GetChannelNameFromString(vi, index, buffer_size, (ViChar*)channel_name.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_channel_name(channel_name);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string channel_name;
-      if (buffer_size > 0) {
-          channel_name.resize(buffer_size-1);
-      }
-      status = library_->GetChannelNameFromString(vi, index, buffer_size, (ViChar*)channel_name.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_channel_name(channel_name);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2512,25 +2536,31 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->GetError(vi, nullptr, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetError(vi, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        ViStatus code {};
+        std::string description;
+        if (buffer_size > 0) {
+            description.resize(buffer_size-1);
+        }
+        status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
-        return ::grpc::Status::OK;
-      }
-      ViInt32 buffer_size = status;
-
-      ViStatus code {};
-      std::string description;
-      if (buffer_size > 0) {
-          description.resize(buffer_size-1);
-      }
-      status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
-      response->set_status(status);
-      if (status == 0) {
+        if (status == 0) {
         response->set_code(code);
         response->set_description(description);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2625,23 +2655,29 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->GetNextCoercionRecord(vi, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetNextCoercionRecord(vi, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string coercion_record;
+        if (buffer_size > 0) {
+            coercion_record.resize(buffer_size-1);
+        }
+        status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_coercion_record(coercion_record);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string coercion_record;
-      if (buffer_size > 0) {
-          coercion_record.resize(buffer_size-1);
-      }
-      status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_coercion_record(coercion_record);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2659,23 +2695,29 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->GetNextInterchangeWarning(vi, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetNextInterchangeWarning(vi, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string interchange_warning;
+        if (buffer_size > 0) {
+            interchange_warning.resize(buffer_size-1);
+        }
+        status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
+        if (status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_interchange_warning(interchange_warning);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string interchange_warning;
-      if (buffer_size > 0) {
-          interchange_warning.resize(buffer_size-1);
-      }
-      status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_interchange_warning(interchange_warning);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
