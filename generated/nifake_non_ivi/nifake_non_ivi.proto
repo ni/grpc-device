@@ -32,6 +32,7 @@ service NiFakeNonIvi {
   rpc InputTimestamp(InputTimestampRequest) returns (InputTimestampResponse);
   rpc OutputTimestamp(OutputTimestampRequest) returns (OutputTimestampResponse);
   rpc InputVarArgs(InputVarArgsRequest) returns (InputVarArgsResponse);
+  rpc OutputVarArgs(OutputVarArgsRequest) returns (OutputVarArgsResponse);
   rpc SetMarbleAttributeDouble(SetMarbleAttributeDoubleRequest) returns (SetMarbleAttributeDoubleResponse);
   rpc SetMarbleAttributeInt32(SetMarbleAttributeInt32Request) returns (SetMarbleAttributeInt32Response);
 }
@@ -59,8 +60,8 @@ enum MarbleInt32AttributeValues {
 }
 
 message StringAndEnum {
-  string myString = 1;
-  BeautifulColor myEnum = 2;
+  string channelName = 1;
+  BeautifulColor color = 2;
   double powerUpState = 3;
 }
 
@@ -202,6 +203,16 @@ message InputVarArgsRequest {
 
 message InputVarArgsResponse {
   int32 status = 1;
+}
+
+message OutputVarArgsRequest {
+  string input_name = 1;
+  repeated string channel_names = 2;
+}
+
+message OutputVarArgsResponse {
+  int32 status = 1;
+  repeated BeautifulColor colors = 2;
 }
 
 message SetMarbleAttributeDoubleRequest {

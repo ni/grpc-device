@@ -101,23 +101,41 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
 
 def create_args_for_varargs(parameters):
     result = ''
+    have_expanded_varargs = False
     for parameter in parameters:
         name = common_helpers.camel_to_snake(parameter['cppName'])
         if not parameter.get('include_in_proto', True):
             continue
         if common_helpers.is_repeated_varargs_parameter(parameter):
-            max_length = parameter['max_length']
+            # Some methods have both input and output repeated varargs parameters,
+            # so only expand them once.
+            if have_expanded_varargs:
+                continue
+            have_expanded_varargs = True
+            repeated_parameters = [
+                p for p in parameters if common_helpers.is_repeating_parameter(p)]
+            # We need to pass one extra set of arguments because the last parameters have to be nullptr's
+            # so the callee knows we're done passing arguments.
+            max_length = parameter['max_length'] + 1
             for i in range(max_length):
-                for field in parameter['varargs_type']['fields']:
-                    result += f'get_{field["name"]}_if({name}, {i}), '
+                for parameter in repeated_parameters:
+                    if common_helpers.is_input_parameter(parameter):
+                        result += f'get_{parameter["name"]}_if({name}, {i}), '
+                    else:
+                        result += f'get_{parameter["name"]}_if({parameter["name"]}Vector, {i}), '
         else:
             result += f'{name}, '
     return result[:-2]
 
 
 def create_params(parameters, expand_varargs=True):
-    any_not_include_in_proto = any([p for p in parameters if not p.get('include_in_proto', True)])
-    return ', '.join(create_param(p, expand_varargs, any_not_include_in_proto) for p in parameters)
+    repeated_parameters = [
+        p for p in parameters if common_helpers.is_repeating_parameter(p)]
+    # Some methods have both input and output repeated varargs parameters,
+    # so only expand them once.
+    if common_helpers.is_repeated_varargs_parameter(parameters[-1]) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
+        parameters = parameters[:-1]
+    return ', '.join(create_param(p, expand_varargs, repeated_parameters) for p in parameters)
 
 
 def get_array_param_size(parameter) -> str:
@@ -130,47 +148,43 @@ def get_array_param_size(parameter) -> str:
 def expand_varargs_parameters(parameters):
     if not common_helpers.has_repeated_varargs_parameter(parameters):
         return parameters
-    # omit the varargs parameter that we're going to expand
-    new_parameters = parameters[:-1]
-    varargs_parameter = parameters[-1]
-    assert common_helpers.is_repeated_varargs_parameter(varargs_parameter)
-    max_length = varargs_parameter['max_length']
-    # Many (all?) functions that take varargs take the first set of parameter as
-    # non-varargs. If this is the case, we need one fewer set of parameters in the varargs
-    # section.
-    if any([p for p in parameters if not p.get('include_in_proto', True)]):
-        max_length -= 1
+    # omit the varargs parameters that we're going to expand
+    new_parameters = [
+        p for p in parameters if not common_helpers.is_repeated_varargs_parameter(p)]
+    varargs_parameters = [
+        p for p in parameters if common_helpers.is_repeated_varargs_parameter(p)]
+    max_length = varargs_parameters[0]['max_length']
+    repeated_parameters = [
+        p for p in parameters if common_helpers.is_repeating_parameter(p)]
     for i in range(max_length):
-        for field in varargs_parameter['varargs_type']['fields']:
-            new_parameters.append({'cppName': f'{field["name"]}{i}'})
+        for p in repeated_parameters:
+            new_parameters.append({'cppName': f'{p["name"]}{i}'})
     return new_parameters
 
 
-def create_param(parameter, expand_varargs=True, any_not_include_in_proto=False):
+def create_param(parameter, expand_varargs=True, repeated_parameters=None):
     type = parameter['type']
     name = parameter['cppName']
     if common_helpers.is_struct(parameter):
         type = type.replace("struct ", "")
-    if common_helpers.is_array(type):
+    if common_helpers.is_repeated_varargs_parameter(parameter):
+        if expand_varargs:
+            max_length = parameter['max_length']
+            s = ''
+            for i in range(max_length):
+                for parameter in repeated_parameters:
+                    real_field_name = parameter['cppName']
+                    parameter['cppName'] = f'{real_field_name}{i}'
+                    s += create_param(parameter, expand_varargs=False) + ', '
+                    parameter['cppName'] = real_field_name
+            return s[:-2]
+        else:
+            return '...'
+    elif common_helpers.is_array(type):
         array_size = get_array_param_size(parameter)
         return f'{type[:-2]} {name}[{array_size}]'
     elif common_helpers.is_pointer_parameter(parameter):
         return f'{type}* {name}'
-    elif common_helpers.is_repeated_varargs_parameter(parameter):
-        if expand_varargs:
-            max_length = parameter['max_length']
-            if any_not_include_in_proto:
-                max_length -= 1
-            s = ''
-            for i in range(max_length):
-                for field in parameter['varargs_type']['fields']:
-                    real_field_name = field['cppName']
-                    field['cppName'] = f'{real_field_name}{i}'
-                    s += create_param(field, expand_varargs=False) + ', '
-                    field['cppName'] = real_field_name
-            return s[:-2]
-        else:
-            return '...'
     else:
         return f'{type} {name}'
 
@@ -295,5 +309,4 @@ def get_callback_method_parameters(function_data):
 
 
 def create_param_type_list(parameters):
-    return ', '.join([p['type'] for p in parameters])
     return ', '.join([p['type'] for p in parameters])

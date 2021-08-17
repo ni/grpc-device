@@ -445,22 +445,15 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto input_name = request->input_name().c_str();
-      auto string_and_enums = request->string_and_enums();
-      if (string_and_enums.size() == 0) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for stringAndEnums were specified");
-      }
-      if (string_and_enums.size() > 4) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 4 values for stringAndEnums were specified");
-      }
-      auto get_myString_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
+      auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
             if (vector.size() > n) {
-                  return vector[n].mystring().c_str();
+                  return vector[n].channelname().c_str();
             }
             return nullptr;
       };
-      auto get_myEnum_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> int32 {
+      auto get_color_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> int32 {
             if (vector.size() > n) {
-                  return vector[n].myenum();
+                  return vector[n].color();
             }
             return 0;
       };
@@ -470,9 +463,61 @@ namespace nifake_non_ivi_grpc {
             }
             return 0;
       };
+      auto string_and_enums = request->string_and_enums();
+      if (string_and_enums.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for stringAndEnums were specified");
+      }
+      if (string_and_enums.size() > 3) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for stringAndEnums were specified");
+      }
 
-      auto status = library_->InputVarArgs(input_name, get_myString_if(string_and_enums, 0), get_myEnum_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_myString_if(string_and_enums, 1), get_myEnum_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_myString_if(string_and_enums, 2), get_myEnum_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_myString_if(string_and_enums, 3), get_myEnum_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
+      auto status = library_->InputVarArgs(input_name, get_channelName_if(string_and_enums, 0), get_color_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_channelName_if(string_and_enums, 1), get_color_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_channelName_if(string_and_enums, 2), get_color_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_channelName_if(string_and_enums, 3), get_color_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputVarArgs(::grpc::ServerContext* context, const OutputVarArgsRequest* request, OutputVarArgsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto input_name = request->input_name().c_str();
+      auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<std::string>& vector, int n) -> const char* {
+            if (vector.size() > n) {
+                  return vector[n].c_str();
+            }
+            return nullptr;
+      };
+      auto channel_names = request->channel_names();
+      if (channel_names.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for channelNames were specified");
+      }
+      if (channel_names.size() > 3) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for channelNames were specified");
+      }
+
+      auto get_color_if = [](std::vector<int32>& vector, int n) -> int32* {
+            if (vector.size() > n) {
+                  return &(vector[n]);
+            }
+            return nullptr;
+      };
+      std::vector<int32> colorVector;
+      colorVector.resize(channel_names.size());
+      auto status = library_->OutputVarArgs(input_name, get_channelName_if(channel_names, 0), get_color_if(colorVector, 0), get_channelName_if(channel_names, 1), get_color_if(colorVector, 1), get_channelName_if(channel_names, 2), get_color_if(colorVector, 2), get_channelName_if(channel_names, 3), get_color_if(colorVector, 3));
+      response->set_status(status);
+      if (status == 0) {
+        for (int i = 0; i < colorVector.size(); ++i) {
+          response->add_colors(static_cast<BeautifulColor>(colorVector[i]));
+        }
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

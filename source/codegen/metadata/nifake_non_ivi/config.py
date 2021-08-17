@@ -18,12 +18,12 @@ config = {
             'fields': [
                 {
                     'type': 'const char[]',
-                    'name': 'myString',
+                    'name': 'channelName',
                 },
                 {
                     'type': 'int32',
                     'enum': 'BeautifulColor',
-                    'name': 'myEnum',
+                    'name': 'color',
                 },
                 {
                     'type': 'double',

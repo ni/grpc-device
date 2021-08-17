@@ -297,14 +297,14 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'name': 'channelName',
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'enum': 'BeautifulColor',
                 'name': 'color',
                 'type': 'int32'
@@ -312,7 +312,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'name': 'powerUpState',
                 'type': 'double'
             },
@@ -320,7 +320,47 @@ functions = {
                 'direction': 'in',
                 'repeated_var_args': True,
                 'name': 'stringAndEnums',
+                'is_compound_type': True,
                 'grpc_type': 'repeated StringAndEnum',
+                'max_length': 3
+            }
+        ],
+        'returns': 'int32'
+    },
+    'OutputVarArgs': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'inputName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'repeating_argument': True,
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'repeating_argument': True,
+                'enum': 'BeautifulColor',
+                'name': 'color',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'repeated_var_args': True,
+                'name': 'channelNames',
+                'grpc_type': 'repeated string',
+                'max_length': 3
+            },
+            {
+                'direction': 'out',
+                'repeated_var_args': True,
+                'name': 'colors',
+                'grpc_type': 'repeated BeautifulColor',
                 'max_length': 4
             }
         ],

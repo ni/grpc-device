@@ -5852,6 +5852,45 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetDigitalPullUpPullDownStates': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'repeating_argument': True,
+                'name': 'channelName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'repeating_argument': True,
+                'enum': 'DigitalPullUpPullDownStates',
+                'name': 'state',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'repeated_var_args': True,
+                'name': 'channelNames',
+                'grpc_type': 'repeated string',
+                'max_length': 96
+            },
+            {
+                'direction': 'out',
+                'repeated_var_args': True,
+                'name': 'states',
+                'grpc_type': 'repeated DigitalPullUpPullDownStates',
+                'max_length': 96
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetDisconnectedCDAQSyncPorts': {
         'parameters': [
             {
@@ -7799,27 +7838,28 @@ functions = {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelNames',
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'state',
-                'repeating_var_arg': True,
-                'type': 'float64'
+                'repeating_argument': True,
+                'type': 'double'
             },
             {
                 'direction': 'in',
                 'enum': 'PowerUpChannelType',
                 'include_in_proto': False,
                 'name': 'channelType',
-                'repeating_var_arg': True,
+                'repeating_argument': True,
                 'type': 'int32'
             },
             {
                 'direction': 'in',
                 'grpc_type': 'repeated AnalogPowerUpState',
+                'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
                 'repeated_var_args': True

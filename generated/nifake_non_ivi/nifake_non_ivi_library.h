@@ -32,7 +32,8 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 ReadStream(int32 start, int32 stop, int32* value);
   int32 InputTimestamp(CVIAbsoluteTime when);
   int32 OutputTimestamp(CVIAbsoluteTime* when);
-  int32 InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char myString0[], int32 myEnum0, double powerUpState0, const char myString1[], int32 myEnum1, double powerUpState1, const char myString2[], int32 myEnum2, double powerUpState2);
+  int32 InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char channelName0[], int32 color0, double powerUpState0, const char channelName1[], int32 color1, double powerUpState1, const char channelName2[], int32 color2, double powerUpState2);
+  int32 OutputVarArgs(const char inputName[], const char channelName[], int32* color, const char channelName0[], int32* color0, const char channelName1[], int32* color1, const char channelName2[], int32* color2);
   int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value);
   int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value);
 
@@ -52,6 +53,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using InputTimestampPtr = int32 (*)(CVIAbsoluteTime when);
   using OutputTimestampPtr = int32 (*)(CVIAbsoluteTime* when);
   using InputVarArgsPtr = int32 (*)(const char inputName[], const char channelName[], int32 color, double powerUpState, ...);
+  using OutputVarArgsPtr = int32 (*)(const char inputName[], const char channelName[], int32* color, ...);
   using SetMarbleAttributeDoublePtr = int32 (*)(FakeHandle handle, int32 attribute, double value);
   using SetMarbleAttributeInt32Ptr = int32 (*)(FakeHandle handle, int32 attribute, int32 value);
 
@@ -71,6 +73,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     InputTimestampPtr InputTimestamp;
     OutputTimestampPtr OutputTimestamp;
     InputVarArgsPtr InputVarArgs;
+    OutputVarArgsPtr OutputVarArgs;
     SetMarbleAttributeDoublePtr SetMarbleAttributeDouble;
     SetMarbleAttributeInt32Ptr SetMarbleAttributeInt32;
   } FunctionLoadStatus;

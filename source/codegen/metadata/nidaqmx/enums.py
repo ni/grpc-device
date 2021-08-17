@@ -554,6 +554,19 @@ enums = {
             }
         ]
     },
+    'DigitalPullUpPullDownStates': {
+        'values': [
+            {
+                'name': 'PULL_UP',
+                'value': 15950
+            },
+            {
+                'name': 'PULL_DOWN',
+                'value': 15951
+            },
+        ]
+    },
+
     'DigitalWidthUnits3': {
         'values': [
             {

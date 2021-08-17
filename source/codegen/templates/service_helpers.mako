@@ -154,8 +154,9 @@ ${initialize_input_params(function_name, parameters)}\
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${initialize_input_params(function_name, [p for p in parameters if p.get('include_in_proto', True)] )}\
+${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
+${set_output_vararg_parameter_sizes(parameters)}\
 % if common_helpers.can_mock_function(parameters):
       auto status = library_->${function_name}(${service_helpers.create_args_for_varargs(parameters)});
 % else:
@@ -195,26 +196,61 @@ ${set_response_values(output_parameters=output_parameters)}\
 <%def name="initialize_input_params(function_name, parameters)">\
 <%
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
+  input_vararg_parameters = [p for p in input_parameters if common_helpers.is_repeated_varargs_parameter(p)]
+  input_vararg_parameter = input_vararg_parameters[0] if len(input_vararg_parameters) > 0 else None
 %>\
 % for parameter in input_parameters:
-${initialize_input_param(function_name, parameter)}\
+${initialize_input_param(function_name, parameter, input_vararg_parameter)}\
 % endfor
 </%def>
 
 ## Initialize an input parameter for an API call.
-<%def name="initialize_input_param(function_name, parameter)">\
-% if common_helpers.is_enum(parameter):
+<%def name="initialize_input_param(function_name, parameter, input_vararg_parameter=None)">\
+% if common_helpers.is_repeating_parameter(parameter):
+${initialize_repeating_param(parameter, input_vararg_parameter)}
+% elif common_helpers.is_repeated_varargs_parameter(parameter):
+${initialize_repeated_varargs_param(parameter)}
+% elif common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}
-% elif common_helpers.is_repeated_varargs_parameter(parameter):
-${initialize_repeated_varargs_param(parameter)}
 % elif 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
 % else:
 ${initialize_standard_input_param(function_name, parameter)}
 % endif
+</%def>
+
+<%def name="initialize_repeating_param(parameter, input_vararg_parameter)">\
+<%
+  stripped_grpc_type = common_helpers.strip_repeated_from_grpc_type(input_vararg_parameter['grpc_type'])
+  if stripped_grpc_type == 'string':
+      stripped_grpc_type = 'std::string'
+  parameter_c_type = parameter['type']
+  parameter_c_type_pointer = parameter_c_type.replace('[]','*')
+  # In gRPC fields, the names of the fields in the struct are lowercase
+  parameter_name = parameter['name'].lower()
+%>\
+      auto get_${parameter['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${parameter_c_type_pointer} {
+            if (vector.size() > n) {
+<%
+    ## Note that this code will not handle every datatype, but it works for all
+    ## the ones we currently use with repeated varargs.
+    return_snippet = ''
+    if input_vararg_parameter.get("is_compound_type", False):
+          return_snippet += f'.{parameter_name}()'
+    if common_helpers.is_string_arg(parameter):
+          return_snippet += f'.c_str()'
+%>\
+                  return vector[n]${return_snippet};
+            }
+% if common_helpers.is_string_arg(parameter):
+            return nullptr;
+% else:
+            return 0;
+% endif
+      };\
 </%def>
 
 <%def name="initialize_repeated_varargs_param(parameter)">\
@@ -235,30 +271,6 @@ ${initialize_standard_input_param(function_name, parameter)}
       if (${parameter_name}.size() > ${max_vector_size}) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than ${max_vector_size} values for ${parameter["name"]} were specified");
       }
-% for member in parameter['varargs_type']['fields']:
-<%
-  member_c_type = member['type']
-  member_c_type_pointer = member_c_type.replace('[]','*')
-  # In gRPC fields, the names of the fields in the struct are lowercase
-  member_name = member['name'].lower()
-%>\
-      auto get_${member['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${member_c_type_pointer} {
-            if (vector.size() > n) {
-% if common_helpers.is_string_arg(member):
-                  return vector[n].${member_name}().c_str();
-% else:
-## Note that this code will not handle every datatype, but it works for all
-## the ones we currently use with repeated varargs.
-                  return vector[n].${member_name}();
-% endif            
-            }
-% if common_helpers.is_string_arg(member):
-            return nullptr;
-% else:
-            return 0;
-% endif
-      };
-% endfor
 </%def>
 
 ## Initialize an enum input parameter for an API call.
@@ -420,6 +432,20 @@ ${initialize_standard_input_param(function_name, parameter)}
 % endif
 </%def>
 
+<%def name="set_output_vararg_parameter_sizes(parameters)">\
+<%
+  input_vararg_parameter = [p for p in parameters if common_helpers.is_repeated_varargs_parameter(p) and common_helpers.is_input_parameter(p)][0]
+  input_parameter_name = common_helpers.camel_to_snake(input_vararg_parameter['cppName'])
+  output_vararg_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p) and not common_helpers.is_input_parameter(p)]
+%>\
+% for parameter in output_vararg_parameters:
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+%>\
+      ${parameter_name}Vector.resize(${input_parameter_name}.size());
+% endfor
+</%def>
+
 ## Initialize the output parameters for an API call.
 <%def name="initialize_output_params(output_parameters)">\
 % for parameter in output_parameters:
@@ -427,7 +453,18 @@ ${initialize_standard_input_param(function_name, parameter)}
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
 %>\
-%   if common_helpers.is_array(parameter['type']):
+%   if common_helpers.is_repeating_parameter(parameter):
+      auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
+            if (vector.size() > n) {
+## Note that this code will not handle every datatype, but it works for all
+## the ones we currently use with repeated varargs.
+                  return &(vector[n]);
+            }
+            return nullptr;
+      };
+      std::vector<${underlying_param_type}> ${parameter_name}Vector;
+%   elif common_helpers.is_repeated_varargs_parameter(parameter): # pass
+%   elif common_helpers.is_array(parameter['type']):
 <%
   size = common_helpers.get_size_expression(parameter)
 %>\
@@ -471,7 +508,21 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
 %>\
-%   if common_helpers.is_enum(parameter) == True:
+%   if common_helpers.is_repeating_parameter(parameter):
+<%
+    varargs_parameter = [p for p in output_parameters if common_helpers.is_repeated_varargs_parameter(p)][0]
+    varargs_parameter_name = common_helpers.camel_to_snake(varargs_parameter['cppName'])
+%>\
+## Note that this currently only supports one repeated output parameter.
+        for (int i = 0; i < ${parameter_name}Vector.size(); ++i) {
+%   if 'enum' in parameter:
+          response->add_${varargs_parameter_name}(static_cast<${parameter['enum']}>(${parameter_name}Vector[i]));
+%   else:
+          response->add_${varargs_parameter_name}(${parameter_name}Vector[i]);
+%   endif
+        }
+%   elif common_helpers.is_repeated_varargs_parameter(parameter): #pass
+%   elif common_helpers.is_enum(parameter) == True:
 <%
   has_mapped_enum = 'mapped-enum' in parameter
   has_unmapped_enum = 'enum' in parameter
