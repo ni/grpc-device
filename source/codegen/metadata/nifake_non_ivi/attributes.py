@@ -10,7 +10,7 @@ attributes = {
         4444: {
             'access': 'read-write',
             'name': 'WEIGHT',
-            'resettable': False,
+            'resettable': True,
             'type': 'double'
         }
     }

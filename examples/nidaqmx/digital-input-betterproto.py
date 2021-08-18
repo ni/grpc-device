@@ -20,6 +20,8 @@
 # when calling read_digital_u32, we set fill_mode_raw instead of fill_mode to avoid a default raw value
 # being used.
 #
+# To run this example without hardware: create a simulated device in NI MAX on the server (Windows only).
+#
 # Running from command line:
 #
 # Server machine's IP address, port number, and lines name can be passed as separate command line arguments.
