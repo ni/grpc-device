@@ -88,7 +88,12 @@ async def main():
                     n_samples=100,
                     every_n_samples_event_type=nidaqmx_types.EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER))
 
+            # Wait for initial_metadata to ensure that the callback is registered before starting the task.
+            await every_n_samples_stream.initial_metadata()
+
             done_event_stream = client.RegisterDoneEvent(nidaqmx_types.RegisterDoneEventRequest(task=task))
+            
+            await done_event_stream.initial_metadata()
 
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
