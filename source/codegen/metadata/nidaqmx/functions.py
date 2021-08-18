@@ -750,8 +750,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'WatchdogAOOutputType',
                 'name': 'outputTypeArray',
-                'type': 'int32[]'
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
@@ -775,8 +776,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'WatchdogCOExpirState',
                 'name': 'expirStateArray',
-                'type': 'int32[]'
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
@@ -800,8 +802,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'DigitalLineState',
                 'name': 'expirStateArray',
-                'type': 'int32[]'
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
@@ -8020,6 +8023,13 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'

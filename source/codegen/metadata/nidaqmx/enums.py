@@ -1057,12 +1057,12 @@ enums = {
     'LineGrouping': {
         'values': [
             {
-                'name': 'CHAN_FOR_ALL_LINES',
-                'value': 1
-            },
-            {
                 'name': 'CHAN_PER_LINE',
                 'value': 0
+            },
+            {
+                'name': 'CHAN_FOR_ALL_LINES',
+                'value': 1
             }
         ]
     },
@@ -2164,6 +2164,47 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'WatchdogAOOutputType': {
+        'values': [
+            {
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'name': 'NO_CHANGE',
+                'value': 10160
+            }
+        ]
+    },
+    'WatchdogCOExpirState': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Low logic.'
+                },
+                'name': 'LOW',
+                'value': 10214
+            },
+            {
+                'documentation': {
+                    'description': 'High logic.'
+                },
+                'name': 'HIGH',
+                'value': 10192
+            },
+            {
+                'documentation': {
+                    'description': ' Expiration does not affect the state of the counter output. The channels retain  their states at the time of the watchdog timer expiration, and no further  counter generation runs.'
+                },
+                'name': 'NO_CHANGE',
+                'value': 10160
             }
         ]
     },

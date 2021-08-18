@@ -9,15 +9,16 @@ def get_include_guard_name(config, suffix):
 def get_c_element_type_for_array_that_needs_coercion(parameter):
     if not parameter.get('coerced', False):
         return None
-    stripped_type = parameter['type']
-    if stripped_type.startswith('const '):
-        stripped_type = stripped_type[len('const '):]
-    if stripped_type.endswith('*'):
-        stripped_type = stripped_type[:-1]
-    elif stripped_type.endswith('[]'):
-        stripped_type = stripped_type[:-2]
-    else:
+    if not common_helpers.is_array(parameter['type']):
         return None
+    return get_c_element_type(parameter)
+
+
+def get_c_element_type(parameter):
+    stripped_type = parameter['type']
+    stripped_type = common_helpers.strip_prefix(stripped_type, 'const ')
+    stripped_type = common_helpers.strip_suffix(stripped_type, '*')
+    stripped_type = common_helpers.strip_suffix(stripped_type, '[]')
     return stripped_type
 
 

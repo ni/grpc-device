@@ -988,7 +988,15 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto channel_names = request->channel_names().c_str();
       auto expir_state_array = const_cast<const float64*>(request->expir_state_array().data());
-      auto output_type_array = const_cast<int32*>(reinterpret_cast<const int32*>(request->output_type_array().data()));
+      auto output_type_array_vector = std::vector<int32>();
+      output_type_array_vector.reserve(request->output_type_array().size());
+      std::transform(
+        request->output_type_array().begin(),
+        request->output_type_array().end(),
+        std::back_inserter(output_type_array_vector),
+        [](auto x) { return x; });
+      auto output_type_array = output_type_array_vector.data();
+
       uInt32 array_size = request->array_size();
       auto status = library_->CfgWatchdogAOExpirStates(task, channel_names, expir_state_array, output_type_array, array_size);
       response->set_status(status);
@@ -1010,7 +1018,15 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto channel_names = request->channel_names().c_str();
-      auto expir_state_array = const_cast<int32*>(reinterpret_cast<const int32*>(request->expir_state_array().data()));
+      auto expir_state_array_vector = std::vector<int32>();
+      expir_state_array_vector.reserve(request->expir_state_array().size());
+      std::transform(
+        request->expir_state_array().begin(),
+        request->expir_state_array().end(),
+        std::back_inserter(expir_state_array_vector),
+        [](auto x) { return x; });
+      auto expir_state_array = expir_state_array_vector.data();
+
       uInt32 array_size = request->array_size();
       auto status = library_->CfgWatchdogCOExpirStates(task, channel_names, expir_state_array, array_size);
       response->set_status(status);
@@ -1032,7 +1048,15 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto channel_names = request->channel_names().c_str();
-      auto expir_state_array = const_cast<int32*>(reinterpret_cast<const int32*>(request->expir_state_array().data()));
+      auto expir_state_array_vector = std::vector<int32>();
+      expir_state_array_vector.reserve(request->expir_state_array().size());
+      std::transform(
+        request->expir_state_array().begin(),
+        request->expir_state_array().end(),
+        std::back_inserter(expir_state_array_vector),
+        [](auto x) { return x; });
+      auto expir_state_array = expir_state_array_vector.data();
+
       uInt32 array_size = request->array_size();
       auto status = library_->CfgWatchdogDOExpirStates(task, channel_names, expir_state_array, array_size);
       response->set_status(status);
@@ -9164,7 +9188,8 @@ namespace nidaqmx_grpc {
       auto scale_name = request->scale_name().c_str();
       int32 attribute = request->attribute();
       auto value = request->value().c_str();
-      auto status = library_->SetScaleAttributeString(scale_name, attribute, value);
+      auto size = 0U;
+      auto status = library_->SetScaleAttributeString(scale_name, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

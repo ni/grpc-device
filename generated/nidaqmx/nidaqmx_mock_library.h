@@ -43,9 +43,9 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, CfgPipelinedSampClkTiming, (TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan), (override));
   MOCK_METHOD(int32, CfgSampClkTiming, (TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan), (override));
   MOCK_METHOD(int32, CfgTimeStartTrig, (TaskHandle task, CVIAbsoluteTime when, int32 timescale), (override));
-  MOCK_METHOD(int32, CfgWatchdogAOExpirStates, (TaskHandle task, const char channelNames[], const float64 expirStateArray[], int32 outputTypeArray[], uInt32 arraySize), (override));
-  MOCK_METHOD(int32, CfgWatchdogCOExpirStates, (TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize), (override));
-  MOCK_METHOD(int32, CfgWatchdogDOExpirStates, (TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize), (override));
+  MOCK_METHOD(int32, CfgWatchdogAOExpirStates, (TaskHandle task, const char channelNames[], const float64 expirStateArray[], const int32 outputTypeArray[], uInt32 arraySize), (override));
+  MOCK_METHOD(int32, CfgWatchdogCOExpirStates, (TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize), (override));
+  MOCK_METHOD(int32, CfgWatchdogDOExpirStates, (TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize), (override));
   MOCK_METHOD(int32, ClearTEDS, (const char physicalChannel[]), (override));
   MOCK_METHOD(int32, ClearTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, ConfigureLogging, (TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation), (override));
@@ -211,7 +211,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SetScaleAttributeDouble, (const char scaleName[], int32 attribute, float64 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetScaleAttributeDoubleArray, (const char scaleName[], int32 attribute, const float64 value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetScaleAttributeInt32, (const char scaleName[], int32 attribute, int32 value, uInt32 size), (override));
-  MOCK_METHOD(int32, SetScaleAttributeString, (const char scaleName[], int32 attribute, const char value[]), (override));
+  MOCK_METHOD(int32, SetScaleAttributeString, (const char scaleName[], int32 attribute, const char value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, SetSyncPulseTimeWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, StartNewFile, (TaskHandle task, const char filePath[]), (override));
