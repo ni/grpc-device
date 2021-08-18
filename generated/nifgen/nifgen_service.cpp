@@ -11,9 +11,10 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-const auto kErrorReadBufferTooSmall = -200229;
 
 namespace nifgen_grpc {
+
+  const auto kErrorReadBufferTooSmall = -200229;
 
   NiFgenService::NiFgenService(NiFgenLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)

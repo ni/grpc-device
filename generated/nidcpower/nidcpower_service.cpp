@@ -11,9 +11,10 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-const auto kErrorReadBufferTooSmall = -200229;
 
 namespace nidcpower_grpc {
+
+  const auto kErrorReadBufferTooSmall = -200229;
 
   NiDCPowerService::NiDCPowerService(NiDCPowerLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)

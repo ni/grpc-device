@@ -47,12 +47,13 @@ any_ivi_dance_functions = any(
 % if any_non_mockable_functions:
 #include "${module_name}_library.h"
 % endif
-% if any_ivi_dance_functions:
-const auto kErrorReadBufferTooSmall = -200229;
-% endif
 
 namespace ${config["namespace_component"]}_grpc {
 
+% if any_ivi_dance_functions:
+  const auto kErrorReadBufferTooSmall = -200229;
+
+% endif
   ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
