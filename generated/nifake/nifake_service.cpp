@@ -322,7 +322,7 @@ namespace nifake_grpc {
       
         std::string configuration(size_in_bytes, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
-        if (status > size_in_bytes) {
+        if (status == kErrorReadBufferTooSmall || status > size_in_bytes) {
           // buffer is now too small, try again
           continue;
         }
@@ -457,7 +457,7 @@ namespace nifake_grpc {
             a_string.resize(buffer_size-1);
         }
         status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
-        if (status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -555,7 +555,7 @@ namespace nifake_grpc {
         response->mutable_array_out()->Resize(array_size, 0);
         ViReal64* array_out = response->mutable_array_out()->mutable_data();
         status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
-        if (status > array_size) {
+        if (status == kErrorReadBufferTooSmall || status > array_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -746,7 +746,7 @@ namespace nifake_grpc {
             attribute_value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
-        if (status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1336,7 +1336,7 @@ namespace nifake_grpc {
             a_string.resize(string_size-1);
         }
         status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
-        if (status > string_size) {
+        if (status == kErrorReadBufferTooSmall || status > string_size) {
           // buffer is now too small, try again
           continue;
         }

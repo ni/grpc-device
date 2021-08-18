@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+const auto kErrorReadBufferTooSmall = -200229;
 
 namespace niswitch_grpc {
 
@@ -629,7 +630,7 @@ namespace niswitch_grpc {
             attribute_value.resize(array_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
-        if (status > array_size) {
+        if (status == kErrorReadBufferTooSmall || status > array_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -696,7 +697,7 @@ namespace niswitch_grpc {
             channel_name_buffer.resize(buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name_buffer.data());
-        if (status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -737,7 +738,7 @@ namespace niswitch_grpc {
             description.resize(buffer_size-1);
         }
         status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
-        if (status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -778,7 +779,7 @@ namespace niswitch_grpc {
             coercion_record.resize(buffer_size-1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-        if (status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -818,7 +819,7 @@ namespace niswitch_grpc {
             interchange_warning.resize(buffer_size-1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-        if (status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -860,7 +861,7 @@ namespace niswitch_grpc {
             path.resize(buffer_size-1);
         }
         status = library_->GetPath(vi, channel1, channel2, buffer_size, (ViChar*)path.data());
-        if (status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -925,7 +926,7 @@ namespace niswitch_grpc {
             relay_name_buffer.resize(relay_name_buffer_size-1);
         }
         status = library_->GetRelayName(vi, index, relay_name_buffer_size, (ViChar*)relay_name_buffer.data());
-        if (status > relay_name_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > relay_name_buffer_size) {
           // buffer is now too small, try again
           continue;
         }

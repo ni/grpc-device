@@ -1238,7 +1238,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingI
   EXPECT_THAT(response.array_out(), ElementsAreArray(doubles, expected_size));
 }
 
-TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizes_CallsGetArrayUsingIviDance)
+TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizesByReturnValue_CallsGetArrayUsingIviDance)
 {
   nidevice_grpc::SessionRepository session_repository;
   NiFakeMockLibrary library;
@@ -1256,6 +1256,43 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizes_Ca
   // call will be made again.
   ::testing::Expectation first_real_call = EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_old_size, _))
                                                .WillOnce(Return(expected_new_size));
+  // follow up call with size returned from ivi-dance setup.
+  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_new_size, _))
+      .After(first_real_call)
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(doubles, doubles + expected_new_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetArrayUsingIviDanceRequest request;
+  request.mutable_vi()->set_id(session_id);
+  nifake_grpc::GetArrayUsingIviDanceResponse response;
+  ::grpc::Status status = service.GetArrayUsingIviDance(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(doubles, expected_new_size));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizesByError_CallsGetArrayUsingIviDance)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  ViReal64 doubles[] = {53.4, 42, -120.3};
+  ViInt32 expected_old_size = 2;
+  ViInt32 expected_new_size = 3;
+  // ivi-dance call
+  EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, 0, nullptr))
+      .WillOnce(Return(expected_old_size))
+      .WillOnce(Return(expected_new_size));
+  // follow up call - return that the array now needs to be bigger, so the ivi-dance
+  // call will be made again.
+  // Use the value of the error here to ensure that it doesn't change.
+  ::testing::Expectation first_real_call = EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_old_size, _))
+                                               .WillOnce(Return(-200229));
   // follow up call with size returned from ivi-dance setup.
   EXPECT_CALL(library, GetArrayUsingIviDance(kTestViSession, expected_new_size, _))
       .After(first_real_call)

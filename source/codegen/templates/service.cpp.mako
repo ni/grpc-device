@@ -17,7 +17,9 @@ function_names = service_helpers.filter_proto_rpc_functions_to_generate(function
 # means we need another include file
 any_non_mockable_functions = any([not common_helpers.can_mock_function(functions[name]['parameters']) for name in function_names])
 # Define the constant for buffer too small if we have any of these functions.
-any_ivi_dance_with_a_twist_functions = any([common_helpers.has_ivi_dance_with_a_twist_param(functions[name]['parameters']) for name in function_names])
+any_ivi_dance_functions = any(
+  [common_helpers.has_ivi_dance_with_a_twist_param(functions[name]['parameters']) or
+   common_helpers.has_ivi_dance_param(functions[name]['parameters']) for name in function_names])
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
 
@@ -45,7 +47,7 @@ any_ivi_dance_with_a_twist_functions = any([common_helpers.has_ivi_dance_with_a_
 % if any_non_mockable_functions:
 #include "${module_name}_library.h"
 % endif
-% if any_ivi_dance_with_a_twist_functions:
+% if any_ivi_dance_functions:
 const auto kErrorReadBufferTooSmall = -200229;
 % endif
 
