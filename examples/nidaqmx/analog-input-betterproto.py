@@ -20,6 +20,8 @@
 # when calling cfg_samp_clk_timing, we set active_edge_raw instead of active_edge to avoid a default raw value
 # being used.
 #
+# To run this example without hardware: create a simulated device in NI MAX on the server (Windows only).
+# 
 # Running from command line:
 #
 # Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
