@@ -5558,15 +5558,27 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'lines',
+                'include_in_proto': False,
+                'name': 'channelNames',
+                'repeating_argument': True,
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'enum': 'DigitalLineState',
                 'name': 'expState',
+                'repeating_argument': True,
                 'type': 'int32'
-            }
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated ChannelNamesAndExpState',
+                'is_compound_type': True,
+                'max_length': 96,
+                'name': 'namesAndExpStates',
+                'repeated_var_args': True
+            },
         ],
         'returns': 'int32'
     },

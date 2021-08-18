@@ -56,6 +56,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
   ViStatus InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi);
+  ViStatus InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2);
   ViStatus MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]);
   ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size);
   ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber);
@@ -124,6 +125,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using InitWithOptionsPtr = ViStatus (*)(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   using InitiatePtr = ViStatus (*)(ViSession vi);
   using InitExtCalPtr = ViStatus (*)(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi);
+  using InitWithVarArgsPtr = ViStatus (*)(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ...);
   using MultipleArrayTypesPtr = ViStatus (*)(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]);
   using MultipleArraysSameSizePtr = ViStatus (*)(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size);
   using OneInputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 aNumber);
@@ -192,6 +194,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     InitWithOptionsPtr InitWithOptions;
     InitiatePtr Initiate;
     InitExtCalPtr InitExtCal;
+    InitWithVarArgsPtr InitWithVarArgs;
     MultipleArrayTypesPtr MultipleArrayTypes;
     MultipleArraysSameSizePtr MultipleArraysSameSize;
     OneInputFunctionPtr OneInputFunction;

@@ -59,6 +59,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niFake_InitWithOptions"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niFake_Initiate"));
   function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(shared_library_.get_function_pointer("niFake_InitExtCal"));
+  function_pointers_.InitWithVarArgs = reinterpret_cast<InitWithVarArgsPtr>(shared_library_.get_function_pointer("niFake_InitWithVarArgs"));
   function_pointers_.MultipleArrayTypes = reinterpret_cast<MultipleArrayTypesPtr>(shared_library_.get_function_pointer("niFake_MultipleArrayTypes"));
   function_pointers_.MultipleArraysSameSize = reinterpret_cast<MultipleArraysSameSizePtr>(shared_library_.get_function_pointer("niFake_MultipleArraysSameSize"));
   function_pointers_.OneInputFunction = reinterpret_cast<OneInputFunctionPtr>(shared_library_.get_function_pointer("niFake_OneInputFunction"));
@@ -545,6 +546,18 @@ ViStatus NiFakeLibrary::InitExtCal(ViRsrc resourceName, ViString calibrationPass
   return niFake_InitExtCal(resourceName, calibrationPassword, vi);
 #else
   return function_pointers_.InitExtCal(resourceName, calibrationPassword, vi);
+#endif
+}
+
+ViStatus NiFakeLibrary::InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2)
+{
+  if (!function_pointers_.InitWithVarArgs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_InitWithVarArgs.");
+  }
+#if defined(_MSC_VER)
+  return niFake_InitWithVarArgs(resourceName, vi, stringArg, turtle, stringArg0, turtle0, stringArg1, turtle1, stringArg2, turtle2);
+#else
+  return function_pointers_.InitWithVarArgs(resourceName, vi, stringArg, turtle, stringArg0, turtle0, stringArg1, turtle1, stringArg2, turtle2);
 #endif
 }
 

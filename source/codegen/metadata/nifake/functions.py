@@ -1473,6 +1473,46 @@ functions = {
         ],
         'returns': 'ViStatus'
      },
+    'InitWithVarArgs': {
+        'codegen_method': 'public',
+        'init_method': True,
+        'parameters': [
+            {
+                'name': 'resourceName',
+                'direction': 'in',
+                'type': 'ViRsrc'
+            },
+            {
+                'name': 'vi',
+                'direction': 'out',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'stringArg',
+                'type': 'ViConstString',
+                'include_in_proto': False,
+                'repeating_argument': True,
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'enum': 'Turtle',
+                'name': 'turtle',
+                'repeating_argument': True,
+                'type': 'ViInt16'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated StringAndTurtle',
+                'is_compound_type': True,
+                'max_length': 3,
+                'name': 'nameAndTurtle',
+                'repeated_var_args': True
+            },
+        ],
+        'returns': 'ViStatus',
+    },
     'LockSession': {
         'codegen_method': 'no',
         'documentation': {

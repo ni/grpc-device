@@ -29,6 +29,21 @@ config = {
             ]
         },
         {
+            'name': 'ChannelNamesAndExpState',
+            'grpc_name': 'ChannelNamesAndExpState',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelNames',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalLineState',
+                    'name': 'expState'
+                }
+            ]
+        },
+        {
             'name': 'DigitalPowerUpTypeAndChannel',
             'grpc_name': 'DigitalPowerUpTypeAndChannel',
             'fields': [

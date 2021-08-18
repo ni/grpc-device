@@ -19,7 +19,11 @@
 ${initialize_input_params(function_name, parameters)}
       auto init_lambda = [&] () {
         ${resource_handle_type} ${session_output_var_name};
+% if common_helpers.can_mock_function(parameters):
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
+% else:
+        int status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args(parameters)});
+% endif
         return std::make_tuple(status, ${session_output_var_name});
       };
       uint32_t session_id = 0;
@@ -158,9 +162,9 @@ ${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
 ${set_output_vararg_parameter_sizes(parameters)}\
 % if common_helpers.can_mock_function(parameters):
-      auto status = library_->${function_name}(${service_helpers.create_args_for_varargs(parameters)});
+      auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
 % else:
-      auto status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args_for_varargs(parameters)});
+      auto status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args(parameters)});
 % endif
       response->set_status(status);
 % if output_parameters:

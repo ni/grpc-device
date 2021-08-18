@@ -18,6 +18,8 @@ bool operator==(const CustomStruct& first, const CustomStruct& second)
   return first.structInt == second.structInt && first.structDouble == second.structDouble;
 }
 
+using ::testing::StrEq;
+
 namespace ni {
 namespace tests {
 namespace unit {
@@ -240,6 +242,121 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenCloseExtCal_SessionIsClosed
   EXPECT_EQ(kDriverSuccess, close_response.status());
   EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
   EXPECT_EQ(0, session_repository.access_session(0, session_name));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithOneArgument_SucceedsAndCreatesAndStoresSession)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* resource_name = "Dev0";
+  const char* session_name = "sessionName";
+  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
+  EXPECT_CALL(library, InitWithVarArgs(Pointee(*resource_name), _, StrEq("SomeStringArg"), nifake_grpc::Turtle::TURTLE_DONATELLO, nullptr, turtleUnspecified, nullptr, turtleUnspecified, nullptr, turtleUnspecified))
+      .WillOnce(DoAll(SetArgPointee<1>(kTestViSession), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithVarArgsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_session_name(session_name);
+  auto nameAndTurtle = request.add_name_and_turtle();
+  nameAndTurtle->set_stringarg("SomeStringArg");
+  nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_DONATELLO);
+  nifake_grpc::InitWithVarArgsResponse response;
+  ::grpc::Status status = service.InitWithVarArgs(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  nidevice_grpc::Session session = response.vi();
+  EXPECT_NE(0, session_repository.access_session(session.id(), ""));
+  EXPECT_NE(0, session_repository.access_session(0, session_name));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithThreeArguments_SucceedsAndCreatesAndStoresSession)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* resource_name = "Dev0";
+  const char* session_name = "sessionName";
+  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
+  EXPECT_CALL(library, InitWithVarArgs(Pointee(*resource_name), _, StrEq("SomeStringArg"), nifake_grpc::Turtle::TURTLE_DONATELLO, StrEq("SomeStringArg2"), nifake_grpc::Turtle::TURTLE_MICHELANGELO, StrEq("SomeStringArg3"), nifake_grpc::Turtle::TURTLE_RAPHAEL, nullptr, turtleUnspecified))
+      .WillOnce(DoAll(SetArgPointee<1>(kTestViSession), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithVarArgsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_session_name(session_name);
+  auto nameAndTurtle = request.add_name_and_turtle();
+  nameAndTurtle->set_stringarg("SomeStringArg");
+  nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_DONATELLO);
+  nameAndTurtle = request.add_name_and_turtle();
+  nameAndTurtle->set_stringarg("SomeStringArg2");
+  nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_MICHELANGELO);
+  nameAndTurtle = request.add_name_and_turtle();
+  nameAndTurtle->set_stringarg("SomeStringArg3");
+  nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_RAPHAEL);
+  nifake_grpc::InitWithVarArgsResponse response;
+  ::grpc::Status status = service.InitWithVarArgs(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  nidevice_grpc::Session session = response.vi();
+  EXPECT_NE(0, session_repository.access_session(session.id(), ""));
+  EXPECT_NE(0, session_repository.access_session(0, session_name));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithNoArguments_FailsAndDoesNotStoreSession)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* resource_name = "Dev0";
+  const char* session_name = "sessionName";
+  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
+  EXPECT_CALL(library, InitWithVarArgs)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithVarArgsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_session_name(session_name);
+  nifake_grpc::InitWithVarArgsResponse response;
+  ::grpc::Status status = service.InitWithVarArgs(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
+  nidevice_grpc::Session session = response.vi();
+  EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
+}
+
+TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithFourArguments_FailsAndDoesNotStoreSession)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* resource_name = "Dev0";
+  const char* session_name = "sessionName";
+  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
+  EXPECT_CALL(library, InitWithVarArgs)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithVarArgsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_session_name(session_name);
+  for (int i = 0; i < 4; ++i) {
+    request.add_name_and_turtle();
+  }
+  nifake_grpc::InitWithVarArgsResponse response;
+  ::grpc::Status status = service.InitWithVarArgs(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
+  nidevice_grpc::Session session = response.vi();
+  EXPECT_EQ(0, session_repository.access_session(session.id(), ""));
 }
 
 // Error logic tests using GetABoolean

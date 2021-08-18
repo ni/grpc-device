@@ -132,7 +132,6 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, CreateTEDSAIVoltageChanWithExcit, (TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[]), (override));
   MOCK_METHOD(int32, CreateTableScale, (const char name[], const float64 prescaledVals[], uInt32 numPrescaledValsIn, const float64 scaledVals[], uInt32 numScaledValsIn, int32 preScaledUnits, const char scaledUnits[]), (override));
   MOCK_METHOD(int32, CreateTask, (const char sessionName[], TaskHandle* task), (override));
-  MOCK_METHOD(int32, CreateWatchdogTimerTask, (const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout, const char lines[], int32 expState), (override));
   MOCK_METHOD(int32, CreateWatchdogTimerTaskEx, (const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout), (override));
   MOCK_METHOD(int32, DeleteNetworkDevice, (const char deviceName[]), (override));
   MOCK_METHOD(int32, DeleteSavedGlobalChan, (const char channelName[]), (override));
