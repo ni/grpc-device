@@ -5837,6 +5837,28 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetBufferAttributeUInt32': {
+        'cname': 'DAQmxGetBufferAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'BufferAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetDigitalLogicFamilyPowerUpState': {
         'parameters': [
             {
@@ -7634,6 +7656,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ResetBufferAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'BufferAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ResetDevice': {
         'parameters': [
             {
@@ -7882,6 +7920,28 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetBufferAttributeUInt32': {
+        'cname': 'DAQmxSetBufferAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'BufferAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetDigitalLogicFamilyPowerUpState': {
         'parameters': [
             {
@@ -8020,6 +8080,13 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'

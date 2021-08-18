@@ -366,6 +366,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ResetMarbleAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'MarbleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetMarbleAttributeDouble': {
         'parameters': [
             {

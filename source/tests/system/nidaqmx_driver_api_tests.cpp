@@ -780,6 +780,34 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->AutoConfigureCDAQSyncConnections(&context, request, &response);
   }
 
+  ::grpc::Status set_buffer_attribute_u32(BufferUInt32Attributes attribute, uint32 value, SetBufferAttributeUInt32Response& response)
+  {
+    ::grpc::ClientContext context;
+    SetBufferAttributeUInt32Request request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    request.set_value(value);
+    return stub()->SetBufferAttributeUInt32(&context, request, &response);
+  }
+
+  ::grpc::Status get_buffer_attribute_u32(BufferUInt32Attributes attribute, GetBufferAttributeUInt32Response& response)
+  {
+    ::grpc::ClientContext context;
+    GetBufferAttributeUInt32Request request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    return stub()->GetBufferAttributeUInt32(&context, request, &response);
+  }
+
+  ::grpc::Status reset_buffer_attribute(BufferResetAttributes attribute, ResetBufferAttributeResponse& response)
+  {
+    ::grpc::ClientContext context;
+    ResetBufferAttributeRequest request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    return stub()->ResetBufferAttribute(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -1565,6 +1593,43 @@ TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupport
   auto status = auto_configure_cdaq_sync_connections(response);
 
   EXPECT_DAQ_ERROR(DAQmxErrorDeviceDoesNotSupportCDAQSyncConnections, status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBufferSize)
+{
+  create_di_chan();
+  auto ATTRIBUTE = BufferUInt32Attributes::BUFFER_ATTRIBUTE_INPUT_BUF_SIZE;
+  auto get_response = GetBufferAttributeUInt32Response{};
+  auto set_response = SetBufferAttributeUInt32Response{};
+  auto readback_response = GetBufferAttributeUInt32Response{};
+  auto reset_response = ResetBufferAttributeResponse{};
+  auto read_after_reset_response = GetBufferAttributeUInt32Response{};
+
+  auto get_status = get_buffer_attribute_u32(
+      ATTRIBUTE,
+      get_response);
+  auto initial_value = get_response.value();
+  auto set_status = set_buffer_attribute_u32(
+      ATTRIBUTE,
+      initial_value * 2,
+      set_response);
+  auto readback_status = get_buffer_attribute_u32(
+      ATTRIBUTE,
+      readback_response);
+  auto reset_status = reset_buffer_attribute(
+      BufferResetAttributes::BUFFER_RESET_ATTRIBUTE_INPUT_BUF_SIZE,
+      reset_response);
+  auto read_after_reset_status = get_buffer_attribute_u32(
+      ATTRIBUTE,
+      read_after_reset_response);
+
+  EXPECT_SUCCESS(get_status, get_response);
+  EXPECT_SUCCESS(set_status, set_response);
+  EXPECT_SUCCESS(readback_status, readback_response);
+  EXPECT_SUCCESS(reset_status, reset_response);
+  EXPECT_SUCCESS(read_after_reset_status, read_after_reset_response);
+  EXPECT_EQ(initial_value, read_after_reset_response.value());
+  EXPECT_EQ(initial_value * 2, readback_response.value());
 }
 }  // namespace system
 }  // namespace tests

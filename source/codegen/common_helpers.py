@@ -1,5 +1,5 @@
 import re
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 
 
 def is_output_parameter(parameter):
@@ -102,8 +102,39 @@ def is_unsupported_enum_array(parameter):
     return False
 
 
+PascalTokenSubstitution = namedtuple('PascalTokenSubstitution', ['pascal_representation', 'preferred_representation'])
+SPECIAL_CASE_PASCAL_TOKENS = [
+    PascalTokenSubstitution('Uint', 'UInt') # NI uses UInt, not Uint, and never U_INT when converting to snake.
+]
+
+
+def normalize_special_pascal_tokens(pascal_or_camel_string: str) -> str:
+    for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
+        pascal_or_camel_string = pascal_or_camel_string.replace(special_case_override, pascal_token)
+    return pascal_or_camel_string
+
+
+def insert_special_case_pascal_tokens(normal_pascal_string: str) -> str:
+    for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
+        normal_pascal_string = normal_pascal_string.replace(pascal_token, special_case_override)
+    return normal_pascal_string
+
+
+def insert_leading_special_case_pascal_tokens(camel_string: str) -> str:
+    for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
+        camel_string = replace_prefix(camel_string, pascal_token.lower(), special_case_override)
+    return camel_string
+
+
+def normalize_leading_special_case_pascal_tokens(pascal_string: str) -> str:
+    for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
+        pascal_string = replace_prefix(pascal_string, special_case_override, pascal_token)
+    return pascal_string
+
+
 def camel_to_snake(camel_string):
     '''Returns a snake_string for a given camelString.'''
+    camel_string = normalize_special_pascal_tokens(camel_string)
     # Add _ before Words:
     # someDeviceIPAddress -> some_DeviceIP_Address
     s1 = re.sub(r"([^_])([A-Z][a-z]+[0-9]*)", r"\1_\2", camel_string)
@@ -123,11 +154,14 @@ def snake_to_pascal(snake_string):
             snake_string[index + 1] = snake_string[index + 1].upper()
             del snake_string[index]
         index = index + 1
-    return ("".join(snake_string))
+    result = ("".join(snake_string))
+    return insert_special_case_pascal_tokens(result)
 
 
 def pascal_to_camel(pascal_string):
     '''Returns a camelString for a given PascalString.'''
+    pascal_string = normalize_leading_special_case_pascal_tokens(pascal_string)
+
     # Full string all-caps: IEPE -> iepe. HTTP2 -> http2.
     match = re.fullmatch(r"([A-Z]+[0-9]*)", pascal_string)
     if match:
@@ -147,6 +181,8 @@ def pascal_to_camel(pascal_string):
 def ensure_pascal_case(pascal_or_camel_string):
     '''Ensures that a camel/pascal case string is pascal case
     NOTE: does not distinguish leading all-caps acronyms.'''
+    pascal_or_camel_string = insert_leading_special_case_pascal_tokens(pascal_or_camel_string)
+
     match = re.fullmatch(r'^([a-z])(.*)$', pascal_or_camel_string)
     if match:
         return match[1].upper() + match[2]
@@ -339,7 +375,11 @@ class AttributeGroup:
         self._config = config
 
 
-    def get_attributes_split_by_type(self):
+    def get_attributes_split_by_sub_group(self):
+        """
+        Splits attributes by type, with an additional "Reset" sub-group
+        for resettable attributes.
+        """
         if not get_split_attributes_by_type(self._config):
             return {'': self.attributes}
 
@@ -348,6 +388,8 @@ class AttributeGroup:
             data_type = get_grpc_type_name_for_identifier(
                 data['type'], self._config)
             categorized_attributes[data_type][id] = data
+            if data.get('resettable', False):
+                categorized_attributes['Reset'][id] = data
         return categorized_attributes
 
 
@@ -376,6 +418,9 @@ def strip_prefix(s: str, prefix: str) -> str:
 def strip_suffix(s: str, suffix: str) -> str:
     return s[: -len(suffix)] if s.endswith(suffix) else s
 
+
+def replace_prefix(s: str, prefix: str, sub: str) -> str:
+    return sub + s[len(prefix):] if s.startswith(prefix) else s 
 
 def get_grpc_type_name_for_identifier(data_type, config):
     """
