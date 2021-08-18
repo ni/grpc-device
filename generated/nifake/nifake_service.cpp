@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+const auto kErrorReadBufferTooSmall = -200229;
 
 namespace nifake_grpc {
 
@@ -484,19 +485,25 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto a_string = request->a_string().c_str();
       ViInt32 actual_size {};
-      auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_array_out()->Resize(actual_size, 0);
+        ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
+        status = library_->GetAnIviDanceWithATwistArray(vi, a_string, actual_size, array_out, &actual_size);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_size(actual_size);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_array_out()->Resize(actual_size, 0);
-      ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
-      status = library_->GetAnIviDanceWithATwistArray(vi, a_string, actual_size, array_out, &actual_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_size(actual_size);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

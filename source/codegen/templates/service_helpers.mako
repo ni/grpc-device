@@ -77,20 +77,30 @@ ${set_response_values(output_parameters)}\
 %>\
 ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(scalar_output_parameters)}\
-      auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance_with_a_twist(parameters)});
-      if (status < 0) {
-        response->set_status(status);
-        return ::grpc::Status::OK;
-      }
+      while (true) {
+        auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance_with_a_twist(parameters)});
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+<%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(array_output_parameters)}\
-      status = library_->${function_name}(${service_helpers.create_args(parameters)});
-      response->set_status(status);
+</%block>\
+        status = library_->${function_name}(${service_helpers.create_args(parameters)});
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
 % if output_parameters:
-      if (status == 0) {
+        if (status == 0) {
+<%block filter="common_helpers.indent(1)">\
 ${set_response_values(output_parameters)}\
-      }
+</%block>\
+        }
 % endif
-      return ::grpc::Status::OK;\
+        return ::grpc::Status::OK;
+      }\
 </%def>
 
 

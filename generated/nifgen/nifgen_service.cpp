@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+const auto kErrorReadBufferTooSmall = -200229;
 
 namespace nifgen_grpc {
 
@@ -2109,19 +2110,25 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 number_of_coefficients_read {};
-      auto status = library_->GetFIRFilterCoefficients(vi, channel_name, 0, nullptr, &number_of_coefficients_read);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetFIRFilterCoefficients(vi, channel_name, 0, nullptr, &number_of_coefficients_read);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_coefficients_array()->Resize(number_of_coefficients_read, 0);
+        ViReal64* coefficients_array = response->mutable_coefficients_array()->mutable_data();
+        status = library_->GetFIRFilterCoefficients(vi, channel_name, number_of_coefficients_read, coefficients_array, &number_of_coefficients_read);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_number_of_coefficients_read(number_of_coefficients_read);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_coefficients_array()->Resize(number_of_coefficients_read, 0);
-      ViReal64* coefficients_array = response->mutable_coefficients_array()->mutable_data();
-      status = library_->GetFIRFilterCoefficients(vi, channel_name, number_of_coefficients_read, coefficients_array, &number_of_coefficients_read);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_number_of_coefficients_read(number_of_coefficients_read);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

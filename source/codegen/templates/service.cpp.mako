@@ -16,6 +16,8 @@ function_names = service_helpers.filter_proto_rpc_functions_to_generate(function
 # If there are any non-mockable functions, we need to call the library directly, which
 # means we need another include file
 any_non_mockable_functions = any([not common_helpers.can_mock_function(functions[name]['parameters']) for name in function_names])
+# Define the constant for buffer too small if we have any of these functions.
+any_ivi_dance_with_a_twist_functions = any([common_helpers.has_ivi_dance_with_a_twist_param(functions[name]['parameters']) for name in function_names])
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
 
@@ -42,6 +44,9 @@ any_non_mockable_functions = any([not common_helpers.can_mock_function(functions
 % endif
 % if any_non_mockable_functions:
 #include "${module_name}_library.h"
+% endif
+% if any_ivi_dance_with_a_twist_functions:
+const auto kErrorReadBufferTooSmall = -200229;
 % endif
 
 namespace ${config["namespace_component"]}_grpc {
