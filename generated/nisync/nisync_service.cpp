@@ -1077,8 +1077,6 @@ namespace nisync_grpc {
             time_reference_names.resize(buffer_size-1);
         }
         status = library_->GetTimeReferenceNames(vi, buffer_size, (ViChar*)time_reference_names.data());
-        // We cast status into buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -1196,8 +1194,6 @@ namespace nisync_grpc {
             value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, active_item, attribute, buffer_size, (ViChar*)value.data());
-        // We cast status into buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;

@@ -149,8 +149,6 @@ namespace nitclk_grpc {
             error_string.resize(error_string_size-1);
         }
         status = library_->GetExtendedErrorInfo((ViChar*)error_string.data(), error_string_size);
-        // We cast status into error_string_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(error_string_size)) {
           // buffer is now too small, try again
           continue;

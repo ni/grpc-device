@@ -1753,8 +1753,6 @@ namespace nidigitalpattern_grpc {
             value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute, buffer_size, (ViChar*)value.data());
-        // We cast status into buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -1796,8 +1794,6 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, name_buffer_size, (ViChar*)name.data());
-        // We cast status into name_buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(name_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -1839,8 +1835,6 @@ namespace nidigitalpattern_grpc {
             names.resize(name_buffer_size-1);
         }
         status = library_->GetChannelNameFromString(vi, indices, name_buffer_size, (ViChar*)names.data());
-        // We cast status into name_buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(name_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -1882,8 +1876,6 @@ namespace nidigitalpattern_grpc {
             error_description.resize(error_description_buffer_size-1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
-        // We cast status into error_description_buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(error_description_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -2024,8 +2016,6 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetPatternName(vi, pattern_index, name_buffer_size, (ViChar*)name.data());
-        // We cast status into name_buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(name_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -2067,8 +2057,6 @@ namespace nidigitalpattern_grpc {
             pin_list.resize(pin_list_buffer_size-1);
         }
         status = library_->GetPatternPinList(vi, start_label, pin_list_buffer_size, (ViChar*)pin_list.data());
-        // We cast status into pin_list_buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(pin_list_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -2110,8 +2098,6 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetPinName(vi, pin_index, name_buffer_size, (ViChar*)name.data());
-        // We cast status into name_buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(name_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -2376,8 +2362,6 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetTimeSetName(vi, time_set_index, name_buffer_size, (ViChar*)name.data());
-        // We cast status into name_buffer_size above, so it's safe to cast
-        // back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(name_buffer_size)) {
           // buffer is now too small, try again
           continue;
