@@ -57,7 +57,7 @@ ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(output_parameters)}\
 </%block>\
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
-        if (status == kErrorReadBufferTooSmall || status > ${common_helpers.camel_to_snake(size_param['cppName'])}) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > ${common_helpers.camel_to_snake(size_param['cppName'])}) {
           // buffer is now too small, try again
           continue;
         }
@@ -93,7 +93,7 @@ ${initialize_output_params(scalar_output_parameters)}\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }

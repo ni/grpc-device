@@ -19,6 +19,7 @@
 namespace nidaqmx_grpc {
 
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiDAQmxService::NiDAQmxService(NiDAQmxLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
@@ -7263,7 +7264,7 @@ namespace nidaqmx_grpc {
             error_string.resize(buffer_size-1);
         }
         status = library_->GetErrorString(error_code, (char*)error_string.data(), buffer_size);
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -7301,7 +7302,7 @@ namespace nidaqmx_grpc {
             error_string.resize(buffer_size-1);
         }
         status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }

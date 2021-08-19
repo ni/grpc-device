@@ -15,6 +15,7 @@
 namespace nisync_grpc {
 
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiSyncService::NiSyncService(NiSyncLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
@@ -1077,7 +1078,7 @@ namespace nisync_grpc {
             time_reference_names.resize(buffer_size-1);
         }
         status = library_->GetTimeReferenceNames(vi, buffer_size, (ViChar*)time_reference_names.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1194,7 +1195,7 @@ namespace nisync_grpc {
             value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, active_item, attribute, buffer_size, (ViChar*)value.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }

@@ -15,6 +15,7 @@
 namespace niscope_grpc {
 
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiScopeService::NiScopeService(NiScopeLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
@@ -1394,7 +1395,7 @@ namespace niscope_grpc {
       
         std::string configuration(size_in_bytes, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
-        if (status == kErrorReadBufferTooSmall || status > size_in_bytes) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > size_in_bytes) {
           // buffer is now too small, try again
           continue;
         }
@@ -1619,7 +1620,7 @@ namespace niscope_grpc {
             value.resize(buf_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, (ViChar*)value.data());
-        if (status == kErrorReadBufferTooSmall || status > buf_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buf_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1660,7 +1661,7 @@ namespace niscope_grpc {
             channel_string.resize(buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1701,7 +1702,7 @@ namespace niscope_grpc {
             name.resize(buffer_size-1);
         }
         status = library_->GetChannelNameFromString(vi, index, buffer_size, (ViChar*)name.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1767,7 +1768,7 @@ namespace niscope_grpc {
             description.resize(buffer_size-1);
         }
         status = library_->GetError(vi, &error_code, buffer_size, (ViChar*)description.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1809,7 +1810,7 @@ namespace niscope_grpc {
             error_message.resize(buffer_size-1);
         }
         status = library_->GetErrorMessage(vi, error_code, buffer_size, (ViChar*)error_message.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }

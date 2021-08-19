@@ -15,6 +15,7 @@
 namespace nidigitalpattern_grpc {
 
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiDigitalService::NiDigitalService(NiDigitalLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
@@ -1387,7 +1388,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_data()->Resize(actual_num_waveforms, 0);
         ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
         status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, actual_num_waveforms, data, &actual_num_waveforms, &actual_samples_per_waveform);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -1462,7 +1463,7 @@ namespace nidigitalpattern_grpc {
         std::string actual_pin_states(actual_num_pin_data, '\0');
         std::vector<ViBoolean> per_pin_pass_fail(actual_num_pin_data, ViBoolean());
         status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, actual_num_pin_data, (ViUInt8*)expected_pin_states.data(), (ViUInt8*)actual_pin_states.data(), per_pin_pass_fail.data(), &actual_num_pin_data);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -1585,7 +1586,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
         ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
         status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, actual_num_frequencies, frequencies, &actual_num_frequencies);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -1753,7 +1754,7 @@ namespace nidigitalpattern_grpc {
             value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute, buffer_size, (ViChar*)value.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1794,7 +1795,7 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, name_buffer_size, (ViChar*)name.data());
-        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > name_buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1835,7 +1836,7 @@ namespace nidigitalpattern_grpc {
             names.resize(name_buffer_size-1);
         }
         status = library_->GetChannelNameFromString(vi, indices, name_buffer_size, (ViChar*)names.data());
-        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > name_buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1876,7 +1877,7 @@ namespace nidigitalpattern_grpc {
             error_description.resize(error_description_buffer_size-1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
-        if (status == kErrorReadBufferTooSmall || status > error_description_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > error_description_buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -1914,7 +1915,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_failure_count()->Resize(actual_num_read, 0);
         ViInt64* failure_count = response->mutable_failure_count()->mutable_data();
         status = library_->GetFailCount(vi, channel_list, actual_num_read, failure_count, &actual_num_read);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -1975,7 +1976,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
         ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
         status = library_->GetPatternPinIndexes(vi, start_label, actual_num_pins, pin_indexes, &actual_num_pins);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -2016,7 +2017,7 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetPatternName(vi, pattern_index, name_buffer_size, (ViChar*)name.data());
-        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > name_buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -2057,7 +2058,7 @@ namespace nidigitalpattern_grpc {
             pin_list.resize(pin_list_buffer_size-1);
         }
         status = library_->GetPatternPinList(vi, start_label, pin_list_buffer_size, (ViChar*)pin_list.data());
-        if (status == kErrorReadBufferTooSmall || status > pin_list_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > pin_list_buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -2098,7 +2099,7 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetPinName(vi, pin_index, name_buffer_size, (ViChar*)name.data());
-        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > name_buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -2139,7 +2140,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_channel_indexes()->Resize(actual_num_values, 0);
         ViInt32* channel_indexes = reinterpret_cast<ViInt32*>(response->mutable_channel_indexes()->mutable_data());
         status = library_->GetPinResultsPinInformation(vi, channel_list, actual_num_values, pin_indexes, site_numbers, channel_indexes, &actual_num_values);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -2175,7 +2176,7 @@ namespace nidigitalpattern_grpc {
         }
         std::vector<ViBoolean> pass_fail(actual_num_sites, ViBoolean());
         status = library_->GetSitePassFail(vi, site_list, actual_num_sites, pass_fail.data(), &actual_num_sites);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -2229,7 +2230,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
         ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
         status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, actual_num_site_numbers, site_numbers, &actual_num_site_numbers);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -2362,7 +2363,7 @@ namespace nidigitalpattern_grpc {
             name.resize(name_buffer_size-1);
         }
         status = library_->GetTimeSetName(vi, time_set_index, name_buffer_size, (ViChar*)name.data());
-        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > name_buffer_size) {
           // buffer is now too small, try again
           continue;
         }
@@ -2931,7 +2932,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_measurements()->Resize(actual_num_read, 0);
         ViReal64* measurements = response->mutable_measurements()->mutable_data();
         status = library_->PPMUMeasure(vi, channel_list, measurement_type, actual_num_read, measurements, &actual_num_read);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -3035,7 +3036,7 @@ namespace nidigitalpattern_grpc {
         }
         std::string data(actual_num_read, '\0');
         status = library_->ReadStatic(vi, channel_list, actual_num_read, (ViUInt8*)data.data(), &actual_num_read);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -3398,7 +3399,7 @@ namespace nidigitalpattern_grpc {
         response->mutable_offsets()->Resize(actual_num_offsets, 0);
         ViReal64* offsets = response->mutable_offsets()->mutable_data();
         status = library_->TDR(vi, channel_list, apply_offsets, actual_num_offsets, offsets, &actual_num_offsets);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }

@@ -52,6 +52,7 @@ namespace ${config["namespace_component"]}_grpc {
 
 % if any_ivi_dance_functions:
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
 % endif
   ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ResourceRepositorySharedPtr session_repository)
