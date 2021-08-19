@@ -232,6 +232,8 @@ ${initialize_input_param(function_name, parameter, input_vararg_parameter)}\
 ${initialize_repeating_param(parameter, input_vararg_parameter)}
 % elif common_helpers.is_repeated_varargs_parameter(parameter):
 ${initialize_repeated_varargs_param(parameter)}
+% elif common_helpers.is_enum(parameter) and common_helpers.is_array(parameter['type']):
+${initialize_enum_array_input_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
@@ -293,6 +295,26 @@ ${initialize_standard_input_param(function_name, parameter)}
       if (${parameter_name}.size() > ${max_vector_size}) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than ${max_vector_size} values for ${parameter["name"]} were specified");
       }
+</%def>
+
+
+## Initialize an enum array input parameter.
+## This is a straight copy and does not support all of the features of enum parameters 
+## (i.e. mapped enums, _raw fields, etc.)
+<%def name="initialize_enum_array_input_param(function_name, parameter)">\
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  field_name = common_helpers.camel_to_snake(parameter["name"])
+  element_type = service_helpers.get_c_element_type(parameter)
+%>\
+      auto ${parameter_name}_vector = std::vector<${element_type}>();
+      ${parameter_name}_vector.reserve(request->${field_name}().size());
+      std::transform(
+        request->${field_name}().begin(),
+        request->${field_name}().end(),
+        std::back_inserter(${parameter_name}_vector),
+        [](auto x) { return x; });
+      auto ${parameter_name} = ${parameter_name}_vector.data();
 </%def>
 
 ## Initialize an enum input parameter for an API call.

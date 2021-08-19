@@ -44,9 +44,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 CfgPipelinedSampClkTiming(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan);
   int32 CfgSampClkTiming(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan);
   int32 CfgTimeStartTrig(TaskHandle task, CVIAbsoluteTime when, int32 timescale);
-  int32 CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], int32 outputTypeArray[], uInt32 arraySize);
-  int32 CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize);
-  int32 CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize);
+  int32 CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], const int32 outputTypeArray[], uInt32 arraySize);
+  int32 CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize);
+  int32 CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize);
   int32 ClearTEDS(const char physicalChannel[]);
   int32 ClearTask(TaskHandle task);
   int32 ConfigureLogging(TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation);
@@ -281,9 +281,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using CfgPipelinedSampClkTimingPtr = int32 (*)(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan);
   using CfgSampClkTimingPtr = int32 (*)(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan);
   using CfgTimeStartTrigPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime when, int32 timescale);
-  using CfgWatchdogAOExpirStatesPtr = int32 (*)(TaskHandle task, const char channelNames[], const float64 expirStateArray[], int32 outputTypeArray[], uInt32 arraySize);
-  using CfgWatchdogCOExpirStatesPtr = int32 (*)(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize);
-  using CfgWatchdogDOExpirStatesPtr = int32 (*)(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize);
+  using CfgWatchdogAOExpirStatesPtr = int32 (*)(TaskHandle task, const char channelNames[], const float64 expirStateArray[], const int32 outputTypeArray[], uInt32 arraySize);
+  using CfgWatchdogCOExpirStatesPtr = int32 (*)(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize);
+  using CfgWatchdogDOExpirStatesPtr = int32 (*)(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize);
   using ClearTEDSPtr = int32 (*)(const char physicalChannel[]);
   using ClearTaskPtr = int32 (*)(TaskHandle task);
   using ConfigureLoggingPtr = int32 (*)(TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation);

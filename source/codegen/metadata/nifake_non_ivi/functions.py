@@ -424,4 +424,20 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetColors': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'enum': 'BeautifulColor',
+                'name': 'colors',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    }
 }

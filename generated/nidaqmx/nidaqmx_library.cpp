@@ -581,7 +581,7 @@ int32 NiDAQmxLibrary::CfgTimeStartTrig(TaskHandle task, CVIAbsoluteTime when, in
 #endif
 }
 
-int32 NiDAQmxLibrary::CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], int32 outputTypeArray[], uInt32 arraySize)
+int32 NiDAQmxLibrary::CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], const int32 outputTypeArray[], uInt32 arraySize)
 {
   if (!function_pointers_.CfgWatchdogAOExpirStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgWatchdogAOExpirStates.");
@@ -593,7 +593,7 @@ int32 NiDAQmxLibrary::CfgWatchdogAOExpirStates(TaskHandle task, const char chann
 #endif
 }
 
-int32 NiDAQmxLibrary::CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize)
+int32 NiDAQmxLibrary::CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize)
 {
   if (!function_pointers_.CfgWatchdogCOExpirStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgWatchdogCOExpirStates.");
@@ -605,7 +605,7 @@ int32 NiDAQmxLibrary::CfgWatchdogCOExpirStates(TaskHandle task, const char chann
 #endif
 }
 
-int32 NiDAQmxLibrary::CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize)
+int32 NiDAQmxLibrary::CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize)
 {
   if (!function_pointers_.CfgWatchdogDOExpirStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgWatchdogDOExpirStates.");
