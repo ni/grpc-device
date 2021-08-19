@@ -544,6 +544,10 @@ ${initialize_standard_input_param(function_name, parameter)}
         if(${parameter_name} == (int)${parameter_name}) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
         }
+%       elif parameter.get("use_checked_enum_conversion", False):
+        bool ${parameter_name}_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(${parameter_name});
+        auto ${parameter_name}_as_valid_enum_value = ${parameter_name}_is_valid ? ${parameter_name} : 0;
+        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}_as_valid_enum_value));
 %       else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %       endif

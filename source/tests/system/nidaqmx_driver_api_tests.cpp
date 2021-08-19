@@ -393,6 +393,7 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     return stub()->RegisterDoneEvent(&context, request);
   }
+
   auto register_every_n_samples_event(::grpc::ClientContext& context, uint32 n_samples)
   {
     RegisterEveryNSamplesEventRequest request;
@@ -1102,6 +1103,7 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
   EXPECT_SUCCESS(set_status, set_response);
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM, response.value());
+  EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM, response.value_raw());
 }
 
 TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)

@@ -793,7 +793,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32Raw_Succeeds)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32_Succeeds)
+TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32Enum_ReturnsValueAndValueRaw)
 {
   const auto ATTRIBUTE = MarbleInt32Attributes::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_AQUA;
@@ -807,6 +807,24 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32_Succeeds)
 
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(VALUE, response.value());
+  EXPECT_EQ(VALUE, response.value_raw());
+}
+
+TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32NonEnum_ReturnsValueRawAndUnspecifiedValue)
+{
+  const auto ATTRIBUTE = MarbleInt32Attributes::MARBLE_ATTRIBUTE_NUMBER_OF_FAILED_ATTEMPTS;
+  const auto VALUE = 1000;
+  EXPECT_CALL(library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
+      .WillOnce(DoAll(SetArgPointee<2>(VALUE), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  GetMarbleAttributeInt32Request request;
+  request.set_attribute(ATTRIBUTE);
+  GetMarbleAttributeInt32Response response;
+  service_.GetMarbleAttributeInt32(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(MarbleInt32AttributeValues::MARBLE_INT32_UNSPECIFIED, response.value());
+  EXPECT_EQ(VALUE, response.value_raw());
 }
 
 TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)

@@ -7406,7 +7406,10 @@ namespace nidaqmx_grpc {
       auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value, size);
       response->set_status(status);
       if (status == 0) {
-        response->set_value(value);
+        bool value_is_valid = nidaqmx_grpc::ScaleInt32AttributeValues_IsValid(value);
+        auto value_as_valid_enum_value = value_is_valid ? value : 0;
+        response->set_value(static_cast<nidaqmx_grpc::ScaleInt32AttributeValues>(value_as_valid_enum_value));
+        response->set_value_raw(value);
       }
       return ::grpc::Status::OK;
     }
