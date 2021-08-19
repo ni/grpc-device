@@ -20,23 +20,23 @@ def is_pointer_parameter(parameter):
 
 # This means the parameter follows a specific varargs convention where
 # the user can pass in an arbitrary repetition of fixed arguments.
-def is_repeated_varargs_parameter(parameter):
+def is_repeated_varargs_parameter(parameter: dict):
     return parameter.get('repeated_var_args', False)
 
 # This means the parameter can be repeated as many times as desired.
 # See also is_repeatied_varargs_parameter()
-def is_repeating_parameter(parameter):
+def is_repeating_parameter(parameter: dict):
     return parameter.get('repeating_argument', False)
 
-def is_array(dataType):
+def is_array(dataType: str):
     return dataType.endswith("[]") or dataType.endswith("*")
 
 
-def is_enum(parameter):
+def is_enum(parameter: dict):
     return "enum" in parameter or "mapped-enum" in parameter
 
 
-def is_struct(parameter):
+def is_struct(parameter: dict):
     return parameter["type"].startswith("struct")
 
 
@@ -109,7 +109,10 @@ def is_unsupported_scalar_array(parameter):
 
 
 def is_unsupported_enum_array(parameter):
-    if is_enum(parameter) and is_output_parameter(parameter):
+    if is_enum(parameter):
+        if is_input_parameter(parameter):
+            return False
+            
         return not is_supported_enum_array_output_type(parameter)
     return False
 

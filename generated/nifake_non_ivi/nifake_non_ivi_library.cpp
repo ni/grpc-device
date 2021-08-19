@@ -41,6 +41,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetMarbleAttribute = reinterpret_cast<ResetMarbleAttributePtr>(shared_library_.get_function_pointer("niFakeNonIvi_ResetMarbleAttribute"));
   function_pointers_.SetMarbleAttributeDouble = reinterpret_cast<SetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeDouble"));
   function_pointers_.SetMarbleAttributeInt32 = reinterpret_cast<SetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeInt32"));
+  function_pointers_.SetColors = reinterpret_cast<SetColorsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetColors"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -291,6 +292,18 @@ int32 NiFakeNonIviLibrary::SetMarbleAttributeInt32(FakeHandle handle, int32 attr
   return niFakeNonIvi_SetMarbleAttributeInt32(handle, attribute, value);
 #else
   return function_pointers_.SetMarbleAttributeInt32(handle, attribute, value);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::SetColors(int32 colors[], int32 size)
+{
+  if (!function_pointers_.SetColors) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetColors.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_SetColors(colors, size);
+#else
+  return function_pointers_.SetColors(colors, size);
 #endif
 }
 

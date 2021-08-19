@@ -646,5 +646,32 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetColors(::grpc::ServerContext* context, const SetColorsRequest* request, SetColorsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto colors_vector = std::vector<int32>();
+      colors_vector.reserve(request->colors().size());
+      std::transform(
+        request->colors().begin(),
+        request->colors().end(),
+        std::back_inserter(colors_vector),
+        [](auto x) { return x; });
+      auto colors = colors_vector.data();
+
+      int32 size = request->size();
+      auto status = library_->SetColors(colors, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 } // namespace nifake_non_ivi_grpc
 

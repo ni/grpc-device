@@ -770,7 +770,9 @@ class NiDAQmxDriverApiTests : public Test {
 
     set_request_session_id(request, watchdog_session);
     request.set_channel_names("gRPCSystemTestDAQ/port1/line0:1");
-    auto expir_states = std::vector<int32>{DAQmx_Val_High, DAQmx_Val_High};
+    auto expir_states = std::vector<DigitalLineState>{
+        DigitalLineState::DIGITAL_LINE_STATE_HIGH,
+        DigitalLineState::DIGITAL_LINE_STATE_HIGH};
     request.mutable_expir_state_array()->CopyFrom({expir_states.cbegin(), expir_states.cend()});
     request.set_array_size(2);
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);

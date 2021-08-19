@@ -135,7 +135,8 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     return response.status();
   }
 
-  void setup_iota_with_custom_size() {
+  void setup_iota_with_custom_size()
+  {
     auto set_iota_data = [](int32 size_one, int32 size_two, int32* data) {
       auto out_size = (size_one == -1) ? size_two : size_one + 1;
       std::iota(data, data + out_size, 0);
@@ -147,7 +148,8 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
             Return(kDriverSuccess)));
   }
 
-  static void EXPECT_IOTA_OF_SIZE(IotaWithCustomSizeResponse response, size_t size) {
+  static void EXPECT_IOTA_OF_SIZE(IotaWithCustomSizeResponse response, size_t size)
+  {
     std::vector<int32> expected(size);
     std::iota(expected.begin(), expected.end(), 0);
     std::vector<int32> actual{response.data().cbegin(), response.data().cend()};
@@ -917,6 +919,25 @@ TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)
   request.set_attribute(ATTRIBUTE);
   ResetMarbleAttributeResponse response;
   service_.ResetMarbleAttribute(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
+{
+  const auto COLORS = std::vector<BeautifulColor>{
+      BeautifulColor::BEAUTIFUL_COLOR_AQUA,
+      BeautifulColor::BEAUTIFUL_COLOR_GREEN,
+      BeautifulColor::BEAUTIFUL_COLOR_PINK};
+  EXPECT_CALL(library_, SetColors(_, _))
+      .With(Args<0, 1>(ElementsAreArray(COLORS.data(), COLORS.size())))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  SetColorsRequest request;
+  request.mutable_colors()->CopyFrom({COLORS.begin(), COLORS.end()});
+  request.set_size(static_cast<int32>(COLORS.size()));
+  SetColorsResponse response;
+  service_.SetColors(&context, &request, &response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
 }

@@ -35,6 +35,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 ResetMarbleAttribute(FakeHandle handle, int32 attribute) = 0;
   virtual int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value) = 0;
   virtual int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value) = 0;
+  virtual int32 SetColors(int32 colors[], int32 size) = 0;
 };
 
 }  // namespace nifake_non_ivi_grpc

@@ -37,6 +37,7 @@ service NiFakeNonIvi {
   rpc ResetMarbleAttribute(ResetMarbleAttributeRequest) returns (ResetMarbleAttributeResponse);
   rpc SetMarbleAttributeDouble(SetMarbleAttributeDoubleRequest) returns (SetMarbleAttributeDoubleResponse);
   rpc SetMarbleAttributeInt32(SetMarbleAttributeInt32Request) returns (SetMarbleAttributeInt32Response);
+  rpc SetColors(SetColorsRequest) returns (SetColorsResponse);
 }
 
 enum MarbleInt32ArrayAttributes {
@@ -274,6 +275,15 @@ message SetMarbleAttributeInt32Request {
 }
 
 message SetMarbleAttributeInt32Response {
+  int32 status = 1;
+}
+
+message SetColorsRequest {
+  repeated int32 colors = 1;
+  int32 size = 2;
+}
+
+message SetColorsResponse {
   int32 status = 1;
 }
 

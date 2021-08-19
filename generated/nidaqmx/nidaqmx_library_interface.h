@@ -41,9 +41,9 @@ class NiDAQmxLibraryInterface {
   virtual int32 CfgPipelinedSampClkTiming(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan) = 0;
   virtual int32 CfgSampClkTiming(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan) = 0;
   virtual int32 CfgTimeStartTrig(TaskHandle task, CVIAbsoluteTime when, int32 timescale) = 0;
-  virtual int32 CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], int32 outputTypeArray[], uInt32 arraySize) = 0;
-  virtual int32 CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize) = 0;
-  virtual int32 CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], int32 expirStateArray[], uInt32 arraySize) = 0;
+  virtual int32 CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], const int32 outputTypeArray[], uInt32 arraySize) = 0;
+  virtual int32 CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize) = 0;
+  virtual int32 CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize) = 0;
   virtual int32 ClearTEDS(const char physicalChannel[]) = 0;
   virtual int32 ClearTask(TaskHandle task) = 0;
   virtual int32 ConfigureLogging(TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation) = 0;
