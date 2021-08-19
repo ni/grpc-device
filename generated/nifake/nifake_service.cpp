@@ -329,7 +329,7 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_configuration(configuration);
+          response->set_configuration(configuration);
         }
         return ::grpc::Status::OK;
       }
@@ -464,7 +464,7 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_a_string(a_string);
+          response->set_a_string(a_string);
         }
         return ::grpc::Status::OK;
       }
@@ -753,7 +753,7 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_attribute_value(attribute_value);
+          response->set_attribute_value(attribute_value);
         }
         return ::grpc::Status::OK;
       }
@@ -1393,18 +1393,18 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_a_boolean(a_boolean);
-        response->set_an_int32(an_int32);
-        response->set_an_int64(an_int64);
-        response->set_an_int_enum(static_cast<nifake_grpc::Turtle>(an_int_enum));
-        response->set_an_int_enum_raw(an_int_enum);
-        response->set_a_float(a_float);
-        auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
-        if(a_float_enum_omap_it != floatenum_output_map_.end()) {
-          response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
-        }
-        response->set_a_float_enum_raw(a_float_enum);
-        response->set_a_string(a_string);
+          response->set_a_boolean(a_boolean);
+          response->set_an_int32(an_int32);
+          response->set_an_int64(an_int64);
+          response->set_an_int_enum(static_cast<nifake_grpc::Turtle>(an_int_enum));
+          response->set_an_int_enum_raw(an_int_enum);
+          response->set_a_float(a_float);
+          auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
+          if(a_float_enum_omap_it != floatenum_output_map_.end()) {
+            response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
+          }
+          response->set_a_float_enum_raw(a_float_enum);
+          response->set_a_string(a_string);
         }
         return ::grpc::Status::OK;
       }

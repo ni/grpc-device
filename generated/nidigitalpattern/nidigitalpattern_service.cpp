@@ -1759,7 +1759,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_value(value);
+          response->set_value(value);
         }
         return ::grpc::Status::OK;
       }
@@ -1800,7 +1800,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_name(name);
+          response->set_name(name);
         }
         return ::grpc::Status::OK;
       }
@@ -1841,7 +1841,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_names(names);
+          response->set_names(names);
         }
         return ::grpc::Status::OK;
       }
@@ -1882,8 +1882,8 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_code(error_code);
-        response->set_error_description(error_description);
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
         }
         return ::grpc::Status::OK;
       }
@@ -2022,7 +2022,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_name(name);
+          response->set_name(name);
         }
         return ::grpc::Status::OK;
       }
@@ -2063,7 +2063,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_pin_list(pin_list);
+          response->set_pin_list(pin_list);
         }
         return ::grpc::Status::OK;
       }
@@ -2104,7 +2104,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_name(name);
+          response->set_name(name);
         }
         return ::grpc::Status::OK;
       }
@@ -2368,7 +2368,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_name(name);
+          response->set_name(name);
         }
         return ::grpc::Status::OK;
       }

@@ -7269,7 +7269,7 @@ namespace nidaqmx_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_string(error_string);
+          response->set_error_string(error_string);
         }
         return ::grpc::Status::OK;
       }
@@ -7307,7 +7307,7 @@ namespace nidaqmx_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_string(error_string);
+          response->set_error_string(error_string);
         }
         return ::grpc::Status::OK;
       }

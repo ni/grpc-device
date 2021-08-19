@@ -64,7 +64,9 @@ ${initialize_output_params(output_parameters)}\
         response->set_status(status);
 % if output_parameters:
         if (status == 0) {
+<%block filter="common_helpers.indent(1)">\
 ${set_response_values(output_parameters)}\
+</%block>\
         }
 % endif
         return ::grpc::Status::OK;

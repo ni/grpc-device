@@ -1929,7 +1929,7 @@ namespace nifgen_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_attribute_value(attribute_value);
+          response->set_attribute_value(attribute_value);
         }
         return ::grpc::Status::OK;
       }
@@ -1970,7 +1970,7 @@ namespace nifgen_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_channel_string(channel_string);
+          response->set_channel_string(channel_string);
         }
         return ::grpc::Status::OK;
       }
@@ -2011,8 +2011,8 @@ namespace nifgen_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_code(error_code);
-        response->set_error_description(error_description);
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
         }
         return ::grpc::Status::OK;
       }
@@ -2190,7 +2190,7 @@ namespace nifgen_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_coercion_record(coercion_record);
+          response->set_coercion_record(coercion_record);
         }
         return ::grpc::Status::OK;
       }
@@ -2230,7 +2230,7 @@ namespace nifgen_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_interchange_warning(interchange_warning);
+          response->set_interchange_warning(interchange_warning);
         }
         return ::grpc::Status::OK;
       }

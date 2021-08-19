@@ -1400,7 +1400,7 @@ namespace niscope_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_configuration(configuration);
+          response->set_configuration(configuration);
         }
         return ::grpc::Status::OK;
       }
@@ -1625,7 +1625,7 @@ namespace niscope_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_value(value);
+          response->set_value(value);
         }
         return ::grpc::Status::OK;
       }
@@ -1666,7 +1666,7 @@ namespace niscope_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_channel_string(channel_string);
+          response->set_channel_string(channel_string);
         }
         return ::grpc::Status::OK;
       }
@@ -1707,7 +1707,7 @@ namespace niscope_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_name(name);
+          response->set_name(name);
         }
         return ::grpc::Status::OK;
       }
@@ -1773,8 +1773,8 @@ namespace niscope_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_code(error_code);
-        response->set_description(description);
+          response->set_error_code(error_code);
+          response->set_description(description);
         }
         return ::grpc::Status::OK;
       }
@@ -1815,7 +1815,7 @@ namespace niscope_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_message(error_message);
+          response->set_error_message(error_message);
         }
         return ::grpc::Status::OK;
       }

@@ -637,7 +637,7 @@ namespace niswitch_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_attribute_value(attribute_value);
+          response->set_attribute_value(attribute_value);
         }
         return ::grpc::Status::OK;
       }
@@ -704,7 +704,7 @@ namespace niswitch_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_channel_name_buffer(channel_name_buffer);
+          response->set_channel_name_buffer(channel_name_buffer);
         }
         return ::grpc::Status::OK;
       }
@@ -745,8 +745,8 @@ namespace niswitch_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_code(code);
-        response->set_description(description);
+          response->set_code(code);
+          response->set_description(description);
         }
         return ::grpc::Status::OK;
       }
@@ -786,7 +786,7 @@ namespace niswitch_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_coercion_record(coercion_record);
+          response->set_coercion_record(coercion_record);
         }
         return ::grpc::Status::OK;
       }
@@ -826,7 +826,7 @@ namespace niswitch_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_interchange_warning(interchange_warning);
+          response->set_interchange_warning(interchange_warning);
         }
         return ::grpc::Status::OK;
       }
@@ -868,7 +868,7 @@ namespace niswitch_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_path(path);
+          response->set_path(path);
         }
         return ::grpc::Status::OK;
       }
@@ -933,7 +933,7 @@ namespace niswitch_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_relay_name_buffer(relay_name_buffer);
+          response->set_relay_name_buffer(relay_name_buffer);
         }
         return ::grpc::Status::OK;
       }

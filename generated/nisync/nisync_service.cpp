@@ -1083,7 +1083,7 @@ namespace nisync_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_time_reference_names(time_reference_names);
+          response->set_time_reference_names(time_reference_names);
         }
         return ::grpc::Status::OK;
       }
@@ -1200,7 +1200,7 @@ namespace nisync_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_value(value);
+          response->set_value(value);
         }
         return ::grpc::Status::OK;
       }
