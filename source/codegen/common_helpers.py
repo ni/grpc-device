@@ -74,9 +74,21 @@ def strip_repeated_from_grpc_type(grpc_type):
     return grpc_type[len('repeated '):]
 
 
-def get_underlying_type_name(parameter_type):
+def get_underlying_type_name(parameter_type: str) -> str:
     '''Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name.'''
     return parameter_type.replace("struct ", "").replace('[]', '')
+
+
+def get_underlying_grpc_type_name(grpc_type: str) -> str:
+    return strip_prefix(grpc_type, "repeated ")
+
+
+def get_underlying_type(parameter_or_attribute: dict) -> str:
+    return get_underlying_type_name(parameter_or_attribute["type"])
+
+
+def get_underlying_grpc_type(parameter: dict) -> str:
+    return get_underlying_grpc_type_name(parameter["grpc_type"])
 
 
 def has_unsupported_parameter(function):
@@ -97,9 +109,21 @@ def is_unsupported_scalar_array(parameter):
 
 
 def is_unsupported_enum_array(parameter):
-    if is_enum(parameter):
-        return not (is_output_parameter(parameter) and is_string_arg(parameter))
+    if is_enum(parameter) and is_output_parameter(parameter):
+        return not is_supported_enum_array_output_type(parameter)
     return False
+
+
+def is_supported_enum_array_output_type(parameter):
+    return is_string_arg(parameter) or is_static_castable_enum_type(parameter)
+
+
+def is_static_castable_enum_type(parameter):
+    grpc_type = get_underlying_grpc_type(parameter)
+    # Note: sint32 could work here but causes issue with existing attribute output accessors
+    # because it's not wire-compatible with enum. If it's added here, we need to make sure that 
+    # we're handling compatibility issues on those methods.
+    return grpc_type in ['int32', 'uint32']
 
 
 PascalTokenSubstitution = namedtuple('PascalTokenSubstitution', ['pascal_representation', 'preferred_representation'])
@@ -213,7 +237,7 @@ def get_attribute_enums_by_type(attributes):
     for attribute_name in attributes:
         attribute = attributes[attribute_name]
         if 'enum' in attribute:
-            attribute_type = attribute['type']
+            attribute_type = get_underlying_type(attribute)
             enum_name = attribute['enum']
             attribute_enums_by_type[attribute_type].add(enum_name)
     return attribute_enums_by_type

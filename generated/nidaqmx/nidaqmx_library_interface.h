@@ -146,6 +146,14 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize) = 0;
   virtual int32 GetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value) = 0;
+  virtual int32 GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size) = 0;
+  virtual int32 GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size) = 0;
+  virtual int32 GetDeviceAttributeInt32(const char deviceName[], int32 attribute, int32* value, uInt32 size) = 0;
+  virtual int32 GetDeviceAttributeInt32Array(const char deviceName[], int32 attribute, int32 value[], uInt32 size) = 0;
+  virtual int32 GetDeviceAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size) = 0;
+  virtual int32 GetDeviceAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size) = 0;
+  virtual int32 GetDeviceAttributeUInt32Array(const char deviceName[], int32 attribute, uInt32 value[], uInt32 size) = 0;
   virtual int32 GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily) = 0;
   virtual int32 GetDisconnectedCDAQSyncPorts(char portList[], uInt32 portListSize) = 0;
   virtual int32 GetErrorString(int32 errorCode, char errorString[], uInt32 bufferSize) = 0;

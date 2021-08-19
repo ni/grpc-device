@@ -21,6 +21,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 Close(FakeHandle handle);
   int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value);
   int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value);
+  int32 GetMarbleAttributeInt32Array(FakeHandle handle, int32 attribute, int32 value[]);
   int32 Init(const char sessionName[], FakeHandle* handle);
   int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle);
   int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
@@ -42,6 +43,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using ClosePtr = int32 (*)(FakeHandle handle);
   using GetMarbleAttributeDoublePtr = int32 (*)(FakeHandle handle, int32 attribute, double* value);
   using GetMarbleAttributeInt32Ptr = int32 (*)(FakeHandle handle, int32 attribute, int32* value);
+  using GetMarbleAttributeInt32ArrayPtr = int32 (*)(FakeHandle handle, int32 attribute, int32 value[]);
   using InitPtr = int32 (*)(const char sessionName[], FakeHandle* handle);
   using InitWithHandleNameAsSessionNamePtr = int32 (*)(const char handleName[], FakeHandle* handle);
   using InputArraysWithNarrowIntegerTypesPtr = int32 (*)(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
@@ -63,6 +65,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     ClosePtr Close;
     GetMarbleAttributeDoublePtr GetMarbleAttributeDouble;
     GetMarbleAttributeInt32Ptr GetMarbleAttributeInt32;
+    GetMarbleAttributeInt32ArrayPtr GetMarbleAttributeInt32Array;
     InitPtr Init;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
     InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;

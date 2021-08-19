@@ -813,6 +813,21 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ResetBufferAttribute(&context, request, &response);
   }
 
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_device_attribute_request(const std::string& device_name, TAttributes attribute)
+  {
+    TRequest request;
+    request.set_device_name(device_name);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  ::grpc::Status get_device_attribute_i32_array(const GetDeviceAttributeInt32ArrayRequest& request, GetDeviceAttributeInt32ArrayResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetDeviceAttributeInt32Array(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -1636,6 +1651,24 @@ TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBuffer
   EXPECT_SUCCESS(read_after_reset_status, read_after_reset_response);
   EXPECT_EQ(initial_value, read_after_reset_response.value());
   EXPECT_EQ(initial_value * 2, readback_response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, GetAISupportMeasurementTypes_ResultIncludesCurrentAndVoltage)
+{
+  const auto ATTRIBUTE = DeviceInt32ArrayAttributes::DEVICE_ATTRIBUTE_AI_SUPPORTED_MEAS_TYPES;
+  auto request = create_get_device_attribute_request<GetDeviceAttributeInt32ArrayRequest>(
+      DEVICE_NAME,
+      ATTRIBUTE);
+  auto response = GetDeviceAttributeInt32ArrayResponse{};
+  auto query_status = get_device_attribute_i32_array(request, response);
+  request.set_size(response.status());
+  auto status = get_device_attribute_i32_array(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_THAT(response.value(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
+  EXPECT_THAT(response.value(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_VOLTAGE));
+  EXPECT_THAT(response.value_raw(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
+  EXPECT_THAT(response.value_raw(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_VOLTAGE));
 }
 }  // namespace system
 }  // namespace tests

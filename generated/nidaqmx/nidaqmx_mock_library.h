@@ -148,6 +148,14 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetAutoConfiguredCDAQSyncConnections, (char portList[], uInt32 portListSize), (override));
   MOCK_METHOD(int32, GetBufferAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeBool, (const char deviceName[], int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeDouble, (const char deviceName[], int32 attribute, float64* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeDoubleArray, (const char deviceName[], int32 attribute, float64 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeInt32, (const char deviceName[], int32 attribute, int32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeInt32Array, (const char deviceName[], int32 attribute, int32 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeString, (const char deviceName[], int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeUInt32, (const char deviceName[], int32 attribute, uInt32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetDeviceAttributeUInt32Array, (const char deviceName[], int32 attribute, uInt32 value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32* logicFamily), (override));
   MOCK_METHOD(int32, GetDisconnectedCDAQSyncPorts, (char portList[], uInt32 portListSize), (override));
   MOCK_METHOD(int32, GetErrorString, (int32 errorCode, char errorString[], uInt32 bufferSize), (override));

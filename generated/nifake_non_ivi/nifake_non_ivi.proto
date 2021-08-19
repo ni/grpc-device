@@ -20,6 +20,7 @@ service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetMarbleAttributeDouble(GetMarbleAttributeDoubleRequest) returns (GetMarbleAttributeDoubleResponse);
   rpc GetMarbleAttributeInt32(GetMarbleAttributeInt32Request) returns (GetMarbleAttributeInt32Response);
+  rpc GetMarbleAttributeInt32Array(GetMarbleAttributeInt32ArrayRequest) returns (GetMarbleAttributeInt32ArrayResponse);
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
   rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
@@ -36,6 +37,12 @@ service NiFakeNonIvi {
   rpc ResetMarbleAttribute(ResetMarbleAttributeRequest) returns (ResetMarbleAttributeResponse);
   rpc SetMarbleAttributeDouble(SetMarbleAttributeDoubleRequest) returns (SetMarbleAttributeDoubleResponse);
   rpc SetMarbleAttributeInt32(SetMarbleAttributeInt32Request) returns (SetMarbleAttributeInt32Response);
+}
+
+enum MarbleInt32ArrayAttributes {
+  MARBLE_INT32_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
+  MARBLE_ATTRIBUTE_TEN_FAVORITE_COLORS = 10;
+  MARBLE_ATTRIBUTE_TEN_RANDOM_NUMBERS = 345;
 }
 
 enum MarbleInt32Attributes {
@@ -103,6 +110,17 @@ message GetMarbleAttributeInt32Response {
   int32 status = 1;
   MarbleInt32AttributeValues value = 2;
   int32 value_raw = 3;
+}
+
+message GetMarbleAttributeInt32ArrayRequest {
+  nidevice_grpc.Session handle = 1;
+  MarbleInt32ArrayAttributes attribute = 2;
+}
+
+message GetMarbleAttributeInt32ArrayResponse {
+  int32 status = 1;
+  repeated MarbleInt32AttributeValues value = 2;
+  repeated int32 value_raw = 3;
 }
 
 message InitRequest {
