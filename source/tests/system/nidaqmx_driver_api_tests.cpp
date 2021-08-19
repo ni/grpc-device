@@ -195,7 +195,6 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     GetErrorStringRequest request;
-    request.set_buffer_size(4096);
     request.set_error_code(error_code);
     return stub()->GetErrorString(&context, request, &response);
   }
@@ -1254,7 +1253,7 @@ TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
   auto status = get_error_string(DAQmxErrorInvalidAttributeValue, response);
 
   EXPECT_SUCCESS(status, response);
-  EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
+  EXPECT_THAT(response.error_string(), StrEq("Requested value is not a supported value for this property."));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)

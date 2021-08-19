@@ -7247,12 +7247,19 @@ namespace nidaqmx_grpc {
     }
     try {
       int32 error_code = request->error_code();
-      uInt32 buffer_size = request->buffer_size();
+
+      auto status = library_->GetErrorString(error_code, nullptr, 0);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      uInt32 buffer_size = status;
+
       std::string error_string;
       if (buffer_size > 0) {
           error_string.resize(buffer_size-1);
       }
-      auto status = library_->GetErrorString(error_code, (char*)error_string.data(), buffer_size);
+      status = library_->GetErrorString(error_code, (char*)error_string.data(), buffer_size);
       response->set_status(status);
       if (status == 0) {
         response->set_error_string(error_string);
@@ -7272,12 +7279,19 @@ namespace nidaqmx_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      uInt32 buffer_size = request->buffer_size();
+
+      auto status = library_->GetExtendedErrorInfo(nullptr, 0);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      uInt32 buffer_size = status;
+
       std::string error_string;
       if (buffer_size > 0) {
           error_string.resize(buffer_size-1);
       }
-      auto status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
+      status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
       response->set_status(status);
       if (status == 0) {
         response->set_error_string(error_string);
