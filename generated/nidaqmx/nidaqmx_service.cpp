@@ -18,6 +18,8 @@
 
 namespace nidaqmx_grpc {
 
+  const auto kErrorReadBufferTooSmall = -200229;
+
   NiDAQmxService::NiDAQmxService(NiDAQmxLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
@@ -7248,23 +7250,29 @@ namespace nidaqmx_grpc {
     try {
       int32 error_code = request->error_code();
 
-      auto status = library_->GetErrorString(error_code, nullptr, 0);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetErrorString(error_code, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 buffer_size = status;
+      
+        std::string error_string;
+        if (buffer_size > 0) {
+            error_string.resize(buffer_size-1);
+        }
+        status = library_->GetErrorString(error_code, (char*)error_string.data(), buffer_size);
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_error_string(error_string);
+        }
         return ::grpc::Status::OK;
       }
-      uInt32 buffer_size = status;
-
-      std::string error_string;
-      if (buffer_size > 0) {
-          error_string.resize(buffer_size-1);
-      }
-      status = library_->GetErrorString(error_code, (char*)error_string.data(), buffer_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_string(error_string);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7280,23 +7288,29 @@ namespace nidaqmx_grpc {
     }
     try {
 
-      auto status = library_->GetExtendedErrorInfo(nullptr, 0);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetExtendedErrorInfo(nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 buffer_size = status;
+      
+        std::string error_string;
+        if (buffer_size > 0) {
+            error_string.resize(buffer_size-1);
+        }
+        status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_error_string(error_string);
+        }
         return ::grpc::Status::OK;
       }
-      uInt32 buffer_size = status;
-
-      std::string error_string;
-      if (buffer_size > 0) {
-          error_string.resize(buffer_size-1);
-      }
-      status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_string(error_string);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
