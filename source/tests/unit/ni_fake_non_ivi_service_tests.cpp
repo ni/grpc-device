@@ -812,15 +812,6 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32Enum_ReturnsValueAndValu
   EXPECT_EQ(VALUE, response.value_raw());
 }
 
-template <typename TValueEnum, typename TResponse>
-auto get_value_enum_vector(const TResponse& response)
-{
-  // Repeated enums are just ints in the c++ generated code: cast/convert them.
-  return convert_to_enum_vector<TValueEnum>(
-      response.value().cbegin(),
-      response.value().cend());
-}
-
 template <typename TValueEnum, typename TIterator>
 auto convert_to_enum_vector(TIterator begin, TIterator end)
 {
@@ -831,6 +822,15 @@ auto convert_to_enum_vector(TIterator begin, TIterator end)
       std::back_inserter(vec),
       [](auto x) { return static_cast<TValueEnum>(x); });
   return vec;
+}
+
+template <typename TValueEnum, typename TResponse>
+auto get_value_enum_vector(const TResponse& response)
+{
+  // Repeated enums are just ints in the c++ generated code: cast/convert them.
+  return convert_to_enum_vector<TValueEnum>(
+      response.value().cbegin(),
+      response.value().cend());
 }
 
 template <typename TRaw = int32, typename TResponse>
