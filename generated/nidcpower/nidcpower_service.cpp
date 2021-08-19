@@ -2173,7 +2173,9 @@ namespace nidcpower_grpc {
         response->mutable_configuration()->Resize(size, 0);
         ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
         status = library_->ExportAttributeConfigurationBuffer(vi, size, configuration);
-        if (status == kErrorReadBufferTooSmall || status > size) {
+        // We cast status into size above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2429,7 +2431,9 @@ namespace nidcpower_grpc {
             attribute_value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        // We cast status into buffer_size above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2470,7 +2474,9 @@ namespace nidcpower_grpc {
             channel_name.resize(buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        // We cast status into buffer_size above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2511,7 +2517,9 @@ namespace nidcpower_grpc {
             channel_name.resize(buffer_size-1);
         }
         status = library_->GetChannelNameFromString(vi, index, buffer_size, (ViChar*)channel_name.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        // We cast status into buffer_size above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2552,7 +2560,9 @@ namespace nidcpower_grpc {
             description.resize(buffer_size-1);
         }
         status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        // We cast status into buffer_size above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2670,7 +2680,9 @@ namespace nidcpower_grpc {
             coercion_record.resize(buffer_size-1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        // We cast status into buffer_size above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2710,7 +2722,9 @@ namespace nidcpower_grpc {
             interchange_warning.resize(buffer_size-1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        // We cast status into buffer_size above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }

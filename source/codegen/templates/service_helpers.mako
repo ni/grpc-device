@@ -57,7 +57,9 @@ ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(output_parameters)}\
 </%block>\
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
-        if (status == kErrorReadBufferTooSmall || status > ${common_helpers.camel_to_snake(size_param['cppName'])}) {
+        // We cast status into ${common_helpers.camel_to_snake(size_param['cppName'])} above, so it's safe to cast
+        // back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(${common_helpers.camel_to_snake(size_param['cppName'])})) {
           // buffer is now too small, try again
           continue;
         }
