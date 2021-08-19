@@ -30,6 +30,21 @@ config = {
                     'grpc_name': 'struct_double'
                 }
             ]
+        },
+        {
+            'name': 'StringAndTurtle',
+            'grpc_name': 'StringAndTurtle',
+            'fields': [
+                {
+                    'type': 'ViConstString',
+                    'name': 'stringArg',
+                },
+                {
+                    'type': 'ViInt16',
+                    'enum': 'Turtle',
+                    'name': 'turtle'
+                }
+            ]
         }
     ],
     'driver_name': 'NI-FAKE',

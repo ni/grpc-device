@@ -994,6 +994,56 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::InitWithVarArgs(::grpc::ServerContext* context, const InitWithVarArgsRequest* request, InitWithVarArgsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      auto get_stringArg_if = [](const google::protobuf::RepeatedPtrField<StringAndTurtle>& vector, int n) -> ViConstString {
+            if (vector.size() > n) {
+                  return vector[n].stringarg().c_str();
+            }
+            return nullptr;
+      };
+      auto get_turtle_if = [](const google::protobuf::RepeatedPtrField<StringAndTurtle>& vector, int n) -> ViInt16 {
+            if (vector.size() > n) {
+                  return vector[n].turtle();
+            }
+            return 0;
+      };
+      auto name_and_turtle = request->name_and_turtle();
+      if (name_and_turtle.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for nameAndTurtle were specified");
+      }
+      if (name_and_turtle.size() > 3) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for nameAndTurtle were specified");
+      }
+
+
+      auto init_lambda = [&] () {
+        ViSession vi;
+        int status = library_->InitWithVarArgs(resource_name, &vi, get_stringArg_if(name_and_turtle, 0), get_turtle_if(name_and_turtle, 0), get_stringArg_if(name_and_turtle, 1), get_turtle_if(name_and_turtle, 1), get_stringArg_if(name_and_turtle, 2), get_turtle_if(name_and_turtle, 2), get_stringArg_if(name_and_turtle, 3), get_turtle_if(name_and_turtle, 3));
+        return std::make_tuple(status, vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (ViSession id) { library_->close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_vi()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::MultipleArrayTypes(::grpc::ServerContext* context, const MultipleArrayTypesRequest* request, MultipleArrayTypesResponse* response)
   {
     if (context->IsCancelled()) {

@@ -156,11 +156,13 @@ public:
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status GetAIChanCalCalDate(::grpc::ServerContext* context, const GetAIChanCalCalDateRequest* request, GetAIChanCalCalDateResponse* response) override;
   ::grpc::Status GetAIChanCalExpDate(::grpc::ServerContext* context, const GetAIChanCalExpDateRequest* request, GetAIChanCalExpDateResponse* response) override;
+  ::grpc::Status GetAnalogPowerUpStates(::grpc::ServerContext* context, const GetAnalogPowerUpStatesRequest* request, GetAnalogPowerUpStatesResponse* response) override;
   ::grpc::Status GetArmStartTrigTimestampVal(::grpc::ServerContext* context, const GetArmStartTrigTimestampValRequest* request, GetArmStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
   ::grpc::Status GetBufferAttributeUInt32(::grpc::ServerContext* context, const GetBufferAttributeUInt32Request* request, GetBufferAttributeUInt32Response* response) override;
   ::grpc::Status GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response) override;
+  ::grpc::Status GetDigitalPowerUpStates(::grpc::ServerContext* context, const GetDigitalPowerUpStatesRequest* request, GetDigitalPowerUpStatesResponse* response) override;
   ::grpc::Status GetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const GetDigitalPullUpPullDownStatesRequest* request, GetDigitalPullUpPullDownStatesResponse* response) override;
   ::grpc::Status GetDisconnectedCDAQSyncPorts(::grpc::ServerContext* context, const GetDisconnectedCDAQSyncPortsRequest* request, GetDisconnectedCDAQSyncPortsResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;
@@ -223,6 +225,8 @@ public:
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetBufferAttributeUInt32(::grpc::ServerContext* context, const SetBufferAttributeUInt32Request* request, SetBufferAttributeUInt32Response* response) override;
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
+  ::grpc::Status SetDigitalPowerUpStates(::grpc::ServerContext* context, const SetDigitalPowerUpStatesRequest* request, SetDigitalPowerUpStatesResponse* response) override;
+  ::grpc::Status SetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const SetDigitalPullUpPullDownStatesRequest* request, SetDigitalPullUpPullDownStatesResponse* response) override;
   ::grpc::Status SetFirstSampClkWhen(::grpc::ServerContext* context, const SetFirstSampClkWhenRequest* request, SetFirstSampClkWhenResponse* response) override;
   ::grpc::Status SetScaleAttributeDouble(::grpc::ServerContext* context, const SetScaleAttributeDoubleRequest* request, SetScaleAttributeDoubleResponse* response) override;
   ::grpc::Status SetScaleAttributeDoubleArray(::grpc::ServerContext* context, const SetScaleAttributeDoubleArrayRequest* request, SetScaleAttributeDoubleArrayResponse* response) override;

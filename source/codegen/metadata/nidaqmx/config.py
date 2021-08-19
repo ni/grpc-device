@@ -27,6 +27,81 @@ config = {
                     'name': 'channelType',
                 }
             ]
+        },
+        {
+            'name': 'ChannelNamesAndExpState',
+            'grpc_name': 'ChannelNamesAndExpState',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelNames',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalLineState',
+                    'name': 'expState'
+                }
+            ]
+        },
+        {
+            'name': 'DigitalPowerUpTypeAndChannel',
+            'grpc_name': 'DigitalPowerUpTypeAndChannel',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelName',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalPowerUpChannelType',
+                    'name': 'state',
+                }
+            ]
+        },
+        {
+            'name': 'DigitalPowerUpTypeAndChannels',
+            'grpc_name': 'DigitalPowerUpTypeAndChannels',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelNames',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalPowerUpChannelType',
+                    'name': 'state',
+                }
+            ]
+        },
+        {
+            'name': 'DigitalPullUpPullDownStateAndChannel',
+            'grpc_name': 'DigitalPullUpPullDownStateAndChannel',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelNames',
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'DigitalPullUpPullDownState',
+                    'name': 'state',
+                }
+            ]
+        },
+        {
+            'name': 'PowerUpChannelTypeAndName',
+            'grpc_name': 'PowerUpChannelTypeAndName',
+            'fields': [
+                {
+                    'type': 'const char[]',
+                    'name': 'channelName'
+                },
+                {
+                    'type': 'int32',
+                    'enum': 'PowerUpChannelType',
+                    'name': 'channelType'
+                }
+            ]
         }
     ],
     'additional_headers': ['custom/nidaqmx_conversions.h'],

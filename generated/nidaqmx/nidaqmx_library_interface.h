@@ -130,7 +130,6 @@ class NiDAQmxLibraryInterface {
   virtual int32 CreateTEDSAIVoltageChanWithExcit(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[]) = 0;
   virtual int32 CreateTableScale(const char name[], const float64 prescaledVals[], uInt32 numPrescaledValsIn, const float64 scaledVals[], uInt32 numScaledValsIn, int32 preScaledUnits, const char scaledUnits[]) = 0;
   virtual int32 CreateTask(const char sessionName[], TaskHandle* task) = 0;
-  virtual int32 CreateWatchdogTimerTask(const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout, const char lines[], int32 expState) = 0;
   virtual int32 CreateWatchdogTimerTaskEx(const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout) = 0;
   virtual int32 DeleteNetworkDevice(const char deviceName[]) = 0;
   virtual int32 DeleteSavedGlobalChan(const char channelName[]) = 0;

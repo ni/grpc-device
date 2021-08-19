@@ -554,7 +554,32 @@ enums = {
             }
         ]
     },
-    'DigitalPullUpPullDownStates': {
+    'DigitalPowerUpChannelType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'High logic.'
+                },
+                'name': 'HIGH',
+                'value': 10192
+            },
+            {
+                'documentation': {
+                    'description': 'Low logic.'
+                },
+                'name': 'LOW',
+                'value': 10214
+            },
+            {
+                'documentation': {
+                    'description': 'High-impedance state. You can select this state only on devices with bidirectional ports, and you can select it only for entire ports. You cannot select this state for dedicated digital output lines.'
+                },
+                'name': 'TRISTATE',
+                'value': 10310
+            }
+        ]
+    },
+    'DigitalPullUpPullDownState': {
         'values': [
             {
                 'name': 'PULL_UP',
@@ -566,7 +591,6 @@ enums = {
             },
         ]
     },
-
     'DigitalWidthUnits3': {
         'values': [
             {
@@ -1175,10 +1199,6 @@ enums = {
             {
                 'name': 'CHANNEL_CURRENT',
                 'value': 1
-            },
-            {
-                'name': 'CHANNEL_HIGH_IMPEDANCE',
-                'value': 2
             }
         ]
     },

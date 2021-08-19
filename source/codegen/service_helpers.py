@@ -35,6 +35,7 @@ def create_args_for_callback(parameters):
         for p in parameters
     ])
 
+
 def create_args(parameters):
     result = ''
     is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(
@@ -42,11 +43,31 @@ def create_args(parameters):
     if is_twist_mechanism:
         twist_value = common_helpers.get_twist_value(parameters)
         twist_value_name = common_helpers.camel_to_snake(twist_value)
+    have_expanded_varargs = False
     for parameter in parameters:
+        if parameter.get('repeating_argument', False):
+            continue
         parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
         is_array = common_helpers.is_array(parameter['type'])
         is_output = common_helpers.is_output_parameter(parameter)
-        if is_output and common_helpers.is_string_arg(parameter):
+        if common_helpers.is_repeated_varargs_parameter(parameter):
+            # Some methods have both input and output repeated varargs parameters,
+            # so only expand them once.
+            if have_expanded_varargs:
+                continue
+            have_expanded_varargs = True
+            repeated_parameters = [
+                p for p in parameters if common_helpers.is_repeating_parameter(p)]
+            # We need to pass one extra set of arguments because the last parameters have to be nullptr's
+            # so the callee knows we're done passing arguments.
+            max_length = parameter['max_length'] + 1
+            for i in range(max_length):
+                for parameter in repeated_parameters:
+                    if common_helpers.is_input_parameter(parameter):
+                        result += f'get_{parameter["name"]}_if({parameter_name}, {i}), '
+                    else:
+                        result += f'get_{parameter["name"]}_if({parameter["name"]}Vector, {i}), '
+        elif is_output and common_helpers.is_string_arg(parameter):
             type_without_brackets = common_helpers.get_underlying_type_name(
                 parameter['type'])
             result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
@@ -57,7 +78,7 @@ def create_args(parameters):
         elif 'callback_params' in parameter:
             result = f'{result}CallbackRouter::handle_callback, '
         elif 'callback_token' in parameter:
-            result =  f'{result}handler->token(), '
+            result = f'{result}handler->token(), '
         else:
             if is_array and common_helpers.is_struct(parameter):
                 parameter_name = parameter_name + ".data()"
@@ -96,35 +117,6 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
                 result = result + f'&{name}' + ', '
         else:
             result = result + common_helpers.camel_to_snake(name) + ', '
-    return result[:-2]
-
-
-def create_args_for_varargs(parameters):
-    result = ''
-    have_expanded_varargs = False
-    for parameter in parameters:
-        name = common_helpers.camel_to_snake(parameter['cppName'])
-        if not parameter.get('include_in_proto', True):
-            continue
-        if common_helpers.is_repeated_varargs_parameter(parameter):
-            # Some methods have both input and output repeated varargs parameters,
-            # so only expand them once.
-            if have_expanded_varargs:
-                continue
-            have_expanded_varargs = True
-            repeated_parameters = [
-                p for p in parameters if common_helpers.is_repeating_parameter(p)]
-            # We need to pass one extra set of arguments because the last parameters have to be nullptr's
-            # so the callee knows we're done passing arguments.
-            max_length = parameter['max_length'] + 1
-            for i in range(max_length):
-                for parameter in repeated_parameters:
-                    if common_helpers.is_input_parameter(parameter):
-                        result += f'get_{parameter["name"]}_if({name}, {i}), '
-                    else:
-                        result += f'get_{parameter["name"]}_if({parameter["name"]}Vector, {i}), '
-        else:
-            result += f'{name}, '
     return result[:-2]
 
 
@@ -302,7 +294,8 @@ def get_callback_method_parameters(function_data):
         for p in parameters
         if common_helpers.is_input_parameter(p)
     ]
-    callback_ptr_parameter = next((p for p in parameters if 'callback_params' in p))
+    callback_ptr_parameter = next(
+        (p for p in parameters if 'callback_params' in p))
     output_parameters = callback_ptr_parameter['callback_params']
 
     return input_parameters, output_parameters

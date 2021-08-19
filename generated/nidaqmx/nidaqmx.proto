@@ -145,11 +145,13 @@ service NiDAQmx {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc GetAIChanCalCalDate(GetAIChanCalCalDateRequest) returns (GetAIChanCalCalDateResponse);
   rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
+  rpc GetAnalogPowerUpStates(GetAnalogPowerUpStatesRequest) returns (GetAnalogPowerUpStatesResponse);
   rpc GetArmStartTrigTimestampVal(GetArmStartTrigTimestampValRequest) returns (GetArmStartTrigTimestampValResponse);
   rpc GetArmStartTrigTrigWhen(GetArmStartTrigTrigWhenRequest) returns (GetArmStartTrigTrigWhenResponse);
   rpc GetAutoConfiguredCDAQSyncConnections(GetAutoConfiguredCDAQSyncConnectionsRequest) returns (GetAutoConfiguredCDAQSyncConnectionsResponse);
   rpc GetBufferAttributeUInt32(GetBufferAttributeUInt32Request) returns (GetBufferAttributeUInt32Response);
   rpc GetDigitalLogicFamilyPowerUpState(GetDigitalLogicFamilyPowerUpStateRequest) returns (GetDigitalLogicFamilyPowerUpStateResponse);
+  rpc GetDigitalPowerUpStates(GetDigitalPowerUpStatesRequest) returns (GetDigitalPowerUpStatesResponse);
   rpc GetDigitalPullUpPullDownStates(GetDigitalPullUpPullDownStatesRequest) returns (GetDigitalPullUpPullDownStatesResponse);
   rpc GetDisconnectedCDAQSyncPorts(GetDisconnectedCDAQSyncPortsRequest) returns (GetDisconnectedCDAQSyncPortsResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
@@ -212,6 +214,8 @@ service NiDAQmx {
   rpc SetArmStartTrigTrigWhen(SetArmStartTrigTrigWhenRequest) returns (SetArmStartTrigTrigWhenResponse);
   rpc SetBufferAttributeUInt32(SetBufferAttributeUInt32Request) returns (SetBufferAttributeUInt32Response);
   rpc SetDigitalLogicFamilyPowerUpState(SetDigitalLogicFamilyPowerUpStateRequest) returns (SetDigitalLogicFamilyPowerUpStateResponse);
+  rpc SetDigitalPowerUpStates(SetDigitalPowerUpStatesRequest) returns (SetDigitalPowerUpStatesResponse);
+  rpc SetDigitalPullUpPullDownStates(SetDigitalPullUpPullDownStatesRequest) returns (SetDigitalPullUpPullDownStatesResponse);
   rpc SetFirstSampClkWhen(SetFirstSampClkWhenRequest) returns (SetFirstSampClkWhenResponse);
   rpc SetScaleAttributeDouble(SetScaleAttributeDoubleRequest) returns (SetScaleAttributeDoubleResponse);
   rpc SetScaleAttributeDoubleArray(SetScaleAttributeDoubleArrayRequest) returns (SetScaleAttributeDoubleArrayResponse);
@@ -445,10 +449,17 @@ enum DigitalPatternCondition1 {
   DIGITAL_PATTERN_CONDITION1_PATTERN_DOES_NOT_MATCH = 10253;
 }
 
-enum DigitalPullUpPullDownStates {
-  DIGITAL_PULL_UP_PULL_DOWN_STATES_UNSPECIFIED = 0;
-  DIGITAL_PULL_UP_PULL_DOWN_STATES_PULL_UP = 15950;
-  DIGITAL_PULL_UP_PULL_DOWN_STATES_PULL_DOWN = 15951;
+enum DigitalPowerUpChannelType {
+  DIGITAL_POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
+  DIGITAL_POWER_UP_CHANNEL_TYPE_HIGH = 10192;
+  DIGITAL_POWER_UP_CHANNEL_TYPE_LOW = 10214;
+  DIGITAL_POWER_UP_CHANNEL_TYPE_TRISTATE = 10310;
+}
+
+enum DigitalPullUpPullDownState {
+  DIGITAL_PULL_UP_PULL_DOWN_STATE_UNSPECIFIED = 0;
+  DIGITAL_PULL_UP_PULL_DOWN_STATE_PULL_UP = 15950;
+  DIGITAL_PULL_UP_PULL_DOWN_STATE_PULL_DOWN = 15951;
 }
 
 enum DigitalWidthUnits3 {
@@ -644,7 +655,6 @@ enum PowerUpChannelType {
   POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_VOLTAGE = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_CURRENT = 1;
-  POWER_UP_CHANNEL_TYPE_CHANNEL_HIGH_IMPEDANCE = 2;
 }
 
 enum PressureUnits {
@@ -957,6 +967,31 @@ message AnalogPowerUpState {
   string channelNames = 1;
   double state = 2;
   PowerUpChannelType channelType = 3;
+}
+
+message ChannelNamesAndExpState {
+  string channelNames = 1;
+  DigitalLineState expState = 2;
+}
+
+message DigitalPowerUpTypeAndChannel {
+  string channelName = 1;
+  DigitalPowerUpChannelType state = 2;
+}
+
+message DigitalPowerUpTypeAndChannels {
+  string channelNames = 1;
+  DigitalPowerUpChannelType state = 2;
+}
+
+message DigitalPullUpPullDownStateAndChannel {
+  string channelNames = 1;
+  DigitalPullUpPullDownState state = 2;
+}
+
+message PowerUpChannelTypeAndName {
+  string channelName = 1;
+  PowerUpChannelType channelType = 2;
 }
 message AddCDAQSyncConnectionRequest {
   string port_list = 1;
@@ -3423,11 +3458,7 @@ message CreateWatchdogTimerTaskRequest {
   string device_name = 1;
   string session_name = 2;
   double timeout = 3;
-  string lines = 4;
-  oneof exp_state_enum {
-    DigitalLineState exp_state = 5;
-    int32 exp_state_raw = 6;
-  }
+  repeated ChannelNamesAndExpState names_and_exp_states = 4;
 }
 
 message CreateWatchdogTimerTaskResponse {
@@ -3553,6 +3584,16 @@ message GetAIChanCalExpDateResponse {
   uint32 minute = 6;
 }
 
+message GetAnalogPowerUpStatesRequest {
+  string device_name = 1;
+  repeated PowerUpChannelTypeAndName power_up_states = 2;
+}
+
+message GetAnalogPowerUpStatesResponse {
+  int32 status = 1;
+  repeated double states = 2;
+}
+
 message GetArmStartTrigTimestampValRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -3599,6 +3640,16 @@ message GetDigitalLogicFamilyPowerUpStateResponse {
   int32 logic_family = 2;
 }
 
+message GetDigitalPowerUpStatesRequest {
+  string device_name = 1;
+  repeated string channel_name = 2;
+}
+
+message GetDigitalPowerUpStatesResponse {
+  int32 status = 1;
+  repeated DigitalPowerUpChannelType power_up_states = 2;
+}
+
 message GetDigitalPullUpPullDownStatesRequest {
   string device_name = 1;
   repeated string channel_names = 2;
@@ -3606,7 +3657,7 @@ message GetDigitalPullUpPullDownStatesRequest {
 
 message GetDigitalPullUpPullDownStatesResponse {
   int32 status = 1;
-  repeated DigitalPullUpPullDownStates states = 2;
+  repeated DigitalPullUpPullDownState states = 2;
 }
 
 message GetDisconnectedCDAQSyncPortsRequest {
@@ -4348,6 +4399,24 @@ message SetDigitalLogicFamilyPowerUpStateRequest {
 }
 
 message SetDigitalLogicFamilyPowerUpStateResponse {
+  int32 status = 1;
+}
+
+message SetDigitalPowerUpStatesRequest {
+  string device_name = 1;
+  repeated DigitalPowerUpTypeAndChannels power_up_states = 2;
+}
+
+message SetDigitalPowerUpStatesResponse {
+  int32 status = 1;
+}
+
+message SetDigitalPullUpPullDownStatesRequest {
+  string device_name = 1;
+  repeated DigitalPullUpPullDownStateAndChannel pull_up_pull_down_state_and_channels = 2;
+}
+
+message SetDigitalPullUpPullDownStatesResponse {
   int32 status = 1;
 }
 
