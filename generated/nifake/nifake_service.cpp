@@ -14,6 +14,8 @@
 
 namespace nifake_grpc {
 
+  const auto kErrorReadBufferTooSmall = -200229;
+
   NiFakeService::NiFakeService(NiFakeLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
@@ -311,20 +313,26 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 size_in_bytes = status;
+      
+        std::string configuration(size_in_bytes, '\0');
+        status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
+        if (status == kErrorReadBufferTooSmall || status > size_in_bytes) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_configuration(configuration);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 size_in_bytes = status;
-
-      std::string configuration(size_in_bytes, '\0');
-      status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_configuration(configuration);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -437,23 +445,29 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string a_string;
+        if (buffer_size > 0) {
+            a_string.resize(buffer_size-1);
+        }
+        status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_a_string(a_string);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string a_string;
-      if (buffer_size > 0) {
-          a_string.resize(buffer_size-1);
-      }
-      status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_a_string(a_string);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -472,19 +486,25 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto a_string = request->a_string().c_str();
       ViInt32 actual_size {};
-      auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_array_out()->Resize(actual_size, 0);
+        ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
+        status = library_->GetAnIviDanceWithATwistArray(vi, a_string, actual_size, array_out, &actual_size);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_size(actual_size);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_array_out()->Resize(actual_size, 0);
-      ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
-      status = library_->GetAnIviDanceWithATwistArray(vi, a_string, actual_size, array_out, &actual_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_size(actual_size);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -525,20 +545,26 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->GetArrayUsingIviDance(vi, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetArrayUsingIviDance(vi, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 array_size = status;
+      
+        response->mutable_array_out()->Resize(array_size, 0);
+        ViReal64* array_out = response->mutable_array_out()->mutable_data();
+        status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
+        if (status == kErrorReadBufferTooSmall || status > array_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 array_size = status;
-
-      response->mutable_array_out()->Resize(array_size, 0);
-      ViReal64* array_out = response->mutable_array_out()->mutable_data();
-      status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
-      response->set_status(status);
-      if (status == 0) {
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -708,23 +734,29 @@ namespace nifake_grpc {
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
-      auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string attribute_value;
+        if (buffer_size > 0) {
+            attribute_value.resize(buffer_size-1);
+        }
+        status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_attribute_value(attribute_value);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string attribute_value;
-      if (buffer_size > 0) {
-          attribute_value.resize(buffer_size-1);
-      }
-      status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_attribute_value(attribute_value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1334,28 +1366,33 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 array_size = request->array_size();
 
-      auto status = library_->ReturnMultipleTypes(vi, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->ReturnMultipleTypes(vi, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 string_size = status;
+      
+        ViBoolean a_boolean {};
+        ViInt32 an_int32 {};
+        ViInt64 an_int64 {};
+        ViInt16 an_int_enum {};
+        ViReal64 a_float {};
+        ViReal64 a_float_enum {};
+        response->mutable_an_array()->Resize(array_size, 0);
+        ViReal64* an_array = response->mutable_an_array()->mutable_data();
+        std::string a_string;
+        if (string_size > 0) {
+            a_string.resize(string_size-1);
+        }
+        status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
+        if (status == kErrorReadBufferTooSmall || status > string_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
-        return ::grpc::Status::OK;
-      }
-      ViInt32 string_size = status;
-
-      ViBoolean a_boolean {};
-      ViInt32 an_int32 {};
-      ViInt64 an_int64 {};
-      ViInt16 an_int_enum {};
-      ViReal64 a_float {};
-      ViReal64 a_float_enum {};
-      response->mutable_an_array()->Resize(array_size, 0);
-      ViReal64* an_array = response->mutable_an_array()->mutable_data();
-      std::string a_string;
-      if (string_size > 0) {
-          a_string.resize(string_size-1);
-      }
-      status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
-      response->set_status(status);
-      if (status == 0) {
+        if (status == 0) {
         response->set_a_boolean(a_boolean);
         response->set_an_int32(an_int32);
         response->set_an_int64(an_int64);
@@ -1368,8 +1405,9 @@ namespace nifake_grpc {
         }
         response->set_a_float_enum_raw(a_float_enum);
         response->set_a_string(a_string);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

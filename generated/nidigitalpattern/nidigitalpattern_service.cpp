@@ -14,6 +14,8 @@
 
 namespace nidigitalpattern_grpc {
 
+  const auto kErrorReadBufferTooSmall = -200229;
+
   NiDigitalService::NiDigitalService(NiDigitalLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
@@ -1376,20 +1378,26 @@ namespace nidigitalpattern_grpc {
       ViReal64 timeout = request->timeout();
       ViInt32 actual_num_waveforms {};
       ViInt32 actual_samples_per_waveform {};
-      auto status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, 0, nullptr, &actual_num_waveforms, &actual_samples_per_waveform);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, 0, nullptr, &actual_num_waveforms, &actual_samples_per_waveform);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_data()->Resize(actual_num_waveforms, 0);
+        ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
+        status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, actual_num_waveforms, data, &actual_num_waveforms, &actual_samples_per_waveform);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_waveforms(actual_num_waveforms);
+          response->set_actual_samples_per_waveform(actual_samples_per_waveform);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_data()->Resize(actual_num_waveforms, 0);
-      ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
-      status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, actual_num_waveforms, data, &actual_num_waveforms, &actual_samples_per_waveform);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_waveforms(actual_num_waveforms);
-        response->set_actual_samples_per_waveform(actual_samples_per_waveform);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1444,25 +1452,31 @@ namespace nidigitalpattern_grpc {
       ViInt64 sample_index = request->sample_index();
       ViInt32 dut_cycle_index = request->dut_cycle_index();
       ViInt32 actual_num_pin_data {};
-      auto status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, 0, nullptr, nullptr, nullptr, &actual_num_pin_data);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, 0, nullptr, nullptr, nullptr, &actual_num_pin_data);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string expected_pin_states(actual_num_pin_data, '\0');
+        std::string actual_pin_states(actual_num_pin_data, '\0');
+        std::vector<ViBoolean> per_pin_pass_fail(actual_num_pin_data, ViBoolean());
+        status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, actual_num_pin_data, (ViUInt8*)expected_pin_states.data(), (ViUInt8*)actual_pin_states.data(), per_pin_pass_fail.data(), &actual_num_pin_data);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          CopyBytesToEnums(expected_pin_states, response->mutable_expected_pin_states());
+          response->set_expected_pin_states_raw(expected_pin_states);
+          CopyBytesToEnums(actual_pin_states, response->mutable_actual_pin_states());
+          response->set_actual_pin_states_raw(actual_pin_states);
+          Copy(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
+          response->set_actual_num_pin_data(actual_num_pin_data);
+        }
         return ::grpc::Status::OK;
       }
-      std::string expected_pin_states(actual_num_pin_data, '\0');
-      std::string actual_pin_states(actual_num_pin_data, '\0');
-      std::vector<ViBoolean> per_pin_pass_fail(actual_num_pin_data, ViBoolean());
-      status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, actual_num_pin_data, (ViUInt8*)expected_pin_states.data(), (ViUInt8*)actual_pin_states.data(), per_pin_pass_fail.data(), &actual_num_pin_data);
-      response->set_status(status);
-      if (status == 0) {
-        CopyBytesToEnums(expected_pin_states, response->mutable_expected_pin_states());
-        response->set_expected_pin_states_raw(expected_pin_states);
-        CopyBytesToEnums(actual_pin_states, response->mutable_actual_pin_states());
-        response->set_actual_pin_states_raw(actual_pin_states);
-        Copy(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
-        response->set_actual_num_pin_data(actual_num_pin_data);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1562,19 +1576,25 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_frequencies {};
-      auto status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, 0, nullptr, &actual_num_frequencies);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, 0, nullptr, &actual_num_frequencies);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
+        ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
+        status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, actual_num_frequencies, frequencies, &actual_num_frequencies);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_frequencies(actual_num_frequencies);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
-      ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
-      status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, actual_num_frequencies, frequencies, &actual_num_frequencies);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_frequencies(actual_num_frequencies);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1720,23 +1740,29 @@ namespace nidigitalpattern_grpc {
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
 
-      auto status = library_->GetAttributeViString(vi, channel_name, attribute, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAttributeViString(vi, channel_name, attribute, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string value;
+        if (buffer_size > 0) {
+            value.resize(buffer_size-1);
+        }
+        status = library_->GetAttributeViString(vi, channel_name, attribute, buffer_size, (ViChar*)value.data());
+        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_value(value);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string value;
-      if (buffer_size > 0) {
-          value.resize(buffer_size-1);
-      }
-      status = library_->GetAttributeViString(vi, channel_name, attribute, buffer_size, (ViChar*)value.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1755,23 +1781,29 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 index = request->index();
 
-      auto status = library_->GetChannelName(vi, index, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetChannelName(vi, index, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 name_buffer_size = status;
+      
+        std::string name;
+        if (name_buffer_size > 0) {
+            name.resize(name_buffer_size-1);
+        }
+        status = library_->GetChannelName(vi, index, name_buffer_size, (ViChar*)name.data());
+        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_name(name);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 name_buffer_size = status;
-
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
-      status = library_->GetChannelName(vi, index, name_buffer_size, (ViChar*)name.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_name(name);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1790,23 +1822,29 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto indices = request->indices().c_str();
 
-      auto status = library_->GetChannelNameFromString(vi, indices, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetChannelNameFromString(vi, indices, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 name_buffer_size = status;
+      
+        std::string names;
+        if (name_buffer_size > 0) {
+            names.resize(name_buffer_size-1);
+        }
+        status = library_->GetChannelNameFromString(vi, indices, name_buffer_size, (ViChar*)names.data());
+        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_names(names);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 name_buffer_size = status;
-
-      std::string names;
-      if (name_buffer_size > 0) {
-          names.resize(name_buffer_size-1);
-      }
-      status = library_->GetChannelNameFromString(vi, indices, name_buffer_size, (ViChar*)names.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_names(names);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1824,25 +1862,31 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
 
-      auto status = library_->GetError(vi, nullptr, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetError(vi, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 error_description_buffer_size = status;
+      
+        ViStatus error_code {};
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size-1);
+        }
+        status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status > error_description_buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
-        return ::grpc::Status::OK;
-      }
-      ViInt32 error_description_buffer_size = status;
-
-      ViStatus error_code {};
-      std::string error_description;
-      if (error_description_buffer_size > 0) {
-          error_description.resize(error_description_buffer_size-1);
-      }
-      status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
-      response->set_status(status);
-      if (status == 0) {
+        if (status == 0) {
         response->set_error_code(error_code);
         response->set_error_description(error_description);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1861,19 +1905,25 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_read {};
-      auto status = library_->GetFailCount(vi, channel_list, 0, nullptr, &actual_num_read);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetFailCount(vi, channel_list, 0, nullptr, &actual_num_read);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_failure_count()->Resize(actual_num_read, 0);
+        ViInt64* failure_count = response->mutable_failure_count()->mutable_data();
+        status = library_->GetFailCount(vi, channel_list, actual_num_read, failure_count, &actual_num_read);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_read(actual_num_read);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_failure_count()->Resize(actual_num_read, 0);
-      ViInt64* failure_count = response->mutable_failure_count()->mutable_data();
-      status = library_->GetFailCount(vi, channel_list, actual_num_read, failure_count, &actual_num_read);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_read(actual_num_read);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1916,19 +1966,25 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto start_label = request->start_label().c_str();
       ViInt32 actual_num_pins {};
-      auto status = library_->GetPatternPinIndexes(vi, start_label, 0, nullptr, &actual_num_pins);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetPatternPinIndexes(vi, start_label, 0, nullptr, &actual_num_pins);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
+        ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
+        status = library_->GetPatternPinIndexes(vi, start_label, actual_num_pins, pin_indexes, &actual_num_pins);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_pins(actual_num_pins);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
-      ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
-      status = library_->GetPatternPinIndexes(vi, start_label, actual_num_pins, pin_indexes, &actual_num_pins);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_pins(actual_num_pins);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1947,23 +2003,29 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 pattern_index = request->pattern_index();
 
-      auto status = library_->GetPatternName(vi, pattern_index, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetPatternName(vi, pattern_index, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 name_buffer_size = status;
+      
+        std::string name;
+        if (name_buffer_size > 0) {
+            name.resize(name_buffer_size-1);
+        }
+        status = library_->GetPatternName(vi, pattern_index, name_buffer_size, (ViChar*)name.data());
+        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_name(name);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 name_buffer_size = status;
-
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
-      status = library_->GetPatternName(vi, pattern_index, name_buffer_size, (ViChar*)name.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_name(name);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -1982,23 +2044,29 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto start_label = request->start_label().c_str();
 
-      auto status = library_->GetPatternPinList(vi, start_label, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetPatternPinList(vi, start_label, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 pin_list_buffer_size = status;
+      
+        std::string pin_list;
+        if (pin_list_buffer_size > 0) {
+            pin_list.resize(pin_list_buffer_size-1);
+        }
+        status = library_->GetPatternPinList(vi, start_label, pin_list_buffer_size, (ViChar*)pin_list.data());
+        if (status == kErrorReadBufferTooSmall || status > pin_list_buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_pin_list(pin_list);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 pin_list_buffer_size = status;
-
-      std::string pin_list;
-      if (pin_list_buffer_size > 0) {
-          pin_list.resize(pin_list_buffer_size-1);
-      }
-      status = library_->GetPatternPinList(vi, start_label, pin_list_buffer_size, (ViChar*)pin_list.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_pin_list(pin_list);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2017,23 +2085,29 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 pin_index = request->pin_index();
 
-      auto status = library_->GetPinName(vi, pin_index, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetPinName(vi, pin_index, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 name_buffer_size = status;
+      
+        std::string name;
+        if (name_buffer_size > 0) {
+            name.resize(name_buffer_size-1);
+        }
+        status = library_->GetPinName(vi, pin_index, name_buffer_size, (ViChar*)name.data());
+        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_name(name);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 name_buffer_size = status;
-
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
-      status = library_->GetPinName(vi, pin_index, name_buffer_size, (ViChar*)name.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_name(name);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2052,23 +2126,29 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_values {};
-      auto status = library_->GetPinResultsPinInformation(vi, channel_list, 0, nullptr, nullptr, nullptr, &actual_num_values);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetPinResultsPinInformation(vi, channel_list, 0, nullptr, nullptr, nullptr, &actual_num_values);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_pin_indexes()->Resize(actual_num_values, 0);
+        ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
+        response->mutable_site_numbers()->Resize(actual_num_values, 0);
+        ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
+        response->mutable_channel_indexes()->Resize(actual_num_values, 0);
+        ViInt32* channel_indexes = reinterpret_cast<ViInt32*>(response->mutable_channel_indexes()->mutable_data());
+        status = library_->GetPinResultsPinInformation(vi, channel_list, actual_num_values, pin_indexes, site_numbers, channel_indexes, &actual_num_values);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_values(actual_num_values);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_pin_indexes()->Resize(actual_num_values, 0);
-      ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
-      response->mutable_site_numbers()->Resize(actual_num_values, 0);
-      ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
-      response->mutable_channel_indexes()->Resize(actual_num_values, 0);
-      ViInt32* channel_indexes = reinterpret_cast<ViInt32*>(response->mutable_channel_indexes()->mutable_data());
-      status = library_->GetPinResultsPinInformation(vi, channel_list, actual_num_values, pin_indexes, site_numbers, channel_indexes, &actual_num_values);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_values(actual_num_values);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2087,19 +2167,25 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       ViInt32 actual_num_sites {};
-      auto status = library_->GetSitePassFail(vi, site_list, 0, nullptr, &actual_num_sites);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetSitePassFail(vi, site_list, 0, nullptr, &actual_num_sites);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<ViBoolean> pass_fail(actual_num_sites, ViBoolean());
+        status = library_->GetSitePassFail(vi, site_list, actual_num_sites, pass_fail.data(), &actual_num_sites);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          Copy(pass_fail, response->mutable_pass_fail());
+          response->set_actual_num_sites(actual_num_sites);
+        }
         return ::grpc::Status::OK;
       }
-      std::vector<ViBoolean> pass_fail(actual_num_sites, ViBoolean());
-      status = library_->GetSitePassFail(vi, site_list, actual_num_sites, pass_fail.data(), &actual_num_sites);
-      response->set_status(status);
-      if (status == 0) {
-        Copy(pass_fail, response->mutable_pass_fail());
-        response->set_actual_num_sites(actual_num_sites);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2134,19 +2220,25 @@ namespace nidigitalpattern_grpc {
       }
 
       ViInt32 actual_num_site_numbers {};
-      auto status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, 0, nullptr, &actual_num_site_numbers);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, 0, nullptr, &actual_num_site_numbers);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
+        ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
+        status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, actual_num_site_numbers, site_numbers, &actual_num_site_numbers);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_site_numbers(actual_num_site_numbers);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
-      ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
-      status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, actual_num_site_numbers, site_numbers, &actual_num_site_numbers);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_site_numbers(actual_num_site_numbers);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2257,23 +2349,29 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 time_set_index = request->time_set_index();
 
-      auto status = library_->GetTimeSetName(vi, time_set_index, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetTimeSetName(vi, time_set_index, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 name_buffer_size = status;
+      
+        std::string name;
+        if (name_buffer_size > 0) {
+            name.resize(name_buffer_size-1);
+        }
+        status = library_->GetTimeSetName(vi, time_set_index, name_buffer_size, (ViChar*)name.data());
+        if (status == kErrorReadBufferTooSmall || status > name_buffer_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_name(name);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 name_buffer_size = status;
-
-      std::string name;
-      if (name_buffer_size > 0) {
-          name.resize(name_buffer_size-1);
-      }
-      status = library_->GetTimeSetName(vi, time_set_index, name_buffer_size, (ViChar*)name.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_name(name);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2824,19 +2922,25 @@ namespace nidigitalpattern_grpc {
       }
 
       ViInt32 actual_num_read {};
-      auto status = library_->PPMUMeasure(vi, channel_list, measurement_type, 0, nullptr, &actual_num_read);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->PPMUMeasure(vi, channel_list, measurement_type, 0, nullptr, &actual_num_read);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_measurements()->Resize(actual_num_read, 0);
+        ViReal64* measurements = response->mutable_measurements()->mutable_data();
+        status = library_->PPMUMeasure(vi, channel_list, measurement_type, actual_num_read, measurements, &actual_num_read);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_read(actual_num_read);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_measurements()->Resize(actual_num_read, 0);
-      ViReal64* measurements = response->mutable_measurements()->mutable_data();
-      status = library_->PPMUMeasure(vi, channel_list, measurement_type, actual_num_read, measurements, &actual_num_read);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_read(actual_num_read);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2923,20 +3027,26 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_read {};
-      auto status = library_->ReadStatic(vi, channel_list, 0, nullptr, &actual_num_read);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->ReadStatic(vi, channel_list, 0, nullptr, &actual_num_read);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string data(actual_num_read, '\0');
+        status = library_->ReadStatic(vi, channel_list, actual_num_read, (ViUInt8*)data.data(), &actual_num_read);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          CopyBytesToEnums(data, response->mutable_data());
+          response->set_data_raw(data);
+          response->set_actual_num_read(actual_num_read);
+        }
         return ::grpc::Status::OK;
       }
-      std::string data(actual_num_read, '\0');
-      status = library_->ReadStatic(vi, channel_list, actual_num_read, (ViUInt8*)data.data(), &actual_num_read);
-      response->set_status(status);
-      if (status == 0) {
-        CopyBytesToEnums(data, response->mutable_data());
-        response->set_data_raw(data);
-        response->set_actual_num_read(actual_num_read);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -3279,19 +3389,25 @@ namespace nidigitalpattern_grpc {
       auto channel_list = request->channel_list().c_str();
       ViBoolean apply_offsets = request->apply_offsets();
       ViInt32 actual_num_offsets {};
-      auto status = library_->TDR(vi, channel_list, apply_offsets, 0, nullptr, &actual_num_offsets);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->TDR(vi, channel_list, apply_offsets, 0, nullptr, &actual_num_offsets);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_offsets()->Resize(actual_num_offsets, 0);
+        ViReal64* offsets = response->mutable_offsets()->mutable_data();
+        status = library_->TDR(vi, channel_list, apply_offsets, actual_num_offsets, offsets, &actual_num_offsets);
+        if (status == kErrorReadBufferTooSmall) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_actual_num_offsets(actual_num_offsets);
+        }
         return ::grpc::Status::OK;
       }
-      response->mutable_offsets()->Resize(actual_num_offsets, 0);
-      ViReal64* offsets = response->mutable_offsets()->mutable_data();
-      status = library_->TDR(vi, channel_list, apply_offsets, actual_num_offsets, offsets, &actual_num_offsets);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_actual_num_offsets(actual_num_offsets);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

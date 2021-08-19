@@ -14,6 +14,8 @@
 
 namespace nitclk_grpc {
 
+  const auto kErrorReadBufferTooSmall = -200229;
+
   NiTClkService::NiTClkService(NiTClkLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
   {
@@ -134,23 +136,29 @@ namespace nitclk_grpc {
     }
     try {
 
-      auto status = library_->GetExtendedErrorInfo(nullptr, 0);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetExtendedErrorInfo(nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViUInt32 error_string_size = status;
+      
+        std::string error_string;
+        if (error_string_size > 0) {
+            error_string.resize(error_string_size-1);
+        }
+        status = library_->GetExtendedErrorInfo((ViChar*)error_string.data(), error_string_size);
+        if (status == kErrorReadBufferTooSmall || status > error_string_size) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+        response->set_error_string(error_string);
+        }
         return ::grpc::Status::OK;
       }
-      ViUInt32 error_string_size = status;
-
-      std::string error_string;
-      if (error_string_size > 0) {
-          error_string.resize(error_string_size-1);
-      }
-      status = library_->GetExtendedErrorInfo((ViChar*)error_string.data(), error_string_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_string(error_string);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
