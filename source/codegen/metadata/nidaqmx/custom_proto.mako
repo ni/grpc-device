@@ -5,23 +5,23 @@ message AnalogPowerUpState {
 }
 
 message ChannelNamesAndExpState {
-  string channelNames = 1;
+  string lines = 1;
   DigitalLineState expState = 2;
 }
 
 message DigitalPowerUpTypeAndChannel {
   string channelName = 1;
-  DigitalPowerUpChannelType state = 2;
+  PowerUpStates state = 2;
 }
 
 message DigitalPowerUpTypeAndChannels {
   string channelNames = 1;
-  DigitalPowerUpChannelType state = 2;
+  PowerUpStates state = 2;
 }
 
 message DigitalPullUpPullDownStateAndChannel {
   string channelNames = 1;
-  DigitalPullUpPullDownState state = 2;
+  ResistorState state = 2;
 }
 
 message PowerUpChannelTypeAndName {

@@ -34,7 +34,7 @@ config = {
             'fields': [
                 {
                     'type': 'const char[]',
-                    'name': 'channelNames',
+                    'name': 'lines',
                 },
                 {
                     'type': 'int32',
@@ -53,7 +53,7 @@ config = {
                 },
                 {
                     'type': 'int32',
-                    'enum': 'DigitalPowerUpChannelType',
+                    'enum': 'PowerUpStates',
                     'name': 'state',
                 }
             ]
@@ -68,7 +68,7 @@ config = {
                 },
                 {
                     'type': 'int32',
-                    'enum': 'DigitalPowerUpChannelType',
+                    'enum': 'PowerUpStates',
                     'name': 'state',
                 }
             ]
@@ -83,7 +83,7 @@ config = {
                 },
                 {
                     'type': 'int32',
-                    'enum': 'DigitalPullUpPullDownState',
+                    'enum': 'ResistorState',
                     'name': 'state',
                 }
             ]

@@ -214,7 +214,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'triggerSlopeArray',
-                'type': 'int32[]'
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
@@ -249,7 +249,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'triggerSlopeArray',
-                'type': 'int32[]'
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
@@ -2456,7 +2456,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'rosetteMeasTypes',
-                'type': 'int32[]'
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
@@ -5562,14 +5562,14 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'name': 'channelNames',
+                'name': 'lines',
                 'repeating_argument': True,
                 'type': 'const char[]'
             },
             {
                 'direction': 'in',
-                'include_in_proto': False,
                 'enum': 'DigitalLineState',
+                'include_in_proto': False,
                 'name': 'expState',
                 'repeating_argument': True,
                 'type': 'int32'
@@ -5581,7 +5581,7 @@ functions = {
                 'max_length': 96,
                 'name': 'namesAndExpStates',
                 'repeated_var_args': True
-            },
+            }
         ],
         'returns': 'int32'
     },
@@ -5822,7 +5822,7 @@ functions = {
                 'include_in_proto': False,
                 'name': 'state',
                 'repeating_argument': True,
-                'type': 'double'
+                'type': 'float64'
             },
             {
                 'direction': 'in',
@@ -6192,7 +6192,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'DigitalPowerUpChannelType',
+                'enum': 'PowerUpStates',
                 'include_in_proto': False,
                 'name': 'state',
                 'repeating_argument': True,
@@ -6207,7 +6207,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated DigitalPowerUpChannelType',
+                'grpc_type': 'repeated PowerUpStates',
                 'max_length': 96,
                 'name': 'powerUpStates',
                 'repeated_var_args': True
@@ -6225,31 +6225,31 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
-                'repeating_argument': True,
                 'name': 'channelName',
+                'repeating_argument': True,
                 'type': 'const char[]'
             },
             {
                 'direction': 'out',
+                'enum': 'ResistorState',
                 'include_in_proto': False,
-                'repeating_argument': True,
-                'enum': 'DigitalPullUpPullDownState',
                 'name': 'state',
+                'repeating_argument': True,
                 'type': 'int32'
             },
             {
                 'direction': 'in',
-                'repeated_var_args': True,
-                'name': 'channelNames',
                 'grpc_type': 'repeated string',
-                'max_length': 96
+                'max_length': 96,
+                'name': 'channelName',
+                'repeated_var_args': True
             },
             {
                 'direction': 'out',
-                'repeated_var_args': True,
+                'grpc_type': 'repeated ResistorState',
+                'max_length': 96,
                 'name': 'states',
-                'grpc_type': 'repeated DigitalPullUpPullDownState',
-                'max_length': 96
+                'repeated_var_args': True
             }
         ],
         'returns': 'int32'
@@ -8225,7 +8225,7 @@ functions = {
                 'include_in_proto': False,
                 'name': 'state',
                 'repeating_argument': True,
-                'type': 'double'
+                'type': 'float64'
             },
             {
                 'direction': 'in',
@@ -8315,7 +8315,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DigitalPowerUpChannelType',
+                'enum': 'PowerUpStates',
                 'include_in_proto': False,
                 'name': 'state',
                 'repeating_argument': True,
@@ -8348,7 +8348,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DigitalPullUpPullDownState',
+                'enum': 'ResistorState',
                 'include_in_proto': False,
                 'name': 'state',
                 'repeating_argument': True,
@@ -8774,7 +8774,7 @@ functions = {
                 'coerced': True,
                 'direction': 'in',
                 'name': 'writeArray',
-                'type': 'int16[]'
+                'type': 'const int16[]'
             },
             {
                 'direction': 'out',
@@ -8823,7 +8823,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'writeArray',
-                'type': 'int32[]'
+                'type': 'const int32[]'
             },
             {
                 'direction': 'out',
