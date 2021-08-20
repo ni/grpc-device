@@ -604,19 +604,6 @@ enum DigitalPatternCondition1 {
   DIGITAL_PATTERN_CONDITION1_PATTERN_DOES_NOT_MATCH = 10253;
 }
 
-enum DigitalPowerUpChannelType {
-  DIGITAL_POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
-  DIGITAL_POWER_UP_CHANNEL_TYPE_HIGH = 10192;
-  DIGITAL_POWER_UP_CHANNEL_TYPE_LOW = 10214;
-  DIGITAL_POWER_UP_CHANNEL_TYPE_TRISTATE = 10310;
-}
-
-enum DigitalPullUpPullDownState {
-  DIGITAL_PULL_UP_PULL_DOWN_STATE_UNSPECIFIED = 0;
-  DIGITAL_PULL_UP_PULL_DOWN_STATE_PULL_UP = 15950;
-  DIGITAL_PULL_UP_PULL_DOWN_STATE_PULL_DOWN = 15951;
-}
-
 enum DigitalWidthUnits3 {
   DIGITAL_WIDTH_UNITS3_UNSPECIFIED = 0;
   DIGITAL_WIDTH_UNITS3_SECONDS = 10364;
@@ -810,6 +797,14 @@ enum PowerUpChannelType {
   POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_VOLTAGE = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_CURRENT = 1;
+  POWER_UP_CHANNEL_TYPE_CHANNEL_HIGH_IMPEDANCE = 2;
+}
+
+enum PowerUpStates {
+  POWER_UP_STATES_UNSPECIFIED = 0;
+  POWER_UP_STATES_HIGH = 10192;
+  POWER_UP_STATES_LOW = 10214;
+  POWER_UP_STATES_TRISTATE = 10310;
 }
 
 enum PressureUnits {
@@ -848,6 +843,12 @@ enum ResistanceUnits2 {
   RESISTANCE_UNITS2_UNSPECIFIED = 0;
   RESISTANCE_UNITS2_OHMS = 10384;
   RESISTANCE_UNITS2_FROM_CUSTOM_SCALE = 10065;
+}
+
+enum ResistorState {
+  RESISTOR_STATE_UNSPECIFIED = 0;
+  RESISTOR_STATE_PULL_UP = 15950;
+  RESISTOR_STATE_PULL_DOWN = 15951;
 }
 
 enum SaveOptions {
@@ -1255,33 +1256,33 @@ enum ScaleInt32AttributeValues {
   SCALE_INT32_UNITS_PRE_SCALED_FROM_TEDS = 12516;
 }
 
-message AnalogPowerUpState {
+message AnalogPowerUpChannelsAndState {
   string channelNames = 1;
   double state = 2;
   PowerUpChannelType channelType = 3;
 }
 
-message ChannelNamesAndExpState {
-  string channelNames = 1;
+message WatchdogExpChannelsAndState {
+  string lines = 1;
   DigitalLineState expState = 2;
 }
 
 message DigitalPowerUpTypeAndChannel {
   string channelName = 1;
-  DigitalPowerUpChannelType state = 2;
+  PowerUpStates state = 2;
 }
 
-message DigitalPowerUpTypeAndChannels {
+message DigitalPowerUpChannelsAndState {
   string channelNames = 1;
-  DigitalPowerUpChannelType state = 2;
+  PowerUpStates state = 2;
 }
 
-message DigitalPullUpPullDownStateAndChannel {
+message DigitalPullUpPullDownChannelsAndState {
   string channelNames = 1;
-  DigitalPullUpPullDownState state = 2;
+  ResistorState state = 2;
 }
 
-message PowerUpChannelTypeAndName {
+message AnalogPowerUpChannelAndType {
   string channelName = 1;
   PowerUpChannelType channelType = 2;
 }
@@ -3750,7 +3751,7 @@ message CreateWatchdogTimerTaskRequest {
   string device_name = 1;
   string session_name = 2;
   double timeout = 3;
-  repeated ChannelNamesAndExpState names_and_exp_states = 4;
+  repeated WatchdogExpChannelsAndState exp_states = 4;
 }
 
 message CreateWatchdogTimerTaskResponse {
@@ -3878,12 +3879,12 @@ message GetAIChanCalExpDateResponse {
 
 message GetAnalogPowerUpStatesRequest {
   string device_name = 1;
-  repeated PowerUpChannelTypeAndName power_up_states = 2;
+  repeated AnalogPowerUpChannelAndType channels = 2;
 }
 
 message GetAnalogPowerUpStatesResponse {
   int32 status = 1;
-  repeated double states = 2;
+  repeated double power_up_states = 2;
 }
 
 message GetArmStartTrigTimestampValRequest {
@@ -4025,17 +4026,17 @@ message GetDigitalPowerUpStatesRequest {
 
 message GetDigitalPowerUpStatesResponse {
   int32 status = 1;
-  repeated DigitalPowerUpChannelType power_up_states = 2;
+  repeated PowerUpStates power_up_states = 2;
 }
 
 message GetDigitalPullUpPullDownStatesRequest {
   string device_name = 1;
-  repeated string channel_names = 2;
+  repeated string channel_name = 2;
 }
 
 message GetDigitalPullUpPullDownStatesResponse {
   int32 status = 1;
-  repeated DigitalPullUpPullDownState states = 2;
+  repeated ResistorState pull_up_pull_down_states = 2;
 }
 
 message GetDisconnectedCDAQSyncPortsRequest {
@@ -4742,7 +4743,7 @@ message SetAIChanCalExpDateResponse {
 
 message SetAnalogPowerUpStatesRequest {
   string device_name = 1;
-  repeated AnalogPowerUpState power_up_states = 2;
+  repeated AnalogPowerUpChannelsAndState power_up_states = 2;
 }
 
 message SetAnalogPowerUpStatesResponse {
@@ -4782,7 +4783,7 @@ message SetDigitalLogicFamilyPowerUpStateResponse {
 
 message SetDigitalPowerUpStatesRequest {
   string device_name = 1;
-  repeated DigitalPowerUpTypeAndChannels power_up_states = 2;
+  repeated DigitalPowerUpChannelsAndState power_up_states = 2;
 }
 
 message SetDigitalPowerUpStatesResponse {
@@ -4791,7 +4792,7 @@ message SetDigitalPowerUpStatesResponse {
 
 message SetDigitalPullUpPullDownStatesRequest {
   string device_name = 1;
-  repeated DigitalPullUpPullDownStateAndChannel pull_up_pull_down_state_and_channels = 2;
+  repeated DigitalPullUpPullDownChannelsAndState pull_up_pull_down_states = 2;
 }
 
 message SetDigitalPullUpPullDownStatesResponse {
