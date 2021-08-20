@@ -527,6 +527,9 @@ ${initialize_standard_input_param(function_name, parameter)}
       }
 %     elif service_helpers.is_output_array_that_needs_coercion(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size});
+%     elif common_helpers.is_enum(parameter):
+      response->mutable_${parameter_name}_raw()->Resize(${size}, 0);
+      ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}_raw()->mutable_data());
 ## uInt32 requires cast because of int vs long in that typedef vs uint32_t
 %     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16', 'uInt32', 'int32']:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -574,6 +577,10 @@ ${initialize_standard_input_param(function_name, parameter)}
     mapped_enum_name = parameter["mapped-enum"]
     map_name = mapped_enum_name.lower() + "_output_map_"
     mapped_enum_iterator_name = parameter_name + "_omap_it"
+  is_array = common_helpers.is_array(parameter["type"])
+  is_string = common_helpers.is_string_arg(parameter)
+  uses_raw_output_as_read_buffer = is_array and not is_string
+  use_checked_enum_conversion = parameter.get("use_checked_enum_conversion", False)
 %>\
 %     if has_mapped_enum:
         auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
@@ -582,31 +589,40 @@ ${initialize_standard_input_param(function_name, parameter)}
         }
 %     endif
 %     if has_unmapped_enum:
-%       if common_helpers.is_array(parameter['type']) and common_helpers.is_string_arg(parameter):
+%       if use_checked_enum_conversion:
+        auto checked_convert_${parameter_name} = [](auto raw_value) {
+          bool raw_value_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<${namespace_prefix}${parameter["enum"]}>(valid_enum_value);
+        };
+%       endif
+%       if is_string:
         CopyBytesToEnums(${parameter_name}, response->mutable_${parameter_name}());
+%       elif uses_raw_output_as_read_buffer:
+<%
+      raw_response_field = f"response->{parameter_name}_raw()"
+      cast_x_to_enum = f"static_cast<{namespace_prefix}{parameter['enum']}>(x)"
+      checked_convert_x_to_enum = f"checked_convert_{parameter_name}(x)"
+      convert_x_to_enum = checked_convert_x_to_enum if use_checked_enum_conversion else cast_x_to_enum
+%>\
+${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
+${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum)}\
 %       elif parameter['type'] == 'ViReal64':
         if(${parameter_name} == (int)${parameter_name}) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
         }
 %       elif parameter.get("use_checked_enum_conversion", False):
-        bool ${parameter_name}_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(${parameter_name});
-        auto ${parameter_name}_as_valid_enum_value = ${parameter_name}_is_valid ? ${parameter_name} : 0;
-        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}_as_valid_enum_value));
+        response->set_${parameter_name}(checked_convert_${parameter_name}(${parameter_name}));
 %       else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %       endif
 %     endif
+%     if not uses_raw_output_as_read_buffer: # Set data to raw, unless we *got* the data from raw.
         response->set_${parameter_name}_raw(${parameter_name});
+%     endif
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
-        response->mutable_${parameter_name}()->Clear();
-        response->mutable_${parameter_name}()->Reserve(${common_helpers.get_size_expression(parameter)});
-        std::transform(
-          ${parameter_name}.begin(),
-          ${parameter_name}.end(),
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
-          [](auto x) { 
-              return x;
-          });
+${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
+${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x")}\
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
@@ -622,4 +638,21 @@ ${initialize_standard_input_param(function_name, parameter)}
         response->set_${parameter_name}(${parameter_name});
 %   endif
 % endfor
+</%def>
+
+## Allocate the response buffer using get_size_expression.
+<%def name="initialize_response_buffer(parameter_name, parameter)">\
+        response->mutable_${parameter_name}()->Clear();
+        response->mutable_${parameter_name}()->Reserve(${common_helpers.get_size_expression(parameter)});
+</%def>
+
+## Copy source_buffer to response->mutable_[parameter_name]() applying transform_x.
+<%def name="copy_to_response_with_transform(source_buffer, parameter_name, transform_x)">\
+        std::transform(
+          ${source_buffer}.begin(),
+          ${source_buffer}.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
+          [&](auto x) { 
+              return ${transform_x};
+          });
 </%def>

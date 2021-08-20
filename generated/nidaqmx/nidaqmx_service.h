@@ -161,6 +161,14 @@ public:
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
   ::grpc::Status GetBufferAttributeUInt32(::grpc::ServerContext* context, const GetBufferAttributeUInt32Request* request, GetBufferAttributeUInt32Response* response) override;
+  ::grpc::Status GetDeviceAttributeBool(::grpc::ServerContext* context, const GetDeviceAttributeBoolRequest* request, GetDeviceAttributeBoolResponse* response) override;
+  ::grpc::Status GetDeviceAttributeDouble(::grpc::ServerContext* context, const GetDeviceAttributeDoubleRequest* request, GetDeviceAttributeDoubleResponse* response) override;
+  ::grpc::Status GetDeviceAttributeDoubleArray(::grpc::ServerContext* context, const GetDeviceAttributeDoubleArrayRequest* request, GetDeviceAttributeDoubleArrayResponse* response) override;
+  ::grpc::Status GetDeviceAttributeInt32(::grpc::ServerContext* context, const GetDeviceAttributeInt32Request* request, GetDeviceAttributeInt32Response* response) override;
+  ::grpc::Status GetDeviceAttributeInt32Array(::grpc::ServerContext* context, const GetDeviceAttributeInt32ArrayRequest* request, GetDeviceAttributeInt32ArrayResponse* response) override;
+  ::grpc::Status GetDeviceAttributeString(::grpc::ServerContext* context, const GetDeviceAttributeStringRequest* request, GetDeviceAttributeStringResponse* response) override;
+  ::grpc::Status GetDeviceAttributeUInt32(::grpc::ServerContext* context, const GetDeviceAttributeUInt32Request* request, GetDeviceAttributeUInt32Response* response) override;
+  ::grpc::Status GetDeviceAttributeUInt32Array(::grpc::ServerContext* context, const GetDeviceAttributeUInt32ArrayRequest* request, GetDeviceAttributeUInt32ArrayResponse* response) override;
   ::grpc::Status GetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const GetDigitalLogicFamilyPowerUpStateRequest* request, GetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status GetDigitalPowerUpStates(::grpc::ServerContext* context, const GetDigitalPowerUpStatesRequest* request, GetDigitalPowerUpStatesResponse* response) override;
   ::grpc::Status GetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const GetDigitalPullUpPullDownStatesRequest* request, GetDigitalPullUpPullDownStatesResponse* response) override;

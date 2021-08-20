@@ -24,6 +24,231 @@ enums = {
             }
         ]
     },
+    'AIMeasurementType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage measurement.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Voltage RMS measurement.'
+                },
+                'name': 'VOLTAGE_RMS',
+                'value': 10350
+            },
+            {
+                'documentation': {
+                    'description': 'Current measurement.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': 'Current RMS measurement.'
+                },
+                'name': 'CURRENT_RMS',
+                'value': 10351
+            },
+            {
+                'documentation': {
+                    'description': ' Voltage measurement with an excitation source. You can use this measurement  type for custom sensors that require excitation, but you must use a custom  scale to scale the measured voltage.'
+                },
+                'name': 'VOLTAGE_CUSTOM_WITH_EXCITATION',
+                'value': 10323
+            },
+            {
+                'documentation': {
+                    'description': 'Measure voltage ratios from a Wheatstone bridge.'
+                },
+                'name': 'BRIDGE',
+                'value': 15908
+            },
+            {
+                'documentation': {
+                    'description': ' Frequency measurement using a frequency to voltage converter.'
+                },
+                'name': 'FREQ_VOLTAGE',
+                'value': 10181
+            },
+            {
+                'documentation': {
+                    'description': 'Resistance measurement.'
+                },
+                'name': 'RESISTANCE',
+                'value': 10278
+            },
+            {
+                'documentation': {
+                    'description': 'Temperature measurement using a thermocouple.'
+                },
+                'name': 'TEMP_TC',
+                'value': 10303
+            },
+            {
+                'documentation': {
+                    'description': 'Temperature measurement using a thermistor.'
+                },
+                'name': 'TEMP_THRMSTR',
+                'value': 10302
+            },
+            {
+                'documentation': {
+                    'description': 'Temperature measurement using an RTD.'
+                },
+                'name': 'TEMP_RTD',
+                'value': 10301
+            },
+            {
+                'documentation': {
+                    'description': ' Temperature measurement using a built-in sensor on a terminal block or device.  On SCXI modules, for example, this could be the CJC sensor.'
+                },
+                'name': 'TEMP_BUILT_IN_SENSOR',
+                'value': 10311
+            },
+            {
+                'documentation': {
+                    'description': 'Strain measurement.'
+                },
+                'name': 'STRAIN_GAGE',
+                'value': 10300
+            },
+            {
+                'documentation': {
+                    'description': 'Strain measurement using a rosette strain gage.'
+                },
+                'name': 'ROSETTE_STRAIN_GAGE',
+                'value': 15980
+            },
+            {
+                'documentation': {
+                    'description': 'Position measurement using an LVDT.'
+                },
+                'name': 'POSITION_LVDT',
+                'value': 10352
+            },
+            {
+                'documentation': {
+                    'description': 'Position measurement using an RVDT.'
+                },
+                'name': 'POSITION_RVDT',
+                'value': 10353
+            },
+            {
+                'documentation': {
+                    'description': 'Position measurement using an eddy current proximity probe.'
+                },
+                'name': 'POSITION_EDDY_CURRENT_PROXIMITY_PROBE',
+                'value': 14835
+            },
+            {
+                'documentation': {
+                    'description': 'Acceleration measurement using an accelerometer.'
+                },
+                'name': 'ACCELEROMETER',
+                'value': 10356
+            },
+            {
+                'documentation': {
+                    'description': 'Acceleration measurement using a charge-based sensor.'
+                },
+                'name': 'ACCELERATION_CHARGE',
+                'value': 16104
+            },
+            {
+                'documentation': {
+                    'description': ' Acceleration measurement using a 4 wire DC voltage based sensor.'
+                },
+                'name': 'ACCELERATION_4_WIRE_DC_VOLTAGE',
+                'value': 16106
+            },
+            {
+                'documentation': {
+                    'description': 'Velocity measurement using an IEPE Sensor.'
+                },
+                'name': 'VELOCITY_IEPE_SENSOR',
+                'value': 15966
+            },
+            {
+                'documentation': {
+                    'description': 'Force measurement using a bridge-based sensor.'
+                },
+                'name': 'FORCE_BRIDGE',
+                'value': 15899
+            },
+            {
+                'documentation': {
+                    'description': 'Force measurement using an IEPE Sensor.'
+                },
+                'name': 'FORCE_IEPE_SENSOR',
+                'value': 15895
+            },
+            {
+                'documentation': {
+                    'description': 'Pressure measurement using a bridge-based sensor.'
+                },
+                'name': 'PRESSURE_BRIDGE',
+                'value': 15902
+            },
+            {
+                'documentation': {
+                    'description': 'Sound pressure measurement using a microphone.'
+                },
+                'name': 'SOUND_PRESSURE_MICROPHONE',
+                'value': 10354
+            },
+            {
+                'documentation': {
+                    'description': 'Torque measurement using a bridge-based sensor.'
+                },
+                'name': 'TORQUE_BRIDGE',
+                'value': 15905
+            },
+            {
+                'documentation': {
+                    'description': 'Measurement type defined by TEDS.'
+                },
+                'name': 'TEDS_SENSOR',
+                'value': 12531
+            },
+            {
+                'documentation': {
+                    'description': 'Charge measurement.'
+                },
+                'name': 'CHARGE',
+                'value': 16105
+            }
+        ]
+    },
+    'AOOutputChannelType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage generation.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current generation.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': 'Function generation.'
+                },
+                'name': 'FUNC_GEN',
+                'value': 14750
+            }
+        ]
+    },
     'AccelChargeSensitivityUnits': {
         'values': [
             {
@@ -124,6 +349,18 @@ enums = {
             }
         ]
     },
+    'AltRef': {
+        'values': [
+            {
+                'name': 'MSL',
+                'value': 16005
+            },
+            {
+                'name': 'HAE',
+                'value': 16006
+            }
+        ]
+    },
     'AngleUnits1': {
         'values': [
             {
@@ -210,6 +447,26 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'AntStatus': {
+        'values': [
+            {
+                'name': 'UNKNOWN',
+                'value': 12588
+            },
+            {
+                'name': 'NORMAL',
+                'value': 10459
+            },
+            {
+                'name': 'ABSENT',
+                'value': 15994
+            },
+            {
+                'name': 'OVERCURRENT',
+                'value': 15995
             }
         ]
     },
@@ -369,6 +626,210 @@ enums = {
             }
         ]
     },
+    'BusType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'PCI.'
+                },
+                'name': 'PCI',
+                'value': 12582
+            },
+            {
+                'documentation': {
+                    'description': 'PCI Express.'
+                },
+                'name': 'PC_IE',
+                'value': 13612
+            },
+            {
+                'documentation': {
+                    'description': 'PXI.'
+                },
+                'name': 'PXI',
+                'value': 12583
+            },
+            {
+                'documentation': {
+                    'description': 'PXI Express.'
+                },
+                'name': 'PX_IE',
+                'value': 14706
+            },
+            {
+                'documentation': {
+                    'description': 'SCXI.'
+                },
+                'name': 'SCXI',
+                'value': 12584
+            },
+            {
+                'documentation': {
+                    'description': 'SCC.'
+                },
+                'name': 'SCC',
+                'value': 14707
+            },
+            {
+                'documentation': {
+                    'description': 'PC Card/PCMCIA.'
+                },
+                'name': 'PC_CARD',
+                'value': 12585
+            },
+            {
+                'documentation': {
+                    'description': 'USB.'
+                },
+                'name': 'USB',
+                'value': 12586
+            },
+            {
+                'documentation': {
+                    'description': 'CompactDAQ.'
+                },
+                'name': 'COMPACT_DAQ',
+                'value': 14637
+            },
+            {
+                'documentation': {
+                    'description': 'CompactRIO.'
+                },
+                'name': 'COMPACT_RIO',
+                'value': 16143
+            },
+            {
+                'documentation': {
+                    'description': 'TCP/IP.'
+                },
+                'name': 'TCPIP',
+                'value': 14828
+            },
+            {
+                'documentation': {
+                    'description': 'Unknown bus type.'
+                },
+                'name': 'UNKNOWN',
+                'value': 12588
+            },
+            {
+                'documentation': {
+                    'description': 'SwitchBlock.'
+                },
+                'name': 'SWITCH_BLOCK',
+                'value': 15870
+            }
+        ]
+    },
+    'CIMeasurementType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Count edges of a digital signal.'
+                },
+                'name': 'COUNT_EDGES',
+                'value': 10125
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the frequency of a digital signal.'
+                },
+                'name': 'FREQ',
+                'value': 10179
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the period of a digital signal.'
+                },
+                'name': 'PERIOD',
+                'value': 10256
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the width of a pulse of a digital signal.'
+                },
+                'name': 'PULSE_WIDTH',
+                'value': 10359
+            },
+            {
+                'documentation': {
+                    'description': ' Measure the time between state transitions of a digital signal.'
+                },
+                'name': 'SEMI_PERIOD',
+                'value': 10289
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse measurement, returning the result as frequency and duty cycle.'
+                },
+                'name': 'PULSE_FREQUENCY',
+                'value': 15864
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse measurement, returning the result as high time and low time.'
+                },
+                'name': 'PULSE_TIME',
+                'value': 15865
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse measurement, returning the result as high ticks and low ticks.'
+                },
+                'name': 'PULSE_TICKS',
+                'value': 15866
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the duty cycle of a digital signal.'
+                },
+                'name': 'DUTY_CYCLE',
+                'value': 16070
+            },
+            {
+                'documentation': {
+                    'description': 'Angular position measurement using an angular encoder.'
+                },
+                'name': 'POSITION_ANG_ENCODER',
+                'value': 10360
+            },
+            {
+                'documentation': {
+                    'description': 'Linear position measurement using a linear encoder.'
+                },
+                'name': 'POSITION_LIN_ENCODER',
+                'value': 10361
+            },
+            {
+                'documentation': {
+                    'description': 'Angular velocity measurement using an angular encoder.'
+                },
+                'name': 'VELOCITY_ANG_ENCODER',
+                'value': 16078
+            },
+            {
+                'documentation': {
+                    'description': 'Linear velocity measurement using a linear encoder.'
+                },
+                'name': 'VELOCITY_LIN_ENCODER',
+                'value': 16079
+            },
+            {
+                'documentation': {
+                    'description': 'Measure time between edges of two digital signals.'
+                },
+                'name': 'TWO_EDGE_SEP',
+                'value': 10267
+            },
+            {
+                'documentation': {
+                    'description': ' Timestamp measurement, synchronizing the counter to a GPS receiver.'
+                },
+                'name': 'GPS_TIMESTAMP',
+                'value': 10362
+            }
+        ]
+    },
     'CJCSource1': {
         'values': [
             {
@@ -391,6 +852,31 @@ enums = {
                 },
                 'name': 'CHAN',
                 'value': 10113
+            }
+        ]
+    },
+    'COOutputType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Generate pulses defined by the time the pulse is at a low state and the time  the pulse is at a high state.'
+                },
+                'name': 'PULSE_TIME',
+                'value': 10269
+            },
+            {
+                'documentation': {
+                    'description': 'Generate digital pulses defined by frequency and duty cycle.'
+                },
+                'name': 'PULSE_FREQ',
+                'value': 10119
+            },
+            {
+                'documentation': {
+                    'description': ' Generate digital pulses defined by the number of timebase ticks that the pulse  is at a low state and the number of timebase ticks that the pulse is at a high  state.'
+                },
+                'name': 'PULSE_TICKS',
+                'value': 10268
             }
         ]
     },
@@ -473,6 +959,31 @@ enums = {
                 },
                 'name': 'DYN_AVG',
                 'value': 16065
+            }
+        ]
+    },
+    'Coupling1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Remove the DC offset from the signal.'
+                },
+                'name': 'AC',
+                'value': 10045
+            },
+            {
+                'documentation': {
+                    'description': 'Allow NI-DAQmx to measure all of the signal.'
+                },
+                'name': 'DC',
+                'value': 10050
+            },
+            {
+                'documentation': {
+                    'description': ' Remove the signal from the measurement and measure only ground.'
+                },
+                'name': 'GND',
+                'value': 10066
             }
         ]
     },
@@ -757,6 +1268,45 @@ enums = {
                 },
                 'name': 'NONE',
                 'value': 10230
+            }
+        ]
+    },
+    'FilterType2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Lowpass filter.'
+                },
+                'name': 'LOWPASS',
+                'value': 16071
+            },
+            {
+                'documentation': {
+                    'description': 'Highpass filter.'
+                },
+                'name': 'HIGHPASS',
+                'value': 16072
+            },
+            {
+                'documentation': {
+                    'description': 'Bandpass filter.'
+                },
+                'name': 'BANDPASS',
+                'value': 16073
+            },
+            {
+                'documentation': {
+                    'description': 'Notch filter.'
+                },
+                'name': 'NOTCH',
+                'value': 16074
+            },
+            {
+                'documentation': {
+                    'description': 'Custom filter.'
+                },
+                'name': 'CUSTOM',
+                'value': 10137
             }
         ]
     },
@@ -1172,6 +1722,54 @@ enums = {
             }
         ]
     },
+    'NavMeasurementType': {
+        'values': [
+            {
+                'name': 'ALTITUDE',
+                'value': 15997
+            },
+            {
+                'name': 'LONGITUDE',
+                'value': 15998
+            },
+            {
+                'name': 'LATITUDE',
+                'value': 15999
+            },
+            {
+                'name': 'SPEED_OVER_GROUND',
+                'value': 16000
+            },
+            {
+                'name': 'TRACK',
+                'value': 16001
+            },
+            {
+                'name': 'TIMESTAMP',
+                'value': 15986
+            },
+            {
+                'name': 'VERT_VELOCITY',
+                'value': 16003
+            }
+        ]
+    },
+    'NavMode': {
+        'values': [
+            {
+                'name': 'MOBILE',
+                'value': 15989
+            },
+            {
+                'name': 'STATIONARY_WITH_SURVEY',
+                'value': 15990
+            },
+            {
+                'name': 'STATIONARY_WITH_PRESET_LOCATION',
+                'value': 15991
+            }
+        ]
+    },
     'Polarity2': {
         'values': [
             {
@@ -1231,6 +1829,171 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'ProductCategory': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'M Series DAQ.'
+                },
+                'name': 'M_SERIES_DAQ',
+                'value': 14643
+            },
+            {
+                'documentation': {
+                    'description': 'X Series DAQ.'
+                },
+                'name': 'X_SERIES_DAQ',
+                'value': 15858
+            },
+            {
+                'documentation': {
+                    'description': 'E Series DAQ.'
+                },
+                'name': 'E_SERIES_DAQ',
+                'value': 14642
+            },
+            {
+                'documentation': {
+                    'description': 'S Series DAQ.'
+                },
+                'name': 'S_SERIES_DAQ',
+                'value': 14644
+            },
+            {
+                'documentation': {
+                    'description': 'B Series DAQ.'
+                },
+                'name': 'B_SERIES_DAQ',
+                'value': 14662
+            },
+            {
+                'documentation': {
+                    'description': 'SC Series DAQ.'
+                },
+                'name': 'SC_SERIES_DAQ',
+                'value': 14645
+            },
+            {
+                'documentation': {
+                    'description': 'USB DAQ.'
+                },
+                'name': 'USBDAQ',
+                'value': 14646
+            },
+            {
+                'documentation': {
+                    'description': 'AO Series.'
+                },
+                'name': 'AO_SERIES',
+                'value': 14647
+            },
+            {
+                'documentation': {
+                    'description': 'Digital I/O.'
+                },
+                'name': 'DIGITAL_IO',
+                'value': 14648
+            },
+            {
+                'documentation': {
+                    'description': 'TIO Series.'
+                },
+                'name': 'TIO_SERIES',
+                'value': 14661
+            },
+            {
+                'documentation': {
+                    'description': 'Dynamic Signal Acquisition.'
+                },
+                'name': 'DYNAMIC_SIGNAL_ACQUISITION',
+                'value': 14649
+            },
+            {
+                'documentation': {
+                    'description': 'Switches.'
+                },
+                'name': 'SWITCHES',
+                'value': 14650
+            },
+            {
+                'documentation': {
+                    'description': 'CompactDAQ chassis.'
+                },
+                'name': 'COMPACT_DAQ_CHASSIS',
+                'value': 14658
+            },
+            {
+                'documentation': {
+                    'description': 'CompactRIO Chassis.'
+                },
+                'name': 'COMPACT_RIO_CHASSIS',
+                'value': 16144
+            },
+            {
+                'documentation': {
+                    'description': 'C Series I/O module.'
+                },
+                'name': 'C_SERIES_MODULE',
+                'value': 14659
+            },
+            {
+                'documentation': {
+                    'description': 'SCXI module.'
+                },
+                'name': 'SCXI_MODULE',
+                'value': 14660
+            },
+            {
+                'documentation': {
+                    'description': 'SCC Connector Block.'
+                },
+                'name': 'SCC_CONNECTOR_BLOCK',
+                'value': 14704
+            },
+            {
+                'documentation': {
+                    'description': 'SCC Module.'
+                },
+                'name': 'SCC_MODULE',
+                'value': 14705
+            },
+            {
+                'documentation': {
+                    'description': 'NI ELVIS.'
+                },
+                'name': 'NIELVIS',
+                'value': 14755
+            },
+            {
+                'documentation': {
+                    'description': 'Network DAQ.'
+                },
+                'name': 'NETWORK_DAQ',
+                'value': 14829
+            },
+            {
+                'documentation': {
+                    'description': 'SC Express.'
+                },
+                'name': 'SC_EXPRESS',
+                'value': 15886
+            },
+            {
+                'documentation': {
+                    'description': 'FieldDAQ.'
+                },
+                'name': 'FIELD_DAQ',
+                'value': 16151
+            },
+            {
+                'documentation': {
+                    'description': 'Unknown category.'
+                },
+                'name': 'UNKNOWN',
+                'value': 12588
             }
         ]
     },
@@ -1853,6 +2616,34 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'TriggerUsage': {
+        'values': [
+            {
+                'name': 'ADVANCE',
+                'value': 12488
+            },
+            {
+                'name': 'PAUSE',
+                'value': 12489
+            },
+            {
+                'name': 'REFERENCE',
+                'value': 12490
+            },
+            {
+                'name': 'START',
+                'value': 12491
+            },
+            {
+                'name': 'HANDSHAKE',
+                'value': 10389
+            },
+            {
+                'name': 'ARM_START',
+                'value': 14641
             }
         ]
     },

@@ -154,6 +154,14 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetArmStartTrigTrigWhen = reinterpret_cast<GetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTrigWhen"));
   function_pointers_.GetAutoConfiguredCDAQSyncConnections = reinterpret_cast<GetAutoConfiguredCDAQSyncConnectionsPtr>(shared_library_.get_function_pointer("DAQmxGetAutoConfiguredCDAQSyncConnections"));
   function_pointers_.GetBufferAttributeUInt32 = reinterpret_cast<GetBufferAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetBufferAttribute"));
+  function_pointers_.GetDeviceAttributeBool = reinterpret_cast<GetDeviceAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
+  function_pointers_.GetDeviceAttributeDouble = reinterpret_cast<GetDeviceAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
+  function_pointers_.GetDeviceAttributeDoubleArray = reinterpret_cast<GetDeviceAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
+  function_pointers_.GetDeviceAttributeInt32 = reinterpret_cast<GetDeviceAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
+  function_pointers_.GetDeviceAttributeInt32Array = reinterpret_cast<GetDeviceAttributeInt32ArrayPtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
+  function_pointers_.GetDeviceAttributeString = reinterpret_cast<GetDeviceAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
+  function_pointers_.GetDeviceAttributeUInt32 = reinterpret_cast<GetDeviceAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
+  function_pointers_.GetDeviceAttributeUInt32Array = reinterpret_cast<GetDeviceAttributeUInt32ArrayPtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
   function_pointers_.GetDigitalLogicFamilyPowerUpState = reinterpret_cast<GetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxGetDigitalLogicFamilyPowerUpState"));
   function_pointers_.GetDigitalPowerUpStates = reinterpret_cast<GetDigitalPowerUpStatesPtr>(shared_library_.get_function_pointer("DAQmxGetDigitalPowerUpStates"));
   function_pointers_.GetDigitalPullUpPullDownStates = reinterpret_cast<GetDigitalPullUpPullDownStatesPtr>(shared_library_.get_function_pointer("DAQmxGetDigitalPullUpPullDownStates"));
@@ -1862,6 +1870,102 @@ int32 NiDAQmxLibrary::GetBufferAttributeUInt32(TaskHandle task, int32 attribute,
   return DAQmxGetBufferAttribute(task, attribute, value);
 #else
   return function_pointers_.GetBufferAttributeUInt32(task, attribute, value);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeBool(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeDouble(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeDoubleArray(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeInt32(const char deviceName[], int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeInt32(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeInt32Array(const char deviceName[], int32 attribute, int32 value[], uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeInt32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeInt32Array(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeString(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeUInt32(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetDeviceAttributeUInt32Array(const char deviceName[], int32 attribute, uInt32 value[], uInt32 size)
+{
+  if (!function_pointers_.GetDeviceAttributeUInt32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetDeviceAttributeUInt32Array(deviceName, attribute, value, size);
 #endif
 }
 

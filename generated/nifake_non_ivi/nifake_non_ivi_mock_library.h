@@ -20,6 +20,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, Close, (FakeHandle handle), (override));
   MOCK_METHOD(int32, GetMarbleAttributeDouble, (FakeHandle handle, int32 attribute, double* value), (override));
   MOCK_METHOD(int32, GetMarbleAttributeInt32, (FakeHandle handle, int32 attribute, int32* value), (override));
+  MOCK_METHOD(int32, GetMarbleAttributeInt32Array, (FakeHandle handle, int32 attribute, int32 value[]), (override));
   MOCK_METHOD(int32, Init, (const char sessionName[], FakeHandle* handle), (override));
   MOCK_METHOD(int32, InitWithHandleNameAsSessionName, (const char handleName[], FakeHandle* handle), (override));
   MOCK_METHOD(int32, InputArraysWithNarrowIntegerTypes, (const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]), (override));
