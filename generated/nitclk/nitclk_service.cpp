@@ -149,7 +149,7 @@ namespace nitclk_grpc {
             error_string.resize(error_string_size-1);
         }
         status = library_->GetExtendedErrorInfo((ViChar*)error_string.data(), error_string_size);
-        if (status == kErrorReadBufferTooSmall || status > error_string_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(error_string_size)) {
           // buffer is now too small, try again
           continue;
         }

@@ -1167,7 +1167,7 @@ namespace nidmm_grpc {
       
         std::string configuration(size, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size, (ViInt8*)configuration.data());
-        if (status == kErrorReadBufferTooSmall || status > size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1482,7 +1482,7 @@ namespace nidmm_grpc {
             attribute_value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1593,7 +1593,7 @@ namespace nidmm_grpc {
             channel_string.resize(buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1658,7 +1658,7 @@ namespace nidmm_grpc {
             description.resize(buffer_size-1);
         }
         status = library_->GetError(vi, &error_code, buffer_size, (ViChar*)description.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1700,7 +1700,7 @@ namespace nidmm_grpc {
             error_message.resize(buffer_size-1);
         }
         status = library_->GetErrorMessage(vi, error_code, buffer_size, (ViChar*)error_message.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1825,7 +1825,7 @@ namespace nidmm_grpc {
             coercion_record.resize(buffer_size-1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1865,7 +1865,7 @@ namespace nidmm_grpc {
             interchange_warning.resize(buffer_size-1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }

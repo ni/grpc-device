@@ -1699,7 +1699,7 @@ namespace nifgen_grpc {
         response->mutable_configuration()->Resize(size_in_bytes, 0);
         ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
-        if (status == kErrorReadBufferTooSmall || status > size_in_bytes) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(size_in_bytes)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1923,7 +1923,7 @@ namespace nifgen_grpc {
             attribute_value.resize(array_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
-        if (status == kErrorReadBufferTooSmall || status > array_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1964,7 +1964,7 @@ namespace nifgen_grpc {
             channel_string.resize(buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2005,7 +2005,7 @@ namespace nifgen_grpc {
             error_description.resize(error_description_buffer_size-1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
-        if (status == kErrorReadBufferTooSmall || status > error_description_buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(error_description_buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2184,7 +2184,7 @@ namespace nifgen_grpc {
             coercion_record.resize(buffer_size-1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2224,7 +2224,7 @@ namespace nifgen_grpc {
             interchange_warning.resize(buffer_size-1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-        if (status == kErrorReadBufferTooSmall || status > buffer_size) {
+        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
