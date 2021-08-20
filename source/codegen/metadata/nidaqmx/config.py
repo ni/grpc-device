@@ -10,8 +10,8 @@ config = {
     'close_function': 'ClearTask',
     'custom_types': [
         {
-            'name': 'AnalogPowerUpState',
-            'grpc_name': 'AnalogPowerUpState',
+            'name': 'AnalogPowerUpChannelsAndState',
+            'grpc_name': 'AnalogPowerUpChannelsAndState',
             'fields': [
                 {
                     'type': 'const char[]',
@@ -29,8 +29,8 @@ config = {
             ]
         },
         {
-            'name': 'ChannelNamesAndExpState',
-            'grpc_name': 'ChannelNamesAndExpState',
+            'name': 'WatchdogExpChannelsAndState',
+            'grpc_name': 'WatchdogExpChannelsAndState',
             'fields': [
                 {
                     'type': 'const char[]',
@@ -59,8 +59,8 @@ config = {
             ]
         },
         {
-            'name': 'DigitalPowerUpTypeAndChannels',
-            'grpc_name': 'DigitalPowerUpTypeAndChannels',
+            'name': 'DigitalPowerUpChannelsAndState',
+            'grpc_name': 'DigitalPowerUpChannelsAndState',
             'fields': [
                 {
                     'type': 'const char[]',
@@ -74,8 +74,8 @@ config = {
             ]
         },
         {
-            'name': 'DigitalPullUpPullDownStateAndChannel',
-            'grpc_name': 'DigitalPullUpPullDownStateAndChannel',
+            'name': 'DigitalPullUpPullDownChannelsAndState',
+            'grpc_name': 'DigitalPullUpPullDownChannelsAndState',
             'fields': [
                 {
                     'type': 'const char[]',
@@ -89,8 +89,8 @@ config = {
             ]
         },
         {
-            'name': 'PowerUpChannelTypeAndName',
-            'grpc_name': 'PowerUpChannelTypeAndName',
+            'name': 'AnalogPowerUpChannelAndType',
+            'grpc_name': 'AnalogPowerUpChannelAndType',
             'fields': [
                 {
                     'type': 'const char[]',

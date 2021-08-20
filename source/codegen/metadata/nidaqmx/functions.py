@@ -5576,10 +5576,10 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated ChannelNamesAndExpState',
+                'grpc_type': 'repeated WatchdogExpChannelsAndState',
                 'is_compound_type': True,
                 'max_length': 96,
-                'name': 'namesAndExpStates',
+                'name': 'expStates',
                 'repeated_var_args': True
             }
         ],
@@ -5834,17 +5834,17 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated PowerUpChannelTypeAndName',
+                'grpc_type': 'repeated AnalogPowerUpChannelAndType',
                 'is_compound_type': True,
                 'max_length': 96,
-                'name': 'powerUpStates',
+                'name': 'channels',
                 'repeated_var_args': True
             },
             {
                 'direction': 'out',
                 'grpc_type': 'repeated double',
                 'max_length': 96,
-                'name': 'states',
+                'name': 'powerUpStates',
                 'repeated_var_args': True
             }
         ],
@@ -6248,7 +6248,7 @@ functions = {
                 'direction': 'out',
                 'grpc_type': 'repeated ResistorState',
                 'max_length': 96,
-                'name': 'states',
+                'name': 'pullUpPullDownStates',
                 'repeated_var_args': True
             }
         ],
@@ -8237,7 +8237,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated AnalogPowerUpState',
+                'grpc_type': 'repeated AnalogPowerUpChannelsAndState',
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
@@ -8323,7 +8323,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated DigitalPowerUpTypeAndChannels',
+                'grpc_type': 'repeated DigitalPowerUpChannelsAndState',
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
@@ -8356,10 +8356,10 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated DigitalPullUpPullDownStateAndChannel',
+                'grpc_type': 'repeated DigitalPullUpPullDownChannelsAndState',
                 'is_compound_type': True,
                 'max_length': 96,
-                'name': 'pullUpPullDownStateAndChannels',
+                'name': 'pullUpPullDownStates',
                 'repeated_var_args': True
             }
         ],
