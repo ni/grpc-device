@@ -2,6 +2,8 @@
 #include <stdexcept>
 
 namespace nitclk_grpc {
+const auto kErrorReadBufferTooSmall = -200229;
+const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -16,20 +18,26 @@ namespace nitclk_grpc {
       ViConstString channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
-      auto status = library_->GetAttributeViString(session, channel_name, attribute_id, 0, nullptr);
-      if (status < 0) {
+      while (true) {
+        auto status = library_->GetAttributeViString(session, channel_name, attribute_id, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+
+        std::string value(buffer_size, '\0');
+        status = library_->GetAttributeViString(session, channel_name, attribute_id, buffer_size, (ViChar*)value.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
         response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
         return ::grpc::Status::OK;
       }
-      ViInt32 buffer_size = status;
-
-      std::string value(buffer_size, '\0');
-      status = library_->GetAttributeViString(session, channel_name, attribute_id, buffer_size, (ViChar*)value.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
