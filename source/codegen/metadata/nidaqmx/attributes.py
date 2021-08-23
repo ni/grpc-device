@@ -4992,5 +4992,951 @@ attributes = {
             'resettable': True,
             'type': 'float64'
         }
+    },
+    'Trigger': {
+        4960: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'DIG_EDGE_ADV_TRIG_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4962: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ADV_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4965: {
+            'access': 'read-write',
+            'enum': 'TriggerType5',
+            'name': 'ADV_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4966: {
+            'access': 'read-write',
+            'enum': 'TriggerType6',
+            'name': 'PAUSE_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4968: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4969: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_LVL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4976: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4977: {
+            'access': 'read-write',
+            'enum': 'ActiveLevel',
+            'name': 'ANLG_LVL_PAUSE_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4979: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4980: {
+            'access': 'read-write',
+            'enum': 'WindowTriggerCondition2',
+            'name': 'ANLG_WIN_PAUSE_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4981: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_BTM',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4982: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_TOP',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4985: {
+            'access': 'read-write',
+            'name': 'DIG_LVL_PAUSE_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4992: {
+            'access': 'read-write',
+            'enum': 'Level1',
+            'name': 'DIG_LVL_PAUSE_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5011: {
+            'access': 'read-write',
+            'enum': 'TriggerType10',
+            'name': 'START_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5013: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5014: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_LVL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5015: {
+            'access': 'read-write',
+            'enum': 'Slope1',
+            'name': 'ANLG_EDGE_START_TRIG_SLOPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5016: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5120: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5121: {
+            'access': 'read-write',
+            'enum': 'WindowTriggerCondition1',
+            'name': 'ANLG_WIN_START_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5122: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_BTM',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5123: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_TOP',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5124: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'DIG_EDGE_START_TRIG_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5127: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_START_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5136: {
+            'access': 'read-write',
+            'name': 'DIG_PATTERN_START_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5137: {
+            'access': 'read-write',
+            'enum': 'DigitalPatternCondition1',
+            'name': 'DIG_PATTERN_START_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5140: {
+            'access': 'read-write',
+            'enum': 'TriggerType4',
+            'name': 'ARM_START_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5141: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'DIG_EDGE_ARM_START_TRIG_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5143: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ARM_START_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5145: {
+            'access': 'read-write',
+            'enum': 'TriggerType8',
+            'name': 'REF_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5153: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5154: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_LVL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5155: {
+            'access': 'read-write',
+            'enum': 'Slope1',
+            'name': 'ANLG_EDGE_REF_TRIG_SLOPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5156: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5158: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5159: {
+            'access': 'read-write',
+            'enum': 'WindowTriggerCondition1',
+            'name': 'ANLG_WIN_REF_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5160: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_BTM',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5161: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_TOP',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5168: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'DIG_EDGE_REF_TRIG_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5172: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_REF_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5175: {
+            'access': 'read-write',
+            'name': 'DIG_PATTERN_REF_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5176: {
+            'access': 'read-write',
+            'enum': 'DigitalPatternCondition1',
+            'name': 'DIG_PATTERN_REF_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5189: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_PRETRIG_SAMPLES',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        5251: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6230: {
+            'access': 'read-write',
+            'name': 'START_TRIG_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6231: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_WIN_REF_TRIG_COUPLING',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6344: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'START_TRIG_DELAY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6415: {
+            'access': 'read-write',
+            'name': 'START_TRIG_RETRIGGERABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8559: {
+            'access': 'read-write',
+            'name': 'DIG_PATTERN_PAUSE_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8560: {
+            'access': 'read-write',
+            'enum': 'DigitalPatternCondition1',
+            'name': 'DIG_PATTERN_PAUSE_TRIG_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8582: {
+            'access': 'read-write',
+            'name': 'DIG_PATTERN_START_TRIG_PATTERN',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8583: {
+            'access': 'read-write',
+            'name': 'DIG_PATTERN_REF_TRIG_PATTERN',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8584: {
+            'access': 'read-write',
+            'name': 'DIG_PATTERN_PAUSE_TRIG_PATTERN',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8739: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_START_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8740: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_START_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8741: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_START_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8742: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_START_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8743: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_START_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8744: {
+            'access': 'read-write',
+            'name': 'DIG_LVL_PAUSE_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8745: {
+            'access': 'read-write',
+            'name': 'DIG_LVL_PAUSE_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8746: {
+            'access': 'read-write',
+            'name': 'DIG_LVL_PAUSE_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8747: {
+            'access': 'read-write',
+            'name': 'DIG_LVL_PAUSE_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8748: {
+            'access': 'read-write',
+            'name': 'DIG_LVL_PAUSE_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8749: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ARM_START_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8750: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ARM_START_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8751: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ARM_START_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8752: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ARM_START_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8753: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ARM_START_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8755: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_EDGE_START_TRIG_COUPLING',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8756: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_WIN_START_TRIG_COUPLING',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8757: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_EDGE_REF_TRIG_COUPLING',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8758: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_LVL_PAUSE_TRIG_COUPLING',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8759: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_WIN_PAUSE_TRIG_COUPLING',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8760: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_ADV_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8887: {
+            'access': 'read-write',
+            'enum': 'TriggerType9',
+            'name': 'HSHK_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8888: {
+            'access': 'read-write',
+            'name': 'INTERLOCKED_HSHK_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8889: {
+            'access': 'read-write',
+            'enum': 'Level1',
+            'name': 'INTERLOCKED_HSHK_TRIG_ASSERTED_LVL',
+            'resettable': True,
+            'type': 'int32'
+        },
+        11969: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_AUTO_TRIG_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11970: {
+            'access': 'read',
+            'name': 'REF_TRIG_AUTO_TRIGGERED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        11991: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_REF_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11992: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_REF_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        11993: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_REF_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        11994: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_REF_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        11995: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_REF_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12001: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12002: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12003: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12004: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12005: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_START_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12006: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12007: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12008: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12009: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12010: {
+            'access': 'read-write',
+            'name': 'ANLG_EDGE_REF_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12011: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12012: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12013: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12014: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12015: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_REF_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12016: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12017: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12018: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12019: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12020: {
+            'access': 'read-write',
+            'name': 'ANLG_LVL_PAUSE_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12021: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12022: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12023: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12024: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12025: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_PAUSE_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12031: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12032: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12033: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12034: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12035: {
+            'access': 'read-write',
+            'name': 'ANLG_WIN_START_TRIG_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12062: {
+            'access': 'read',
+            'name': 'START_TRIG_TERM',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12063: {
+            'access': 'read',
+            'name': 'REF_TRIG_TERM',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12064: {
+            'access': 'read',
+            'name': 'PAUSE_TRIG_TERM',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12159: {
+            'access': 'read',
+            'name': 'ARM_START_TERM',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12160: {
+            'access': 'read-write',
+            'enum': 'SyncType',
+            'name': 'TRIGGER_SYNC_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12317: {
+            'access': 'read-write',
+            'name': 'TIME_START_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12342: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'START_TRIG_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12365: {
+            'access': 'read-write',
+            'name': 'START_TRIG_TRIG_WHEN',
+            'resettable': True,
+            'type': 'CVIAbsoluteTime'
+        },
+        12570: {
+            'access': 'read-write',
+            'name': 'START_TRIG_TRIG_WIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12571: {
+            'access': 'read-write',
+            'name': 'START_TRIG_RETRIGGER_WIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12572: {
+            'access': 'read-write',
+            'name': 'START_TRIG_MAX_NUM_TRIGS_TO_DETECT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12573: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_RETRIGGERABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12574: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_TRIG_WIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12575: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_RETRIGGER_WIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12576: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_MAX_NUM_TRIGS_TO_DETECT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12577: {
+            'access': 'read-write',
+            'name': 'ANLG_MULTI_EDGE_START_TRIG_SRCS',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12578: {
+            'access': 'read-write',
+            'enum': 'Slope1',
+            'name': 'ANLG_MULTI_EDGE_START_TRIG_SLOPES',
+            'resettable': True,
+            'type': 'int32[]'
+        },
+        12579: {
+            'access': 'read-write',
+            'name': 'ANLG_MULTI_EDGE_START_TRIG_LVLS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12580: {
+            'access': 'read-write',
+            'name': 'ANLG_MULTI_EDGE_START_TRIG_HYSTS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12581: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_MULTI_EDGE_START_TRIG_COUPLINGS',
+            'resettable': True,
+            'type': 'int32[]'
+        },
+        12582: {
+            'access': 'read-write',
+            'name': 'ANLG_MULTI_EDGE_REF_TRIG_SRCS',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12583: {
+            'access': 'read-write',
+            'enum': 'Slope1',
+            'name': 'ANLG_MULTI_EDGE_REF_TRIG_SLOPES',
+            'resettable': True,
+            'type': 'int32[]'
+        },
+        12584: {
+            'access': 'read-write',
+            'name': 'ANLG_MULTI_EDGE_REF_TRIG_LVLS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12585: {
+            'access': 'read-write',
+            'name': 'ANLG_MULTI_EDGE_REF_TRIG_HYSTS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12586: {
+            'access': 'read-write',
+            'enum': 'Coupling2',
+            'name': 'ANLG_MULTI_EDGE_REF_TRIG_COUPLINGS',
+            'resettable': True,
+            'type': 'int32[]'
+        },
+        12589: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'START_TRIG_TIMESTAMP_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12590: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_TIMESTAMP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12591: {
+            'access': 'read',
+            'name': 'REF_TRIG_TIMESTAMP_VAL',
+            'resettable': False,
+            'type': 'CVIAbsoluteTime'
+        },
+        12592: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'REF_TRIG_TIMESTAMP_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12593: {
+            'access': 'read-write',
+            'name': 'ARM_START_TRIG_TRIG_WHEN',
+            'resettable': True,
+            'type': 'CVIAbsoluteTime'
+        },
+        12594: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'ARM_START_TRIG_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12595: {
+            'access': 'read-write',
+            'name': 'ARM_START_TRIG_TIMESTAMP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12596: {
+            'access': 'read',
+            'name': 'ARM_START_TRIG_TIMESTAMP_VAL',
+            'resettable': False,
+            'type': 'CVIAbsoluteTime'
+        },
+        12597: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'ARM_START_TRIG_TIMESTAMP_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12618: {
+            'access': 'read-write',
+            'name': 'START_TRIG_TIMESTAMP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12619: {
+            'access': 'read',
+            'name': 'START_TRIG_TIMESTAMP_VAL',
+            'resettable': False,
+            'type': 'CVIAbsoluteTime'
+        }
     }
 }

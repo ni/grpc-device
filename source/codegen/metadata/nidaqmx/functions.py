@@ -7327,6 +7327,244 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetTrigAttributeBool': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTrigAttributeDouble': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTrigAttributeDoubleArray': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTrigAttributeInt32': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTrigAttributeInt32Array': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTrigAttributeString': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTrigAttributeTimestamp': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'CVIAbsoluteTime'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTrigAttributeUInt32': {
+        'cname': 'DAQmxGetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IsTaskDone': {
         'parameters': [
             {
@@ -8760,6 +8998,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ResetTrigAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SaveGlobalChan': {
         'parameters': [
             {
@@ -9831,6 +10085,242 @@ functions = {
             {
                 'direction': 'in',
                 'grpc_type': 'TimingAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeBool': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeDouble': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeDoubleArray': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeInt32': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeInt32Array': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'const int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeString': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeTimestamp': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'CVIAbsoluteTime'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTrigAttributeUInt32': {
+        'cname': 'DAQmxSetTrigAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TriggerAttributes',
                 'name': 'attribute',
                 'type': 'int32'
             },

@@ -203,6 +203,14 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetTimingAttributeString = reinterpret_cast<GetTimingAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
   function_pointers_.GetTimingAttributeTimestamp = reinterpret_cast<GetTimingAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
   function_pointers_.GetTimingAttributeUInt32 = reinterpret_cast<GetTimingAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
+  function_pointers_.GetTrigAttributeBool = reinterpret_cast<GetTrigAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetTrigAttributeDouble = reinterpret_cast<GetTrigAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetTrigAttributeDoubleArray = reinterpret_cast<GetTrigAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetTrigAttributeInt32 = reinterpret_cast<GetTrigAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetTrigAttributeInt32Array = reinterpret_cast<GetTrigAttributeInt32ArrayPtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetTrigAttributeString = reinterpret_cast<GetTrigAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetTrigAttributeTimestamp = reinterpret_cast<GetTrigAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetTrigAttributeUInt32 = reinterpret_cast<GetTrigAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
   function_pointers_.IsTaskDone = reinterpret_cast<IsTaskDonePtr>(shared_library_.get_function_pointer("DAQmxIsTaskDone"));
   function_pointers_.LoadTask = reinterpret_cast<LoadTaskPtr>(shared_library_.get_function_pointer("DAQmxLoadTask"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
@@ -239,6 +247,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
   function_pointers_.ResetTimingAttribute = reinterpret_cast<ResetTimingAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttribute"));
   function_pointers_.ResetTimingAttributeEx = reinterpret_cast<ResetTimingAttributeExPtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttributeEx"));
+  function_pointers_.ResetTrigAttribute = reinterpret_cast<ResetTrigAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTrigAttribute"));
   function_pointers_.SaveGlobalChan = reinterpret_cast<SaveGlobalChanPtr>(shared_library_.get_function_pointer("DAQmxSaveGlobalChan"));
   function_pointers_.SaveScale = reinterpret_cast<SaveScalePtr>(shared_library_.get_function_pointer("DAQmxSaveScale"));
   function_pointers_.SaveTask = reinterpret_cast<SaveTaskPtr>(shared_library_.get_function_pointer("DAQmxSaveTask"));
@@ -277,6 +286,14 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetTimingAttributeString = reinterpret_cast<SetTimingAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
   function_pointers_.SetTimingAttributeTimestamp = reinterpret_cast<SetTimingAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
   function_pointers_.SetTimingAttributeUInt32 = reinterpret_cast<SetTimingAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
+  function_pointers_.SetTrigAttributeBool = reinterpret_cast<SetTrigAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetTrigAttributeDouble = reinterpret_cast<SetTrigAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetTrigAttributeDoubleArray = reinterpret_cast<SetTrigAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetTrigAttributeInt32 = reinterpret_cast<SetTrigAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetTrigAttributeInt32Array = reinterpret_cast<SetTrigAttributeInt32ArrayPtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetTrigAttributeString = reinterpret_cast<SetTrigAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetTrigAttributeTimestamp = reinterpret_cast<SetTrigAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetTrigAttributeUInt32 = reinterpret_cast<SetTrigAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
   function_pointers_.StartNewFile = reinterpret_cast<StartNewFilePtr>(shared_library_.get_function_pointer("DAQmxStartNewFile"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
@@ -2503,6 +2520,102 @@ int32 NiDAQmxLibrary::GetTimingAttributeUInt32(TaskHandle task, int32 attribute,
 #endif
 }
 
+int32 NiDAQmxLibrary::GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeDouble(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, float64 value[], uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeDoubleArray(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTrigAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTrigAttributeInt32Array(TaskHandle task, int32 attribute, int32 value[], uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeInt32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeInt32Array(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTrigAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeString(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeTimestamp(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTrigAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTrigAttributeUInt32(task, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::IsTaskDone(TaskHandle task, bool32* isTaskDone)
 {
   if (!function_pointers_.IsTaskDone) {
@@ -2932,6 +3045,18 @@ int32 NiDAQmxLibrary::ResetTimingAttributeEx(TaskHandle task, const char deviceN
   return DAQmxResetTimingAttributeEx(task, deviceNames, attribute);
 #else
   return function_pointers_.ResetTimingAttributeEx(task, deviceNames, attribute);
+#endif
+}
+
+int32 NiDAQmxLibrary::ResetTrigAttribute(TaskHandle task, int32 attribute)
+{
+  if (!function_pointers_.ResetTrigAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetTrigAttribute(task, attribute);
+#else
+  return function_pointers_.ResetTrigAttribute(task, attribute);
 #endif
 }
 
@@ -3388,6 +3513,102 @@ int32 NiDAQmxLibrary::SetTimingAttributeUInt32(TaskHandle task, int32 attribute,
   return DAQmxSetTimingAttribute(task, attribute, value, size);
 #else
   return function_pointers_.SetTimingAttributeUInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeDouble(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, const float64 value[], uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeDoubleArray(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeInt32Array(TaskHandle task, int32 attribute, const int32 value[], uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeInt32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeInt32Array(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeString(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeTimestamp(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTrigAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTrigAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTrigAttributeUInt32(task, attribute, value, size);
 #endif
 }
 

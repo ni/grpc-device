@@ -420,6 +420,24 @@ enums = {
             }
         ]
     },
+    'ActiveLevel': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the signal is above the threshold.'
+                },
+                'name': 'ABOVE_LVL',
+                'value': 10093
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the signal is below the threshold.'
+                },
+                'name': 'BELOW_LVL',
+                'value': 10107
+            }
+        ]
+    },
     'AltRef': {
         'values': [
             {
@@ -1191,6 +1209,24 @@ enums = {
             }
         ]
     },
+    'Coupling2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Alternating Current.'
+                },
+                'name': 'AC',
+                'value': 10045
+            },
+            {
+                'documentation': {
+                    'description': 'Direct Current.'
+                },
+                'name': 'DC',
+                'value': 10050
+            }
+        ]
+    },
     'CurrentShuntResistorLocation1': {
         'values': [
             {
@@ -1377,6 +1413,31 @@ enums = {
                 },
                 'name': 'PATTERN_DOES_NOT_MATCH',
                 'value': 10253
+            }
+        ]
+    },
+    'DigitalWidthUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Complete periods of the Sample Clock.'
+                },
+                'name': 'SAMP_CLK_PERIODS',
+                'value': 10286
+            },
+            {
+                'documentation': {
+                    'description': 'Seconds.'
+                },
+                'name': 'SECONDS',
+                'value': 10364
+            },
+            {
+                'documentation': {
+                    'description': 'Timebase ticks.'
+                },
+                'name': 'TICKS',
+                'value': 10304
             }
         ]
     },
@@ -3557,6 +3618,31 @@ enums = {
             }
         ]
     },
+    'SyncType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Disables trigger skew correction.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': 'Device is the source for shared clocks and triggers.'
+                },
+                'name': 'MASTER',
+                'value': 15888
+            },
+            {
+                'documentation': {
+                    'description': 'Device uses clocks and triggers from the master device.'
+                },
+                'name': 'SLAVE',
+                'value': 15889
+            }
+        ]
+    },
     'SyncUnlockBehavior': {
         'values': [
             {
@@ -3884,6 +3970,219 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'TriggerType10': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger when an analog signal signal crosses a threshold.'
+                },
+                'name': 'ANLG_EDGE',
+                'value': 10099
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when any of the configured analog signals cross their respective  thresholds.'
+                },
+                'name': 'ANLG_MULTI_EDGE',
+                'value': 16108
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger on the rising or falling edge of a digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when digital physical channels match a digital pattern.'
+                },
+                'name': 'DIG_PATTERN',
+                'value': 10398
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when an analog signal enters or leaves a range of values. The range is  in the units of the measurement.'
+                },
+                'name': 'ANLG_WIN',
+                'value': 10103
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger when a specified time is reached.'
+                },
+                'name': 'TIME',
+                'value': 15996
+            },
+            {
+                'documentation': {
+                    'description': 'Disable triggering for the task.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger on a rising or falling edge of a digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger when a specified time is reached.'
+                },
+                'name': 'TIME',
+                'value': 15996
+            },
+            {
+                'documentation': {
+                    'description': 'Disable the trigger.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType5': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Advance to the next entry in a scan list on the rising or falling edge of a  digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': ' Advance to the next entry in a scan list when you call  DAQmxSendSoftwareTrigger().'
+                },
+                'name': 'SOFTWARE',
+                'value': 10292
+            },
+            {
+                'documentation': {
+                    'description': ' Advance through all entries in the scan list as fast as possible.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType6': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while an analog signal is above or below a  level.'
+                },
+                'name': 'ANLG_LVL',
+                'value': 10101
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while an analog signal is either inside or  outside of a range of values.'
+                },
+                'name': 'ANLG_WIN',
+                'value': 10103
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while a digital signal is at either a high  or low state.'
+                },
+                'name': 'DIG_LVL',
+                'value': 10152
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while digital physical channels either  match or do not match a digital pattern.'
+                },
+                'name': 'DIG_PATTERN',
+                'value': 10398
+            },
+            {
+                'documentation': {
+                    'description': 'Do not pause the measurement or generation.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType8': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger when an analog signal signal crosses a threshold.'
+                },
+                'name': 'ANLG_EDGE',
+                'value': 10099
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when any of the configured analog signals cross their respective  thresholds.'
+                },
+                'name': 'ANLG_MULTI_EDGE',
+                'value': 16108
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger on the rising or falling edge of a digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when digital physical channels match a digital pattern.'
+                },
+                'name': 'DIG_PATTERN',
+                'value': 10398
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when an analog signal enters or leaves a range of values. The range is  in the units of the measurement.'
+                },
+                'name': 'ANLG_WIN',
+                'value': 10103
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger when a specified time is reached.'
+                },
+                'name': 'TIME',
+                'value': 15996
+            },
+            {
+                'documentation': {
+                    'description': 'Disable triggering for the task.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType9': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Use the Handshake Trigger as a control signal for asynchronous handshaking,  such as 8255 handshaking.'
+                },
+                'name': 'INTERLOCKED',
+                'value': 12549
+            },
+            {
+                'documentation': {
+                    'description': ' Start the measurement or generation immediately when you start the task.'
+                },
+                'name': 'NONE',
+                'value': 10230
             }
         ]
     },
@@ -4385,6 +4684,24 @@ enums = {
                 },
                 'name': 'LEAVING_WIN',
                 'value': 10208
+            }
+        ]
+    },
+    'WindowTriggerCondition2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the trigger is inside the window.'
+                },
+                'name': 'INSIDE_WIN',
+                'value': 10199
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the signal is outside the window.'
+                },
+                'name': 'OUTSIDE_WIN',
+                'value': 10251
             }
         ]
     },

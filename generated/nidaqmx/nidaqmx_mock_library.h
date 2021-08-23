@@ -195,6 +195,14 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetTimingAttributeString, (TaskHandle task, int32 attribute, char value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetTimingAttributeTimestamp, (TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetTimingAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeBool, (TaskHandle task, int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeDouble, (TaskHandle task, int32 attribute, float64* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeDoubleArray, (TaskHandle task, int32 attribute, float64 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeInt32, (TaskHandle task, int32 attribute, int32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeInt32Array, (TaskHandle task, int32 attribute, int32 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeString, (TaskHandle task, int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeTimestamp, (TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetTrigAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value, uInt32 size), (override));
   MOCK_METHOD(int32, IsTaskDone, (TaskHandle task, bool32* isTaskDone), (override));
   MOCK_METHOD(int32, LoadTask, (const char sessionName[], TaskHandle* task), (override));
   MOCK_METHOD(int32, ReadAnalogF64, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
@@ -231,6 +239,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ResetDevice, (const char deviceName[]), (override));
   MOCK_METHOD(int32, ResetTimingAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, ResetTimingAttributeEx, (TaskHandle task, const char deviceNames[], int32 attribute), (override));
+  MOCK_METHOD(int32, ResetTrigAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, SaveGlobalChan, (TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options), (override));
   MOCK_METHOD(int32, SaveScale, (const char scaleName[], const char saveAs[], const char author[], uInt32 options), (override));
   MOCK_METHOD(int32, SaveTask, (TaskHandle task, const char saveAs[], const char author[], uInt32 options), (override));
@@ -266,6 +275,14 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SetTimingAttributeString, (TaskHandle task, int32 attribute, const char value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetTimingAttributeTimestamp, (TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size), (override));
   MOCK_METHOD(int32, SetTimingAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeBool, (TaskHandle task, int32 attribute, bool32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeDouble, (TaskHandle task, int32 attribute, float64 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeDoubleArray, (TaskHandle task, int32 attribute, const float64 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeInt32, (TaskHandle task, int32 attribute, int32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeInt32Array, (TaskHandle task, int32 attribute, const int32 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeString, (TaskHandle task, int32 attribute, const char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeTimestamp, (TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetTrigAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value, uInt32 size), (override));
   MOCK_METHOD(int32, StartNewFile, (TaskHandle task, const char filePath[]), (override));
   MOCK_METHOD(int32, StartTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, StopTask, (TaskHandle task), (override));
