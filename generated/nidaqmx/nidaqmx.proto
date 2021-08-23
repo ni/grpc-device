@@ -187,6 +187,18 @@ service NiDAQmx {
   rpc GetTaskAttributeBool(GetTaskAttributeBoolRequest) returns (GetTaskAttributeBoolResponse);
   rpc GetTaskAttributeString(GetTaskAttributeStringRequest) returns (GetTaskAttributeStringResponse);
   rpc GetTaskAttributeUInt32(GetTaskAttributeUInt32Request) returns (GetTaskAttributeUInt32Response);
+  rpc GetTimingAttributeBool(GetTimingAttributeBoolRequest) returns (GetTimingAttributeBoolResponse);
+  rpc GetTimingAttributeDouble(GetTimingAttributeDoubleRequest) returns (GetTimingAttributeDoubleResponse);
+  rpc GetTimingAttributeExBool(GetTimingAttributeExBoolRequest) returns (GetTimingAttributeExBoolResponse);
+  rpc GetTimingAttributeExDouble(GetTimingAttributeExDoubleRequest) returns (GetTimingAttributeExDoubleResponse);
+  rpc GetTimingAttributeExInt32(GetTimingAttributeExInt32Request) returns (GetTimingAttributeExInt32Response);
+  rpc GetTimingAttributeExString(GetTimingAttributeExStringRequest) returns (GetTimingAttributeExStringResponse);
+  rpc GetTimingAttributeExTimestamp(GetTimingAttributeExTimestampRequest) returns (GetTimingAttributeExTimestampResponse);
+  rpc GetTimingAttributeExUInt32(GetTimingAttributeExUInt32Request) returns (GetTimingAttributeExUInt32Response);
+  rpc GetTimingAttributeInt32(GetTimingAttributeInt32Request) returns (GetTimingAttributeInt32Response);
+  rpc GetTimingAttributeString(GetTimingAttributeStringRequest) returns (GetTimingAttributeStringResponse);
+  rpc GetTimingAttributeTimestamp(GetTimingAttributeTimestampRequest) returns (GetTimingAttributeTimestampResponse);
+  rpc GetTimingAttributeUInt32(GetTimingAttributeUInt32Request) returns (GetTimingAttributeUInt32Response);
   rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc LoadTask(LoadTaskRequest) returns (LoadTaskResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
@@ -221,6 +233,8 @@ service NiDAQmx {
   rpc ResetBufferAttribute(ResetBufferAttributeRequest) returns (ResetBufferAttributeResponse);
   rpc ResetChanAttribute(ResetChanAttributeRequest) returns (ResetChanAttributeResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
+  rpc ResetTimingAttribute(ResetTimingAttributeRequest) returns (ResetTimingAttributeResponse);
+  rpc ResetTimingAttributeEx(ResetTimingAttributeExRequest) returns (ResetTimingAttributeExResponse);
   rpc SaveGlobalChan(SaveGlobalChanRequest) returns (SaveGlobalChanResponse);
   rpc SaveScale(SaveScaleRequest) returns (SaveScaleResponse);
   rpc SaveTask(SaveTaskRequest) returns (SaveTaskResponse);
@@ -247,6 +261,18 @@ service NiDAQmx {
   rpc SetScaleAttributeString(SetScaleAttributeStringRequest) returns (SetScaleAttributeStringResponse);
   rpc SetStartTrigTrigWhen(SetStartTrigTrigWhenRequest) returns (SetStartTrigTrigWhenResponse);
   rpc SetSyncPulseTimeWhen(SetSyncPulseTimeWhenRequest) returns (SetSyncPulseTimeWhenResponse);
+  rpc SetTimingAttributeBool(SetTimingAttributeBoolRequest) returns (SetTimingAttributeBoolResponse);
+  rpc SetTimingAttributeDouble(SetTimingAttributeDoubleRequest) returns (SetTimingAttributeDoubleResponse);
+  rpc SetTimingAttributeExBool(SetTimingAttributeExBoolRequest) returns (SetTimingAttributeExBoolResponse);
+  rpc SetTimingAttributeExDouble(SetTimingAttributeExDoubleRequest) returns (SetTimingAttributeExDoubleResponse);
+  rpc SetTimingAttributeExInt32(SetTimingAttributeExInt32Request) returns (SetTimingAttributeExInt32Response);
+  rpc SetTimingAttributeExString(SetTimingAttributeExStringRequest) returns (SetTimingAttributeExStringResponse);
+  rpc SetTimingAttributeExTimestamp(SetTimingAttributeExTimestampRequest) returns (SetTimingAttributeExTimestampResponse);
+  rpc SetTimingAttributeExUInt32(SetTimingAttributeExUInt32Request) returns (SetTimingAttributeExUInt32Response);
+  rpc SetTimingAttributeInt32(SetTimingAttributeInt32Request) returns (SetTimingAttributeInt32Response);
+  rpc SetTimingAttributeString(SetTimingAttributeStringRequest) returns (SetTimingAttributeStringResponse);
+  rpc SetTimingAttributeTimestamp(SetTimingAttributeTimestampRequest) returns (SetTimingAttributeTimestampResponse);
+  rpc SetTimingAttributeUInt32(SetTimingAttributeUInt32Request) returns (SetTimingAttributeUInt32Response);
   rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
@@ -1656,6 +1682,156 @@ enum TaskUInt32Attributes {
   TASK_ATTRIBUTE_NUM_DEVICES = 10682;
 }
 
+enum TimingInt32Attributes {
+  TIMING_INT32_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_MODE = 4864;
+  TIMING_ATTRIBUTE_SAMP_CLK_ACTIVE_EDGE = 4865;
+  TIMING_ATTRIBUTE_DELAY_FROM_SAMP_CLK_DELAY_UNITS = 4868;
+  TIMING_ATTRIBUTE_AI_CONV_TIMEBASE_SRC = 4921;
+  TIMING_ATTRIBUTE_SAMP_TIMING_TYPE = 4935;
+  TIMING_ATTRIBUTE_AI_CONV_ACTIVE_EDGE = 6227;
+  TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_ACTIVE_EDGE = 6380;
+  TIMING_ATTRIBUTE_HSHK_START_COND = 8899;
+  TIMING_ATTRIBUTE_HSHK_SAMPLE_INPUT_DATA_WHEN = 8900;
+  TIMING_ATTRIBUTE_SAMP_CLK_UNDERFLOW_BEHAVIOR = 10593;
+  TIMING_ATTRIBUTE_SAMP_CLK_OVERRUN_BEHAVIOR = 12028;
+  TIMING_ATTRIBUTE_IMPLICIT_UNDERFLOW_BEHAVIOR = 12029;
+  TIMING_ATTRIBUTE_SYNC_PULSE_TYPE = 12598;
+  TIMING_ATTRIBUTE_SYNC_PULSE_TIME_TIMESCALE = 12600;
+  TIMING_ATTRIBUTE_FIRST_SAMP_TIMESTAMP_TIMESCALE = 12603;
+  TIMING_ATTRIBUTE_FIRST_SAMP_CLK_TIMESCALE = 12675;
+}
+
+enum TimingResetAttributes {
+  TIMING_RESET_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_RESET_ATTRIBUTE_SAMP_QUANT_SAMP_MODE = 4864;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_ACTIVE_EDGE = 4865;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_TIMEBASE_RATE = 4867;
+  TIMING_RESET_ATTRIBUTE_DELAY_FROM_SAMP_CLK_DELAY_UNITS = 4868;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_TIMEBASE_MASTER_TIMEBASE_DIV = 4869;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC = 4872;
+  TIMING_RESET_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN = 4880;
+  TIMING_RESET_ATTRIBUTE_REF_CLK_RATE = 4885;
+  TIMING_RESET_ATTRIBUTE_REF_CLK_SRC = 4886;
+  TIMING_RESET_ATTRIBUTE_DELAY_FROM_SAMP_CLK_DELAY = 4887;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_TIMEBASE_DIV = 4917;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_TIMEBASE_SRC = 4921;
+  TIMING_RESET_ATTRIBUTE_MASTER_TIMEBASE_SRC = 4931;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_RATE = 4932;
+  TIMING_RESET_ATTRIBUTE_SAMP_TIMING_TYPE = 4935;
+  TIMING_RESET_ATTRIBUTE_MASTER_TIMEBASE_RATE = 5269;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_SRC = 5378;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_RATE = 6216;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_SRC = 6226;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_ACTIVE_EDGE = 6227;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_TIMEBASE_DIV = 6379;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_TIMEBASE_ACTIVE_EDGE = 6380;
+  TIMING_RESET_ATTRIBUTE_CHANGE_DETECT_DI_RISING_EDGE_PHYSICAL_CHANS = 8597;
+  TIMING_RESET_ATTRIBUTE_CHANGE_DETECT_DI_FALLING_EDGE_PHYSICAL_CHANS = 8598;
+  TIMING_RESET_ATTRIBUTE_ON_DEMAND_SIMULTANEOUS_AO_ENABLE = 8608;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_DIG_FLTR_ENABLE = 8734;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_DIG_FLTR_MIN_PULSE_WIDTH = 8735;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_DIG_FLTR_TIMEBASE_SRC = 8736;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_DIG_FLTR_TIMEBASE_RATE = 8737;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_DIG_SYNC_ENABLE = 8738;
+  TIMING_RESET_ATTRIBUTE_SYNC_PULSE_SRC = 8765;
+  TIMING_RESET_ATTRIBUTE_SYNC_PULSE_MIN_DELAY_TO_START = 8767;
+  TIMING_RESET_ATTRIBUTE_HSHK_DELAY_AFTER_XFER = 8898;
+  TIMING_RESET_ATTRIBUTE_HSHK_START_COND = 8899;
+  TIMING_RESET_ATTRIBUTE_HSHK_SAMPLE_INPUT_DATA_WHEN = 8900;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_UNDERFLOW_BEHAVIOR = 10593;
+  TIMING_RESET_ATTRIBUTE_SAMP_TIMING_ENGINE = 10790;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_DIG_FLTR_ENABLE = 11996;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_DIG_FLTR_MIN_PULSE_WIDTH = 11997;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_DIG_FLTR_TIMEBASE_SRC = 11998;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_DIG_FLTR_TIMEBASE_RATE = 11999;
+  TIMING_RESET_ATTRIBUTE_AI_CONV_DIG_SYNC_ENABLE = 12000;
+  TIMING_RESET_ATTRIBUTE_CHANGE_DETECT_DI_TRISTATE = 12026;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_OVERRUN_BEHAVIOR = 12028;
+  TIMING_RESET_ATTRIBUTE_IMPLICIT_UNDERFLOW_BEHAVIOR = 12029;
+  TIMING_RESET_ATTRIBUTE_SYNC_PULSE_RESET_DELAY = 12157;
+  TIMING_RESET_ATTRIBUTE_SYNC_CLK_INTERVAL = 12158;
+  TIMING_RESET_ATTRIBUTE_TIMING_SYNC_PULSE_FORCE = 12474;
+  TIMING_RESET_ATTRIBUTE_SAMP_CLK_WRITE_WFM_USE_INITIAL_WFM_DT = 12540;
+  TIMING_RESET_ATTRIBUTE_SYNC_PULSE_TYPE = 12598;
+  TIMING_RESET_ATTRIBUTE_SYNC_PULSE_TIME_WHEN = 12599;
+  TIMING_RESET_ATTRIBUTE_SYNC_PULSE_TIME_TIMESCALE = 12600;
+  TIMING_RESET_ATTRIBUTE_FIRST_SAMP_TIMESTAMP_ENABLE = 12601;
+  TIMING_RESET_ATTRIBUTE_FIRST_SAMP_TIMESTAMP_TIMESCALE = 12603;
+  TIMING_RESET_ATTRIBUTE_FIRST_SAMP_CLK_WHEN = 12674;
+  TIMING_RESET_ATTRIBUTE_FIRST_SAMP_CLK_TIMESCALE = 12675;
+  TIMING_RESET_ATTRIBUTE_FIRST_SAMP_CLK_OFFSET = 12714;
+}
+
+enum TimingDoubleAttributes {
+  TIMING_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_RATE = 4867;
+  TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN = 4880;
+  TIMING_ATTRIBUTE_REF_CLK_RATE = 4885;
+  TIMING_ATTRIBUTE_DELAY_FROM_SAMP_CLK_DELAY = 4887;
+  TIMING_ATTRIBUTE_SAMP_CLK_RATE = 4932;
+  TIMING_ATTRIBUTE_MASTER_TIMEBASE_RATE = 5269;
+  TIMING_ATTRIBUTE_AI_CONV_RATE = 6216;
+  TIMING_ATTRIBUTE_SAMP_CLK_DIG_FLTR_MIN_PULSE_WIDTH = 8735;
+  TIMING_ATTRIBUTE_SAMP_CLK_DIG_FLTR_TIMEBASE_RATE = 8737;
+  TIMING_ATTRIBUTE_SYNC_PULSE_SYNC_TIME = 8766;
+  TIMING_ATTRIBUTE_SYNC_PULSE_MIN_DELAY_TO_START = 8767;
+  TIMING_ATTRIBUTE_HSHK_DELAY_AFTER_XFER = 8898;
+  TIMING_ATTRIBUTE_SAMP_CLK_MAX_RATE = 8904;
+  TIMING_ATTRIBUTE_AI_CONV_MAX_RATE = 8905;
+  TIMING_ATTRIBUTE_AI_CONV_DIG_FLTR_MIN_PULSE_WIDTH = 11997;
+  TIMING_ATTRIBUTE_AI_CONV_DIG_FLTR_TIMEBASE_RATE = 11999;
+  TIMING_ATTRIBUTE_SYNC_PULSE_RESET_TIME = 12156;
+  TIMING_ATTRIBUTE_SYNC_PULSE_RESET_DELAY = 12157;
+  TIMING_ATTRIBUTE_FIRST_SAMP_CLK_OFFSET = 12714;
+}
+
+enum TimingUInt32Attributes {
+  TIMING_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_MASTER_TIMEBASE_DIV = 4869;
+  TIMING_ATTRIBUTE_AI_CONV_TIMEBASE_DIV = 4917;
+  TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_DIV = 6379;
+  TIMING_ATTRIBUTE_SAMP_TIMING_ENGINE = 10790;
+  TIMING_ATTRIBUTE_SYNC_CLK_INTERVAL = 12158;
+}
+
+enum TimingStringAttributes {
+  TIMING_STRING_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC = 4872;
+  TIMING_ATTRIBUTE_REF_CLK_SRC = 4886;
+  TIMING_ATTRIBUTE_MASTER_TIMEBASE_SRC = 4931;
+  TIMING_ATTRIBUTE_AI_CONV_SRC = 5378;
+  TIMING_ATTRIBUTE_SAMP_CLK_SRC = 6226;
+  TIMING_ATTRIBUTE_CHANGE_DETECT_DI_RISING_EDGE_PHYSICAL_CHANS = 8597;
+  TIMING_ATTRIBUTE_CHANGE_DETECT_DI_FALLING_EDGE_PHYSICAL_CHANS = 8598;
+  TIMING_ATTRIBUTE_SAMP_CLK_DIG_FLTR_TIMEBASE_SRC = 8736;
+  TIMING_ATTRIBUTE_SYNC_PULSE_SRC = 8765;
+  TIMING_ATTRIBUTE_AI_CONV_DIG_FLTR_TIMEBASE_SRC = 11998;
+  TIMING_ATTRIBUTE_SAMP_CLK_TERM = 12059;
+  TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_TERM = 12060;
+  TIMING_ATTRIBUTE_SYNC_PULSE_TERM = 12165;
+}
+
+enum TimingBoolAttributes {
+  TIMING_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_ATTRIBUTE_ON_DEMAND_SIMULTANEOUS_AO_ENABLE = 8608;
+  TIMING_ATTRIBUTE_SAMP_CLK_DIG_FLTR_ENABLE = 8734;
+  TIMING_ATTRIBUTE_SAMP_CLK_DIG_SYNC_ENABLE = 8738;
+  TIMING_ATTRIBUTE_AI_CONV_DIG_FLTR_ENABLE = 11996;
+  TIMING_ATTRIBUTE_AI_CONV_DIG_SYNC_ENABLE = 12000;
+  TIMING_ATTRIBUTE_CHANGE_DETECT_DI_TRISTATE = 12026;
+  TIMING_ATTRIBUTE_TIMING_SYNC_PULSE_FORCE = 12474;
+  TIMING_ATTRIBUTE_SAMP_CLK_WRITE_WFM_USE_INITIAL_WFM_DT = 12540;
+  TIMING_ATTRIBUTE_FIRST_SAMP_TIMESTAMP_ENABLE = 12601;
+}
+
+enum TimingTimestampAttributes {
+  TIMING_TIMESTAMP_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_ATTRIBUTE_SYNC_PULSE_TIME_WHEN = 12599;
+  TIMING_ATTRIBUTE_FIRST_SAMP_TIMESTAMP_VAL = 12602;
+  TIMING_ATTRIBUTE_FIRST_SAMP_CLK_WHEN = 12674;
+}
+
 enum ACExcitWireMode {
   AC_EXCIT_WIRE_MODE_UNSPECIFIED = 0;
   AC_EXCIT_WIRE_MODE_4_WIRE = 4;
@@ -2831,6 +3007,44 @@ enum ScaleInt32AttributeValues {
   SCALE_INT32_UNITS_PRE_SCALED_COULOMBS = 16102;
   SCALE_INT32_UNITS_PRE_SCALED_PICO_COULOMBS = 16103;
   SCALE_INT32_UNITS_PRE_SCALED_FROM_TEDS = 12516;
+}
+
+enum TimingInt32AttributeValues {
+  TIMING_INT32_UNSPECIFIED = 0;
+  TIMING_INT32_ACQUISITION_TYPE_FINITE_SAMPS = 10178;
+  TIMING_INT32_ACQUISITION_TYPE_CONT_SAMPS = 10123;
+  TIMING_INT32_ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT = 12522;
+  TIMING_INT32_DIGITAL_WIDTH_UNITS2_SECONDS = 10364;
+  TIMING_INT32_DIGITAL_WIDTH_UNITS2_TICKS = 10304;
+  TIMING_INT32_EDGE1_RISING = 10280;
+  TIMING_INT32_EDGE1_FALLING = 10171;
+  TIMING_INT32_HANDSHAKE_START_CONDITION_IMMEDIATE = 10198;
+  TIMING_INT32_HANDSHAKE_START_CONDITION_WAIT_FOR_HANDSHAKE_TRIGGER_ASSERT = 12550;
+  TIMING_INT32_HANDSHAKE_START_CONDITION_WAIT_FOR_HANDSHAKE_TRIGGER_DEASSERT = 12551;
+  TIMING_INT32_MIOAI_CONVERT_TB_SRC_SAME_AS_SAMP_TIMEBASE = 10284;
+  TIMING_INT32_MIOAI_CONVERT_TB_SRC_SAME_AS_MASTER_TIMEBASE = 10282;
+  TIMING_INT32_MIOAI_CONVERT_TB_SRC_100_M_HZ_TIMEBASE = 15857;
+  TIMING_INT32_MIOAI_CONVERT_TB_SRC_80_M_HZ_TIMEBASE = 14636;
+  TIMING_INT32_MIOAI_CONVERT_TB_SRC_20_M_HZ_TIMEBASE = 12537;
+  TIMING_INT32_MIOAI_CONVERT_TB_SRC_8_M_HZ_TIMEBASE = 16023;
+  TIMING_INT32_OVERFLOW_BEHAVIOR_STOP_TASK_AND_ERROR = 15862;
+  TIMING_INT32_OVERFLOW_BEHAVIOR_IGNORE_OVERRUNS = 15863;
+  TIMING_INT32_SAMPLE_INPUT_DATA_WHEN_HANDSHAKE_TRIGGER_ASSERTS = 12552;
+  TIMING_INT32_SAMPLE_INPUT_DATA_WHEN_HANDSHAKE_TRIGGER_DEASSERTS = 12553;
+  TIMING_INT32_SAMPLE_TIMING_TYPE_SAMP_CLK = 10388;
+  TIMING_INT32_SAMPLE_TIMING_TYPE_BURST_HANDSHAKE = 12548;
+  TIMING_INT32_SAMPLE_TIMING_TYPE_HANDSHAKE = 10389;
+  TIMING_INT32_SAMPLE_TIMING_TYPE_IMPLICIT = 10451;
+  TIMING_INT32_SAMPLE_TIMING_TYPE_ON_DEMAND = 10390;
+  TIMING_INT32_SAMPLE_TIMING_TYPE_CHANGE_DETECTION = 12504;
+  TIMING_INT32_SAMPLE_TIMING_TYPE_PIPELINED_SAMP_CLK = 14668;
+  TIMING_INT32_SYNC_PULSE_TYPE_ONBOARD = 16128;
+  TIMING_INT32_SYNC_PULSE_TYPE_DIG_EDGE = 10150;
+  TIMING_INT32_SYNC_PULSE_TYPE_TIME = 15996;
+  TIMING_INT32_TIMESCALE2_HOST_TIME = 16126;
+  TIMING_INT32_TIMESCALE2_IO_DEVICE_TIME = 16127;
+  TIMING_INT32_UNDERFLOW_BEHAVIOR_HALT_OUTPUT_AND_ERROR = 14615;
+  TIMING_INT32_UNDERFLOW_BEHAVIOR_PAUSE_UNTIL_DATA_AVAILABLE = 14616;
 }
 
 message AnalogPowerUpChannelsAndState {
@@ -5887,6 +6101,136 @@ message GetTaskAttributeUInt32Response {
   uint32 value = 2;
 }
 
+message GetTimingAttributeBoolRequest {
+  nidevice_grpc.Session task = 1;
+  TimingBoolAttributes attribute = 2;
+}
+
+message GetTimingAttributeBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetTimingAttributeDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  TimingDoubleAttributes attribute = 2;
+}
+
+message GetTimingAttributeDoubleResponse {
+  int32 status = 1;
+  double value = 2;
+}
+
+message GetTimingAttributeExBoolRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingBoolAttributes attribute = 3;
+}
+
+message GetTimingAttributeExBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetTimingAttributeExDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingDoubleAttributes attribute = 3;
+}
+
+message GetTimingAttributeExDoubleResponse {
+  int32 status = 1;
+  double value = 2;
+}
+
+message GetTimingAttributeExInt32Request {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingInt32Attributes attribute = 3;
+}
+
+message GetTimingAttributeExInt32Response {
+  int32 status = 1;
+  TimingInt32AttributeValues value = 2;
+  int32 value_raw = 3;
+}
+
+message GetTimingAttributeExStringRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingStringAttributes attribute = 3;
+  uint32 size = 4;
+}
+
+message GetTimingAttributeExStringResponse {
+  int32 status = 1;
+  string value = 2;
+}
+
+message GetTimingAttributeExTimestampRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingTimestampAttributes attribute = 3;
+}
+
+message GetTimingAttributeExTimestampResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp value = 2;
+}
+
+message GetTimingAttributeExUInt32Request {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingUInt32Attributes attribute = 3;
+}
+
+message GetTimingAttributeExUInt32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message GetTimingAttributeInt32Request {
+  nidevice_grpc.Session task = 1;
+  TimingInt32Attributes attribute = 2;
+}
+
+message GetTimingAttributeInt32Response {
+  int32 status = 1;
+  TimingInt32AttributeValues value = 2;
+  int32 value_raw = 3;
+}
+
+message GetTimingAttributeStringRequest {
+  nidevice_grpc.Session task = 1;
+  TimingStringAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetTimingAttributeStringResponse {
+  int32 status = 1;
+  string value = 2;
+}
+
+message GetTimingAttributeTimestampRequest {
+  nidevice_grpc.Session task = 1;
+  TimingTimestampAttributes attribute = 2;
+}
+
+message GetTimingAttributeTimestampResponse {
+  int32 status = 1;
+  google.protobuf.Timestamp value = 2;
+}
+
+message GetTimingAttributeUInt32Request {
+  nidevice_grpc.Session task = 1;
+  TimingUInt32Attributes attribute = 2;
+}
+
+message GetTimingAttributeUInt32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
 message IsTaskDoneRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -6341,6 +6685,25 @@ message ResetDeviceResponse {
   int32 status = 1;
 }
 
+message ResetTimingAttributeRequest {
+  nidevice_grpc.Session task = 1;
+  TimingResetAttributes attribute = 2;
+}
+
+message ResetTimingAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetTimingAttributeExRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingResetAttributes attribute = 3;
+}
+
+message ResetTimingAttributeExResponse {
+  int32 status = 1;
+}
+
 message SaveGlobalChanRequest {
   nidevice_grpc.Session task = 1;
   string channel_name = 2;
@@ -6624,6 +6987,138 @@ message SetSyncPulseTimeWhenRequest {
 }
 
 message SetSyncPulseTimeWhenResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeBoolRequest {
+  nidevice_grpc.Session task = 1;
+  TimingBoolAttributes attribute = 2;
+  bool value = 3;
+}
+
+message SetTimingAttributeBoolResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  TimingDoubleAttributes attribute = 2;
+  double value = 3;
+}
+
+message SetTimingAttributeDoubleResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeExBoolRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingBoolAttributes attribute = 3;
+  bool value = 4;
+}
+
+message SetTimingAttributeExBoolResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeExDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingDoubleAttributes attribute = 3;
+  double value = 4;
+}
+
+message SetTimingAttributeExDoubleResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeExInt32Request {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingInt32Attributes attribute = 3;
+  oneof value_enum {
+    TimingInt32AttributeValues value = 4;
+    int32 value_raw = 5;
+  }
+}
+
+message SetTimingAttributeExInt32Response {
+  int32 status = 1;
+}
+
+message SetTimingAttributeExStringRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingStringAttributes attribute = 3;
+  string value = 4;
+}
+
+message SetTimingAttributeExStringResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeExTimestampRequest {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingTimestampAttributes attribute = 3;
+  google.protobuf.Timestamp value = 4;
+}
+
+message SetTimingAttributeExTimestampResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeExUInt32Request {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  TimingUInt32Attributes attribute = 3;
+  uint32 value = 4;
+}
+
+message SetTimingAttributeExUInt32Response {
+  int32 status = 1;
+}
+
+message SetTimingAttributeInt32Request {
+  nidevice_grpc.Session task = 1;
+  TimingInt32Attributes attribute = 2;
+  oneof value_enum {
+    TimingInt32AttributeValues value = 3;
+    int32 value_raw = 4;
+  }
+}
+
+message SetTimingAttributeInt32Response {
+  int32 status = 1;
+}
+
+message SetTimingAttributeStringRequest {
+  nidevice_grpc.Session task = 1;
+  TimingStringAttributes attribute = 2;
+  string value = 3;
+}
+
+message SetTimingAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeTimestampRequest {
+  nidevice_grpc.Session task = 1;
+  TimingTimestampAttributes attribute = 2;
+  google.protobuf.Timestamp value = 3;
+}
+
+message SetTimingAttributeTimestampResponse {
+  int32 status = 1;
+}
+
+message SetTimingAttributeUInt32Request {
+  nidevice_grpc.Session task = 1;
+  TimingUInt32Attributes attribute = 2;
+  uint32 value = 3;
+}
+
+message SetTimingAttributeUInt32Response {
   int32 status = 1;
 }
 

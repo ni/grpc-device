@@ -191,6 +191,18 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetTaskAttributeBool = reinterpret_cast<GetTaskAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
   function_pointers_.GetTaskAttributeString = reinterpret_cast<GetTaskAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
   function_pointers_.GetTaskAttributeUInt32 = reinterpret_cast<GetTaskAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
+  function_pointers_.GetTimingAttributeBool = reinterpret_cast<GetTimingAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
+  function_pointers_.GetTimingAttributeDouble = reinterpret_cast<GetTimingAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
+  function_pointers_.GetTimingAttributeExBool = reinterpret_cast<GetTimingAttributeExBoolPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttributeEx"));
+  function_pointers_.GetTimingAttributeExDouble = reinterpret_cast<GetTimingAttributeExDoublePtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttributeEx"));
+  function_pointers_.GetTimingAttributeExInt32 = reinterpret_cast<GetTimingAttributeExInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTimingAttributeEx"));
+  function_pointers_.GetTimingAttributeExString = reinterpret_cast<GetTimingAttributeExStringPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttributeEx"));
+  function_pointers_.GetTimingAttributeExTimestamp = reinterpret_cast<GetTimingAttributeExTimestampPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttributeEx"));
+  function_pointers_.GetTimingAttributeExUInt32 = reinterpret_cast<GetTimingAttributeExUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTimingAttributeEx"));
+  function_pointers_.GetTimingAttributeInt32 = reinterpret_cast<GetTimingAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
+  function_pointers_.GetTimingAttributeString = reinterpret_cast<GetTimingAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
+  function_pointers_.GetTimingAttributeTimestamp = reinterpret_cast<GetTimingAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
+  function_pointers_.GetTimingAttributeUInt32 = reinterpret_cast<GetTimingAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTimingAttribute"));
   function_pointers_.IsTaskDone = reinterpret_cast<IsTaskDonePtr>(shared_library_.get_function_pointer("DAQmxIsTaskDone"));
   function_pointers_.LoadTask = reinterpret_cast<LoadTaskPtr>(shared_library_.get_function_pointer("DAQmxLoadTask"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
@@ -225,6 +237,8 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetBufferAttribute = reinterpret_cast<ResetBufferAttributePtr>(shared_library_.get_function_pointer("DAQmxResetBufferAttribute"));
   function_pointers_.ResetChanAttribute = reinterpret_cast<ResetChanAttributePtr>(shared_library_.get_function_pointer("DAQmxResetChanAttribute"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
+  function_pointers_.ResetTimingAttribute = reinterpret_cast<ResetTimingAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttribute"));
+  function_pointers_.ResetTimingAttributeEx = reinterpret_cast<ResetTimingAttributeExPtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttributeEx"));
   function_pointers_.SaveGlobalChan = reinterpret_cast<SaveGlobalChanPtr>(shared_library_.get_function_pointer("DAQmxSaveGlobalChan"));
   function_pointers_.SaveScale = reinterpret_cast<SaveScalePtr>(shared_library_.get_function_pointer("DAQmxSaveScale"));
   function_pointers_.SaveTask = reinterpret_cast<SaveTaskPtr>(shared_library_.get_function_pointer("DAQmxSaveTask"));
@@ -251,6 +265,18 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetScaleAttributeString = reinterpret_cast<SetScaleAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
   function_pointers_.SetStartTrigTrigWhen = reinterpret_cast<SetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxSetStartTrigTrigWhen"));
   function_pointers_.SetSyncPulseTimeWhen = reinterpret_cast<SetSyncPulseTimeWhenPtr>(shared_library_.get_function_pointer("DAQmxSetSyncPulseTimeWhen"));
+  function_pointers_.SetTimingAttributeBool = reinterpret_cast<SetTimingAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
+  function_pointers_.SetTimingAttributeDouble = reinterpret_cast<SetTimingAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
+  function_pointers_.SetTimingAttributeExBool = reinterpret_cast<SetTimingAttributeExBoolPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttributeEx"));
+  function_pointers_.SetTimingAttributeExDouble = reinterpret_cast<SetTimingAttributeExDoublePtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttributeEx"));
+  function_pointers_.SetTimingAttributeExInt32 = reinterpret_cast<SetTimingAttributeExInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTimingAttributeEx"));
+  function_pointers_.SetTimingAttributeExString = reinterpret_cast<SetTimingAttributeExStringPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttributeEx"));
+  function_pointers_.SetTimingAttributeExTimestamp = reinterpret_cast<SetTimingAttributeExTimestampPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttributeEx"));
+  function_pointers_.SetTimingAttributeExUInt32 = reinterpret_cast<SetTimingAttributeExUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTimingAttributeEx"));
+  function_pointers_.SetTimingAttributeInt32 = reinterpret_cast<SetTimingAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
+  function_pointers_.SetTimingAttributeString = reinterpret_cast<SetTimingAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
+  function_pointers_.SetTimingAttributeTimestamp = reinterpret_cast<SetTimingAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
+  function_pointers_.SetTimingAttributeUInt32 = reinterpret_cast<SetTimingAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTimingAttribute"));
   function_pointers_.StartNewFile = reinterpret_cast<StartNewFilePtr>(shared_library_.get_function_pointer("DAQmxStartNewFile"));
   function_pointers_.StartTask = reinterpret_cast<StartTaskPtr>(shared_library_.get_function_pointer("DAQmxStartTask"));
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
@@ -2333,6 +2359,150 @@ int32 NiDAQmxLibrary::GetTaskAttributeUInt32(TaskHandle task, int32 attribute, u
 #endif
 }
 
+int32 NiDAQmxLibrary::GetTimingAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeDouble(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeExBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeExBool(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeExDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeExDouble(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeExInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeExInt32(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeExString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeExString(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeExTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeExTimestamp(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeExUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeExUInt32(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeString(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeTimestamp(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTimingAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTimingAttributeUInt32(task, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::IsTaskDone(TaskHandle task, bool32* isTaskDone)
 {
   if (!function_pointers_.IsTaskDone) {
@@ -2741,6 +2911,30 @@ int32 NiDAQmxLibrary::ResetDevice(const char deviceName[])
 #endif
 }
 
+int32 NiDAQmxLibrary::ResetTimingAttribute(TaskHandle task, int32 attribute)
+{
+  if (!function_pointers_.ResetTimingAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetTimingAttribute(task, attribute);
+#else
+  return function_pointers_.ResetTimingAttribute(task, attribute);
+#endif
+}
+
+int32 NiDAQmxLibrary::ResetTimingAttributeEx(TaskHandle task, const char deviceNames[], int32 attribute)
+{
+  if (!function_pointers_.ResetTimingAttributeEx) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetTimingAttributeEx(task, deviceNames, attribute);
+#else
+  return function_pointers_.ResetTimingAttributeEx(task, deviceNames, attribute);
+#endif
+}
+
 int32 NiDAQmxLibrary::SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options)
 {
   if (!function_pointers_.SaveGlobalChan) {
@@ -3050,6 +3244,150 @@ int32 NiDAQmxLibrary::SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data
   return DAQmxSetSyncPulseTimeWhen(task, data);
 #else
   return function_pointers_.SetSyncPulseTimeWhen(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeDouble(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeExBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeExBool(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeExDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeExDouble(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeExInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeExInt32(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[], uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeExString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeExString(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeExTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeExTimestamp(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeExUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeExUInt32(task, deviceNames, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeString(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeTimestamp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeTimestamp(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+{
+  if (!function_pointers_.SetTimingAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetTimingAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetTimingAttributeUInt32(task, attribute, value, size);
 #endif
 }
 

@@ -4584,5 +4584,413 @@ attributes = {
             'resettable': False,
             'type': 'uInt32'
         }
+    },
+    'Timing': {
+        4864: {
+            'access': 'read-write',
+            'enum': 'AcquisitionType',
+            'name': 'SAMP_QUANT_SAMP_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4865: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'SAMP_CLK_ACTIVE_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4867: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4868: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits2',
+            'name': 'DELAY_FROM_SAMP_CLK_DELAY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4869: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_TIMEBASE_MASTER_TIMEBASE_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        4872: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4880: {
+            'access': 'read-write',
+            'name': 'SAMP_QUANT_SAMP_PER_CHAN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4885: {
+            'access': 'read-write',
+            'name': 'REF_CLK_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4886: {
+            'access': 'read-write',
+            'name': 'REF_CLK_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4887: {
+            'access': 'read-write',
+            'name': 'DELAY_FROM_SAMP_CLK_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4917: {
+            'access': 'read-write',
+            'name': 'AI_CONV_TIMEBASE_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        4921: {
+            'access': 'read-write',
+            'enum': 'MIOAIConvertTbSrc',
+            'name': 'AI_CONV_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4931: {
+            'access': 'read-write',
+            'name': 'MASTER_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4932: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4935: {
+            'access': 'read-write',
+            'enum': 'SampleTimingType',
+            'name': 'SAMP_TIMING_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5269: {
+            'access': 'read-write',
+            'name': 'MASTER_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5378: {
+            'access': 'read-write',
+            'name': 'AI_CONV_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6216: {
+            'access': 'read-write',
+            'name': 'AI_CONV_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6226: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6227: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'AI_CONV_ACTIVE_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6379: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_TIMEBASE_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6380: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'SAMP_CLK_TIMEBASE_ACTIVE_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8597: {
+            'access': 'read-write',
+            'name': 'CHANGE_DETECT_DI_RISING_EDGE_PHYSICAL_CHANS',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8598: {
+            'access': 'read-write',
+            'name': 'CHANGE_DETECT_DI_FALLING_EDGE_PHYSICAL_CHANS',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8608: {
+            'access': 'read-write',
+            'name': 'ON_DEMAND_SIMULTANEOUS_AO_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8734: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8735: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8736: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8737: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8738: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8765: {
+            'access': 'read-write',
+            'name': 'SYNC_PULSE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8766: {
+            'access': 'read',
+            'name': 'SYNC_PULSE_SYNC_TIME',
+            'resettable': False,
+            'type': 'float64'
+        },
+        8767: {
+            'access': 'read-write',
+            'name': 'SYNC_PULSE_MIN_DELAY_TO_START',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8898: {
+            'access': 'read-write',
+            'name': 'HSHK_DELAY_AFTER_XFER',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8899: {
+            'access': 'read-write',
+            'enum': 'HandshakeStartCondition',
+            'name': 'HSHK_START_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8900: {
+            'access': 'read-write',
+            'enum': 'SampleInputDataWhen',
+            'name': 'HSHK_SAMPLE_INPUT_DATA_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8904: {
+            'access': 'read',
+            'name': 'SAMP_CLK_MAX_RATE',
+            'resettable': False,
+            'type': 'float64'
+        },
+        8905: {
+            'access': 'read',
+            'name': 'AI_CONV_MAX_RATE',
+            'resettable': False,
+            'type': 'float64'
+        },
+        10593: {
+            'access': 'read-write',
+            'enum': 'UnderflowBehavior',
+            'name': 'SAMP_CLK_UNDERFLOW_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10790: {
+            'access': 'read-write',
+            'name': 'SAMP_TIMING_ENGINE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        11996: {
+            'access': 'read-write',
+            'name': 'AI_CONV_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11997: {
+            'access': 'read-write',
+            'name': 'AI_CONV_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        11998: {
+            'access': 'read-write',
+            'name': 'AI_CONV_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        11999: {
+            'access': 'read-write',
+            'name': 'AI_CONV_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12000: {
+            'access': 'read-write',
+            'name': 'AI_CONV_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12026: {
+            'access': 'read-write',
+            'name': 'CHANGE_DETECT_DI_TRISTATE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12028: {
+            'access': 'read-write',
+            'enum': 'OverflowBehavior',
+            'name': 'SAMP_CLK_OVERRUN_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12029: {
+            'access': 'read-write',
+            'enum': 'UnderflowBehavior',
+            'name': 'IMPLICIT_UNDERFLOW_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12059: {
+            'access': 'read',
+            'name': 'SAMP_CLK_TERM',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12060: {
+            'access': 'read',
+            'name': 'SAMP_CLK_TIMEBASE_TERM',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12156: {
+            'access': 'read',
+            'name': 'SYNC_PULSE_RESET_TIME',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12157: {
+            'access': 'read-write',
+            'name': 'SYNC_PULSE_RESET_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12158: {
+            'access': 'read-write',
+            'name': 'SYNC_CLK_INTERVAL',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12165: {
+            'access': 'read',
+            'name': 'SYNC_PULSE_TERM',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12474: {
+            'access': 'read-write',
+            'name': 'TIMING_SYNC_PULSE_FORCE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12540: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_WRITE_WFM_USE_INITIAL_WFM_DT',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12598: {
+            'access': 'read-write',
+            'enum': 'SyncPulseType',
+            'name': 'SYNC_PULSE_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12599: {
+            'access': 'read-write',
+            'name': 'SYNC_PULSE_TIME_WHEN',
+            'resettable': True,
+            'type': 'CVIAbsoluteTime'
+        },
+        12600: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'SYNC_PULSE_TIME_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12601: {
+            'access': 'read-write',
+            'name': 'FIRST_SAMP_TIMESTAMP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12602: {
+            'access': 'read',
+            'name': 'FIRST_SAMP_TIMESTAMP_VAL',
+            'resettable': False,
+            'type': 'CVIAbsoluteTime'
+        },
+        12603: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'FIRST_SAMP_TIMESTAMP_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12674: {
+            'access': 'read-write',
+            'name': 'FIRST_SAMP_CLK_WHEN',
+            'resettable': True,
+            'type': 'CVIAbsoluteTime'
+        },
+        12675: {
+            'access': 'read-write',
+            'enum': 'Timescale2',
+            'name': 'FIRST_SAMP_CLK_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12714: {
+            'access': 'read-write',
+            'name': 'FIRST_SAMP_CLK_OFFSET',
+            'resettable': True,
+            'type': 'float64'
+        }
     }
 }
