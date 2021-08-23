@@ -4459,6 +4459,319 @@ attributes = {
             'type': 'char[]'
         }
     },
+    'Read': {
+        4625: {
+            'access': 'read-write',
+            'enum': 'OverwriteMode1',
+            'name': 'OVER_WRITE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4629: {
+            'access': 'read-write',
+            'name': 'READ_ALL_AVAIL_SAMP',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        4641: {
+            'access': 'read',
+            'name': 'CURR_READ_POS',
+            'resettable': False,
+            'type': 'float64'
+        },
+        4643: {
+            'access': 'read',
+            'name': 'AVAIL_SAMP_PER_CHAN',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6179: {
+            'access': 'read-write',
+            'name': 'CHANNELS_TO_READ',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6182: {
+            'access': 'read-write',
+            'name': 'AUTO_START',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6410: {
+            'access': 'read-write',
+            'enum': 'ReadRelativeTo',
+            'name': 'RELATIVE_TO',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6411: {
+            'access': 'read-write',
+            'name': 'OFFSET',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6442: {
+            'access': 'read',
+            'name': 'TOTAL_SAMP_PER_CHAN_ACQUIRED',
+            'resettable': False,
+            'type': 'float64'
+        },
+        8564: {
+            'access': 'read',
+            'name': 'OVERLOADED_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8565: {
+            'access': 'read',
+            'name': 'OVERLOADED_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8570: {
+            'access': 'read',
+            'name': 'RAW_DATA_WIDTH',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8571: {
+            'access': 'read',
+            'name': 'NUM_CHANS',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8572: {
+            'access': 'read',
+            'name': 'DIGITAL_LINES_BYTES_PER_CHAN',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8596: {
+            'access': 'read',
+            'name': 'CHANGE_DETECT_HAS_OVERFLOWED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8754: {
+            'access': 'read-write',
+            'enum': 'WaitMode',
+            'name': 'WAIT_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8880: {
+            'access': 'read-write',
+            'name': 'SLEEP_TIME',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10726: {
+            'access': 'read',
+            'name': 'OVERCURRENT_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10727: {
+            'access': 'read',
+            'name': 'OVERCURRENT_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        10761: {
+            'access': 'read',
+            'name': 'OPEN_CURRENT_LOOP_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10762: {
+            'access': 'read',
+            'name': 'OPEN_CURRENT_LOOP_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        10902: {
+            'access': 'read',
+            'name': 'OPEN_THRMCPL_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10903: {
+            'access': 'read',
+            'name': 'OPEN_THRMCPL_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        10904: {
+            'access': 'read',
+            'name': 'COMMON_MODE_RANGE_ERROR_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10905: {
+            'access': 'read',
+            'name': 'COMMON_MODE_RANGE_ERROR_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        11972: {
+            'access': 'read-write',
+            'name': 'LOGGING_FILE_PATH',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        11973: {
+            'access': 'read-write',
+            'enum': 'LoggingMode',
+            'name': 'LOGGING_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        11974: {
+            'access': 'read-write',
+            'name': 'LOGGING_TDMS_GROUP_NAME',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        11975: {
+            'access': 'read-write',
+            'enum': 'LoggingOperation',
+            'name': 'LOGGING_TDMS_OPERATION',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12144: {
+            'access': 'read',
+            'name': 'ACCESSORY_INSERTION_OR_REMOVAL_DETECTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12145: {
+            'access': 'read',
+            'name': 'DEVS_WITH_INSERTED_OR_REMOVED_ACCESSORIES',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12227: {
+            'access': 'read-write',
+            'name': 'LOGGING_FILE_WRITE_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12230: {
+            'access': 'read-write',
+            'name': 'LOGGING_FILE_PREALLOCATION_SIZE',
+            'resettable': True,
+            'type': 'uInt64'
+        },
+        12259: {
+            'access': 'read-write',
+            'name': 'LOGGING_PAUSE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12260: {
+            'access': 'read-write',
+            'name': 'LOGGING_SAMPS_PER_FILE',
+            'resettable': True,
+            'type': 'uInt64'
+        },
+        12341: {
+            'access': 'read',
+            'name': 'NAV_FIX_LOST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12417: {
+            'access': 'read',
+            'name': 'OVERTEMPERATURE_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12418: {
+            'access': 'read',
+            'name': 'OVERTEMPERATURE_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12424: {
+            'access': 'read',
+            'name': 'EXCIT_FAULT_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12425: {
+            'access': 'read',
+            'name': 'EXCIT_FAULT_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12544: {
+            'access': 'read',
+            'name': 'OPEN_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12545: {
+            'access': 'read',
+            'name': 'OPEN_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12546: {
+            'access': 'read',
+            'name': 'OPEN_CHANS_DETAILS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12568: {
+            'access': 'read',
+            'name': 'PLL_UNLOCKED_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12569: {
+            'access': 'read',
+            'name': 'PLL_UNLOCKED_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12605: {
+            'access': 'read',
+            'name': 'SYNC_UNLOCKED_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12606: {
+            'access': 'read',
+            'name': 'SYNC_UNLOCKED_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12687: {
+            'access': 'read',
+            'name': 'INPUT_LIMITS_FAULT_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12688: {
+            'access': 'read',
+            'name': 'INPUT_LIMITS_FAULT_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12690: {
+            'access': 'read',
+            'name': 'POWER_SUPPLY_FAULT_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12691: {
+            'access': 'read',
+            'name': 'POWER_SUPPLY_FAULT_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        }
+    },
     'Scale': {
         4646: {
             'access': 'read-write',
@@ -5937,6 +6250,179 @@ attributes = {
             'name': 'START_TRIG_TIMESTAMP_VAL',
             'resettable': False,
             'type': 'CVIAbsoluteTime'
+        }
+    },
+    'Write': {
+        5203: {
+            'access': 'read-write',
+            'enum': 'RegenerationMode1',
+            'name': 'REGEN_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5208: {
+            'access': 'read',
+            'name': 'CURR_WRITE_POS',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5216: {
+            'access': 'read',
+            'name': 'SPACE_AVAIL',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6412: {
+            'access': 'read-write',
+            'enum': 'WriteRelativeTo',
+            'name': 'RELATIVE_TO',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6413: {
+            'access': 'read-write',
+            'name': 'OFFSET',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6443: {
+            'access': 'read',
+            'name': 'TOTAL_SAMP_PER_CHAN_GENERATED',
+            'resettable': False,
+            'type': 'float64'
+        },
+        8573: {
+            'access': 'read',
+            'name': 'RAW_DATA_WIDTH',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8574: {
+            'access': 'read',
+            'name': 'NUM_CHANS',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8575: {
+            'access': 'read',
+            'name': 'DIGITAL_LINES_BYTES_PER_CHAN',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8881: {
+            'access': 'read-write',
+            'enum': 'WaitMode2',
+            'name': 'WAIT_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8882: {
+            'access': 'read-write',
+            'name': 'SLEEP_TIME',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10604: {
+            'access': 'read-write',
+            'name': 'NEXT_WRITE_IS_LAST',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        10728: {
+            'access': 'read',
+            'name': 'OVERCURRENT_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10729: {
+            'access': 'read',
+            'name': 'OVERCURRENT_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        10730: {
+            'access': 'read',
+            'name': 'OPEN_CURRENT_LOOP_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10731: {
+            'access': 'read',
+            'name': 'OPEN_CURRENT_LOOP_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        10732: {
+            'access': 'read',
+            'name': 'POWER_SUPPLY_FAULT_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10733: {
+            'access': 'read',
+            'name': 'POWER_SUPPLY_FAULT_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        10884: {
+            'access': 'read',
+            'name': 'OVERTEMPERATURE_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12371: {
+            'access': 'read',
+            'name': 'ACCESSORY_INSERTION_OR_REMOVAL_DETECTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12372: {
+            'access': 'read',
+            'name': 'DEVS_WITH_INSERTED_OR_REMOVED_ACCESSORIES',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12419: {
+            'access': 'read',
+            'name': 'OVERTEMPERATURE_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12420: {
+            'access': 'read',
+            'name': 'OVERLOADED_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12421: {
+            'access': 'read',
+            'name': 'OVERLOADED_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12475: {
+            'access': 'read',
+            'name': 'EXTERNAL_OVERVOLTAGE_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12476: {
+            'access': 'read',
+            'name': 'EXTERNAL_OVERVOLTAGE_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12607: {
+            'access': 'read',
+            'name': 'SYNC_UNLOCKED_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12608: {
+            'access': 'read',
+            'name': 'SYNC_UNLOCKED_CHANS',
+            'resettable': False,
+            'type': 'char[]'
         }
     }
 }

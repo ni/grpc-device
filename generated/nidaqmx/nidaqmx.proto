@@ -175,6 +175,12 @@ service NiDAQmx {
   rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
   rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
   rpc GetNthTaskReadChannel(GetNthTaskReadChannelRequest) returns (GetNthTaskReadChannelResponse);
+  rpc GetReadAttributeBool(GetReadAttributeBoolRequest) returns (GetReadAttributeBoolResponse);
+  rpc GetReadAttributeDouble(GetReadAttributeDoubleRequest) returns (GetReadAttributeDoubleResponse);
+  rpc GetReadAttributeInt32(GetReadAttributeInt32Request) returns (GetReadAttributeInt32Response);
+  rpc GetReadAttributeString(GetReadAttributeStringRequest) returns (GetReadAttributeStringResponse);
+  rpc GetReadAttributeUInt32(GetReadAttributeUInt32Request) returns (GetReadAttributeUInt32Response);
+  rpc GetReadAttributeUInt64(GetReadAttributeUInt64Request) returns (GetReadAttributeUInt64Response);
   rpc GetRefTrigTimestampVal(GetRefTrigTimestampValRequest) returns (GetRefTrigTimestampValResponse);
   rpc GetScaleAttributeDouble(GetScaleAttributeDoubleRequest) returns (GetScaleAttributeDoubleResponse);
   rpc GetScaleAttributeDoubleArray(GetScaleAttributeDoubleArrayRequest) returns (GetScaleAttributeDoubleArrayResponse);
@@ -207,6 +213,11 @@ service NiDAQmx {
   rpc GetTrigAttributeString(GetTrigAttributeStringRequest) returns (GetTrigAttributeStringResponse);
   rpc GetTrigAttributeTimestamp(GetTrigAttributeTimestampRequest) returns (GetTrigAttributeTimestampResponse);
   rpc GetTrigAttributeUInt32(GetTrigAttributeUInt32Request) returns (GetTrigAttributeUInt32Response);
+  rpc GetWriteAttributeBool(GetWriteAttributeBoolRequest) returns (GetWriteAttributeBoolResponse);
+  rpc GetWriteAttributeDouble(GetWriteAttributeDoubleRequest) returns (GetWriteAttributeDoubleResponse);
+  rpc GetWriteAttributeInt32(GetWriteAttributeInt32Request) returns (GetWriteAttributeInt32Response);
+  rpc GetWriteAttributeString(GetWriteAttributeStringRequest) returns (GetWriteAttributeStringResponse);
+  rpc GetWriteAttributeUInt32(GetWriteAttributeUInt32Request) returns (GetWriteAttributeUInt32Response);
   rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc LoadTask(LoadTaskRequest) returns (LoadTaskResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
@@ -241,9 +252,11 @@ service NiDAQmx {
   rpc ResetBufferAttribute(ResetBufferAttributeRequest) returns (ResetBufferAttributeResponse);
   rpc ResetChanAttribute(ResetChanAttributeRequest) returns (ResetChanAttributeResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
+  rpc ResetReadAttribute(ResetReadAttributeRequest) returns (ResetReadAttributeResponse);
   rpc ResetTimingAttribute(ResetTimingAttributeRequest) returns (ResetTimingAttributeResponse);
   rpc ResetTimingAttributeEx(ResetTimingAttributeExRequest) returns (ResetTimingAttributeExResponse);
   rpc ResetTrigAttribute(ResetTrigAttributeRequest) returns (ResetTrigAttributeResponse);
+  rpc ResetWriteAttribute(ResetWriteAttributeRequest) returns (ResetWriteAttributeResponse);
   rpc SaveGlobalChan(SaveGlobalChanRequest) returns (SaveGlobalChanResponse);
   rpc SaveScale(SaveScaleRequest) returns (SaveScaleResponse);
   rpc SaveTask(SaveTaskRequest) returns (SaveTaskResponse);
@@ -264,6 +277,12 @@ service NiDAQmx {
   rpc SetDigitalPowerUpStates(SetDigitalPowerUpStatesRequest) returns (SetDigitalPowerUpStatesResponse);
   rpc SetDigitalPullUpPullDownStates(SetDigitalPullUpPullDownStatesRequest) returns (SetDigitalPullUpPullDownStatesResponse);
   rpc SetFirstSampClkWhen(SetFirstSampClkWhenRequest) returns (SetFirstSampClkWhenResponse);
+  rpc SetReadAttributeBool(SetReadAttributeBoolRequest) returns (SetReadAttributeBoolResponse);
+  rpc SetReadAttributeDouble(SetReadAttributeDoubleRequest) returns (SetReadAttributeDoubleResponse);
+  rpc SetReadAttributeInt32(SetReadAttributeInt32Request) returns (SetReadAttributeInt32Response);
+  rpc SetReadAttributeString(SetReadAttributeStringRequest) returns (SetReadAttributeStringResponse);
+  rpc SetReadAttributeUInt32(SetReadAttributeUInt32Request) returns (SetReadAttributeUInt32Response);
+  rpc SetReadAttributeUInt64(SetReadAttributeUInt64Request) returns (SetReadAttributeUInt64Response);
   rpc SetScaleAttributeDouble(SetScaleAttributeDoubleRequest) returns (SetScaleAttributeDoubleResponse);
   rpc SetScaleAttributeDoubleArray(SetScaleAttributeDoubleArrayRequest) returns (SetScaleAttributeDoubleArrayResponse);
   rpc SetScaleAttributeInt32(SetScaleAttributeInt32Request) returns (SetScaleAttributeInt32Response);
@@ -290,6 +309,11 @@ service NiDAQmx {
   rpc SetTrigAttributeString(SetTrigAttributeStringRequest) returns (SetTrigAttributeStringResponse);
   rpc SetTrigAttributeTimestamp(SetTrigAttributeTimestampRequest) returns (SetTrigAttributeTimestampResponse);
   rpc SetTrigAttributeUInt32(SetTrigAttributeUInt32Request) returns (SetTrigAttributeUInt32Response);
+  rpc SetWriteAttributeBool(SetWriteAttributeBoolRequest) returns (SetWriteAttributeBoolResponse);
+  rpc SetWriteAttributeDouble(SetWriteAttributeDoubleRequest) returns (SetWriteAttributeDoubleResponse);
+  rpc SetWriteAttributeInt32(SetWriteAttributeInt32Request) returns (SetWriteAttributeInt32Response);
+  rpc SetWriteAttributeString(SetWriteAttributeStringRequest) returns (SetWriteAttributeStringResponse);
+  rpc SetWriteAttributeUInt32(SetWriteAttributeUInt32Request) returns (SetWriteAttributeUInt32Response);
   rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
@@ -1651,6 +1675,101 @@ enum DeviceUInt32ArrayAttributes {
   DEVICE_ATTRIBUTE_ACCESSORY_SERIAL_NUMS = 12143;
 }
 
+enum ReadInt32Attributes {
+  READ_INT32_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_ATTRIBUTE_OVER_WRITE = 4625;
+  READ_ATTRIBUTE_RELATIVE_TO = 6410;
+  READ_ATTRIBUTE_OFFSET = 6411;
+  READ_ATTRIBUTE_WAIT_MODE = 8754;
+  READ_ATTRIBUTE_LOGGING_MODE = 11973;
+  READ_ATTRIBUTE_LOGGING_TDMS_OPERATION = 11975;
+}
+
+enum ReadResetAttributes {
+  READ_RESET_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_RESET_ATTRIBUTE_OVER_WRITE = 4625;
+  READ_RESET_ATTRIBUTE_READ_ALL_AVAIL_SAMP = 4629;
+  READ_RESET_ATTRIBUTE_CHANNELS_TO_READ = 6179;
+  READ_RESET_ATTRIBUTE_AUTO_START = 6182;
+  READ_RESET_ATTRIBUTE_RELATIVE_TO = 6410;
+  READ_RESET_ATTRIBUTE_OFFSET = 6411;
+  READ_RESET_ATTRIBUTE_WAIT_MODE = 8754;
+  READ_RESET_ATTRIBUTE_SLEEP_TIME = 8880;
+  READ_RESET_ATTRIBUTE_LOGGING_FILE_PATH = 11972;
+  READ_RESET_ATTRIBUTE_LOGGING_MODE = 11973;
+  READ_RESET_ATTRIBUTE_LOGGING_TDMS_GROUP_NAME = 11974;
+  READ_RESET_ATTRIBUTE_LOGGING_TDMS_OPERATION = 11975;
+  READ_RESET_ATTRIBUTE_LOGGING_FILE_WRITE_SIZE = 12227;
+  READ_RESET_ATTRIBUTE_LOGGING_FILE_PREALLOCATION_SIZE = 12230;
+  READ_RESET_ATTRIBUTE_LOGGING_PAUSE = 12259;
+  READ_RESET_ATTRIBUTE_LOGGING_SAMPS_PER_FILE = 12260;
+}
+
+enum ReadBoolAttributes {
+  READ_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_ATTRIBUTE_READ_ALL_AVAIL_SAMP = 4629;
+  READ_ATTRIBUTE_AUTO_START = 6182;
+  READ_ATTRIBUTE_OVERLOADED_CHANS_EXIST = 8564;
+  READ_ATTRIBUTE_CHANGE_DETECT_HAS_OVERFLOWED = 8596;
+  READ_ATTRIBUTE_OVERCURRENT_CHANS_EXIST = 10726;
+  READ_ATTRIBUTE_OPEN_CURRENT_LOOP_CHANS_EXIST = 10761;
+  READ_ATTRIBUTE_OPEN_THRMCPL_CHANS_EXIST = 10902;
+  READ_ATTRIBUTE_COMMON_MODE_RANGE_ERROR_CHANS_EXIST = 10904;
+  READ_ATTRIBUTE_ACCESSORY_INSERTION_OR_REMOVAL_DETECTED = 12144;
+  READ_ATTRIBUTE_LOGGING_PAUSE = 12259;
+  READ_ATTRIBUTE_NAV_FIX_LOST = 12341;
+  READ_ATTRIBUTE_OVERTEMPERATURE_CHANS_EXIST = 12417;
+  READ_ATTRIBUTE_EXCIT_FAULT_CHANS_EXIST = 12424;
+  READ_ATTRIBUTE_OPEN_CHANS_EXIST = 12544;
+  READ_ATTRIBUTE_PLL_UNLOCKED_CHANS_EXIST = 12568;
+  READ_ATTRIBUTE_SYNC_UNLOCKED_CHANS_EXIST = 12605;
+  READ_ATTRIBUTE_INPUT_LIMITS_FAULT_CHANS_EXIST = 12687;
+  READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS_EXIST = 12690;
+}
+
+enum ReadDoubleAttributes {
+  READ_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_ATTRIBUTE_CURR_READ_POS = 4641;
+  READ_ATTRIBUTE_TOTAL_SAMP_PER_CHAN_ACQUIRED = 6442;
+  READ_ATTRIBUTE_SLEEP_TIME = 8880;
+}
+
+enum ReadUInt32Attributes {
+  READ_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_ATTRIBUTE_AVAIL_SAMP_PER_CHAN = 4643;
+  READ_ATTRIBUTE_RAW_DATA_WIDTH = 8570;
+  READ_ATTRIBUTE_NUM_CHANS = 8571;
+  READ_ATTRIBUTE_DIGITAL_LINES_BYTES_PER_CHAN = 8572;
+  READ_ATTRIBUTE_LOGGING_FILE_WRITE_SIZE = 12227;
+}
+
+enum ReadStringAttributes {
+  READ_STRING_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_ATTRIBUTE_CHANNELS_TO_READ = 6179;
+  READ_ATTRIBUTE_OVERLOADED_CHANS = 8565;
+  READ_ATTRIBUTE_OVERCURRENT_CHANS = 10727;
+  READ_ATTRIBUTE_OPEN_CURRENT_LOOP_CHANS = 10762;
+  READ_ATTRIBUTE_OPEN_THRMCPL_CHANS = 10903;
+  READ_ATTRIBUTE_COMMON_MODE_RANGE_ERROR_CHANS = 10905;
+  READ_ATTRIBUTE_LOGGING_FILE_PATH = 11972;
+  READ_ATTRIBUTE_LOGGING_TDMS_GROUP_NAME = 11974;
+  READ_ATTRIBUTE_DEVS_WITH_INSERTED_OR_REMOVED_ACCESSORIES = 12145;
+  READ_ATTRIBUTE_OVERTEMPERATURE_CHANS = 12418;
+  READ_ATTRIBUTE_EXCIT_FAULT_CHANS = 12425;
+  READ_ATTRIBUTE_OPEN_CHANS = 12545;
+  READ_ATTRIBUTE_OPEN_CHANS_DETAILS = 12546;
+  READ_ATTRIBUTE_PLL_UNLOCKED_CHANS = 12569;
+  READ_ATTRIBUTE_SYNC_UNLOCKED_CHANS = 12606;
+  READ_ATTRIBUTE_INPUT_LIMITS_FAULT_CHANS = 12688;
+  READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS = 12691;
+}
+
+enum ReadUInt64Attributes {
+  READ_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_ATTRIBUTE_LOGGING_FILE_PREALLOCATION_SIZE = 12230;
+  READ_ATTRIBUTE_LOGGING_SAMPS_PER_FILE = 12260;
+}
+
 enum ScaleStringAttributes {
   SCALE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_DESCR = 4646;
@@ -2177,6 +2296,64 @@ enum TriggerDoubleArrayAttributes {
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_START_TRIG_HYSTS = 12580;
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_REF_TRIG_LVLS = 12584;
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_REF_TRIG_HYSTS = 12585;
+}
+
+enum WriteInt32Attributes {
+  WRITE_INT32_ATTRIBUTE_UNSPECIFIED = 0;
+  WRITE_ATTRIBUTE_REGEN_MODE = 5203;
+  WRITE_ATTRIBUTE_RELATIVE_TO = 6412;
+  WRITE_ATTRIBUTE_OFFSET = 6413;
+  WRITE_ATTRIBUTE_WAIT_MODE = 8881;
+}
+
+enum WriteResetAttributes {
+  WRITE_RESET_ATTRIBUTE_UNSPECIFIED = 0;
+  WRITE_RESET_ATTRIBUTE_REGEN_MODE = 5203;
+  WRITE_RESET_ATTRIBUTE_RELATIVE_TO = 6412;
+  WRITE_RESET_ATTRIBUTE_OFFSET = 6413;
+  WRITE_RESET_ATTRIBUTE_WAIT_MODE = 8881;
+  WRITE_RESET_ATTRIBUTE_SLEEP_TIME = 8882;
+  WRITE_RESET_ATTRIBUTE_NEXT_WRITE_IS_LAST = 10604;
+}
+
+enum WriteDoubleAttributes {
+  WRITE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
+  WRITE_ATTRIBUTE_CURR_WRITE_POS = 5208;
+  WRITE_ATTRIBUTE_TOTAL_SAMP_PER_CHAN_GENERATED = 6443;
+  WRITE_ATTRIBUTE_SLEEP_TIME = 8882;
+}
+
+enum WriteUInt32Attributes {
+  WRITE_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
+  WRITE_ATTRIBUTE_SPACE_AVAIL = 5216;
+  WRITE_ATTRIBUTE_RAW_DATA_WIDTH = 8573;
+  WRITE_ATTRIBUTE_NUM_CHANS = 8574;
+  WRITE_ATTRIBUTE_DIGITAL_LINES_BYTES_PER_CHAN = 8575;
+}
+
+enum WriteBoolAttributes {
+  WRITE_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
+  WRITE_ATTRIBUTE_NEXT_WRITE_IS_LAST = 10604;
+  WRITE_ATTRIBUTE_OVERCURRENT_CHANS_EXIST = 10728;
+  WRITE_ATTRIBUTE_OPEN_CURRENT_LOOP_CHANS_EXIST = 10730;
+  WRITE_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS_EXIST = 10732;
+  WRITE_ATTRIBUTE_OVERTEMPERATURE_CHANS_EXIST = 10884;
+  WRITE_ATTRIBUTE_ACCESSORY_INSERTION_OR_REMOVAL_DETECTED = 12371;
+  WRITE_ATTRIBUTE_OVERLOADED_CHANS_EXIST = 12420;
+  WRITE_ATTRIBUTE_EXTERNAL_OVERVOLTAGE_CHANS_EXIST = 12475;
+  WRITE_ATTRIBUTE_SYNC_UNLOCKED_CHANS_EXIST = 12607;
+}
+
+enum WriteStringAttributes {
+  WRITE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
+  WRITE_ATTRIBUTE_OVERCURRENT_CHANS = 10729;
+  WRITE_ATTRIBUTE_OPEN_CURRENT_LOOP_CHANS = 10731;
+  WRITE_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS = 10733;
+  WRITE_ATTRIBUTE_DEVS_WITH_INSERTED_OR_REMOVED_ACCESSORIES = 12372;
+  WRITE_ATTRIBUTE_OVERTEMPERATURE_CHANS = 12419;
+  WRITE_ATTRIBUTE_OVERLOADED_CHANS = 12421;
+  WRITE_ATTRIBUTE_EXTERNAL_OVERVOLTAGE_CHANS = 12476;
+  WRITE_ATTRIBUTE_SYNC_UNLOCKED_CHANS = 12608;
 }
 
 enum ACExcitWireMode {
@@ -3310,6 +3487,28 @@ enum DeviceInt32AttributeValues {
   DEVICE_INT32_TRIGGER_USAGE_ARM_START = 14641;
 }
 
+enum ReadInt32AttributeValues {
+  READ_INT32_UNSPECIFIED = 0;
+  READ_INT32_LOGGING_MODE_OFF = 10231;
+  READ_INT32_LOGGING_MODE_LOG = 15844;
+  READ_INT32_LOGGING_MODE_LOG_AND_READ = 15842;
+  READ_INT32_LOGGING_OPERATION_OPEN = 10437;
+  READ_INT32_LOGGING_OPERATION_OPEN_OR_CREATE = 15846;
+  READ_INT32_LOGGING_OPERATION_CREATE_OR_REPLACE = 15847;
+  READ_INT32_LOGGING_OPERATION_CREATE = 15848;
+  READ_INT32_OVERWRITE_MODE1_OVERWRITE_UNREAD_SAMPS = 10252;
+  READ_INT32_OVERWRITE_MODE1_DO_NOT_OVERWRITE_UNREAD_SAMPS = 10159;
+  READ_INT32_READ_RELATIVE_TO_FIRST_SAMPLE = 10424;
+  READ_INT32_READ_RELATIVE_TO_CURR_READ_POS = 10425;
+  READ_INT32_READ_RELATIVE_TO_REF_TRIG = 10426;
+  READ_INT32_READ_RELATIVE_TO_FIRST_PRETRIG_SAMP = 10427;
+  READ_INT32_READ_RELATIVE_TO_MOST_RECENT_SAMP = 10428;
+  READ_INT32_WAIT_MODE_WAIT_FOR_INTERRUPT = 12523;
+  READ_INT32_WAIT_MODE_POLL = 12524;
+  READ_INT32_WAIT_MODE_YIELD = 12525;
+  READ_INT32_WAIT_MODE_SLEEP = 12547;
+}
+
 enum ScaleInt32AttributeValues {
   SCALE_INT32_UNSPECIFIED = 0;
   SCALE_INT32_SCALE_TYPE_LINEAR = 10447;
@@ -3448,6 +3647,17 @@ enum TriggerInt32AttributeValues {
   TRIGGER_INT32_WINDOW_TRIGGER_CONDITION1_LEAVING_WIN = 10208;
   TRIGGER_INT32_WINDOW_TRIGGER_CONDITION2_INSIDE_WIN = 10199;
   TRIGGER_INT32_WINDOW_TRIGGER_CONDITION2_OUTSIDE_WIN = 10251;
+}
+
+enum WriteInt32AttributeValues {
+  WRITE_INT32_UNSPECIFIED = 0;
+  WRITE_INT32_REGENERATION_MODE1_ALLOW_REGEN = 10097;
+  WRITE_INT32_REGENERATION_MODE1_DO_NOT_ALLOW_REGEN = 10158;
+  WRITE_INT32_WAIT_MODE2_POLL = 12524;
+  WRITE_INT32_WAIT_MODE2_YIELD = 12525;
+  WRITE_INT32_WAIT_MODE2_SLEEP = 12547;
+  WRITE_INT32_WRITE_RELATIVE_TO_FIRST_SAMPLE = 10424;
+  WRITE_INT32_WRITE_RELATIVE_TO_CURR_WRITE_POS = 10430;
 }
 
 message AnalogPowerUpChannelsAndState {
@@ -6381,6 +6591,68 @@ message GetNthTaskReadChannelResponse {
   string buffer = 2;
 }
 
+message GetReadAttributeBoolRequest {
+  nidevice_grpc.Session task = 1;
+  ReadBoolAttributes attribute = 2;
+}
+
+message GetReadAttributeBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetReadAttributeDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  ReadDoubleAttributes attribute = 2;
+}
+
+message GetReadAttributeDoubleResponse {
+  int32 status = 1;
+  double value = 2;
+}
+
+message GetReadAttributeInt32Request {
+  nidevice_grpc.Session task = 1;
+  ReadInt32Attributes attribute = 2;
+}
+
+message GetReadAttributeInt32Response {
+  int32 status = 1;
+  ReadInt32AttributeValues value = 2;
+  int32 value_raw = 3;
+}
+
+message GetReadAttributeStringRequest {
+  nidevice_grpc.Session task = 1;
+  ReadStringAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetReadAttributeStringResponse {
+  int32 status = 1;
+  string value = 2;
+}
+
+message GetReadAttributeUInt32Request {
+  nidevice_grpc.Session task = 1;
+  ReadUInt32Attributes attribute = 2;
+}
+
+message GetReadAttributeUInt32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message GetReadAttributeUInt64Request {
+  nidevice_grpc.Session task = 1;
+  ReadUInt64Attributes attribute = 2;
+}
+
+message GetReadAttributeUInt64Response {
+  int32 status = 1;
+  uint64 value = 2;
+}
+
 message GetRefTrigTimestampValRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -6715,6 +6987,58 @@ message GetTrigAttributeUInt32Request {
 }
 
 message GetTrigAttributeUInt32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message GetWriteAttributeBoolRequest {
+  nidevice_grpc.Session task = 1;
+  WriteBoolAttributes attribute = 2;
+}
+
+message GetWriteAttributeBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetWriteAttributeDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  WriteDoubleAttributes attribute = 2;
+}
+
+message GetWriteAttributeDoubleResponse {
+  int32 status = 1;
+  double value = 2;
+}
+
+message GetWriteAttributeInt32Request {
+  nidevice_grpc.Session task = 1;
+  WriteInt32Attributes attribute = 2;
+}
+
+message GetWriteAttributeInt32Response {
+  int32 status = 1;
+  WriteInt32AttributeValues value = 2;
+  int32 value_raw = 3;
+}
+
+message GetWriteAttributeStringRequest {
+  nidevice_grpc.Session task = 1;
+  WriteStringAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetWriteAttributeStringResponse {
+  int32 status = 1;
+  string value = 2;
+}
+
+message GetWriteAttributeUInt32Request {
+  nidevice_grpc.Session task = 1;
+  WriteUInt32Attributes attribute = 2;
+}
+
+message GetWriteAttributeUInt32Response {
   int32 status = 1;
   uint32 value = 2;
 }
@@ -7173,6 +7497,15 @@ message ResetDeviceResponse {
   int32 status = 1;
 }
 
+message ResetReadAttributeRequest {
+  nidevice_grpc.Session task = 1;
+  ReadResetAttributes attribute = 2;
+}
+
+message ResetReadAttributeResponse {
+  int32 status = 1;
+}
+
 message ResetTimingAttributeRequest {
   nidevice_grpc.Session task = 1;
   TimingResetAttributes attribute = 2;
@@ -7198,6 +7531,15 @@ message ResetTrigAttributeRequest {
 }
 
 message ResetTrigAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetWriteAttributeRequest {
+  nidevice_grpc.Session task = 1;
+  WriteResetAttributes attribute = 2;
+}
+
+message ResetWriteAttributeResponse {
   int32 status = 1;
 }
 
@@ -7422,6 +7764,69 @@ message SetFirstSampClkWhenRequest {
 }
 
 message SetFirstSampClkWhenResponse {
+  int32 status = 1;
+}
+
+message SetReadAttributeBoolRequest {
+  nidevice_grpc.Session task = 1;
+  ReadBoolAttributes attribute = 2;
+  bool value = 3;
+}
+
+message SetReadAttributeBoolResponse {
+  int32 status = 1;
+}
+
+message SetReadAttributeDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  ReadDoubleAttributes attribute = 2;
+  double value = 3;
+}
+
+message SetReadAttributeDoubleResponse {
+  int32 status = 1;
+}
+
+message SetReadAttributeInt32Request {
+  nidevice_grpc.Session task = 1;
+  ReadInt32Attributes attribute = 2;
+  oneof value_enum {
+    ReadInt32AttributeValues value = 3;
+    int32 value_raw = 4;
+  }
+}
+
+message SetReadAttributeInt32Response {
+  int32 status = 1;
+}
+
+message SetReadAttributeStringRequest {
+  nidevice_grpc.Session task = 1;
+  ReadStringAttributes attribute = 2;
+  string value = 3;
+}
+
+message SetReadAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetReadAttributeUInt32Request {
+  nidevice_grpc.Session task = 1;
+  ReadUInt32Attributes attribute = 2;
+  uint32 value = 3;
+}
+
+message SetReadAttributeUInt32Response {
+  int32 status = 1;
+}
+
+message SetReadAttributeUInt64Request {
+  nidevice_grpc.Session task = 1;
+  ReadUInt64Attributes attribute = 2;
+  uint64 value = 3;
+}
+
+message SetReadAttributeUInt64Response {
   int32 status = 1;
 }
 
@@ -7701,6 +8106,59 @@ message SetTrigAttributeUInt32Request {
 }
 
 message SetTrigAttributeUInt32Response {
+  int32 status = 1;
+}
+
+message SetWriteAttributeBoolRequest {
+  nidevice_grpc.Session task = 1;
+  WriteBoolAttributes attribute = 2;
+  bool value = 3;
+}
+
+message SetWriteAttributeBoolResponse {
+  int32 status = 1;
+}
+
+message SetWriteAttributeDoubleRequest {
+  nidevice_grpc.Session task = 1;
+  WriteDoubleAttributes attribute = 2;
+  double value = 3;
+}
+
+message SetWriteAttributeDoubleResponse {
+  int32 status = 1;
+}
+
+message SetWriteAttributeInt32Request {
+  nidevice_grpc.Session task = 1;
+  WriteInt32Attributes attribute = 2;
+  oneof value_enum {
+    WriteInt32AttributeValues value = 3;
+    int32 value_raw = 4;
+  }
+}
+
+message SetWriteAttributeInt32Response {
+  int32 status = 1;
+}
+
+message SetWriteAttributeStringRequest {
+  nidevice_grpc.Session task = 1;
+  WriteStringAttributes attribute = 2;
+  string value = 3;
+}
+
+message SetWriteAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetWriteAttributeUInt32Request {
+  nidevice_grpc.Session task = 1;
+  WriteUInt32Attributes attribute = 2;
+  uint32 value = 3;
+}
+
+message SetWriteAttributeUInt32Response {
   int32 status = 1;
 }
 

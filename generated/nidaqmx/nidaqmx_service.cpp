@@ -7825,6 +7825,165 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetReadAttributeBool(::grpc::ServerContext* context, const GetReadAttributeBoolRequest* request, GetReadAttributeBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      bool32 value {};
+      auto status = library_->GetReadAttributeBool(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetReadAttributeDouble(::grpc::ServerContext* context, const GetReadAttributeDoubleRequest* request, GetReadAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      float64 value {};
+      auto status = library_->GetReadAttributeDouble(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetReadAttributeInt32(::grpc::ServerContext* context, const GetReadAttributeInt32Request* request, GetReadAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      int32 value {};
+      auto status = library_->GetReadAttributeInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::ReadInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::ReadInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_value(checked_convert_value(value));
+        response->set_value_raw(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetReadAttributeString(::grpc::ServerContext* context, const GetReadAttributeStringRequest* request, GetReadAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      std::string value;
+      if (size > 0) {
+          value.resize(size-1);
+      }
+      auto status = library_->GetReadAttributeString(task, attribute, (char*)value.data(), size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetReadAttributeUInt32(::grpc::ServerContext* context, const GetReadAttributeUInt32Request* request, GetReadAttributeUInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      uInt32 value {};
+      auto status = library_->GetReadAttributeUInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetReadAttributeUInt64(::grpc::ServerContext* context, const GetReadAttributeUInt64Request* request, GetReadAttributeUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      uInt64 value {};
+      auto status = library_->GetReadAttributeUInt64(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetRefTrigTimestampVal(::grpc::ServerContext* context, const GetRefTrigTimestampValRequest* request, GetRefTrigTimestampValResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8664,6 +8823,140 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       uInt32 value {};
       auto status = library_->GetTrigAttributeUInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetWriteAttributeBool(::grpc::ServerContext* context, const GetWriteAttributeBoolRequest* request, GetWriteAttributeBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      bool32 value {};
+      auto status = library_->GetWriteAttributeBool(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetWriteAttributeDouble(::grpc::ServerContext* context, const GetWriteAttributeDoubleRequest* request, GetWriteAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      float64 value {};
+      auto status = library_->GetWriteAttributeDouble(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetWriteAttributeInt32(::grpc::ServerContext* context, const GetWriteAttributeInt32Request* request, GetWriteAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      int32 value {};
+      auto status = library_->GetWriteAttributeInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::WriteInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::WriteInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_value(checked_convert_value(value));
+        response->set_value_raw(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetWriteAttributeString(::grpc::ServerContext* context, const GetWriteAttributeStringRequest* request, GetWriteAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      std::string value;
+      if (size > 0) {
+          value.resize(size-1);
+      }
+      auto status = library_->GetWriteAttributeString(task, attribute, (char*)value.data(), size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetWriteAttributeUInt32(::grpc::ServerContext* context, const GetWriteAttributeUInt32Request* request, GetWriteAttributeUInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      uInt32 value {};
+      auto status = library_->GetWriteAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -9961,6 +10254,26 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ResetReadAttribute(::grpc::ServerContext* context, const ResetReadAttributeRequest* request, ResetReadAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto status = library_->ResetReadAttribute(task, attribute);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ResetTimingAttribute(::grpc::ServerContext* context, const ResetTimingAttributeRequest* request, ResetTimingAttributeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -10012,6 +10325,26 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       int32 attribute = request->attribute();
       auto status = library_->ResetTrigAttribute(task, attribute);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ResetWriteAttribute(::grpc::ServerContext* context, const ResetWriteAttributeRequest* request, ResetWriteAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto status = library_->ResetWriteAttribute(task, attribute);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10577,6 +10910,153 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetFirstSampClkWhen(task, data);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetReadAttributeBool(::grpc::ServerContext* context, const SetReadAttributeBoolRequest* request, SetReadAttributeBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      bool32 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetReadAttributeBool(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetReadAttributeDouble(::grpc::ServerContext* context, const SetReadAttributeDoubleRequest* request, SetReadAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      float64 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetReadAttributeDouble(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetReadAttributeInt32(::grpc::ServerContext* context, const SetReadAttributeInt32Request* request, SetReadAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      int32 value;
+      switch (request->value_enum_case()) {
+        case nidaqmx_grpc::SetReadAttributeInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<int32>(request->value());
+          break;
+        }
+        case nidaqmx_grpc::SetReadAttributeInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<int32>(request->value_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetReadAttributeInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
+      auto size = 0U;
+      auto status = library_->SetReadAttributeInt32(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetReadAttributeString(::grpc::ServerContext* context, const SetReadAttributeStringRequest* request, SetReadAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto value = request->value().c_str();
+      auto size = 0U;
+      auto status = library_->SetReadAttributeString(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetReadAttributeUInt32(::grpc::ServerContext* context, const SetReadAttributeUInt32Request* request, SetReadAttributeUInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      uInt32 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetReadAttributeUInt32(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetReadAttributeUInt64(::grpc::ServerContext* context, const SetReadAttributeUInt64Request* request, SetReadAttributeUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      uInt64 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetReadAttributeUInt64(task, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11207,6 +11687,131 @@ namespace nidaqmx_grpc {
       uInt32 value = request->value();
       auto size = 0U;
       auto status = library_->SetTrigAttributeUInt32(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetWriteAttributeBool(::grpc::ServerContext* context, const SetWriteAttributeBoolRequest* request, SetWriteAttributeBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      bool32 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetWriteAttributeBool(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetWriteAttributeDouble(::grpc::ServerContext* context, const SetWriteAttributeDoubleRequest* request, SetWriteAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      float64 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetWriteAttributeDouble(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetWriteAttributeInt32(::grpc::ServerContext* context, const SetWriteAttributeInt32Request* request, SetWriteAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      int32 value;
+      switch (request->value_enum_case()) {
+        case nidaqmx_grpc::SetWriteAttributeInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<int32>(request->value());
+          break;
+        }
+        case nidaqmx_grpc::SetWriteAttributeInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<int32>(request->value_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetWriteAttributeInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
+      auto size = 0U;
+      auto status = library_->SetWriteAttributeInt32(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetWriteAttributeString(::grpc::ServerContext* context, const SetWriteAttributeStringRequest* request, SetWriteAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto value = request->value().c_str();
+      auto size = 0U;
+      auto status = library_->SetWriteAttributeString(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetWriteAttributeUInt32(::grpc::ServerContext* context, const SetWriteAttributeUInt32Request* request, SetWriteAttributeUInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      uInt32 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetWriteAttributeUInt32(task, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

@@ -2551,6 +2551,24 @@ enums = {
             }
         ]
     },
+    'OverwriteMode1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' When an acquisition encounters unread data in the buffer, the acquisition  continues and overwrites the unread samples with new ones. You can read the new  samples by setting DAQmx_Read_RelativeTo to DAQmx_Val_MostRecentSamp and  setting DAQmx_Read_Offset to the appropriate number of samples.'
+                },
+                'name': 'OVERWRITE_UNREAD_SAMPS',
+                'value': 10252
+            },
+            {
+                'documentation': {
+                    'description': ' The acquisition stops when it encounters a sample in the buffer that you have  not read.'
+                },
+                'name': 'DO_NOT_OVERWRITE_UNREAD_SAMPS',
+                'value': 10159
+            }
+        ]
+    },
     'Polarity2': {
         'values': [
             {
@@ -2891,6 +2909,63 @@ enums = {
                 },
                 'name': 'LOSSY_LSB_REMOVAL',
                 'value': 12556
+            }
+        ]
+    },
+    'ReadRelativeTo': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Start reading samples relative to the first sample acquired.'
+                },
+                'name': 'FIRST_SAMPLE',
+                'value': 10424
+            },
+            {
+                'documentation': {
+                    'description': ' Start reading samples relative to the last sample returned by the previous  read. For the first read operation, this position is the first sample acquired  or the first pretrigger sample if you configured a reference trigger for the  task.'
+                },
+                'name': 'CURR_READ_POS',
+                'value': 10425
+            },
+            {
+                'documentation': {
+                    'description': ' Start reading samples relative to the first sample after the reference trigger  occurred.'
+                },
+                'name': 'REF_TRIG',
+                'value': 10426
+            },
+            {
+                'documentation': {
+                    'description': ' Start reading samples relative to the first pretrigger sample. You specify the  number of pretrigger samples to acquire when you configure a reference trigger.'
+                },
+                'name': 'FIRST_PRETRIG_SAMP',
+                'value': 10427
+            },
+            {
+                'documentation': {
+                    'description': ' Start reading samples relative to the next sample acquired. For example, use  this value and set DAQmx_Read_Offset to -1 to read the last sample acquired.'
+                },
+                'name': 'MOST_RECENT_SAMP',
+                'value': 10428
+            }
+        ]
+    },
+    'RegenerationMode1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Allow NI-DAQmx to regenerate samples that the device previously generated. When  you choose this value, the write marker returns to the beginning of the buffer  after the device generates all samples currently in the buffer.'
+                },
+                'name': 'ALLOW_REGEN',
+                'value': 10097
+            },
+            {
+                'documentation': {
+                    'description': ' Do not allow NI-DAQmx to regenerate samples the device previously generated.  When you choose this value, NI-DAQmx waits for you to write more samples to the  buffer or until the timeout expires.'
+                },
+                'name': 'DO_NOT_ALLOW_REGEN',
+                'value': 10158
             }
         ]
     },
@@ -4616,6 +4691,63 @@ enums = {
             }
         ]
     },
+    'WaitMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Check for available samples when the system receives an interrupt service  request. This mode is the most CPU efficient, but results in lower possible  sampling rates.'
+                },
+                'name': 'WAIT_FOR_INTERRUPT',
+                'value': 12523
+            },
+            {
+                'documentation': {
+                    'description': ' Repeatedly check for available samples as fast as possible. This mode allows  for the highest sampling rates at the expense of CPU efficiency.'
+                },
+                'name': 'POLL',
+                'value': 12524
+            },
+            {
+                'documentation': {
+                    'description': ' Repeatedly check for available samples, but yield control to other threads  after each check. This mode offers a balance between sampling rate and CPU  efficiency.'
+                },
+                'name': 'YIELD',
+                'value': 12525
+            },
+            {
+                'documentation': {
+                    'description': ' Check for available samples once per the amount of time specified in  DAQmx_Read_SleepTime.'
+                },
+                'name': 'SLEEP',
+                'value': 12547
+            }
+        ]
+    },
+    'WaitMode2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Repeatedly check for available buffer space as fast as possible. This mode  allows for the highest sampling rates at the expense of CPU efficiency.'
+                },
+                'name': 'POLL',
+                'value': 12524
+            },
+            {
+                'documentation': {
+                    'description': ' Repeatedly check for available buffer space, but yield control to other threads  after each check. This mode offers a balance between sampling rate and CPU  efficiency.'
+                },
+                'name': 'YIELD',
+                'value': 12525
+            },
+            {
+                'documentation': {
+                    'description': ' Check for available buffer space once per the amount of time specified in  DAQmx_Write_SleepTime.'
+                },
+                'name': 'SLEEP',
+                'value': 12547
+            }
+        ]
+    },
     'WatchdogAOOutputType': {
         'values': [
             {
@@ -4718,6 +4850,24 @@ enums = {
             {
                 'name': 'DO_NOT_WRITE',
                 'value': 12540
+            }
+        ]
+    },
+    'WriteRelativeTo': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Write samples relative to the first sample.'
+                },
+                'name': 'FIRST_SAMPLE',
+                'value': 10424
+            },
+            {
+                'documentation': {
+                    'description': ' Write samples relative to the current position in the buffer.'
+                },
+                'name': 'CURR_WRITE_POS',
+                'value': 10430
             }
         ]
     }
