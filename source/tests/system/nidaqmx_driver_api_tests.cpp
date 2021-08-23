@@ -974,6 +974,50 @@ class NiDAQmxDriverApiTests : public Test {
     return response;
   }
 
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_attribute_request(TAttributes attribute)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  template <typename TRequest, typename TAttributes, typename TValue>
+  TRequest create_set_attribute_request(TAttributes attribute, TValue value)
+  {
+    TRequest request = create_get_attribute_request<TRequest>(attribute);
+    request.set_value(value);
+    return request;
+  }
+
+  GetReadAttributeInt32Response get_read_attribute_i32(ReadInt32Attributes attribute)
+  {
+    auto request = create_get_attribute_request<GetReadAttributeInt32Request>(attribute);
+    auto context = ::grpc::ClientContext{};
+    auto response = GetReadAttributeInt32Response{};
+    raise_if_error(stub()->GetReadAttributeInt32(&context, request, &response));
+    return response;
+  }
+
+  SetReadAttributeInt32Response set_read_attribute_i32(ReadInt32Attributes attribute, ReadInt32AttributeValues value)
+  {
+    auto request = create_set_attribute_request<SetReadAttributeInt32Request>(attribute, value);
+    auto context = ::grpc::ClientContext{};
+    auto response = SetReadAttributeInt32Response{};
+    raise_if_error(stub()->SetReadAttributeInt32(&context, request, &response));
+    return response;
+  }
+
+  SetReadAttributeStringResponse set_read_attribute_string(ReadStringAttributes attribute, const std::string& value)
+  {
+    auto request = create_set_attribute_request<SetReadAttributeStringRequest>(attribute, value);
+    auto context = ::grpc::ClientContext{};
+    auto response = SetReadAttributeStringResponse{};
+    raise_if_error(stub()->SetReadAttributeString(&context, request, &response));
+    return response;
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -1929,6 +1973,22 @@ TEST_F(NiDAQmxDriverApiTests, AIChannelWithSampleClock_ReconfigureRate_UpdatesRa
   EXPECT_SUCCESS(get_response);
   EXPECT_NEAR(INITIAL_RATE, initial_response.value(), .0001);
   EXPECT_NEAR(RECONFIGURED_RATE, get_response.value(), .0001);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureOverwrite_UpdatesOverwriteSuccessfully)
+{
+  const auto NEW_VALUE = ReadInt32AttributeValues::READ_INT32_OVERWRITE_MODE1_OVERWRITE_UNREAD_SAMPS;
+  create_ai_voltage_chan(-5.0, 5.0);
+
+  auto initial_response = get_read_attribute_i32(ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
+  auto set_response = set_read_attribute_i32(ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE, NEW_VALUE);
+  auto get_response = get_read_attribute_i32(ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
+
+  EXPECT_SUCCESS(initial_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(get_response);
+  EXPECT_EQ(NEW_VALUE, get_response.value());
+  EXPECT_NE(get_response.value(), initial_response.value());
 }
 
 }  // namespace system
