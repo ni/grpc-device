@@ -38,6 +38,7 @@ import matplotlib.pyplot as plt
 import time
 import sys
 from grpclib.client import Channel
+from grpclib.exceptions import GRPCError
 
 server_address = "localhost"
 server_port = "31763"
@@ -197,13 +198,13 @@ async def main():
         grpc_scope = await OpenGrpcScope(resource, server_address, server_port)
         await ConfigureGrpcScope(*grpc_scope)
         await MeasureGrpcScope(*grpc_scope)
+    except GRPCError as e:
+        if e.status.name == "UNIMPLEMENTED":
+            print("The operation is not implemented or is not supported/enabled in this service")
+        else:
+            print(f"GRPCError: {str(e)}")
     except Exception as e:
-        error_message = e.args[1]
-        if e.args[0] == 22:
-            error_message = f"Failed to connect to server on {server_address}:{server_port}"
-        elif e.status.name == "UNIMPLEMENTED":
-            error_message = "The operation is not implemented or is not supported/enabled in this service"
-        print(error_message)
+        print(str(e))
     finally:
         if grpc_scope:
             await CloseGrpcScope(*grpc_scope)
