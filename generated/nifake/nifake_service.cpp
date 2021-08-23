@@ -161,6 +161,28 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::AcceptMultipleViUInt32ArraysOfSameSize(::grpc::ServerContext* context, const AcceptMultipleViUInt32ArraysOfSameSizeRequest* request, AcceptMultipleViUInt32ArraysOfSameSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 array_len = static_cast<ViInt32>(request->u_int32_array2().size());
+      auto u_int32_array1 = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->u_int32_array1().data()));
+      auto u_int32_array2 = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->u_int32_array2().data()));
+      auto status = library_->AcceptMultipleViUInt32ArraysOfSameSize(vi, array_len, u_int32_array1, u_int32_array2);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::BoolArrayOutputFunction(::grpc::ServerContext* context, const BoolArrayOutputFunctionRequest* request, BoolArrayOutputFunctionResponse* response)
   {
     if (context->IsCancelled()) {

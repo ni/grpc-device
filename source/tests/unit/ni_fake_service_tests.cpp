@@ -1563,6 +1563,32 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViUInt32Array_CallsAcceptViUInt32Ar
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_AcceptMultipleViUInt32ArraysOfSameSize_CallsAcceptViUInt32Array)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  std::uint32_t uint32_array1[] = {0, 1, 0xFFFFFFFD, 0xFFFFFFFE, 0xFFFFFFFF};
+  std::uint32_t uint32_array2[] = {0, 1, 0xFFFFFFFF, 0xFFFFFFFE, 0xFFFFFFFD};
+  std::int32_t array_len = 5;
+  EXPECT_CALL(library, AcceptMultipleViUInt32ArraysOfSameSize(kTestViSession, array_len, _, _))
+      .With(AllOf(Args<2, 1>(ElementsAreArray(uint32_array1)), Args<3, 1>(ElementsAreArray(uint32_array2))))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::AcceptMultipleViUInt32ArraysOfSameSizeRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.mutable_u_int32_array1()->CopyFrom(google::protobuf::RepeatedField<google::protobuf::uint32>(uint32_array1, uint32_array1 + 5));
+  request.mutable_u_int32_array2()->CopyFrom(google::protobuf::RepeatedField<google::protobuf::uint32>(uint32_array2, uint32_array2 + 5));
+  nifake_grpc::AcceptMultipleViUInt32ArraysOfSameSizeResponse response;
+  ::grpc::Status status = service.AcceptMultipleViUInt32ArraysOfSameSize(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
 TEST(NiFakeServiceTests, NiFakeService_GetViInt32Array_CallsGetViInt32Array)
 {
   nidevice_grpc::SessionRepository session_repository;
