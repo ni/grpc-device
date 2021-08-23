@@ -900,6 +900,37 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->GetDeviceAttributeInt32Array(&context, request, &response);
   }
 
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_task_attribute_request(TAttributes attribute)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  ::grpc::Status get_task_attribute_bool(TaskBoolAttributes attribute, GetTaskAttributeBoolResponse& response)
+  {
+    auto request = create_get_task_attribute_request<GetTaskAttributeBoolRequest>(attribute);
+    ::grpc::ClientContext context;
+    return stub()->GetTaskAttributeBool(&context, request, &response);
+  }
+
+  ::grpc::Status get_task_attribute_u32(TaskUInt32Attributes attribute, GetTaskAttributeUInt32Response& response)
+  {
+    auto request = create_get_task_attribute_request<GetTaskAttributeUInt32Request>(attribute);
+    ::grpc::ClientContext context;
+    return stub()->GetTaskAttributeUInt32(&context, request, &response);
+  }
+
+  ::grpc::Status get_task_attribute_string(TaskStringAttributes attribute, GetTaskAttributeStringResponse& response)
+  {
+    auto request = create_get_task_attribute_request<GetTaskAttributeStringRequest>(attribute);
+    request.set_size(2048);
+    ::grpc::ClientContext context;
+    return stub()->GetTaskAttributeString(&context, request, &response);
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -1807,6 +1838,29 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOOutputType_SucceedsAndReturnsVoltag
   EXPECT_EQ(
       ChannelInt32AttributeValues::CHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE,
       response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, TaskWithChannel_GetTaskAttributes_ReturnsCorectResults)
+{
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
+  start_task();
+
+  auto num_chans_response = GetTaskAttributeUInt32Response{};
+  auto num_chans_status = get_task_attribute_u32(TaskUInt32Attributes::TASK_ATTRIBUTE_NUM_CHANS, num_chans_response);
+  auto channels_response = GetTaskAttributeStringResponse{};
+  auto channels_status = get_task_attribute_string(TaskStringAttributes::TASK_ATTRIBUTE_CHANNELS, channels_response);
+  auto complete_response = GetTaskAttributeBoolResponse{};
+  auto complete_status = get_task_attribute_bool(TaskBoolAttributes::TASK_ATTRIBUTE_COMPLETE, complete_response);
+
+  EXPECT_SUCCESS(num_chans_status, num_chans_response);
+  EXPECT_SUCCESS(channels_status, channels_response);
+  EXPECT_SUCCESS(complete_status, complete_response);
+  EXPECT_EQ(1, num_chans_response.value());
+  auto stripped_channels = std::string(channels_response.value().c_str());
+  EXPECT_THAT(stripped_channels, StrEq(CHANNEL_NAME));
+  EXPECT_FALSE(complete_response.value());
 }
 
 }  // namespace system
