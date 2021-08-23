@@ -20,7 +20,6 @@ service NiFake {
   rpc AcceptListOfDurationsInSeconds(AcceptListOfDurationsInSecondsRequest) returns (AcceptListOfDurationsInSecondsResponse);
   rpc AcceptViSessionArray(AcceptViSessionArrayRequest) returns (AcceptViSessionArrayResponse);
   rpc AcceptViUInt32Array(AcceptViUInt32ArrayRequest) returns (AcceptViUInt32ArrayResponse);
-  rpc AcceptMultipleViUInt32ArraysOfSameSize(AcceptMultipleViUInt32ArraysOfSameSizeRequest) returns (AcceptMultipleViUInt32ArraysOfSameSizeResponse);
   rpc BoolArrayOutputFunction(BoolArrayOutputFunctionRequest) returns (BoolArrayOutputFunctionResponse);
   rpc BoolArrayInputFunction(BoolArrayInputFunctionRequest) returns (BoolArrayInputFunctionResponse);
   rpc CommandWithReservedParam(CommandWithReservedParamRequest) returns (CommandWithReservedParamResponse);
@@ -183,16 +182,6 @@ message AcceptViUInt32ArrayRequest {
 }
 
 message AcceptViUInt32ArrayResponse {
-  int32 status = 1;
-}
-
-message AcceptMultipleViUInt32ArraysOfSameSizeRequest {
-  nidevice_grpc.Session vi = 1;
-  repeated uint32 u_int32_array1 = 2;
-  repeated uint32 u_int32_array2 = 3;
-}
-
-message AcceptMultipleViUInt32ArraysOfSameSizeResponse {
   int32 status = 1;
 }
 

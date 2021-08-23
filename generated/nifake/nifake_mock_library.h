@@ -21,7 +21,6 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, AcceptListOfDurationsInSeconds, (ViSession vi, ViInt32 count, ViReal64 delays[]), (override));
   MOCK_METHOD(ViStatus, AcceptViSessionArray, (ViUInt32 sessionCount, ViSession sessionArray[]), (override));
   MOCK_METHOD(ViStatus, AcceptViUInt32Array, (ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]), (override));
-  MOCK_METHOD(ViStatus, AcceptMultipleViUInt32ArraysOfSameSize, (ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array1[], ViUInt32 uInt32Array2[]), (override));
   MOCK_METHOD(ViStatus, BoolArrayOutputFunction, (ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]), (override));
   MOCK_METHOD(ViStatus, BoolArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]), (override));
   MOCK_METHOD(ViStatus, CommandWithReservedParam, (ViSession vi, ViBoolean* reserved), (override));

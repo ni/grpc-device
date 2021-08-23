@@ -25,7 +25,6 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.AcceptListOfDurationsInSeconds = reinterpret_cast<AcceptListOfDurationsInSecondsPtr>(shared_library_.get_function_pointer("niFake_AcceptListOfDurationsInSeconds"));
   function_pointers_.AcceptViSessionArray = reinterpret_cast<AcceptViSessionArrayPtr>(shared_library_.get_function_pointer("niFake_AcceptViSessionArray"));
   function_pointers_.AcceptViUInt32Array = reinterpret_cast<AcceptViUInt32ArrayPtr>(shared_library_.get_function_pointer("niFake_AcceptViUInt32Array"));
-  function_pointers_.AcceptMultipleViUInt32ArraysOfSameSize = reinterpret_cast<AcceptMultipleViUInt32ArraysOfSameSizePtr>(shared_library_.get_function_pointer("niFake_AcceptMultipleViUInt32ArraysOfSameSize"));
   function_pointers_.BoolArrayOutputFunction = reinterpret_cast<BoolArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayOutputFunction"));
   function_pointers_.BoolArrayInputFunction = reinterpret_cast<BoolArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_BoolArrayInputFunction"));
   function_pointers_.CommandWithReservedParam = reinterpret_cast<CommandWithReservedParamPtr>(shared_library_.get_function_pointer("niFake_CommandWithReservedParam"));
@@ -147,18 +146,6 @@ ViStatus NiFakeLibrary::AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUI
   return niFake_AcceptViUInt32Array(vi, arrayLen, uInt32Array);
 #else
   return function_pointers_.AcceptViUInt32Array(vi, arrayLen, uInt32Array);
-#endif
-}
-
-ViStatus NiFakeLibrary::AcceptMultipleViUInt32ArraysOfSameSize(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array1[], ViUInt32 uInt32Array2[])
-{
-  if (!function_pointers_.AcceptMultipleViUInt32ArraysOfSameSize) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFake_AcceptMultipleViUInt32ArraysOfSameSize.");
-  }
-#if defined(_MSC_VER)
-  return niFake_AcceptMultipleViUInt32ArraysOfSameSize(vi, arrayLen, uInt32Array1, uInt32Array2);
-#else
-  return function_pointers_.AcceptMultipleViUInt32ArraysOfSameSize(vi, arrayLen, uInt32Array1, uInt32Array2);
 #endif
 }
 

@@ -32,7 +32,6 @@ public:
   ::grpc::Status AcceptListOfDurationsInSeconds(::grpc::ServerContext* context, const AcceptListOfDurationsInSecondsRequest* request, AcceptListOfDurationsInSecondsResponse* response) override;
   ::grpc::Status AcceptViSessionArray(::grpc::ServerContext* context, const AcceptViSessionArrayRequest* request, AcceptViSessionArrayResponse* response) override;
   ::grpc::Status AcceptViUInt32Array(::grpc::ServerContext* context, const AcceptViUInt32ArrayRequest* request, AcceptViUInt32ArrayResponse* response) override;
-  ::grpc::Status AcceptMultipleViUInt32ArraysOfSameSize(::grpc::ServerContext* context, const AcceptMultipleViUInt32ArraysOfSameSizeRequest* request, AcceptMultipleViUInt32ArraysOfSameSizeResponse* response) override;
   ::grpc::Status BoolArrayOutputFunction(::grpc::ServerContext* context, const BoolArrayOutputFunctionRequest* request, BoolArrayOutputFunctionResponse* response) override;
   ::grpc::Status BoolArrayInputFunction(::grpc::ServerContext* context, const BoolArrayInputFunctionRequest* request, BoolArrayInputFunctionResponse* response) override;
   ::grpc::Status CommandWithReservedParam(::grpc::ServerContext* context, const CommandWithReservedParamRequest* request, CommandWithReservedParamResponse* response) override;

@@ -384,9 +384,20 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%def name="initialize_len_input_param(parameter)">\
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  field_name = common_helpers.camel_to_snake(parameter["determine_size_from"])
+  size_sources = parameter["determine_size_from"]
+  size_field_name = common_helpers.camel_to_snake(size_sources[-1])
 %>\
-      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${field_name}().size());\
+% if len(size_sources) > 1:
+% for size_source in size_sources[:-1]:
+<%
+  current_size_field_name = common_helpers.camel_to_snake(size_source)
+%>\
+      if (request->${current_size_field_name}().size() != request->${size_field_name}().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields ${current_size_field_name} and ${size_field_name} do not match");
+      }
+% endfor
+% endif
+      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
 </%def>
 
 

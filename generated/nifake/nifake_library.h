@@ -22,7 +22,6 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[]);
   ViStatus AcceptViSessionArray(ViUInt32 sessionCount, ViSession sessionArray[]);
   ViStatus AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
-  ViStatus AcceptMultipleViUInt32ArraysOfSameSize(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array1[], ViUInt32 uInt32Array2[]);
   ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved);
@@ -92,7 +91,6 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using AcceptListOfDurationsInSecondsPtr = ViStatus (*)(ViSession vi, ViInt32 count, ViReal64 delays[]);
   using AcceptViSessionArrayPtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessionArray[]);
   using AcceptViUInt32ArrayPtr = ViStatus (*)(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
-  using AcceptMultipleViUInt32ArraysOfSameSizePtr = ViStatus (*)(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array1[], ViUInt32 uInt32Array2[]);
   using BoolArrayOutputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   using BoolArrayInputFunctionPtr = ViStatus (*)(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   using CommandWithReservedParamPtr = ViStatus (*)(ViSession vi, ViBoolean* reserved);
@@ -162,7 +160,6 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     AcceptListOfDurationsInSecondsPtr AcceptListOfDurationsInSeconds;
     AcceptViSessionArrayPtr AcceptViSessionArray;
     AcceptViUInt32ArrayPtr AcceptViUInt32Array;
-    AcceptMultipleViUInt32ArraysOfSameSizePtr AcceptMultipleViUInt32ArraysOfSameSize;
     BoolArrayOutputFunctionPtr BoolArrayOutputFunction;
     BoolArrayInputFunctionPtr BoolArrayInputFunction;
     CommandWithReservedParamPtr CommandWithReservedParam;

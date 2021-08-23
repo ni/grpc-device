@@ -101,39 +101,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'AcceptMultipleViUInt32ArraysOfSameSize': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'arrayLen',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'uInt32Array1',
-                'type': 'ViUInt32[]',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'arrayLen'
-                }
-            },
-            {
-                'direction': 'in',
-                'name': 'uInt32Array2',
-                'type': 'ViUInt32[]',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'arrayLen'
-                }
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'BoolArrayOutputFunction': {
         'codegen_method': 'public',
         'documentation': {

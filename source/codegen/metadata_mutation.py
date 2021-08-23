@@ -57,7 +57,9 @@ def mark_non_proto_params(parameters):
             size_param = get_size_param(param, parameters)
             size_param['include_in_proto'] = False
             if mechanism == 'len':
-                size_param['determine_size_from'] = param['name']
+                if 'determine_size_from' not in size_param:
+                    size_param['determine_size_from'] = []
+                size_param['determine_size_from'].append(param['name'])
 
 def get_size_param(param, parameters):
     named_params = { p['name'] : p for p in parameters }
