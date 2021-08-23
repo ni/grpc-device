@@ -4463,7 +4463,7 @@ attributes = {
         4625: {
             'access': 'read-write',
             'enum': 'OverwriteMode1',
-            'name': 'OVER_WRITE',
+            'name': 'OVERWRITE',
             'resettable': True,
             'type': 'int32'
         },
