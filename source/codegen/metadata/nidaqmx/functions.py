@@ -249,12 +249,20 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'triggerSlopeArray',
-                'type': 'const int32[]'
+                'type': 'const int32[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                }
             },
             {
                 'direction': 'in',
                 'name': 'triggerLevelArray',
-                'type': 'const float64[]'
+                'type': 'const float64[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                }
             },
             {
                 'direction': 'in',

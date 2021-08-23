@@ -275,7 +275,10 @@ namespace nidaqmx_grpc {
       auto trigger_sources = request->trigger_sources().c_str();
       auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
-      uInt32 array_size = request->array_size();
+      if (request->trigger_slope_array().size() != request->trigger_level_array().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields trigger_slope_array and trigger_level_array do not match");
+      }
+      uInt32 array_size = static_cast<uInt32>(request->trigger_level_array().size());
       auto status = library_->CfgAnlgMultiEdgeStartTrig(task, trigger_sources, trigger_slope_array, trigger_level_array, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;

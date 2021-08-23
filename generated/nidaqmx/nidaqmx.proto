@@ -2952,7 +2952,6 @@ message CfgAnlgMultiEdgeStartTrigRequest {
   string trigger_sources = 2;
   repeated int32 trigger_slope_array = 3;
   repeated double trigger_level_array = 4;
-  uint32 array_size = 5;
 }
 
 message CfgAnlgMultiEdgeStartTrigResponse {
