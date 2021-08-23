@@ -188,6 +188,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetStartTrigTimestampVal = reinterpret_cast<GetStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTimestampVal"));
   function_pointers_.GetStartTrigTrigWhen = reinterpret_cast<GetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTrigWhen"));
   function_pointers_.GetSyncPulseTimeWhen = reinterpret_cast<GetSyncPulseTimeWhenPtr>(shared_library_.get_function_pointer("DAQmxGetSyncPulseTimeWhen"));
+  function_pointers_.GetTaskAttributeBool = reinterpret_cast<GetTaskAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
+  function_pointers_.GetTaskAttributeString = reinterpret_cast<GetTaskAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
+  function_pointers_.GetTaskAttributeUInt32 = reinterpret_cast<GetTaskAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
   function_pointers_.IsTaskDone = reinterpret_cast<IsTaskDonePtr>(shared_library_.get_function_pointer("DAQmxIsTaskDone"));
   function_pointers_.LoadTask = reinterpret_cast<LoadTaskPtr>(shared_library_.get_function_pointer("DAQmxLoadTask"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_.get_function_pointer("DAQmxReadAnalogF64"));
@@ -2291,6 +2294,42 @@ int32 NiDAQmxLibrary::GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* dat
   return DAQmxGetSyncPulseTimeWhen(task, data);
 #else
   return function_pointers_.GetSyncPulseTimeWhen(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTaskAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTaskAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTaskAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetTaskAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTaskAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTaskAttributeString(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetTaskAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetTaskAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetTaskAttributeUInt32(task, attribute, value, size);
 #endif
 }
 

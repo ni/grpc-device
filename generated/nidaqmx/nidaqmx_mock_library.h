@@ -180,6 +180,9 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetStartTrigTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetSyncPulseTimeWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
+  MOCK_METHOD(int32, GetTaskAttributeBool, (TaskHandle task, int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetTaskAttributeString, (TaskHandle task, int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetTaskAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value, uInt32 size), (override));
   MOCK_METHOD(int32, IsTaskDone, (TaskHandle task, bool32* isTaskDone), (override));
   MOCK_METHOD(int32, LoadTask, (const char sessionName[], TaskHandle* task), (override));
   MOCK_METHOD(int32, ReadAnalogF64, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));

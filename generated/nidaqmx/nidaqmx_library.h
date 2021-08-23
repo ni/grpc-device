@@ -185,6 +185,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data);
   int32 GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data);
   int32 GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* data);
+  int32 GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
+  int32 GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size);
+  int32 GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
   int32 IsTaskDone(TaskHandle task, bool32* isTaskDone);
   int32 LoadTask(const char sessionName[], TaskHandle* task);
   int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
@@ -443,6 +446,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetStartTrigTimestampValPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
   using GetStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
   using GetSyncPulseTimeWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
+  using GetTaskAttributeBoolPtr = int32 (*)(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
+  using GetTaskAttributeStringPtr = int32 (*)(TaskHandle task, int32 attribute, char value[], uInt32 size);
+  using GetTaskAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
   using IsTaskDonePtr = int32 (*)(TaskHandle task, bool32* isTaskDone);
   using LoadTaskPtr = int32 (*)(const char sessionName[], TaskHandle* task);
   using ReadAnalogF64Ptr = int32 (*)(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
@@ -701,6 +707,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetStartTrigTimestampValPtr GetStartTrigTimestampVal;
     GetStartTrigTrigWhenPtr GetStartTrigTrigWhen;
     GetSyncPulseTimeWhenPtr GetSyncPulseTimeWhen;
+    GetTaskAttributeBoolPtr GetTaskAttributeBool;
+    GetTaskAttributeStringPtr GetTaskAttributeString;
+    GetTaskAttributeUInt32Ptr GetTaskAttributeUInt32;
     IsTaskDonePtr IsTaskDone;
     LoadTaskPtr LoadTask;
     ReadAnalogF64Ptr ReadAnalogF64;
