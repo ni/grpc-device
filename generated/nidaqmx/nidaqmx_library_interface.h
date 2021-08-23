@@ -146,6 +146,12 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize) = 0;
   virtual int32 GetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value) = 0;
+  virtual int32 GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size) = 0;
+  virtual int32 GetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size) = 0;
+  virtual int32 GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value, uInt32 size) = 0;
+  virtual int32 GetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, char value[], uInt32 size) = 0;
+  virtual int32 GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value, uInt32 size) = 0;
   virtual int32 GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size) = 0;
   virtual int32 GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size) = 0;
   virtual int32 GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size) = 0;
@@ -204,6 +210,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 RemoveCDAQSyncConnection(const char portList[]) = 0;
   virtual int32 ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation) = 0;
   virtual int32 ResetBufferAttribute(TaskHandle task, int32 attribute) = 0;
+  virtual int32 ResetChanAttribute(TaskHandle task, const char channel[], int32 attribute) = 0;
   virtual int32 ResetDevice(const char deviceName[]) = 0;
   virtual int32 SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options) = 0;
   virtual int32 SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options) = 0;
@@ -214,6 +221,12 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
   virtual int32 SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
   virtual int32 SetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value) = 0;
+  virtual int32 SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size) = 0;
+  virtual int32 SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size) = 0;
+  virtual int32 SetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size) = 0;
+  virtual int32 SetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32 value, uInt32 size) = 0;
+  virtual int32 SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[], uInt32 size) = 0;
+  virtual int32 SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value, uInt32 size) = 0;
   virtual int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily) = 0;
   virtual int32 SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
   virtual int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size) = 0;

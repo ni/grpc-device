@@ -154,6 +154,12 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetArmStartTrigTrigWhen = reinterpret_cast<GetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTrigWhen"));
   function_pointers_.GetAutoConfiguredCDAQSyncConnections = reinterpret_cast<GetAutoConfiguredCDAQSyncConnectionsPtr>(shared_library_.get_function_pointer("DAQmxGetAutoConfiguredCDAQSyncConnections"));
   function_pointers_.GetBufferAttributeUInt32 = reinterpret_cast<GetBufferAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetBufferAttribute"));
+  function_pointers_.GetChanAttributeBool = reinterpret_cast<GetChanAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
+  function_pointers_.GetChanAttributeDouble = reinterpret_cast<GetChanAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
+  function_pointers_.GetChanAttributeDoubleArray = reinterpret_cast<GetChanAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
+  function_pointers_.GetChanAttributeInt32 = reinterpret_cast<GetChanAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
+  function_pointers_.GetChanAttributeString = reinterpret_cast<GetChanAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
+  function_pointers_.GetChanAttributeUInt32 = reinterpret_cast<GetChanAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
   function_pointers_.GetDeviceAttributeBool = reinterpret_cast<GetDeviceAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
   function_pointers_.GetDeviceAttributeDouble = reinterpret_cast<GetDeviceAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
   function_pointers_.GetDeviceAttributeDoubleArray = reinterpret_cast<GetDeviceAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetDeviceAttribute"));
@@ -214,6 +220,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.RemoveCDAQSyncConnection = reinterpret_cast<RemoveCDAQSyncConnectionPtr>(shared_library_.get_function_pointer("DAQmxRemoveCDAQSyncConnection"));
   function_pointers_.ReserveNetworkDevice = reinterpret_cast<ReserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxReserveNetworkDevice"));
   function_pointers_.ResetBufferAttribute = reinterpret_cast<ResetBufferAttributePtr>(shared_library_.get_function_pointer("DAQmxResetBufferAttribute"));
+  function_pointers_.ResetChanAttribute = reinterpret_cast<ResetChanAttributePtr>(shared_library_.get_function_pointer("DAQmxResetChanAttribute"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
   function_pointers_.SaveGlobalChan = reinterpret_cast<SaveGlobalChanPtr>(shared_library_.get_function_pointer("DAQmxSaveGlobalChan"));
   function_pointers_.SaveScale = reinterpret_cast<SaveScalePtr>(shared_library_.get_function_pointer("DAQmxSaveScale"));
@@ -225,6 +232,12 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAnalogPowerUpStates = reinterpret_cast<SetAnalogPowerUpStatesPtr>(shared_library_.get_function_pointer("DAQmxSetAnalogPowerUpStates"));
   function_pointers_.SetArmStartTrigTrigWhen = reinterpret_cast<SetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxSetArmStartTrigTrigWhen"));
   function_pointers_.SetBufferAttributeUInt32 = reinterpret_cast<SetBufferAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetBufferAttribute"));
+  function_pointers_.SetChanAttributeBool = reinterpret_cast<SetChanAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
+  function_pointers_.SetChanAttributeDouble = reinterpret_cast<SetChanAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
+  function_pointers_.SetChanAttributeDoubleArray = reinterpret_cast<SetChanAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
+  function_pointers_.SetChanAttributeInt32 = reinterpret_cast<SetChanAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
+  function_pointers_.SetChanAttributeString = reinterpret_cast<SetChanAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
+  function_pointers_.SetChanAttributeUInt32 = reinterpret_cast<SetChanAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
   function_pointers_.SetDigitalLogicFamilyPowerUpState = reinterpret_cast<SetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxSetDigitalLogicFamilyPowerUpState"));
   function_pointers_.SetDigitalPowerUpStates = reinterpret_cast<SetDigitalPowerUpStatesPtr>(shared_library_.get_function_pointer("DAQmxSetDigitalPowerUpStates"));
   function_pointers_.SetDigitalPullUpPullDownStates = reinterpret_cast<SetDigitalPullUpPullDownStatesPtr>(shared_library_.get_function_pointer("DAQmxSetDigitalPullUpPullDownStates"));
@@ -1873,6 +1886,78 @@ int32 NiDAQmxLibrary::GetBufferAttributeUInt32(TaskHandle task, int32 attribute,
 #endif
 }
 
+int32 NiDAQmxLibrary::GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetChanAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.GetChanAttributeBool(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetChanAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.GetChanAttributeDouble(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size)
+{
+  if (!function_pointers_.GetChanAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.GetChanAttributeDoubleArray(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetChanAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.GetChanAttributeInt32(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetChanAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.GetChanAttributeString(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetChanAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.GetChanAttributeUInt32(task, channel, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
 {
   if (!function_pointers_.GetDeviceAttributeBool) {
@@ -2593,6 +2678,18 @@ int32 NiDAQmxLibrary::ResetBufferAttribute(TaskHandle task, int32 attribute)
 #endif
 }
 
+int32 NiDAQmxLibrary::ResetChanAttribute(TaskHandle task, const char channel[], int32 attribute)
+{
+  if (!function_pointers_.ResetChanAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetChanAttribute(task, channel, attribute);
+#else
+  return function_pointers_.ResetChanAttribute(task, channel, attribute);
+#endif
+}
+
 int32 NiDAQmxLibrary::ResetDevice(const char deviceName[])
 {
   if (!function_pointers_.ResetDevice) {
@@ -2722,6 +2819,78 @@ int32 NiDAQmxLibrary::SetBufferAttributeUInt32(TaskHandle task, int32 attribute,
   return DAQmxSetBufferAttribute(task, attribute, value);
 #else
   return function_pointers_.SetBufferAttributeUInt32(task, attribute, value);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetChanAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.SetChanAttributeBool(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size)
+{
+  if (!function_pointers_.SetChanAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.SetChanAttributeDouble(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size)
+{
+  if (!function_pointers_.SetChanAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.SetChanAttributeDoubleArray(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32 value, uInt32 size)
+{
+  if (!function_pointers_.SetChanAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.SetChanAttributeInt32(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[], uInt32 size)
+{
+  if (!function_pointers_.SetChanAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.SetChanAttributeString(task, channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value, uInt32 size)
+{
+  if (!function_pointers_.SetChanAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+#else
+  return function_pointers_.SetChanAttributeUInt32(task, channel, attribute, value, size);
 #endif
 }
 

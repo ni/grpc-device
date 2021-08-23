@@ -139,17 +139,30 @@ class NiDAQmxDriverApiTests : public Test {
     return create_ai_voltage_chan(request, response);
   }
 
-  ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
+  CreateAOVoltageChanRequest create_ao_voltage_chan_request(double min_val, double max_val, const std::string& name = "ao0")
   {
-    ::grpc::ClientContext context;
     CreateAOVoltageChanRequest request;
     set_request_session_id(request);
+
     request.set_physical_channel("gRPCSystemTestDAQ/ao0");
-    request.set_name_to_assign_to_channel("ao0");
+    request.set_name_to_assign_to_channel(name);
+
     request.set_min_val(min_val);
     request.set_max_val(max_val);
     request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
+    return request;
+  }
+
+  ::grpc::Status create_ao_voltage_chan(const CreateAOVoltageChanRequest& request, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
+  {
+    ::grpc::ClientContext context;
     return stub()->CreateAOVoltageChan(&context, request, &response);
+  }
+
+  ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
+  {
+    auto request = create_ao_voltage_chan_request(min_val, max_val);
+    return create_ao_voltage_chan(request, response);
   }
 
   ::grpc::Status create_di_chan(CreateDIChanResponse& response = ThrowawayResponse<CreateDIChanResponse>::response())
@@ -813,6 +826,63 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     request.set_attribute(attribute);
     return stub()->ResetBufferAttribute(&context, request, &response);
+  }
+
+  template <typename TRequest, typename T, typename TAttributes>
+  TRequest create_set_chan_attribute_request(const std::string& channel_name, TAttributes attribute, T value)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_channel(channel_name);
+    request.set_attribute(attribute);
+    request.set_value(value);
+    return request;
+  }
+
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_chan_attribute_request(const std::string& channel_name, TAttributes attribute)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_channel(channel_name);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  ::grpc::Status get_chan_attribute_double(const GetChanAttributeDoubleRequest& request, GetChanAttributeDoubleResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetChanAttributeDouble(&context, request, &response);
+  }
+
+  ::grpc::Status set_chan_attribute_double(const SetChanAttributeDoubleRequest& request, SetChanAttributeDoubleResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetChanAttributeDouble(&context, request, &response);
+  }
+
+  ::grpc::Status get_chan_attribute_bool(const GetChanAttributeBoolRequest& request, GetChanAttributeBoolResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetChanAttributeBool(&context, request, &response);
+  }
+
+  ::grpc::Status set_chan_attribute_bool(const SetChanAttributeBoolRequest& request, SetChanAttributeBoolResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetChanAttributeBool(&context, request, &response);
+  }
+
+  ::grpc::Status get_chan_attribute_i32(const GetChanAttributeInt32Request& request, GetChanAttributeInt32Response& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetChanAttributeInt32(&context, request, &response);
+  }
+
+  ::grpc::Status set_chan_attribute_i32(const SetChanAttributeInt32Request& request, SetChanAttributeInt32Response& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetChanAttributeInt32(&context, request, &response);
   }
 
   template <typename TRequest, typename TAttributes>
@@ -1672,6 +1742,73 @@ TEST_F(NiDAQmxDriverApiTests, GetAISupportMeasurementTypes_ResultIncludesCurrent
   EXPECT_THAT(response.value_raw(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
   EXPECT_THAT(response.value_raw(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_VOLTAGE));
 }
+
+TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOMax_ReturnsAOMax)
+{
+  const auto A0_MIN = -10.0;
+  const auto AO_MAX = 10.0;
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(A0_MIN, AO_MAX, CHANNEL_NAME));
+
+  auto request = create_get_chan_attribute_request<GetChanAttributeDoubleRequest>(
+      CHANNEL_NAME,
+      ChannelDoubleAttributes::CHANNEL_ATTRIBUTE_AO_MAX);
+  auto response = GetChanAttributeDoubleResponse{};
+  auto status = get_chan_attribute_double(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_NEAR(AO_MAX, response.value(), 0.0001);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOChannel_SetAndGetAllowConnToGround_SucceedsAndReturnsSetValue)
+{
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
+
+  auto initial_get_request = create_get_chan_attribute_request<GetChanAttributeBoolRequest>(
+      CHANNEL_NAME,
+      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
+  auto initial_get_response = GetChanAttributeBoolResponse{};
+  auto initial_get_status = get_chan_attribute_bool(initial_get_request, initial_get_response);
+  auto set_request = create_set_chan_attribute_request<SetChanAttributeBoolRequest>(
+      CHANNEL_NAME,
+      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND,
+      true);
+  auto set_response = SetChanAttributeBoolResponse{};
+  auto set_status = set_chan_attribute_bool(set_request, set_response);
+  auto get_request = create_get_chan_attribute_request<GetChanAttributeBoolRequest>(
+      CHANNEL_NAME,
+      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
+  auto get_response = GetChanAttributeBoolResponse{};
+  auto get_status = get_chan_attribute_bool(get_request, get_response);
+
+  EXPECT_SUCCESS(initial_get_status, set_response);
+  EXPECT_SUCCESS(set_status, set_response);
+  EXPECT_SUCCESS(get_status, get_response);
+  EXPECT_FALSE(initial_get_response.value());
+  EXPECT_TRUE(get_response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOOutputType_SucceedsAndReturnsVoltage)
+{
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
+
+  auto request = create_get_chan_attribute_request<GetChanAttributeInt32Request>(
+      CHANNEL_NAME,
+      ChannelInt32Attributes::CHANNEL_ATTRIBUTE_AO_OUTPUT_TYPE);
+  auto response = GetChanAttributeInt32Response{};
+  auto status = get_chan_attribute_i32(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(
+      ChannelInt32AttributeValues::CHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE,
+      response.value());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni

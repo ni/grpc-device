@@ -25,6 +25,3725 @@ attributes = {
             'type': 'uInt32'
         }
     },
+    'Channel': {
+        80: {
+            'access': 'read',
+            'enum': 'DataJustification1',
+            'name': 'AI_RAW_SAMP_JUSTIFICATION',
+            'resettable': False,
+            'type': 'int32'
+        },
+        98: {
+            'access': 'read-write',
+            'name': 'AI_IMPEDANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        100: {
+            'access': 'read-write',
+            'enum': 'Coupling1',
+            'name': 'AI_COUPLING',
+            'resettable': True,
+            'type': 'int32'
+        },
+        104: {
+            'access': 'read-write',
+            'name': 'AI_DITHER_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        135: {
+            'access': 'read-write',
+            'enum': 'BridgeConfiguration1',
+            'name': 'AI_BRIDGE_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        148: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_SHUNT_CAL_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        257: {
+            'access': 'read-write',
+            'name': 'AI_AC_EXCIT_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        258: {
+            'access': 'read-write',
+            'name': 'AI_AC_EXCIT_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        280: {
+            'access': 'read-write',
+            'name': 'AO_GAIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        289: {
+            'access': 'read-write',
+            'name': 'AO_LOAD_IMPEDANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        304: {
+            'access': 'read-write',
+            'name': 'AO_DAC_REF_CONN_TO_GND',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        306: {
+            'access': 'read-write',
+            'enum': 'SourceSelection',
+            'name': 'AO_DAC_REF_SRC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        307: {
+            'access': 'read-write',
+            'name': 'AO_REGLITCH_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        308: {
+            'access': 'read-write',
+            'enum': 'DataTransferMechanism',
+            'name': 'AO_DATA_XFER_MECH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        322: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_CTR_TIMEBASE_ACTIVE_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        323: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        324: {
+            'access': 'read-write',
+            'enum': 'CounterFrequencyMethod',
+            'name': 'CI_FREQ_MEAS_METH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        325: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_MEAS_TIME',
+            'resettable': True,
+            'type': 'float64'
+        },
+        327: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        328: {
+            'access': 'read',
+            'name': 'CI_COUNT',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        329: {
+            'access': 'read',
+            'enum': 'Level1',
+            'name': 'CI_OUTPUT_STATE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        336: {
+            'access': 'read',
+            'name': 'CI_TC_REACHED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        512: {
+            'access': 'read-write',
+            'enum': 'DataTransferMechanism',
+            'name': 'CI_DATA_XFER_MECH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        659: {
+            'access': 'read',
+            'name': 'CO_COUNT',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        660: {
+            'access': 'read',
+            'enum': 'Level1',
+            'name': 'CO_OUTPUT_STATE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        661: {
+            'access': 'read-write',
+            'name': 'CO_AUTO_INCR_CNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        664: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_TICKS_INITIAL_DELAY',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        665: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_FREQ_INITIAL_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        825: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        833: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CO_CTR_TIMEBASE_ACTIVE_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        1651: {
+            'access': 'read-write',
+            'enum': 'AccelUnits2',
+            'name': 'AI_ACCEL_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        1682: {
+            'access': 'read-write',
+            'name': 'AI_ACCEL_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        1685: {
+            'access': 'read',
+            'enum': 'AIMeasurementType',
+            'name': 'AI_MEAS_TYPE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        1686: {
+            'access': 'read-write',
+            'enum': 'CountDirection1',
+            'name': 'CI_COUNT_EDGES_DIR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        1687: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_COUNT_EDGES_ACTIVE_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        1688: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_INITIAL_CNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        1793: {
+            'access': 'read-write',
+            'enum': 'CurrentUnits1',
+            'name': 'AI_CURRENT_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        1939: {
+            'access': 'read-write',
+            'name': 'DI_INVERT_LINES',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        1945: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_FREQ_STARTING_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2054: {
+            'access': 'read-write',
+            'enum': 'FrequencyUnits',
+            'name': 'AI_FREQ_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2068: {
+            'access': 'read-write',
+            'name': 'AI_FREQ_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2069: {
+            'access': 'read-write',
+            'name': 'AI_FREQ_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2083: {
+            'access': 'read-write',
+            'enum': 'TimeUnits3',
+            'name': 'CI_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2085: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_PULSE_WIDTH_STARTING_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2099: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2100: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2130: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_PERIOD_STARTING_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2165: {
+            'access': 'read-write',
+            'name': 'CI_ANG_ENCODER_PULSES_PER_REV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        2167: {
+            'access': 'read-write',
+            'enum': 'AngleUnits1',
+            'name': 'AI_RVDT_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2177: {
+            'access': 'read-write',
+            'name': 'CI_ANG_ENCODER_INITIAL_ANGLE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2184: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INDEX_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2185: {
+            'access': 'read-write',
+            'enum': 'EncoderZIndexPhase1',
+            'name': 'CI_ENCODER_Z_INDEX_PHASE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2192: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INDEX_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        2307: {
+            'access': 'read-write',
+            'name': 'AI_RVDT_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2320: {
+            'access': 'read-write',
+            'enum': 'LengthUnits2',
+            'name': 'AI_LVDT_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2321: {
+            'access': 'read-write',
+            'name': 'CI_LIN_ENCODER_DIST_PER_PULSE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2325: {
+            'access': 'read-write',
+            'name': 'CI_LIN_ENCODER_INITIAL_POS',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2361: {
+            'access': 'read-write',
+            'name': 'AI_LVDT_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2389: {
+            'access': 'read-write',
+            'enum': 'ResistanceUnits1',
+            'name': 'AI_RESISTANCE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2433: {
+            'access': 'read-write',
+            'enum': 'StrainUnits1',
+            'name': 'AI_STRAIN_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2434: {
+            'access': 'read-write',
+            'enum': 'StrainGageBridgeType1',
+            'name': 'AI_STRAIN_GAGE_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        2452: {
+            'access': 'read-write',
+            'name': 'AI_STRAIN_GAGE_GAGE_FACTOR',
+            'resettable': True,
+            'type': 'float64'
+        },
+        2456: {
+            'access': 'read-write',
+            'name': 'AI_STRAIN_GAGE_POISSON_RATIO',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4112: {
+            'access': 'read-write',
+            'name': 'AI_RTD_A',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4113: {
+            'access': 'read-write',
+            'name': 'AI_RTD_B',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4115: {
+            'access': 'read-write',
+            'name': 'AI_RTD_C',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4144: {
+            'access': 'read-write',
+            'name': 'AI_RTD_R0',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4146: {
+            'access': 'read-write',
+            'enum': 'RTDType1',
+            'name': 'AI_RTD_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4147: {
+            'access': 'read-write',
+            'enum': 'TemperatureUnits1',
+            'name': 'AI_TEMP_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4148: {
+            'access': 'read',
+            'name': 'AI_THRMCPL_CJC_CHAN',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4149: {
+            'access': 'read',
+            'enum': 'CJCSource1',
+            'name': 'AI_THRMCPL_CJC_SRC',
+            'resettable': False,
+            'type': 'int32'
+        },
+        4150: {
+            'access': 'read-write',
+            'name': 'AI_THRMCPL_CJC_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4176: {
+            'access': 'read-write',
+            'enum': 'ThermocoupleType1',
+            'name': 'AI_THRMCPL_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4193: {
+            'access': 'read-write',
+            'name': 'AI_THRMSTR_R1',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4242: {
+            'access': 'read-write',
+            'enum': 'GpsSignalType1',
+            'name': 'CI_GPS_SYNC_METHOD',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4243: {
+            'access': 'read-write',
+            'name': 'CI_GPS_SYNC_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        4244: {
+            'access': 'read-write',
+            'enum': 'VoltageUnits1',
+            'name': 'AI_VOLTAGE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4247: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg',
+            'name': 'AI_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4360: {
+            'access': 'read',
+            'enum': 'AOOutputChannelType',
+            'name': 'AO_OUTPUT_TYPE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        4361: {
+            'access': 'read-write',
+            'enum': 'CurrentUnits1',
+            'name': 'AO_CURRENT_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4403: {
+            'access': 'read-write',
+            'name': 'DO_INVERT_LINES',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        4407: {
+            'access': 'read-write',
+            'enum': 'DigitalDriveType',
+            'name': 'DO_OUTPUT_DRIVE_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4457: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_HIGH_TICKS',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        4464: {
+            'access': 'read-write',
+            'enum': 'Level1',
+            'name': 'CO_PULSE_IDLE_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4465: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_LOW_TICKS',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        4470: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_DUTY_CYC',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4472: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4484: {
+            'access': 'read-write',
+            'enum': 'VoltageUnits2',
+            'name': 'AO_VOLTAGE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        4486: {
+            'access': 'read-write',
+            'name': 'AO_MAX',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4487: {
+            'access': 'read-write',
+            'name': 'AO_MIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        4488: {
+            'access': 'read-write',
+            'name': 'AO_CUSTOM_SCALE_NAME',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5264: {
+            'access': 'read-write',
+            'name': 'AO_OUTPUT_IMPEDANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5416: {
+            'access': 'read-write',
+            'enum': 'SoundPressureUnits1',
+            'name': 'AI_SOUND_PRESSURE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5430: {
+            'access': 'read-write',
+            'name': 'AI_MICROPHONE_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5984: {
+            'access': 'read-write',
+            'enum': 'AutoZeroType1',
+            'name': 'AI_AUTO_ZERO_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5988: {
+            'access': 'read',
+            'enum': 'ResolutionType1',
+            'name': 'AI_RESOLUTION_UNITS',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5989: {
+            'access': 'read',
+            'name': 'AI_RESOLUTION',
+            'resettable': False,
+            'type': 'float64'
+        },
+        6109: {
+            'access': 'read-write',
+            'name': 'AI_MAX',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6110: {
+            'access': 'read-write',
+            'name': 'AI_MIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6112: {
+            'access': 'read-write',
+            'name': 'AI_CUSTOM_SCALE_NAME',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6114: {
+            'access': 'read-write',
+            'enum': 'VoltageUnits1',
+            'name': 'AI_VOLTAGE_ACRMS_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6115: {
+            'access': 'read-write',
+            'enum': 'CurrentUnits1',
+            'name': 'AI_CURRENT_ACRMS_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6124: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_NOM_RESISTANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6125: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_INITIAL_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6126: {
+            'access': 'read-write',
+            'name': 'AI_LEAD_WIRE_RESISTANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6129: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_BALANCE_COARSE_POT',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6130: {
+            'access': 'read-write',
+            'enum': 'CurrentShuntResistorLocation1',
+            'name': 'AI_CURRENT_SHUNT_LOC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6131: {
+            'access': 'read-write',
+            'name': 'AI_CURRENT_SHUNT_RESISTANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6132: {
+            'access': 'read-write',
+            'enum': 'ExcitationSource',
+            'name': 'AI_EXCIT_SRC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6133: {
+            'access': 'read-write',
+            'name': 'AI_EXCIT_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6134: {
+            'access': 'read-write',
+            'enum': 'ExcitationVoltageOrCurrent',
+            'name': 'AI_EXCIT_VOLTAGE_OR_CURRENT',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6139: {
+            'access': 'read-write',
+            'enum': 'ExcitationDCorAC',
+            'name': 'AI_EXCIT_D_COR_AC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6140: {
+            'access': 'read-write',
+            'name': 'AI_EXCIT_USE_FOR_SCALING',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6145: {
+            'access': 'read-write',
+            'name': 'AI_ATTEN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6146: {
+            'access': 'read-write',
+            'name': 'AI_LOWPASS_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6147: {
+            'access': 'read-write',
+            'name': 'AI_LOWPASS_CUTOFF_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6150: {
+            'access': 'read-write',
+            'name': 'AI_HIGHPASS_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6151: {
+            'access': 'read-write',
+            'name': 'AI_HIGHPASS_CUTOFF_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6152: {
+            'access': 'read-write',
+            'enum': 'FilterType1',
+            'name': 'AI_HIGHPASS_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6153: {
+            'access': 'read-write',
+            'name': 'AI_HIGHPASS_ORDER',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6155: {
+            'access': 'read-write',
+            'name': 'AI_BANDPASS_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6156: {
+            'access': 'read-write',
+            'name': 'AI_BANDPASS_CENTER_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6157: {
+            'access': 'read-write',
+            'enum': 'FilterType1',
+            'name': 'AI_BANDPASS_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6158: {
+            'access': 'read-write',
+            'name': 'AI_BANDPASS_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6160: {
+            'access': 'read-write',
+            'name': 'AI_NOTCH_CENTER_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6161: {
+            'access': 'read-write',
+            'enum': 'FilterType1',
+            'name': 'AI_NOTCH_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6162: {
+            'access': 'read-write',
+            'name': 'AI_NOTCH_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6165: {
+            'access': 'read-write',
+            'name': 'AI_RNG_HIGH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6166: {
+            'access': 'read-write',
+            'name': 'AI_RNG_LOW',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6168: {
+            'access': 'read-write',
+            'name': 'AI_GAIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6170: {
+            'access': 'read-write',
+            'name': 'AI_SAMP_AND_HOLD_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6177: {
+            'access': 'read-write',
+            'enum': 'DataTransferMechanism',
+            'name': 'AI_DATA_XFER_MECH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6187: {
+            'access': 'read-write',
+            'enum': 'ResolutionType1',
+            'name': 'AO_RESOLUTION_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6188: {
+            'access': 'read',
+            'name': 'AO_RESOLUTION',
+            'resettable': False,
+            'type': 'float64'
+        },
+        6189: {
+            'access': 'read-write',
+            'name': 'AO_DAC_RNG_LOW',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6190: {
+            'access': 'read-write',
+            'name': 'AO_DAC_RNG_HIGH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6192: {
+            'access': 'read-write',
+            'name': 'AO_DAC_REF_ALLOW_CONN_TO_GND',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6194: {
+            'access': 'read-write',
+            'name': 'AO_DAC_REF_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6202: {
+            'access': 'read-write',
+            'name': 'AO_USE_ONLY_ON_BRD_MEM',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6204: {
+            'access': 'read-write',
+            'enum': 'OutputDataTransferCondition',
+            'name': 'AO_DATA_XFER_REQ_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6271: {
+            'access': 'read',
+            'enum': 'ChannelType',
+            'name': 'CHAN_TYPE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        6273: {
+            'access': 'read-write',
+            'enum': 'ResistanceConfiguration',
+            'name': 'AI_RESISTANCE_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6275: {
+            'access': 'read-write',
+            'name': 'AI_EXCIT_ACTUAL_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6276: {
+            'access': 'read-write',
+            'enum': 'SourceSelection',
+            'name': 'AI_LOWPASS_SWITCH_CAP_CLK_SRC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6277: {
+            'access': 'read-write',
+            'name': 'AI_LOWPASS_SWITCH_CAP_EXT_CLK_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6278: {
+            'access': 'read-write',
+            'name': 'AI_LOWPASS_SWITCH_CAP_EXT_CLK_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6279: {
+            'access': 'read-write',
+            'name': 'AI_LOWPASS_SWITCH_CAP_OUT_CLK_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6283: {
+            'access': 'read-write',
+            'enum': 'InputDataTransferCondition',
+            'name': 'AI_DATA_XFER_REQ_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6284: {
+            'access': 'read-write',
+            'name': 'AI_MEM_MAP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6286: {
+            'access': 'read-write',
+            'enum': 'OutputTermCfg',
+            'name': 'AO_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6287: {
+            'access': 'read-write',
+            'name': 'AO_MEM_MAP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6288: {
+            'access': 'read-write',
+            'name': 'DI_TRISTATE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6300: {
+            'access': 'read-write',
+            'name': 'CI_MAX',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6301: {
+            'access': 'read-write',
+            'name': 'CI_MIN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6302: {
+            'access': 'read-write',
+            'name': 'CI_CUSTOM_SCALE_NAME',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6304: {
+            'access': 'read',
+            'enum': 'CIMeasurementType',
+            'name': 'CI_MEAS_TYPE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        6305: {
+            'access': 'read-write',
+            'enum': 'FrequencyUnits3',
+            'name': 'CI_FREQ_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6306: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6307: {
+            'access': 'read-write',
+            'enum': 'TimeUnits3',
+            'name': 'CI_PERIOD_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6308: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6310: {
+            'access': 'read-write',
+            'enum': 'AngleUnits2',
+            'name': 'CI_ANG_ENCODER_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6313: {
+            'access': 'read-write',
+            'enum': 'LengthUnits3',
+            'name': 'CI_LIN_ENCODER_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6314: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_WIDTH_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6316: {
+            'access': 'read-write',
+            'enum': 'TimeUnits3',
+            'name': 'CI_TWO_EDGE_SEP_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6317: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6318: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6319: {
+            'access': 'read-write',
+            'enum': 'TimeUnits3',
+            'name': 'CI_SEMI_PERIOD_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6320: {
+            'access': 'read-write',
+            'name': 'CI_SEMI_PERIOD_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6322: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6323: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_MASTER_TIMEBASE_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6325: {
+            'access': 'read',
+            'enum': 'COOutputType',
+            'name': 'CO_OUTPUT_TYPE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        6330: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_HIGH_TIME',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6331: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_LOW_TIME',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6332: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_TIME_INITIAL_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6338: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6339: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_MASTER_TIMEBASE_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6343: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6345: {
+            'access': 'read-write',
+            'name': 'AI_THRMSTR_A',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6346: {
+            'access': 'read-write',
+            'name': 'AI_THRMSTR_C',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6347: {
+            'access': 'read-write',
+            'name': 'AI_THRMSTR_B',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6349: {
+            'access': 'read-write',
+            'enum': 'ACExcitWireMode',
+            'name': 'AI_AC_EXCIT_WIRE_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6357: {
+            'access': 'read-write',
+            'enum': 'FrequencyUnits2',
+            'name': 'CO_PULSE_FREQ_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6358: {
+            'access': 'read-write',
+            'enum': 'TimeUnits2',
+            'name': 'CO_PULSE_TIME_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6369: {
+            'access': 'read-write',
+            'name': 'CO_PULSE_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6387: {
+            'access': 'read-write',
+            'name': 'DO_TRISTATE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6388: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_BALANCE_FINE_POT',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6389: {
+            'access': 'read-write',
+            'name': 'PHYSICAL_CHAN_NAME',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        6392: {
+            'access': 'read-write',
+            'name': 'AI_FORCE_READ_FROM_CHAN',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        6414: {
+            'access': 'read',
+            'name': 'CO_PULSE_DONE',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        6438: {
+            'access': 'read-write',
+            'name': 'CHAN_DESCR',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6444: {
+            'access': 'read-write',
+            'enum': 'CounterFrequencyMethod',
+            'name': 'CI_PERIOD_MEAS_METH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6445: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_MEAS_TIME',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6446: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        6448: {
+            'access': 'read',
+            'name': 'AI_DEV_SCALING_COEFF',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        6449: {
+            'access': 'read',
+            'name': 'AO_DEV_SCALING_COEFF',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        6460: {
+            'access': 'read',
+            'name': 'CI_NUM_POSSIBLY_INVALID_SAMPS',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6463: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_SHUNT_CAL_GAIN_ADJUST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8568: {
+            'access': 'read',
+            'name': 'DI_NUM_LINES',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8569: {
+            'access': 'read',
+            'name': 'DO_NUM_LINES',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8576: {
+            'access': 'read-write',
+            'name': 'AI_EXCIT_USE_MULTIPLEXED',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8600: {
+            'access': 'read-write',
+            'name': 'AI_INPUT_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8602: {
+            'access': 'read-write',
+            'enum': 'LVDTSensitivityUnits1',
+            'name': 'AI_LVDT_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8603: {
+            'access': 'read-write',
+            'enum': 'RVDTSensitivityUnits1',
+            'name': 'AI_RVDT_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8604: {
+            'access': 'read-write',
+            'enum': 'AccelSensitivityUnits1',
+            'name': 'AI_ACCEL_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8605: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_A_INPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8606: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_B_INPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8607: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8620: {
+            'access': 'read-write',
+            'name': 'CI_DUP_COUNT_PREVENT',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8661: {
+            'access': 'read-write',
+            'enum': 'ShuntCalSelect',
+            'name': 'AI_BRIDGE_SHUNT_CAL_SELECT',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8662: {
+            'access': 'read-write',
+            'name': 'DI_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8663: {
+            'access': 'read-write',
+            'name': 'DI_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8672: {
+            'access': 'read',
+            'name': 'AI_TEDS_UNITS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8673: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_DIR_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8678: {
+            'access': 'read-write',
+            'enum': 'EncoderType2',
+            'name': 'CI_ENCODER_DECODING_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8679: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8680: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8681: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8682: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8683: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8684: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8685: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8686: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8687: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8688: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8689: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8690: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8691: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8692: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8693: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8694: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8695: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8696: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8697: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8698: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8699: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_A_INPUT_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8700: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_A_INPUT_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8701: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_A_INPUT_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8702: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_A_INPUT_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8703: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_A_INPUT_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8704: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_B_INPUT_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8705: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_B_INPUT_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8706: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_B_INPUT_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8707: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_B_INPUT_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8708: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_B_INPUT_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8709: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INPUT_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8710: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INPUT_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8711: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INPUT_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8712: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INPUT_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8713: {
+            'access': 'read-write',
+            'name': 'CI_ENCODER_Z_INPUT_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8714: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_WIDTH_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8715: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_WIDTH_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8716: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_WIDTH_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8717: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_WIDTH_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8718: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_WIDTH_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8719: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8720: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8721: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8722: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8723: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8724: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8725: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8726: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8727: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8728: {
+            'access': 'read-write',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8729: {
+            'access': 'read-write',
+            'name': 'CI_SEMI_PERIOD_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8730: {
+            'access': 'read-write',
+            'name': 'CI_SEMI_PERIOD_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8731: {
+            'access': 'read-write',
+            'name': 'CI_SEMI_PERIOD_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8732: {
+            'access': 'read-write',
+            'name': 'CI_SEMI_PERIOD_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8733: {
+            'access': 'read-write',
+            'name': 'CI_SEMI_PERIOD_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8761: {
+            'access': 'read-write',
+            'name': 'CI_PRESCALER',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        8762: {
+            'access': 'read-write',
+            'name': 'AI_SOUND_PRESSURE_MAX_SOUND_PRESSURE_LVL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8768: {
+            'access': 'read-write',
+            'enum': 'AOIdleOutputBehavior',
+            'name': 'AO_IDLE_OUTPUT_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8769: {
+            'access': 'read-write',
+            'name': 'AO_ENHANCED_IMAGE_REJECTION_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8786: {
+            'access': 'read-write',
+            'name': 'AO_DAC_REF_EXT_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8787: {
+            'access': 'read-write',
+            'enum': 'SourceSelection',
+            'name': 'AO_DAC_OFFSET_SRC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8788: {
+            'access': 'read-write',
+            'name': 'AO_DAC_OFFSET_EXT_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8789: {
+            'access': 'read-write',
+            'name': 'AO_DAC_OFFSET_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8803: {
+            'access': 'read-write',
+            'enum': 'DataTransferMechanism',
+            'name': 'DI_DATA_XFER_MECH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8804: {
+            'access': 'read-write',
+            'enum': 'InputDataTransferCondition',
+            'name': 'DI_DATA_XFER_REQ_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8805: {
+            'access': 'read-write',
+            'name': 'DO_USE_ONLY_ON_BRD_MEM',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8806: {
+            'access': 'read-write',
+            'enum': 'DataTransferMechanism',
+            'name': 'DO_DATA_XFER_MECH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8807: {
+            'access': 'read-write',
+            'enum': 'OutputDataTransferCondition',
+            'name': 'DO_DATA_XFER_REQ_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8813: {
+            'access': 'read-write',
+            'name': 'CO_PRESCALER',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        8817: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8818: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8819: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8820: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8821: {
+            'access': 'read-write',
+            'name': 'CI_CTR_TIMEBASE_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8822: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8823: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8824: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8825: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8826: {
+            'access': 'read-write',
+            'name': 'CO_CTR_TIMEBASE_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8852: {
+            'access': 'read-write',
+            'name': 'AI_ENHANCED_ALIAS_REJECTION_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8855: {
+            'access': 'read',
+            'name': 'AI_CHAN_CAL_HAS_VALID_CAL_INFO',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8856: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_ENABLE_CAL',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8857: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_APPLY_CAL_IF_EXP',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8860: {
+            'access': 'read-write',
+            'enum': 'ScaleType3',
+            'name': 'AI_CHAN_CAL_SCALE_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8861: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_TABLE_PRE_SCALED_VALS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        8862: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_TABLE_SCALED_VALS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        8863: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_POLY_FORWARD_COEFF',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        8864: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_POLY_REVERSE_COEFF',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        8865: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_VERIF_REF_VALS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        8866: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_VERIF_ACQ_VALS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        8867: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_OPERATOR_NAME',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8868: {
+            'access': 'read-write',
+            'name': 'AI_CHAN_CAL_DESC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8883: {
+            'access': 'read-write',
+            'enum': 'TimeUnits',
+            'name': 'CI_TIMESTAMP_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8884: {
+            'access': 'read-write',
+            'name': 'CI_TIMESTAMP_INITIAL_SECONDS',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        8920: {
+            'access': 'read-write',
+            'enum': 'RawDataCompressionType',
+            'name': 'AI_RAW_DATA_COMPRESSION_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8921: {
+            'access': 'read-write',
+            'name': 'AI_LOSSY_LSB_REMOVAL_COMPRESSED_SAMP_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        8922: {
+            'access': 'read',
+            'name': 'AI_RAW_SAMP_SIZE',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8958: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_SEMI_PERIOD_STARTING_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8959: {
+            'access': 'read',
+            'name': 'CO_RDY_FOR_NEW_VAL',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8964: {
+            'access': 'read',
+            'name': 'CHAN_IS_GLOBAL',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8972: {
+            'access': 'read-write',
+            'name': 'AI_DATA_XFER_CUSTOM_THRESHOLD',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        10598: {
+            'access': 'read-write',
+            'enum': 'SampleClockActiveOrInactiveEdgeSelection',
+            'name': 'DI_ACQUIRE_ON',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10599: {
+            'access': 'read-write',
+            'enum': 'DigitalLineState',
+            'name': 'DO_LINE_STATES_PAUSED_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10600: {
+            'access': 'read-write',
+            'enum': 'DigitalLineState',
+            'name': 'DO_LINE_STATES_DONE_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10601: {
+            'access': 'read-write',
+            'enum': 'SampleClockActiveOrInactiveEdgeSelection',
+            'name': 'DO_GENERATE_ON',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10602: {
+            'access': 'read-write',
+            'name': 'DI_MEM_MAP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        10603: {
+            'access': 'read-write',
+            'name': 'DO_MEM_MAP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        10605: {
+            'access': 'read-write',
+            'enum': 'LogicFamily',
+            'name': 'DI_LOGIC_FAMILY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10606: {
+            'access': 'read-write',
+            'enum': 'LogicFamily',
+            'name': 'DO_LOGIC_FAMILY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10610: {
+            'access': 'read-write',
+            'enum': 'DigitalLineState',
+            'name': 'DO_LINE_STATES_START_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10627: {
+            'access': 'read',
+            'name': 'AI_IS_TEDS',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10672: {
+            'access': 'read-write',
+            'name': 'AI_VOLTAGE_DB_REF',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10673: {
+            'access': 'read-write',
+            'name': 'AI_SOUND_PRESSURE_DB_REF',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10674: {
+            'access': 'read-write',
+            'name': 'AI_ACCEL_DB_REF',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10704: {
+            'access': 'read-write',
+            'enum': 'ScaleType2',
+            'name': 'AI_THRMCPL_SCALE_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10738: {
+            'access': 'read-write',
+            'enum': 'ConstrainedGenMode',
+            'name': 'CO_CONSTRAINED_GEN_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10745: {
+            'access': 'read-write',
+            'enum': 'ADCTimingMode',
+            'name': 'AI_ADC_TIMING_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10776: {
+            'access': 'read-write',
+            'enum': 'FuncGenType',
+            'name': 'AO_FUNC_GEN_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10777: {
+            'access': 'read-write',
+            'name': 'AO_FUNC_GEN_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10778: {
+            'access': 'read-write',
+            'name': 'AO_FUNC_GEN_AMPLITUDE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10779: {
+            'access': 'read-write',
+            'name': 'AO_FUNC_GEN_OFFSET',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10780: {
+            'access': 'read-write',
+            'name': 'AO_FUNC_GEN_SQUARE_DUTY_CYCLE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10781: {
+            'access': 'read-write',
+            'name': 'AO_VOLTAGE_CURRENT_LIMIT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10786: {
+            'access': 'read-write',
+            'enum': 'ModulationType',
+            'name': 'AO_FUNC_GEN_MODULATION_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10787: {
+            'access': 'read-write',
+            'name': 'AO_FUNC_GEN_FM_DEVIATION',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10885: {
+            'access': 'read-write',
+            'name': 'DO_OVERCURRENT_LIMIT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10886: {
+            'access': 'read-write',
+            'name': 'DO_OVERCURRENT_AUTO_REENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        10887: {
+            'access': 'read-write',
+            'name': 'DO_OVERCURRENT_REENABLE_PERIOD',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10888: {
+            'access': 'read-write',
+            'name': 'AI_PROBE_ATTEN',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10889: {
+            'access': 'read-write',
+            'name': 'AI_DC_OFFSET',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10894: {
+            'access': 'read-write',
+            'name': 'AI_USB_XFER_REQ_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        10895: {
+            'access': 'read-write',
+            'name': 'AO_USB_XFER_REQ_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        10896: {
+            'access': 'read-write',
+            'name': 'DI_USB_XFER_REQ_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        10897: {
+            'access': 'read-write',
+            'name': 'DO_USB_XFER_REQ_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        10898: {
+            'access': 'read-write',
+            'name': 'CI_USB_XFER_REQ_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        10899: {
+            'access': 'read-write',
+            'name': 'CO_USB_XFER_REQ_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        10942: {
+            'access': 'read-write',
+            'name': 'AI_EDDY_CURRENT_PROX_PROBE_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        10943: {
+            'access': 'read-write',
+            'enum': 'EddyCurrentProxProbeSensitivityUnits',
+            'name': 'AI_EDDY_CURRENT_PROX_PROBE_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10944: {
+            'access': 'read-write',
+            'enum': 'LengthUnits2',
+            'name': 'AI_EDDY_CURRENT_PROX_PROBE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        11977: {
+            'access': 'read-write',
+            'name': 'CO_ENABLE_INITIAL_DELAY_ON_RETRIGGER',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11979: {
+            'access': 'read-write',
+            'name': 'CO_USE_ONLY_ON_BRD_MEM',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11980: {
+            'access': 'read-write',
+            'enum': 'DataTransferMechanism',
+            'name': 'CO_DATA_XFER_MECH',
+            'resettable': True,
+            'type': 'int32'
+        },
+        11981: {
+            'access': 'read-write',
+            'enum': 'OutputDataTransferCondition',
+            'name': 'CO_DATA_XFER_REQ_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        11984: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_ENABLE_AVERAGING',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11985: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_ENABLE_AVERAGING',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11986: {
+            'access': 'read-write',
+            'name': 'CI_MEM_MAP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11987: {
+            'access': 'read-write',
+            'name': 'CO_MEM_MAP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        11988: {
+            'access': 'read-write',
+            'name': 'DI_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        11989: {
+            'access': 'read-write',
+            'name': 'DI_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        11990: {
+            'access': 'read-write',
+            'name': 'DI_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12027: {
+            'access': 'read-write',
+            'enum': 'InputDataTransferCondition',
+            'name': 'CI_DATA_XFER_REQ_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12030: {
+            'access': 'read-write',
+            'name': 'DI_DIG_FLTR_ENABLE_BUS_MODE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12036: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_FREQ_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12037: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_PULSE_FREQ_START_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12038: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_FREQ_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12039: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_FREQ_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12040: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_FREQ_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12041: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_FREQ_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12042: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_FREQ_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12043: {
+            'access': 'read-write',
+            'enum': 'FrequencyUnits2',
+            'name': 'CI_PULSE_FREQ_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12044: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TIME_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12045: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_PULSE_TIME_START_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12046: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TIME_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12047: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TIME_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12048: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TIME_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12049: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TIME_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12050: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TIME_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12051: {
+            'access': 'read-write',
+            'enum': 'TimeUnits2',
+            'name': 'CI_PULSE_TIME_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12052: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TICKS_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12053: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_PULSE_TICKS_START_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12054: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TICKS_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12055: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TICKS_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12056: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TICKS_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12057: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TICKS_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12058: {
+            'access': 'read-write',
+            'name': 'CI_PULSE_TICKS_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12139: {
+            'access': 'read-write',
+            'name': 'AI_ADC_CUSTOM_TIMING_MODE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12146: {
+            'access': 'read-write',
+            'name': 'AI_OPEN_THRMCPL_DETECT_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12149: {
+            'access': 'read-write',
+            'enum': 'ForceUnits',
+            'name': 'AI_FORCE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12150: {
+            'access': 'read-write',
+            'enum': 'PressureUnits',
+            'name': 'AI_PRESSURE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12151: {
+            'access': 'read-write',
+            'enum': 'TorqueUnits',
+            'name': 'AI_TORQUE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12152: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_SHUNT_CAL_SHUNT_CAL_A_RESISTANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12153: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_SHUNT_CAL_SHUNT_CAL_A_ACTUAL_RESISTANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12154: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_SHUNT_CAL_SHUNT_CAL_B_RESISTANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12155: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_SHUNT_CAL_SHUNT_CAL_B_ACTUAL_RESISTANCE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12161: {
+            'access': 'read-write',
+            'name': 'AI_FORCE_IEPE_SENSOR_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12162: {
+            'access': 'read-write',
+            'enum': 'ForceIEPESensorSensitivityUnits',
+            'name': 'AI_FORCE_IEPE_SENSOR_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12166: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_INITIAL_RATIO',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12167: {
+            'access': 'read-write',
+            'enum': 'BridgeElectricalUnits',
+            'name': 'AI_BRIDGE_ELECTRICAL_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12168: {
+            'access': 'read-write',
+            'enum': 'BridgePhysicalUnits',
+            'name': 'AI_BRIDGE_PHYSICAL_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12169: {
+            'access': 'read-write',
+            'enum': 'ScaleType4',
+            'name': 'AI_BRIDGE_SCALE_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12170: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_TWO_POINT_LIN_FIRST_ELECTRICAL_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12171: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_TWO_POINT_LIN_FIRST_PHYSICAL_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12172: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_TWO_POINT_LIN_SECOND_ELECTRICAL_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12173: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_TWO_POINT_LIN_SECOND_PHYSICAL_VAL',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12174: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_TABLE_ELECTRICAL_VALS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12175: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_TABLE_PHYSICAL_VALS',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12176: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_POLY_FORWARD_COEFF',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12177: {
+            'access': 'read-write',
+            'name': 'AI_BRIDGE_POLY_REVERSE_COEFF',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12178: {
+            'access': 'read-write',
+            'enum': 'BridgeUnits',
+            'name': 'AI_BRIDGE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12207: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12208: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_RESET_COUNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12209: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12210: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_ACTIVE_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12211: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12212: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12213: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12214: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12215: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_DIG_SYNC_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12216: {
+            'access': 'read-write',
+            'name': 'AI_THRMCPL_LEAD_OFFSET_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12221: {
+            'access': 'read-write',
+            'name': 'AI_REMOVE_FILTER_DELAY',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12269: {
+            'access': 'read',
+            'name': 'AI_FILTER_DELAY',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12270: {
+            'access': 'read-write',
+            'name': 'AI_AVERAGING_WIN_SIZE',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12276: {
+            'access': 'read-write',
+            'enum': 'VelocityUnits',
+            'name': 'AI_VELOCITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12277: {
+            'access': 'read-write',
+            'name': 'AI_VELOCITY_IEPE_SENSOR_DB_REF',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12278: {
+            'access': 'read-write',
+            'name': 'AI_VELOCITY_IEPE_SENSOR_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12279: {
+            'access': 'read-write',
+            'enum': 'VelocityIEPESensorSensitivityUnits',
+            'name': 'AI_VELOCITY_IEPE_SENSOR_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12282: {
+            'access': 'read-write',
+            'name': 'AI_STRAIN_GAGE_FORCE_READ_FROM_CHAN',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12283: {
+            'access': 'read',
+            'name': 'AI_ROSETTE_STRAIN_GAGE_STRAIN_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12284: {
+            'access': 'read-write',
+            'name': 'AI_ROSETTE_STRAIN_GAGE_ORIENTATION',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12285: {
+            'access': 'read-write',
+            'enum': 'StrainGageRosetteMeasurementType',
+            'name': 'AI_ROSETTE_STRAIN_GAGE_ROSETTE_MEAS_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12286: {
+            'access': 'read',
+            'enum': 'StrainGageRosetteType',
+            'name': 'AI_ROSETTE_STRAIN_GAGE_ROSETTE_TYPE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        12288: {
+            'access': 'read-write',
+            'name': 'AI_USB_XFER_REQ_COUNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12289: {
+            'access': 'read-write',
+            'name': 'AO_USB_XFER_REQ_COUNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12290: {
+            'access': 'read-write',
+            'name': 'DI_USB_XFER_REQ_COUNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12291: {
+            'access': 'read-write',
+            'name': 'DO_USB_XFER_REQ_COUNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12292: {
+            'access': 'read-write',
+            'name': 'CI_USB_XFER_REQ_COUNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12293: {
+            'access': 'read-write',
+            'name': 'CO_USB_XFER_REQ_COUNT',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12345: {
+            'access': 'read-write',
+            'name': 'CI_TIMESTAMP_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12346: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_TIMESTAMP_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12347: {
+            'access': 'read-write',
+            'enum': 'Timescale',
+            'name': 'CI_TIMESTAMP_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12348: {
+            'access': 'read-write',
+            'name': 'NAV_CUSTOM_SCALE_NAME',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12349: {
+            'access': 'read',
+            'enum': 'NavMeasurementType',
+            'name': 'NAV_MEAS_TYPE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        12350: {
+            'access': 'read-write',
+            'enum': 'LengthUnits4',
+            'name': 'NAV_ALT_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12351: {
+            'access': 'read-write',
+            'enum': 'AngleUnits3',
+            'name': 'NAV_LAT_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12352: {
+            'access': 'read-write',
+            'enum': 'AngleUnits3',
+            'name': 'NAV_LONG_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12353: {
+            'access': 'read-write',
+            'enum': 'VelocityUnits2',
+            'name': 'NAV_SPEED_OVER_GROUND_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12354: {
+            'access': 'read-write',
+            'enum': 'AngleUnits1',
+            'name': 'NAV_TRACK_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12355: {
+            'access': 'read-write',
+            'enum': 'VelocityUnits2',
+            'name': 'NAV_VERT_VELOCITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12356: {
+            'access': 'read-write',
+            'enum': 'TimeUnits',
+            'name': 'NAV_TIMESTAMP_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12357: {
+            'access': 'read-write',
+            'enum': 'Timescale',
+            'name': 'NAV_TIMESTAMP_TIMESCALE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12401: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits4',
+            'name': 'AI_FILTER_DELAY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12402: {
+            'access': 'read-write',
+            'name': 'AO_FILTER_DELAY_ADJUSTMENT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12404: {
+            'access': 'read-write',
+            'name': 'AI_FILTER_DELAY_ADJUSTMENT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12405: {
+            'access': 'read-write',
+            'name': 'AO_FILTER_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12406: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits4',
+            'name': 'AO_FILTER_DELAY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12429: {
+            'access': 'read-write',
+            'name': 'CI_DUTY_CYCLE_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12430: {
+            'access': 'read-write',
+            'name': 'CI_DUTY_CYCLE_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12431: {
+            'access': 'read-write',
+            'name': 'CI_DUTY_CYCLE_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12432: {
+            'access': 'read-write',
+            'name': 'CI_DUTY_CYCLE_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12433: {
+            'access': 'read-write',
+            'name': 'CI_DUTY_CYCLE_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12434: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'CI_DUTY_CYCLE_STARTING_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12435: {
+            'access': 'read-write',
+            'enum': 'SampClkOverrunBehavior',
+            'name': 'CI_SAMP_CLK_OVERRUN_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12436: {
+            'access': 'read-write',
+            'name': 'CI_SAMP_CLK_OVERRUN_SENTINEL_VAL',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12437: {
+            'access': 'read-write',
+            'name': 'CI_MAX_MEAS_PERIOD',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12439: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_FREQ_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12440: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_FREQ_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12441: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_PERIOD_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12442: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_PERIOD_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12443: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_COUNT_EDGES_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12444: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_COUNT_EDGES_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12445: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12446: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12447: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12448: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12449: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_DUTY_CYCLE_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12450: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_DUTY_CYCLE_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12451: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_ENCODER_A_INPUT_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12452: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_ENCODER_A_INPUT_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12453: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_ENCODER_B_INPUT_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12454: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_ENCODER_B_INPUT_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12455: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_ENCODER_Z_INPUT_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12456: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_ENCODER_Z_INPUT_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12457: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_PULSE_WIDTH_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12458: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_PULSE_WIDTH_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12459: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12460: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_TWO_EDGE_SEP_FIRST_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12461: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12462: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_TWO_EDGE_SEP_SECOND_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12463: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_SEMI_PERIOD_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12464: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_SEMI_PERIOD_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12465: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_PULSE_FREQ_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12466: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_PULSE_FREQ_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12467: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_PULSE_TIME_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12468: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_PULSE_TIME_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12469: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_PULSE_TICKS_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12470: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_PULSE_TICKS_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12471: {
+            'access': 'read-write',
+            'name': 'CI_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12472: {
+            'access': 'read-write',
+            'enum': 'ExcitationIdleOutputBehavior',
+            'name': 'AI_EXCIT_IDLE_OUTPUT_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12477: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12478: {
+            'access': 'read-write',
+            'enum': 'FilterType2',
+            'name': 'AI_DIG_FLTR_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12479: {
+            'access': 'read-write',
+            'enum': 'FilterResponse',
+            'name': 'AI_DIG_FLTR_RESPONSE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12480: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_ORDER',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12481: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_LOWPASS_CUTOFF_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12482: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_HIGHPASS_CUTOFF_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12483: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_BANDPASS_CENTER_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12484: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_BANDPASS_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12485: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_NOTCH_CENTER_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12486: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_NOTCH_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12487: {
+            'access': 'read-write',
+            'name': 'AI_DIG_FLTR_COEFF',
+            'resettable': True,
+            'type': 'float64[]'
+        },
+        12490: {
+            'access': 'read-write',
+            'enum': 'BridgeShuntCalSource',
+            'name': 'AI_BRIDGE_SHUNT_CAL_SHUNT_CAL_A_SRC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12504: {
+            'access': 'read-write',
+            'enum': 'AngularVelocityUnits',
+            'name': 'CI_VELOCITY_ANG_ENCODER_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12505: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ANG_ENCODER_PULSES_PER_REV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12506: {
+            'access': 'read-write',
+            'enum': 'VelocityUnits',
+            'name': 'CI_VELOCITY_LIN_ENCODER_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12507: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_LIN_ENCODER_DIST_PER_PULSE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12508: {
+            'access': 'read-write',
+            'enum': 'EncoderType2',
+            'name': 'CI_VELOCITY_ENCODER_DECODING_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12509: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_A_INPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12510: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_VELOCITY_ENCODER_A_INPUT_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12511: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_VELOCITY_ENCODER_A_INPUT_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12512: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_A_INPUT_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12513: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_A_INPUT_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12514: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_A_INPUT_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12515: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_A_INPUT_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12516: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_B_INPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12517: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_VELOCITY_ENCODER_B_INPUT_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12518: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_VELOCITY_ENCODER_B_INPUT_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12519: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_B_INPUT_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12520: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_B_INPUT_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12521: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_B_INPUT_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12522: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_ENCODER_B_INPUT_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12523: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_MEAS_TIME',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12524: {
+            'access': 'read-write',
+            'name': 'CI_VELOCITY_DIV',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12525: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12526: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12527: {
+            'access': 'read-write',
+            'enum': 'InputTermCfg2',
+            'name': 'CI_COUNT_EDGES_GATE_TERM_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12528: {
+            'access': 'read-write',
+            'enum': 'LogicLvlBehavior',
+            'name': 'CI_COUNT_EDGES_GATE_LOGIC_LVL_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12529: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_DIG_FLTR_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12530: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_DIG_FLTR_MIN_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12531: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_DIG_FLTR_TIMEBASE_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        12532: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_DIG_FLTR_TIMEBASE_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12533: {
+            'access': 'read-write',
+            'enum': 'Level1',
+            'name': 'CI_COUNT_EDGES_GATE_WHEN',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12535: {
+            'access': 'read-write',
+            'enum': 'BridgeShuntCalSource',
+            'name': 'AI_BRIDGE_SHUNT_CAL_SHUNT_CAL_B_SRC',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12541: {
+            'access': 'read-write',
+            'enum': 'Sense',
+            'name': 'AI_EXCIT_SENSE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12543: {
+            'access': 'read-write',
+            'name': 'AI_OPEN_CHAN_DETECT_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12562: {
+            'access': 'read-write',
+            'enum': 'ChargeUnits',
+            'name': 'AI_CHARGE_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12563: {
+            'access': 'read-write',
+            'name': 'AI_ACCEL_CHARGE_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12564: {
+            'access': 'read-write',
+            'enum': 'AccelChargeSensitivityUnits',
+            'name': 'AI_ACCEL_CHARGE_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12565: {
+            'access': 'read-write',
+            'name': 'AI_ACCEL_4_WIRE_DC_VOLTAGE_SENSITIVITY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12566: {
+            'access': 'read-write',
+            'enum': 'AccelSensitivityUnits1',
+            'name': 'AI_ACCEL_4_WIRE_DC_VOLTAGE_SENSITIVITY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12567: {
+            'access': 'read-write',
+            'name': 'AI_DATA_XFER_MAX_RATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12604: {
+            'access': 'read-write',
+            'enum': 'SyncUnlockBehavior',
+            'name': 'CHAN_SYNC_UNLOCK_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12611: {
+            'access': 'read-write',
+            'name': 'AI_CHOP_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12649: {
+            'access': 'read-write',
+            'name': 'AI_SENSOR_POWER_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12650: {
+            'access': 'read-write',
+            'enum': 'SensorPowerCfg',
+            'name': 'AI_SENSOR_POWER_CFG',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12651: {
+            'access': 'read-write',
+            'enum': 'SensorPowerType',
+            'name': 'AI_SENSOR_POWER_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12659: {
+            'access': 'read-write',
+            'name': 'AI_FILTER_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12660: {
+            'access': 'read-write',
+            'name': 'AI_FILTER_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12661: {
+            'access': 'read-write',
+            'enum': 'FilterResponse1',
+            'name': 'AI_FILTER_RESPONSE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12662: {
+            'access': 'read-write',
+            'name': 'AI_FILTER_ORDER',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12684: {
+            'access': 'read-write',
+            'name': 'AI_INPUT_LIMITS_FAULT_DETECT_UPPER_LIMIT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12685: {
+            'access': 'read-write',
+            'name': 'AI_INPUT_LIMITS_FAULT_DETECT_LOWER_LIMIT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12686: {
+            'access': 'read-write',
+            'name': 'AI_INPUT_LIMITS_FAULT_DETECT_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12689: {
+            'access': 'read-write',
+            'name': 'AI_POWER_SUPPLY_FAULT_DETECT_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12692: {
+            'access': 'read-write',
+            'name': 'AI_OVERCURRENT_DETECT_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12715: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12716: {
+            'access': 'read-write',
+            'name': 'CI_FREQ_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12717: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12718: {
+            'access': 'read-write',
+            'name': 'CI_PERIOD_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12719: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12720: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12721: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12722: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_DIR_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12723: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12724: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_COUNT_RESET_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12725: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_THRESH_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12726: {
+            'access': 'read-write',
+            'name': 'CI_COUNT_EDGES_GATE_HYST',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12727: {
+            'access': 'read-write',
+            'name': 'CI_FILTER_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12728: {
+            'access': 'read-write',
+            'name': 'CI_FILTER_FREQ',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12729: {
+            'access': 'read-write',
+            'enum': 'FilterResponse1',
+            'name': 'CI_FILTER_RESPONSE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12730: {
+            'access': 'read-write',
+            'name': 'CI_FILTER_ORDER',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        12731: {
+            'access': 'read',
+            'name': 'CI_FILTER_DELAY',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12732: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits4',
+            'name': 'CI_FILTER_DELAY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12740: {
+            'access': 'read-write',
+            'name': 'AO_FUNC_GEN_START_PHASE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12748: {
+            'access': 'read-write',
+            'name': 'AO_COMMON_MODE_OFFSET',
+            'resettable': True,
+            'type': 'float64'
+        }
+    },
     'Device': {
         1585: {
             'access': 'read',

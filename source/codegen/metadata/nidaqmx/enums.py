@@ -24,6 +24,52 @@ enums = {
             }
         ]
     },
+    'ADCTimingMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Uses the most appropriate supported timing mode based on the Sample Clock Rate.'
+                },
+                'name': 'AUTOMATIC',
+                'value': 16097
+            },
+            {
+                'documentation': {
+                    'description': ' Increases resolution and noise rejection while decreasing conversion rate.'
+                },
+                'name': 'HIGH_RESOLUTION',
+                'value': 10195
+            },
+            {
+                'documentation': {
+                    'description': 'Increases conversion rate while decreasing resolution.'
+                },
+                'name': 'HIGH_SPEED',
+                'value': 14712
+            },
+            {
+                'documentation': {
+                    'description': ' Improves 50 Hz noise rejection while decreasing noise rejection at other  frequencies.'
+                },
+                'name': 'BEST_50_HZ_REJECTION',
+                'value': 14713
+            },
+            {
+                'documentation': {
+                    'description': ' Improves 60 Hz noise rejection while decreasing noise rejection at other  frequencies.'
+                },
+                'name': 'BEST_60_HZ_REJECTION',
+                'value': 14714
+            },
+            {
+                'documentation': {
+                    'description': ' Use DAQmx_AI_ADCCustomTimingMode to specify a custom value controlling the  tradeoff between speed and resolution.'
+                },
+                'name': 'CUSTOM',
+                'value': 10137
+            }
+        ]
+    },
     'AIMeasurementType': {
         'values': [
             {
@@ -224,6 +270,31 @@ enums = {
             }
         ]
     },
+    'AOIdleOutputBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Generate 0 V.'
+                },
+                'name': 'ZERO_VOLTS',
+                'value': 12526
+            },
+            {
+                'documentation': {
+                    'description': ' Set the channel to high-impedance, effectively disconnecting the analog output  circuitry from the I/O connector.'
+                },
+                'name': 'HIGH_IMPEDANCE',
+                'value': 12527
+            },
+            {
+                'documentation': {
+                    'description': 'Continue generating the current value.'
+                },
+                'name': 'MAINTAIN_EXISTING_VALUE',
+                'value': 12528
+            }
+        ]
+    },
     'AOOutputChannelType': {
         'values': [
             {
@@ -418,6 +489,18 @@ enums = {
             }
         ]
     },
+    'AngleUnits3': {
+        'values': [
+            {
+                'name': 'DEGREES',
+                'value': 10146
+            },
+            {
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
     'AngularVelocityUnits': {
         'values': [
             {
@@ -467,6 +550,31 @@ enums = {
             {
                 'name': 'OVERCURRENT',
                 'value': 15995
+            }
+        ]
+    },
+    'AutoZeroType1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Do not perform an autozero.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': ' Perform an auto zero at the beginning of the acquisition. This auto zero task  might not run if you have used DAQmx Control Task previously in your task.'
+                },
+                'name': 'ONCE',
+                'value': 10244
+            },
+            {
+                'documentation': {
+                    'description': 'Perform an auto zero at every sample of the acquisition.'
+                },
+                'name': 'EVERY_SAMPLE',
+                'value': 10164
             }
         ]
     },
@@ -591,6 +699,24 @@ enums = {
                 },
                 'name': 'FOOT_POUNDS',
                 'value': 15884
+            }
+        ]
+    },
+    'BridgeShuntCalSource': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the internal shunt.'
+                },
+                'name': 'BUILT_IN',
+                'value': 10200
+            },
+            {
+                'documentation': {
+                    'description': 'Use an external shunt.'
+                },
+                'name': 'USER_PROVIDED',
+                'value': 10167
             }
         ]
     },
@@ -880,6 +1006,52 @@ enums = {
             }
         ]
     },
+    'ChannelType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Analog input channel.'
+                },
+                'name': 'AI',
+                'value': 10100
+            },
+            {
+                'documentation': {
+                    'description': 'Analog output channel.'
+                },
+                'name': 'AO',
+                'value': 10102
+            },
+            {
+                'documentation': {
+                    'description': 'Digital input channel.'
+                },
+                'name': 'DI',
+                'value': 10151
+            },
+            {
+                'documentation': {
+                    'description': 'Digital output channel.'
+                },
+                'name': 'DO',
+                'value': 10153
+            },
+            {
+                'documentation': {
+                    'description': 'Counter input channel.'
+                },
+                'name': 'CI',
+                'value': 10131
+            },
+            {
+                'documentation': {
+                    'description': 'Counter output channel.'
+                },
+                'name': 'CO',
+                'value': 10132
+            }
+        ]
+    },
     'ChargeUnits': {
         'values': [
             {
@@ -902,6 +1074,38 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'ConstrainedGenMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Counter has no restrictions on pulse generation.'
+                },
+                'name': 'UNCONSTRAINED',
+                'value': 14708
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse frequency must be above 7.63 Hz and cannot change while the task runs. In  this mode, the duty cycle has 8 bits of resolution.'
+                },
+                'name': 'FIXED_HIGH_FREQ',
+                'value': 14709
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse frequency must be below 366.21 Hz and cannot change while the task runs.  In this mode, the duty cycle has 16 bits of resolution.'
+                },
+                'name': 'FIXED_LOW_FREQ',
+                'value': 14710
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse duty cycle must be 50 percent. The frequency can change while the task  runs.'
+                },
+                'name': 'FIXED_50_PERCENT_DUTY_CYCLE',
+                'value': 14711
             }
         ]
     },
@@ -987,6 +1191,24 @@ enums = {
             }
         ]
     },
+    'CurrentShuntResistorLocation1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the built-in shunt resistor of the device.'
+                },
+                'name': 'INTERNAL',
+                'value': 10200
+            },
+            {
+                'documentation': {
+                    'description': ' Use a shunt resistor external to the device. You must specify the value of the  shunt resistor by using DAQmx_AI_CurrentShunt_Resistance.'
+                },
+                'name': 'EXTERNAL',
+                'value': 10167
+            }
+        ]
+    },
     'CurrentShuntResistorLocationWithDefault': {
         'values': [
             {
@@ -1003,6 +1225,31 @@ enums = {
             }
         ]
     },
+    'CurrentUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Amperes.'
+                },
+                'name': 'AMPS',
+                'value': 10342
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            },
+            {
+                'documentation': {
+                    'description': ' Units defined by TEDS information associated with the channel.'
+                },
+                'name': 'FROM_TEDS',
+                'value': 12516
+            }
+        ]
+    },
     'CurrentUnits2': {
         'values': [
             {
@@ -1012,6 +1259,74 @@ enums = {
             {
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'DataJustification1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Samples occupy the lower bits of the integer.'
+                },
+                'name': 'RIGHT_JUSTIFIED',
+                'value': 10279
+            },
+            {
+                'documentation': {
+                    'description': 'Samples occupy the higher bits of the integer.'
+                },
+                'name': 'LEFT_JUSTIFIED',
+                'value': 10209
+            }
+        ]
+    },
+    'DataTransferMechanism': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Direct Memory Access. Data transfers take place independently from the  application.'
+                },
+                'name': 'DMA',
+                'value': 10054
+            },
+            {
+                'documentation': {
+                    'description': ' Data transfers take place independently from the application. Using interrupts  increases CPU usage because the CPU must service interrupt requests. Typically,  you should use interrupts if the device is out of DMA channels.'
+                },
+                'name': 'INTERRUPTS',
+                'value': 10204
+            },
+            {
+                'documentation': {
+                    'description': ' Data transfers take place when you call an NI-DAQmx Read function or an  NI-DAQmx Write function.'
+                },
+                'name': 'PROGRAMMED_IO',
+                'value': 10264
+            },
+            {
+                'documentation': {
+                    'description': ' Data transfers take place independently from the application using a USB bulk  pipe.'
+                },
+                'name': 'US_BBULK',
+                'value': 12590
+            }
+        ]
+    },
+    'DigitalDriveType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Drive the output pin to approximately 0 V for logic low and +3.3 V or +5 V,  depending on the device, for logic high.'
+                },
+                'name': 'ACTIVE_DRIVE',
+                'value': 12573
+            },
+            {
+                'documentation': {
+                    'description': ' Drive the output pin to 0 V for logic low. For logic high, the output driver  assumes a high-impedance state and does not drive a voltage.'
+                },
+                'name': 'OPEN_COLLECTOR',
+                'value': 12574
             }
         ]
     },
@@ -1073,6 +1388,24 @@ enums = {
                 },
                 'name': 'SECONDS',
                 'value': 10364
+            }
+        ]
+    },
+    'DigitalWidthUnits4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Seconds.'
+                },
+                'name': 'SECONDS',
+                'value': 10364
+            },
+            {
+                'documentation': {
+                    'description': 'Sample Clock Periods.'
+                },
+                'name': 'SAMPLE_CLK_PERIODS',
+                'value': 10286
             }
         ]
     },
@@ -1139,21 +1472,21 @@ enums = {
                 'documentation': {
                     'description': ' If signal A leads signal B, count the rising edges of signal A. If signal B  leads signal A, count the falling edges of signal A.'
                 },
-                'name': 'X_1',
+                'name': 'X1',
                 'value': 10090
             },
             {
                 'documentation': {
                     'description': 'Count the rising and falling edges of signal A.'
                 },
-                'name': 'X_2',
+                'name': 'X2',
                 'value': 10091
             },
             {
                 'documentation': {
                     'description': 'Count the rising and falling edges of signal A and signal B.'
                 },
-                'name': 'X_4',
+                'name': 'X4',
                 'value': 10092
             },
             {
@@ -1209,6 +1542,42 @@ enums = {
             }
         ]
     },
+    'ExcitationDCorAC': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'DC excitation.'
+                },
+                'name': 'DC',
+                'value': 10050
+            },
+            {
+                'documentation': {
+                    'description': 'AC excitation.'
+                },
+                'name': 'AC',
+                'value': 10045
+            }
+        ]
+    },
+    'ExcitationIdleOutputBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Drive excitation output to zero.'
+                },
+                'name': 'ZERO_VOLTS_OR_AMPS',
+                'value': 12526
+            },
+            {
+                'documentation': {
+                    'description': 'Continue generating the current value.'
+                },
+                'name': 'MAINTAIN_EXISTING_VALUE',
+                'value': 12528
+            }
+        ]
+    },
     'ExcitationSource': {
         'values': [
             {
@@ -1231,6 +1600,96 @@ enums = {
                 },
                 'name': 'NONE',
                 'value': 10230
+            }
+        ]
+    },
+    'ExcitationVoltageOrCurrent': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage excitation.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current excitation.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            }
+        ]
+    },
+    'FilterResponse': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Constant group delay filter response.'
+                },
+                'name': 'CONSTANT_GROUP_DELAY',
+                'value': 16075
+            },
+            {
+                'documentation': {
+                    'description': 'Butterworth filter response.'
+                },
+                'name': 'BUTTERWORTH',
+                'value': 16076
+            },
+            {
+                'documentation': {
+                    'description': 'Elliptical filter response.'
+                },
+                'name': 'ELLIPTICAL',
+                'value': 16077
+            },
+            {
+                'documentation': {
+                    'description': 'Use the hardware-defined filter response.'
+                },
+                'name': 'HARDWARE_DEFINED',
+                'value': 10191
+            }
+        ]
+    },
+    'FilterResponse1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Comb filter response.'
+                },
+                'name': 'COMB',
+                'value': 16152
+            },
+            {
+                'documentation': {
+                    'description': 'Bessel filter response.'
+                },
+                'name': 'BESSEL',
+                'value': 16153
+            },
+            {
+                'documentation': {
+                    'description': 'Brickwall filter response.'
+                },
+                'name': 'BRICKWALL',
+                'value': 16155
+            },
+            {
+                'documentation': {
+                    'description': 'Butterworth filter response.'
+                },
+                'name': 'BUTTERWORTH',
+                'value': 16076
+            }
+        ]
+    },
+    'FilterType1': {
+        'values': [
+            {
+                'name': 'HARDWARE_DEFINED',
+                'value': 10191
             }
         ]
     },
@@ -1462,6 +1921,88 @@ enums = {
             }
         ]
     },
+    'InputDataTransferCondition': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Transfer data from the device when more than half of the onboard memory of the  device fills.'
+                },
+                'name': 'ON_BRD_MEM_MORE_THAN_HALF_FULL',
+                'value': 10237
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data from the device when there is data in the onboard memory.'
+                },
+                'name': 'ON_BRD_MEM_NOT_EMPTY',
+                'value': 10241
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data from the device when the number of samples specified with  DAQmx_AI_DataXferCustomThreshold are in the device FIFO.'
+                },
+                'name': 'ONBRD_MEM_CUSTOM_THRESHOLD',
+                'value': 12577
+            },
+            {
+                'documentation': {
+                    'description': 'Transfer data when the acquisition is complete.'
+                },
+                'name': 'WHEN_ACQ_COMPLETE',
+                'value': 12546
+            }
+        ]
+    },
+    'InputTermCfg': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Referenced Single-Ended.'
+                },
+                'name': 'RSE',
+                'value': 10083
+            },
+            {
+                'documentation': {
+                    'description': 'Non-Referenced Single-Ended.'
+                },
+                'name': 'NRSE',
+                'value': 10078
+            },
+            {
+                'documentation': {
+                    'description': 'Differential.'
+                },
+                'name': 'DIFF',
+                'value': 10106
+            },
+            {
+                'documentation': {
+                    'description': 'Pseudodifferential.'
+                },
+                'name': 'PSEUDO_DIFF',
+                'value': 12529
+            }
+        ]
+    },
+    'InputTermCfg2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Differential.'
+                },
+                'name': 'DIFF',
+                'value': 10106
+            },
+            {
+                'documentation': {
+                    'description': 'Referenced Single-Ended.'
+                },
+                'name': 'RSE',
+                'value': 10083
+            }
+        ]
+    },
     'InputTermCfgWithDefault': {
         'values': [
             {
@@ -1568,6 +2109,22 @@ enums = {
                 'documentation': {
                     'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
                 },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
+    'LengthUnits4': {
+        'values': [
+            {
+                'name': 'METERS',
+                'value': 10219
+            },
+            {
+                'name': 'FEET',
+                'value': 10380
+            },
+            {
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
             }
@@ -1685,6 +2242,49 @@ enums = {
             }
         ]
     },
+    'LogicLvlBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'High logic.'
+                },
+                'name': 'LOGIC_LEVEL_PULL_UP',
+                'value': 16064
+            },
+            {
+                'documentation': {
+                    'description': 'Supply no excitation to the channel.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'ModulationType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Amplitude modulation.'
+                },
+                'name': 'AM',
+                'value': 14756
+            },
+            {
+                'documentation': {
+                    'description': 'Frequency modulation.'
+                },
+                'name': 'FM',
+                'value': 14757
+            },
+            {
+                'documentation': {
+                    'description': 'No modulation.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
     'NavMeasurementType': {
         'values': [
             {
@@ -1730,6 +2330,56 @@ enums = {
             {
                 'name': 'STATIONARY_WITH_PRESET_LOCATION',
                 'value': 15991
+            }
+        ]
+    },
+    'OutputDataTransferCondition': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Transfer data to the device only when there is no data in the onboard memory of  the device.'
+                },
+                'name': 'ON_BRD_MEM_EMPTY',
+                'value': 10235
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data to the device any time the onboard memory is less than half full.'
+                },
+                'name': 'ON_BRD_MEM_HALF_FULL_OR_LESS',
+                'value': 10239
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data to the device any time the onboard memory of the device is not  full.'
+                },
+                'name': 'ON_BRD_MEM_NOT_FULL',
+                'value': 10242
+            }
+        ]
+    },
+    'OutputTermCfg': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Referenced Single-Ended.'
+                },
+                'name': 'RSE',
+                'value': 10083
+            },
+            {
+                'documentation': {
+                    'description': 'Differential.'
+                },
+                'name': 'DIFF',
+                'value': 10106
+            },
+            {
+                'documentation': {
+                    'description': 'Pseudodifferential.'
+                },
+                'name': 'PSEUDO_DIFF',
+                'value': 12529
             }
         ]
     },
@@ -2051,6 +2701,31 @@ enums = {
             }
         ]
     },
+    'RawDataCompressionType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Do not compress samples.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': 'Remove unused bits from samples. No resolution is lost.'
+                },
+                'name': 'LOSSLESS_PACKING',
+                'value': 12555
+            },
+            {
+                'documentation': {
+                    'description': ' Remove unused bits from samples. Then, if necessary, remove bits from samples  until the samples are the size specified with  DAQmx_AI_LossyLSBRemoval_CompressedSampSize. This compression type limits  resolution to the specified sample size.'
+                },
+                'name': 'LOSSY_LSB_REMOVAL',
+                'value': 12556
+            }
+        ]
+    },
     'ResistanceConfiguration': {
         'values': [
             {
@@ -2076,6 +2751,31 @@ enums = {
             }
         ]
     },
+    'ResistanceUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Ohms.'
+                },
+                'name': 'OHMS',
+                'value': 10384
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            },
+            {
+                'documentation': {
+                    'description': ' Units defined by TEDS information associated with the channel.'
+                },
+                'name': 'FROM_TEDS',
+                'value': 12516
+            }
+        ]
+    },
     'ResistanceUnits2': {
         'values': [
             {
@@ -2097,6 +2797,53 @@ enums = {
             {
                 'name': 'PULL_DOWN',
                 'value': 15951
+            }
+        ]
+    },
+    'ResolutionType1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Bits.'
+                },
+                'name': 'BITS',
+                'value': 10109
+            }
+        ]
+    },
+    'SampClkOverrunBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Repeat the last sample.'
+                },
+                'name': 'REPEATED_DATA',
+                'value': 16062
+            },
+            {
+                'documentation': {
+                    'description': 'Return the sentinel value.'
+                },
+                'name': 'SENTINEL_VALUE',
+                'value': 16063
+            }
+        ]
+    },
+    'SampleClockActiveOrInactiveEdgeSelection': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Active edges.'
+                },
+                'name': 'SAMP_CLK_ACTIVE_EDGE',
+                'value': 14617
+            },
+            {
+                'documentation': {
+                    'description': 'Inactive edges.'
+                },
+                'name': 'SAMP_CLK_INACTIVE_EDGE',
+                'value': 14618
             }
         ]
     },
@@ -2145,6 +2892,171 @@ enums = {
                 },
                 'name': 'TABLE',
                 'value': 10450
+            }
+        ]
+    },
+    'ScaleType2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Scale values by using an Nth order polynomial equation.'
+                },
+                'name': 'POLYNOMIAL',
+                'value': 10449
+            },
+            {
+                'documentation': {
+                    'description': ' Map an array of prescaled values to an array of corresponding scaled values,  with all other values scaled proportionally.'
+                },
+                'name': 'TABLE',
+                'value': 10450
+            }
+        ]
+    },
+    'ScaleType3': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Scale values by using an Nth order polynomial equation.'
+                },
+                'name': 'POLYNOMIAL',
+                'value': 10449
+            },
+            {
+                'documentation': {
+                    'description': ' Map an array of prescaled values to an array of corresponding scaled values,  with all other values scaled proportionally.'
+                },
+                'name': 'TABLE',
+                'value': 10450
+            },
+            {
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'ScaleType4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Do not scale electrical values to physical units.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': ' You provide two pairs of electrical values and their corresponding physical  values. NI-DAQmx uses those values to calculate the slope and y-intercept of a  linear equation and uses that equation to scale electrical values to physical  values.'
+                },
+                'name': 'TWO_POINT_LINEAR',
+                'value': 15898
+            },
+            {
+                'documentation': {
+                    'description': ' Map an array of electrical values to an array of corresponding physical values,  with all other values scaled proportionally. If you specify this scaling type,  DAQmx_AI_Max and DAQmx_AI_Min must be within the smallest and largest physical  values. For any data outside those endpoints, NI-DAQmx coerces that data to the  endpoints.'
+                },
+                'name': 'TABLE',
+                'value': 10450
+            },
+            {
+                'documentation': {
+                    'description': 'Scale values by using an Nth order polynomial equation.'
+                },
+                'name': 'POLYNOMIAL',
+                'value': 10449
+            }
+        ]
+    },
+    'Sense': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Local.'
+                },
+                'name': 'LOCAL',
+                'value': 16095
+            },
+            {
+                'documentation': {
+                    'description': 'Remote.'
+                },
+                'name': 'REMOTE',
+                'value': 16096
+            }
+        ]
+    },
+    'SensorPowerCfg': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Sensor power supply configuration is not changed.'
+                },
+                'name': 'NO_CHANGE',
+                'value': 10160
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply is turned on.'
+                },
+                'name': 'ENABLED',
+                'value': 16145
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply is turned off.'
+                },
+                'name': 'DISABLED',
+                'value': 16146
+            }
+        ]
+    },
+    'SensorPowerType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Sensor power supply generates a single DC voltage level.'
+                },
+                'name': 'DC',
+                'value': 10050
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply generates an AC voltage.'
+                },
+                'name': 'AC',
+                'value': 10045
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply generates a pair of DC voltage levels.'
+                },
+                'name': 'BIPOLAR_DC',
+                'value': 16147
+            }
+        ]
+    },
+    'ShuntCalSelect': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Switch A.'
+                },
+                'name': 'A',
+                'value': 12513
+            },
+            {
+                'documentation': {
+                    'description': 'Switch B.'
+                },
+                'name': 'B',
+                'value': 12514
+            },
+            {
+                'documentation': {
+                    'description': 'Switches A and B.'
+                },
+                'name': 'AAND_B',
+                'value': 12515
             }
         ]
     },
@@ -2268,6 +3180,24 @@ enums = {
             }
         ]
     },
+    'SourceSelection': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Internal to the device.'
+                },
+                'name': 'INTERNAL',
+                'value': 10200
+            },
+            {
+                'documentation': {
+                    'description': 'External to the device.'
+                },
+                'name': 'EXTERNAL',
+                'value': 10167
+            }
+        ]
+    },
     'StrainGageBridgeType1': {
         'values': [
             {
@@ -2321,6 +3251,66 @@ enums = {
             }
         ]
     },
+    'StrainGageRosetteMeasurementType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' The maximum tensile strain coplanar to the surface of the material under stress.'
+                },
+                'name': 'PRINCIPAL_STRAIN_1',
+                'value': 15971
+            },
+            {
+                'documentation': {
+                    'description': ' The minimum tensile strain coplanar to the surface of the material under stress.'
+                },
+                'name': 'PRINCIPAL_STRAIN_2',
+                'value': 15972
+            },
+            {
+                'documentation': {
+                    'description': ' The angle at which the principal strains of the rosette occur.'
+                },
+                'name': 'PRINCIPAL_STRAIN_ANGLE',
+                'value': 15973
+            },
+            {
+                'documentation': {
+                    'description': ' The tensile strain coplanar to the surface of the material under stress in the  X coordinate direction.'
+                },
+                'name': 'CARTESIAN_STRAIN_X',
+                'value': 15974
+            },
+            {
+                'documentation': {
+                    'description': ' The tensile strain coplanar to the surface of the material under stress in the  Y coordinate direction.'
+                },
+                'name': 'CARTESIAN_STRAIN_Y',
+                'value': 15975
+            },
+            {
+                'documentation': {
+                    'description': ' The tensile strain coplanar to the surface of the material under stress in the  XY coordinate direction.'
+                },
+                'name': 'CARTESIAN_SHEAR_STRAIN_XY',
+                'value': 15976
+            },
+            {
+                'documentation': {
+                    'description': ' The maximum strain coplanar to the cross section of the material under stress.'
+                },
+                'name': 'MAX_SHEAR_STRAIN',
+                'value': 15977
+            },
+            {
+                'documentation': {
+                    'description': ' The angle at which the maximum shear strain of the rosette occurs.'
+                },
+                'name': 'MAX_SHEAR_STRAIN_ANGLE',
+                'value': 15978
+            }
+        ]
+    },
     'StrainGageRosetteType': {
         'values': [
             {
@@ -2361,6 +3351,24 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'SyncUnlockBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Stop task and return an error.'
+                },
+                'name': 'STOP_TASK_AND_ERROR',
+                'value': 15862
+            },
+            {
+                'documentation': {
+                    'description': 'Ignore the loss of synchronization and do nothing.'
+                },
+                'name': 'IGNORE_LOST_SYNC_LOCK',
+                'value': 16129
             }
         ]
     },
@@ -2431,6 +3439,45 @@ enums = {
             {
                 'name': 'DEG_R',
                 'value': 10145
+            }
+        ]
+    },
+    'TemperatureUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Degrees Celsius.'
+                },
+                'name': 'DEG_C',
+                'value': 10143
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees Fahrenheit.'
+                },
+                'name': 'DEG_F',
+                'value': 10144
+            },
+            {
+                'documentation': {
+                    'description': 'Kelvins.'
+                },
+                'name': 'KELVINS',
+                'value': 10325
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees Rankine.'
+                },
+                'name': 'DEG_R',
+                'value': 10145
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
             }
         ]
     },
@@ -2512,6 +3559,17 @@ enums = {
             }
         ]
     },
+    'TimeUnits2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Seconds.'
+                },
+                'name': 'SECONDS',
+                'value': 10364
+            }
+        ]
+    },
     'TimeUnits3': {
         'values': [
             {
@@ -2534,6 +3592,18 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'Timescale': {
+        'values': [
+            {
+                'name': 'TAI',
+                'value': 15988
+            },
+            {
+                'name': 'UTC',
+                'value': 15987
             }
         ]
     },
@@ -2952,6 +4022,59 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'VelocityUnits2': {
+        'values': [
+            {
+                'name': 'METERS_PER_SECOND',
+                'value': 15959
+            },
+            {
+                'name': 'KILOMETERS_PER_HOUR',
+                'value': 16007
+            },
+            {
+                'name': 'FEET_PER_SECOND',
+                'value': 16008
+            },
+            {
+                'name': 'MILES_PER_HOUR',
+                'value': 16009
+            },
+            {
+                'name': 'KNOTS',
+                'value': 16010
+            },
+            {
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
+    'VoltageUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Volts.'
+                },
+                'name': 'VOLTS',
+                'value': 10348
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            },
+            {
+                'documentation': {
+                    'description': ' Units defined by TEDS information associated with the channel.'
+                },
+                'name': 'FROM_TEDS',
+                'value': 12516
             }
         ]
     },

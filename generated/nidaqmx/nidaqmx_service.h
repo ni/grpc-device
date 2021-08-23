@@ -161,6 +161,12 @@ public:
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
   ::grpc::Status GetBufferAttributeUInt32(::grpc::ServerContext* context, const GetBufferAttributeUInt32Request* request, GetBufferAttributeUInt32Response* response) override;
+  ::grpc::Status GetChanAttributeBool(::grpc::ServerContext* context, const GetChanAttributeBoolRequest* request, GetChanAttributeBoolResponse* response) override;
+  ::grpc::Status GetChanAttributeDouble(::grpc::ServerContext* context, const GetChanAttributeDoubleRequest* request, GetChanAttributeDoubleResponse* response) override;
+  ::grpc::Status GetChanAttributeDoubleArray(::grpc::ServerContext* context, const GetChanAttributeDoubleArrayRequest* request, GetChanAttributeDoubleArrayResponse* response) override;
+  ::grpc::Status GetChanAttributeInt32(::grpc::ServerContext* context, const GetChanAttributeInt32Request* request, GetChanAttributeInt32Response* response) override;
+  ::grpc::Status GetChanAttributeString(::grpc::ServerContext* context, const GetChanAttributeStringRequest* request, GetChanAttributeStringResponse* response) override;
+  ::grpc::Status GetChanAttributeUInt32(::grpc::ServerContext* context, const GetChanAttributeUInt32Request* request, GetChanAttributeUInt32Response* response) override;
   ::grpc::Status GetDeviceAttributeBool(::grpc::ServerContext* context, const GetDeviceAttributeBoolRequest* request, GetDeviceAttributeBoolResponse* response) override;
   ::grpc::Status GetDeviceAttributeDouble(::grpc::ServerContext* context, const GetDeviceAttributeDoubleRequest* request, GetDeviceAttributeDoubleResponse* response) override;
   ::grpc::Status GetDeviceAttributeDoubleArray(::grpc::ServerContext* context, const GetDeviceAttributeDoubleArrayRequest* request, GetDeviceAttributeDoubleArrayResponse* response) override;
@@ -221,6 +227,7 @@ public:
   ::grpc::Status RemoveCDAQSyncConnection(::grpc::ServerContext* context, const RemoveCDAQSyncConnectionRequest* request, RemoveCDAQSyncConnectionResponse* response) override;
   ::grpc::Status ReserveNetworkDevice(::grpc::ServerContext* context, const ReserveNetworkDeviceRequest* request, ReserveNetworkDeviceResponse* response) override;
   ::grpc::Status ResetBufferAttribute(::grpc::ServerContext* context, const ResetBufferAttributeRequest* request, ResetBufferAttributeResponse* response) override;
+  ::grpc::Status ResetChanAttribute(::grpc::ServerContext* context, const ResetChanAttributeRequest* request, ResetChanAttributeResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
   ::grpc::Status SaveGlobalChan(::grpc::ServerContext* context, const SaveGlobalChanRequest* request, SaveGlobalChanResponse* response) override;
   ::grpc::Status SaveScale(::grpc::ServerContext* context, const SaveScaleRequest* request, SaveScaleResponse* response) override;
@@ -232,6 +239,12 @@ public:
   ::grpc::Status SetAnalogPowerUpStates(::grpc::ServerContext* context, const SetAnalogPowerUpStatesRequest* request, SetAnalogPowerUpStatesResponse* response) override;
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetBufferAttributeUInt32(::grpc::ServerContext* context, const SetBufferAttributeUInt32Request* request, SetBufferAttributeUInt32Response* response) override;
+  ::grpc::Status SetChanAttributeBool(::grpc::ServerContext* context, const SetChanAttributeBoolRequest* request, SetChanAttributeBoolResponse* response) override;
+  ::grpc::Status SetChanAttributeDouble(::grpc::ServerContext* context, const SetChanAttributeDoubleRequest* request, SetChanAttributeDoubleResponse* response) override;
+  ::grpc::Status SetChanAttributeDoubleArray(::grpc::ServerContext* context, const SetChanAttributeDoubleArrayRequest* request, SetChanAttributeDoubleArrayResponse* response) override;
+  ::grpc::Status SetChanAttributeInt32(::grpc::ServerContext* context, const SetChanAttributeInt32Request* request, SetChanAttributeInt32Response* response) override;
+  ::grpc::Status SetChanAttributeString(::grpc::ServerContext* context, const SetChanAttributeStringRequest* request, SetChanAttributeStringResponse* response) override;
+  ::grpc::Status SetChanAttributeUInt32(::grpc::ServerContext* context, const SetChanAttributeUInt32Request* request, SetChanAttributeUInt32Response* response) override;
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status SetDigitalPowerUpStates(::grpc::ServerContext* context, const SetDigitalPowerUpStatesRequest* request, SetDigitalPowerUpStatesResponse* response) override;
   ::grpc::Status SetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const SetDigitalPullUpPullDownStatesRequest* request, SetDigitalPullUpPullDownStatesResponse* response) override;
