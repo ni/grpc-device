@@ -4546,5 +4546,43 @@ attributes = {
             'resettable': False,
             'type': 'int32'
         }
+    },
+    'Task': {
+        4723: {
+            'access': 'read',
+            'name': 'CHANNELS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4724: {
+            'access': 'read',
+            'name': 'COMPLETE',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        4726: {
+            'access': 'read',
+            'name': 'NAME',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8577: {
+            'access': 'read',
+            'name': 'NUM_CHANS',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8974: {
+            'access': 'read',
+            'name': 'DEVICES',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        10682: {
+            'access': 'read',
+            'name': 'NUM_DEVICES',
+            'resettable': False,
+            'type': 'uInt32'
+        }
     }
 }

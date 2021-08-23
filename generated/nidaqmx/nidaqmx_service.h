@@ -195,6 +195,9 @@ public:
   ::grpc::Status GetStartTrigTimestampVal(::grpc::ServerContext* context, const GetStartTrigTimestampValRequest* request, GetStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetStartTrigTrigWhen(::grpc::ServerContext* context, const GetStartTrigTrigWhenRequest* request, GetStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetSyncPulseTimeWhen(::grpc::ServerContext* context, const GetSyncPulseTimeWhenRequest* request, GetSyncPulseTimeWhenResponse* response) override;
+  ::grpc::Status GetTaskAttributeBool(::grpc::ServerContext* context, const GetTaskAttributeBoolRequest* request, GetTaskAttributeBoolResponse* response) override;
+  ::grpc::Status GetTaskAttributeString(::grpc::ServerContext* context, const GetTaskAttributeStringRequest* request, GetTaskAttributeStringResponse* response) override;
+  ::grpc::Status GetTaskAttributeUInt32(::grpc::ServerContext* context, const GetTaskAttributeUInt32Request* request, GetTaskAttributeUInt32Response* response) override;
   ::grpc::Status IsTaskDone(::grpc::ServerContext* context, const IsTaskDoneRequest* request, IsTaskDoneResponse* response) override;
   ::grpc::Status LoadTask(::grpc::ServerContext* context, const LoadTaskRequest* request, LoadTaskResponse* response) override;
   ::grpc::Status ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response) override;
