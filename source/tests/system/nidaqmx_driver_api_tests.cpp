@@ -958,8 +958,8 @@ class NiDAQmxDriverApiTests : public Test {
 
   GetTimingAttributeDoubleResponse get_timing_attribute_double(TimingDoubleAttributes attribute)
   {
+    ::grpc::ClientContext context;
     auto request = create_get_timing_attribute_request<GetTimingAttributeDoubleRequest>(attribute);
-    auto context = ::grpc::ClientContext{};
     auto response = GetTimingAttributeDoubleResponse{};
     raise_if_error(stub()->GetTimingAttributeDouble(&context, request, &response));
     return response;
@@ -967,8 +967,8 @@ class NiDAQmxDriverApiTests : public Test {
 
   SetTimingAttributeDoubleResponse set_timing_attribute_double(TimingDoubleAttributes attribute, double value)
   {
+    ::grpc::ClientContext context;
     auto request = create_set_timing_attribute_request<SetTimingAttributeDoubleRequest>(attribute, value);
-    auto context = ::grpc::ClientContext{};
     auto response = SetTimingAttributeDoubleResponse{};
     raise_if_error(stub()->SetTimingAttributeDouble(&context, request, &response));
     return response;
