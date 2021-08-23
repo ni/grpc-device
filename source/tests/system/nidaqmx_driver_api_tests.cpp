@@ -1018,6 +1018,24 @@ class NiDAQmxDriverApiTests : public Test {
     return response;
   }
 
+  GetWriteAttributeDoubleResponse get_write_attribute_double(WriteDoubleAttributes attribute)
+  {
+    auto request = create_get_attribute_request<GetWriteAttributeDoubleRequest>(attribute);
+    auto context = ::grpc::ClientContext{};
+    auto response = GetWriteAttributeDoubleResponse{};
+    raise_if_error(stub()->GetWriteAttributeDouble(&context, request, &response));
+    return response;
+  }
+
+  SetWriteAttributeDoubleResponse set_write_attribute_double(WriteDoubleAttributes attribute, double value)
+  {
+    auto request = create_set_attribute_request<SetWriteAttributeDoubleRequest>(attribute, value);
+    auto context = ::grpc::ClientContext{};
+    auto response = SetWriteAttributeDoubleResponse{};
+    raise_if_error(stub()->SetWriteAttributeDouble(&context, request, &response));
+    return response;
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -1988,6 +2006,22 @@ TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureOverwrite_UpdatesOverwriteSuc
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(get_response);
   EXPECT_EQ(NEW_VALUE, get_response.value());
+  EXPECT_NE(get_response.value(), initial_response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuccessfully)
+{
+  const auto NEW_VALUE = 100.0;
+  create_ao_voltage_chan(-10.0, 10.0);
+
+  auto initial_response = get_write_attribute_double(WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
+  auto set_response = set_write_attribute_double(WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME, NEW_VALUE);
+  auto get_response = get_write_attribute_double(WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
+
+  EXPECT_SUCCESS(initial_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(get_response);
+  EXPECT_NEAR(NEW_VALUE, get_response.value(), .0001);
   EXPECT_NE(get_response.value(), initial_response.value());
 }
 
