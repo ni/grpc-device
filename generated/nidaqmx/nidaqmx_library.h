@@ -218,6 +218,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data);
   int32 GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data);
   int32 GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* data);
+  int32 GetSystemInfoAttributeString(int32 attribute, char value[], uInt32 size);
+  int32 GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value, uInt32 size);
   int32 GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
   int32 GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size);
   int32 GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
@@ -596,6 +598,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetStartTrigTimestampValPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
   using GetStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
   using GetSyncPulseTimeWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
+  using GetSystemInfoAttributeStringPtr = int32 (*)(int32 attribute, char value[], uInt32 size);
+  using GetSystemInfoAttributeUInt32Ptr = int32 (*)(int32 attribute, uInt32* value, uInt32 size);
   using GetTaskAttributeBoolPtr = int32 (*)(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
   using GetTaskAttributeStringPtr = int32 (*)(TaskHandle task, int32 attribute, char value[], uInt32 size);
   using GetTaskAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
@@ -974,6 +978,8 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetStartTrigTimestampValPtr GetStartTrigTimestampVal;
     GetStartTrigTrigWhenPtr GetStartTrigTrigWhen;
     GetSyncPulseTimeWhenPtr GetSyncPulseTimeWhen;
+    GetSystemInfoAttributeStringPtr GetSystemInfoAttributeString;
+    GetSystemInfoAttributeUInt32Ptr GetSystemInfoAttributeUInt32;
     GetTaskAttributeBoolPtr GetTaskAttributeBool;
     GetTaskAttributeStringPtr GetTaskAttributeString;
     GetTaskAttributeUInt32Ptr GetTaskAttributeUInt32;

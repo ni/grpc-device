@@ -5784,6 +5784,50 @@ attributes = {
             'type': 'int32'
         }
     },
+    'System': {
+        4709: {
+            'access': 'read',
+            'name': 'GLOBAL_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4710: {
+            'access': 'read',
+            'name': 'SCALES',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4711: {
+            'access': 'read',
+            'name': 'TASKS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4722: {
+            'access': 'read',
+            'name': 'NIDAQ_MAJOR_VERSION',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6435: {
+            'access': 'read',
+            'name': 'NIDAQ_MINOR_VERSION',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6459: {
+            'access': 'read',
+            'name': 'DEV_NAMES',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12066: {
+            'access': 'read',
+            'name': 'NIDAQ_UPDATE_VERSION',
+            'resettable': False,
+            'type': 'uInt32'
+        }
+    },
     'Task': {
         4723: {
             'access': 'read',

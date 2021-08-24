@@ -221,6 +221,8 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetStartTrigTimestampVal = reinterpret_cast<GetStartTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTimestampVal"));
   function_pointers_.GetStartTrigTrigWhen = reinterpret_cast<GetStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetStartTrigTrigWhen"));
   function_pointers_.GetSyncPulseTimeWhen = reinterpret_cast<GetSyncPulseTimeWhenPtr>(shared_library_.get_function_pointer("DAQmxGetSyncPulseTimeWhen"));
+  function_pointers_.GetSystemInfoAttributeString = reinterpret_cast<GetSystemInfoAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetSystemInfoAttribute"));
+  function_pointers_.GetSystemInfoAttributeUInt32 = reinterpret_cast<GetSystemInfoAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetSystemInfoAttribute"));
   function_pointers_.GetTaskAttributeBool = reinterpret_cast<GetTaskAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
   function_pointers_.GetTaskAttributeString = reinterpret_cast<GetTaskAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
   function_pointers_.GetTaskAttributeUInt32 = reinterpret_cast<GetTaskAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTaskAttribute"));
@@ -2807,6 +2809,30 @@ int32 NiDAQmxLibrary::GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* dat
   return DAQmxGetSyncPulseTimeWhen(task, data);
 #else
   return function_pointers_.GetSyncPulseTimeWhen(task, data);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetSystemInfoAttributeString(int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetSystemInfoAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSystemInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetSystemInfoAttribute(attribute, value, size);
+#else
+  return function_pointers_.GetSystemInfoAttributeString(attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetSystemInfoAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSystemInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetSystemInfoAttribute(attribute, value, size);
+#else
+  return function_pointers_.GetSystemInfoAttributeUInt32(attribute, value, size);
 #endif
 }
 

@@ -7843,6 +7843,56 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetSystemInfoAttributeString': {
+        'cname': 'DAQmxGetSystemInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'SystemAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSystemInfoAttributeUInt32': {
+        'cname': 'DAQmxGetSystemInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'SystemAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetTaskAttributeBool': {
         'cname': 'DAQmxGetTaskAttribute',
         'parameters': [

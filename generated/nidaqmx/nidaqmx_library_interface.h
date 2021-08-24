@@ -211,6 +211,8 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
+  virtual int32 GetSystemInfoAttributeString(int32 attribute, char value[], uInt32 size) = 0;
+  virtual int32 GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value, uInt32 size) = 0;
   virtual int32 GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size) = 0;
   virtual int32 GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size) = 0;
